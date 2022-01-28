@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+<style>
+	.wrapper{width: 1000px;}
+	h2{
+		text-align: center; 
+		font-size: 30px; 
+		color: rgb(107, 171, 213);
+	}
+	.button{
+		width:60%; 
+		margin:auto; 
+		display:block; 
+		border: 1px solid black;
+	}
+	button{width: 100px; margin-left:75px; }
+	.content{
+	    width: 80%;
+	    margin: auto;
+	    margin-top: 20px;
+	}
+	table{
+	    width: 100%;
+	    text-align: center;
+	}
+</style>

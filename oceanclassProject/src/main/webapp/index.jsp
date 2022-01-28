@@ -8,5 +8,8 @@
 </head>
 <body>
 	★1조 화이팅!!★
+	
+	페이지 확인용
+	<jsp:forward page="WEB-INF/views/event/eventMain.jsp" /></body>
 </body>
 </html>
