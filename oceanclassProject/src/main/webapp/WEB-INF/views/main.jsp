@@ -9,7 +9,6 @@
 </head>
 <body>
 
-	<jsp:forward page="class/classQnaDetailForm.jsp" />
 
 </body>
 </html>

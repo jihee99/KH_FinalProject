@@ -52,9 +52,9 @@
                 <li class="header_2_menu">
                     <a href="">STORE</a>
                     <ul class="header_2_detail">
-                        <li><a href="">클래스상품</a></li>
-                        <li><a href="">굿즈</a></li>
-                        <li><a href="">??</a></li>
+                        <li><a href="">클래스 상품</a></li>
+                        <li><a href="">OC 에디션</a></li>
+                        <li><a href="">DIY Kit</a></li>
                     </ul>
                 </li>
                 
