@@ -10,7 +10,7 @@
 <body>
 
 	
-	<jsp:forward page="../views/store/instructorStoreReviewList.jsp" />
+
 
 </body>
 </html>
