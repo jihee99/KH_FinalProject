@@ -5,6 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 <style>
 	 div{box-sizing: border-box;}
     #header{
@@ -19,10 +23,10 @@
 
     #header_1>div{height:100%; float:left;}
     #header_1_left{width:30%;position:relative;}
-    #header_1_center{width:40%;}
+    #header_1_center{width:40%; margin-bottom:20px;}
     #header_1_right{width:30%;}
 
-    #header_1_center>img{height:100%; display : block; margin: auto; }
+    #header_1_center>img{width:40%; display : block; margin: auto;}
     #header_1_right{text-align: right; line-height:35px; font-size: 12px; text-indent: 35px;}
     #header_1_right>a{margin: 5px; text-decoration:none; color:black}
     #header_1_right>a:hover{cursor: pointer;}
@@ -51,7 +55,7 @@
         <div id="header_1">
             <div id="header_1_left"></div>
             <div id="header_1_center">
-                <img src="images/oceanclasslogo.png" alt="">
+                 <img src="resources/images/logo.png">
             </div>
             <div id="header_1_right">
 
