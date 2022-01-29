@@ -1,13 +1,16 @@
 @charset "UTF-8";
-.innerOuter>div{margin-top: 10px;}
-.menutitle{width:85%; margin-left:55px; text-align: left;} 
+
+.content{width:80%;}
+.content div{margin: auto; box-sizing: border-box;} 
+
+.menutitle{width:80%; text-align: left; padding-top: 30px;} 
 .menutitle>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
 
-.btn_area_1{width: 88%;}
+.btn_area_1{width: 70%;padding-bottom: 15px;}
 .btn_area_1>button{background-color: rgb(107, 171, 213); border: none; font-size: 16px; font-weight: bolder; color: white;}
 
-.contentBox{width: 90%; margin-left: auto; margin-right: auto;}
-.contentBox>table{width: 85%; margin-left: auto; margin-right: auto; padding: 10px; background-color: lightgray; border-radius: 2px;}
+.contentBox{width: 70%; margin: 10px;}
+.contentBox>table{width: 100%; margin-left: auto; margin-right: auto; padding: 10px; background-color: lightgray; border-radius: 2px;}
 .img_area{height: 210px; width: 250px; margin: 20px 25px; display:inline-block; background: white;}
 .info_area{width: 90%; margin:15px 10px; border-collapse: separate; border-spacing: 0 6px;}
 
@@ -17,3 +20,5 @@
 
 #updateBtn{background: grey;}
 #deleteBtn{background: rgb(167, 23, 23);}
+
+.btn_group{margin: 20px 0px;}

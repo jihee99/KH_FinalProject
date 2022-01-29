@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.innerOuter div{border:1px solid red;}
+.headMenu{text-align: left;} 
+.headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
+
+.content{width:100%; margin: auto;}
+.selectStore>*{width: 30%; margin-top:20px;}
+
+.content_table{margin: 10px 0px; text-align: center; font-size: 14px;}
+.content_table>table{border-collapse: separate; border-spacing: 0px 6px; }
+.content_table thead{line-height: 35px; background: lightgray;}    
+.content_table tbody>tr:hover{cursor: pointer; font-weight: 600;}
+
+.btn_group{margin: 20px 0px;}
