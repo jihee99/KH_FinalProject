@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<jsp:forward page="store/instructorStoreList.jsp"/>
+	
 
 
 </body>
