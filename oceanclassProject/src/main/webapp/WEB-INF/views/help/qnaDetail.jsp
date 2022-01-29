@@ -10,9 +10,28 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/helpMain.css">
+    
+    <style>
+    	.table{
+    		width:80%; 
+			margin:auto;
+			margin-left: 100px;
+			background-color: rgba(107, 171, 213, 0.38);
+			margin-bottom: 20px;
+		}
+		table th{ 
+			width: 25%; 
+			padding:15px; 
+			padding-bottom: 10px;
+		}
+		table td{
+			text-align: left;
+		}
+		#back{ margin-left: 380px;}
+    </style>
+
 </head>
 <body>
-
 	<jsp:include page="../common/header.jsp" />
     <div class="wrapper my-5">
         <div class="head py-3">
@@ -24,50 +43,32 @@
             <button type="button" class="btn btn-outline-primary">1:1문의</button>
         </div>
         <div class="content my-5">
-            <table class="table table-hover">
-                <thead>
+            <table class="table table-bordered">
+                    <tr>
+                        <th>제목</th>
+                        <td colspan="3">환불되나욤</td>
+                    </tr>
+                    <tr>
+                        <th >작성자</th>
+                        <td>모니카</td>
+                        <th>작성날짜</th>
+                        <td>2022-01-01</td>
+                    </tr>
                     <tr>
                         <th>카테고리</th>
-                        <th>총 강의수</th>
-                        <th>총 수강생수</th>
-                        <th>월 매출</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
+                        <td colspan="3">클래스</td>
                     </tr>
                     <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
+                        <th >문의내용</th>
+                        <td colspan="3"><textarea name="" id="" cols="70" rows="8" style="resize: none;">내용웅앵웅~</textarea></td>
                     </tr>
                     <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
+                        <th >답변</th>
+                        <td colspan="3"><textarea name="" id="" cols="70" rows="5" style="resize: none;">답변웅앵웅~</textarea></td>
                     </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                </tbody>
             </table>
+            <button type="button" class="btn btn-primary" id="back">목록으로</button>
         </div>
-        <div class="paging"></div>
     </div>
 </body>
 </html>
