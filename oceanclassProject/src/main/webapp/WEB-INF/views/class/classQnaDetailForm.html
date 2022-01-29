@@ -78,23 +78,35 @@
         margin-left: 10px;
         line-height: 35px;
     }
+    /* 내용 전체 영역 */
     #content-area{
         margin-bottom: 40px;
         width: 950px;
         padding-left: 24px;
         align-content: center;
     }
+    /* 내용 안 텍스트 상자 */
     #content-text{
         border: none;
         resize: none;
     }
+    /* 신고하기 */
     #content-report{
         float: right;
     }
+    /* 댓글 영역 */
     #reply-area{
-        display: flex;
-        margin-left: 55px;
+        /* display: flex; */
+        margin-left: 35px;
         margin-bottom: 20px;
+    }
+    #reply-bar{
+        display: flex;
+        margin-bottom: 20px;
+    }#reply-img{
+        margin-right: 15px;
+    }#reply-btn{
+        margin-left: 15px;
     }
 </style>    
 </head>
@@ -132,16 +144,28 @@
             </div>
             <hr style="border: solid 1px rgb(179, 178, 178); width: 980px;">
             
-            <div id="reply-area">
-                <div id="reply-img">
-                    <img src="../../../resources/images/reply2.png" alt="">
+            <div id="reply-area" style="overflow: scroll;">
+                <div id="reply-bar">
+                    <div id="reply-img">
+                        <img src="../../../resources/images/reply2.png" alt="">
+                    </div>
+                    <input type="text" id="reply-input" style="width: 750px;" placeholder="댓글 내용을 입력해 주세요.">
+                    <div id="reply-btn">
+                        <button class="btn btn-lg" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; width: 95px; height: 48px;">답변</button>
+                    </div>
                 </div>
-                <input type="text" id="reply-input" style="width: 750px;" placeholder="댓글 내용을 입력해 주세요.">
-                <div id="reply-btn">
-                    <button class="btn btn-lg" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; ">답변</button>
+                <div id="reply-writer">
+                    <img src="../../../resources/images/user.png" style="width: 30px;">
+                    <span id="writer-nick">보미 강사</span>
+                    <textarea id="" cols="100" rows="2"></textarea>
+                </div>
+                <div id="reply-writer">
+                    <img src="../../../resources/images/user.png" style="width: 30px;">
+                    <span id="writer-nick">보미 강사</span>
+                    <textarea id="" cols="100" rows="2"></textarea>
                 </div>
             </div>
-        
-    </div>
+        </div>
+        <br><br><br><br><br><br>
 </body>
 </html>
