@@ -34,13 +34,8 @@
 <body>
 	<jsp:include page="../common/header.jsp" />
     <div class="wrapper my-5">
-        <div class="head py-3">
-            <p><h2>HELP</h2></p>
-        </div>
-        <div class="button my-3">
-            <button type="button" class="btn btn-outline-primary">공지사항</button>
-            <button type="button" class="btn btn-outline-primary">FAQ</button>
-            <button type="button" class="btn btn-outline-primary">1:1문의</button>
+        <div class="head">
+            <p><h2>1:1문의</h2></p>
         </div>
         <div class="content my-5">
             <table class="table table-bordered">

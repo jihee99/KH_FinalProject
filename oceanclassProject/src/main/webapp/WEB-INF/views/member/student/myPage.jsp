@@ -9,14 +9,14 @@
 	<title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./resources/css/stuMypage.css">
+    <link rel="stylesheet" href="./resources/css/stuMypage.css?3">
 </head>
 <body>
 	<div class="wrapper">
         <div class="header">
-            <div id="logo"><img src="" alt="">로고이미지</div>
+            <div id="logo"><img src="resources/images/logo.png"></div>
             <div id="title">My Page</div>
-            <div id="buy"><a href="">장바구니아이콘</a></div>
+            <div id="buy"><a href=""><img src="resources/images/largeCart.png"></a></div>
         </div>
         <div class="contentArea">
             <div class="side">
@@ -49,7 +49,7 @@
             </div>    
             <div class="content">
                 <h2>제목</h2>
-                내용~~~~~~~~~~~~~
+                	내용~~~~~~~~~~~~~
             </div>
         </div>
     </div>
