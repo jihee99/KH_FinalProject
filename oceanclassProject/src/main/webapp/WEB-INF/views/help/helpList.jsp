@@ -19,7 +19,7 @@
             <p><h2>HELP</h2></p>
         </div>
         <div class="button my-3">
-            <button type="button" class="btn btn-outline-primary">공지사항</button>
+            <button type="button" class="btn btn-primary">공지사항</button>
             <button type="button" class="btn btn-outline-primary">FAQ</button>
             <button type="button" class="btn btn-outline-primary">1:1문의</button>
         </div>
