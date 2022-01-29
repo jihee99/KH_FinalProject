@@ -4,7 +4,7 @@
 .innerOuter{width:80%; border:1px solid blue; margin-left:300px;}
 .innerOuter div{border:1px solid red;}
 
-.headMenu{width:80%; margin:auto; text-align: left;} 
+.headMenu{width:80%; padding-top:30px; margin:auto; text-align: left;} 
 .headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
 
 .content{width:80%; margin: auto;}
