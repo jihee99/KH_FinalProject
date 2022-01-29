@@ -1,9 +1,14 @@
 @charset "UTF-8";
+
+/*나중에 강사용 메뉴바 생기면 수정할 부분!!*/
+.innerOuter{width:80%; border:1px solid blue; margin-left:300px;}
 .innerOuter div{border:1px solid red;}
-.headMenu{text-align: left;} 
+
+.headMenu{width:80%; margin:auto; text-align: left;} 
 .headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
 
-.content{width:100%; margin: auto;}
+.content{width:80%; margin: auto;}
+.selectStore{margin:10px 0px;}
 .selectStore>*{width: 30%; margin-top:20px;}
 
 .content_table{margin: 10px 0px; text-align: center; font-size: 14px;}
