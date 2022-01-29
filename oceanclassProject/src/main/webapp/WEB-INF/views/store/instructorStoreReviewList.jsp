@@ -12,11 +12,12 @@
 </head>
 <body>
 	
-	<jsp:include page="../common/header.jsp"/>
+	<!-- 강사용 메뉴바 연결하기 -->
+
 	
 	<div class="innerOuter">
         <div class="headMenu">
-            <b>상품리뷰관리</b>
+            <b>상품 리뷰 관리</b>
         </div>
         <div class="content">
             <div class="selectStore">

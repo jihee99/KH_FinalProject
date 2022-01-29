@@ -1,14 +1,12 @@
 @charset "UTF-8";
-
-/*나중에 강사용 메뉴바 생기면 수정할 부분!!*/
+ /*임의 설정!! 나중에 빼고 가져가기*/
  div{box-sizing: border-box;}
 .innerOuter{width:1000px; margin:auto;}
 
-.headMenu{width:80%; padding-top:30px; margin:auto; text-align: left;} 
+.headMenu{text-align: left;} 
 .headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
 
-.content{width:80%; margin: auto;}
-.selectStore{margin:10px 0px;}
+.content{width:1000px; margin: auto; padding: 10px;}
 .selectStore>*{width: 30%; margin-top:20px;}
 
 .content_table{margin: 10px 0px; text-align: center; font-size: 14px;}
@@ -16,4 +14,4 @@
 .content_table thead{line-height: 35px; background: lightgray;}    
 .content_table tbody>tr:hover{cursor: pointer; font-weight: 600;}
 
-.btn_group{margin: 20px 0px;}
+.btn_group{margin: 50px 0px; position: relative;}    
