@@ -8,9 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<!--  
 	<jsp:include page="common/header.jsp" />
 	
+	
+	<jsp:forward page="store/storeEnrollPage.jsp"/>
+	-->
 	
 </body>
 </html>
