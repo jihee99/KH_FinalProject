@@ -8,9 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<<<<<<< Updated upstream
 
 	<jsp:include page="common/header.jsp" />
 
 
+=======
+	<jsp:forward page="class/classQnaDetailForm.jsp" />
+>>>>>>> Stashed changes
 </body>
 </html>

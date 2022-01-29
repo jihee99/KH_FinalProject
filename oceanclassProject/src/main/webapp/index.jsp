@@ -11,5 +11,9 @@
 	
 	페이지 확인용 jsp 연결
 	<jsp:forward page="WEB-INF/views/main.jsp" />
+<<<<<<< Updated upstream
 </body>
+=======
+	</body>
+>>>>>>> Stashed changes
 </html>
