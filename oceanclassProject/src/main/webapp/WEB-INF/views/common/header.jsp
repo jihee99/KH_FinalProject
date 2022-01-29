@@ -6,13 +6,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	    div{box-sizing: border-box;}
+	 div{box-sizing: border-box;}
     #header{
         width:73%;
         padding-top: 20px;
         margin:auto;
     }
-    
+
     #header>div{width:100%; margin-bottom:10px}
     #header_1{height:75px}
     #header_2{text-align: center;}
@@ -40,6 +40,9 @@
 
     .header_2_menu a:hover+.header_2_detail{display: block;}
     .header_2_detail:hover{display: block;}
+
+    /* 내용 담길 전체 div 가로길이 고정 */
+    .innerOuter{width: 80%; margin:auto; padding:5% 10%;}
 </style>
 
 </head>
@@ -48,7 +51,7 @@
         <div id="header_1">
             <div id="header_1_left"></div>
             <div id="header_1_center">
-                <img src="resources/images/oceanclasslogo.png" alt="">
+                <img src="images/oceanclasslogo.png" alt="">
             </div>
             <div id="header_1_right">
 
@@ -82,7 +85,8 @@
                     </ul>
                 </li>
 
-                <li class="header_2_menu"><a href="">STORE</a>
+                <li class="header_2_menu">
+                    <a href="">STORE</a>
                     <ul class="header_2_detail">
                         <li><a href="">클래스상품</a></li>
                         <li><a href="">굿즈</a></li>
@@ -97,7 +101,7 @@
                 <li class="header_2_menu"><a href="">HELP</a></li>
             </ul>
         </div>
-
+        
     </div>
 </body>
 </html>
