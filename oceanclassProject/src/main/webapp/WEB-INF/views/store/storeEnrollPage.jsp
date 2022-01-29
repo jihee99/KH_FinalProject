@@ -4,21 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-	.headMenu{text-align: left;} 
-    .headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
-
-    #pInfo{width:80%; margin-left: 10px; display: table-cell; border-collapse: separate; border-spacing: 0 6px;}
-    #pInfo>thead th{line-height: 33px; font-size: 17px; padding-left: 15px;}
-    #pInfo>tbody th{line-height: 33px; font-size: 14px; text-align: right; padding-right: 15px;}
-    #pInfo>tbody td>input{width: 80%;}
-
-    .detail{font-size: 12px; color: rgb(185, 7, 7); font-weight: bold;}
-
-    .btnBox>button{border-radius: 7px; width: 120px; height: 45px; margin: 10px; font-size: 15px; font-weight: bolder; color: white; border:none; }
-    .btnBox>button[type="submit"]{background-color: rgb(107, 171, 213);}
-    .btnBox>button[type="reset"]{background-color: gray;}
-</style>
+<link rel="stylesheet" href="./resources/css/store/storeEnrollPage.css">
 <title>Insert title here</title>
 </head>
 <body>
