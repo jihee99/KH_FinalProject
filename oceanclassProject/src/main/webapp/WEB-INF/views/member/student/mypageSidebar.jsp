@@ -19,15 +19,15 @@
                 <div class="menu">
                     <p>클래스 관리</p>
                     <ul>
-                        <li><a href="">수강중인 클래스</a></li>
-                        <li><a href="">클래스 문의/후기</a></li>
+                        <li><a href="?page=myClass.jsp">나의 클래스</a></li>
+                        <li><a href="?page=myClassReview.jsp">클래스 문의/후기</a></li>
                         <li><a href="">찜한 클래스</a></li>
                     </ul>
                 </div>
                 <div class="menu">
                     <p>상품 관리</p>
                     <ul>
-                        <li><a href="">주문 조회</a></li>
+                        <li><a href="?page=myShopping.jsp">주문 조회</a></li>
                         <li><a href="">상품 문의/후기</a></li>
                         <li><a href="">찜한 상품</a></li>
                     </ul>
@@ -38,7 +38,7 @@
                         <li><a href="?page=myQna.jsp">1:1 문의 내역</a></li>
                         <li><a href="">내 포인트/쿠폰</a></li>
                         <li><a href="">프로필 관리</a></li>
-                        <li><a href="">회원 탈퇴</a></li>
+                        <li><a href="?page=myDelete.jsp">회원 탈퇴</a></li>
                     </ul>
                 </div>
             </div>    
