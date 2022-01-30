@@ -36,7 +36,7 @@
 	<div class="content1">
     <div class="conhead">
         <h2>클래스 문의</h2>
-        <a>더보기</a>
+        <a href="?page=myClassQnaDetail.jsp">더보기</a>
     </div>
     <table>
         <thead>
@@ -64,7 +64,7 @@
 <div class="content2">
     <div class="conhead">
         <h2>클래스 후기</h2>
-        <a>더보기</a>
+        <a href="?page=myClassReviewDetail.jsp">더보기</a>
     </div>
     <table>
         <thead>
