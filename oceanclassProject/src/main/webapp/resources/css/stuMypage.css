@@ -9,7 +9,7 @@
 	    margin-bottom: 20px;
 	}
 	.contentArea{
-	    width: 80%;
+	    width: 90%;
 	    height: 100%;
 	    margin: auto;
 	}
@@ -23,7 +23,7 @@
 	    padding: 20px;
 	}
 	#profile{
-	    width: 100%; 
+	    width: 80%; 
 	    height: 20%; 
 	    border: 1px solid;
 	    margin: 15px;
@@ -59,7 +59,7 @@
 	    height: 80%;
 	}
 	#logo, #buy{width: 15%; }
-	#logo img{width:90%; margin-left: 60px; margin-top: 20px;}
+	#logo img{width:90%; margin-left: 40px; margin-top: 20px;}
 	#buy img{float:right; margin-top: 40px;}
 	#title{
 	    width: 70%;
@@ -67,6 +67,7 @@
 	    font-weight: bolder;
 	    color: rgb(107, 171, 213);
 	    padding-top: 15px;
+	    padding-left: 40px;
 	    text-align: center;
 	}
 	h2, h3{width: 30%; color:rgb(107, 171, 213);}
