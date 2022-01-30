@@ -19,7 +19,7 @@
                 <div class="menu">
                     <p>클래스 관리</p>
                     <ul>
-                        <li><a href="">수강중인 클래스</a></li>
+                        <li><a href="?page=myClass.jsp">나의 클래스</a></li>
                         <li><a href="">클래스 문의/후기</a></li>
                         <li><a href="">찜한 클래스</a></li>
                     </ul>
@@ -27,7 +27,7 @@
                 <div class="menu">
                     <p>상품 관리</p>
                     <ul>
-                        <li><a href="">주문 조회</a></li>
+                        <li><a href="?page=myShopping.jsp">주문 조회</a></li>
                         <li><a href="">상품 문의/후기</a></li>
                         <li><a href="">찜한 상품</a></li>
                     </ul>
