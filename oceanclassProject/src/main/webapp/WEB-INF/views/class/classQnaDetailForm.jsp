@@ -28,6 +28,11 @@
     #top-area{
         height: 100px;
         margin-top: 50px;
+        display: flex;
+        justify-content: space-between;
+    }
+    #tc-box{
+        font-size: 18px;
     }
     #bord-name{
         color: rgb(107, 171, 213);
@@ -153,6 +158,9 @@
 	<div class="wrap">
         <div id="top-area">
             <span id="bord-name">클래스 문의 관리</span>
+            <div id="tc_box">
+                <img src="../../../resources/images/user.png" style="width: 35px;" alt=""><span> 보미사랑 강사님 환영합니다!</span>
+            </div>
         </div>
         <div id="content-wrap">
             <div id="category-area">
