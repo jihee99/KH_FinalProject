@@ -11,7 +11,7 @@
 
 	<jsp:include page="common/header.jsp" />
 
-	<jsp:include page="common/content.jsp" />
+	<jsp:include page="class/classContent.jsp" />
 	
 	<jsp:include page="common/footerBar.jsp" />
 
