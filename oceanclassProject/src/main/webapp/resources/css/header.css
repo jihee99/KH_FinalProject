@@ -36,4 +36,4 @@ div {box-sizing: border-box;}
 .header_2_detail:hover{display: block;}
 
 /* 내용 담길 전체 div 가로길이 고정 */
-.innerOuter{width: 80%; margin:auto; padding:5px 10px;}
+.innerOuter{width: 1000px; margin:auto; padding:5px 10px;}
