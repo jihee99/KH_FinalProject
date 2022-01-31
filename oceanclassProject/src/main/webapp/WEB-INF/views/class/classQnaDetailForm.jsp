@@ -29,6 +29,7 @@
         width: 1000px;
         height: auto;
         margin: auto;
+        margin-top: 50px;
     }
     /* 글내용 div */
     #content-wrap{
@@ -179,7 +180,8 @@
         </div>
     </div>
     -->
-    <div style="width: 1400px; height: auto; margin: auto;">
+    <div style="width: 1600px; height: auto; margin: auto;">
+    	<jsp:include page="../common/teacher/tcMypageSidebar.jsp" />
         <div class="wrap">
             <div id="top-area">
                 <span id="bord-name">클래스 문의 관리</span>

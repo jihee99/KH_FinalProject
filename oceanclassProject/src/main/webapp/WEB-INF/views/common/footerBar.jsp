@@ -12,7 +12,7 @@
 <style>
     /* footer 영역의 세부 스타일 */
     #footer{
-        width: 1400px;
+        width: 1600px;
         bottom: 0;
     }
     .footer1{
