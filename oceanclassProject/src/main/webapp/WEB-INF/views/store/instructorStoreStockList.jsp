@@ -12,6 +12,10 @@
 <link rel="stylesheet" href="./resources/css/store/instructorStoreStockList.css">
 </head>
 <body>
+
+	<!-- 
+	강사용 메뉴바 연결하기
+	 -->
 	
     <div class="innerOuter" align="center">
         <div class="headMenu">
