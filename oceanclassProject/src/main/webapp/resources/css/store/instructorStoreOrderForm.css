@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.innerOuter{width:1000px; margin: auto;}
+.headMenu{text-align: left;} 
+.headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
+
+.content{width: 100%; margin-top: 50px; padding: 5px 8px;}
+.content table{width: 80%; border-collapse: separate; line-height: 200%; border: 1px solid white;}
+.content th{text-align: center; background: lightgray;}
+.content select{width: 100%; height: 30px;}
+.content input{width: 100%; height: 30px; border: none; font-size: 15px;}
+
+.btnBox button{margin-top:30px; background: rgb(107, 171, 213); font-size: 16px; font-weight: 550; color: white;}

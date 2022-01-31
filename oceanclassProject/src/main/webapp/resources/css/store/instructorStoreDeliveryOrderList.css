@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.innerOuter{width:1000px; margin: auto;}
+.headMenu{text-align: left;} 
+.headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
+
+#dStatus{width: 100%; margin-top: 50px;}
+#dStatus td{width: 170px;}
+#dStatus p{font-size: 14px; font-weight: 600;}
+.imgbox{background:rgb(150, 150, 150, 0.6); border-radius: 70%; width: 110px; height: 110px; text-align: center;} 
+.imgbox>img{width: 80%; object-fit: cover; margin-top: 10px;}
+
+.imgbox :hover{cursor: pointer;}
+
+.content{width: 100%; margin-top: 20px; padding: 5px 8px;}
+.content_1>div{height: 50px; float: left;}
+.content_1_left{width: 20%; text-align:left; padding-left:10px; font-size: 15px;}
+.content_1_left>b{font-size: 17px;}
+.content_1_center{width: 40%;}
+.content_1_right{width: 40%; float: right;}
+
+.content_1_right input{height: 32px; margin-top: 5px; width: 250px;}
+.content_1_right button{height: 32px; margin-top: 5px; border-radius: 5px; border: none;}
+
+.content_2{width: 100%; border-collapse: separate; line-height: 200%;}
+.content_2 table{font-size: 15px; text-align: center; text-align: center;}
+.content thead{line-height: 35px; background: lightgray;}
+
+.btn_group{margin: 20px 0px; position: relative;}    
+
+#updateBtn{width: 50px; height: 30px; border-radius: 5px; border: none; background: rgb(107, 171, 213); color: white;}
+#detailBtn{width: 50px; height: 30px; border-radius: 5px; border: none; background: gray; color: white;}
+#deleteBtn{
+	margin-left: 10px; width: 80px; height: 30px; 
+	border-radius: 5px; border: none; 
+	background: rgb(185, 1, 1); color: white; 
+	font-size: 15px; font-weight: 450;
+}
