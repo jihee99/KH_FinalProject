@@ -9,10 +9,13 @@
 </head>
 <body>
 
-	
+	<!-- 강사용 메뉴바 연결하기 	-->
+	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
+	 	
 	 <div class="innerOuter">
         <div class="content">
             <div class="headMenu">
+            	<br>
                 <b>상품등록하기</b>
             </div>
             <br>

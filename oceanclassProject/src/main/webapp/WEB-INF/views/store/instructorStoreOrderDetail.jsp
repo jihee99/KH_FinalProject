@@ -14,9 +14,11 @@
 <body>
 
     <!-- 강사 사이드 네비바 연결하기 -->
+    <jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 
-    <div class="innerOuter" align="center">
+    <div class="innerOuter">
         <div class="headMenu">
+        	<br><br>
             <b>주문 내역서</b>
         </div>
         <div class="head_2">

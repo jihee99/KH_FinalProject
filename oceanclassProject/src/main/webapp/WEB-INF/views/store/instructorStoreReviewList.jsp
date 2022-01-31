@@ -13,10 +13,11 @@
 <body>
 	
 	<!-- 강사용 메뉴바 연결하기 -->
-
+ 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 	
 	<div class="innerOuter">
         <div class="headMenu">
+        	<br><br>
             <b>상품 리뷰 관리</b>
         </div>
         <div class="content">
@@ -28,10 +29,10 @@
                 </select>
             </div>
             <div class="content_table">
-                <table class="table table-sm table-light" align="center">
+                <table class="table table-sm" align="center">
                     <thead>
                         <tr>
-                            <th width="150">리뷰번호</th>
+                            <th width="120">리뷰번호</th>
                             <th width="120">별점</th>
                             <th width="300">내용</th>
                             <th width="120">작성자</th>

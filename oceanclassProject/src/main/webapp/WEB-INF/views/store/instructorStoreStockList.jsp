@@ -5,20 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="./resources/css/store/instructorStoreStockList.css">
 </head>
 <body>
 
-	<!-- 
-	강사용 메뉴바 연결하기
-	 -->
-	
+	<!-- 강사용 메뉴바 연결하기 -->
+	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
+		
     <div class="innerOuter" align="center">
         <div class="headMenu">
+            <br><br>
             <b>상품 재고 관리</b>
         </div>
         <div class="head_2">
