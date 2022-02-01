@@ -144,12 +144,12 @@
                     <a href="">아이디 찾기</a>&ensp; 
                     <a href="">비밀번호 찾기</a>
                 </div>
-                <!-- 아이디 비번 틀렸을때
-                <div id="checkResult" style="font-size:1.5em; color: rgb(192, 57, 43); font-weight: bolder;">
+                <!-- 아이디 비번 틀렸을때 -->
+                <!--<div id="checkResult" style="font-size:1.5em; color: rgb(192, 57, 43); font-weight: bolder;">
                     <img src="resources/images/warning.jpg" width="25px">
                     아이디 혹은 비밀번호를 다시 확인 하세요.
-                </div>
-                -->
+                </div>-->
+                
             </div>
         </div>
     </div>

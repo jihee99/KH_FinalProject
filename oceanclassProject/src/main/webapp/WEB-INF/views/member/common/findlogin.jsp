@@ -33,10 +33,10 @@
         margin-top: 5px;
     }
     #idFind-form{
-        width: 350px;
+        width: 360px;
         margin: 0 auto;
     }
-    #userIdPwd {
+    #findId {
         width: 250px;
         height: 50px !important;
         padding: 10px;
@@ -79,36 +79,31 @@
                     <span>아이디 찾기</span>
                 </div>
                 <form action="" method="post">
-                    <!-- id 인풋 null일 때-->
+                    
                     <span id="top-text">휴대폰 번호</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="userIdPwd" placeholder="휴대번호(숫자만)" name="userId" required>
+                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="userId" required>
                       <button type="button" class="rightBtn btn-sm" onclick="idCheck();">본인 인증</button>
-                      <!-- <div class="valid-feedback"></div>
-                      <div class="invalid-feedback">아이디를 입력해주세요</div> -->
+                      
                     </div>
-                    <!-- 비밀번호 인풋 null일 때-->
+                    
                     <span id="top-text">인증 번호</span>
                     <div class="form-group">
-                      <input type="password" class="form-control" id="userIdPwd" placeholder="SMS로 수신된 인증번호" name="userPwd" required>
+                      <input type="password" class="form-control" id="findId" placeholder="SMS로 수신된 인증번호" name="userPwd" required>
                       <button type="button" class="rightBtn btn-sm" onclick="idCheck();">확인</button>
-                      <!-- <div class="valid-feedback"></div>
-                      <div class="invalid-feedback">비밀번호를 입력해주세요</div> -->
+                      
                     </div>
-        
-                    <!--
-                    // 아이디 틀렸을 시 
-                    <div>
-                      <p class="notifyRed">등록되지않은 아이디 입니다</p>
-                    </div>
-        
-                    // 비밀번호 틀렸을 시
-                    <div>
-                      <p class="notifyRed">비밀번호가 틀렸습니다</p>
-                    </div>
-                    -->
-
                     <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">아이디 찾기</button>
+                    
+                    <div id="checkResult" style="margin-top: 25px;">
+                        <div align="center">
+                            <img src="resources/images/warning.jpg" width="25px">
+                            <span style="font-size:1.4em; color: rgb(192, 57, 43); font-weight: bolder;">일치하는 회원정보가 없습니다</span>
+                        </div>
+                        <div align="center">
+                        <a href="" style="color: rgb(127, 127, 127); font-size: 0.9em; margin: auto;">회원가입 하기</a>
+                        </div>
+                    </div>
                 </form>
             </div>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
