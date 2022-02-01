@@ -9,7 +9,15 @@
 <title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
+    <link rel="stylesheet" href="./resources/css/stuMypage.css">
+<style>
+	p{
+	    font-weight: bolder;
+	    font-size: 20px;
+	    color: rgb(107, 171, 213);
+	    float: left;
+	}
+</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -37,7 +45,7 @@
                     <ul>
                         <li><a href="?page=myQna.jsp">1:1 문의 내역</a></li>
                         <li><a href="">내 포인트/쿠폰</a></li>
-                        <li><a href="">프로필 관리</a></li>
+                        <li><a href="?page=myProfile.jsp">나의 프로필</a></li>
                         <li><a href="?page=myDelete.jsp">회원 탈퇴</a></li>
                     </ul>
                 </div>

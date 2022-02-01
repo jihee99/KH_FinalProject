@@ -11,16 +11,15 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-.content{
-width: 100%;
-    height: 100%;
-    float: right;
-    border: 1px solid;
-    padding-left: 0;}
+	.content{
+		width: 100%;
+	    height: 100%;
+	    float: right;
+	    padding-left: 0;
+    }
 	.conhead{
         width: 100%;
 	    height: 15%;
-        border: 1px solid;
 	}
 	.content1, .content2{
 	    width: 100%;
@@ -29,7 +28,6 @@ width: 100%;
 	.conhead>h2{width: 30%; border: 1px solid;}
 	.conhead>a{float: right; margin-top: -20px;}
 	table{
-	    border: 1px solid;
 	    width: 90%;
 	    margin: auto;
 	    text-align: center;
