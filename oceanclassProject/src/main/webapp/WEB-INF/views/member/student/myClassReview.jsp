@@ -11,21 +11,26 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
 <style>
+	.content{
+		width: 100%;
+	    height: 100%;
+	    float: right;
+	    padding-left: 0;
+    }
 	.conhead{
-        width: 90%;
+        width: 100%;
 	    height: 15%;
-        margin: auto;
 	}
 	.content1, .content2{
-	    width: 80%;
+	    width: 100%;
 	    height: 50%;
-	    margin: auto;
-	    float: right;
+	    margin-top: 30px;
+	    margin-left: -50px;
+	    border: 1px solid white;
 	}
-	.conhead>h2{width: 50%; border: 1px solid;}
+	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
 	table{
-	    border: 1px solid;
 	    width: 90%;
 	    margin: auto;
 	    text-align: center;

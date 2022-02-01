@@ -10,7 +10,7 @@
 	★1조 화이팅!!★
 	
 	페이지 확인용 jsp 연결
-	<jsp:forward page="WEB-INF/views/main.jsp" />
+	<jsp:forward page="WEB-INF/views/member/student/mypageMain.jsp" />
 
 </body>
 

@@ -11,11 +11,18 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
+	.content{
+		width: 100%;
+	    height: 100%;
+	    float: right;
+	    padding-left: 0;
+    }
 	 .content>p{
-         width: 420px;
+         width: 50%;
          margin: 120px;
          text-align: left;
          font-weight: bolder;
+         border: 1px solid;
      }
      h3{margin-left: 200px; margin-top: -50px;}
      button{margin-top: 30px; width: 100px; margin-left: 40px;}
@@ -26,7 +33,7 @@
 	    <h2>회원 탈퇴</h2>
 	    <p>
 		        회원 탈퇴시 수강중인 강의와 진행중인 주문에 대한 조회가 불가능하며
-		        모든 작성글은 탈퇴 후 삭제할 수 없습니다.
+		        모든 작성글은 탈퇴 후 삭제할 수 없습니다.<br>
 		        탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니
 		        신중하게 선택하시기 바랍니다.
 	    </p>
