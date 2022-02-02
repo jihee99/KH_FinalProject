@@ -1,88 +1,118 @@
 @charset "UTF-8";
+
 	div {box-sizing: border-box;}
-	.wrapper{width: 1000px; height: 1000px;}
-	.header{
-	    width: 90%;
-	    height: 100px;
-	    margin: auto;
-	    margin-bottom: 20px;
+	
+	
+	/* 총 크기 */
+	#mainTable{width: 1200px; height: 1000px; margin:auto;}
+	#mainSide{
+		width: 15%;
+		height: 100%;
+		border:1px solid red;
 	}
-	.contentArea{
-	    width: 90%;
-	    height: 100%;
-	    margin: auto;
-	}
-	.side{
-	    width: 10%;
-	    height: 100%;
-	    float: left;
-	}
-	.content{
-	    width: 80%;
-	    padding: 20px;
-	}
-	#profile{
-	    width: 80%; 
-	    height: 20%; 
-	    border: 1px solid;
-	    margin: 15px;
-	}
-	.side div{
-	    float: left;
-	    margin-top: 10px;
-	}
-	.menu{margin-bottom: 20px;}
-	.side li{ list-style: none; }
-	p{
-	    font-weight: bolder;
-	    font-size: 20px;
-	    color: rgb(107, 171, 213);
-	    float: left;
-	}
-	.side a{
-	    text-decoration: none;
-	    float: left;
-	    color: grey;
-	    margin-top: 10px;
-	    margin-left: 10px;
-	    font-size: 16px;
-	}
-	.side a:hover{
-	    text-decoration: underline;
-	    font-weight: bolder;
+	#mainContent{
+		width: 80%;
+		height: 100%;
+		border:1px solid blue;
 	}
 	
+	
+	/* header 스타일 */
+	.header{
+	    width: 100%;
+	    height: 100px;
+	    margin: auto;
+	    margin-bottom: 50px;	    
+	}
 	#logo, #title, #buy{
 	    float: left;
-	    height: 80%;
+	    height: 100%;
 	}
-	#logo, #buy{width: 15%; }
-	#logo img{width:90%; margin-left: 40px; margin-top: 20px;}
-	#buy img{float:right; margin-top: 40px;}
+	#logo, #buy{width: 15%; margin-top: 40px;}
+	#logo img{width:100%;}
+	#buy img{float:right; margin-top: 30px;}
 	#title{
 	    width: 70%;
-	    font-size: 48px;
+	    font-size: 60px;
 	    font-weight: bolder;
 	    color: rgb(107, 171, 213);
 	    padding-top: 15px;
 	    padding-left: 40px;
 	    text-align: center;
 	}
-	h2, h3{width: 30%; color:rgb(107, 171, 213);}
-	h2{margin-top: 80px;}
 	
+	
+	/* 사이드 스타일 */
+	.side{
+		width: 100%;
+	    height: 100%;
+	}
+	#profile{
+	    width: 90%; 
+	    height: 180px;
+	    border: 1px solid lightgray;
+	    margin: 10px;
+	}
+	#profile>img{
+		width: 100%; 
+		height: 100%;
+	}
+	.side div{
+	    float: left;
+	    margin-top: 10px;
+	}
+	.menu{margin: 15px;}
+	.side li{ list-style: none; }
+	.side p{
+	    font-weight: bolder;
+	    font-size: 20px;
+	    color: rgb(107, 171, 213);
+	    float: left;
+	    margin-bottom: -5px;
+	}
+	.side a{
+	    text-decoration: none;
+	    float: left;
+	    color: grey;
+	    margin-top: 15px;
+	    font-size: 15px;
+	}
+	.side a:hover{
+	    text-decoration: underline;
+	    font-weight: bolder;
+	}
+	
+	
+	/* 콘텐츠 스타일 */
+	.content{
+	    width: 100%;
+	    height: 100%;
+	    padding: 30px;
+	    margin-top: 50px;
+	}
+	h2{
+		width: 30%; 
+		text-align: left; 
+		color: rgb(107, 171, 213); 
+		font-weight: 800;
+		margin-top: 20px;
+	}
+	
+	
+	/* 콘텐츠 내 검색버튼창 스타일 */
 	.searchBar{
 	    background-color:rgba(107, 171, 213, 0.38);
-	    height: 5%;
+	   	width: 100%;
+	    height: 8%;
+	    margin-top: 40px;
 	}
-	.searchBar>p, .searchBar>button{float: left;}
-	.searchBar *{margin-top: 9px; }
+	.searchBar>p, .searchBar>button{float: left; font-weight: 600;}
+	.searchBar *{margin-top: 16px;}
+	.searchBar button{margin-top: 12px; margin-left: 10px;}
 	.searchBar>p{margin-right: 50px; margin-left: 50px;}
+	#search{width:500px; margin-left: 450px;}
+	#search>button{margin: auto; font-weight: 600;}
 	
-	#search{width:300px; margin-left: 450px;}
-	#mainTable{width:80%; margin:auto;}
-	#mainTable #side{
-		width:22%;
-		padding-left: 100px;
-	}
+	
+	.paging{margin-top: 50px;}
 	

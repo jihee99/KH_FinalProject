@@ -7,14 +7,15 @@
 		color: rgb(107, 171, 213);
 	}
 	.button{
-		width:60%; 
+		width:100%; 
 		margin:auto; 
-		display:block; 
-		border: 1px solid black;
 	}
-	button{width: 100px; margin-left:75px; }
+	button{
+		width: 120px; 
+		margin-left: 120px;  
+	}
 	.content{
-	    width: 80%;
+	    width: 100%;
 	    margin: auto;
 	    margin-top: 20px;
 	}

@@ -11,18 +11,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
-<style>
-	#mainTable{width: 100%; height: 1000px}
-	#mainSide{
-		width: 15%;
-		height: 100%;
-		padding: 20px;
-	}
-	#mainContent{
-		width: 80%;
-		height: 100%;
-	}
-</style>
+
 </head>
 <body>
 	
@@ -41,7 +30,7 @@
 		
 		<tr>
 			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
-			<td id="mainContent"><jsp:include page="<%= select %>" /></td>
+			<td id="mainContent"><jsp:include page="<%= select %>" flush="false" /></td>
 		</tr>
 	</table>
 	

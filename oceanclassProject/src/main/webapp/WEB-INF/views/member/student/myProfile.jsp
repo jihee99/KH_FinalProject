@@ -8,24 +8,15 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    #wrap{
-        width: 90%;
-        height: 100%;
-        margin: auto;
-        margin-top: -100px;
-        border: 1px solid;
-    }
-    #logoImg{
-        margin-top: 50px;
-        margin-bottom: 50px;
-    }
     #join-form{
         width: 650px;
         margin: 0 auto;
         display: flex;
+        flex-direction: column;
     }
     #joinForm>div {
         padding-bottom: 20px;
@@ -34,8 +25,9 @@
     #join-text{
         font-size: 24px;
         font-weight: bolder;
-        margin: 30px;
         color: rgb(107, 171, 213);
+        margin: 0 auto;
+        margin-top: -20px;
     }
     .textName {
         float: left;
@@ -110,26 +102,24 @@
         height: 20px;
         vertical-align: text-bottom;
     }
-    .btn{
-        margin: 20px;
-        margin-left: auto;
+    button{
+        margin: auto;
+        margin-top: 20px;
     }
     #changeProfile{
         background-color: rgb(213, 232, 248); 
-        margin-right: 17px;
     }
 </style>
 </head>
 <body>
-	<div style="height: auto; margin: auto; width: 1400px;">
-        <div id="wrap">
+        <div class="content">
             <div id="join-text">
                 <h2>나의 프로필</h2>
             </div>
             <div id="join-form">
                 <form action="" method="post" id="joinForm">
                     <div class="box">
-                        <i class="bi bi-person-circle" style="font-size: 6rem; margin: auto;"></i>
+                        <i class="bi bi-emoji-wink" style="font-size: 6rem; margin: auto;"></i>
                     </div>
                  
                     <div class="box">
@@ -160,7 +150,7 @@
                         </div>
                     </div>
               
-                    <button type="submit" id="changePass" class="btn btn-light" onclick="changePassword;">비밀번호 변경</button>
+                    <button type="submit" id="changePass" class="btn btn-light" onclick="changePwd();">비밀번호 변경</button>
                     <button type="submit" id="changeProfile" class="btn" onclick="changeProfile();">프로필 수정</button>
                     <button type="reset" id="cancel" class="btn btn-light" onclick="myDelete();">회원탈퇴</button>
                 
@@ -170,9 +160,6 @@
 			
             
         </div>
-    </div>
     
-</body>
-</html>
 </body>
 </html>

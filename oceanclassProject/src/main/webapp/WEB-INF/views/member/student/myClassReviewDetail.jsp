@@ -11,16 +11,6 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
 <style>
-	.content{
-	    width: 100%;
-	    height: 100%;
-	    float: right;
-	}
-	.conhead{
-        width: 90%;
-	    height: 15%;
-        margin: auto;
-	}
 	.list{
 	    width: 100%;
 	    height: 85%;
