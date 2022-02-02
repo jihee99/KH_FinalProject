@@ -11,13 +11,10 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
 <style>
-	.conhead{
-        width: 90%;
-	    height: 15%;
-        margin: auto;
+	.search{
+	
 	}
 	table{
-	    border: 1px solid;
 	    width: 90%;
 	    margin: auto;
 	    text-align: center;
@@ -27,11 +24,13 @@
 <body>
 	<div class="content">
 	    <div class="conhead">
-	        <h2>클래스 문의 내역</h2>
-	        <input type="text" style="width:60%">
-            <button class="btn-xs">검색</button>
+	        <h2>클래스 문의</h2>
 	    </div>
-		<table>
+	    <div class="search">
+	    	<input type="text" style="width:35%; margin-top: 30px; border:1px solid red;">
+            <button class="btn btn-info">검색</button>
+	    </div>
+		<table class="table">
 	        <thead>
 	            <tr>
 	                <th>클래스</th>
@@ -41,42 +40,57 @@
 	        </thead>
 	        <tbody>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의..</td>
-	                <td>근력운동 1도 안해봣는데 수업 들을 수 있나요..</td>
-	                <td>답변</td>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의..</td>
-	                <td>근력운동 1도 안해봣는데 수업 들을 수 있나요..</td>
-	                <td>답변</td>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의..</td>
-	                <td>근력운동 1도 안해봣는데 수업 들을 수 있나요..</td>
-	                <td>답변</td>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의..</td>
-	                <td>근력운동 1도 안해봣는데 수업 들을 수 있나요..</td>
-	                <td>답변</td>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의..</td>
-	                <td>근력운동 1도 안해봣는데 수업 들을 수 있나요..</td>
-	                <td>답변</td>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의..</td>
-	                <td>근력운동 1도 안해봣는데 수업 들을 수 있나요..</td>
-	                <td>답변</td>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의..</td>
-	                <td>근력운동 1도 안해봣는데 수업 들을 수 있나요..</td>
-	                <td>답변</td>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
+	            </tr>
+	            <tr>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
+	            </tr>
+	            <tr>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
+	            </tr>
+	            <tr>
+	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>2022-01-02</td>
+	                <td>답변완료</td>
 	            </tr>
 	        </tbody>
-	    </table>
+		</table>
 	</div>
 </body>
 </html>

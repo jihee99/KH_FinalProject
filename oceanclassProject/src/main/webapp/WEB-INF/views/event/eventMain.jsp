@@ -12,8 +12,10 @@
     <link rel="stylesheet" href="./resources/css/eventMain.css">
 </head>
 <body>
+
 	<jsp:include page="../common/header.jsp" />
-    <div class="wrapper my-5">
+	
+    <div class="innerOuter">
         <div class="head py-3">
             <p><h2>EVENT</h2></p>
         </div>
@@ -71,6 +73,8 @@
         </div>
         <div class="paging"></div>
     </div>
+    
+    <jsp:include page="../common/footerBar.jsp" />
     
 </body>
 </html>

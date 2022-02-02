@@ -11,12 +11,6 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.content{
-		width: 100%;
-	    height: 100%;
-	    float: right;
-	    padding-left: 0;
-    }
 	.conhead{
         width: 100%;
 	    height: 15%;
@@ -25,7 +19,7 @@
 	    width: 100%;
 	    height: 50%;
 	}
-	.conhead>h2{width: 30%; border: 1px solid;}
+	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
 	table{
 	    width: 90%;
