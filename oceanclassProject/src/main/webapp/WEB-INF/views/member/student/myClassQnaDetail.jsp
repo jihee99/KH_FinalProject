@@ -11,10 +11,8 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
 <style>
-	.search>input{
-		width:35%; 
-		margin-top: 40px; 
-		margin-bottom: 50px;
+	.search{
+	
 	}
 	table{
 	    width: 90%;
@@ -29,7 +27,7 @@
 	        <h2>클래스 문의</h2>
 	    </div>
 	    <div class="search">
-	    	<input type="text">
+	    	<input type="text" style="width:35%; margin-top: 30px; border:1px solid red;">
             <button class="btn btn-info">검색</button>
 	    </div>
 		<table class="table">
@@ -93,19 +91,6 @@
 	            </tr>
 	        </tbody>
 		</table>
-		
-		<div class="paging" align="center">
-			<button class="btn btn-light">&lt;</button>
-			
-			<button class="btn btn-light">1</button>
-			<button class="btn btn-light">2</button>
-			<button class="btn btn-light">3</button>
-			<button class="btn btn-light">4</button>
-			<button class="btn btn-light">5</button>
-			
-			<button class="btn btn-light">&gt;</button>
-		</div>
-		
 	</div>
 </body>
 </html>

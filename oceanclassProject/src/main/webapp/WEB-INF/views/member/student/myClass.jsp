@@ -11,18 +11,17 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.content1{
-	    width: 100%;
-	    height: 50%;
-	    border: 1px solid;
-	}
 	.conhead{
         width: 100%;
 	    height: 15%;
 	}
+	.content1, .content2{
+	    width: 100%;
+	    height: 50%;
+	}
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
-	.table{
+	table{
 	    width: 90%;
 	    margin: auto;
 	    text-align: center;
@@ -39,7 +38,7 @@
 	        <a>썸네일~~~~~</a>
 	        <a>썸네일~~~~~</a>
 	    </div>  
-	    <div class="content1">
+	    <div class="content2">
 	        <div class="conhead">
 	            <h2>나의 클래스 내역</h2>
 	            <a>더보기</a>

@@ -152,6 +152,7 @@
               
                     <button type="submit" id="changePass" class="btn btn-light" onclick="changePwd();">비밀번호 변경</button>
                     <button type="submit" id="changeProfile" class="btn" onclick="changeProfile();">프로필 수정</button>
+                    <button type="reset" id="cancel" class="btn btn-light" onclick="myDelete();">회원탈퇴</button>
                 
                 </form>
                 <br><br><br><br><br><br>
