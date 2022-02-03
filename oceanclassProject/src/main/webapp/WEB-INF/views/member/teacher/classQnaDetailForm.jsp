@@ -181,7 +181,7 @@
     </div>
     -->
     <div style="width: 1600px; height: auto; margin: auto;">
-    	<jsp:include page="../common/teacher/tcMypageSidebar.jsp" />
+    	<jsp:include page="../../common/teacher/tcMypageSidebar.jsp" />
         <div class="wrap">
             <div id="top-area">
                 <span id="bord-name">클래스 문의 관리</span>
@@ -262,7 +262,7 @@
             </div>
             <br><br><br><br><br><br>
         </div>
-        <jsp:include page="../common/footerBar.jsp" />
+        <jsp:include page="../../common/footerBar.jsp" />
     </div>
 </body>
 

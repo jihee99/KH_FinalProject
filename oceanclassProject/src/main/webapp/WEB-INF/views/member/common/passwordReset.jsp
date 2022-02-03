@@ -86,12 +86,12 @@
                     
                     <span id="top-text">변경할 비밀번호</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="pwd" placeholder="비밀번호(영문,숫자 포함 6자리 이상)" name="userId" required> 
+                      <input type="password" class="form-control" id="pwd" placeholder="비밀번호(영문,숫자 포함 6자리 이상)" name="userId" required> 
                     </div>
 
                     <span id="top-text">비밀번호 확인</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="pwd" placeholder="비밀번호 확인" name="userId" required> 
+                      <input type="password" class="form-control" id="pwd" placeholder="비밀번호 확인" name="userId" required> 
                     </div>
 
                     <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">변경 완료</button>
