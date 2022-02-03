@@ -8,15 +8,22 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+    #wrap{
+        width: 1000px;
+        height: auto;
+        margin: auto;
+    }
+    #logoImg{
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
     #join-form{
         width: 650px;
         margin: 0 auto;
         display: flex;
-        flex-direction: column;
     }
     #joinForm>div {
         padding-bottom: 20px;
@@ -25,9 +32,8 @@
     #join-text{
         font-size: 24px;
         font-weight: bolder;
+        margin: 30px;
         color: rgb(107, 171, 213);
-        margin: 0 auto;
-        margin-top: -20px;
     }
     .textName {
         float: left;
@@ -102,63 +108,62 @@
         height: 20px;
         vertical-align: text-bottom;
     }
-    button{
-        margin: auto;
-        margin-top: 20px;
-    }
-    #changeProfile{
+    #confirm{
         background-color: rgb(213, 232, 248); 
+        float: left;
+        margin-right: 17px;
     }
+    #confirm, #cancel{margin-top: 25px;}
 </style>
 </head>
 <body>
-        <div class="content">
+	<div style="height: auto; margin: auto; width: 1400px;">
+        <div id="wrap">
             <div id="join-text">
-                <h2>나의 프로필</h2>
+                <span>비밀번호 수정</span>
             </div>
             <div id="join-form">
                 <form action="" method="post" id="joinForm">
-                    <div class="box">
-                        <i class="bi bi-emoji-wink" style="font-size: 6rem; margin: auto;"></i>
-                    </div>
-                 
-                    <div class="box">
-                        <label class="textName" for="userId">아이디<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="userId" name="userId" placeholder="사용자아이디" style="width: 215px;" readonly> 
-                        </div>
-                    </div>
-
-                    <div class="box">
-                        <label class="textName" for="userPwdCk">이름<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="userPwdCk" name="userPwdCk" placeholder="신정우" readonly>
-                        </div>
-                    </div>
-
-                    <div class="box">
-                        <label class="textName" for="userId">닉네임<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="userId" class="w200" name="userId" placeholder="모니카쌤" readonly>
-                        </div>
-                    </div>
 
                     <div class="box">
                         <label class="textName" for="userId">휴대전화 번호<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="userId" class="w200" name="userId" placeholder="010-1111-2222" readonly>
+                            <input type="text" id="userId" class="w200" name="userId" placeholder="010-1111-2222" required>
+                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">본인 인증</button>
                         </div>
                     </div>
-              
-                    <button type="submit" id="changePass" class="btn btn-light" onclick="changePwd();">비밀번호 변경</button>
-                    <button type="submit" id="changeProfile" class="btn" onclick="changeProfile();">프로필 수정</button>
-                
+                    <div class="box">
+                        <label class="textName"></label>
+                        <div class="input-area">
+                            <input type="text" id="userId" class="w200" name="userId" placeholder="인증번호" required>
+                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">인증 확인</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 핸드폰인증 성공 시 나올 내용 -->
+                    <div class="box">
+                        <label class="textName" for="userPwd">비밀번호<span class="star">*</span></label>
+                        <div class="input-area">
+                            <input type="text" id="userPwd" name="userPwd" placeholder="비밀번호(영문,숫자 포함 6자리 이상)" required>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <label class="textName" for="userPwdCk">비밀번호 확인<span class="star">*</span></label>
+                        <div class="input-area">
+                            <input type="text" id="userPwdCk" name="userPwdCk" placeholder="비밀번호 확인" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="confirm" class="btn">수정</button>
+                    <button type="reset" id="cancel" class="btn btn-light">취소</button>
                 </form>
                 <br><br><br><br><br><br>
             </div>
-			
-            
         </div>
-    
+    </div>
+</body>
+</html>
+
 </body>
 </html>

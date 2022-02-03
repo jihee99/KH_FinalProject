@@ -31,37 +31,38 @@
 	    margin: auto;
 	    text-align: center;
 	}
+	h4{color: gray; font-weight: bolder; margin-bottom: 25px;}
 </style>
 </head>
 <body>
 	<div class="content">
 		<div class="content1">
 		    <div class="conhead">
-		        <h2>클래스 문의</h2>
-		        <a href="?page=myClassQnaDetail.jsp">더보기</a>
+		        <h2>상품 문의</h2>
+		        <a href="?page=myShoppingQnaDetail.jsp">더보기</a>
 		    </div>
 		    <table class="table">
 		        <thead>
 		            <tr>
-		                <th>클래스</th>
-		                <th>문의날짜</th>
+		                <th>상품</th>
+		                <th>내용</th>
 		                <th>답변상태</th>
 		            </tr>
 		        </thead>
 		        <tbody>
 		            <tr>
-		                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
-		                <td>2022-01-02</td>
+		                <td>갤럭시Z-FLIP3 라벤더 색상 자급제..</td>
+		                <td>퀵으로 배송 받을 수 있나요?..</td>
 		                <td>답변완료</td>
 		            </tr>
 		            <tr>
-		                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
-		                <td>2022-01-02</td>
+		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
+		                <td>퀵으로 배송 받을 수 있나요?..</td>
 		                <td>답변완료</td>
 		            </tr>
 		            <tr>
-		                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
-		                <td>2022-01-02</td>
+		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
+		                <td>퀵으로 배송 받을 수 있나요?..</td>
 		                <td>답변완료</td>
 		            </tr>
 		        </tbody>
@@ -69,31 +70,40 @@
 		</div>  
 		<div class="content1">
 		    <div class="conhead">
-		        <h2>클래스 후기</h2>
-		        <a href="?page=myClassReviewDetail.jsp">더보기</a>
+		        <h2>상품 후기</h2>
+		        <a href="?page=myShoppingReviewDetail.jsp">더보기</a>
 		    </div>
+		    <!-- 후기 있을 경우 -->
 		    <table class="table">
 		        <thead>
 		            <tr>
-		                <th>클래스</th>
-		                <th>상태</th>
+		                <th>상품</th>
+		                <th>내용</th>
+		                <th>날짜</th>
 		            </tr>
 		        </thead>
 		        <tbody>
 		            <tr>
-		                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
-		                <td>수강중</td>
+		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
+		                <td>역시 다른건 다 필요없고 이쁜게 진리인..</td>
+		                <td>2021-02-10</td>
 		            </tr>
 		            <tr>
-		                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
-		                <td>수강중</td>
+		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
+		                <td>역시 다른건 다 필요없고 이쁜게 진리인..</td>
+		                <td>2021-02-10</td>
 		            </tr>
 		            <tr>
-		                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
-		                <td>수강중</td>
+		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
+		                <td>역시 다른건 다 필요없고 이쁜게 진리인..</td>
+		                <td>2021-02-10</td>
 		            </tr>
 		        </tbody>
 		    </table>
+		    
+		    <!-- 후기 없을 경우  -->
+		    <h4>등록한 후기가 없습니다.</h4>
+		    <button class="btn btn-info">후기 등록하고 포인트 받기!</button>
 		</div> 
 	</div>
 

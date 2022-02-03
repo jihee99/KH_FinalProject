@@ -27,7 +27,7 @@
 	        <p>상품 관리</p>
 	        <ul>
 	            <li><a href="?page=myShopping.jsp">주문 조회</a></li>
-	            <li><a href="">상품 문의/후기</a></li>
+	            <li><a href="?page=myShoppingReview.jsp">상품 문의/후기</a></li>
 	            <li><a href="">찜한 상품</a></li>
 	        </ul>
 	    </div>
@@ -35,7 +35,7 @@
 	        <p>내 정보 관리</p>
 	        <ul>
 	            <li><a href="?page=myQna.jsp">1:1 문의 내역</a></li>
-	            <li><a href="">내 포인트/쿠폰</a></li>
+	            <li><a href="?page=myPoint.jsp">내 포인트/쿠폰</a></li>
 	            <li><a href="?page=myProfile.jsp">나의 프로필</a></li>
 	            <li><a href="?page=myDelete.jsp">회원 탈퇴</a></li>
 	        </ul>

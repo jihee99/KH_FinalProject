@@ -25,7 +25,7 @@
 	
 	<table id="mainTable">
 		<tr>
-			<td colspan="2"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
+			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
 		</tr>
 		
 		<tr>
