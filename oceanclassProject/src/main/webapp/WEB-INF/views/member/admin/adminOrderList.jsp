@@ -218,7 +218,7 @@
 
                         putCheckList();
                     });
-                    
+					
                     $("input[name=memChBxRow]").click(function() {
                         var total = $("input[name=memChBxRow]").length;
                         var checked = $("input[name=memChBxRow]:checked").length;
@@ -229,7 +229,7 @@
                         putCheckList();
                     });
 
-                    /*쿠폰버튼 눌렀을 때*/
+                    /*삭제버튼 눌렀을 때*/
                     $("#deleteBtn").click(function() {
                         if(memArr.length == 0) {
                             console.log("체크항목없음");
@@ -245,6 +245,7 @@
 
                     });
 
+                    /*배열에 선택된 행 넣는 함수*/
                     function putCheckList(){
                         memArr = new Array();
                         var idxArr = new Array();
@@ -255,15 +256,18 @@
 
                         for(var i=0; i<idxArr.length; i++){
                             var obj = new Object();
-                            obj.memNo = $("#memTable tbody").children().eq(idxArr[i]).children().eq(1).text();
+                            /*데이터값에 맞춰서 수정하기*/
+                            obj.memNo = $("#orderTable tbody").children().eq(idxArr[i]).children().eq(1).text();
                             memArr.push(obj);
                         }
                     }
+                    
+                    /*검색버튼 눌렀을 때, 검색기간 무결성 검사*/
                     $("#searchBtn").click(function(){
          
                         var startDate = $( "input[name='startDate']" ).val();
                         var startDateArr = startDate.split('-');
-                        
+
                         var endDate = $( "input[name='endDate']" ).val();
                         var endDateArr = endDate.split('-');
                                 
