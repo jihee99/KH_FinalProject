@@ -11,6 +11,8 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
+	.searchBar>p{margin-right: 30px; margin-left: 70px;}
+	#search{width:450px; margin-left: 450px;}
 	.table{
 		width:100%;
 		margin-top: 30px;
@@ -19,7 +21,7 @@
 </style>
 </head>
 <body>
-
+	<!-- 임시로 테이블해둔거!! Collspse로 할거임 -->
 	<div class="content">
 	    <h2>1:1 문의 내역</h2>
 	    <div class="searchBar">

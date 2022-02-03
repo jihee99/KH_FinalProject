@@ -14,11 +14,11 @@
 	.content1{
 	    width: 100%;
 	    height: 50%;
-	    border: 1px solid;
 	}
 	.conhead{
         width: 100%;
 	    height: 15%;
+	    margin-bottom: 25px;
 	}
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}

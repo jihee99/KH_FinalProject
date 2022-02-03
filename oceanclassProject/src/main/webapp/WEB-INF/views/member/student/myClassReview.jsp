@@ -15,7 +15,7 @@
         width: 100%;
 	    height: 15%;
 	}
-	.content1, .content2{
+	.content1{
 	    width: 100%;
 	    height: 50%;
 	}
@@ -67,7 +67,7 @@
 		        </tbody>
 		    </table>
 		</div>  
-		<div class="content2">
+		<div class="content1">
 		    <div class="conhead">
 		        <h2>클래스 후기</h2>
 		        <a href="?page=myClassReviewDetail.jsp">더보기</a>

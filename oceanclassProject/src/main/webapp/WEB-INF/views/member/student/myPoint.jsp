@@ -58,7 +58,7 @@
 	    <div class="content1">
 	    	<div class="conhead">
 		    	<h3> 적립내역 </h3>
-			    <a href="?page=myPointDetail.jsp">더보기</a>
+			    <a href="">더보기</a>
 		    </div>
 		    <table class="table">
 		        <thead>

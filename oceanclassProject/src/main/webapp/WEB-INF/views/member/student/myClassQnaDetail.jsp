@@ -11,10 +11,10 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
 <style>
+	.search{float: right;}
 	.search>input{
-		width:35%; 
-		margin-top: 40px; 
-		margin-bottom: 50px;
+		width:200px; 
+		margin-bottom: 20px;
 	}
 	table{
 	    width: 90%;
@@ -37,61 +37,71 @@
 	            <tr>
 	                <th>클래스</th>
 	                <th>내용</th>
+	                <th>날짜</th>
 	                <th>답변상태</th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
 	            <tr>
-	                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
+	                <td>여자의 힘은 여자가 기른다!..</td>
+	                <td>케틀벨만 있으면 수업 진행이 가능한가요?..</td>
 	                <td>2022-01-02</td>
 	                <td>답변완료</td>
 	            </tr>
-	        </tbody>
 		</table>
 		
 		<div class="paging" align="center">

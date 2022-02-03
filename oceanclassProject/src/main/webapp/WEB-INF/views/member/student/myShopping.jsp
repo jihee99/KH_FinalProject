@@ -18,14 +18,8 @@
 	    margin-top: 50px;
 	    border: 1px solid lightgray;
 	}
-	.list>button{
-		width: 20%; 
-		height: 50%; 
-		margin-top: 30px;
-		font-weight: 600;
-	}
 	.list img{
-		width: 30%; 
+		width: 25%; 
 		height: 100%;
 		float: left;
 	}
@@ -34,10 +28,18 @@
 		height: 100%; 
 		float: left; 
 		margin-top: 10px;
+		margin-left: 15px;
 	}
 	#explain>h3{color:rgb(107, 171, 213); font-weight: 600;}
 	#explain>p{margin-top: -10px; font-weight: bolder; }
 	#state{float:left;}
+	.list>button{
+		width: 20%; 
+		height: 50%; 
+		margin-top: 30px;
+		margin-left: 15px;
+		font-weight: 600;
+	}
 	
 </style>
 </head>
