@@ -1,22 +1,16 @@
 @charset "UTF-8";
 
-	div{box-sizing: border-box;}
-	.wrapper{width:80%; margin:auto;}
-	h2{
+    div{box-sizing: border-box;}
+	.head>p{
 		text-align: center; 
-		font-size: 30px; 
+		font-size: 40px; 
 		font-weight: 800;
 		color: rgb(107, 171, 213);
 	}
-	.button{
-		width:75%; 
-		margin:auto; 
-		display:block; 
-		border: 1px solid black;
-	}
-	button{width: 150px; margin-left:100px;}
+    .button{padding-left: 70px;}
+	.button>button{width: 180px; margin: 0 auto; margin-left: 70px;}
 	.content{
-	    width: 80%;
+	    width: 100%;
 	    margin: auto;
 	    margin-top: 20px;
 	}
