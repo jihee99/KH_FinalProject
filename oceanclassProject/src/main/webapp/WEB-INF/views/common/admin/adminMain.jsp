@@ -35,8 +35,8 @@
                 <div id="menu2">
                     <p>클래스 관리</p>
                     <ul>
-                        <li><a href="">클래스 등록 관리</a></li>
-                        <li><a href="">클래스 관리</a></li>
+                        <li><a href="" id="classEnrollManager">클래스 등록 관리</a></li>
+                        <li><a href="" id="classManager">클래스 관리</a></li>
                     </ul>
                 </div>
                 <div id="menu3">
