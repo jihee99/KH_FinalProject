@@ -56,7 +56,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -69,7 +69,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -82,7 +82,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -95,7 +95,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -108,7 +108,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -121,7 +121,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                           	<td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -134,7 +134,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -147,7 +147,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -160,7 +160,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                     <tr>
@@ -173,7 +173,7 @@
                             <td><input type="number"></td>
                             <td><input type="checkbox" name="" id=""></td>
                             <td><input type="checkbox" name="" id=""></td>
-                            <td><button type="submit">저장</button></td>
+                            <td><button class="btn" type="submit">저장</button></td>
                         </form>
                     </tr>
                 </tbody>
