@@ -11,21 +11,21 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
+	.conhead{margin-bottom: 70px;}
 	.table{
 		width:100%;
 		margin-top: 30px;
 		text-align: center;
 	}
+	.paging{margin-top: 70px;}
 </style>
 </head>
 <body>
 
 	<div class="content">
-	    <h2>나의 포인트/쿠폰</h2>
-	    <div class="searchBar">
-	        
+		<div class="conhead">
+	    	<h2>적립내역</h2>
 	    </div>
-	    <h3> 적립내역 </h3>
 	    <table class="table">
 	        <thead>
 	            <tr>
@@ -43,10 +43,10 @@
 	                <td>2022/07/12</td>
 	            </tr>
 	            <tr>
-	                <td>22/01/13</td>
-	                <td>상품 구매</td>
-	                <td>+100</td>
-	                <td>2022/07/12</td>
+	                <td>22/01/07</td>
+	                <td>이벤트 당첨</td>
+	                <td>1000원 할인</td>
+	                <td>2023/01/06</td>
 	            </tr>
 	            <tr>
 	                <td>22/01/13</td>
@@ -54,10 +54,49 @@
 	                <td>+100</td>
 	                <td>2022/07/12</td>
 	            </tr>
+	            <tr>
+	                <td>22/01/07</td>
+	                <td>이벤트 당첨</td>
+	                <td>1000원 할인</td>
+	                <td>2023/01/06</td>
+	            </tr><tr>
+	                <td>22/01/13</td>
+	                <td>상품 구매</td>
+	                <td>+100</td>
+	                <td>2022/07/12</td>
+	            </tr>
+	            <tr>
+	                <td>22/01/07</td>
+	                <td>이벤트 당첨</td>
+	                <td>1000원 할인</td>
+	                <td>2023/01/06</td>
+	            </tr><tr>
+	                <td>22/01/13</td>
+	                <td>상품 구매</td>
+	                <td>+100</td>
+	                <td>2022/07/12</td>
+	            </tr>
+	            <tr>
+	                <td>22/01/07</td>
+	                <td>이벤트 당첨</td>
+	                <td>1000원 할인</td>
+	                <td>2023/01/06</td>
+	            </tr>
 	        </tbody>
 	    </table>
 	    
-    
+	    <div class="paging" align="center">
+			<button class="btn btn-light">&lt;</button>
+			
+			<button class="btn btn-light">1</button>
+			<button class="btn btn-light">2</button>
+			<button class="btn btn-light">3</button>
+			<button class="btn btn-light">4</button>
+			<button class="btn btn-light">5</button>
+			
+			<button class="btn btn-light">&gt;</button>
+		</div>
+		
 	</div>
 
 </body>
