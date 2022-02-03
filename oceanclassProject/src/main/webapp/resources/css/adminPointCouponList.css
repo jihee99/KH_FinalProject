@@ -1,0 +1,36 @@
+@charset "UTF-8";
+.innerOuter{width:1000px; margin: auto;}
+.headMenu{text-align: left;} 
+.headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
+
+.head_2{width: 100%; height: 80px;}
+.head_2 div{float: left; height: 80px;}
+.head_2_left{width: 400px;}
+.head_2_center{width: 288px;}
+.head_2_right{width: 300px; float: right;}
+
+.head_2_left table{float: left; margin-left: 10px; margin-top: 10px; font-size: 14px;}
+label[for="coupon"], label[for="point"]{top: -1.5px; margin-top: 3px;}
+.searchType{margin-left: 5px; position: relative; top: 1.5px;}
+#searchKey{height: 28px; margin-left:5px; width: 250px;}
+.head_2_left button{height: 28px; border-radius: 5px; border: none;}
+
+.content{width: 100%; font-size: 14px;}
+.content table{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
+.content table thead{line-height: 35px; font-size: 14px; background: lightgray;}
+
+#deleteBtn{ 
+    float: left; margin-left: 10px;
+    background: lightgray;
+    font-weight: 550;
+}
+#deleteBtn:hover{background: none; border: 1.5px solid gray;}
+
+#couponBtn{
+    float:right; margin-right: 20px;
+    color: white; background: rgb(107, 171, 213); 
+    font-weight: 600;
+}
+#couponBtn:hover{border: 1.5px solid rgb(107, 171, 213); color: rgb(107, 171, 213); background: none;}
+
+.btn_group{margin: 40px 0px; position: relative;}    
