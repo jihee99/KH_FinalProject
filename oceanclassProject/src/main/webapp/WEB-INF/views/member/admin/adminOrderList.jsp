@@ -24,7 +24,7 @@
         <div class="content_1">
             <b>통합주문 검색</b>
             <form action="">
-                <table border="1">
+                <table>
                     <tr>
                         <th width="100">주문분류</th>
                         <td width="300">
@@ -76,17 +76,18 @@
         </div>
 
 
-        <div class="content">
+        <div class="content_2">
+            <b>통합주문목록(123)</b>
             <button id="deleteBtn" class="btn">삭제</button>
-            <table id="memTable">
+            <table id="orderTable">
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="checkAll"></th>
-                        <th width="100">주문상태</th>
-                        <th>주문분류</th>
                         <th>주문번호</th>
-                        <th>주문자명</th>
+                        <th>주문분류</th>
+                        <th width="100">주문자명</th>
                         <th>총금액</th>
+                        <th width="100">주문상태</th>
                         <th>주문일자</th>
                         <th>취소일자</th>
                         <th>결제방법</th>
@@ -95,116 +96,114 @@
                 <tbody>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <input type="hidden" value="해당주문번호">
-                        <td>주문접수</td>
+                        <td class="orderNo">CO432</td>
                         <td>클래스</td>
-                        <td>CO432</td>
                         <td>김땡땡</td>
                         <td>75,000</td>
+                        <td>주문접수</td>
                         <td>2022-02-03 12:24:32</td>
                         <td>--</td>
                         <td>카드</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td style="color: blue;">취소완료</td>
+                        <td class="orderNo">CO431</td>
                         <td>클래스</td>
-                        <td>CO431</td>
                         <td>김땡땡</td>
                         <td>75,000</td>
+                        <td style="color: blue;">취소완료</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>2022-02-02 14:24:32</td>
                         <td>카드</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
+                        <td class="orderNo">CO430</td>
+                        <td>클래스</td>
+                        <td>김땡땡</td>
+                        <td>75,000</td>
                         <td style="color: red;">취소접수</td>
-                        <td>클래스</td>
-                        <td>CO431</td>
-                        <td>김땡땡</td>
-                        <td>75,000</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>2022-02-02 14:24:32</td>
                         <td>무통장</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td style="color: green;">배송완료</td>
+                        <td class="orderNo">PO431</td>
                         <td>스토어</td>
-                        <td>PO431</td>
                         <td>김땡땡</td>
                         <td>75,000</td>
+                        <td style="color: green;">배송완료</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>--</td>
                         <td>카드</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
+                        <td class="orderNo">PO431</td>
+                        <td>스토어</td>
+                        <td>김땡땡</td>
+                        <td>75,000</td>
                         <td style="color: blue;">취소완료</td>
-                        <td>스토어</td>
-                        <td>PO431</td>
-                        <td>김땡땡</td>
-                        <td>75,000</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>2022-02-02 14:24:32</td>
                         <td>무통장</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
+                        <td>PO431</td>
+                        <td>스토어</td>
+                        <td>김땡땡</td>
+                        <td>75,000</td>
                         <td style="color: green;">배송완료</td>
-                        <td>스토어</td>
-                        <td>PO431</td>
-                        <td>김땡땡</td>
-                        <td>75,000</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>--</td>
                         <td>카드</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
+                        <td>PO431</td>
+                        <td>스토어</td>
+                        <td>김땡땡</td>
+                        <td>75,000</td>
                         <td style="color: green;">배송완료</td>
-                        <td>스토어</td>
-                        <td>PO431</td>
-                        <td>김땡땡</td>
-                        <td>75,000</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>--</td>
                         <td>카드</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>배송중</td>
-                        <td>스토어</td>
                         <td>PO431</td>
+                        <td>스토어</td>
                         <td>김땡땡</td>
                         <td>75,000</td>
+                        <td>배송중</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>--</td>
                         <td>카드</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>배송중</td>
-                        <td>스토어</td>
                         <td>PO431</td>
+                        <td>스토어</td>
                         <td>김땡땡</td>
                         <td>75,000</td>
+                        <td>배송중</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>--</td>
                         <td>카드</td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>배송중</td>
-                        <td>스토어</td>
                         <td>PO431</td>
+                        <td>스토어</td>
                         <td>김땡땡</td>
                         <td>75,000</td>
+                        <td>배송중</td>
                         <td>2022-02-02 12:24:32</td>
                         <td>--</td>
                         <td>카드</td>
                     </tr>
-
                 </tbody>
             </table>
             <script>
@@ -285,6 +284,17 @@
                         console.log(endDate);
                         
                 });
+                    
+				/*상세페이지로 이동*/
+				$(function(){
+				    $("#orderTable tbody tr").click(function(){
+				
+				        /* 맞춰서 나중에 수정하기
+				        location.href='detail.bo?bno=' + $(this).children(".bno").text();
+				        */
+				       console.log($(this).children(".orderNo").text());
+				    })
+				})
 
 		});
         </script>
