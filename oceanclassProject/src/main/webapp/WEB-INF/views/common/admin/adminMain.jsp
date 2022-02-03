@@ -63,7 +63,6 @@
                         <li><a href="">FAQ 관리</a></li>
                         <li><a href="">1:1문의 관리</a></li>
                         <li><a href="">이벤트 관리</a></li>
-                        <li><a href="">채팅 문의</a></li>
                     </ul>
                 </div>
             </div>

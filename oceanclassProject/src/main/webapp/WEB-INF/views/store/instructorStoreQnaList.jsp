@@ -10,12 +10,12 @@
 </head>
 <body>
 
-	<!-- 강사용 메뉴바 연결하기 
-	<jsp:include page=""/>
-	-->
-	
+	<!-- 강사용 메뉴바 연결하기 	-->
+	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
+	 	
 	<div class="innerOuter">
         <div class="headMenu">
+        	<br><br>
             <b>상품리뷰관리</b>
         </div>
         <div class="content">

@@ -5,18 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="./resources/css/store/instructorStoreDeliveryOrderList.css">
 </head>
 <body>
 
 	<!-- 강사용 사이드바 연결 -->
+	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 	
-	<div class="innerOuter" align="center">
+	<div class="innerOuter">
         <div class="headMenu">
+        	<br><br>
             <b>주문 배송 관리</b>
         </div>
         <div id="dStatus">
