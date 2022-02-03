@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.innerOuter{width:1000px; margin: auto;}
+.headMenu{text-align: left;} 
+.headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
+
+.content_1{width: 100%; text-align: left;}
+.content_1>b{margin-left: 10px; font-size: 16px; line-height: 33px;}
+.content_1 table{width: 550px; margin-left: 10px; vertical-align: middle;}
+.content_1 table *{font-size: 14px;}
+.content_1 table th{text-align: center;}
+label[for="class"], label[for="store"]{top: -1.5px; margin-top: 4px;}
+.orderType{position: relative; top: 1.5px;}
+.content_1 table select,input[type="text"]{height: 28px;}
+.content_1 table input[type="text"]{width:250px;}
+.content_1 button{width: 99%; height: 160px;}
+
+
+
+.head_2_right button{
+    height: 38px; width: 150px; margin-top: 30px;
+    border-radius: 5px; border: 1.5px solid rgb(107, 171, 213); 
+    color: rgb(107, 171, 213); background: none;
+    font-weight: 600;
+}
+
+.content{width: 100%; font-size: 14px;}
+.content table{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
+.content table thead{line-height: 35px; font-size: 14px; background: lightgray;}
+
+.content>button{
+    float: right; margin-right: 10px; margin-bottom: 5px;
+    font-weight: bold; color: white;
+    background: rgb(172, 11, 11);
+}
+
+
+.btn_group{margin: 40px 0px; position: relative;}    

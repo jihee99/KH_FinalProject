@@ -192,12 +192,14 @@
                     /*쿠폰버튼 눌렀을 때*/
                     $("#couponBtn").click(function() {
                         if(memArr.length == 0) {
+                        	/*나중에 alert로 수정하기*/
                             console.log("체크항목없음");
                             return;
                         }
 
                         var str = "";
                         console.log(memArr);
+                        /*입력데이터에 맞춰서 수정하기*/
                         for (var i = 0; i < memArr.length; i++) {
                             str += "번호"+ memArr[i].memNo + "\n";
                         }
