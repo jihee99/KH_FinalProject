@@ -6,14 +6,14 @@
 	/* 총 크기 */
 	#mainTable{width: 1200px; height: 1000px; margin:auto;}
 	#mainSide{
-		width: 15%;
+		width: 20%;
 		height: 100%;
-		border:1px solid red;
+		border: 1px solid red;
 	}
 	#mainContent{
 		width: 80%;
 		height: 100%;
-		border:1px solid blue;
+		border: 1px solid ;
 	}
 	
 	
@@ -89,6 +89,7 @@
 	    height: 100%;
 	    padding: 30px;
 	    margin-top: 50px;
+	    border: 1px solid;
 	}
 	h2{
 		width: 30%; 
@@ -98,13 +99,14 @@
 		margin-top: 20px;
 	}
 	
-	
+
 	/* 콘텐츠 내 검색버튼창 스타일 */
 	.searchBar{
 	    background-color:rgba(107, 171, 213, 0.38);
 	   	width: 100%;
 	    height: 8%;
-	    margin-top: 40px;
+	    margin: 0 auto;
+	    margin-top: 50px;
 	}
 	.searchBar>p, .searchBar>button{float: left; font-weight: 600;}
 	.searchBar *{margin-top: 16px;}
@@ -114,5 +116,6 @@
 	#search>button{margin: auto; font-weight: 600;}
 	
 	
+	/* 콘텐츠 내 페이징바 스타일 */
 	.paging{margin-top: 50px;}
 	

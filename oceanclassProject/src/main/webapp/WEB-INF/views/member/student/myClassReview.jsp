@@ -20,7 +20,12 @@
 	    height: 50%;
 	}
 	.conhead>h2{width: 30%;}
-	.conhead>a{float: right; margin-top: -20px;}
+	.conhead>a{
+		float: right; 
+		margin-top: -20px; 
+		text-decoration: none;
+		color: black;	
+	}
 	table{
 	    width: 90%;
 	    margin: auto;
