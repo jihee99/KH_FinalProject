@@ -158,14 +158,11 @@
             </table>
             <br>
             <button class="btn" id="deleteBtn">선택목록삭제</button>
-            <button class="btn" id="couponBtn">개별쿠폰관리</button>
+            <button class="btn" id="pointBtn" onclick="window.open('포인트 팝업창 띄울 url작성하기','개별 포인트 관리','width=500, height=600, left=400, top=400, resizable=no');">개별포인트관리</button>
             <br>
         </div>
         
         <div class="content_coupon" style="display: none;">
-            <table id="contentTable">
-
-        <div class="content">
             <table id="couponTable">
                 <thead>
                     <tr>
@@ -302,7 +299,6 @@
 
 
         <script>
-
             /*라디오 버튼에 따른 동적 화면 구현*/
             $("input[type=radio][name=searchType]").on('click',function(){
                 var chkValue = $('input[type=radio][name=searchType]:checked').val();
@@ -317,7 +313,6 @@
                     $('.content_coupon').css('display','block');
                 }
             })
-
 
 
             var chkArr = new Array();
@@ -375,10 +370,10 @@
                         chkArr.push(obj);
                     }
                 }
-
+                
             });
         </script>
-    </div>
+	</div>
 
 </body>
 </html>

@@ -32,6 +32,13 @@ label[for="coupon"], label[for="point"]{top: -1.5px; margin-top: 3px;}
 }
 #deleteBtn:hover{background: none; border: 1.5px solid gray;}
 
+#pointBtn{
+    float:right; margin-right: 20px;
+    color: white; background: rgb(107, 171, 213); 
+    font-weight: 600;
+}
+#pointBtn :hover{border: 1.5px solid rgb(107, 171, 213); color: rgb(107, 171, 213); background: none;}
+
 #couponBtn{
     float:right; margin-right: 20px;
     color: white; background: rgb(107, 171, 213); 
