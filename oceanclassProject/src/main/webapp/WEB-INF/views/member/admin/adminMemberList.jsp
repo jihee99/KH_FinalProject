@@ -167,7 +167,61 @@
                 </tbody>
             </table>
             <button class="btn">블랙리스트 조회</button>
-            
+            <script>
+                var memArr = new Array();
+
+                $(document).ready(function() {
+
+                    $("#checkAll").click(function() {
+                        if($("#checkAll").is(":checked")) $("input[name=memChBxRow]").prop("checked", true);
+                        else $("input[name=memChBxRow]").prop("checked", false);
+
+                        putCheckList();
+                    });
+                    
+                    $("input[name=memChBxRow]").click(function() {
+                        var total = $("input[name=memChBxRow]").length;
+                        var checked = $("input[name=memChBxRow]:checked").length;
+                        
+                        if(total != checked) $("#checkAll").prop("checked", false);
+                        else $("#checkAll").prop("checked", true);
+                        
+                        putCheckList();
+                    });
+
+                    /*쿠폰버튼 눌렀을 때*/
+                    $("#couponBtn").click(function() {
+                        if(memArr.length == 0) {
+                            console.log("체크항목없음");
+                            return;
+                        }
+
+                        var str = "";
+                        console.log(memArr);
+                        for (var i = 0; i < memArr.length; i++) {
+                            str += "번호"+ memArr[i].memNo + "\n";
+                        }
+                        console.log(str);
+
+                    });
+
+                    function putCheckList(){
+                        memArr = new Array();
+                        var idxArr = new Array();
+
+                        $("input[name=memChBxRow]:checked").each(function(){
+                            idxArr.push($("input[name=memChBxRow]:checked").index(this));
+                        });
+
+                        for(var i=0; i<idxArr.length; i++){
+                            var obj = new Object();
+                            obj.memNo = $("#memTable tbody").children().eq(idxArr[i]).children().eq(1).text();
+                            memArr.push(obj);
+                        }
+                    }
+
+				});
+            </script>
         </div>
         <div class="btn_group" align="center">
             <button class="btn btn-light">&lt;</button>
