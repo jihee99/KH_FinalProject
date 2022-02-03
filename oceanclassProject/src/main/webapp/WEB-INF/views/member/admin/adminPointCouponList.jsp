@@ -10,12 +10,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="./resources/css/adminPointCouponList.css">
+
 </head>
 <body>
     
     <!-- 관리자 사이드바 연결하기 -->
     <jsp:include page="../../common/admin/adminMain.jsp" />
     
+
     <div class="innerOuter" align="center">
         <div class="headMenu">
             <b>포인트 / 쿠폰 관리</b>
@@ -25,6 +27,7 @@
                 <form id="searchForm">
                     <table>
                         <tr>
+
                             <th>분 &nbsp; &nbsp; &nbsp; 류</th>
                             <td>
                                 <input type="radio" class="searchType" name="searchType" id="point" value="point" checked="checked">
@@ -46,6 +49,7 @@
             <div class="head_2_center"></div>
             <div class="head_2_right"></div>
         </div>
+
         <div class="content_point">
             <table id="contentTable">
                 <thead>
@@ -160,6 +164,9 @@
         
         <div class="content_coupon" style="display: none;">
             <table id="contentTable">
+
+        <div class="content">
+            <table id="couponTable">
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="checkAll"></th>
@@ -293,6 +300,7 @@
             <button class="btn btn-light">&gt;</button>
         </div>
 
+
         <script>
 
             /*라디오 버튼에 따른 동적 화면 구현*/
@@ -309,6 +317,8 @@
                     $('.content_coupon').css('display','block');
                 }
             })
+
+
 
             var chkArr = new Array();
 
@@ -358,7 +368,10 @@
                     for(var i=0; i<idxArr.length; i++){
                         var obj = new Object();
                         /*나중에 쿠폰 번호 맞춰서 수정하기*/
+
                         obj.memNo = $("#contentTable tbody").children().eq(idxArr[i]).children().eq(1).text();
+
+                       
                         chkArr.push(obj);
                     }
                 }
@@ -366,5 +379,6 @@
             });
         </script>
     </div>
+
 </body>
 </html>

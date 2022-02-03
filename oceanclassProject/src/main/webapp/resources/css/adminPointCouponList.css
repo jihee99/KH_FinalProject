@@ -15,6 +15,7 @@ label[for="coupon"], label[for="point"]{top: -1.5px; margin-top: 3px;}
 #searchKey{height: 28px; margin-left:5px; width: 250px;}
 .head_2_left button{height: 28px; border-radius: 5px; border: none;}
 
+
 .content_point{width: 100%; font-size: 14px;}
 .content_point table{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
 .content_point table thead{line-height: 35px; font-size: 14px; background: lightgray;}
@@ -22,6 +23,7 @@ label[for="coupon"], label[for="point"]{top: -1.5px; margin-top: 3px;}
 .content_coupon{width: 100%; font-size: 14px;}
 .content_coupon table{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
 .content_coupon table thead{line-height: 35px; font-size: 14px; background: lightgray;}
+
 
 #deleteBtn{ 
     float: left; margin-left: 10px;
@@ -36,4 +38,5 @@ label[for="coupon"], label[for="point"]{top: -1.5px; margin-top: 3px;}
     font-weight: 600;
 }
 #couponBtn:hover{border: 1.5px solid rgb(107, 171, 213); color: rgb(107, 171, 213); background: none;}
+
 .btn_group{margin: 40px 0px; position: relative;}    
