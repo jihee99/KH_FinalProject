@@ -17,5 +17,6 @@
             <div id="title">My Page</div>
             <div id="buy"><a href=""><img src="resources/images/largeCart.png"></a></div>
     </div>
+    <hr class="my-2">
 </body>
 </html>

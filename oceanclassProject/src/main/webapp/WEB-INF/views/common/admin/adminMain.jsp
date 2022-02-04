@@ -28,15 +28,15 @@
                     <ul>
                         <li><a href="">전체 회원 관리</a></li>
                         <li><a href="">주문 내역 관리</a></li>
-                        <li><a href="">포인트/쿠폰 관리</a></li>
+                        <li><a href="pclist.ad">포인트/쿠폰 관리</a></li>
                         <li><a href="">신고내역 조회/검색</a></li>
                     </ul>
                 </div>
                 <div id="menu2">
                     <p>클래스 관리</p>
                     <ul>
-                        <li><a href="">클래스 등록 관리</a></li>
-                        <li><a href="">클래스 관리</a></li>
+                        <li><a href="" id="classEnrollManager">클래스 등록 관리</a></li>
+                        <li><a href="" id="classManager">클래스 관리</a></li>
                     </ul>
                 </div>
                 <div id="menu3">

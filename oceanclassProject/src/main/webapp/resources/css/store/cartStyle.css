@@ -1,0 +1,676 @@
+@charset "UTF-8";
+
+main{
+    display: block;
+}
+div {
+    display: block;
+}
+.cart .page_cart{
+    width: 940px;
+    padding: 0 25px;
+    display: block;
+    width: 1280px;
+    margin: 0 auto;
+    /*반응형 사이즈 조절때문에 width 두개인거라 나중에 부트스트랩으로 조정*/
+}
+h2{
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+a{text-decoration: none; cursor: pointer;}
+.cart_header {
+    position: relative;
+    padding-top: 40px;
+    margin-bottom: 31px;
+}
+.cart_header .title .link{
+    color:black;
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: -0.2px;
+}
+.cart_header .title {
+    display: inline-block;
+    vertical-align: top;
+    font-weight: normal;
+}
+.cart_header .title.on {
+    font-weight: bold;
+}
+hr, legend, .blind{
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+}
+
+ul, ol{
+    list-style: none;
+}
+.cart_header .step{
+    position: absolute;
+    top: 49px;
+    right: 1px;
+}
+body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td, form, fieldset, legend, input, textarea, button, select {
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: none;
+}
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+body, input, textarea, select, button, table {
+    font-family: 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
+    font-size: 12px;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+em, address {
+    font-style: normal;
+}
+em {
+    font-style: italic;
+}
+.cart_header .step li {
+    float: left;
+    font-size: 13px;
+    color: rgba(34,34,34,0.5);
+    line-height: 16px;
+}
+.cart_header .step li:not(:first-child):before {
+    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/arrow_right_8x13_gray-316bba7f42242da807c4cc0baef50c01.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    width: 8px;
+    height: 13px;
+    margin: -3px 9px 0 10px;
+    vertical-align: middle;
+    content: '';
+}
+.cart .cart_notice_list{
+    padding: 14px 16px;
+    margin-bottom: 40px;
+    border: 1px solid #ebeff2;
+    border-radius: 3px;
+    background: #fafbfc;
+}
+.cart .cart_notice_list .txt_point {
+    color: #0a67be;
+}
+.cart .cart_notice_list li {
+    position: relative;
+    padding-left: 10px;
+    font-size: 13px;
+    color: #565960;
+    line-height: 17px;
+}
+.cart .cart_notice_list .txt_point:before {
+    background: #0a67be;
+}
+.cart .cart_notice_list li:before {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #c6c9cb;
+    content: '';
+}
+.cart .cart_notice_list li:not(:first-child) {
+    margin-top: 6px;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: grey;
+}
+.table {
+    width: 100%;
+    border-spacing: 0;
+    border-top: 2px solid #383d4a;
+    border-bottom: 1px solid #9ca0aa;
+}
+caption {
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(0, 0, 0, 0);
+    margin: -1px;
+}
+caption {
+    display: table-caption;
+    text-align: -webkit-center;
+}
+colgroup {
+    display: table-column-group;
+}
+col {
+    display: table-column;
+}
+.table .col_1 {
+    width: 35px;
+}
+.table .col_2 {
+    width: 525px;
+}
+.table .col_3 {
+    width: 380px;
+}
+.table .col_4, .table .col_5 {
+    width: 170px;
+}
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.table .th:first-child {
+    text-align: left;
+}
+.table .th {
+    font-size: 13px;
+    line-height: 48px;
+    color: #222;
+}
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+.checkbox {
+    height: 20px;
+}
+.checkbox .input:checked {
+    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_checkbox_20x20_green-5ea29ba9c7d082e58dab31430cd738ae.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.checkbox .input {
+    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_checkbox_20x20_white-7458b93102d0e841a2fc3dd7fbd4f61c.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    border: 0;
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+    -webkit-appearance: none;
+    cursor: pointer;
+    outline: none;
+}
+input, select {
+    vertical-align: middle;
+}
+label {
+    cursor: default;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+.table_cell:first-child, .table_cell:nth-child(2) {
+    border-left: 0;
+}
+.table_cell {
+    position: relative;
+    border-left: 1px solid #ececef;
+    border-top: 1px solid #cacbd4;
+    word-break: break-all;
+}
+.product_desc_wrap {
+    position: relative;
+    padding: 0 45px 0 115px;
+    margin: 23px 0;
+    min-height: 100px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.page_cart .product_description .product_thumb {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+.product_description .product_thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 70px;
+    height: 70px;
+    border-radius: 3px;
+}
+.product_description .product_img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+img, fieldset {
+    border: 0;
+}
+.product_description .product_thumb:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.04);
+    content: '';
+}
+.product_description .product_merchant_name {
+    font-size: 12px;
+    color: #222;
+    line-height: 15px;
+    text-decoration: underline;
+}
+/*
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+*/
+.page_cart .product_description .product_name {
+    margin-top: 5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.product_description .product_price_area {
+    display: block;
+    margin-top: 4px;
+    font-family: tahoma, 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
+}
+.product_description .product_price_sale {
+    font-size: 14px;
+    color: #222;
+    font-weight: 700;
+    line-height: 17px;
+}
+.product_description .product_price_sale .unit {
+    font-size: 13px;
+    vertical-align: 1px;
+}
+.product_description .product_price_total {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #959595;
+    line-height: 16px;
+}
+s {text-decoration: line-through;}
+.product_button_area {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+.image_button.button_delete {
+    padding: 5px;
+}
+.image_button {
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.image_button.button_delete:after {
+    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_x_12x12_gray-cc1d568dadf8adaaba055a592a9cc484.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    width: 12px;
+    height: 12px;
+    content: '';
+}
+.table_cell.valign_top {vertical-align: top;}
+.product_item_wrap {
+    padding: 10px 20px 21px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.product_item {
+    position: relative;
+    padding: 10px 32px 8px 0;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 12px;
+    color: #222;
+    line-height: 19px;
+}
+.product_options .product_option_box:not(:first-child) {
+    margin-top: 16px;
+}
+.product_options .product_option_box {
+    margin-top: 14px;
+}
+.product_options .product_option_box button {
+    padding: 0 9px;
+}
+.button_basic.button_small {
+    border-color: #d1d4d7;
+}
+.button_basic {
+    background: #fff;
+    color: #444;
+}
+.button_small {
+    height: 25px;
+    font-size: 12px;
+}
+.button{
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    border: 1px solid;
+    border-radius: 3px;
+}
+.product_price {
+    padding: 15px;
+    text-align: center;
+}
+.product_price .product_detail_price {
+    display: block;
+    font-family: tahoma, 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
+    font-size: 15px;
+    color: rgb(34, 34, 34);
+    font-weight: 700;
+    line-height: 19px;
+}
+.product_price .product_detail_price .unit {
+    font-size: 14px;
+    vertical-align: 1px;
+}
+.product_price .product_delivery_fee {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #777;
+    line-height: 15px;
+}
+.product_price .product_button_box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 64px;
+    margin: 10px auto 0;
+}
+.button_blue.button_small {
+    height: 27px;
+}
+.button_blue {
+    border-color: #3795ec;
+    background: #3795ec;
+    font-weight: 700;
+    color: #fff;
+}
+.delivery_fee {
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+}
+.delivery_fee_area {
+    position: relative;
+    padding: 0 15px;
+}
+.delivery_fee .delivery_fee_price {
+    display: inline-block;
+    margin-top: -1px;
+    font-family: tahoma, 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
+    font-size: 14px;
+    color: rgb(34, 34, 34);
+    font-weight: 700;
+    line-height: 17px;
+    vertical-align: top;
+}
+.delivery_fee .delivery_fee_price .unit {
+    font-size: 13px;
+    vertical-align: 1px;
+}
+.image_button.button_tooltip {
+    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_question_16x16_white-6915bd26a85dbf5d7f55b1f7fdcd8784.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 16px;
+    height: 16px;
+    margin-left: 3px;
+}
+.delivery_fee .tooltip_box {
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    text-align: left;
+}
+.tooltip {
+    display: none;
+    position: relative;
+    padding: 13px 42px 16px 14px;
+    border: 1px solid #c7cacd;
+    background: #fff;
+    text-align: left;
+    white-space: nowrap;
+    -webkit-box-shadow: 0 2px 1px -1px rgb(0 0 0 / 5%);
+    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 5%);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.tooltip .button_close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px;
+    background: none;
+    border: none;
+}
+.tooltip .tooltip_tit {
+    display: block;
+    font-size: 12px;
+    color: #222;
+    line-height: 16px;
+}
+strong {font-weight: bold;}
+.tooltip .tooltip_desc p {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #555;
+    line-height: 16px;
+}
+.tooltip .tooltip_desc p em {
+    color: #287ae4;
+}
+.delivery_fee .delivery_fee_txt{
+    margin-top: 5px;
+    line-height: 16px;
+}
+.product_button_box {
+    overflow: hidden;
+    padding: 15px 0 30px;
+}
+.product_button_box .area_checkbox {
+    display: inline-block;
+    margin: 6px 15px 0 0;
+    vertical-align: top;
+}
+.button_basic.button_small {border-color: #d1d4d7;}
+.product_button_box button {
+    height: 34px;
+    padding: 0 12px;
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+    font-size: 14px;
+}
+.button+.button {
+    margin-left: 4px;
+}
+.order_calculator {
+    display: table;
+    width: 100%;
+    padding: 32px 0;
+    border: 1px solid #9ca0aa;
+    border-width: 1px 0;
+    table-layout: fixed;
+    text-align: center;
+    color: #222;
+}
+.order_calculator .product_price_detail {
+    display: table-cell;
+    width: 50%;
+    vertical-align: middle;
+}
+.order_calculator .product_price:nth-child(1), .order_calculator .product_price:nth-child(2) {
+    position: relative;
+    padding-right: 54px;
+}
+.order_calculator .product_price {
+    display: inline-block;
+    font-weight: 700;
+    line-height: 21px;
+}
+dl {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+dt {
+    display: block;
+}
+.order_calculator .product_price dt {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+.order_calculator .product_price dd {
+    display: block;
+    font-size: 15px;
+}
+.order_calculator .product_price:nth-child(1):after {
+    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_plus_14x14_gray-7e0420fe92c85f7e8cefeaeda4b07f43.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 14px;
+}
+.order_calculator .product_price:nth-child(1):after, .order_calculator .product_price:nth-child(2):after {
+    position: absolute;
+    top: 33px;
+    right: 20px;
+    width: 14px;
+    content: '';
+}
+.order_calculator .product_price:nth-child(1), .order_calculator .product_price:nth-child(2) {
+    position: relative;
+    padding-right: 54px;
+}
+.order_calculator .product_price dd .price {
+    font-family: tahoma, 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
+    font-size: 18px;
+    vertical-align: -2px;
+}
+.order_calculator .product_price:nth-child(2):after {
+    height: 2px;
+    margin-top: 6px;
+    background: #c7c7c7;
+}
+.order_calculator .product_price dd.discount {
+    color: #f85151;
+}
+.order_calculator .product_price_total {
+    display: table-cell;
+    width: 50%;
+    border-left: 1px solid #c0c2c7;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 19px;
+}
+.order_calculator .text_mart {
+    font-family: helvetica, 나눔고딕, "Nanum Gothic", " 맑은고딕", "Malgun Gothic", 돋움, dotum, "Apple SD Gothic Neo", sans-serif;
+}
+.order_calculator .text_point {
+    color: #3f9ef6;
+}
+.order_calculator .product_price_total .price {
+    margin-left: 6px;
+    font-family: tahoma, 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
+    font-size: 24px;
+    vertical-align: -2px;
+}
+.cart .cart_button_box {
+    margin: 40px 0 50px;
+    text-align: center;
+}
+.cart .cart_button_box .link_home {
+    display: inline-block;
+    min-width: 200px;
+    height: 56px;
+    margin-right: 6px;
+    box-sizing: border-box;
+    font-family: helvetica, 나눔고딕, "Nanum Gothic", " 맑은고딕", "Malgun Gothic", 돋움, dotum, "Apple SD Gothic Neo", sans-serif;
+    font-size: 17px;
+    line-height: 55px;
+    color: rgb(51, 51, 51);
+    font-weight: 700;
+    letter-spacing: -0.6px;
+    vertical-align: top;
+    padding: 0px 26px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(185, 190, 194);
+    border-image: initial;
+    border-radius: 3px;
+}
+.cart .cart_button_box button {
+    -webkit-box-flex: 0;
+    width: 200px;
+    font-family: helvetica, 나눔고딕, "Nanum Gothic", " 맑은고딕", "Malgun Gothic", 돋움, dotum, "Apple SD Gothic Neo", sans-serif;
+    flex: 0 0 auto;
+}
+.button_large {
+    height: 56px;
+    font-size: 17px;
+    letter-spacing: -0.6px;
+}

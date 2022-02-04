@@ -19,20 +19,22 @@
         margin-top: 50px;
         margin-bottom: 70px;
     }
-    #idFind-text{
-        font-size: 25px;
+    #leave-text{
+        font-size: 27px;
         font-weight: bolder;
         margin-bottom: 65px;
+        color: rgb(52, 152, 219);
     }
     #top-text{
         color: rgb(52, 152, 219);
+        font-size: 20px;
     }
     .form-group{
         display: flex;
         align-items: baseline;
         margin-top: 5px;
     }
-    #idFind-form{
+    #leave-form{
         width: 360px;
         margin: 0 auto;
     }
@@ -70,35 +72,49 @@
         color: red;
         font-weight: bold;
     }
+    #delete-confirm{
+        margin-bottom: 50px;
+        color: black;
+        font-weight: bolder;
+    }
 </style>
 </head>
 <body>
-	<div style="width: 1400px; height: auto; margin: auto;">
+	<div style="width: 1600px; height: auto; margin: auto;">
+        <jsp:include page="../../common/teacher/tcMypageSidebar.jsp" />
         <div id="wrap">
             <div id="logoImg" align="center">
                 <img src="resources/images/logo.png" width="280px">
             </div>
-            <div id="idFind-form">
-                <div id="idFind-text" align="center">
-                    <span>비밀번호 재설정</span>
+            <div id="leave-form">
+                <div id="leave-text" align="center">
+                    <span>회원 탈퇴</span>
                 </div>
                 <form action="" method="post">
                     
-                    <span id="top-text">변경할 비밀번호</span>
-                    <div class="form-group">
-                      <input type="password" class="form-control" id="pwd" placeholder="비밀번호(영문,숫자 포함 6자리 이상)" name="userId" required> 
+                    <div align="center" id="delete-confirm">
+                        <span>
+                            강사 회원의 경우<br> 
+                            모든 클래스 정리 이후 탈퇴가 가능하며 <br>
+                            신청 시에는 14일 이내에 탈퇴 처리가 진행 됩니다. <br><br><br>
+                            정말 탈퇴 하시겠습니까?
+                        </span>
                     </div>
 
-                    <span id="top-text">비밀번호 확인</span>
-                    <div class="form-group">
-                      <input type="password" class="form-control" id="pwd" placeholder="비밀번호 확인" name="userId" required> 
+                    <div align="center">
+                        <span id="top-text">
+                            비밀번호 확인
+                        </span>
+                        <div class="form-group">
+                        <input type="text" class="form-control" id="pwd" placeholder="비밀번호 확인" name="userId" required> 
+                        </div>
                     </div>
 
-                    <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">변경 완료</button>
+                    <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">회원 탈퇴</button>
                     
                 </form>
             </div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />
     </div>

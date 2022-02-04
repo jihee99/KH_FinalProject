@@ -92,6 +92,44 @@
         background-color: black;
         margin-top: -25px;
 	}
+    /* 모달창 */
+    .modalMsg-area{
+            font-weight: bolder;
+            font-size: 17px;
+            margin-bottom: 35px;
+            height: 70px;
+            text-align: center;
+            margin-left: 11px;
+    }
+    #deletebtn-area>*{
+            color: white;
+            font-weight: bolder;
+            font-size: 15px;
+            height: 35px;
+            line-height: 5px;
+            width: 170px;
+            margin-top: -10px;
+    }
+    #confirm{
+        display: flex;
+        margin: auto;
+        margin-bottom: 5px;
+    }
+    #check{
+        display: flex;
+        margin: auto;
+        margin-bottom: 5px;
+    }
+    #confirm-btn{
+        background-color: rgb(228, 240, 250);
+        margin-right: 2px;
+        line-height: 22px;
+        color: black;
+    }
+    #closebtn{
+        background-color: gray;
+        margin-left: 2px;
+    }
 </style>
 </head>
 <body>
@@ -125,9 +163,41 @@
                     <span id="top-text">휴대전화 번호</span>
                     <div class="form-group">
                       <input type="number" class="form-control" id="phone" placeholder="01095227273" name="phone" style="width: 340px;" required> 
-                      <button id="phoneUpdate" type="button" class="rightBtn btn-sm" onclick="idCheck();">수정</button>
+                      <button id="phoneUpdate" type="button" class="rightBtn btn-sm" onclick="idCheck();" data-toggle="modal" data-target="#phoneModal">수정</button>
                     </div>
+                    <!-- 번호인증 모달 -->
+                    <div class="modal fade" id="phoneModal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" style="width: 400px;">
+                                
+                                <div class="modal-header">
+                                    <span style="font-weight: bolder;">휴대폰 인증하기</span>
+                                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                </div>
+                                <div style="margin-left: 15px;">
+                                    <span style="font-size: small; color: grey;">번호 수정을 위해 본인의 휴대폰 번호를 인증해 주세요</span>
+                                </div>
 
+                                <!-- Modal body -->
+                                <div class="modal-body" align="center">
+                                    <div class="modalMsg-area">
+                                        <div id="confirm">
+                                            <input type="text" class="form-control" id="phone" placeholder="01095227273" name="phone" style="width: 250px;" required> 
+                                            <button id="phoneUpdate" type="button" onclick="idCheck();" style="width: 90px; height: 38px; background-color: lightgray;">인증받기</button>
+                                        </div>
+                                        <div id="check">
+                                            <input type="number" class="form-control" id="phone" placeholder="1234" name="phone" style="width: 250px;" required> 
+                                            <button id="phoneUpdate" type="button" onclick="idCheck();" style="width: 90px; height: 38px;">확인</button>
+                                        </div>
+                                    </div>
+                                    <div id="deletebtn-area">
+                                    <a type="button" class="btn" id="confirm-btn" data-toggle="modal" href="">확인</a>
+                                    <button type="button" class="btn" data-dismiss="modal" id="closebtn">닫기</button>
+                                    </div>              
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <span id="top-text">강사 이력</span>
                     <div class="form-group">
                       <input type="file" class="form-control" id="history" placeholder="강사 이력을 입력 하세요." name="history" required> 

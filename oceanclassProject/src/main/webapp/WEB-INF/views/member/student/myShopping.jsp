@@ -12,33 +12,35 @@
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
 <style>
 	.list{
-	    width: 100%;
+	    width: 90%;
 	    height: 15%;
+	    margin: 0 auto;
 	    margin-top: 50px;
 	    border: 1px solid lightgray;
 	}
-	
+	.list img{
+		width: 25%; 
+		height: 100%;
+		float: left;
+	}
 	#explain{
 		width: 50%; 
 		height: 100%; 
 		float: left; 
-		border: 1px solid lightgray;
+		margin-top: 10px;
+		margin-left: 15px;
 	}
 	#explain>h3{color:rgb(107, 171, 213); font-weight: 600;}
 	#explain>p{margin-top: -10px; font-weight: bolder; }
 	#state{float:left;}
-	
 	.list>button{
 		width: 20%; 
 		height: 50%; 
-		margin-top: 25px;
+		margin-top: 30px;
+		margin-left: 15px;
 		font-weight: 600;
 	}
-	.list img{
-		width: 30%; 
-		height: 100%;
-		float: left;
-	}
+	
 </style>
 </head>
 <body>
@@ -57,7 +59,7 @@
 	    <div class="list">
 	    	<a href=""><img src="resources/images/logo.png" alt=""></a>
             <div id="explain">
-                <h3>잔슨빌 육즙 가득한 스모크 소세지</h3>
+                <h4>잔슨빌 육즙 가득한 스모크 소세지</h4>
                 <p>주문날짜 : 2021-01-02</p>
                 <h3 id="state">배송완료</h3>
             </div>
@@ -66,7 +68,7 @@
 	    <div class="list">
 	    	<a href=""><img src="resources/images/logo.png" alt=""></a>
             <div id="explain">
-                <h3>잔슨빌 육즙 가득한 스모크 소세지</h3>
+                <h4>잔슨빌 육즙 가득한 스모크 소세지</h4>
                 <p>주문날짜 : 2021-01-02</p>
                 <h3 id="state">배송완료</h3>
             </div>
@@ -75,12 +77,13 @@
 	    <div class="list">
 	    	<a href=""><img src="resources/images/logo.png" alt=""></a>
             <div id="explain">
-                <h3>잔슨빌 육즙 가득한 스모크 소세지</h3>
+                <h4>잔슨빌 육즙 가득한 스모크 소세지</h4>
                 <p>주문날짜 : 2021-01-02</p>
                 <h3 id="state">배송완료</h3>
             </div>
             <button class="btn btn-info">주문 상세보기</button>
 	    </div>
+	    
 	    
 		<div class="paging" align="center">
 			<button class="btn btn-light">&lt;</button>

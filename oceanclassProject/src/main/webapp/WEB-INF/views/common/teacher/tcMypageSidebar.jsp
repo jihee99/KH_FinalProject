@@ -71,7 +71,7 @@
                 <div id="menu1">
                     <p>강사 정보</p>
                     <ul>
-                        <li><a href="">강사 정보</a></li>
+                        <li><a href="?page=tcMyPage.jsp">강사 정보</a></li>
                     </ul>
                 </div>
                 <div id="menu2">

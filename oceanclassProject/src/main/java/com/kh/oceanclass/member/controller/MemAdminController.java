@@ -23,5 +23,5 @@ public class MemAdminController {
 		// 관리자 포인트 지급 페이지 확인용 메소드
 		return "member/admin/adminCouponEnrollWindow";
 	}
-	
+
 }
