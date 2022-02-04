@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+.innerOuter{width:1000px; margin: auto;}
+.headMenu{text-align: left;} 
+.headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
+
+.head_2{height: 70px; margin-top: 30px; margin-left: 10px; text-align: left;}
+
+.content_1{margin-left: 10px; text-align: left; font-size: 14px;}
+.content_1 table{margin-top: 5px; width: 100%; font-size: 13px; text-align: center;}
+.content_1 table th{background: lightgray;}
+
+.content_2{margin-left: 10px; margin-top: 5px; text-align: left; font-size: 14px;}
+.content_2 table{margin-top: 5px; width: 100%; font-size: 13px; text-align: center;}
+.content_2 table th{background: lightgray;}
+
+.content_3{margin-left: 10px; margin-top: 5px; text-align: left; font-size: 14px;}
+.content_3 table{margin-top: 5px; width: 100%; font-size: 13px; text-align: center;}
+.content_3 table>thead{background: lightgray;}
+
+#reBtn{margin-top:30px; background: rgb(177, 5, 5); font-size: 16px; font-weight: 550; color: white;}
+#listBtn{margin-top:30px; background: gray; font-size: 16px; font-weight: 550; color: white;}

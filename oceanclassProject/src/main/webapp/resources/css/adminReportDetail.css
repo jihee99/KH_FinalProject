@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.innerOuter{width:1000px; margin: auto;}
+.headMenu{text-align: left;} 
+.headMenu>b{font-size: 28px; font-weight: 800; margin-left: 10px; color: rgb(107, 171, 213);}
+
+.content_1{width: 100%; text-align: left;}
+.content_1>b{margin-left: 10px; font-size: 16px; line-height: 30px;}
+.content_1 table{width: 990px; margin-left: 10px; border-collapse: separate; line-height: 33px;}
+.content_1 table *{font-size: 14px;}
+.content_1 table th{text-align: center; background: lightgray;}
+.content_1 table td{padding-left: 10px;}
+
+#deBtn{float:right; width: 90px; height: 35px; background: gray; font-size: 16px; color: white; margin: 2px;}
+#reBtn{float:right; width: 90px; height: 35px; background: rgb(107, 171, 213); font-size: 16px; color: white; margin: 2px; margin-right: 10px;}
+
+.content_1>div{margin:10px; height: 150px; background: lightgray; padding: 20px;}  
