@@ -200,12 +200,15 @@
                     </div>
                     <span id="top-text">강사 이력</span>
                     <div class="form-group">
-                      <input type="file" class="form-control" id="history" placeholder="강사 이력을 입력 하세요." name="history" required> 
+                        <textarea name="" id="history" cols="51" rows="3" placeholder=" 강사 이력을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                    <input type="file" class="form-control" id="history" name="history" required> 
                     </div>
 
                     <span id="top-text">강사 소개</span>
                     <div class="form-group">
-                      <textarea name="" id="intro" cols="51" rows="5" placeholder="내용을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
+                      <textarea name="" id="intro" cols="51" rows="5" placeholder=" 내용을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
                     </div>
 
                     <span id="top-text">강사 소셜 미디어</span>
