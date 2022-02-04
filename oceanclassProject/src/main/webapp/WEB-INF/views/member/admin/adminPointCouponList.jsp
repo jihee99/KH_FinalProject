@@ -84,7 +84,7 @@
             </table>
             <br>
             <button class="btn" id="deleteBtn">선택목록삭제</button>
-            <button class="btn" id="couponBtn" onclick="window.open('pgive.ad','포인트지급페이지','width=550, height=400, menubar=no, status=no, toolbar=no, resizable=no')">개별포인트관리</button>
+            <button class="btn" id="couponBtn" onclick="window.open('pgive.ad','포인트지급페이지','width=550, height=420, menubar=no, status=no, toolbar=no, resizable=no')">개별포인트관리</button>
             <br>
         </div>
         
@@ -110,7 +110,7 @@
                         <td>2022-02-01 12:00:00</td>
                         <td>2022-02-08 12:00:00</td>
                         <td>
-                            <button class="crow">발급</button>
+                            <button class="crow" onclick="window.open('cgive.ad','쿠폰지급페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
                         </td>
                     </tr>
                     
@@ -118,7 +118,7 @@
             </table>
             <br>
             <button class="btn" id="deleteBtn">선택목록삭제</button>
-            <button class="btn" id="couponBtn" onclick="window.open('cenroll.ad','포인트지급페이지','width=550, height=350, menubar=no, status=no, toolbar=no, resizable=no')">쿠폰등록하기</button>
+            <button class="btn" id="couponBtn" onclick="window.open('cenroll.ad','포인트지급페이지','width=550, height=380, menubar=no, status=no, toolbar=no, resizable=no')">쿠폰등록하기</button>
             <br>
         </div>
 
