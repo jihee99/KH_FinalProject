@@ -9,17 +9,18 @@
 	<title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./resources/css/eventMain.css">
+    <link rel="stylesheet" href="./resources/css/header.css?1">
+    <link rel="stylesheet" href="./resources/css/eventMain.css?2">
 </head>
 <body>
 
 	<jsp:include page="../common/header.jsp" />
 	
-    <div class="innerOuter">
+    <div class="innerOuter my-3">
         <div class="head py-3">
-            <p><h2>EVENT</h2></p>
+            <p>EVENT</p>
         </div>
-        <div class="button my-3">
+        <div class="button">
             <button type="button" class="btn btn-outline-primary">전체</button>
             <button type="button" class="btn btn-outline-primary">클래스</button>
             <button type="button" class="btn btn-outline-primary">스토어</button>
@@ -27,51 +28,45 @@
             <button type="button" class="btn btn-outline-primary">댓글</button>
             <button type="button" class="btn btn-outline-primary">기타</button>
         </div>
-        <div class="content my-5">
-            <table border="1px">
-                <thead>
-                    <tr>
-                        <th>카테고리</th>
-                        <th>총 강의수</th>
-                        <th>총 수강생수</th>
-                        <th>월 매출</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="content">
+            <div class="img">
+                <img src="" alt="" style="width: 100%; height: 100%;">
+                <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
+            </div>
+            <div class="img">
+                <img src="" alt="" style="width: 100%; height: 100%;">
+                <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
+            </div>
+            <div class="img">
+                <img src="" alt="" style="width: 100%; height: 100%;">
+                <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
+            </div>
+            <div class="img">
+                <img src="" alt="" style="width: 100%; height: 100%;">
+                <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
+            </div>
+            <div class="img">
+                <img src="" alt="" style="width: 100%; height: 100%;">
+                <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
+            </div>
+            <div class="img">
+                <img src="" alt="" style="width: 100%; height: 100%;">
+                <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
+            </div>
         </div>
-        <div class="paging"></div>
+        
+		 <div class="paging" align="center">
+			<button class="btn btn-light">&lt;</button>
+			
+			<button class="btn btn-light">1</button>
+			<button class="btn btn-light">2</button>
+			<button class="btn btn-light">3</button>
+			<button class="btn btn-light">4</button>
+			<button class="btn btn-light">5</button>
+			
+			<button class="btn btn-light">&gt;</button>
+		</div>
+
     </div>
     
     <jsp:include page="../common/footerBar.jsp" />
