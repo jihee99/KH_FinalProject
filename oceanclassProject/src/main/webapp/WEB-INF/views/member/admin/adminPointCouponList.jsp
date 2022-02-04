@@ -13,11 +13,11 @@
 
 </head>
 <body>
- 
+    
     <!-- 관리자 사이드바 연결하기 -->
     <jsp:include page="../../common/admin/adminMain.jsp" />
     
-    
+
     <div class="innerOuter" align="center">
         <div class="headMenu">
             <b>포인트 / 쿠폰 관리</b>
@@ -27,11 +27,12 @@
                 <form id="searchForm">
                     <table>
                         <tr>
+
                             <th>분 &nbsp; &nbsp; &nbsp; 류</th>
                             <td>
-                                <input type="radio" class="searchType" name="searchType" id="point" value="point">
+                                <input type="radio" class="searchType" name="searchType" id="point" value="point" checked="checked">
                                 <label for="point">포인트</label>
-                                <input type="radio" class="searchType" name="searchType" id="coupon" value="coupon" checked="checked">
+                                <input type="radio" class="searchType" name="searchType" id="coupon" value="coupon">
                                 <label for="coupon">쿠폰</label>
                             </td>
                         </tr>
@@ -48,7 +49,8 @@
             <div class="head_2_center"></div>
             <div class="head_2_right"></div>
         </div>
-        <div class="content_point" style="display: none;">
+
+        <div class="content_point">
             <table id="contentTable">
                 <thead>
                     <tr>
@@ -80,45 +82,206 @@
                         <td>2022-02-01 12:00:00</td>
                         <td>2022-08-01 12:00:00</td>
                     </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>포인트 만료</td>
+                        <td>-100</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-08-01 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>포인트 만료</td>
+                        <td>-100</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-08-01 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>포인트 만료</td>
+                        <td>-100</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-08-01 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>포인트 만료</td>
+                        <td>-100</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-08-01 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>포인트 만료</td>
+                        <td>-100</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-08-01 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>포인트 만료</td>
+                        <td>-100</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-08-01 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>포인트 만료</td>
+                        <td>-100</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-08-01 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>포인트 만료</td>
+                        <td>-100</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-08-01 12:00:00</td>
+                    </tr>
                 </tbody>
             </table>
             <br>
             <button class="btn" id="deleteBtn">선택목록삭제</button>
-            <button class="btn" id="couponBtn" onclick="window.open();">개별포인트관리</button>
+            <button class="btn" id="pointBtn" onclick="window.open('포인트 팝업창 띄울 url작성하기','개별 포인트 관리','width=500, height=600, left=400, top=400, resizable=no');">개별포인트관리</button>
             <br>
         </div>
         
-        <div class="content_coupon">
-            <table id="contentTable">
+        <div class="content_coupon" style="display: none;">
+            <table id="couponTable">
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="checkAll"></th>
-                        <th width="120">쿠폰번호</th>
-                        <th width="350">쿠폰명</th>
+                        <th width="120">아이디</th>
+                        <th width="120">회원명</th>
+                        <th width="200">쿠폰명</th>
                         <th width="100">할인율(%)</th>
+                        <th width="80">사용여부</th>
                         <th>지급일</th>
                         <th>만료일</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><input type="checkbox" name="chBxRow" id=""></td>
-                        <td>2012312</td>
+                        <td>user01</td>
+                        <td>손지희</td>
                         <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
                         <td>10</td>
+                        <td>N</td>
                         <td>2022-02-01 12:00:00</td>
                         <td>2022-02-08 12:00:00</td>
-                        <td>
-                            <button class="crow">발급</button>
-                        </td>
                     </tr>
-                    
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
+                        <td>user01</td>
+                        <td>손지희</td>
+                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
+                        <td>10</td>
+                        <td>N</td>
+                        <td>2022-02-01 12:00:00</td>
+                        <td>2022-02-08 12:00:00</td>
+                    </tr>
                 </tbody>
             </table>
             <br>
             <button class="btn" id="deleteBtn">선택목록삭제</button>
-            <button class="btn" id="couponBtn">쿠폰등록하기</button>
+            <button class="btn" id="couponBtn">개별쿠폰관리</button>
             <br>
         </div>
 
@@ -134,8 +297,8 @@
             <button class="btn btn-light">&gt;</button>
         </div>
 
-        <script>
 
+        <script>
             /*라디오 버튼에 따른 동적 화면 구현*/
             $("input[type=radio][name=searchType]").on('click',function(){
                 var chkValue = $('input[type=radio][name=searchType]:checked').val();
@@ -150,6 +313,7 @@
                     $('.content_coupon').css('display','block');
                 }
             })
+
 
             var chkArr = new Array();
 
@@ -199,14 +363,17 @@
                     for(var i=0; i<idxArr.length; i++){
                         var obj = new Object();
                         /*나중에 쿠폰 번호 맞춰서 수정하기*/
+
                         obj.memNo = $("#contentTable tbody").children().eq(idxArr[i]).children().eq(1).text();
+
+                       
                         chkArr.push(obj);
                     }
                 }
-
+                
             });
         </script>
-    </div>
+	</div>
 
 </body>
 </html>
