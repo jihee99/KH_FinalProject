@@ -23,7 +23,7 @@
         <div class="content_1">
             <b>통합신고검색</b>
             <form action="">
-                <table border="1">
+                <table>
                     <tr>
                         <th>기간 검색</th>
                         <td>
