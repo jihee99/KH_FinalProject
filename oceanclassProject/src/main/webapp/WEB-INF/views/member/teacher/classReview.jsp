@@ -21,10 +21,17 @@
     #review{
         margin: auto;
         width: 700px;
+        margin-bottom: 10px;
     }
     #classCategory{
         margin: auto;
         width: 700px;
+    }
+    #classCategory select{
+        margin: auto;
+        width: 700px;
+        height: 45px;
+        margin-bottom: 80px;
     }
     /* 게시판이름 영역*/
     #top-area{
@@ -85,8 +92,16 @@
         font-size: 28px;
         margin-top: -5px;
     }
-    
-
+    #allReview{
+        font-size: 28px;
+    }
+    #starAverage{
+        font-size: 17px;
+    }
+    #number{
+        color: rgb(107, 171, 223);
+        font-weight: bolder;
+    }
 </style>  
 </head>
 <body>
@@ -105,8 +120,8 @@
                 </select>
             </div>
             <div id="review">
-                <span id="allReview">총 후기 5건 /</span>
-                <span id="starAverage">별점평균 4.8점</span>
+                <span id="allReview">총 후기 <span id="number">5</span>건 /</span>
+                <span id="starAverage">별점평균 <span id="number">4.8</span>점</span>
             </div>
             <div id="content-wrap" style="overflow-y: scroll;">
                 <div id="cl-wrap">
