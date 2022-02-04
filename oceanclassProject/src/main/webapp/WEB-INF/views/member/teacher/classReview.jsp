@@ -18,6 +18,14 @@
         margin: auto;
         margin-top: 50px;
     }
+    #review{
+        margin: auto;
+        width: 700px;
+    }
+    #classCategory{
+        margin: auto;
+        width: 700px;
+    }
     /* 게시판이름 영역*/
     #top-area{
         height: 100px;
@@ -34,6 +42,11 @@
     #content-wrap{
         margin: auto;
         width: 700px;
+        height: 480px;
+        border: 1px solid gray;
+    }
+    #cl-img{
+        margin-left: 15px;
     }
     #cl-wrap{
         /* box-sizing: border-box; border:1px solid black; */
@@ -48,17 +61,15 @@
     #cl-category{
         font-weight: bolder;
         font-size: 20px;
+        margin-top: 5px;
     }
     #cl-content{
         padding-top: 10px;
     }
-    #num-btn{
-        font-size: 23px;
-        color: gray;
-        font-weight: bolder;
-    }
-    #cl-num{
-        margin-right: 25px;
+    #cl-content textarea{
+        width: 450px;
+        height: 100px;
+        resize: none;
     }
     /* 클래스 등록버튼 */
     #enrollBtn {
@@ -70,11 +81,11 @@
         margin-bottom: 10px;
         margin-top: 80px;
     }
-    #cl-content textarea{
-        width: 450px;
-        height: 60px;
-        resize: none;
+    .star{
+        font-size: 28px;
+        margin-top: -5px;
     }
+    
 
 </style>  
 </head>
@@ -84,12 +95,45 @@
     	<jsp:include page="../../common/teacher/tcMypageSidebar.jsp" />
         <div class="wrap">
             <div id="top-area">
-                <span id="bord-name">내클래스 목록</span>
+                <span id="bord-name">클래스 리뷰 관리</span>
             </div>
-            <div id="content-wrap">
+            <div id="classCategory">
+                <select name="" id="">
+                    <option value="">보미 강사의 강아지 훈련 클래스</option>
+                    <option value="">올바른 강아지 산책 클래스</option>
+                    <option value="">무의미하게 시간 보내는 클래스</option>
+                </select>
+            </div>
+            <div id="review">
+                <span id="allReview">총 후기 5건 /</span>
+                <span id="starAverage">별점평균 4.8점</span>
+            </div>
+            <div id="content-wrap" style="overflow-y: scroll;">
                 <div id="cl-wrap">
                     <div id="cl-img">
-                        <img src="resources/images/bomi7.jpg" style="width: 150px;">
+                        <img src="resources/images/bomi7.jpg" style="width: 140px;">
+                        <div class="star" align="center">
+                            <span>★★★★★</span>
+                        </div>
+                    </div>
+                    <div id="cl-box">
+                        <div id="cl-category">
+                            <span>
+                                모든 강아지한테 통하는 훈련 클래스에요!!
+                            </span>
+                        </div>
+                        <div id="cl-content">
+                            <textarea style="border: none ">강아지들이 다 좋아해요 제가 강아지를 101마리 키우고 있기때문에 확실히 압니다. 종류는 모두 같아요 요즘 검은옷을 즐겨입고 강아지로 모피를 만들기를 원하는 친구가 제 강아지</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="cl-wrap">
+                    <div id="cl-img">
+                        <img src="resources/images/bomi7.jpg" style="width: 140px;">
+                        <div class="star" align="center">
+                            <span>★★★★★</span>
+                        </div>
                     </div>
                     <div id="cl-box">
                         <div id="cl-category">
@@ -100,19 +144,15 @@
                         <div id="cl-content">
                             <textarea style="border: none ">어떤 악마견 비글견도 다 천사견으로 만들어 드립니다 세상에 나쁜 강아지는 없다! 보미 훈경 클래스면 모두모두 천사강쥐</textarea>
                         </div>
-                        <div id="num-btn">
-                            <span id="cl-num">
-                                수강생 수 : 350 &ensp; 조회수 : 719
-                            </span>
-                            <button class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
-                            <button class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
-                        </div>
                     </div>
                 </div>
-                <hr>
+
                 <div id="cl-wrap">
                     <div id="cl-img">
-                        <img src="resources/images/bomi7.jpg" style="width: 150px;">
+                        <img src="resources/images/bomi7.jpg" style="width: 140px;">
+                        <div class="star" align="center">
+                            <span>★★★★★</span>
+                        </div>
                     </div>
                     <div id="cl-box">
                         <div id="cl-category">
@@ -123,41 +163,7 @@
                         <div id="cl-content">
                             <textarea style="border: none ">어떤 악마견 비글견도 다 천사견으로 만들어 드립니다 세상에 나쁜 강아지는 없다! 보미 훈경 클래스면 모두모두 천사강쥐</textarea>
                         </div>
-                        <div id="num-btn">
-                            <span id="cl-num">
-                                수강생 수 : 350 &ensp; 조회수 : 719
-                            </span>
-                            <button class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
-                            <button class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
-                        </div>
                     </div>
-                </div>
-                <hr>
-                <div id="cl-wrap">
-                    <div id="cl-img">
-                        <img src="resources/images/bomi7.jpg" style="width: 150px;">
-                    </div>
-                    <div id="cl-box">
-                        <div id="cl-category">
-                            <span>
-                                [운동] 보미 강사의 강아지 훈련 클래스
-                            </span>
-                        </div>
-                        <div id="cl-content">
-                            <textarea style="border: none ">어떤 악마견 비글견도 다 천사견으로 만들어 드립니다 세상에 나쁜 강아지는 없다! 보미 훈경 클래스면 모두모두 천사강쥐</textarea>
-                        </div>
-                        <div id="num-btn">
-                            <span id="cl-num">
-                                수강생 수 : 350 &ensp; 조회수 : 719
-                            </span>
-                            <button class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
-                            <button class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div align="center">
-                <button type="submit" id="enrollBtn" class="btn" style="background-color: rgb(228, 240, 250);">새로운 클래스 등록하기</button>
                 </div>
             </div>
             <br><br><br>

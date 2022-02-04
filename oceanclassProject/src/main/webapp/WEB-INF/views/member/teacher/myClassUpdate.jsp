@@ -145,6 +145,9 @@
         margin-left: 10px;
         /* margin-right: 10px; */
     }
+    input[type="text"]:disabled {
+        background: rgb(158, 158, 158);
+    }
 </style>
 </head>
 <body>
@@ -175,8 +178,7 @@
                     <div class="box">
                         <label class="textName" for="userId">클래스명<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="" name="" placeholder="클래스명을 입력 하세요." required>
-                            <span>클래스명은 등록 후 수정이 불가능 합니다. 신중히 입력해 주세요.</span>
+                            <input type="text" id="" name="" placeholder="클래스명을 입력 하세요." disabled>
                         </div>
                     </div>
 
@@ -212,9 +214,9 @@
                         <label class="textName" for="">클래스 가격<span class="star">*</span></label>
                         <div class="input-area">
                             <span style="color: black; font-weight: bolder; font-size: 20px;">수강료</span>
-                            <input type="text" id="" class="w200" name="" value="원" style="width: 150px; font-weight: bolder; text-align: right; margin-left: 15px;" required>
+                            <input type="text" id="" class="w200" name="" value="원" style="width: 150px; font-weight: bolder; text-align: right; margin-left: 15px;" disabled>
                             <button id="sum" type="button" class="rightBtn" onclick="idCheck();">X</button>
-                            <input type="text" id="" class="w200" name="" value="회" style="width: 133px; font-weight: bolder; text-align: right; margin-left: 15px;" required>
+                            <input type="text" id="" class="w200" name="" value="회" style="width: 133px; font-weight: bolder; text-align: right; margin-left: 15px;" disabled>
 
                         </div>
                     </div>
@@ -223,8 +225,7 @@
                         <div class="input-area">
                             <button id="sum" type="button" class="rightBtn" onclick="idCheck();"  style="margin-left: 80px;">=</button>
                             <span style="color: black; font-weight: bolder; font-size: 20px;">최종 수강료</span>
-                            <input type="text" id="" class="w200" name="" value="원" style="width: 192px; font-weight: bolder; text-align: right; margin-left: 15px;" required>
-                            <span style="margin-left: 80px;">클래스 가격은 등록 후 수정이 불가능 합니다. 신중히 입력해 주세요.</span>
+                            <input type="text" id="" class="w200" name="" value="원" style="width: 192px; font-weight: bolder; text-align: right; margin-left: 15px;" disabled>
                         </div>
                     </div>
 
