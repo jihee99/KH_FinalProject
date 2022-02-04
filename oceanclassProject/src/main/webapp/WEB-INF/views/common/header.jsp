@@ -59,10 +59,10 @@
                 </li>
                 
 
-                <li class="header_2_menu"><a href="">EVENT</a></li>
+                <li class="header_2_menu"><a href="eventMain.ev">EVENT</a></li>
 
                 
-                <li class="header_2_menu"><a href="">HELP</a></li>
+                <li class="header_2_menu"><a href="helpMain.he">HELP</a></li>
             </ul>
         </div>
         
