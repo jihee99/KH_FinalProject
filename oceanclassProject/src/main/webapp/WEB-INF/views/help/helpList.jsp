@@ -16,12 +16,12 @@
 	<jsp:include page="../common/header.jsp" />
     <div class="innerOuter my-3">
         <div class="head py-3">
-            <p>HELP</p>
+            <p>공지사항</p>
         </div>
         <div class="button my-3">
-            <button type="button" class="btn btn-outline-primary">공지사항</button>
-            <button type="button" class="btn btn-outline-primary">FAQ</button>
-            <button type="button" class="btn btn-outline-primary">1:1문의</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='helpMain.he';">공지사항</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='faqMain.he';">FAQ</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='qnaMain.he';">1:1문의</button>
         </div>
         <div class="content my-5">
             <table class="table table-hover">

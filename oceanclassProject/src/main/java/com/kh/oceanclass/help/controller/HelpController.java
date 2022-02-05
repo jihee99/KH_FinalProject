@@ -10,5 +10,22 @@ public class HelpController {
 	public String helpMain() {
 		return "help/helpList";
 	}
+	
+	@RequestMapping(value="qnaMain.he")
+	public String qnaMain() {
+		return "help/qnaChoose";
+	}
+	
+	@RequestMapping(value="qnaList.he")
+	public String qnaList() {
+		return "help/qnaList";
+	}
+	
+	@RequestMapping(value="faqMain.he")
+	public String faqMain() {
+		return "help/faqMain";
+	}
+	
+	
 
 }

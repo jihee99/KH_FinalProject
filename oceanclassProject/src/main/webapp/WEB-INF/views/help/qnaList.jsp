@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./resources/css/helpMain.css">
     <style>
     	.middle{
-    		width: 80%;
+    		width: 100%;
     		margin: auto;
     		margin-top: 50px;
     		margin-bottom: -20px;
@@ -32,14 +32,15 @@
 <body>
 
 	<jsp:include page="../common/header.jsp" />
-    <div class="wrapper my-5">
+	
+    <div class="innerOuter my-3">
         <div class="head py-3">
-            <p><h2>HELP</h2></p>
+            <p>1:1문의</p>
         </div>
         <div class="button my-3">
-            <button type="button" class="btn btn-outline-primary">공지사항</button>
-            <button type="button" class="btn btn-outline-primary">FAQ</button>
-            <button type="button" class="btn btn-primary">1:1문의</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='helpMain.he';">공지사항</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='faqMain.he';">FAQ</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='qnaMain.he';">1:1문의</button>
         </div>
         <div class="middle">
             <input type="text" class="form-control form-control-sm">
@@ -92,5 +93,8 @@
         </div>
         <div class="paging"></div>
     </div>
+    
+     <jsp:include page="../common/footerBar.jsp" />
+     
 </body>
 </html>
