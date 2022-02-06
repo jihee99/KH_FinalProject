@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.dao.HelpDao;
 import com.kh.oceanclass.help.model.vo.Notice;
+import com.kh.oceanclass.help.model.vo.Qna;
 
 @Service
 public class HelpServiceImpl implements HelpService{
@@ -19,6 +20,9 @@ public class HelpServiceImpl implements HelpService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	/*
+	 *	공지사항 게시판
+	 */
 	@Override
 	public int selectListCount() {
 		return hDao.selectListCount(sqlSession);
@@ -37,6 +41,20 @@ public class HelpServiceImpl implements HelpService{
 	@Override
 	public Notice selectNotice(int nno) {
 		return hDao.selectNotice(sqlSession, nno);
+	}
+	
+	
+	/*
+	 * 	1:1문의 게시판
+	 */
+	@Override
+	public int selectQnaCount() {
+		return hDao.selectQnaCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Qna> selectQnaList(PageInfo pi) {
+		return hDao.selectQnaList(sqlSession, pi);
 	}
 
 }

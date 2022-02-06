@@ -1,33 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Insert title here</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/helpMain.css">
-    <style>
-    	.middle{
-    		width: 100%;
-    		margin: auto;
-    		margin-top: 50px;
-    		margin-bottom: -20px;
-   		}
-        .middle>input{
-        	width: 200px; 
-        	float: left; 
-        	margin-top: -1px;
-        }
-        .middle>.qs{float: right;}
-        .middle>button{
-        	width: 100px;
-        	margin-left:0;
-        }
-    </style>
+<style>
+	.middle{
+		width: 100%;
+		margin: auto;
+		margin-top: 50px;
+		margin-bottom: -20px;
+	}
+    .middle>input{
+    	width: 200px; 
+    	float: left; 
+    	margin-top: -1px;
+    }
+    .middle>.qs{float: right;}
+    .middle>button{
+    	width: 100px;
+    	margin-left:0;
+    }
+</style>
 </head>
 <body>
 
@@ -51,47 +52,40 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                    	<th>글번호</th>
                         <th>카테고리</th>
-                        <th>총 강의수</th>
-                        <th>총 수강생수</th>
-                        <th>월 매출</th>
+                        <th style="width:50%;">제목</th>
+                        <th>작성자</th>
+                        <th>날짜</th>
+                        <th>답변유무</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
-                    <tr>
-                        <td>운동</td>
-                        <td>340</td>
-                        <td>6421</td>
-                        <td>70,245,100</td>
-                    </tr>
+                    <c:forEach var="q" items="${list}"> 
+	                    <tr>	
+	                        <td id="nno">${q.qnaNo}</td>
+	                        <td>${q.category}</td>
+	                        <td>${q.qnaTitle}</td>
+	                        <td>${q.nickName}</td>
+	                        <td>${q.createDate}</td>
+	                        <c:choose>
+		                        <c:when test="${not empty q.ansDate}">
+		                        	<td>답변등록</td>
+		                        </c:when>
+		                        <c:otherwise>
+		                        	<td><td>
+		                        </c:otherwise>
+	                        </c:choose>
+	                        
+	                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
-        <div class="paging"></div>
+        
+    
+        
+	</div>
     </div>
     
      <jsp:include page="../common/footerBar.jsp" />

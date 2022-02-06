@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Notice;
+import com.kh.oceanclass.help.model.vo.Qna;
 
 @Service
 public interface HelpService {
@@ -29,7 +30,8 @@ public interface HelpService {
 	/*
 	 * 	1:1 문의 게시판
 	 */
-	
+	int selectQnaCount();
+	ArrayList<Qna> selectQnaList(PageInfo pi);
 	
 }
 

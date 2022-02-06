@@ -12,6 +12,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.help.model.service.HelpService;
 import com.kh.oceanclass.help.model.vo.Notice;
+import com.kh.oceanclass.help.model.vo.Qna;
 
 
 @Controller
@@ -86,8 +87,26 @@ public class HelpController {
 		return "help/qnaChoose";
 	}
 	
-	@RequestMapping(value="qnaList.he")
-	public String qnaList() {
+	@RequestMapping("qnaList.he")
+	public String qnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int qnaCount = hService.selectQnaCount();
+		//System.out.println(qnaCount);
+		
+		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 10, 10);
+		ArrayList<Qna> list = hService.selectQnaList(pi);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).category.equals("C")) {
+				list.get(i).category = "클래스";
+			}else if(list.get(i).category.equals("S")) {
+				list.get(i).category = "스토어";
+			}else {
+				list.get(i).category = "기타";
+			}
+		}
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
 		return "help/qnaList";
 	}
 
