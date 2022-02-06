@@ -69,7 +69,7 @@
 	  		<img src="resources/images/iChatImg.png">
 		</button>
 	
-<!-- The Modal -->
+	<!-- The Modal -->
 	<div id="iChatModal">
 		<form action="">
 		    <div class="modal_dialog">
