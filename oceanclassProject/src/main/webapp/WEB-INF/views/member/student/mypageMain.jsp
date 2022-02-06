@@ -19,7 +19,7 @@
 		String select = request.getParameter("page");
 	
 		if(select == null){
-			select = "myClass.jsp";
+			select = "myMain.jsp";
 		}
 	%>
 	
