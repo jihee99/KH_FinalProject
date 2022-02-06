@@ -30,15 +30,13 @@ public class HelpServiceImpl implements HelpService{
 	}
 
 	@Override
-	public int increaseCount(int noNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int increaseCount(int nno) {
+		return hDao.increaseCount(sqlSession, nno);
 	}
 
 	@Override
-	public Notice selectNotice(int noNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public Notice selectNotice(int nno) {
+		return hDao.selectNotice(sqlSession, nno);
 	}
 
 }

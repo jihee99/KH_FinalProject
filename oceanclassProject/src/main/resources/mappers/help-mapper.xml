@@ -4,8 +4,8 @@
 
 	
 	<resultMap id="noticeResult" type="Notice">
-		<result column="no_no" property="noNo" />
-		<result column="mem_no" property="memNo" />
+		<result column="nno" property="noNo" />
+		<result column="mno" property="memNo" />
 		<result column="category" property="category" />
 		<result column="n_title" property="noTitle" />
 		<result column="n_content" property="noContent" />
@@ -25,8 +25,8 @@
 	
 	<select id="selectList" resultMap="noticeResult">
 		select
-		       no_no
-		     , mem_no
+		       nno
+		     , mno
 		     , category
 		     , n_title
 		     , n_content
@@ -36,7 +36,28 @@
 		  from notice
 		 where status = 'Y'
 		 order
-		    by no_no desc
+		    by nno desc
+	</select>
+	
+	<update id="increaseCount">
+		update
+			   notice
+		   set count = count + 1
+		 where nno = #{noNo}
+		   and status = 'Y'
+	</update>
+	
+	<select id="selectNotice" resultMap="noticeResult">
+		select
+		       nno
+		     , mno
+		     , category
+		     , n_title
+		     , n_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , img
+		  from notice
+		 where nno = #{noNo}
 	</select>
 	
 </mapper>

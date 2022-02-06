@@ -24,5 +24,13 @@ public class HelpDao {
 		
 		return (ArrayList)sqlSession.selectList("helpMapper.selectList", null, rowBounds);
 	}
+	
+	public int increaseCount(SqlSessionTemplate sqlSession, int noNo) {
+		return sqlSession.update("helpMapper.increaseCount", noNo);
+	}
+	
+	public Notice selectNotice(SqlSessionTemplate sqlSession, int noNo) {
+		return sqlSession.selectOne("helpMapper.selectNotice", noNo);
+	}
 
 }
