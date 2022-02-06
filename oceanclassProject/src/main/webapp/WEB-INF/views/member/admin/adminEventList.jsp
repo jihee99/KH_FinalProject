@@ -105,7 +105,7 @@
     #statusBox{
         display: flex;
         justify-content:space-between;
-        margin-bottom: 45px;
+        margin-bottom: 50px;
     }
     #statusBox button{
         width: 250px;
@@ -114,6 +114,10 @@
     #imgBox{
         display: flex;
         justify-content:space-between;
+        margin-bottom: 15px;
+    }
+    .img p{
+        text-align: center;
     }
 </style>  
 </head>
@@ -129,9 +133,7 @@
             <div id="content-wrap">
 
                 <div id="btnBox">
-                    <button class="btn" id="blueBtn">답변</button>
-                    <button class="btn" id="blueBtn">수정</button>
-                    <button class="btn btn-danger">삭제</button>
+                    <button class="btn" id="blueBtn">등록</button>
                 </div>
 
                 <div id="statusBox">
@@ -143,7 +145,7 @@
                 <div id="eventBox">
                     <div id="imgBox">
                         <div class="img">
-                            <img src="resources/images/bomi7.jpg" style="width: 480px; height: 210px;">
+                            <img src="resources/images/event1.jpg" style="width: 480px; height: 210px;">
                             <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
                         </div>
                         <div class="img">
