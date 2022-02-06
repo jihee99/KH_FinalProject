@@ -183,7 +183,7 @@
                     <div class="box">
                         <label class="textName" for="">클래스 설명<span class="star">*</span></label>
                         <div class="input-area">
-                            <textarea name="" id="" cols="58" rows="4">간단한 클래스 설명을 입력 하세요.</textarea>
+                            <textarea name="" id="" cols="58" rows="4" placeholder="간단한 클래스 설명을 입력 하세요."></textarea>
                         </div>
                     </div>
 

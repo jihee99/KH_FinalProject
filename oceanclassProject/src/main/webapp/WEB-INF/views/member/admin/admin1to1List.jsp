@@ -117,7 +117,7 @@
         margin-bottom: 30px;
         justify-content: space-between;
     }
-    .btn{
+    #btnGroup{
         width: 70px;
         height: 30px;
         line-height: 0px;
@@ -159,9 +159,9 @@
                         <input class="form-control mr-2" type="date"> ~ <input class="form-control ml-2" type="date">
                     </div>
                     <div id="btnBox" style="float: right;">
-                        <button class="btn" id="blueBtn">답변</button>
-                        <button class="btn" id="blueBtn">수정</button>
-                        <button class="btn btn-danger">삭제</button>
+                        <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
+                        <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
+                        <button class="btn btn-danger" id="btnGroup">삭제</button>
                     </div>
                 </div>
                 <div id="tableBox">
