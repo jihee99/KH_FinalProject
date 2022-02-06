@@ -13,27 +13,37 @@
 <style>
 	.content{
 		width: 80%;
-		height: 600px;
+		height: 300px;
 		padding: 30px;
-		border: 1px solid;
 	}
-	.content>button{margin: 100px; }
+	.content>p{
+		width: 50%;
+		height: 100%;
+		float: left;
+	}
+	.content img{
+		display: block;
+		width: 20%;
+		height: 30%;
+		margin: 0 auto;
+		margin-top: 30px;
+	}
+	.content button{display: block; margin: 0 auto;}
 </style>
 </head>
 <body>
 
 	<jsp:include page="../common/header.jsp" />
 	
-	<div class="innerOuter my-3">
+	<div class="innerOuter my-5">
         <div class="head py-3">
             <p>1:1문의</p>
         </div>
         <div class="content">
         	
-        	<i class="bi bi-pencil-square" style="border: 1px solid; font-size: 5rem;"></i>
-        	<i class="bi bi-chat-dots" style="font-size: 5rem;"></i>
-        	<button type="button" class="btn btn-outline-primary" onclick="location.href='qnaList.he';">문의 등록</button>
-        	<button class="btn btn-info">실시간 상담</button>
+        	<p><img src="resources/images/pencile2.png"><button type="button" class="btn btn-outline-primary" onclick="location.href='qnaList.he';">문의 등록</button></p>
+        	
+        	<p><img src="resources/images/reply2.png"><button class="btn btn-info">실시간 상담</button></p>
         	
         </div>
         
