@@ -83,14 +83,14 @@
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="checkAll"></th>
-                        <th>주문번호</th>
-                        <th>주문분류</th>
+                        <th width="100">주문번호</th>
+                        <th width="100">주문분류</th>
                         <th width="100">주문자명</th>
-                        <th>총금액</th>
+                        <th width="!00">총금액</th>
                         <th width="100">주문상태</th>
-                        <th>주문일자</th>
-                        <th>취소일자</th>
-                        <th>결제방법</th>
+                        <th width="200">주문일자</th>
+                        <th width="200">취소일자</th>
+                        <th width="100">결제방법</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -23,5 +23,6 @@ label[for="class"], label[for="store"]{top: -1.5px; margin-top: 4px;}
 
 #deBtn{background: gray; font-size: 16px; color: white; margin: 2px;}
 #reBtn{background: rgb(107, 171, 213); font-size: 16px; color: white; margin: 2px; margin-right: 10px;}
+#bBtn{background: rgb(172, 1, 1); font-size: 16px; color: white;}
 
 .btn_group{margin: 40px 0px; position: relative;}   

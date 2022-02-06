@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*헤더용 설정 가져온거임!! */
 
-.innerOuter{width:1000px; margin: auto;}
+.innerOuter{width:1000px; margin: auto; display:block;}
 
 .content{width:80%; margin:auto;}
 
