@@ -2,9 +2,12 @@ package com.kh.oceanclass.help.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Notice;
 
+@Service
 public interface HelpService {
 	
 	/* 

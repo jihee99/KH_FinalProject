@@ -18,4 +18,4 @@
 	    width: 100%;
 	    text-align: center;
 	}
-	.paging{margin-bottom: 50px;}
+	#paging{width:fit-content; margin:auto;}
