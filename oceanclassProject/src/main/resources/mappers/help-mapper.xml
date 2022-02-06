@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="helpMapper">
+
+	
+	<resultMap id="noticeResult" type="Notice">
+		<result column="no_no" property="noNo" />
+		<result column="mem_no" property="memNo" />
+		<result column="category" property="category" />
+		<result column="n_title" property="noTitle" />
+		<result column="n_content" property="noContent" />
+		<result column="count" property="count" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="img" property="img" />
+	</resultMap>
+
+	<!-- 공지사항 -->
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from notice
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectList" resultMap="noticeResult">
+		select
+		       no_no
+		     , mem_no
+		     , category
+		     , n_title
+		     , n_content
+		     , count
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , img
+		  from notice
+		 where status = 'Y'
+		 order
+		    by no_no desc
+	</select>
+	
+</mapper>
