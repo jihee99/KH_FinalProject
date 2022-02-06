@@ -32,8 +32,7 @@
     #top-area{
         height: 100px;
         margin-top: 50px;
-        display: flex;
-        justify-content: space-between;
+        margin-bottom: 50px;
     }
     /* 게시판이름 */
     #bord-name{
@@ -119,8 +118,9 @@
         justify-content: space-between;
     }
     .btn{
-        width: 60px;
-        height: 35px;
+        width: 70px;
+        height: 30px;
+        line-height: 0px;
     }
     #blueBtn{
         background-color: rgb(107, 171, 213);
