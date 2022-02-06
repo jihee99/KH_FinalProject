@@ -13,7 +13,7 @@
     
 <style>
 	.content>table{
-		width: 60%; 
+		width: 80%; 
 		margin:auto;
 		background-color: rgba(107, 171, 213, 0.3);
 		margin-bottom: 50px;
@@ -29,9 +29,9 @@
 	}
 	.text{
 		height: 300px;
-		vertical-align: middle;
+		valign: middle;
 	}
-	.btn{display: block; margin: auto; background: rgb(107, 171, 213);}
+	.content>button{display: block; margin: auto; background: rgb(107, 171, 213);}
 </style>
     
 </head>
