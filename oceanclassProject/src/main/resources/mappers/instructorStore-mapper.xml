@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inStoreMapper">
+  <resultMap id="productResult" type="Product">
+  	<result column="PNO" property="pNo"/>
+  	<result column="MNO" property="mNo"/>
+  	<result column="CATEGORY" property="category"/>
+  	<result column="TITLE" property="title"/>
+  	<result column="PRICE" property="price"/>
+  	<result column="STOCK" property="stock"/>
+  	<result column="ENDATE" property="enDate"/>
+  	<result column="COURIER" property="courier"/>
+  	<result column="SOLDOUT_YN" property="soldoutYN"/>
+  	<result column="STATUS" property="status"/>
+  	<result column="IMG1" property="mainImg"/>
+  	<result column="IMG2" property="subImg1"/>
+  	<result column="IMG3" property="subImg2"/>
+  	<result column="IMG4" property="subImg3"/>
+  </resultMap>
+  
+  <select id="selectList" resultType="productResult">
+  	select PNO
+	     , MNO
+	     , CATEGORY
+	     , TITLE
+	     , PRICE
+	     , STOCK
+	     , ENDATE
+	     , COURIER
+	     , SOLDOUT_YN
+	     , IMG1
+	     , IMG2
+	     , IMG3
+	     , IMG4
+	 from STORE
+	where STATUS = 'Y';
+  </select>
+  
+</mapper>

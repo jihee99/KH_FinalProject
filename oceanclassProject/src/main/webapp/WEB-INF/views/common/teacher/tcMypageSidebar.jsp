@@ -118,7 +118,7 @@
                 <div id="menu3">
                     <p>스토어 관리</p>
                     <ul>
-                        <li><a href="">내 상품</a></li>
+                        <li><a href="stlist.in">내 상품</a></li>
                         <li><a href="">상품 리뷰 관리</a></li>
                         <li><a href="">상품 문의 관리</a></li>
                         <li><a href="">재고 관리</a></li>

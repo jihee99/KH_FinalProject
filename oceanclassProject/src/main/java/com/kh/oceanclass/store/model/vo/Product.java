@@ -27,5 +27,6 @@ public class Product {
 	private String subImg1;		// 상세이미지1 경로
 	private String subImg2;		// 상세이미지2 경로
 	private String subImg3;		// 상세이미지3 경로
+
 	
 }
