@@ -95,9 +95,8 @@
                         <th><input type="checkbox" id="checkAll"></th>
                         <th width="120">쿠폰번호</th>
                         <th width="350">쿠폰명</th>
-                        <th width="100">할인율(%)</th>
-                        <th>지급일</th>
-                        <th>만료일</th>
+                        <th width="150">할인율(%)</th>
+                        <th width="150">발행 수</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -107,11 +106,14 @@
                         <td>2012312</td>
                         <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
                         <td>10</td>
-                        <td>2022-02-01 12:00:00</td>
-                        <td>2022-02-08 12:00:00</td>
+                        <td>24</td>
                         <td>
                             <button class="crow" onclick="window.open('cgive.ad','쿠폰지급페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
+                        	<button>삭제</button>
                         </td>
+                    </tr>
+                    <tr>
+                    	<td colspan="6">선택삭제로 할지 아니면 행별 삭제로 할지 정하기!!</td>
                     </tr>
                     
                 </tbody>

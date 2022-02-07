@@ -18,7 +18,7 @@ label[for="class"], label[for="store"]{top: -1.5px; margin-top: 4px;}
 .content_2>b{float:left; margin-left: 10px; font-size: 16px; line-height: 33px;}
 #orderTable{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
 #orderTable thead{line-height: 35px; font-size: 14px; background: lightgray;}
-#orderTable tbody tr:hover{cursor: pointer; font-weight: bold;}
+
 
 .content_2>button{
     float: right; margin-right: 10px; margin-bottom: 5px;

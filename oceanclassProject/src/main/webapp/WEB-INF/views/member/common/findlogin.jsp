@@ -89,7 +89,7 @@
                     
                     <span id="top-text">인증 번호</span>
                     <div class="form-group">
-                      <input type="password" class="form-control" id="findId" placeholder="SMS로 수신된 인증번호" name="userPwd" required>
+                      <input type="number" class="form-control" id="findId" placeholder="SMS로 수신된 인증번호" name="userPwd" required>
                       <button type="button" class="rightBtn btn-sm" onclick="idCheck();">확인</button>
                       
                     </div>

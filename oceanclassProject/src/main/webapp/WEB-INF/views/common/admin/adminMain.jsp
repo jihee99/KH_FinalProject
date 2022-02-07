@@ -72,7 +72,6 @@
                 <span class="material-icons">manage_accounts</span> 관리자1
             </div>
             <div id="content">
-                	내용~~~~~
             </div>
         </div>
     </div>  

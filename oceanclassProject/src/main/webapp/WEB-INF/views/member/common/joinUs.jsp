@@ -44,15 +44,8 @@
         text-align: right;
         margin-right: 35px;
     }
-    input[type=text] {
-        height: 45px;
-        width: 300px;
-        border: 1px solid lightgray;
-        border-radius: 5px;
-        padding: 10px;
-    }
-
-    input[type=password] {
+    
+    .input-area input{
         height: 45px;
         width: 300px;
         border: 1px solid lightgray;
@@ -148,14 +141,14 @@
                     <div class="box">
                         <label class="textName" for="userPwd">비밀번호<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="userPwd" name="userPwd" placeholder="비밀번호(영문,숫자 포함 6자리 이상)" required>
+                            <input type="password" id="userPwd" name="userPwd" placeholder="비밀번호(영문,숫자 포함 6자리 이상)" required>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="userPwdCk">비밀번호 확인<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="userPwdCk" name="userPwdCk" placeholder="비밀번호 확인" required>
+                            <input type="password" id="userPwdCk" name="userPwdCk" placeholder="비밀번호 확인" required>
                         </div>
                     </div>
 
@@ -184,7 +177,7 @@
                     <div class="box">
                         <label class="textName"></label>
                         <div class="input-area">
-                            <input type="text" id="userId" class="w200" name="userId" placeholder="인증번호" required>
+                            <input type="number" id="userId" class="w200" name="userId" placeholder="인증번호" required>
                             <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">인증 확인</button>
                         </div>
                     </div>

@@ -126,7 +126,7 @@
             <div id="content-wrap" style="overflow-y: scroll;">
                 <div id="cl-wrap">
                     <div id="cl-img">
-                        <img src="resources/images/bomi7.jpg" style="width: 140px;">
+                        <img src="resources/images/bomi7.png" style="width: 140px;">
                         <div class="star" align="center">
                             <span>★★★★★</span>
                         </div>

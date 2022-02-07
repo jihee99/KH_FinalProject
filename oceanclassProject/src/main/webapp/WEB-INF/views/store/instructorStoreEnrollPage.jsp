@@ -20,7 +20,7 @@
                 <b>상품등록하기</b>
             </div>
             <br>
-            <form action="">
+            <form method="post" action="" enctype="multipart/form-data">
                 <table id="pInfo">
                     <thead>
                         <tr>
@@ -35,18 +35,19 @@
                             <th style="width: 140px;">카테고리</th>
                             <td style="width: 750px;">
                                 <select>
-                                    <option value="클래스상품">클래스상품</option>
-                                    <option value="클래스상품">OC 에디션</option>
-                                    <option value="클래스상품">DIY 키트</option>
+                                    <option value="1">클래스상품</option>
+                                    <option value="2">OC 에디션</option>
+                                    <option value="3">DIY 키트</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <th>상품명</th>
-                            <td><input type=""></td>
+                            <td><input name="" type="text"></td>
                         </tr>
                         <tr>
-                            <td style="line-height: 5px;">&nbsp;</td>
+							<input name="" type="text" placeholder="옵션명">
+							<input name="" type="number" placeholder="원">
                         </tr>
                         <tr>
                             <th>대표이미지</th>
@@ -57,7 +58,7 @@
                         </tr>
                         <tr class="atLine">
                             <th></th>
-                            <td><input type="file"></td>
+                            <td><input type="file" name="upfile"></td>
                         </tr>
                         <tr>
                             <td style="line-height: 5px;">&nbsp;</td>
@@ -68,22 +69,22 @@
                         </tr>
                         <tr class="atLine">
                             <td></td>
-                            <td><input type="file"></td>
+                            <td><input type="file" name="upfile"></td>
                         </tr>
                         <tr class="atLine">
                             <td></td>
-                            <td><input type="file"></td>
+                            <td><input type="file" name="upfile"></td>
                         </tr>
                         <tr class="atLine">
                             <td></td>
-                            <td><input type="file"></td>
+                            <td><input type="file" name="upfile"></td>
                         </tr>
                         <tr>
                             <td style="line-height: 5px;">&nbsp;</td>
                         </tr>
                         <tr>
                             <th>상품가격</th>
-                            <td><input type="number" placeholder="숫자만 입력하세요(원)"></td>
+                            <td><input name="" type="number" placeholder="숫자만 입력하세요(원)"></td>
                         </tr>
                         <tr>
                             <td style="line-height: 5px;">&nbsp;</td>
@@ -92,9 +93,9 @@
                             <th>배송정보</th>
                             <td>
                                 <select>
-                                    <option>우체국택배</option>
-                                    <option>CJ대한통운</option>
-                                    <option>롯데택배</option>
+                                    <option value="우체국택배">우체국택배</option>
+                                    <option value="CJ대한통운">CJ대한통운</option>
+                                    <option value="롯데택배">롯데택배</option>
                                 </select>
                             </td>
                         </tr>

@@ -20,6 +20,7 @@
         <div class="headMenu">
             <b>신고 내역 조회</b>
         </div>
+        <br>
         <div class="content_1">
             <b>통합신고검색</b>
             <form action="">
@@ -169,6 +170,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div style="float:left; margin-top:10px;">
+    		<button id="bBtn" class="btn btn-sm" style="background: rgb(172, 1, 1); font-size: 16px; color: white;">블랙리스트 목록 보기</button>
         </div>
         <div class="btn_group" align="center">
             <button class="btn btn-light">&lt;</button>
