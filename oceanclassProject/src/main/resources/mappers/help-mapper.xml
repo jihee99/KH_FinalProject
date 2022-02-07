@@ -42,10 +42,8 @@
 		     , mno
 		     , category
 		     , n_title
-		     , n_content
 		     , count
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-		     , img
 		  from notice
 		 where status = 'Y'
 		 order
@@ -88,6 +86,21 @@
 		     , nickname
 		     , category
 		     , q_title
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , password
+		     , to_char(a_date, 'YYYY-MM-DD') as "a_date"
+		  from qna
+		  join member using (mno)
+		 order
+		    by qno desc
+	</select>
+	
+	<select id="selectQna" resultMap="qnaResult">
+		select
+			   qno
+		     , nickname
+		     , category
+		     , q_title
 		     , q_content
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , img
@@ -96,8 +109,7 @@
 		     , a_date
 		  from qna
 		  join member using (mno)
-		 order
-		    by qno desc
+		 where qno = #{qno}
 	</select>
 	
 </mapper>

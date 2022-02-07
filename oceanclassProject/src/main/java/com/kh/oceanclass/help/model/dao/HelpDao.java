@@ -47,5 +47,9 @@ public class HelpDao {
 		
 		return (ArrayList)sqlSession.selectList("helpMapper.selectQnaList", null, rowBounds);
 	}
+	
+	public Qna selectQna(SqlSessionTemplate sqlSession, int qno) {
+		return sqlSession.selectOne("helpMapper.selectQna", qno);
+	}
 
 }

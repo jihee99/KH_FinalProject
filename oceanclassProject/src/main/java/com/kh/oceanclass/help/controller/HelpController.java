@@ -109,5 +109,19 @@ public class HelpController {
 		model.addAttribute("list", list);
 		return "help/qnaList";
 	}
+	
+	@RequestMapping("qnaDetail.he")
+	public String selectQna(int qno, Model model) {
+		Qna q = hService.selectQna(qno);
+		if(q.category.equals("C")) {
+			q.category = "클래스";
+		}else if(q.category.equals("S")) {
+			q.category = "스토어";
+		}else {
+			q.category = "기타";
+		}
+		model.addAttribute("q", q);
+		return "help/qnaDetail";
+	}
 
 } // class

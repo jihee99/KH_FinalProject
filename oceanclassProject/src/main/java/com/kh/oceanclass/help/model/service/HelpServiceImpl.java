@@ -57,4 +57,9 @@ public class HelpServiceImpl implements HelpService{
 		return hDao.selectQnaList(sqlSession, pi);
 	}
 
+	@Override
+	public Qna selectQna(int qno) {
+		return hDao.selectQna(sqlSession, qno);
+	}
+
 }

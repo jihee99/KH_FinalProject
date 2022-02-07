@@ -49,7 +49,7 @@
             <button type="button" class="btn btn-primary qs">문의하기</button>
         </div>
         <div class="content my-5">
-            <table class="table table-hover">
+            <table id="qnaList" class="table table-hover">
                 <thead>
                     <tr>
                     	<th>글번호</th>
@@ -63,7 +63,7 @@
                 <tbody>
                     <c:forEach var="q" items="${list}"> 
 	                    <tr>	
-	                        <td id="nno">${q.qnaNo}</td>
+	                        <td id="qno">${q.qnaNo}</td>
 	                        <td>${q.category}</td>
 	                        <td>${q.qnaTitle}</td>
 	                        <td>${q.nickName}</td>
@@ -83,10 +83,47 @@
             </table>
         </div>
         
-    
+        <script>
+        	$(function(){
+        		$("#qnaList>tbody>tr").click(function(){
+        			location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
+        		});
+        	})
         
+        </script>
+        
+         <div id="paging">
+			<ul class="pagination">
+				<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li class="page-item disabled">
+							<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ pi.currentPage-1 }">Previous</a></li>
+					</c:otherwise>
+				</c:choose>
+				
+				
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ p }">${ p }</a></li>
+				</c:forEach>
+				
+				
+				<c:choose>
+					<c:when test="${ pi.currentPage eq pi.maxPage }">
+						<li class="page-item disabled">
+							<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ pi.currentPage+1 }">Next</a></li>
+					</c:otherwise>
+				</c:choose>
+            </ul>
+        </div>
 	</div>
-    </div>
     
      <jsp:include page="../common/footerBar.jsp" />
      

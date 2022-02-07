@@ -33,5 +33,7 @@ public interface HelpService {
 	int selectQnaCount();
 	ArrayList<Qna> selectQnaList(PageInfo pi);
 	
+	Qna selectQna(int qno);
+	
 }
 
