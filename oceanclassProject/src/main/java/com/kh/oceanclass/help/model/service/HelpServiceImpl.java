@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.dao.HelpDao;
+import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
 
@@ -61,5 +62,21 @@ public class HelpServiceImpl implements HelpService{
 	public Qna selectQna(int qno) {
 		return hDao.selectQna(sqlSession, qno);
 	}
+	
+	@Override
+	public int insertQna(Qna q) {
+		return hDao.insertQna(sqlSession, q);
+	}
+	
+	
+	/*
+	 * 	FAQ 게시판
+	 */
+	@Override
+	public ArrayList<Faq> selectFaqList() {
+		return hDao.selectFaqList(sqlSession);
+	}
+
+
 
 }
