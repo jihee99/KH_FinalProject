@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,62 +20,56 @@
 			background-color: rgba(107, 171, 213, 0.38);
 			margin-bottom: 20px;
 		}
-		table th{ width: 25%; padding:15px;}
+		table th, table td{padding: 15px;}
 		table td{
+			width: 85%;
 			text-align: left;
 		}
-		.bottom{margin-left: 150px;}
+		.bottom{margin-left: 140px; margin-top: 70px;}
     </style>
 </head>
 <body>
 
 	<jsp:include page="../common/header.jsp" />
-    <div class="wrapper my-5">
+    <div class="innerOuter my-5">
         <div class="head py-3">
-            <p><h2>HELP</h2></p>
-        </div>
-        <div class="button my-3">
-            <button type="button" class="btn btn-outline-primary">공지사항</button>
-            <button type="button" class="btn btn-outline-primary">FAQ</button>
-            <button type="button" class="btn btn-outline-primary">1:1문의</button>
+            <p>1:1 문의 작성</p>
         </div>
         <div class="content my-5">
-            <table>
-                    <tr>
-                        <th>카테고리*</th>
-                        <td>
-                            <select name="national">
-                                <option value="c">클래스</option>
-                                <option value="s">스토어</option>
-                                <option value="e">기타</option>
-                            </select>
-                        </td>
+        	<form id="enrollQna" method="post" action="insertQna.he" enctype="multipart/form-data"> 
+				<input type="hidden" id="mno" value="14">
+				<table>
+					<tr>
+					    <th><label for="category">*카테고리</label></th>
+					    <td>
+					        <select name="national">
+					            <option value="c">클래스</option>
+					            <option value="s">스토어</option>
+					            <option value="e">기타</option>
+					        </select>
+					    </td>
                     </tr>
-                    <tr>
-                        <th >제목*</th>
-                        <td><textarea name="" id="" cols="50" rows="1" style="resize:none">환불되나요
-                        </textarea></td>
+					<tr>
+                        <th><label for="title">*제목</label></th>
+                        <td><input type="text" id="title" class="form-control" name="boardTitle" required></td>
                     </tr>
-                    <tr>
-                        <th>내용*</th>
-                        <td><textarea name="" id="" cols="50" rows="10" style="resize:none">강의 3개 들었는데 환불되나욤
-                        </textarea></td>
+					<tr>
+                        <th><label for="content">*내용</label></th>
+                        <th><textarea id="content"  class="form-control" required name="boardContent" rows="10" style="resize:none;"></textarea></th>
                     </tr>
-                    <tr>
-                        <th>첨부파일</th>
-                        <td><input type="file"></td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">비밀글입니다<input type="radio"> <input type="number" placeholder="비밀번호입력(4자리)"></th>
-                    </tr>
-            </table>
-            <div class="button bottom">
-                <button type="button" class="btn btn-outline-primary">등록</button>
-                <button type="button" class="btn btn-outline-primary">취소</button>
-            </div>
+					<tr>
+						<th>비밀글</th>
+                        <td><input type="password" id="pwd" placeholder="비밀번호입력(4자리)"></td>
+					</tr>
+				</table>	
+				
+				<div class="button bottom">
+	                <button type="submit" class="btn">등록</button>
+	                <button type="reset" class="btn">취소</button>
+            	</div>
+        	</form>
         </div>
-        <div class="paging"></div>
     </div>
-
+	<jsp:include page="../common/footerBar.jsp" />
 </body>
 </html>

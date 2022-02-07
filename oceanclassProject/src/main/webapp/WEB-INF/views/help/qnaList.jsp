@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./resources/css/helpMain.css">
 <style>
 	.middle{
@@ -46,9 +46,10 @@
         <div class="middle">
             <input type="text" class="form-control form-control-sm">
             <button class="btn btn-sm btn-outline-primary" style="width:60px;">검색</button>
-            <button type="button" class="btn btn-primary qs">문의하기</button>
+			<button type="button" class="btn btn-primary qs" onclick="location.href='qnaForm.he';">문의하기</button>
         </div>
         <div class="content my-5">
+        	<input type="hidden" id="pwd" value="${q.qwd}">
             <table id="qnaList" class="table table-hover">
                 <thead>
                     <tr>
@@ -65,7 +66,12 @@
 	                    <tr>	
 	                        <td id="qno">${q.qnaNo}</td>
 	                        <td>${q.category}</td>
-	                        <td>${q.qnaTitle}</td>
+	                        <td>
+	                        	${q.qnaTitle}
+	                        	<c:if test="${q.pwd ne '0'}">
+		                    		<i class="bi bi-lock-fill"></i>
+		                    	</c:if>
+	                        </td>
 	                        <td>${q.nickName}</td>
 	                        <td>${q.createDate}</td>
 	                        <c:choose>
@@ -86,9 +92,18 @@
         <script>
         	$(function(){
         		$("#qnaList>tbody>tr").click(function(){
-        			location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
+        			if(("#pwd").text() != 0){
+        				password();
+        			}else{
+        				location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
+        			}
         		});
         	})
+        	
+        	function password(){
+        		
+        		
+        	}
         
         </script>
         
