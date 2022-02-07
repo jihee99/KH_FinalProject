@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,56 +12,58 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/helpMain.css">
     
-    <style>
-    	.table{
-    		width:80%; 
-			margin:auto;
-			margin-left: 100px;
-			background-color: rgba(107, 171, 213, 0.38);
-			margin-bottom: 20px;
-		}
-		table th{ 
-			width: 25%; 
-			padding:15px; 
-			padding-bottom: 10px;
-		}
-		table td{
-			text-align: left;
-		}
-		#back{ margin-left: 380px;}
-    </style>
+<style>
+  	.table{
+  		width:80%; 
+		margin:auto;
+		margin-left: 100px;
+		background-color: rgba(107, 171, 213, 0.38);
+		margin-bottom: 20px;
+	}
+	table th{ 
+		width: 25%; 
+		padding:15px; 
+		padding-bottom: 10px;
+	}
+	table td{
+		text-align: left;
+	}
+	#back{margin-left: 380px;}
+</style>
 
 </head>
 <body>
 	<jsp:include page="../common/header.jsp" />
-    <div class="wrapper my-5">
+    <div class="innerOuter my-5">
         <div class="head">
-            <p><h2>1:1문의</h2></p>
+            <p>1:1문의</p>
         </div>
         <div class="content my-5">
             <table class="table table-bordered">
-                    <tr>
-                        <th>제목</th>
-                        <td colspan="3">환불되나욤</td>
-                    </tr>
-                    <tr>
-                        <th >작성자</th>
-                        <td>모니카</td>
-                        <th>작성날짜</th>
-                        <td>2022-01-01</td>
-                    </tr>
-                    <tr>
-                        <th>카테고리</th>
-                        <td colspan="3">클래스</td>
-                    </tr>
-                    <tr>
-                        <th >문의내용</th>
-                        <td colspan="3"><textarea name="" id="" cols="70" rows="8" style="resize: none;">내용웅앵웅~</textarea></td>
-                    </tr>
-                    <tr>
-                        <th >답변</th>
-                        <td colspan="3"><textarea name="" id="" cols="70" rows="5" style="resize: none;">답변웅앵웅~</textarea></td>
-                    </tr>
+				<tr>
+                    <th>제목</th>
+                    <td colspan="3">${q.qnaTitle}</td>
+                </tr>
+                <tr>
+                    <th>작성자</th>
+                    <td>${q.nickName}</td>
+                    <th>작성날짜</th>
+                    <td>${q.createDate}</td>
+                </tr>
+                <tr>
+                    <th>카테고리</th>
+                    <td colspan="3">${q.category}</td>
+                </tr>
+                <tr>
+                    <th>문의내용</th>
+                    <td colspan="3"><p>${q.qnaContent}</p></td>
+                </tr>
+                <c:if test="${not empty q.ansDate}"> 
+	                <tr>
+	                    <th>답변</th>
+	                    <td colspan="3">${q.ansContent}<br><br>${q.ansDate}</td>
+	                </tr>
+                </c:if>
             </table>
             <button type="button" class="btn btn-primary" id="back">목록으로</button>
         </div>

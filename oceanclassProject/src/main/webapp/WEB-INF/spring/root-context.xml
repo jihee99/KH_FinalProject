@@ -5,12 +5,11 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- 
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="" />
-		<property name="password" value="" />
+		<property name="username" value="OCEAN" />
+		<property name="password" value="OCEAN" />
 	</bean>
 	 
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
@@ -26,6 +25,5 @@
 		<property name="maxUploadSize" value="100000000" />
 		<property name="maxInMemorySize" value="100000000" />
 	</bean>
-	 -->
 		
 </beans>
