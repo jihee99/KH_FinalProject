@@ -48,8 +48,7 @@
                         </tr>
                         <tr>
                         	<th>옵션여부</th>
-                        	<td>
-							<td>
+                        	<td></td>
                         </tr>
                         <tr>
                         	<th></th>

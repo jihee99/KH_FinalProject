@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,7 @@
 			
 			$('#insBtn').click(function(){
 				if(index<=max){
-					var fieldHTML = '<div><input class="opStyle1" type="text" placeholder="옵션명" style="width:400px; line-height:29px; margin-right:2px;"><input class="opStyle2" type="number" placeholder="원" style="width:200px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn">삭제</a></div>';
+					var fieldHTML = '<div><input class="opStyle1" name="optionName" type="text" placeholder="옵션명" style="width:400px; line-height:29px; margin-right:2px;"><input name="price" class="opStyle2" type="number" placeholder="원" style="width:200px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn">삭제</a></div>';
 					$('#append').append(fieldHTML);		//add field
 					index++;	// 카운트 증가
 				}else{
@@ -45,7 +46,7 @@
                 <b>상품수정하기</b>
             </div>
             <br>
-            <!-- <form method="post" action="" enctype="multipart/form-data"> -->
+            <form method="post" action="stenroll.in" enctype="multipart/form-data">
                 <table id="pInfo">
                     <thead>
                         <tr>
@@ -59,7 +60,7 @@
                         <tr>
                             <th style="width: 140px;">카테고리</th>
                             <td style="width: 750px;">
-                                <select class="category">
+                                <select class="category" name="category">
                                     <option value="1">클래스상품</option>
                                     <option value="2">OC 에디션</option>
                                     <option value="3">DIY 키트</option>
@@ -70,15 +71,19 @@
                             <th>상품명</th>
                             <td><input name="title" type="text"></td>
                         </tr>
+                        <tr>
+                            <th>상품가격</th>
+                            <td><input name="price" type="number" placeholder="숫자만 입력하세요(원)"></td>
+                        </tr>
                          <tr>
                         	<th>옵션여부</th>
                         	<td>
-                        		<button class="btn btn-light" id="insBtn">+</button>
+                        		<input type="button" class="btn btn-light" id="insBtn" value="+" style="width:40px;">
 							<td>
                         </tr>
                         <tr>
                         	<td colspan="2">
-                        		<div id="append" style="margin-left:50px; width:700px; border:1px solid red;">
+                        		<div id="append" style="margin-left:50px; width:700px;">
 					
                         		</div>
                         	</td>
@@ -117,16 +122,9 @@
                             <td style="line-height: 5px;">&nbsp;</td>
                         </tr>
                         <tr>
-                            <th>상품가격</th>
-                            <td><input name="" type="number" placeholder="숫자만 입력하세요(원)"></td>
-                        </tr>
-                        <tr>
-                            <td style="line-height: 5px;">&nbsp;</td>
-                        </tr>
-                        <tr>
                             <th>배송정보</th>
                             <td>
-                                <select>
+                                <select name="courier">
                                     <option value="우체국택배">우체국택배</option>
                                     <option value="CJ대한통운">CJ대한통운</option>
                                     <option value="롯데택배">롯데택배</option>
@@ -137,11 +135,11 @@
                 </table>
                 <br><br>
                 <div class="btnBox" align="center">
-                    <button class="btn" type="">제출하기</button>
+                    <button class="btn" type="submit">제출하기</button>
                     <button class="btn" type="reset">초기화</button>
                 </div>
                 <br><br>
-            <!-- </form> -->
+            </form>
         </div>
     </div>
 </body>
