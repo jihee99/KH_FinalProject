@@ -20,3 +20,5 @@
 	    text-align: center;
 	}
 	#paging{width:fit-content; margin:auto;}
+	.content button{background: rgb(107, 171, 213); color: whitesmoke;}
+	.content button:hover{background: rgb(107, 171, 213, 0.2)}

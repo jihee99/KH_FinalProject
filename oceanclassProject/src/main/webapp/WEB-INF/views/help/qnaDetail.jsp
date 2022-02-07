@@ -13,22 +13,26 @@
     <link rel="stylesheet" href="./resources/css/helpMain.css">
     
 <style>
-  	.table{
-  		width:80%; 
+ 	.content>table{
+		width: 80%; 
 		margin:auto;
-		margin-left: 100px;
-		background-color: rgba(107, 171, 213, 0.38);
-		margin-bottom: 20px;
+		background-color: rgba(107, 171, 213, 0.3);
+		margin-bottom: 50px;
 	}
 	table th{ 
-		width: 25%; 
+		width: 20%; 
 		padding:15px; 
 		padding-bottom: 10px;
+		text-align: center;
 	}
 	table td{
 		text-align: left;
 	}
-	#back{margin-left: 380px;}
+	.text{
+		height: 300px;
+		valign: middle;
+	}
+	.content>button{display: block; margin: auto;}
 </style>
 
 </head>
@@ -39,10 +43,12 @@
             <p>1:1문의</p>
         </div>
         <div class="content my-5">
-            <table class="table table-bordered">
+            <table class="table table-bordered border-white">
 				<tr>
                     <th>제목</th>
-                    <td colspan="3">${q.qnaTitle}</td>
+                    <td colspan="3">
+                    	${q.qnaTitle}
+                    </td>
                 </tr>
                 <tr>
                     <th>작성자</th>
@@ -56,7 +62,7 @@
                 </tr>
                 <tr>
                     <th>문의내용</th>
-                    <td colspan="3"><p>${q.qnaContent}</p></td>
+                    <td colspan="3" class="text"><p>${q.qnaContent}</p></td>
                 </tr>
                 <c:if test="${not empty q.ansDate}"> 
 	                <tr>
@@ -65,7 +71,7 @@
 	                </tr>
                 </c:if>
             </table>
-            <button type="button" class="btn btn-primary" id="back">목록으로</button>
+            <button type="button" class="btn" onclick="history.back()">목록으로</button>
         </div>
     </div>
 </body>
