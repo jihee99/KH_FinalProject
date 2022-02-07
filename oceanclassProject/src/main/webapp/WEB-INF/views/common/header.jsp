@@ -20,7 +20,7 @@
             <div id="header_1_right">
 
                 <!-- 로그인 전 -->
-                <a href="">로그인</a>
+                <a href="login.me">로그인</a>
                 <a href="">회원가입</a>
                 
                 <!-- 로그인 후 
