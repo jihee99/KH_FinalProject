@@ -20,8 +20,8 @@
             <div id="header_1_right">
 
                 <!-- 로그인 전 -->
-                <a href="login.me">로그인</a>
-                <a href="">회원가입</a>
+                <a href="loginForm.me">로그인</a>
+                <a href="joinUsForm.me">회원가입</a>
                 
                 <!-- 로그인 후 
                 <img src="" value="장바구니">

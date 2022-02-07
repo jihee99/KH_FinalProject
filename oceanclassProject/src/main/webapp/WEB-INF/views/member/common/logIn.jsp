@@ -100,7 +100,7 @@
                 <div id="login-text">
                     <span>Log in</span>
                 </div>
-                <form action="" method="post">
+                <form action="login.me" method="post">
                     <!-- id 인풋 null일 때-->
                     <div class="form-group">
                       <input type="text" class="form-control" id="userIdPwd" placeholder="아이디를 입력하세요." name="userId" required>
@@ -138,7 +138,7 @@
             </div>
             <div class="loginBottom" align="center">
                 <div id="join">
-                    아직도 OceanClass 회원이 아니신가요? &ensp;<a style="color: rgb(52, 152, 219);" href="">회원가입 하기</a>
+                    아직도 OceanClass 회원이 아니신가요? &ensp;<a style="color: rgb(52, 152, 219);" href="joinUsForm.me">회원가입 하기</a>
                 </div>
                 <div id="find">
                     <a href="">아이디 찾기</a>&ensp; 
