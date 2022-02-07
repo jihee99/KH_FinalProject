@@ -23,10 +23,10 @@ public class Product {
 	public String courier;		// 택배회사
 	public String soldoutYN;	// 품절여부
 	public String status;		// 게시상태(Y-게시/N-승인대기/R-반려/D-내리기)
-	public String mainImg;		// 메인이미지 경로
-	public String subImg1;		// 상세이미지1 경로
-	public String subImg2;		// 상세이미지2 경로
-	public String subImg3;		// 상세이미지3 경로
+	public String productImg0;		// 메인이미지 경로
+	public String productImg1;		// 상세이미지1 경로
+	public String productImg2;		// 상세이미지2 경로
+	public String productImg3;		// 상세이미지3 경로
 
 	
 }

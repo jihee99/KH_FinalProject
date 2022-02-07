@@ -34,7 +34,7 @@
                 <table>
                     <tr>
                         <td class="img_area">
-                            <img src="${p.mainImg }" style= "height:100%; background-color:none;">
+                            <img src="${p.productImg0 }" style= "height:100%; background-color:none;">
                         </td>
                         <td width="700">
                             <table class="info_area">

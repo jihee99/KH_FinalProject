@@ -1,6 +1,10 @@
 package com.kh.oceanclass.store.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -49,10 +53,22 @@ public class InstructorStoreController {
 	public void insertProduct(Product p, ProductOption op, MultipartFile[] upfile, HttpSession session, Model model) {
 		System.out.println(p);
 		System.out.println(op); 
-		System.out.println(upfile);
+		/*for(int i=0; i<upfile.length; i++) {
+			System.out.println(upfile[i]);
+		}*/
+		
+		ArrayList<String> changeList = saveFile(upfile, session);
+		//String changeName = saveFile(upfile, session);
+		System.out.println(changeList);
+		
+		// 배열에 저장된 값을 어떻게 하나씩 객체에 넣어야할지 모르겠음..
+
+		
+		
+		System.out.println(p);
 	}
 	
-	
+
 	@RequestMapping("stdetail.in")
 	public String selectProduct(int pno, Model model) {
 		Product p = inStoreService.selectProduct(pno);
@@ -62,9 +78,41 @@ public class InstructorStoreController {
 		return "store/instructorStoreUpdate";
 	}
 	
+	
 	@RequestMapping("stupdateF.in")
 	public void updateProduct(int pno, Model model) {
 		System.out.println(pno);
 	}
 
+	
+	
+	//파일명변경
+	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
+		
+		ArrayList<String> changeList = new ArrayList();
+		//String reName = "";
+		for(int i=0; i<upfile.length; i++) {
+			if(!upfile[i].getOriginalFilename().equals("")) {
+				String originName = upfile[i].getOriginalFilename();
+				String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());	
+				int ranNum = (int)(Math.random() * 90000 + 10000);	
+				String ext = originName.substring(originName.lastIndexOf("."));
+				String changeName = currentTime + ranNum + ext;
+				
+				String savePath = session.getServletContext().getRealPath("/resources/images/store/");
+				
+				changeList.add(changeName);
+				//reName += changeName + "-";
+				try {
+					upfile[i].transferTo(new File(savePath + changeName));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return changeList;
+	}
+		
 }
