@@ -9,10 +9,14 @@
 	<typeAliases>
 		<typeAlias type="com.kh.oceanclass.help.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.oceanclass.help.model.vo.Qna" alias="Qna"/>
+		
+		<typeAlias type="com.kh.oceanclass.store.model.vo.Product" alias="Product"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.ProductOption" alias="ProductOption"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/help-mapper.xml" />
+		<mapper resource="/mappers/instructorStore-mapper.xml" />
 	</mappers>
 	
 </configuration>

@@ -11,7 +11,7 @@
 	
 	페이지 확인용 jsp 연결
 
-	<jsp:forward page="WEB-INF/views/member/teacher/classQnaDetailForm.jsp" />
+	<jsp:forward page="WEB-INF/views/common/teacher/tcMypageSidebar.jsp" />
 
 
 </body>

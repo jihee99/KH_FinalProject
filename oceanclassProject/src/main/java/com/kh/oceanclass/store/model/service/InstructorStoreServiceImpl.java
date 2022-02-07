@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.dao.InstructorStoreDao;
 import com.kh.oceanclass.store.model.vo.Product;
 
@@ -19,14 +20,14 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public void selectListCount() {
+	public int selectListCount() {
 		// TODO Auto-generated method stub
-		
+		return inStoreDao.selectListCount(sqlSession);
 	}
 
 	@Override
-	public ArrayList<Product> selectList() {
-		return inStoreDao.selectList(sqlSession);
+	public ArrayList<Product> selectList(PageInfo pi) {
+		return inStoreDao.selectList(sqlSession, pi);
 	}
 
 	@Override

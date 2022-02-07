@@ -13,10 +13,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-.ou{width:1500px}
+
 .wrapper{
     width: 1400px;
-    position:fixed; 
 }
 .side{
     /* margin-top: 50px; */
@@ -88,7 +87,7 @@
 </style>
 </head>
 <body>
-	<div class="ou">
+
     <div class="wrapper">
         <div class="side">
             <div id="logo">
@@ -145,7 +144,7 @@
     <button id="iChat" onclick="">
 		<img src="resources/images/iChatImg.png">
 	</button>
-	</div>
+
 	
 	<!-- The Modal -->
 	<div id="iChatModal">
