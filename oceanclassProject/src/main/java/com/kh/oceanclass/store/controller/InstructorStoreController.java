@@ -20,31 +20,40 @@ import com.kh.oceanclass.store.model.vo.Product;
 public class InstructorStoreController {
 	
 	@Autowired
-	private InstructorStoreService inStoreServie;
+	private InstructorStoreService inStoreService;
 	
 	@RequestMapping("stlist.in")
 	public String selectList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model){
 		
-		int listCount = inStoreServie.selectListCount();
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 3);
-		ArrayList<Product> list = inStoreServie.selectList(pi);
+		int listCount = inStoreService.selectListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 1);
+		ArrayList<Product> list = inStoreService.selectList(pi);
 		
 		//System.out.println("pi = "+pi);
-		System.out.println("list = "+list);
+		//System.out.println("list = "+list);
 		
-		for(int i=0; i<list.size(); i++) {
-			System.out.println(list.get(i).status);
-			if(list.get(i).status.equals("Y")) {
-				list.get(i).setStatus("게시중");
-			}
-			else if(list.get(i).status.equals("N")) {
-				list.get(i).setStatus("승인대기중");
-			}
-			System.out.println(i+"번 ="+list.get(i).status);
-		}
 		model.addAttribute("pi",pi);
 		model.addAttribute("list", list);
 		return "store/instructorStoreList";
 	};
+	
+	@RequestMapping("stenrollF.in")
+	public String enrollForm() {
+		return "store/instructorStoreEnrollPage";
+	}
+	
+	@RequestMapping("stdetail.in")
+	public String selectProduct(int pno, Model model) {
+		Product p = inStoreService.selectProduct(pno);
+		System.out.println(pno);
+		System.out.println(p);
+		model.addAttribute("p", p);
+		return "store/instructorStoreUpdate";
+	}
+	
+	@RequestMapping("stupdateF.in")
+	public void updateProduct(int pno, Model model) {
+		System.out.println(pno);
+	}
 
 }

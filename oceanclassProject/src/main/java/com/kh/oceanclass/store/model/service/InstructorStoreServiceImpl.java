@@ -37,9 +37,8 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	}
 
 	@Override
-	public void selectProduct() {
-		// TODO Auto-generated method stub
-		
+	public Product selectProduct(int pno) {
+		return inStoreDao.selectProduct(sqlSession, pno);
 	}
 
 	@Override

@@ -21,8 +21,11 @@ public class InstructorStoreDao {
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
 		return (ArrayList)sqlSession.selectList("inStoreMapper.selectList", null, rowBounds);
+	}
+	
+	public Product selectProduct(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.selectOne("inStoreMapper.selectProduct", pno);
 	}
 
 	

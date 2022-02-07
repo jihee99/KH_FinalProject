@@ -15,7 +15,7 @@ public interface InstructorStoreService {
 	void insertProduct();
 	
 	// 3. 상품 상세조회용 서비스
-	void selectProduct();
+	Product selectProduct(int pno);
 	
 	// 4. 상품 수정용 서비스
 	void updateProduct();

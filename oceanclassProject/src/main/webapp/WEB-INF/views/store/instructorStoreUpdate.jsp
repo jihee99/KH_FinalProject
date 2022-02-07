@@ -5,36 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 <link rel="stylesheet" href="./resources/css/store/storeEnrollPage.css">
 <title>Insert title here</title>
 </head>
 <body>
-	<script>
-		$(function(){
-			var max = 5;	// 옵션 추가 가능한 최댓값
-			var index = 1;	// 최초 카운트 1
-			var wrapper = $("#append");	// 옵션 추가될 영역
-			
-			$('#insBtn').click(function(){
-				if(index<=max){
-					var fieldHTML = '<div><input class="opStyle1" type="text" placeholder="옵션명" style="width:400px; line-height:29px; margin-right:2px;"><input class="opStyle2" type="number" placeholder="원" style="width:200px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn">삭제</a></div>';
-					$('#append').append(fieldHTML);		//add field
-					index++;	// 카운트 증가
-				}else{
-					alert("더이상 옵션을 추가할 수 없습니다!");
-				}
-			});
-			
-			$(wrapper).on("click", ".delBtn", function(e){
-				e.preventDefault();
-				$(this).parent('div').remove();
-				index--;	
-			});
-			
-		})
-	</script>
+
 	<!-- 강사용 메뉴바 연결하기 	-->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 	 	
@@ -42,10 +18,10 @@
         <div class="content">
             <div class="headMenu">
             	<br>
-                <b>상품수정하기</b>
+                <b>상품등록하기</b>
             </div>
             <br>
-            <!-- <form method="post" action="" enctype="multipart/form-data"> -->
+            <form method="post" action="" enctype="multipart/form-data">
                 <table id="pInfo">
                     <thead>
                         <tr>
@@ -59,7 +35,7 @@
                         <tr>
                             <th style="width: 140px;">카테고리</th>
                             <td style="width: 750px;">
-                                <select class="category">
+                                <select>
                                     <option value="1">클래스상품</option>
                                     <option value="2">OC 에디션</option>
                                     <option value="3">DIY 키트</option>
@@ -68,20 +44,19 @@
                         </tr>
                         <tr>
                             <th>상품명</th>
-                            <td><input name="title" type="text"></td>
+                            <td><input name="title" type="text" value="${p.title }"></td>
                         </tr>
-                         <tr>
+                        <tr>
                         	<th>옵션여부</th>
                         	<td>
-                        		<button class="btn btn-light" id="insBtn">+</button>
 							<td>
                         </tr>
                         <tr>
-                        	<td colspan="2">
-                        		<div id="append" style="margin-left:50px; width:700px; border:1px solid red;">
-					
-                        		</div>
-                        	</td>
+                        	<th></th>
+                        	<td>
+								<input name="" type="text" placeholder="옵션명">
+								<input name="" type="number" placeholder="원">
+							<td>
                         </tr>
                         <tr>
                             <th>대표이미지</th>
@@ -92,7 +67,10 @@
                         </tr>
                         <tr class="atLine">
                             <th></th>
-                            <td><input type="file" name="upfile"></td>
+                            <td>
+                            	<input type="file" id="upfiles" name="reupfiles">
+
+                            </td>
                         </tr>
                         <tr>
                             <td style="line-height: 5px;">&nbsp;</td>
@@ -137,11 +115,11 @@
                 </table>
                 <br><br>
                 <div class="btnBox" align="center">
-                    <button class="btn" type="">제출하기</button>
+                    <button class="btn" type="submit">제출하기</button>
                     <button class="btn" type="reset">초기화</button>
                 </div>
                 <br><br>
-            <!-- </form> -->
+            </form>
         </div>
     </div>
 </body>

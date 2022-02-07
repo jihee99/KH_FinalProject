@@ -3,8 +3,8 @@
 <mapper namespace="inStoreMapper">
 
 	<resultMap id="productResult" type="Product">
-	  	<result column="pno" property="pNo"/>
-	  	<result column="mno" property="mNo"/>
+	  	<result column="pno" property="productNo"/>
+	  	<result column="mno" property="memberNo"/>
 	  	<result column="category" property="category"/>
 	  	<result column="title" property="title"/>
 	  	<result column="price" property="price"/>
@@ -39,5 +39,24 @@
 		order
 		    by pno desc
 	</select>
-  
+	
+  	<select id="selectProduct" resultMap="productResult">
+  		select 
+		       pno
+		     , mno
+		     , category
+		     , title
+		     , price
+		     , stock
+		     , to_char(endate, 'YYYY-MM-DD') endate
+		     , courier
+		     , soldout_yn
+		     , status
+		     , img1
+		     , img2
+		     , img3
+		     , img4
+		  from store
+		 where pno = #{pno}
+  	</select>
 </mapper>
