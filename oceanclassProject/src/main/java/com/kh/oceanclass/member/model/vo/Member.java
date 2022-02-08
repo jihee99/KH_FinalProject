@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class Member {
 	
-	private int mNo;
+	private int memNo;
 	private String userId;
 	private String userPwd;
 	private String userName;
@@ -22,7 +22,7 @@ public class Member {
 	private String profileImg;
 	private String point;
 	private String grade;
-	private String uStatus;
+	private String userStatus;
 	private String report;
 	private Date enrollDate;
 	private Date sleepDate;

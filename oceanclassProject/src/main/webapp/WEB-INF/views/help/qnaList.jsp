@@ -8,8 +8,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./resources/css/helpMain.css">
 <style>
 	.middle{
@@ -46,9 +47,10 @@
         <div class="middle">
             <input type="text" class="form-control form-control-sm">
             <button class="btn btn-sm btn-outline-primary" style="width:60px;">검색</button>
-            <button type="button" class="btn btn-primary qs">문의하기</button>
+			<button type="button" class="btn btn-primary qs" onclick="location.href='qnaForm.he';">문의하기</button>
         </div>
         <div class="content my-5">
+        	
             <table id="qnaList" class="table table-hover">
                 <thead>
                     <tr>
@@ -63,17 +65,23 @@
                 <tbody>
                     <c:forEach var="q" items="${list}"> 
 	                    <tr>	
+	                    	<input type="hidden" id="pwd" name="pwd" value="${q.pwd }">
 	                        <td id="qno">${q.qnaNo}</td>
 	                        <td>${q.category}</td>
-	                        <td>${q.qnaTitle}</td>
+	                        <td>
+	                        	${q.qnaTitle}
+	                        	<c:if test="${q.pwd ne '0'}">
+		                    		<i class="bi bi-lock-fill"></i>
+		                    	</c:if>
+	                        </td>
 	                        <td>${q.nickName}</td>
 	                        <td>${q.createDate}</td>
 	                        <c:choose>
 		                        <c:when test="${not empty q.ansDate}">
-		                        	<td>답변등록</td>
+		                        	<td>등록완료</td>
 		                        </c:when>
 		                        <c:otherwise>
-		                        	<td><td>
+		                        	<td>대기중<td>
 		                        </c:otherwise>
 	                        </c:choose>
 	                        
@@ -85,8 +93,16 @@
         
         <script>
         	$(function(){
-        		$("#qnaList>tbody>tr").click(function(){
-        			location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
+        		$("#qnaList tr").click(function(){
+        			var pwd = $($(this)[0]).children().first().val();
+        			//console.log(pwd);
+        			if(pwd == '0'){
+        				location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
+        			}else{
+        				$(".modal").modal();
+        				//console.log("비밀글");
+        			}
+        			
         		});
         	})
         
@@ -124,8 +140,23 @@
             </ul>
         </div>
 	</div>
+	
+	
+	<!-- Modal Area -->
+	<div class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<p style="text-align:center;">비밀글입니다.</p>
+				</div>
+			<div class="modal-footer">
+		        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+		    </div>
+			</div>
+		</div>
+	</div>
     
-     <jsp:include page="../common/footerBar.jsp" />
+    <jsp:include page="../common/footerBar.jsp" />
      
 </body>
 </html>

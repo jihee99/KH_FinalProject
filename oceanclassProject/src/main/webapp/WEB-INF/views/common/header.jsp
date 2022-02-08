@@ -29,7 +29,7 @@
                 <a href="loginForm.me">로그인</a>
                 <a href="joinUsForm.me">회원가입</a>
                 </c:when>
-                <c:otherwise>
+                <c:otherwise> 
                 <!-- 로그인 후 -->
                 <label style="font-size: 16px;"><span id="userName" style="font-weight: bolder;">${ loginUser.userName }</span> 님 반가워요!</label> &nbsp;&nbsp;
                 <a href="logout.me" style="font-size: 16px;">로그아웃</a>&nbsp;

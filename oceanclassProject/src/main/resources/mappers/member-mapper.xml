@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	
 	<resultMap id="memberResult" type="Member">
-	   <result column="mno" property="mNo" />
+	   <result column="mno" property="memNo" />
 	   <result column="user_id" property="userId" />
        <result column="user_pwd" property="userPwd" />
        <result column="user_name" property="userName" />
@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        <result column="profile" property="profileImg" />
        <result column="point" property="point" />
        <result column="grade" property="grade" />
-       <result column="u_status" property="uStatus" />
+       <result column="u_status" property="userStatus" />
        <result column="report" property="report" />
        <result column="enroll_date" property="enrollDate" />
        <result column="sleep_date" property="sleepDate" />
