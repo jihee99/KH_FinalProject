@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.dao.InstructorStoreDao;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.ProductOption;
 
 @Service
 public class InstructorStoreServiceImpl implements InstructorStoreService{
@@ -31,9 +32,17 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	}
 
 	@Override
-	public void insertProduct() {
+	public int insertProduct(Product p) {
 		// TODO Auto-generated method stub
 		
+		return 0;
+		
+	}
+	
+	@Override
+	public int insertProductOption(ProductOption option) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -106,5 +115,6 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

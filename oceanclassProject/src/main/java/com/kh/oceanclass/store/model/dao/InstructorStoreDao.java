@@ -28,5 +28,10 @@ public class InstructorStoreDao {
 		return sqlSession.selectOne("inStoreMapper.selectProduct", pno);
 	}
 
+	public int insertProduct(SqlSessionTemplate sqlSession, Product p) {
+		
+		return 0;
+	}
+
 	
 }

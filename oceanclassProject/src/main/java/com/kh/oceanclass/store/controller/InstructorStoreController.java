@@ -53,19 +53,25 @@ public class InstructorStoreController {
 	public void insertProduct(Product p, ProductOption op, MultipartFile[] upfile, HttpSession session, Model model) {
 		System.out.println(p);
 		System.out.println(op); 
-		/*for(int i=0; i<upfile.length; i++) {
-			System.out.println(upfile[i]);
-		}*/
 		
 		ArrayList<String> changeList = saveFile(upfile, session);
-		//String changeName = saveFile(upfile, session);
-		System.out.println(changeList);
-		
-		// 배열에 저장된 값을 어떻게 하나씩 객체에 넣어야할지 모르겠음..
+		//System.out.println(changeList);
 
+		for(int i=0; i<changeList.size(); i++) {
+			if(i==0) {
+				p.productImg0 = changeList.get(i);
+			} else if(i==1) {
+				p.productImg1 = changeList.get(i);
+ 			} else if(i==2) {
+ 				p.productImg2 = changeList.get(i);
+ 			} else {
+ 				p.productImg3 = changeList.get(i);
+ 			}
+		}
 		
+		//System.out.println(p);
+		int result1 = inStoreService.insertProduct(p);
 		
-		System.out.println(p);
 	}
 	
 
@@ -90,7 +96,7 @@ public class InstructorStoreController {
 	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
 		
 		ArrayList<String> changeList = new ArrayList();
-		//String reName = "";
+		
 		for(int i=0; i<upfile.length; i++) {
 			if(!upfile[i].getOriginalFilename().equals("")) {
 				String originName = upfile[i].getOriginalFilename();
@@ -101,8 +107,8 @@ public class InstructorStoreController {
 				
 				String savePath = session.getServletContext().getRealPath("/resources/images/store/");
 				
-				changeList.add(changeName);
-				//reName += changeName + "-";
+				changeList.add("resources/images/store/"+changeName);
+				
 				try {
 					upfile[i].transferTo(new File(savePath + changeName));
 				} catch (IllegalStateException | IOException e) {
