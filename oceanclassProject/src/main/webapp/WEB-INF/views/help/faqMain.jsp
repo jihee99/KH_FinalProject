@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +10,16 @@
 <title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="./resources/css/helpMain.css?3">
 <style>
-	.button{margin-bottom: 200px;}
+	.content>ul{
+		list-style: none;
+		text-align: center;
+		padding: 20px;
+	}
+	.t{background: rgb(224, 224, 224); padding: 10px;}
+	.c{display: none;}
+	.selected{background: whitesmoke;}
 </style>
 </head>
 <body>
@@ -26,69 +33,32 @@
             <button type="button" class="btn btn-outline-primary" onclick="location.href='faqMain.he';">FAQ</button>
             <button type="button" class="btn btn-outline-primary" onclick="location.href='qnaMain.he';">1:1문의</button>
         </div>
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-			<div class="accordion-item">
-			  <h2 class="accordion-header" id="flush-headingOne">
-			    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-			      	클래스 수강은 어떻게 하나요?
-			    </button>
-			  </h2>
-			  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-			    <div class="accordion-body">
-			    	잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!
-			    </div>
-			  </div>
-			</div>
-			<div class="accordion-item">
-			  <h2 class="accordion-header" id="flush-headingTwo">
-			    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-			      	지금얘만되는중!!!!!!!!!!!
-			    </button>
-			  </h2>
-			  <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-			    <div class="accordion-body">
-			    	잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!
-			    </div>
-			  </div>
-			</div>
-			<div class="accordion-item">
-			  <h2 class="accordion-header" id="flush-headingOne">
-			    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-			      	클래스 수강은 어떻게 하나요?
-			    </button>
-			  </h2>
-			  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-			    <div class="accordion-body">
-			    	잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!
-			    </div>
-			  </div>
-			</div>
-			<div class="accordion-item">
-			  <h2 class="accordion-header" id="flush-headingOne">
-			    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-			      	클래스 수강은 어떻게 하나요?
-			    </button>
-			  </h2>
-			  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-			    <div class="accordion-body">
-			    	잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!
-			    </div>
-			  </div>
-			</div>
-			<div class="accordion-item">
-			  <h2 class="accordion-header" id="flush-headingOne">
-			    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-			      	클래스 수강은 어떻게 하나요?
-			    </button>
-			  </h2>
-			  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-			    <div class="accordion-body">
-			    	잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!잘 해보라노~~~!!!
-			    </div>
-			  </div>
-			</div>
-		</div>
+       
+        <div class="content">
+        	<ul>
+        		<c:forEach var="f" items="${list}"> 
+	        		<li class="con">
+	        			<h6 class="t">[${f.category}] ${f.faqTitle}</h6>
+	        			<p class="c">${f.faqContent}</p>
+	        		</li>
+        		</c:forEach>
+        	</ul>
+        </div>
+        
+        <script>
+        	$(".con>.t").click(function(){
+        		console.log($(this).text());
+        		$(this).toggleClass("selected");
+        		$(".con>t").not(this).removeClass("selected");
+        		
+        		var target=$(this).parents(".con").find(".c");
+        		console.log(target.text());
+        		target.slideToggle(300);
+        	});
+        </script>
+		
     </div>
+    
     <br> <br> <br> 
     <jsp:include page="../common/footerBar.jsp" />
     
