@@ -40,8 +40,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  from member
 		 where u_status = 'Y'
 		   and user_id = #{userId}
-		   and user_pwd = #{userPwd}
 		   
 	</select>
+	
+	<insert id="insertMember">
+		insert
+	 		  into member
+	 		  (
+	              mno
+	            , grade
+	 		  	, user_id
+	 		  	, user_pwd
+	 		  	, user_name
+	 		  	, nickname
+	 		  	, phone
+	 		  	)
+	 		  	values
+	 		   (
+	            SEQ_MNO.NEXTVAL
+	          , #{grade}
+	 		  ,	#{userId}
+	 		  , #{userPwd}
+	 		  , #{userName}
+	 		  , #{nickName}
+	 		  , #{phone}
+	 		  )
+	</insert>
 	
 </mapper>
