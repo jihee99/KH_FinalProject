@@ -117,15 +117,15 @@
                 <span>회원 가입</span>
             </div>
             <div id="join-form">
-                <form action="" method="post" id="joinForm">
+                <form action="insert.me" method="post" id="joinForm">
                     <div class="box">
                         <label class="textName" for="st/tc">회원 구분 선택<span class="star">*</span></label>
                         <div class="radio-box">
-                            <input type="radio" name="st/tc" id="st/tc" checked>
+                            <input type="radio" name="grade" id="st/tc" value="S" checked>
                             <label for="">학생 회원</label>
                         </div>
                         <div class="radio-box">
-                            <input type="radio" name="st/tc" id="st/tc">
+                            <input type="radio" name="grade" value="T" id="st/tc">
                             <label for="">강사 회원</label>
                         </div>
                     </div>
@@ -148,21 +148,21 @@
                     <div class="box">
                         <label class="textName" for="userPwdCk">비밀번호 확인<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="password" id="userPwdCk" name="userPwdCk" placeholder="비밀번호 확인" required>
+                            <input type="password" id="userPwdCk" name="userPwdCk" placeholder="비밀번호 확인">
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="userPwdCk">이름<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="userPwdCk" name="userPwdCk" placeholder="이름" required>
+                            <input type="text" id="userPwdCk" name="userName" placeholder="이름" required>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="userId">닉네임<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="userId" class="w200" name="userId" placeholder="닉네임(한 2~8 / 영 2~12)" required>
+                            <input type="text" id="nickName" class="w200" name="nickName" placeholder="닉네임(한 2~8 / 영 2~12)" required>
                             <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">중복 확인</button>
                         </div>
                     </div>
@@ -170,14 +170,14 @@
                     <div class="box">
                         <label class="textName" for="userId">휴대전화 번호<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="userId" class="w200" name="userId" placeholder="휴대전화 번호(숫자만)" required>
+                            <input type="text" id="phone" class="w200" name="phone" placeholder="휴대전화 번호(-로 구분)" required>
                             <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">본인 인증</button>
                         </div>
                     </div>
                     <div class="box">
                         <label class="textName"></label>
                         <div class="input-area">
-                            <input type="number" id="userId" class="w200" name="userId" placeholder="인증번호" required>
+                            <input type="number" id="userId" class="w200" name="num" placeholder="인증번호">
                             <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">인증 확인</button>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
 
                             <hr>
                             <div class="termsCheck">
-                                <input type="checkbox" class="agreeCheck" required>
+                                <input type="checkbox" class="agreeCheck">
                                 <a href="" class="checkText" data-toggle="modal" data-target="#terms1">마케팅 수신 동의</a> 
                                 <span class="smallSpan">(선택)</span><span class="star"></span>
                             </div>

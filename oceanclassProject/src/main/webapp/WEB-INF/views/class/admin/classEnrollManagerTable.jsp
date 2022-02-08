@@ -42,7 +42,7 @@
                 클래스 목록이 보여지는 상태에서는 반려는 못하게 하는게 맞는듯?
                 승인만 할 수 있게 하기!
             -->
-            <button type="button" class="btn btn-info" style="background-color: #6babd5; width: 80px;">승인</button>
+            <button type="button" class="btn" style="background-color: #6babd5; width: 80px; color: white;">승인</button>
             <!--
             <button type="button" class="btn" style="background-color: lightgray; width: 80px;">반려</button>
             -->

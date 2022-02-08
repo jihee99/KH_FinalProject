@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,10 +20,10 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService mService;
-	/*
+	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	*/
+	
 	
 	@RequestMapping("loginForm.me")
 	public String loginForm(HttpSession session) {
@@ -35,13 +36,13 @@ public class MemberController {
 		
 		Member loginUser = mService.loginMember(m);
 		
-		if(loginUser == null) { 
-			mv.addObject("errorMsg", "로그인실패");
-			mv.setViewName("member/common/logInError");
-		}else{ 
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) { 
 			session.setAttribute("loginUser", loginUser);
 			//System.out.println(loginUser);
 			mv.setViewName("redirect:/");
+		}else{ 
+			mv.addObject("errorMsg", "로그인실패");
+			mv.setViewName("member/common/logInError");
 		}
 		return mv;
 	}
@@ -61,8 +62,23 @@ public class MemberController {
 	}
 	
 	@RequestMapping("insert.me")
-	public void insertMember() {
+	public String insertMember(Member m, Model model, HttpSession session) {
 		
+		String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+		
+		m.setUserPwd(encPwd);
+		
+		int result = mService.insertMember(m);
+		
+		if(result > 0) { // 성공=> 메인페이지 url재요청
+					
+			session.setAttribute("alertMsg", "회원가입 성공");
+			return "member/common/joinSuccess";
+					
+		}else {// 실패=> 에러문구 담아서 에러페이지 포워딩
+			model.addAttribute("errorMsg", "회원가입 실패");
+			return "common/errorPage";
+		}
 	}
 	
 	@RequestMapping("idCheck.me")

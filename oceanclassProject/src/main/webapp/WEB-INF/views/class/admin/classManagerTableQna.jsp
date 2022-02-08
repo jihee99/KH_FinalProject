@@ -27,7 +27,7 @@
 </head>
 <body>
     <div>
-        <button type="button" class="btn btn-info" style="background-color: #6babd5; width: 130px;">문의 노출</button>
+        <button type="button" class="btn" style="background-color: #6babd5; width: 130px; color: white;">문의 노출</button>
         <button type="button" class="btn" style="background-color: lightgray; width: 130px;">문의 미노출</button>
 
         <div style="float: right;">
