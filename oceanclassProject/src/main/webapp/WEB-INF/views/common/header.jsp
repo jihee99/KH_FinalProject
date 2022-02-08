@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./resources/css/header.css">
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 </head>
 <body>
 	 <div id="header">
@@ -19,14 +23,20 @@
             </div>
             <div id="header_1_right">
 
+			<c:choose>
+				<c:when test="${ empty loginUser }">
                 <!-- 로그인 전 -->
-                <a href="">로그인</a>
-                <a href="">회원가입</a>
-                
-                <!-- 로그인 후 
-                <img src="" value="장바구니">
-                <img src="" value="마이페이지">
-                 -->
+                <a href="loginForm.me">로그인</a>
+                <a href="joinUsForm.me">회원가입</a>
+                </c:when>
+                <c:otherwise>
+                <!-- 로그인 후 -->
+                <label style="font-size: 16px;"><span id="userName" style="font-weight: bolder;">${ loginUser.userName }</span> 님 반가워요!</label> &nbsp;&nbsp;
+                <a href="logout.me" style="font-size: 16px;">로그아웃</a>&nbsp;
+                <img src="resources/images/smallCart.png" style="width: 32px;" value="장바구니">&nbsp;&nbsp;&nbsp;
+                <img src="resources/images/user.png" style="width: 32px;" value="마이페이지">
+                 </c:otherwise>
+               </c:choose>
             </div>
         </div>
 

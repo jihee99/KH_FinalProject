@@ -1,19 +1,21 @@
 package com.kh.oceanclass.store.model.service;
 
+import java.util.ArrayList;
+
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.store.model.vo.Product;
 
 public interface InstructorStoreService {
 
-	
 	// 1. 상품 리스트 페이지 서비스(페이징)
-	void selectListCount();
-	void selectList(PageInfo pi);
+	int selectListCount();
+	ArrayList<Product> selectList(PageInfo pi);
 	
 	// 2. 상품 등록 서비스
 	void insertProduct();
 	
 	// 3. 상품 상세조회용 서비스
-	void selectProduct();
+	Product selectProduct(int pno);
 	
 	// 4. 상품 수정용 서비스
 	void updateProduct();
