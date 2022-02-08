@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
-import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
 
@@ -52,14 +51,5 @@ public class HelpDao {
 	public Qna selectQna(SqlSessionTemplate sqlSession, int qno) {
 		return sqlSession.selectOne("helpMapper.selectQna", qno);
 	}
-	
-	public int insertQna(SqlSessionTemplate sqlSession, Qna q) {
-		return sqlSession.selectOne("helpMapper.insertQna", q);
-	}
 
-	
-	// FAQ
-	public ArrayList<Faq> selectFaqList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("helpMapper.selectFaqList");
-	}
 }
