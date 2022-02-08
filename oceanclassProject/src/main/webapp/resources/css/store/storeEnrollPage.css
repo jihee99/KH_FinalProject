@@ -13,9 +13,6 @@
 
 .detail{font-size: 12px; color: rgb(185, 7, 7); font-weight: bold;}
 
-.opStyle1{width:400px; line-height: 30px;}
-.opStyle2{width:150px; line-height: 30px;}
-
 .btnBox>button{border-radius: 7px; width: 120px; height: 45px; margin: 10px; font-size: 15px; font-weight: bolder; color: white; border:none; }
 .btnBox>button[type="submit"]{background-color: rgb(107, 171, 213);}
 .btnBox>button[type="reset"]{background-color: gray;}

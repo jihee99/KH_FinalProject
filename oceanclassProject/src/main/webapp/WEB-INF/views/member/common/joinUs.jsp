@@ -325,9 +325,8 @@
                         </div>
                     </div>
                     <button type="submit" id="joinBtn" class="btn">Join Us !</button>
-                	<br><br><br><br><br><br><br>
                 </form>
-                <br><br><br><br>
+                <br><br><br><br><br><br>
             </div>
         </div>
     </div>

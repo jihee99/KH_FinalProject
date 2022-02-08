@@ -27,6 +27,16 @@
 		<result column="a_content" property="ansContent" />
 		<result column="a_date" property="ansDate" />
 	</resultMap>
+	
+	<resultMap id="faqResult" type="Faq">
+		<result column="fno" property="faqNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="f_title" property="faqTitle" />
+		<result column="f_content" property="faqContent" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+	</resultMap>
 
 	<!-- 공지사항 -->
 	<select id="selectListCount" resultType="_int">
@@ -110,6 +120,39 @@
 		  from qna
 		  join member using (mno)
 		 where qno = #{qno}
+	</select>
+	
+	<insert id="insertQna">
+		insert 
+		  into qna
+		     {
+		       qno
+		     , mno
+		     , category
+		     , q_title
+		     , q_content
+		     , create_date
+		     , img
+		     , password
+		     }
+		values
+		     {
+		       qno.nextVal
+		     , mno.nextVal
+		     ,       
+	</insert>
+	
+	
+	<!-- FAQ -->
+	<select id="selectFaqList" resultMap="faqResult">
+		select
+			   fno
+			 , category
+			 , f_title
+			 , f_content
+		  from faq
+         order 
+            by category
 	</select>
 	
 </mapper>

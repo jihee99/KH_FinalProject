@@ -13,8 +13,8 @@ import lombok.ToString;
 @ToString
 public class ProductOption {
 	
-	private int optionNo;			// 옵션번호
-	private int productNo;			// 상품번호(참조)
-	private String optionName;		// 옵션명
+	private int opNo;			// 옵션번호
+	private int pNo;			// 상품번호(참조)
+	private String opName;		// 옵션명
 	private int price;			// 가격
 }
