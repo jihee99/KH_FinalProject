@@ -13,11 +13,14 @@
 
 		<typeAlias type="com.kh.oceanclass.store.model.vo.Product" alias="Product"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.ProductOption" alias="ProductOption"/>
+	
+		<typeAlias type="com.kh.oceanclass.member.model.vo.Member" alias="Member"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/help-mapper.xml" />
 		<mapper resource="/mappers/instructorStore-mapper.xml" />
+		<mapper resource="/mappers/member-mapper.xml" />
 	</mappers>
 	
 </configuration>
