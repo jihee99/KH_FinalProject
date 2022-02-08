@@ -89,6 +89,8 @@ public class InstructorStoreController {
 	@RequestMapping("stdetail.in")
 	public String selectProduct(int pno, Model model) {
 		Product p = inStoreService.selectProduct(pno);
+		ArrayList<ProductOption> oplist = inStoreService.selectProductOption(pno);
+		
 		System.out.println(pno);
 		System.out.println(p);
 		model.addAttribute("p", p);
@@ -111,20 +113,20 @@ public class InstructorStoreController {
 		for(int i=0; i<upfile.length; i++) {
 			if(!upfile[i].getOriginalFilename().equals("")) {
 				String originName = upfile[i].getOriginalFilename();
+				
 				String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());	
 				int ranNum = (int)(Math.random() * 90000 + 10000);	
 				String ext = originName.substring(originName.lastIndexOf("."));
 				String changeName = currentTime + ranNum + ext;
 				
-				String savePath = session.getServletContext().getRealPath("/resources/images/store/");
+				String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/store/");
 				
-				changeList.add("resources/images/store/"+changeName);
-				
+				changeList.add("resources/uploadFiles/store/"+changeName);
 				try {
 					upfile[i].transferTo(new File(savePath + changeName));
-				} catch (IllegalStateException | IOException e) {
+				} catch (IllegalStateException | IOException e1) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e1.printStackTrace();
 				}
 				
 			}

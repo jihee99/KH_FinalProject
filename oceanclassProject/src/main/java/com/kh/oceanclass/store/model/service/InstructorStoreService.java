@@ -18,40 +18,53 @@ public interface InstructorStoreService {
 	// 2.2 옵션 등록 서비스
 	int insertProductOption(ProductOption option);
 	
-	// 3. 상품 상세조회용 서비스
+	
+	// 3.1 상품 상세조회용 서비스
 	Product selectProduct(int pno);
 	
-	// 4. 상품 수정용 서비스
+	// 3.2 상품 옵션 조회용 서비스
+	ArrayList<ProductOption> selectProductOption(int pno);
+	
+	
+	// 4.1 상품 수정용 서비스
 	void updateProduct();
 	
-	// 5. 상품 삭제용 서비스
+	// 4.2 상품 옵션 수정용 서비스
+	void updateProductOption();
+	
+	
+	// 5.1 상품 삭제용 서비스
 	void deleteProduct();
+	
+	// 5.2 상품옵션 삭제용 서비스
+	void deleteProductOption();
+	
 	
 	// 6. 상품 문의 리스트 페이지 서비스
 	void selectStoreQnaList();
 	
-	// 8. 상품 문의 답변 서비스
+	// 7. 상품 문의 답변 서비스
 	void storeQnaAnswer();
 	
-	// 9. 상품 리뷰 리스트 페이지 서비스
+	// 8. 상품 리뷰 리스트 페이지 서비스
 	void selectStoreReviewList();
 	
-	// 10. 상품 리뷰 상세조회용 서비스
+	// 9. 상품 리뷰 상세조회용 서비스
 	void selectStoreReview();
 	
-	// 11. 상품 주문내역 리스트 페이지
+	// 10. 상품 주문내역 리스트 페이지
 	void selectStoreDeliveryList();
 	
-	// 12. 상품 주문내역 상세조회용 서비스(상태변경)
+	// 11. 상품 주문내역 상세조회용 서비스(상태변경)
 	void selectStoreDelivery();
 	
-	// 13. 상품 재고 리스트 조회용 서비스
+	// 12. 상품 재고 리스트 조회용 서비스
 	void selectStoreStockList();
 	
-	// 14. 상품 재고 수정용 서비스
+	// 13. 상품 재고 수정용 서비스
 	void selectStoreStock();
 	
-	// 15. 상품발주요청용 서비스
+	// 14. 상품발주요청용 서비스
 	void selectStoreOrder();
 	
 }

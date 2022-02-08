@@ -18,7 +18,7 @@
         <div class="content">
             <div class="headMenu">
             	<br>
-                <b>상품등록하기</b>
+                <b>상품수정하기</b>
             </div>
             <br>
             <form method="post" action="" enctype="multipart/form-data">
