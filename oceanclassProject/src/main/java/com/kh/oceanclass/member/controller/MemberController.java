@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.oceanclass.member.model.service.MemberService;
 import com.kh.oceanclass.member.model.vo.Member;
@@ -30,16 +31,27 @@ public class MemberController {
 	}
 	
 	@RequestMapping("login.me")
-	public String loginMember(Member m) {
+	public ModelAndView loginMember(Member m, HttpSession session, ModelAndView mv) {
 		
 		Member loginUser = mService.loginMember(m);
 		
 		if(loginUser == null) { 
-		    System.out.println("로그인 실패");
+			mv.addObject("errorMsg", "로그인실패");
+			mv.setViewName("member/common/logInError");
 		}else{ 
-		    System.out.println("로그인 성공");
+			session.setAttribute("loginUser", loginUser);
+			//System.out.println(loginUser);
+			mv.setViewName("redirect:/");
 		}
-		return "logIn";
+		return mv;
+	}
+	
+	@RequestMapping("logout.me")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:/";
 	}
 	
 	@RequestMapping("joinUsForm.me")
