@@ -9,6 +9,7 @@
 	<typeAliases>
 		<typeAlias type="com.kh.oceanclass.help.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.oceanclass.help.model.vo.Qna" alias="Qna"/>
+		<typeAlias type="com.kh.oceanclass.help.model.vo.Faq" alias="Faq"/>
 	</typeAliases>
 	
 	<mappers>
