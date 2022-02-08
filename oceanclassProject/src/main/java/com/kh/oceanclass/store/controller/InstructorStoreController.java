@@ -1,6 +1,10 @@
 package com.kh.oceanclass.store.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,13 +50,42 @@ public class InstructorStoreController {
 	}
 	
 	@RequestMapping(value="stenroll.in", produces="application/json; charset=UTF-8")
-	public void insertProduct(Product p, ProductOption op, MultipartFile[] upfile, HttpSession session, Model model) {
+	public String insertProduct(Product p, ProductOption option, MultipartFile[] upfile, HttpSession session, Model model) {
 		System.out.println(p);
-		System.out.println(op); 
-		System.out.println(upfile);
+		System.out.println(option); 
+		
+		ArrayList<String> changeList = saveFile(upfile, session);
+		//System.out.println(changeList);
+
+		for(int i=0; i<changeList.size(); i++) {
+			if(i==0) {
+				p.productImg0 = changeList.get(i);
+			} else if(i==1) {
+				p.productImg1 = changeList.get(i);
+ 			} else if(i==2) {
+ 				p.productImg2 = changeList.get(i);
+ 			} else {
+ 				p.productImg3 = changeList.get(i);
+ 			}
+		}
+		//System.out.println(p);
+		
+		int result1 = inStoreService.insertProduct(p);
+		int result2 = inStoreService.insertProductOption(option);
+		
+		//System.out.println("p : " + result1);
+		//System.out.println("op : " + result2);
+		
+		if(result1*result2>0) {
+			session.setAttribute("alertMsg", "상품 등록 요청을 완료했습니다.");
+			return "redirect:stlist.in";
+		} else {
+			model.addAttribute("errorMsg", "상품 등록에 실패했습니다.");
+			return "common/errorPage";
+		}
 	}
 	
-	
+
 	@RequestMapping("stdetail.in")
 	public String selectProduct(int pno, Model model) {
 		Product p = inStoreService.selectProduct(pno);
@@ -62,9 +95,41 @@ public class InstructorStoreController {
 		return "store/instructorStoreUpdate";
 	}
 	
+	
 	@RequestMapping("stupdateF.in")
 	public void updateProduct(int pno, Model model) {
 		System.out.println(pno);
 	}
 
+	
+	
+	//파일명변경
+	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
+		
+		ArrayList<String> changeList = new ArrayList();
+		
+		for(int i=0; i<upfile.length; i++) {
+			if(!upfile[i].getOriginalFilename().equals("")) {
+				String originName = upfile[i].getOriginalFilename();
+				String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());	
+				int ranNum = (int)(Math.random() * 90000 + 10000);	
+				String ext = originName.substring(originName.lastIndexOf("."));
+				String changeName = currentTime + ranNum + ext;
+				
+				String savePath = session.getServletContext().getRealPath("/resources/images/store/");
+				
+				changeList.add("resources/images/store/"+changeName);
+				
+				try {
+					upfile[i].transferTo(new File(savePath + changeName));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return changeList;
+	}
+		
 }

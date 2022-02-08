@@ -13,10 +13,10 @@
 	  	<result column="courier" property="courier"/>
 	  	<result column="soldout_yn" property="soldoutYN"/>
 	  	<result column="status" property="status"/>
-	  	<result column="img1" property="mainImg"/>
-	  	<result column="img2" property="subImg1"/>
-	  	<result column="img3" property="subImg2"/>
-	 	<result column="img4" property="subImg3"/>
+	  	<result column="img1" property="productImg0"/>
+	  	<result column="img2" property="productImg1"/>
+	  	<result column="img3" property="productImg2"/>
+	 	<result column="img4" property="productImg3"/>
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
@@ -59,4 +59,60 @@
 		  from store
 		 where pno = #{pno}
   	</select>
+  	
+  	<insert id="insertProduct">
+  		insert 
+		  into STORE
+		     (
+		       pno
+		     , mno
+		     , category
+		     , title
+		     , price
+		     , stock
+		     , endate
+		     , courier
+		     , soldout_yn
+		     , status
+		     , img1
+		     , img2
+		     , img3
+		     , img4
+		     )
+		 VALUES
+		    (
+		      SEQ_SNO.NEXTVAL
+		    , #{memberNo}
+		    , #{category}
+		    , #{title}
+		    , #{price}
+		    , #{stock}
+		    , sysdate
+		    , #{courier}
+		    , 'N'
+		    , 'N'
+		    , #{productImg0}
+		    , #{productImg1}
+		    , #{productImg2}
+		    , #{productImg3}
+		    ) 
+  	</insert>
+  	
+  	<insert id="insertProductOption">
+  		insert 
+		  into SOPTION
+		     (
+		       opno
+		     , pno
+		     , opname
+		     , price
+		     )
+		 VALUES
+		    (
+		      SEQ_OPNO.NEXTVAL
+		    , #{productNo}
+		    , #{optionName}
+		    , #{price}
+		    )
+  	</insert>
 </mapper>

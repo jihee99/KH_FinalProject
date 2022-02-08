@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.ProductOption;
 
 public interface InstructorStoreService {
 
@@ -11,8 +12,11 @@ public interface InstructorStoreService {
 	int selectListCount();
 	ArrayList<Product> selectList(PageInfo pi);
 	
-	// 2. 상품 등록 서비스
-	void insertProduct();
+	// 2.1 상품 등록 서비스
+	int insertProduct(Product p);
+	
+	// 2.2 옵션 등록 서비스
+	int insertProductOption(ProductOption option);
 	
 	// 3. 상품 상세조회용 서비스
 	Product selectProduct(int pno);

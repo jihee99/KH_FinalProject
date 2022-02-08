@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.dao.InstructorStoreDao;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.ProductOption;
 
 @Service
 public class InstructorStoreServiceImpl implements InstructorStoreService{
@@ -21,7 +22,6 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
 		return inStoreDao.selectListCount(sqlSession);
 	}
 
@@ -31,9 +31,13 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	}
 
 	@Override
-	public void insertProduct() {
-		// TODO Auto-generated method stub
-		
+	public int insertProduct(Product p) {		
+		return inStoreDao.insertProduct(sqlSession, p);
+	}
+	
+	@Override
+	public int insertProductOption(ProductOption option) {
+		return inStoreDao.insertProductOption(sqlSession, option);
 	}
 
 	@Override
@@ -106,5 +110,6 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }
