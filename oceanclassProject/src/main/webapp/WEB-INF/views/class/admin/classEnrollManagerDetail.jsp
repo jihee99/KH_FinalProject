@@ -17,6 +17,12 @@
     .detail>tbody>tr{
         height: 45px;
     }
+    #pagingArea{
+		width:fit-content;
+		margin:auto;
+		margin-top: 150px;
+		margin-bottom: 50px;
+	}
 </style>
 </head>
 <body>
@@ -28,7 +34,7 @@
 
     <table class="detail">
         <tbody>
-            <tr>
+            <tr style="width: 1000px;">
                 <th style="width: 200px;">클래스 카테고리</th>
                 <td style="width: 800px;">요리</td>
             </tr>
@@ -112,6 +118,5 @@
             </div>
         </form>
     </div>
-
 </body>
 </html>

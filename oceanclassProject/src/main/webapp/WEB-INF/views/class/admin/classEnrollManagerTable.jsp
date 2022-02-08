@@ -30,8 +30,8 @@
     <div>
         <div align="right">
             <select style="width:150px; height: 30px;">
-                <option>신청일 빠른순</option>
-                <option>신청일 느린순</option>
+                <option selected>오래된 신청순</option>
+                <option>최신 신청순</option>
             </select>
         </div>
         <br>
@@ -59,16 +59,16 @@
     </div>
 
     <div>
-        <table class="table table-hover classList">
+        <table id="classList" class="table table-hover classList">
             <thead>
                 <tr style="background-color: #6babd5;">
                     <th><input type="checkbox"></th>
-                    <th>카테고리</th>
-                    <th>클래스명</th>
-                    <th>강사명</th>
-                    <th>가격</th>
-                    <th>신청일</th>
-                    <th>처리상태</th>
+                    <th width="120">카테고리</th>
+                    <th width="380">클래스명</th>
+                    <th width="200">강사명</th>
+                    <th width="100">가격</th>
+                    <th width="100">신청일</th>
+                    <th width="100">처리상태</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,7 +78,7 @@
                     <td>클래스명1</td>
                     <td>강사명1</td>
                     <td>12,000</td>
-                    <td>2022-01-05</td>
+                    <td>22-01-05</td>
                     <td>N</td>
                 </tr>
                 <tr>
@@ -87,7 +87,7 @@
                     <td>클래스명1</td>
                     <td>강사명1</td>
                     <td>12,000</td>
-                    <td>2022-01-05</td>
+                    <td>22-01-05</td>
                     <td>N</td>
                 </tr>
                 <tr>
@@ -96,7 +96,7 @@
                     <td>클래스명1</td>
                     <td>강사명1</td>
                     <td>12,000</td>
-                    <td>2022-01-05</td>
+                    <td>22-01-05</td>
                     <td>N</td>
                 </tr>
             </tbody>

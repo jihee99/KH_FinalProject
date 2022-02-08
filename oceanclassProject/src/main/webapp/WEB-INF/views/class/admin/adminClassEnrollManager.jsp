@@ -58,12 +58,12 @@
 
             <div class="content">
                 <!-- 상세페이지 미클릭시/클릭시 div display 상태 변경 -->
-                <div class="content1" style="display: none;">
+                <div class="content1" style="display:block">
                     <!-- 등록 신청한 클래스 보여지는 div -->
                     <jsp:include page="classEnrollManagerTable.jsp" />
                 </div>
 
-                <div class="content2">
+                <div class="content2" style="display: none;">
                     <!-- 클래스 상세보기시 보여지는 div -->
                     <jsp:include page="classEnrollManagerDetail.jsp" />
                 </div>
@@ -71,5 +71,23 @@
         </div>
 
     </div>
+
+    <script>
+        $(function(){
+            $("#classList>tbody>tr").click(function(){
+                $(".content1").css("display", "none");
+                $(".content2").css("display", "block");
+            })
+        })
+        /*
+        $(function(){
+            $("#listPage").click(function(){
+                console.log("Gggggg");
+                $(".content2").css("display", "none");
+                $(".content1").css("display", "block");
+            })
+        })
+        */
+    </script>
 </body>
 </html>
