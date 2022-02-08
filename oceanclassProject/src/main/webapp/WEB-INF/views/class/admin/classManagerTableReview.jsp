@@ -27,7 +27,7 @@
 </head>
 <body>
     <div>
-        <button type="button" class="btn btn-info" style="background-color: #6babd5; width: 130px;">후기 노출</button>
+        <button type="button" class="btn" style="background-color: #6babd5; width: 130px; color: white;">후기 노출</button>
         <button type="button" class="btn" style="background-color: lightgray; width: 130px;">후기 미노출</button>
 
         <div style="float: right;">

@@ -27,7 +27,7 @@
 </head>
 <body>
     <div>
-        <button type="button" class="btn btn-info" style="background-color: #6babd5; width: 80px;">승인</button>
+        <button type="button" class="btn" style="background-color: #6babd5; width: 80px; color: white;">승인</button>
         <button type="button" class="btn" style="background-color: lightgray; width: 80px;" data-toggle="modal" data-target="#myModal">반려</button>
     </div>
     <br><br>

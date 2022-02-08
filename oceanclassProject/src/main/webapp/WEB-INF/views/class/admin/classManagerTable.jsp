@@ -37,7 +37,7 @@
         <br>
 
         <div>
-            <button type="button" class="btn btn-info" style="background-color: #6babd5; width: 130px;">클래스 노출</button>
+            <button type="button" class="btn" style="background-color: #6babd5; width: 130px; color: white;">클래스 노출</button>
             <button type="button" class="btn" style="background-color: lightgray; width: 130px;">클래스 미노출</button>
             <div style="float: right;">
                 <input type="checkbox" id="yClass" checked>
