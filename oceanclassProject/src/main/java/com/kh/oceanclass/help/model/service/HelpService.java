@@ -39,5 +39,7 @@ public interface HelpService {
 	
 	int insertQna(Qna q);
 	
+	int insertSecretQna(Qna q);
+	
 }
 

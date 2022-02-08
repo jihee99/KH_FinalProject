@@ -17,12 +17,12 @@
 	
 	<resultMap id="qnaResult" type="Qna">
 		<result column="qno" property="qnaNo" />
+		<result column="mno" property="memNo" />
 		<result column="nickname" property="nickName" />
 		<result column="category" property="category" />
 		<result column="q_title" property="qnaTitle" />
 		<result column="q_content" property="qnaContent" />
 		<result column="create_date" property="createDate" />
-		<result column="img" property="img" />
 		<result column="password" property="pwd" />
 		<result column="a_content" property="ansContent" />
 		<result column="a_date" property="ansDate" />
@@ -113,7 +113,6 @@
 		     , q_title
 		     , q_content
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-		     , img
 		     , password
 		     , a_content
 		     , a_date
@@ -125,21 +124,43 @@
 	<insert id="insertQna">
 		insert 
 		  into qna
-		     {
+		     (
 		       qno
 		     , mno
 		     , category
 		     , q_title
 		     , q_content
-		     , create_date
-		     , img
-		     , password
-		     }
+		     )
 		values
-		     {
-		       qno.nextVal
-		     , mno.nextVal
-		     ,       
+		     (
+		       seq_qno.nextval
+		     , #{memNo}
+		     , #{category}
+		     , #{qnaTitle}
+		     , #{qnaContent}
+		     )
+	</insert>
+	
+	<insert id="insertSecretQna">
+		insert 
+		  into qna
+		     (
+		       qno
+		     , mno
+		     , category
+		     , q_title
+		     , q_content
+		     , password
+		     )
+		values
+		     (
+		       seq_qno.nextval
+		     , #{memNo}
+		     , #{category}
+		     , #{qnaTitle}
+		     , #{qnaContent}
+		     , #{pwd}
+		     )
 	</insert>
 	
 	
