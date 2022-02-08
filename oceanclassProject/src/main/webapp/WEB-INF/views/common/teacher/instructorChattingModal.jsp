@@ -15,38 +15,18 @@
 #iChat{position: fixed; top: 600px; left: 1400px; background: none; border: none;}
 #iChat>img{width: 80px;}
 
-#iChatModal{box-sizing: border-box; width: 400px; position: fixed; left: 1090px;}
-#iChatModal div{box-sizing: border-box;}
-.modal-dialog{height: 500px;}
-.modal-content{height: 500px; border: 5px solid green;}
-
-.modal-header table img{width: 60px;}
-.modal-header table b{margin-left: 10px; font-size: 14px;}
-
-.modal-body{height: 350px; border:4px solid red;}
-.modal-body div{margin:2px; background: lightgray; border-radius: 15px; padding: 10px;}
-.modal-body b, p{font-size: 13px;}
-
-.modal-footer{float: left; border: 5px solid yellowgreen;}
-.modal-footer input{
-  height: 40px; width: 80%;
-  background: lightgray; border-radius: 5px; border: none;
+#iChatModal{
+	border-radius:10px;
+	box-sizing: border-box; width: 400px; position: fixed; margin-top: 80px; left: 1090px; 
+	display: none; box-shadow: 5px 5px 10px black;
 }
-.modal-footer button{height: 40px; background: none; border: none; margin-top: 2px; margin-left: 5px;}
-.modal-footer button img{height: 38px;}
-
-/*채팅관련 스타일*/
-#iChat{position: fixed; top: 600px; left: 1400px; background: none; border: none;}
-#iChat>img{width: 80px;}
-
-#iChatModal{box-sizing: border-box; width: 400px; position: fixed; margin-top: 100px; left: 1090px; display: none;}
 #iChatModal div{box-sizing: border-box;}
-.modal_dialog{height: 500px;}
-.modal_content{height: 500px; border: 5px solid green;}
+.modal_dialog{height: 510px;}
+.modal_content{height: 510px;}
 
-.modal_header{height: 80px; border: 5px solid salmon;}
+.modal_header{height: 80px;}
 .modal_header table{float: left; margin: 5px;}
-.modal_header table img{width: 60px;}
+.modal_header table img{width: 60px; margin-left:10px;}
 .modal_header table b{margin-left: 10px; font-size: 14px;}
 .modal_header button{float: right; margin: 10px;}
 
@@ -54,20 +34,21 @@
 .modal_body div{margin-top: 10px; margin-left: 10px; margin-right:10px; background: lightgray; border-radius: 15px; padding: 10px;}
 .modal_body b, p{font-size: 13px;}
 
-.modal_footer{float: left; border: 5px solid yellowgreen;}
+.modal_footer{float: left; padding:5px;}
 .modal_footer input{
-  height: 40px; width: 320px;
+  height: 40px; width: 320px; margin-left:5px;
   background: lightgray; border-radius: 5px; border: none;
 }
 .modal_footer button{height: 40px; background: none; border: none; margin-top: 2px; margin-left: 5px; position:absolute;}
 .modal_footer button img{height: 38px;}
+
 </style>
 </head>
 <body>
 
-        <button id="iChat" onclick="">
-	  		<img src="resources/images/iChatImg.png">
-		</button>
+    <button id="iChat" onclick="">
+		<img src="resources/images/iChatImg.png">
+	</button>
 	
 	<!-- The Modal -->
 	<div id="iChatModal">
@@ -77,7 +58,7 @@
 	
 			<!-- Modal Header -->
 			<div class="modal_header">
-				<table border="1">
+				<table>
 					<tr>
 						<td><img src="resources/images/logoOnlyImg.png"></td>
 						<td><b>Instructor Center</b></td>
@@ -114,6 +95,7 @@
 	</div>
 
 	<script>
+
 	$(function(){
 		$("#iChat").click(function(){
 			if($("#iChatModal").css("display")=="none"){
@@ -124,6 +106,7 @@
 			$("#iChatModal").css("display","none");
 		})
 	})
+
 	</script>
 </body>
 </html>
