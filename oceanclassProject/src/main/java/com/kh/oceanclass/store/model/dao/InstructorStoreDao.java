@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.ProductOption;
 
 @Repository
 public class InstructorStoreDao {
@@ -28,10 +29,14 @@ public class InstructorStoreDao {
 		return sqlSession.selectOne("inStoreMapper.selectProduct", pno);
 	}
 
-	public int insertProduct(SqlSessionTemplate sqlSession, Product p) {
-		
-		return 0;
+	public int insertProduct(SqlSessionTemplate sqlSession, Product p) {	
+		return sqlSession.insert("inStoreMapper.insertProduct", p);
 	}
+
+	public int insertProductOption(SqlSessionTemplate sqlSession, ProductOption option) {
+		return sqlSession.insert("inStoreMapper.insertProductOption", option);
+	}
+	
 
 	
 }

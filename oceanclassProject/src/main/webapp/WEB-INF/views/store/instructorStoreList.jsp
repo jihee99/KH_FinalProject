@@ -24,9 +24,11 @@
             
             <!-- loginUser가 teacher일때만 보여지게 하기 
             -->
+            <c:if test="${loginUser ne null }">
             <div class="btn_area_1" align="right">
                 <button class="btn btn-lg" onclick="location.href='stenrollF.in'">+상품추가하기</button>
             </div>
+            </c:if>
             <!-- 개별 상품 정보 보여지는 폼 -->
             <c:forEach var="p" items="${list }">
             <div class="contentBox">

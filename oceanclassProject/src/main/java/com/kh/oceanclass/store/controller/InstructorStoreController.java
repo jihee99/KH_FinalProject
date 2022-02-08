@@ -50,9 +50,9 @@ public class InstructorStoreController {
 	}
 	
 	@RequestMapping(value="stenroll.in", produces="application/json; charset=UTF-8")
-	public void insertProduct(Product p, ProductOption op, MultipartFile[] upfile, HttpSession session, Model model) {
+	public String insertProduct(Product p, ProductOption option, MultipartFile[] upfile, HttpSession session, Model model) {
 		System.out.println(p);
-		System.out.println(op); 
+		System.out.println(option); 
 		
 		ArrayList<String> changeList = saveFile(upfile, session);
 		//System.out.println(changeList);
@@ -68,10 +68,21 @@ public class InstructorStoreController {
  				p.productImg3 = changeList.get(i);
  			}
 		}
-		
 		//System.out.println(p);
-		int result1 = inStoreService.insertProduct(p);
 		
+		int result1 = inStoreService.insertProduct(p);
+		int result2 = inStoreService.insertProductOption(option);
+		
+		//System.out.println("p : " + result1);
+		//System.out.println("op : " + result2);
+		
+		if(result1*result2>0) {
+			session.setAttribute("alertMsg", "상품 등록 요청을 완료했습니다.");
+			return "redirect:stlist.in";
+		} else {
+			model.addAttribute("errorMsg", "상품 등록에 실패했습니다.");
+			return "common/errorPage";
+		}
 	}
 	
 

@@ -43,7 +43,7 @@
         <div class="content">
             <div class="headMenu">
             	<br>
-                <b>상품수정하기</b>
+                <b>상품등록하기</b>
             </div>
             <br>
             <form method="post" action="stenroll.in" enctype="multipart/form-data">
@@ -60,7 +60,7 @@
                         <tr>
                             <th style="width: 140px;">카테고리</th>
                             <td style="width: 750px;">
-                                <select class="category" name="category">
+                                <select class="category" name="category" required>
                                     <option value="1">클래스상품</option>
                                     <option value="2">OC 에디션</option>
                                     <option value="3">DIY 키트</option>
@@ -69,11 +69,14 @@
                         </tr>
                         <tr>
                             <th>상품명</th>
-                            <td><input name="title" type="text"></td>
+                            <td>
+                            	<input type="hidden" name="memberNo" value="${loginUser.memNo }">
+                            	<input name="title" type="text" required>
+                            </td>
                         </tr>
                         <tr>
                             <th>상품가격</th>
-                            <td><input name="price" type="number" placeholder="숫자만 입력하세요(원)"></td>
+                            <td><input name="price" type="number" placeholder="숫자만 입력하세요(원)" required></td>
                         </tr>
                          <tr>
                         	<th>옵션여부</th>
@@ -97,7 +100,7 @@
                         </tr>
                         <tr class="atLine">
                             <th></th>
-                            <td><input type="file" name="upfile"></td>
+                            <td><input type="file" name="upfile" required></td>
                         </tr>
                         <tr>
                             <td style="line-height: 5px;">&nbsp;</td>
@@ -108,7 +111,7 @@
                         </tr>
                         <tr class="atLine">
                             <td></td>
-                            <td><input type="file" name="upfile"></td>
+                            <td><input type="file" name="upfile" required></td>
                         </tr>
                         <tr class="atLine">
                             <td></td>
@@ -124,11 +127,20 @@
                         <tr>
                             <th>배송정보</th>
                             <td>
-                                <select name="courier">
+                                <select name="courier" required>
                                     <option value="우체국택배">우체국택배</option>
                                     <option value="CJ대한통운">CJ대한통운</option>
                                     <option value="롯데택배">롯데택배</option>
                                 </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="float:left;">추가 정보</th>
+                        </tr>
+                        <tr>
+                            <th>보유재보</th>
+                            <td>
+                                <input type="number" name="stock" required>
                             </td>
                         </tr>
                     </tbody>

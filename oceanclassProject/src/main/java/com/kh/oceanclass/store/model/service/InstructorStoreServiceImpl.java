@@ -22,7 +22,6 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
 		return inStoreDao.selectListCount(sqlSession);
 	}
 
@@ -32,17 +31,13 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	}
 
 	@Override
-	public int insertProduct(Product p) {
-		// TODO Auto-generated method stub
-		
-		return 0;
-		
+	public int insertProduct(Product p) {		
+		return inStoreDao.insertProduct(sqlSession, p);
 	}
 	
 	@Override
 	public int insertProductOption(ProductOption option) {
-		// TODO Auto-generated method stub
-		return 0;
+		return inStoreDao.insertProductOption(sqlSession, option);
 	}
 
 	@Override

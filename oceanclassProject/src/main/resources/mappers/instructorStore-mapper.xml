@@ -59,4 +59,60 @@
 		  from store
 		 where pno = #{pno}
   	</select>
+  	
+  	<insert id="insertProduct">
+  		insert 
+		  into STORE
+		     (
+		       pno
+		     , mno
+		     , category
+		     , title
+		     , price
+		     , stock
+		     , endate
+		     , courier
+		     , soldout_yn
+		     , status
+		     , img1
+		     , img2
+		     , img3
+		     , img4
+		     )
+		 VALUES
+		    (
+		      SEQ_SNO.NEXTVAL
+		    , #{memberNo}
+		    , #{category}
+		    , #{title}
+		    , #{price}
+		    , #{stock}
+		    , sysdate
+		    , #{courier}
+		    , 'N'
+		    , 'N'
+		    , #{productImg0}
+		    , #{productImg1}
+		    , #{productImg2}
+		    , #{productImg3}
+		    ) 
+  	</insert>
+  	
+  	<insert id="insertProductOption">
+  		insert 
+		  into SOPTION
+		     (
+		       opno
+		     , pno
+		     , opname
+		     , price
+		     )
+		 VALUES
+		    (
+		      SEQ_OPNO.NEXTVAL
+		    , #{productNo}
+		    , #{optionName}
+		    , #{price}
+		    )
+  	</insert>
 </mapper>
