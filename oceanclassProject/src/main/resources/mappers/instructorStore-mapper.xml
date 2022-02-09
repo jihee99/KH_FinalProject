@@ -19,6 +19,13 @@
 	 	<result column="img4" property="productImg3"/>
 	</resultMap>
 	
+	<resultMap id="productOptionResult" type="ProductOption">
+		<result column="opno" property="optionNo"/>
+		<result column="pno" property="productNo"/>
+		<result column="opname" property="optionName"/>
+		<result column="price" property="price"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		select
 		       count(*)
@@ -39,27 +46,7 @@
 		order
 		    by pno desc
 	</select>
-	
-  	<select id="selectProduct" resultMap="productResult">
-  		select 
-		       pno
-		     , mno
-		     , category
-		     , title
-		     , price
-		     , stock
-		     , to_char(endate, 'YYYY-MM-DD') endate
-		     , courier
-		     , soldout_yn
-		     , status
-		     , img1
-		     , img2
-		     , img3
-		     , img4
-		  from store
-		 where pno = #{pno}
-  	</select>
-  	
+	  	
   	<insert id="insertProduct">
   		insert 
 		  into STORE
@@ -110,9 +97,39 @@
 		 VALUES
 		    (
 		      SEQ_OPNO.NEXTVAL
-		    , #{productNo}
+		    , SEQ_SNO.CURRVAL
 		    , #{optionName}
 		    , #{price}
 		    )
   	</insert>
+  	
+  	  	<select id="selectProduct" resultMap="productResult">
+  		select 
+		       pno
+		     , mno
+		     , category
+		     , title
+		     , price
+		     , stock
+		     , to_char(endate, 'YYYY-MM-DD') endate
+		     , courier
+		     , soldout_yn
+		     , status
+		     , img1
+		     , img2
+		     , img3
+		     , img4
+		  from store
+		 where pno = #{pno}
+  	</select>
+  	
+  	<select id="selectProductOption" resultMap="productOptionResult">
+	  	select 
+		       opno
+		     , pno
+		     , opname
+		     , price
+		  from soption
+		 where pno = #{productNo}
+  	</select>
 </mapper>

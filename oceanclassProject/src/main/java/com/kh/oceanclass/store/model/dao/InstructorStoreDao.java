@@ -25,10 +25,7 @@ public class InstructorStoreDao {
 		return (ArrayList)sqlSession.selectList("inStoreMapper.selectList", null, rowBounds);
 	}
 	
-	public Product selectProduct(SqlSessionTemplate sqlSession, int pno) {
-		return sqlSession.selectOne("inStoreMapper.selectProduct", pno);
-	}
-
+	//상품등록
 	public int insertProduct(SqlSessionTemplate sqlSession, Product p) {	
 		return sqlSession.insert("inStoreMapper.insertProduct", p);
 	}
@@ -36,6 +33,16 @@ public class InstructorStoreDao {
 	public int insertProductOption(SqlSessionTemplate sqlSession, ProductOption option) {
 		return sqlSession.insert("inStoreMapper.insertProductOption", option);
 	}
+
+	// 상품상세조회
+	public Product selectProduct(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.selectOne("inStoreMapper.selectProduct", pno);
+	}
+	
+	public ArrayList<ProductOption> selectProductOption(SqlSessionTemplate sqlSession, int pno) {
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectProductOption", pno);
+	}
+
 	
 
 	
