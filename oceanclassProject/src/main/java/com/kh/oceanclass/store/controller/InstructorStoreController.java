@@ -33,7 +33,7 @@ public class InstructorStoreController {
 	public String selectList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model){
 		
 		int listCount = inStoreService.selectListCount();
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 3);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 1);
 		ArrayList<Product> list = inStoreService.selectList(pi);
 		
 		//System.out.println("pi = "+pi);
@@ -205,15 +205,7 @@ public class InstructorStoreController {
 		return "redirect:stlist.in";
 	}
 	
-	@RequestMapping(value="stdelete.in")
-	public String deleteProduct() {
-		
-		return "";
-	}
-	
-	
-	
-	
+	//파일명변경 배열로
 	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
 		
 		ArrayList<String> changeList = new ArrayList();
@@ -242,4 +234,7 @@ public class InstructorStoreController {
 		return changeList;
 	}
 	
+	// 파일업로드 단일
+	
+		
 }
