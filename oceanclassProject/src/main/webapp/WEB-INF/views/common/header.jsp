@@ -15,6 +15,12 @@
 
 </head>
 <body>
+	<c:if test="${not empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
 	 <div id="header">
         <div id="header_1">
             <div id="header_1_left"></div>
