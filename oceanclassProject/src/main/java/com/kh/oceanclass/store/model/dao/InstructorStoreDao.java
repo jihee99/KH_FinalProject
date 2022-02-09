@@ -43,7 +43,13 @@ public class InstructorStoreDao {
 		return (ArrayList)sqlSession.selectList("inStoreMapper.selectProductOption", pno);
 	}
 
-	
+	public int updateProduct(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.update("inStoreMapper.updateProduct", p);
+	}
+
+	public int updateProductOption(SqlSessionTemplate sqlSession, ProductOption option) {
+		return 0;//sqlSession.update("inStoreMapper.updateProductOption", option);
+	}
 
 	
 }

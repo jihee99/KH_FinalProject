@@ -87,7 +87,7 @@
                         <tr>
 
                         	<td colspan="2">
-                        		<div id="append" style="margin-left:50px; width:700px; border:1px solid red;">
+                        		<div id="append" style="margin-left:50px; width:700px;">
 					
                         		</div>
                         	</td>
