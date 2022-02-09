@@ -48,7 +48,7 @@ public class InstructorStoreDao {
 	}
 
 	public int updateProductOption(SqlSessionTemplate sqlSession, ProductOption option) {
-		return 0;//sqlSession.update("inStoreMapper.updateProductOption", option);
+		return sqlSession.update("inStoreMapper.updateProductOption", option);
 	}
 
 	

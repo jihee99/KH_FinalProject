@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 <link rel="stylesheet" href="./resources/css/store/storeEnrollPage.css">
 <title>Insert title here</title>
 </head>
@@ -40,8 +40,18 @@
 				$(this).parent('div').remove();
 				index--;	
 			});
-			
 		})
+		
+       	$(function(){
+     		if(${p.category} == 1){
+     			$("#category option:eq(0)").prop("selected", true);	
+     		} else if(${p.category} == 2) {
+     			$("#category option:eq(1)").prop("selected", true);	
+     		} else {
+     			$("#category option:eq(2)").prop("selected", true);	
+     		}
+
+     	})
 	</script>
 	
 	<!-- 강사용 메뉴바 연결하기 	-->
@@ -71,7 +81,7 @@
                         <tr>
                             <th style="width: 140px;">카테고리</th>
                             <td style="width: 750px;">
-                                <select name="category" required>
+                                <select id="category" name="category" required>
                                     <option value="1">클래스상품</option>
                                     <option value="2">OC 에디션</option>
                                     <option value="3">DIY 키트</option>
