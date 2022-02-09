@@ -1,3 +1,4 @@
+
 package com.kh.oceanclass.store.controller;
 
 import java.io.File;
@@ -52,12 +53,20 @@ public class InstructorStoreController {
 	@RequestMapping(value="stenroll.in", produces="application/json; charset=UTF-8")
 	public String insertProduct(Product p, ProductOption option, MultipartFile[] upfile, HttpSession session, Model model) {
 		
-		String[] strArr = option.getOptionName().split(",");
+		System.out.println(p);
+		System.out.println(option);
+		System.out.println(upfile);
+		for(int i =0; i<upfile.length; i++) {
+			System.out.println("upfile : " + upfile[i]);
+		}
+		
+		String[] strArr = null;
 		ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
 		
 		// 옵션이 존재할 때
-		if(strArr.length>0) {
+		if(option.getOptionName() != null) {
 			// 문자열로 반환된 optionName을 각각의 객체로 분리
+			strArr = option.getOptionName().split(",");
 			for(int i=0; i<strArr.length; i++) {
 				oplist.add(new ProductOption());
 				oplist.get(i).setOptionName(strArr[i]);
@@ -205,6 +214,7 @@ public class InstructorStoreController {
 		return "redirect:stlist.in";
 	}
 	
+	//파일명변경 배열로
 	@RequestMapping(value="stdelete.in")
 	public String deleteProduct() {
 		
@@ -242,4 +252,6 @@ public class InstructorStoreController {
 		return changeList;
 	}
 	
+
+		
 }
