@@ -17,7 +17,7 @@
 <body>
 	<c:if test="${not empty alertMsg }">
 		<script>
-			alertify.alert("${alertMsg}");
+			alert("${alertMsg}");
 		</script>
 		<c:remove var="alertMsg"/>
 	</c:if>
