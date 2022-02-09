@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inStoreMapper">
+
+	<resultMap id="productResult" type="Product">
+	  	<result column="pno" property="productNo"/>
+	  	<result column="mno" property="memberNo"/>
+	  	<result column="category" property="category"/>
+	  	<result column="title" property="title"/>
+	  	<result column="price" property="price"/>
+	  	<result column="stock" property="stock"/>
+	  	<result column="endate" property="enDate"/>
+	  	<result column="courier" property="courier"/>
+	  	<result column="soldout_yn" property="soldoutYN"/>
+	  	<result column="status" property="status"/>
+	  	<result column="img1" property="productImg0"/>
+	  	<result column="img2" property="productImg1"/>
+	  	<result column="img3" property="productImg2"/>
+	 	<result column="img4" property="productImg3"/>
+	</resultMap>
+	
+	<resultMap id="productOptionResult" type="ProductOption">
+		<result column="opno" property="optionNo"/>
+		<result column="pno" property="productNo"/>
+		<result column="opname" property="optionName"/>
+		<result column="price" property="price"/>
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from store
+		 where status in ('Y', 'N')
+	</select>
+	
+	<select id="selectList" resultMap="productResult" >
+	 	select pno
+		     , mno
+		     , category
+		     , title
+		     , price
+		     , status
+		     , img1
+		 from store
+		where status in ('Y','N')
+		order
+		    by pno desc
+	</select>
+	  	
+  	<insert id="insertProduct">
+  		insert 
+		  into STORE
+		     (
+		       pno
+		     , mno
+		     , category
+		     , title
+		     , price
+		     , stock
+		     , endate
+		     , courier
+		     , soldout_yn
+		     , status
+		     , img1
+		     , img2
+		     , img3
+		     , img4
+		     )
+		 VALUES
+		    (
+		      SEQ_SNO.NEXTVAL
+		    , #{memberNo}
+		    , #{category}
+		    , #{title}
+		    , #{price}
+		    , #{stock}
+		    , sysdate
+		    , #{courier}
+		    , 'N'
+		    , 'N'
+		    , #{productImg0}
+		    , #{productImg1}
+		    , #{productImg2}
+		    , #{productImg3}
+		    ) 
+  	</insert>
+  	
+  	<insert id="insertProductOption">
+  		insert 
+		  into SOPTION
+		     (
+		       opno
+		     , pno
+		     , opname
+		     , price
+		     )
+		 VALUES
+		    (
+		      SEQ_OPNO.NEXTVAL
+		    , SEQ_SNO.CURRVAL
+		    , #{optionName}
+		    , #{price}
+		    )
+  	</insert>
+  	
+  	  	<select id="selectProduct" resultMap="productResult">
+  		select 
+		       pno
+		     , mno
+		     , category
+		     , title
+		     , price
+		     , stock
+		     , to_char(endate, 'YYYY-MM-DD') endate
+		     , courier
+		     , soldout_yn
+		     , status
+		     , img1
+		     , img2
+		     , img3
+		     , img4
+		  from store
+		 where pno = #{pno}
+  	</select>
+  	
+  	<select id="selectProductOption" resultMap="productOptionResult">
+	  	select 
+		       opno
+		     , pno
+		     , opname
+		     , price
+		  from soption
+		 where pno = #{productNo}
+  	</select>
+</mapper>

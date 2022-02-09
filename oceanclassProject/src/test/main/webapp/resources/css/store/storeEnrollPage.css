@@ -1,0 +1,21 @@
+@charset "UTF-8";
+.innerOuter{width: 80%; margin:auto; padding:5px 10px;}
+
+.headMenu{text-align: left; padding-top: 30px;} 
+.headMenu>b{font-size: 28px; font-weight: 800; margin-left: 30px; color: rgb(107, 171, 213);}
+
+.content{width: 80%; margin-left: auto; margin-right: auto;}
+
+#pInfo{width:80%; margin-left: auto; margin-right: auto; border-collapse: separate; border-spacing: 0 6px;}
+#pInfo>thead th{line-height: 33px; font-size: 17px; padding-left: 15px;}
+#pInfo>tbody th{line-height: 33px; font-size: 14px; text-align: right; padding-right: 15px;}
+#pInfo>tbody td>input{width: 80%;}
+
+.detail{font-size: 12px; color: rgb(185, 7, 7); font-weight: bold;}
+
+.opStyle1{width:400px; line-height: 30px;}
+.opStyle2{width:150px; line-height: 30px;}
+
+.btnBox>button{border-radius: 7px; width: 120px; height: 45px; margin: 10px; font-size: 15px; font-weight: bolder; color: white; border:none; }
+.btnBox>button[type="submit"]{background-color: rgb(107, 171, 213);}
+.btnBox>button[type="reset"]{background-color: gray;}
