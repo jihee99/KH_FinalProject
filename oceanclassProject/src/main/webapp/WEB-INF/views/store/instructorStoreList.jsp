@@ -11,9 +11,9 @@
 </head>
 <body>
 	
-	<!-- 강사용 메뉴바 연결하기 	-->
+	<!-- 강사용 메뉴바 연결하기 	
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
-	
+	-->
     <div class="innerOuter" align="center">
         <div class="content">
             <div class="menutitle">

@@ -6,8 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 <link rel="stylesheet" href="./resources/css/store/storeEnrollPage.css">
 <title>Insert title here</title>
 </head>
@@ -139,7 +138,7 @@
                             <th colspan="2" style="float:left;">추가 정보</th>
                         </tr>
                         <tr>
-                            <th>보유재보</th>
+                            <th>보유재고</th>
                             <td>
                                 <input type="number" name="stock" required>
                             </td>
