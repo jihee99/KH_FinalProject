@@ -31,6 +31,7 @@ public class MemberController {
 		return "member/common/logIn";
 	}
 	
+	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, HttpSession session, ModelAndView mv) {
 		
