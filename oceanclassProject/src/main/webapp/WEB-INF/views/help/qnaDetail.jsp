@@ -28,9 +28,9 @@
 	table td{
 		text-align: left;
 	}
-	.text{
+	.text>p{
 		height: 300px;
-		valign: middle;
+		border: 1px solid;
 	}
 	.content>button{display: block; margin: auto;}
 </style>
@@ -64,10 +64,10 @@
                     <th>문의내용</th>
                     <td colspan="3" class="text"><p>${q.qnaContent}</p></td>
                 </tr>
-                <c:if test="${not empty q.ansDate}"> 
+                <c:if test="${not empty q.ansContent}"> 
 	                <tr>
 	                    <th>답변</th>
-	                    <td colspan="3">${q.ansContent}<br><br>${q.ansDate}</td>
+	                    <td colspan="3">${q.ansContent}<br><br><p style="font-size: 9px;">${q.ansDate}</p></td>
 	                </tr>
                 </c:if>
             </table>

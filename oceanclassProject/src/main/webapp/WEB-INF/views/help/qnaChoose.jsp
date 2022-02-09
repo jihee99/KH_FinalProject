@@ -14,15 +14,17 @@
 	.content{
 		width: 80%;
 		height: 300px;
-		padding: 30px;
+		padding: 20px;
 	}
 	.content>p{
 		width: 50%;
 		height: 100%;
 		float: left;
 	}
-	.content bi{
-		padding: 30px;
+	.bi{
+		display: block;
+		width: 22%;
+		margin: 0 auto;
 	}
 	.content button{display: block; margin: 0 auto;}
 </style>
@@ -37,9 +39,9 @@
         </div>
         <div class="content">
         	
-        	<p><i class="bi bi-pencil-square" style="font-size: 5rem; color: gray;"></i><button type="button" class="btn" onclick="location.href='qnaList.he';">문의 등록</button></p>
+        	<p><i class="bi bi-pencil-square align-middle" style="font-size: 5rem; color: gray;"></i><button type="button" class="btn" onclick="location.href='qnaList.he';">문의 등록</button></p>
         	
-        	<p><i class="bi bi-chat-left-dots" style="font-size: 5rem; color: gray;"></i><button class="btn">실시간 상담</button></p>
+        	<p><i class="bi bi-chat-left-dots align-middle" style="font-size: 5rem; color: gray;"></i><button class="btn">실시간 상담</button></p>
         	
         </div>
         
