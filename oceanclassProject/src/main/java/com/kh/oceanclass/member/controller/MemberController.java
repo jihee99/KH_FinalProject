@@ -36,7 +36,7 @@ public class MemberController {
 		
 		Member loginUser = mService.loginMember(m);
 		
-		if(loginUser != null || bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) { 
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) { 
 			session.setAttribute("loginUser", loginUser);
 			//System.out.println(loginUser);
 			mv.setViewName("redirect:/");
