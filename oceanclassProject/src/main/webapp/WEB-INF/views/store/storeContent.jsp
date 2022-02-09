@@ -44,6 +44,9 @@
 </style>
 </head>
 <body>
+
+	<jsp:include page="../common/header.jsp" />
+
     <div id="outer">
         <div id="silde">나중에 silde들어갈자리</div>
         
@@ -175,5 +178,8 @@
         <div style="height: 150px;"></div>
 
     </div>
+    
+    <jsp:include page="../common/footerBar.jsp" />
+    
 </body>
 </html>
