@@ -4,10 +4,10 @@
 .headMenu{text-align: left; padding-top: 30px;} 
 .headMenu>b{font-size: 28px; font-weight: 800; margin-left: 30px; color: rgb(107, 171, 213);}
 
-.content{width: 80%; margin-left: auto; margin-right: auto;}
+.content{width: 1000px; margin-left: auto; margin-right: auto;}
 
 #pInfo{width:80%; margin-left: auto; margin-right: auto; border-collapse: separate; border-spacing: 0 6px;}
-#pInfo>thead th{line-height: 33px; font-size: 17px; padding-left: 15px;}
+#pInfo>thead th{line-height: 33px; padding-left: 10px;}
 #pInfo>tbody th{line-height: 33px; font-size: 14px; text-align: right; padding-right: 15px;}
 #pInfo>tbody td>input{width: 80%;}
 
