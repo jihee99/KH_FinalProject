@@ -101,7 +101,7 @@
                     <span>Log in</span>
                 </div>
                 <form action="login.me" method="post">
-                    <!-- id 인풋 null일 때-->
+                    <!-- id 인풋 null일 때--> 
                     <div class="form-group">
                       <input type="text" class="form-control" id="userIdPwd" placeholder="아이디를 입력하세요." name="userId" required>
                       <!-- <div class="valid-feedback"></div>
