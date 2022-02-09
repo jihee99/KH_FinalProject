@@ -71,7 +71,7 @@
                                 <tr>
                                     <td class="btn_area_2">
                                         <button id="updateBtn" class="btn" onclick="location.href='stdetail.in?pno=${p.productNo}'">수정하기</button>
-                                        <button id="deleteBtn" class="btn" onclick="">상품삭제하기</button>
+                                        <button id="deleteBtn" class="btn" onclick="location.href='stdelete.in?pno=${p.productNo}'">상품삭제하기</button>
                                     </td>
                                 </tr>
                             </table>

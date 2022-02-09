@@ -34,10 +34,10 @@ public interface InstructorStoreService {
 	
 	
 	// 5.1 상품 삭제용 서비스
-	void deleteProduct();
+	int deleteProduct(int pno);
 	
 	// 5.2 상품옵션 삭제용 서비스
-	void deleteProductOption();
+	int deleteProductOption(int pno);
 	
 	
 	// 6. 상품 문의 리스트 페이지 서비스

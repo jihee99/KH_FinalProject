@@ -51,5 +51,12 @@ public class InstructorStoreDao {
 		return sqlSession.update("inStoreMapper.updateProductOption", option);
 	}
 
+	public int deleteProduct(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.update("inStoreMapper.deleteProduct", pno);
+	}
+	
+	public int deleteProductOption(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.delete("inStoreMapper.deleteProductOption", pno);
+	}
 	
 }
