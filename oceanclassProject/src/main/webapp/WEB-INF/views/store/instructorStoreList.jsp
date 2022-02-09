@@ -24,7 +24,7 @@
             
             <!-- loginUser가 teacher일때만 보여지게 하기 
             -->
-            <c:if test="${loginUser ne null }">
+            <c:if test="${loginUser ne null and loginUser.grade eq 'T'}">
             <div class="btn_area_1" align="right">
                 <button class="btn btn-lg" onclick="location.href='stenrollF.in'">+상품추가하기</button>
             </div>

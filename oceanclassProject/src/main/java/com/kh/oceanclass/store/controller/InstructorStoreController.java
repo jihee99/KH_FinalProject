@@ -54,9 +54,18 @@ public class InstructorStoreController {
 		System.out.println(p);
 		System.out.println(option); 
 		
+		ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
+		String[] strArr = option.getOptionName().split(",");
+		
+		for(int i=0; i<strArr.length; i++) {
+			oplist.add(new ProductOption());
+			oplist.get(i).setOptionName(strArr[i]);
+			oplist.get(i).setPrice(option.getPrice());
+		}		
+		
 		ArrayList<String> changeList = saveFile(upfile, session);
 		//System.out.println(changeList);
-
+		
 		for(int i=0; i<changeList.size(); i++) {
 			if(i==0) {
 				p.productImg0 = changeList.get(i);
@@ -71,7 +80,10 @@ public class InstructorStoreController {
 		//System.out.println(p);
 		
 		int result1 = inStoreService.insertProduct(p);
-		int result2 = inStoreService.insertProductOption(option);
+		int result2 = 1;
+		for(int i=0; i<oplist.size(); i++) {
+			result2 = result2 * inStoreService.insertProductOption(oplist.get(i));
+		}
 		
 		//System.out.println("p : " + result1);
 		//System.out.println("op : " + result2);
@@ -90,10 +102,15 @@ public class InstructorStoreController {
 	public String selectProduct(int pno, Model model) {
 		Product p = inStoreService.selectProduct(pno);
 		ArrayList<ProductOption> oplist = inStoreService.selectProductOption(pno);
+		int opIndex = oplist.size();
 		
-		System.out.println(pno);
+		//System.out.println(pno);
 		System.out.println(p);
+		System.out.println(oplist);
+		
 		model.addAttribute("p", p);
+		model.addAttribute("oplist", oplist);
+		model.addAttribute("opIndex", opIndex);
 		return "store/instructorStoreUpdate";
 	}
 	

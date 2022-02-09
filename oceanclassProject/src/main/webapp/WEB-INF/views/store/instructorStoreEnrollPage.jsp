@@ -20,7 +20,7 @@
 			
 			$('#insBtn').click(function(){
 				if(index<=max){
-					var fieldHTML = '<div><input class="opStyle1" name="optionName" type="text" placeholder="옵션명" style="width:400px; line-height:29px; margin-right:2px;"><input name="price" class="opStyle2" type="number" placeholder="원" style="width:200px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn">삭제</a></div>';
+					var fieldHTML = '<div><input class="opStyle1" name="optionName" type="text" placeholder="옵션명" style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn">삭제</a></div>';
 					$('#append').append(fieldHTML);		//add field
 					index++;	// 카운트 증가
 				}else{
@@ -78,15 +78,16 @@
                             <th>상품가격</th>
                             <td><input name="price" type="number" placeholder="숫자만 입력하세요(원)" required></td>
                         </tr>
-                         <tr>
+                        <tr>
                         	<th>옵션여부</th>
                         	<td>
                         		<input type="button" class="btn btn-light" id="insBtn" value="+" style="width:40px;">
 							<td>
                         </tr>
                         <tr>
+
                         	<td colspan="2">
-                        		<div id="append" style="margin-left:50px; width:700px;">
+                        		<div id="append" style="margin-left:50px; width:700px; border:1px solid red;">
 					
                         		</div>
                         	</td>
