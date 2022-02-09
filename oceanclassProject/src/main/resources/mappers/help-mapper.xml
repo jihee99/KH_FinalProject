@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="helpMapper">
+
+	
+	<resultMap id="noticeResult" type="Notice">
+		<result column="nno" property="noNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="n_title" property="noTitle" />
+		<result column="n_content" property="noContent" />
+		<result column="count" property="count" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="img" property="img" />
+	</resultMap>
+	
+	<resultMap id="qnaResult" type="Qna">
+		<result column="qno" property="qnaNo" />
+		<result column="nickname" property="nickName" />
+		<result column="category" property="category" />
+		<result column="q_title" property="qnaTitle" />
+		<result column="q_content" property="qnaContent" />
+		<result column="create_date" property="createDate" />
+		<result column="img" property="img" />
+		<result column="password" property="pwd" />
+		<result column="a_content" property="ansContent" />
+		<result column="a_date" property="ansDate" />
+	</resultMap>
+	
+	<resultMap id="faqResult" type="Faq">
+		<result column="fno" property="faqNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="f_title" property="faqTitle" />
+		<result column="f_content" property="faqContent" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<!-- 공지사항 -->
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from notice
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectList" resultMap="noticeResult">
+		select
+		       nno
+		     , mno
+		     , category
+		     , n_title
+		     , count
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from notice
+		 where status = 'Y'
+		 order
+		    by nno desc
+	</select>
+	
+	<update id="increaseCount">
+		update
+			   notice
+		   set count = count + 1
+		 where nno = #{noNo}
+		   and status = 'Y'
+	</update>
+	
+	<select id="selectNotice" resultMap="noticeResult">
+		select
+		       nno
+		     , mno
+		     , category
+		     , n_title
+		     , n_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , img
+		  from notice
+		 where nno = #{noNo}
+	</select>
+	
+	
+	<!-- 1:1문의 -->
+	<select id="selectQnaCount" resultType="_int">
+		select
+		       count(*)
+		  from qna
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectQnaList" resultMap="qnaResult">
+		select
+		       qno
+		     , nickname
+		     , category
+		     , q_title
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , password
+		     , to_char(a_date, 'YYYY-MM-DD') as "a_date"
+		  from qna
+		  join member using (mno)
+		 order
+		    by qno desc
+	</select>
+	
+	<select id="selectQna" resultMap="qnaResult">
+		select
+			   qno
+		     , nickname
+		     , category
+		     , q_title
+		     , q_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , img
+		     , password
+		     , a_content
+		     , a_date
+		  from qna
+		  join member using (mno)
+		 where qno = #{qno}
+	</select>
+	
+	<insert id="insertQna">
+		insert 
+		  into qna
+		     {
+		       qno
+		     , mno
+		     , category
+		     , q_title
+		     , q_content
+		     , create_date
+		     , img
+		     , password
+		     }
+		values
+		     {
+		       qno.nextVal
+		     , mno.nextVal
+		     ,       
+	</insert>
+	
+	
+	<!-- FAQ -->
+	<select id="selectFaqList" resultMap="faqResult">
+		select
+			   fno
+			 , category
+			 , f_title
+			 , f_content
+		  from faq
+         order 
+            by category
+	</select>
+	
+</mapper>
