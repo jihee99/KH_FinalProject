@@ -30,6 +30,7 @@
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/adminMem-mapper.xml" />
 		<mapper resource="/mappers/class-mapper.xml" />
+		<mapper resource="/mappers/mypage-mapper.xml" />
 	</mappers>
 	
 </configuration>
