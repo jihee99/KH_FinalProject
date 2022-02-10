@@ -20,6 +20,8 @@
 		<typeAlias type="com.kh.oceanclass.member.model.vo.MemCoupon" alias="MemCoupon"/>
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Coupon" alias="Coupon"/>
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Point" alias="Point"/>
+		
+		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassVo" alias="Class"/>
 	</typeAliases>
 	
 	<mappers>
@@ -27,6 +29,7 @@
 		<mapper resource="/mappers/instructorStore-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/adminMem-mapper.xml" />
+		<mapper resource="/mappers/class-mapper.xml" />
 	</mappers>
 	
 </configuration>
