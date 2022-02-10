@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -10,11 +10,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript" ></script>
-	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+  	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    #wrap{
+    #wrap{s
         width: 1000px;
         height: auto;
         margin: auto;
@@ -138,58 +139,47 @@
                     </div>
 
                     <button type="submit" id="_btnLogin" class="btn" style="background-color: rgb(228, 240, 250);">로그인 하기</button>
-                    <!-- <button type="submit" class="btn" style="background-color: rgb(232, 248, 239);">네이버로 로그인 하기</button> -->
+                    <button type="button" onclick="kakaoLogin()" class="btn" style="background-color: rgb(255, 224, 73);">카카오로 로그인 하기</button>
                 	
-                	<!-- Naver Login Btn --> 
-                	<div id="naverIdLogin" > 
-	                	<a id="naverIdLogin_loginButton"> 
-	                		<img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" width="100%" height="55px" style="max-width:400px;max-height:60px"/> 
-	                	</a> 
-                	</div>
-
-					
-					<script type="text/javascript"> 
-					var naverLogin = new naver.LoginWithNaverId({ 
-						clientId: "Jrjt2SGEiCrkTfdJbLaH", 
-						callbackUrl: "http://localhost:8888/oceanclass/", 
-						isPopup: false, 
-						/* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */ 
-						}); 
-					/* (3) 네아로 로그인 정보를 초기화하기 위하여 init을 호출 */ 
-					naverLogin.init(); 
-					
-					/* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) */ 
-					window.addEventListener('load', function () { 
-						naverLogin.getLoginStatus(function (status) { 
-							if (status) { 
-								/* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */ 
-								console.log(naverLogin.accessToken.accessToken) 
-								var email = naverLogin.user.getEmail(); 
-								var profileImage = naverLogin.user.getProfileImage(); 
-								var name = naverLogin.user.getName(); 
-								var uniqId = naverLogin.user.getId(); 
-								if( email == undefined || email == null) { 
-									alert("이메일은 필수정보입니다. 정보제공을 동의해주세요."); 
-									/* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 */ 
-									naverLogin.reprompt(); 
-									return; 
-									
-								}else if( name == undefined || name == null){ 
-									alert("회원이름은 필수정보입니다. 정보제공을 동의해주세요."); 
-									naverLogin.reprompt(); 
-									return; 
-									
-								}else{ 
-									// 성공 
-									} 
-								} else { 
-									console.log("callback 처리에 실패하였습니다."); 
-									} 
-							}); 
-						});
-
+                	<script>
+					Kakao.init('bd21082a499aaa79b4c08e01935a8a70'); //발급받은 키 중 javascript키를 사용해준다.
+					console.log(Kakao.isInitialized()); // sdk초기화여부판단
+					//카카오로그인
+					function kakaoLogin() {
+					    Kakao.Auth.login({
+					      success: function (response) {
+					        Kakao.API.request({
+					          url: '/v2/user/me',
+					          success: function (response) {
+					        	  console.log(response)
+					          },
+					          fail: function (error) {
+					            console.log(error)
+					          },
+					        })
+					      },
+					      fail: function (error) {
+					        console.log(error)
+					      },
+					    })
+					  }
+					//카카오로그아웃  
+					function kakaoLogout() {
+					    if (Kakao.Auth.getAccessToken()) {
+					      Kakao.API.request({
+					        url: '/v1/user/unlink',
+					        success: function (response) {
+					        	console.log(response)
+					        },
+					        fail: function (error) {
+					          console.log(error)
+					        },
+					      })
+					      Kakao.Auth.setAccessToken(undefined)
+					    }
+					  }  
 					</script>
-                	
+					
                 </form>
             </div>
             
