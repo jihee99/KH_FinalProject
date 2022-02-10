@@ -102,8 +102,8 @@
 				    </div>
 				    
 				    <div class="button">
-					    <button type="button" id="changePass" class="btn btn-light" onclick="changePwd();">비밀번호 변경</button>
-					    <button type="button" id="changeProfile" class="btn" onclick="changeProfile();">프로필 수정</button>
+					    <button type="button" id="changePwd" class="btn btn-light" onclick="changePwd();">비밀번호 변경</button>
+					    <button type="button" id="changeProfile" class="btn" onclick="formProfile();">프로필 수정</button>
 					</div>
 					
 				</div>
@@ -111,29 +111,47 @@
 			</td>
 		</tr>
 	</table>
-	
-	<script>
-		function changePwd(){
-			$(".modal").modal();
-		}
-	</script>
+
 	
 	<div class="modal" tabindex="-1">
 		<div class="modal-dialog">
-			<div class="modal-header">
-		        <h5 class="modal-title">비밀번호 변경</h5>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      	</div>
 			<div class="modal-content">
+				<div class="modal-header">
+		       		<div class="modal-title">비밀번호 변경</div>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         				<span aria-hidden="true">&times;</span>
+        			</button>
+	      		</div>
 				<div class="modal-body">
-					<p style="text-align:center;">비밀번호 변경</p>
+						<p style="text-align:center;">변경할 비밀번호 : <input type="password" id="newPwd" name="newPwd" required></p>
+						<p style="text-align:center; margin-left: 18px;">비밀번호 확인 : <input type="password" id="checkPwd" name="cheeckPwd"></p>
+						<button type="button" id="changeBtn" class="btn btn-light btn-sm btn-block" style="margin:0 auto;">비밀번호 변경</button>
 				</div>
-			<div class="modal-footer">
-		        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
-		    </div>
 			</div>
 		</div>
 	</div>
+	
+	
+	<script>
+	
+		function formProfile(){
+			location.href='formProfile.me'
+		} 	
+	
+		function changePwd(){
+			$(".modal").modal();
+		}
+		
+		$("#changeBtn").click(function(){
+			var newPwd = docuement.querySelector("#newPwd").value();
+			var checkPwd = docuement.querySelector("#newPwd").value();
+			
+			console.log(newPwd);
+			console.log(checkPwd);
+		});
+		
+	</script>
+
 	
 </body>
 </html>
