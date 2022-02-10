@@ -56,10 +56,6 @@ public class HelpDao {
 	public int insertQna(SqlSessionTemplate sqlSession, Qna q) {
 		return sqlSession.insert("helpMapper.insertQna", q);
 	}
-	
-//	public int insertSecretQna(SqlSessionTemplate sqlSession, QnaIn q) {
-//		return sqlSession.selectOne("helpMapper.insertSecretQna", q);
-//	}
 
 	
 	// FAQ

@@ -147,27 +147,21 @@ public class HelpController {
 	@RequestMapping("insertQna.he")
 	public String insertQna(Qna q, HttpSession session, Model model) {
 		
-		System.out.println(q);
-		
 		if(q.pwd == null) {
 			q.pwd = "";
 		}
+		//System.out.println(q);
 		
-		// 비밀번호까지 해서 필드 다 채워도 NullPointerException... 
-//		at com.kh.oceanclass.help.model.dao.HelpDao.insertQna(HelpDao.java:58)
-//		at com.kh.oceanclass.help.model.service.HelpServiceImpl.insertQna(HelpServiceImpl.java:69)
-//		at com.kh.oceanclass.help.controller.HelpController.insertQna(HelpController.java:158)
-		System.out.println(q);
-			int result = hService.insertQna(q);
-			
-			if(result>0) {
-				session.setAttribute("alertMsg", "게시글이 등록되었습니다");
-				return "redirect:qnaList.he";
-			}else {
-				model.addAttribute("errorMsg", "게시글 등록 실패");
-				return "common/errorPage";
-			}
+		int result = hService.insertQna(q);
 		
+		if(result>0) {
+			session.setAttribute("alertMsg", "게시글이 등록되었습니다");
+			return "redirect:qnaList.he";
+		}else {
+			model.addAttribute("errorMsg", "게시글 등록 실패");
+			return "common/errorPage";
+		}
+	
 		
 	}
 	
