@@ -1,33 +1,95 @@
 package com.kh.oceanclass.member.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.kh.oceanclass.member.model.service.MypageService;
+import com.kh.oceanclass.member.model.vo.Member;
 
 @Controller
 public class StuMypageController {
-
-	/*
-	 * 	마이페이지 기능
-	 */
 	
+	@Autowired
+	private MypageService myService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+
+	// 메인 이동
 	@RequestMapping("home.me")
 	public String home() {
 		return "/main";
 	}
 	
+	// 마이페이지 이동
 	@RequestMapping("myPage.me")
 	public String myPage() {
 		return "member/student/mypageMain";
 	}
 	
+	// 프로필 확인
 	@RequestMapping("myProfile.me")
 	public String myProfile() {
 		return "member/student/myProfile";
 	}
 	
-	@RequestMapping("myDelete.me")
+	// 프로필 수정폼
+	@RequestMapping("formProfile.me")
+	public String formProfile() {
+		return "member/student/myProfileChange";
+	}
+	
+	@RequestMapping("changeProfile.me")
+	public void changeProfile(Member m, MultipartFile profileImg, HttpSession session, Model model) {
+		
+		System.out.println(m);
+		
+		int result = myService.updateProfile(m);
+		System.out.println(result);
+	}
+	
+	// 회원 탈퇴폼
+	@RequestMapping("myDeleteForm.me")
 	public String myDelete() {
 		return "member/student/myDelete";
+	}
+	
+	// 회원 탈퇴
+	@RequestMapping("myDelete.me")
+	public String deleteMem(String userPwd, String userId, HttpSession session, Model model) {
+		//System.out.println(userPwd);
+		//System.out.println(userId);
+		// db 비밀번호 암호문
+		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
+		
+		if(bcryptPasswordEncoder.matches(userPwd, encPwd)) { 
+			int result = myService.deleteMem(userId);
+			
+			if(result>0) {
+				session.removeAttribute("loginUser");
+				session.setAttribute("alertMsg", "그동안 오션클래스를 이용해주셔서 감사합니다");
+				return "redirect:/";
+			}else {
+				model.addAttribute("errorMsg", "회원탈퇴실패");
+				return "common/errorPage";
+			}
+		}else {
+			session.setAttribute("alertMsg", "잘못된 비밀번호입니다.");
+			return "redirect:myDeleteForm.me";
+		}
+	}
+	
+	// 포인트/쿠폰페이지
+	@RequestMapping("pointCoupon.me")
+	public String pointCoupon() {
+		return "member/student/myPoint.jsp";
 	}
 	
 }

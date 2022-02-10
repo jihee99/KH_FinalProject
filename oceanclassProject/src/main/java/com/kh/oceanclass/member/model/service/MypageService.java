@@ -9,6 +9,6 @@ public interface MypageService {
 	int updateProfile(Member m);
 	
 	// 회원탈퇴
-	int deleteProfile(Member m);
+	int deleteMem(String userId);
 	
 }
