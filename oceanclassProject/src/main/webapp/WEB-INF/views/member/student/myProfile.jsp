@@ -4,10 +4,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -115,6 +111,29 @@
 			</td>
 		</tr>
 	</table>
+	
+	<script>
+		function changePwd(){
+			$(".modal").modal();
+		}
+	</script>
+	
+	<div class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-header">
+		        <h5 class="modal-title">비밀번호 변경</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      	</div>
+			<div class="modal-content">
+				<div class="modal-body">
+					<p style="text-align:center;">비밀번호 변경</p>
+				</div>
+			<div class="modal-footer">
+		        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+		    </div>
+			</div>
+		</div>
+	</div>
 	
 </body>
 </html>
