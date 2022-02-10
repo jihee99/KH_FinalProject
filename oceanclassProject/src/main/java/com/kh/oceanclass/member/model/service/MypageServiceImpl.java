@@ -22,8 +22,9 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public int deleteMem(String userId) {
-		return myDao.deleteMem(sqlSession, userId);
+	public int deleteProfile(Member m) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

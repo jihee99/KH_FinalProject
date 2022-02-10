@@ -7,6 +7,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
      #info>p{
@@ -16,7 +18,18 @@
      	font-size: 18px;
      	word-wrap: break-word;
      }
-     #deleteMem{margin-left: 300px; margin-top: 50px;}
+     #checkPwd{
+     	width: 40%;
+     	margin: auto;
+     }
+     #checkPwd>h3{
+     	color: rgb(107, 171, 213); 
+		font-weight: 600;
+     	text-align: center;
+		margin-top: 50px; 
+		margin-bottom: 20px;
+	}
+	#checkPwd>input{margin-left: 50px;}
 </style>
 </head>
 <body>
@@ -39,34 +52,34 @@
 					    </p>
 						   
 				    </div>
-					<button id="deleteMem" type="button" class="btn btn-info btn-lg" >회원탈퇴</button>
+				    <div id="checkPwd">
+					    <h3>비밀번호 확인</h3>
+					    <input type="password" placeholder="비밀번호 입력" name="userPwd">
+					    <button id="button" type="button" class="btn btn-info" data-toggle="modal" data-target=".modal">회원탈퇴</button>
+				    </div>
 				</div>
 			</td>
 		</tr>
 	</table>
 	
+	<script>
+		$("#button").click(function(){
+			$(".modal").modal();
+		})
+	</script>
+	
 	<div class="modal" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
-					<form action="myDelete.me" method="post">
-						비밀번호를 입력해주세요.
-						<input type="hidden" id="userId" name="userId" value="${loginUser.userId}">
-						<input type="password" placeholder="비밀번호 입력" id="userPwd" name="userPwd" required>
-						<button type="submit" id="delBtn" class="btn btn-light btn-sm btn-block" style="margin:0 auto;">확인</button>
-					</form>
+					<p style="text-align:center;">정말 탈퇴하시겠습니까?</p>
 				</div>
+			<div class="modal-footer">
+		        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+		    </div>
 			</div>
 		</div>
 	</div>
-	
-	<script>
-		$("#deleteMem").click(function(){
-			$(".modal").modal();
-		});
-	</script>
-	
-
     
 
 </body>
