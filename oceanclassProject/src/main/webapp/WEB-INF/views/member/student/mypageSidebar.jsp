@@ -35,9 +35,9 @@
 	        <p>내 정보 관리</p>
 	        <ul>
 	            <li><a href="?page=myQna.jsp">1:1 문의 내역</a></li>
-	            <li><a href="?page=myPoint.jsp">내 포인트/쿠폰</a></li>
+	            <li><a href="pointCoupon.me">내 포인트/쿠폰</a></li>
 	            <li><a href="myProfile.me">나의 프로필</a></li>
-	            <li><a href="myDelete.me">회원 탈퇴</a></li>
+	            <li><a href="myDeleteForm.me">회원 탈퇴</a></li>
 	        </ul>
 	    </div>
 	</div>  
