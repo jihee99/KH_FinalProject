@@ -9,10 +9,41 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="./resources/css/header.css">
-<!-- JavaScript -->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
+<link rel="stylesheet" href="./resources/css/header.css">
+<style>
+div{box-sizing: border-box;}
+
+/*검색영역 관련 스타일*/
+#header_search{
+    border: 1px solid red; margin:auto; align-items: center;
+}
+#header_search select {
+	display:flex;
+    width: 100px;
+    height:35px;
+    padding-left:10px;
+    border: 1px solid #999;
+    font-family: inherit;
+    background: url('resources/images/arrow.jpg') no-repeat 95% 50%;
+    border-radius: 0px;
+    appearance: none;
+    display:inline-block;
+}
+
+#header_search input{height: 35px; width: 350px;}
+#header_search button {
+    font-size: 15px;
+    border: none;
+    background-color: rgb(107, 171, 213);
+    width: 50px;
+    height: 35px;
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+}
+
+</style>
 </head>
 <body>
 	<c:if test="${not empty alertMsg }">
@@ -46,8 +77,19 @@
             </div>
         </div>
 
-        <!--각 페이지 넘어가서 해당 메뉴에 글자 색 효과 넣기 rgb(107, 171, 213) -->
-
+		<div id="header_search" align="center">
+            <form action="">
+                <select name="" id="header_category">
+                    <option value="">클래스</option>
+                    <option value="">스토어</option>
+                </select>
+                
+                <input type="text" name="">
+                <button type="submit">검색</button>
+            </form>
+		</div>
+		
+		<!--각 페이지 넘어가서 해당 메뉴에 글자 색 효과 넣기 rgb(107, 171, 213) -->
         <div id="header_2">
 
             <ul class="header_2_box">
