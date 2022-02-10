@@ -15,5 +15,6 @@ public class Coupon {
 	private int couponNo;
 	private String couponName; 
 	private int discount;
-
-}
+	private String dedate;
+	private int count;
+}	

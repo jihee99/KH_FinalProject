@@ -34,6 +34,8 @@
 		<result column="cno" property="couponNo" />
 	    <result column="cname" property="couponName" />
         <result column="discount" property="discount" />
+        <result column="dedate" property="dedate" />
+        <result column="count" property="count" />
 	</resultMap>	
 	
 	<resultMap type="MemCoupon" id="memCouponResult">
@@ -112,11 +114,11 @@
 	</select>
 	
 	<select id="selectTMemCount" resultType="_int">
-		select
-		       count(*)
-		  from member
-		 where u_status = 'Y'
-		   and grade = 'T'
+			select
+			       count(*)
+			  from member
+			 where u_status = 'Y'
+			   and grade = 'T'
 	</select>
 	
 	<select id="selectTMemList" resultMap="memberResult">
@@ -134,4 +136,43 @@
 		 order
 		    by mno desc
 	</select>
+	
+	<select id="selectCouponCount" resultType="_int">
+		select
+		       count(*)
+		  from couponlist
+	</select>
+	
+	<select id="selectCouponList" resultMap="couponResult">
+		select
+		       cno
+		     , cname
+		     , discount
+		     , to_char(dedate, 'YYYY-MM-DD') as dedate
+		     , NVL((select count(*)
+		          from coupon
+		          group by cno
+		          having couponlist.cno = coupon.cno),  0) as count
+		 from couponlist
+		 order
+		    by cno desc
+	</select>
+	
+	<insert id="enrollCoupon">
+		insert 
+		  into COUPONLIST 
+		     (
+		       CNO
+		     , CNAME
+		     , DISCOUNT
+		     , DEDATE
+		     )
+		values
+		     (
+		       SEQ_CNO.nextval
+		     , #{couponName}
+		     , #{discount}
+		     , #{dedate}
+		     )
+	</insert>
 </mapper>

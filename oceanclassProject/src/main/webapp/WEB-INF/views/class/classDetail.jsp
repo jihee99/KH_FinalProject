@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +53,7 @@
     <div class="outer">
         <div class="leftContent">
             <div id="titleImg">
-                <img src="" width="100%" height="300px">
+                <img src="${ c.clImg }" width="100%" height="300px">
             </div>
             <br>
 
@@ -73,13 +74,21 @@
 
             <div id="classContent">
                 <div id="mainImg">
-                    <img src="" width="100%" height="500px">
+                    <img src="${ c.clImg2 }" width="100%" height="500px">
                 </div>
                 <div id="curriculum" style="display:none;">
-                    <img src="" width="100%" height="500px">
+                    <img src="${ c.clImg3 }" width="100%" height="500px">
                 </div>
                 <div id="kit" style="display:none;">
-                    <img src="" width="100%" height="500px">
+                	<c:choose>
+                		<c:when test="${ c.kit == 'Y' }">
+		                    <img src="${ c.clKitImg }" width="100%" height="500px">
+                		</c:when>
+                		<c:otherwise>
+                			<br>
+                			<div>해당 클래스는 키트가 제공되지 않는 클래스입니다.</div>
+                		</c:otherwise>
+                	</c:choose>
                 </div>
                 <div id="review" style="display:none;">
                     <jsp:include page="classReview.jsp" />
@@ -103,14 +112,21 @@
         <div class="rightContent">
             <div>
                 <div>강사명</div>
-                <div style="font-weight: bold; height: 100px;">클래스명클래스명</div>
-                <div align="right">월 35,000원</div>
+                <div style="font-weight: bold; height: 100px;">${ c.clName }</div>
+                <div align="right">월 ${ c.clPrice }원</div>
                 <div align="right" style="font-size: 12px;">(5개월 할부)</div>
                 <hr>
                 <div style="font-size: 12px; margin-bottom: 5px;" align="right">
-                    <!-- 키트 없으면 키트는 안보임 -->
-                    <img src="resources/images/giftbox.png" width="16" height="16"> 
-                    <span>준비물키트 | </span> 
+                    <c:choose>
+                    	<c:when test="${ c.kit == 'Y' }">
+		                    <img src="resources/images/giftbox.png" width="16" height="16"> 
+		                    <span>준비물 키트 있음 | </span> 
+                    	</c:when>
+                    	<c:otherwise>	
+		                    <span>준비물 키트 없음 | </span> 
+                    	</c:otherwise>
+                    </c:choose>
+                    <!-- 강의만족도 어디서 따올건지 생각해야함... -->
                     <span>강의만족도 99%</span>
                 </div>
                 <div class="classBuy">
