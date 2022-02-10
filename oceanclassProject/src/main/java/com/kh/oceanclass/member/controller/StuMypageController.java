@@ -1,5 +1,7 @@
 package com.kh.oceanclass.member.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.service.MypageService;
+import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 
 @Controller
@@ -88,8 +93,20 @@ public class StuMypageController {
 	
 	// 포인트/쿠폰페이지
 	@RequestMapping("pointCoupon.me")
-	public String pointCoupon() {
-		return "member/student/myPoint.jsp";
+	public String couponList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int couponCount = myService.selectCouponCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
+		ArrayList<Coupon> list = myService.selectCouponList(pi, memNo);
+		//System.out.println(list);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("couponCount", couponCount);
+		model.addAttribute("list", list);
+		return "member/student/myPoint";
+		
 	}
 	
 }

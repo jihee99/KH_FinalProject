@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="myMapper">
+
+	<resultMap id="couponResult" type="coupon">
+		<result column="cno" property="couponNo" />
+		<result column="mno" property="memNo" />
+		<result column="CNAME" property="couponName" />
+		<result column="DISCOUNT" property="discount" />
+		<result column="dedate" property="dedate" />
+		<result column="endate" property="endate" />
+	</resultMap>
 	
 	<update id="updateProfile">
 		update
@@ -18,5 +27,24 @@
 		 where user_id = #{userId}
 	</update>
 	
+	<select id="selectCouponList" resultMap="couponResult">
+		SELECT 
+			   coupon.cno
+		     , coupon.mno
+		     , CNAME
+		     , DISCOUNT
+		     , to_char(coupon.dedate, 'YYYY-MM-DD') as "dedate"
+		     , to_char(coupon.endate, 'YYYY-MM-DD') as "endate"
+		  FROM COUPONLIST
+		  JOIN COUPON ON (COUPON.CNO = COUPONLIST.CNO)
+		 WHERE MNO = #{memNo}
+	</select>
+	
+	<select id="selectCouponCount" resultType="_int">
+		select 
+			   count(*)
+		  from coupon
+		 where mno = #{memNo}
+	</select>
 
 </mapper>

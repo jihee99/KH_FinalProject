@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +12,13 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.searchBar{margin-bottom: 50px;}
+	.searchBar{margin-bottom: 200px;}
 	.searchBar>p{
 		margin: 0 auto;
-		font-size:28px; 
-		padding-left: 100px; 
-		padding-right: 100px;
-		width: 50%;
+		font-size:22px; 
+		width: 30%;
+		border: 1px solid;
+		
 	}
 	.conhead{
         width: 100%;
@@ -60,36 +61,37 @@
 				
 				<div class="content">
 				    <h2>나의 포인트/쿠폰</h2>
-				    <div class="searchBar">
-				        <p style="text-align: right;"> <i class="bi bi-coin" style="font-size: 2.5rem;"></i> 포인트 100p</p>
-				        <p style="text-align: left;"> <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 쿠폰 1장</p>
-				    </div>
-				    <div class="content1">
-				    	<div class="conhead">
-					    	<h3> 적립내역 </h3>
-						    <a href="?page=myPointPlusDetail.jsp">더보기</a>
+				 
+					    <div class="searchBar">
+					        <p style="text-align: right;"> 
+					        	<i class="bi bi-coin" style="font-size: 2.5rem;"></i> 
+					        	포인트 100p
+					        </p>
+					        <p style="text-align: left;"> 
+					        	<i class="bi bi-cash" style="font-size: 2.5rem;"></i> 
+					        	쿠폰 <a href="#" onclick="openModal();">${couponCount}</a>장
+					        </p>
 					    </div>
-					    <table class="table">
-					        <thead>
-					            <tr>
-					                <th>날짜</th>
-					                <th>내역</th>
-					                <th>사유</th>
-					                <th>금액</th>
-					                <th>유효기간</th>
-					            </tr>
-					        </thead>
-					        <tbody>
-					            <tr>
-					                <td>22/01/13</td>
-					                <td>포인트 적립</td>
-					                <td>상품 구매</td>
-					                <td>+100</td>
-					                <td>2022/07/12</td>
-					            </tr>
-					    </table>
-				    </div>
-				    
+					    <div class="content1">
+					    	<div class="conhead">
+						    	<h3> 적립내역 </h3>
+							    <a href="?page=myPointPlusDetail.jsp">더보기</a>
+						    </div>
+						    <table class="table">
+						        <thead>
+						            <tr>
+						                <th>날짜</th>
+						                <th>내역</th>
+						                <th>사유</th>
+						                <th>금액</th>
+						                <th>유효기간</th>
+						            </tr>
+						        </thead>
+								   <tbody>
+								          
+								   </tbody>
+						    </table>
+					    </div>
 				    <!-- 사용내역 없을 경우 -->
 				    <div class="content1">
 					    <h3> 사용내역 </h3>
@@ -100,6 +102,49 @@
 			</td>
 		</tr>
 	</table>
+	
+	<div class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			 	<div class="modal-header">
+			     	<h5 class="modal-title">쿠폰 내역</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         				<span aria-hidden="true">&times;</span>
+        			</button>
+		     	</div>
+				<div class="modal-body">
+					<table class="table">
+				        <thead>
+				            <tr>
+				                <th>날짜</th>
+				                <th>내역</th>
+				                <th>사유</th>
+				                <th>금액</th>
+				                <th>유효기간</th>
+				            </tr>
+				        </thead>
+						   <tbody>
+						        <c:forEach var="c" items="${ list }" >
+						            <tr>
+						                <td>${c.endate}</td>
+						                <td>쿠폰지급</td>
+						                <td>이벤트</td>
+						                <td>${c.discount}% 할인</td>
+						                <td>${c.dedate}</td>
+						            </tr>
+						        </c:forEach>    
+						   </tbody>
+					</table>
+				</div>
+			 </div>
+		</div>
+	</div>
+	
+	<script>
+		function openModal(){
+			$(".modal").modal();
+		}
+	</script>
 
 </body>
 </html>
