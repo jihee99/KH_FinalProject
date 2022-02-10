@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,60 +85,83 @@
             </table>
             <br>
             <button class="btn" id="deleteBtn">선택목록삭제</button>
-            <button class="btn" id="couponBtn" onclick="window.open('pgive.ad','포인트지급페이지','width=550, height=420, menubar=no, status=no, toolbar=no, resizable=no')">개별포인트관리</button>
+            <button class="btn" id="pointBtn" onclick="window.open('pgive.ad','포인트지급페이지','width=550, height=420, menubar=no, status=no, toolbar=no, resizable=no')">개별포인트관리</button>
             <br>
+            
+			<div class="btn_group" align="center">
+	            <button class="btn btn-light">&lt;</button>
+	
+	            <button class="btn btn-light">1</button>
+	            <button class="btn btn-light">2</button>
+	            <button class="btn btn-light">3</button>
+	            <button class="btn btn-light">4</button>
+	            <button class="btn btn-light">5</button>
+	
+	            <button class="btn btn-light">&gt;</button>
+	        </div>
+            
         </div>
-        
+   
+<!-- 쿠폰영역 -->        
         <div class="content_coupon">
-            <table id="contentTable">
+        	<button class="btn" id="couponBtn" onclick="window.open('cenrollF.ad','회원쿠폰지급페이지','width=550, height=380, menubar=no, status=no, toolbar=no, resizable=no')">쿠폰등록하기</button>
+            <br><br>
+            <table id="contentTable" style="table-layout:fixed;">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="checkAll"></th>
-                        <th width="120">쿠폰번호</th>
+                        <th width="110">쿠폰번호</th>
                         <th width="350">쿠폰명</th>
-                        <th width="150">할인율(%)</th>
-                        <th width="150">발행 수</th>
-                        <th></th>
+                        <th width="100">할인율(%)</th>
+                         <th width="100">발행 수</th>
+                         <th width="100">유효기간</th>
+                        <th width="150"></th>
                     </tr>
                 </thead>
                 <tbody>
+                	<c:forEach var="c" items="${clist }">
                     <tr>
-                        <td><input type="checkbox" name="chBxRow" id=""></td>
-                        <td>2012312</td>
-                        <td>설날맞이 특별할인 ★☆10% 깜짝쿠폰☆★</td>
-                        <td>10</td>
-                        <td>24</td>
+                        <td>${c.couponNo }</td>
+                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${c.couponName }</td>
+                        <td>${c.discount }</td>
+                        <td>${c.count }</td>
+                        <td>${c.dedate }</td>
                         <td>
-                            <button class="crow" onclick="window.open('cgive.ad','쿠폰지급페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
+                            <button class="crow" onclick="window.open('cgive.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
                         	<button>삭제</button>
                         </td>
                     </tr>
-                    <tr>
-                    	<td colspan="6">선택삭제로 할지 아니면 행별 삭제로 할지 정하기!!</td>
-                    </tr>
-                    
+                    </c:forEach>                    
                 </tbody>
             </table>
             <br>
-            <button class="btn" id="deleteBtn">선택목록삭제</button>
-            <button class="btn" id="couponBtn" onclick="window.open('cenroll.ad','포인트지급페이지','width=550, height=380, menubar=no, status=no, toolbar=no, resizable=no')">쿠폰등록하기</button>
-            <br>
-        </div>
 
-        <div class="btn_group" align="center">
-            <button class="btn btn-light">&lt;</button>
+	        <div class="btn_group" align="center">
+				<c:choose>
+	           		<c:when test="${cPi.currentPage eq 1 }">
+	           			<button class="btn btn-light" disabled>&lt;</button>
+	           		</c:when>
+	           		<c:otherwise>
+	           			<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${cPi.currentPage - 1}'">&lt;</button>
+	           		</c:otherwise>
+	           	</c:choose>
+	                   
+	   			<c:forEach var="p" begin="${cPi.startPage }" end="${cPi.endPage }">
+	   				<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${p}'">${p }</button>
+	   			</c:forEach>
+	   
+	   			<c:choose>
+	               	<c:when test="${pi.currentPage eq cPi.maxPage }">
+	           			<button class="btn btn-light" disabled>&gt;</button>
+	               	</c:when>
+	               	<c:otherwise>
+	               		<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${cPi.currentPage + 1}'">&gt;</button>
+	               	</c:otherwise>
+	            </c:choose>
+	        </div>
+		</div>
 
-            <button class="btn btn-light">1</button>
-            <button class="btn btn-light">2</button>
-            <button class="btn btn-light">3</button>
-            <button class="btn btn-light">4</button>
-            <button class="btn btn-light">5</button>
-
-            <button class="btn btn-light">&gt;</button>
-        </div>
 
         <script>
-
             /*라디오 버튼에 따른 동적 화면 구현*/
             $("input[type=radio][name=searchType]").on('click',function(){
                 var chkValue = $('input[type=radio][name=searchType]:checked').val();

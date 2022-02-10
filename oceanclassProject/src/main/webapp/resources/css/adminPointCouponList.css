@@ -21,8 +21,9 @@ label[for="coupon"], label[for="point"]{top: -1.5px; margin-top: 3px;}
 .content_point table thead{line-height: 35px; font-size: 14px; background: lightgray;}
 
 .content_coupon{width: 100%; font-size: 14px;}
-.content_coupon table{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
+.content_coupon table{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px; table-layout:fixed;}
 .content_coupon table thead{line-height: 35px; font-size: 14px; background: lightgray;}
+.content_coupon table tbody td{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
 
 #deleteBtn{ 
     float: left; margin-left: 10px;

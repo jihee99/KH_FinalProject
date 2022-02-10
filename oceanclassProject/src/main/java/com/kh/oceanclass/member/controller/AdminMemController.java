@@ -7,14 +7,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.service.AdminMemService;
+import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 
 /*관리자 회원관리 관련 기능*/
@@ -40,13 +41,13 @@ public class AdminMemController {
 	
 	@RequestMapping(value="login.ad")
 	public ModelAndView adminLogin(Member m, HttpSession session, ModelAndView mv) {
-		System.out.println(m);
+		//System.out.println(m);
 
 		Member loginUser = adMemService.loginAdmin(m);
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) { 
 			session.setAttribute("loginUser", loginUser);
-			System.out.println(loginUser);
+			//System.out.println(loginUser);
 			mv.setViewName("redirect:main.ad");
 		}else{ 
 			mv.addObject("errorMsg", "로그인실패");
@@ -96,16 +97,49 @@ public class AdminMemController {
 		
 		return mv;
 	}
-		
-	
-	
-	
+
 	
 	
 	@RequestMapping(value="pclist.ad")
-	public String adminCPList() {
-		// 관리자 포인트,쿠폰 리스트 목록 확인용 메소드
-		return "member/admin/adminPointCouponList";
+	public ModelAndView adminCPList(@RequestParam(value="cpage",defaultValue="1") int currentCPage, @RequestParam(value="cpage",defaultValue="1") int currentPPage, ModelAndView mv) {
+		int clistCount = adMemService.selectCouponCount();
+		PageInfo cPi = Pagination.getPageInfo(clistCount, currentCPage, 5, 10);
+		ArrayList<Coupon> clist = adMemService.selectCouponList(cPi);
+		
+		/*
+		int plistCount = adMemService.selectPointCount();
+		PageInfo pPi = Pagination.getPageInfo(plistCount, currentPPage, 5, 10);
+		ArrayList<Point> plist = adMemService.selectPointList(pPi);
+		*/
+		mv.addObject("cPi", cPi);
+		mv.addObject("clist", clist);
+		
+		mv.setViewName("member/admin/adminPointCouponList");
+		return mv;
+	}
+	
+	
+	@RequestMapping(value="cenrollF.ad")
+	public String adminCouponEnroll() {
+		// 관리자 쿠폰 지급 페이지 확인용 메소드
+		return "member/admin/adminCouponEnrollWindow";
+	}
+
+	@ResponseBody
+	@RequestMapping(value="cenroll.ad")
+	public void insertCoupon(Coupon c) {
+		//int result = adMemService.adminEnrollCoupon(c);
+		System.out.println(c);
+		//System.out.println(result);
+
+	}
+	
+
+	@RequestMapping(value="cgive.ad")
+	public String adminCouponManager(int cno) {
+		// 관리자 쿠폰 발행 페이지 확인용 메소드
+		System.out.println(cno);
+		return "member/admin/adminCouponWindow";
 	}
 	
 	@RequestMapping(value="pgive.ad")
@@ -113,17 +147,4 @@ public class AdminMemController {
 		// 관리자 포인트 지급 페이지 확인용 메소드
 		return "member/admin/adminPointWindow";
 	}
-	
-	@RequestMapping(value="cenroll.ad")
-	public String adminCouponEnroll() {
-		// 관리자 쿠폰 지급 페이지 확인용 메소드
-		return "member/admin/adminCouponEnrollWindow";
-	}
-
-	@RequestMapping(value="cgive.ad")
-	public String adminCouponManager() {
-		// 관리자 포인트 지급 페이지 확인용 메소드
-		return "member/admin/adminCouponWindow";
-	}
-	
 }

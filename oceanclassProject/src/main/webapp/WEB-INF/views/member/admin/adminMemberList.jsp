@@ -94,7 +94,6 @@
             
         </div>
         <div class="btn_group" align="center">
-        	
         	<c:choose>
            		<c:when test="${pi.currentPage eq 1 }">
            			<button class="btn btn-light" disabled>&lt;</button>

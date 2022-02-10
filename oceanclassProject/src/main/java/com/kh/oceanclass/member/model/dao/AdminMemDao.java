@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 
 @Repository
@@ -53,6 +54,23 @@ public class AdminMemDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectTMemList", null, rowBounds);
+	}
+
+	public int selectCouponCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adMemMapper.selectCouponCount");
+	}
+
+	public ArrayList<Coupon> selectCouponList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectCouponList", null, rowBounds);
+	}
+
+	public int adminEnrollCoupon(SqlSessionTemplate sqlSession, Coupon c) {
+		return sqlSession.insert("adMemMapper.enrollCoupon", c);
 	}
 	
 	
