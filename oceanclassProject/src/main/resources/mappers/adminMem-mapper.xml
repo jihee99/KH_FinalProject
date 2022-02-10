@@ -43,5 +43,95 @@
         <result column="use" property="useYN" />
         <result column="endate" property="enDate" />
         <result column="dedate" property="deDate" />
-	</resultMap>	
+	</resultMap>
+	
+	<select id="loginAdmin" resultMap="memberResult">
+		select
+			  	mno
+		      , user_id
+		      , user_pwd
+		      , user_name
+		      , nickname
+		      , phone
+		      , profile
+		      , point
+		      , u_status
+		      , to_char(enroll_date, 'YYYY-MM-DD') enroll_date
+		      , sleep_date
+		      , escape_date
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'A'
+		   and user_id = #{userId}
+	</select>	
+	
+	<select id="selectMemCount" resultType="_int">
+		select
+		       count(*)
+		  from member
+		 where u_status = 'Y'
+	</select>
+	
+	<select id="selectMemList" resultMap="memberResult">
+		select
+			  	mno
+		      , user_id
+		      , user_name
+		      , nickname
+		      , phone
+		      , grade
+		      , enroll_date
+		  from member
+		 where u_status = 'Y'
+		 order
+		    by mno desc
+	</select>
+	
+	<select id="selectSMemCount" resultType="_int">
+		select
+		       count(*)
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'S'
+	</select>
+	
+	<select id="selectSMemList" resultMap="memberResult">
+		select
+			  	mno
+		      , user_id
+		      , user_name
+		      , nickname
+		      , phone
+		      , grade
+		      , enroll_date
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'S'
+		 order
+		    by mno desc
+	</select>
+	
+	<select id="selectTMemCount" resultType="_int">
+		select
+		       count(*)
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'T'
+	</select>
+	
+	<select id="selectTMemList" resultMap="memberResult">
+		select
+			  	mno
+		      , user_id
+		      , user_name
+		      , nickname
+		      , phone
+		      , grade
+		      , enroll_date
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'T'
+		 order
+		    by mno desc
+	</select>
 </mapper>

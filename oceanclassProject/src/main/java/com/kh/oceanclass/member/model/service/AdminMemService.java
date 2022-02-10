@@ -18,7 +18,14 @@ public interface AdminMemService {
 	
 	//관리자 전체회원 조회기능
 	int selectMemCount();
-	ArrayList<Member> adminMemberList(Member m, PageInfo pi);
+	ArrayList<Member> selectMemList(PageInfo pi);
+	
+	int selectSMemCount();
+	ArrayList<Member> selectSMemList(PageInfo pi);
+	
+	int selectTMemCount();
+	ArrayList<Member> selectTMemList(PageInfo pi);
+	
 	
 	//------------신고------------
 	//관리자 신고내역 조회기능

@@ -27,22 +27,44 @@ public class AdminMemServiceImpl implements AdminMemService {
 	public Member loginAdmin(Member m) {
 		return adMemDao.loginAdmin(sqlSession, m);
 	}
-
+	
 	@Override
 	public int selectMemCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return adMemDao.selectMemCount(sqlSession);
 	}
 
 	@Override
-	public ArrayList<Member> adminMemberList(Member m, PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Member> selectMemList(PageInfo pi) {
+		return adMemDao.selectMemList(sqlSession, pi);
 	}
+	
+	@Override
+	public int selectSMemCount() {
+		return adMemDao.selectSMemCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectSMemList(PageInfo pi) {
+		return adMemDao.selectSMemList(sqlSession, pi);
+	}
+
+	@Override
+	public int selectTMemCount() {
+		return adMemDao.selectTMemCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectTMemList(PageInfo pi) {
+		return adMemDao.selectTMemList(sqlSession, pi);
+	}
+	
+	
+	
+	
+	
 
 	@Override
 	public ArrayList<Report> adminReportList(PageInfo pi) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -99,5 +121,7 @@ public class AdminMemServiceImpl implements AdminMemService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }
