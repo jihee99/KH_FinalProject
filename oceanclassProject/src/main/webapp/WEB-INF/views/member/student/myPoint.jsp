@@ -49,52 +49,57 @@
 </head>
 <body>
 
-	<div class="content">
-	    <h2>나의 포인트/쿠폰</h2>
-	    <div class="searchBar">
-	        <p style="text-align: right;"> <i class="bi bi-coin" style="font-size: 2.5rem;"></i> 포인트 100p</p>
-	        <p style="text-align: left;"> <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 쿠폰 1장</p>
-	    </div>
-	    <div class="content1">
-	    	<div class="conhead">
-		    	<h3> 적립내역 </h3>
-			    <a href="?page=myPointPlusDetail.jsp">더보기</a>
-		    </div>
-		    <table class="table">
-		        <thead>
-		            <tr>
-		                <th>날짜</th>
-		                <th>내역</th>
-		                <th>사유</th>
-		                <th>금액</th>
-		                <th>유효기간</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-		            <tr>
-		                <td>22/01/13</td>
-		                <td>포인트 적립</td>
-		                <td>상품 구매</td>
-		                <td>+100</td>
-		                <td>2022/07/12</td>
-		            </tr>
-		            <tr>
-		                <td>22/01/07</td>
-		                <td>쿠폰 적립</td>
-		                <td>이벤트 당첨</td>
-		                <td>1000원 할인</td>
-		                <td>2023/01/06</td>
-		            </tr>
-		        </tbody>
-		    </table>
-	    </div>
-	    
-	    <!-- 사용내역 없을 경우 -->
-	    <div class="content1">
-		    <h3> 사용내역 </h3>
-		    <p> 사용내역이 없습니다 </p>
-    	</div>
-	</div>
+	<table id="mainTable">
+		<tr>
+			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
+		</tr>
+		
+		<tr>
+			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
+			<td id="mainContent">
+				
+				<div class="content">
+				    <h2>나의 포인트/쿠폰</h2>
+				    <div class="searchBar">
+				        <p style="text-align: right;"> <i class="bi bi-coin" style="font-size: 2.5rem;"></i> 포인트 100p</p>
+				        <p style="text-align: left;"> <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 쿠폰 1장</p>
+				    </div>
+				    <div class="content1">
+				    	<div class="conhead">
+					    	<h3> 적립내역 </h3>
+						    <a href="?page=myPointPlusDetail.jsp">더보기</a>
+					    </div>
+					    <table class="table">
+					        <thead>
+					            <tr>
+					                <th>날짜</th>
+					                <th>내역</th>
+					                <th>사유</th>
+					                <th>금액</th>
+					                <th>유효기간</th>
+					            </tr>
+					        </thead>
+					        <tbody>
+					            <tr>
+					                <td>22/01/13</td>
+					                <td>포인트 적립</td>
+					                <td>상품 구매</td>
+					                <td>+100</td>
+					                <td>2022/07/12</td>
+					            </tr>
+					    </table>
+				    </div>
+				    
+				    <!-- 사용내역 없을 경우 -->
+				    <div class="content1">
+					    <h3> 사용내역 </h3>
+					    <p> 사용내역이 없습니다 </p>
+			    	</div>
+				</div>
+
+			</td>
+		</tr>
+	</table>
 
 </body>
 </html>
