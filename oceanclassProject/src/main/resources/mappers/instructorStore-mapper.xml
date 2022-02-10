@@ -152,4 +152,16 @@
 		      , price = #{price}
 		 where opno = #{optionNo}
   	</update>
+  	
+  	<update id="deleteProduct">
+  		update store
+		   set status = 'Y'
+		 where pno = #{pno}
+  	</update>
+  	
+  	<delete id="deleteProductOption">
+  		delete 
+		  from soption 
+		 where pno = #{pno} 
+  	</delete>
 </mapper>

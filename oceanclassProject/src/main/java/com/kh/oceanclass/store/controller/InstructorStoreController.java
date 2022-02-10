@@ -53,13 +53,6 @@ public class InstructorStoreController {
 	@RequestMapping(value="stenroll.in", produces="application/json; charset=UTF-8")
 	public String insertProduct(Product p, ProductOption option, MultipartFile[] upfile, HttpSession session, Model model) {
 		
-		System.out.println(p);
-		System.out.println(option);
-		System.out.println(upfile);
-		for(int i =0; i<upfile.length; i++) {
-			System.out.println("upfile : " + upfile[i]);
-		}
-		
 		String[] strArr = null;
 		ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
 		
@@ -72,8 +65,7 @@ public class InstructorStoreController {
 				oplist.get(i).setOptionName(strArr[i]);
 				oplist.get(i).setPrice(option.getPrice());
 			}
-		}
-				
+		}	
 		
 		ArrayList<String> changeList = saveFile(upfile, session);
 		//System.out.println(changeList);
@@ -216,9 +208,18 @@ public class InstructorStoreController {
 	
 	//파일명변경 배열로
 	@RequestMapping(value="stdelete.in")
-	public String deleteProduct() {
+	public String deleteProduct(int pno, Model model, HttpSession session) {
+		int result1 = inStoreService.deleteProduct(pno);
+		int result2 = inStoreService.deleteProductOption(pno);
 		
-		return "";
+		if(result1 * result2 > 0) {
+			session.setAttribute("alertMsg", "상품이 성공적으로 삭제되었습니다.");
+			return "redirect:stlist.in";
+		} else {
+			model.addAttribute("errorMsg", "상품삭제에 실패했습니다.");
+			return "common/errorPage";
+		}
+	
 	}
 	
 	

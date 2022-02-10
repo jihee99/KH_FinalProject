@@ -15,12 +15,18 @@
 		<typeAlias type="com.kh.oceanclass.store.model.vo.ProductOption" alias="ProductOption"/>
 	
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Member" alias="Member"/>
+
+		<typeAlias type="com.kh.oceanclass.member.model.vo.Report" alias="Report"/>
+		<typeAlias type="com.kh.oceanclass.member.model.vo.MemCoupon" alias="MemCoupon"/>
+		<typeAlias type="com.kh.oceanclass.member.model.vo.Coupon" alias="Coupon"/>
+		<typeAlias type="com.kh.oceanclass.member.model.vo.Point" alias="Point"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/help-mapper.xml" />
 		<mapper resource="/mappers/instructorStore-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/adminMem-mapper.xml" />
 	</mappers>
 	
 </configuration>

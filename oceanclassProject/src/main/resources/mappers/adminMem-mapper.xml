@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adMemMapper">
+
+	<resultMap type="Member" id="memberResult">
+		<result column="mno" property="memNo" />
+	    <result column="user_id" property="userId" />
+        <result column="user_pwd" property="userPwd" />
+        <result column="user_name" property="userName" />
+        <result column="nickname" property="nickName" />
+        <result column="phone" property="phone" />
+        <result column="profile" property="profileImg" />
+        <result column="point" property="point" />
+        <result column="grade" property="grade" />
+        <result column="u_status" property="userStatus" />
+        <result column="report" property="report" />
+        <result column="enroll_date" property="enrollDate" />
+        <result column="sleep_date" property="sleepDate" />
+        <result column="escape_date" property="escapeDate" />		
+	</resultMap>
+
+	<resultMap type="Point" id="pointResult">
+		<result column="pno" property="pointNo" />
+	    <result column="mno" property="memNo" />
+        <result column="type" property="type" />
+        <result column="p_order_no" property="orderNo" />
+        <result column="p_date" property="pointDate" />		
+		<result column="p_price" property="pointPrice" />	
+		<result column="reason" property="reason" />	
+		<result column="deadline" property="deadLine" />	
+	</resultMap>	
+	
+	<resultMap type="Coupon" id="couponResult">
+		<result column="cno" property="couponNo" />
+	    <result column="cname" property="couponName" />
+        <result column="discount" property="discount" />
+	</resultMap>	
+	
+	<resultMap type="MemCoupon" id="memCouponResult">
+		<result column="pcno" property="memCouponNo" />
+	    <result column="mno" property="memNo" />
+        <result column="cno" property="couponNo" />
+        <result column="use" property="useYN" />
+        <result column="endate" property="enDate" />
+        <result column="dedate" property="deDate" />
+	</resultMap>
+	
+	<select id="loginAdmin" resultMap="memberResult">
+		select
+			  	mno
+		      , user_id
+		      , user_pwd
+		      , user_name
+		      , nickname
+		      , phone
+		      , profile
+		      , point
+		      , u_status
+		      , to_char(enroll_date, 'YYYY-MM-DD') enroll_date
+		      , sleep_date
+		      , escape_date
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'A'
+		   and user_id = #{userId}
+	</select>	
+	
+	<select id="selectMemCount" resultType="_int">
+		select
+		       count(*)
+		  from member
+		 where u_status = 'Y'
+	</select>
+	
+	<select id="selectMemList" resultMap="memberResult">
+		select
+			  	mno
+		      , user_id
+		      , user_name
+		      , nickname
+		      , phone
+		      , grade
+		      , enroll_date
+		  from member
+		 where u_status = 'Y'
+		 order
+		    by mno desc
+	</select>
+	
+	<select id="selectSMemCount" resultType="_int">
+		select
+		       count(*)
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'S'
+	</select>
+	
+	<select id="selectSMemList" resultMap="memberResult">
+		select
+			  	mno
+		      , user_id
+		      , user_name
+		      , nickname
+		      , phone
+		      , grade
+		      , enroll_date
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'S'
+		 order
+		    by mno desc
+	</select>
+	
+	<select id="selectTMemCount" resultType="_int">
+		select
+		       count(*)
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'T'
+	</select>
+	
+	<select id="selectTMemList" resultMap="memberResult">
+		select
+			  	mno
+		      , user_id
+		      , user_name
+		      , nickname
+		      , phone
+		      , grade
+		      , enroll_date
+		  from member
+		 where u_status = 'Y'
+		   and grade = 'T'
+		 order
+		    by mno desc
+	</select>
+</mapper>

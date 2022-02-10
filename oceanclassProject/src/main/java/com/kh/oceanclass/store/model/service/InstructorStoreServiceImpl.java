@@ -70,17 +70,15 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	
 	
 	@Override
-	public void deleteProduct() {
+	public int deleteProduct(int pno) {
 		// 5.1 상품 삭제용 서비스
-		// TODO Auto-generated method stub
-		
+		return inStoreDao.deleteProduct(sqlSession, pno);
 	}
 	
 	@Override
-	public void deleteProductOption() {
+	public int deleteProductOption(int pno) {
 		// 5.2 상품옵션 삭제용 서비스
-		// TODO Auto-generated method stub
-		
+		return inStoreDao.deleteProductOption(sqlSession, pno);
 	}
 
 
