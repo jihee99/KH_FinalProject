@@ -11,5 +11,12 @@
 		 where mno = ${memNo}
 	</update>
 	
+	<update id="deleteMem">
+		update
+			   member
+		   set u_status = 'D'
+		 where user_id = #{userId}
+	</update>
+	
 
 </mapper>
