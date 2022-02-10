@@ -27,6 +27,7 @@
 		<mapper resource="/mappers/instructorStore-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/adminMem-mapper.xml" />
+		<mapper resource="/mappers/mypage-mapper.xml" />
 	</mappers>
 	
 </configuration>
