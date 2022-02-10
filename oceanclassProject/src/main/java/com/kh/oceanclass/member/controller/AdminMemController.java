@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -127,12 +128,12 @@ public class AdminMemController {
 
 	@ResponseBody
 	@RequestMapping(value="cenroll.ad")
-	public void insertCoupon(Coupon c) {
-		//int result = adMemService.adminEnrollCoupon(c);
+	public String insertCoupon(Coupon c) {
 		System.out.println(c);
-		//System.out.println(result);
-
+		int result = adMemService.adminEnrollCoupon(c);
+		return result>0? "success" : "fail";
 	}
+
 	
 
 	@RequestMapping(value="cgive.ad")
