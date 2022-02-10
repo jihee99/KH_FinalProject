@@ -47,13 +47,15 @@ public interface AdminMemService {
 	
 	//------------쿠폰/포인트------------
 	//관리자포인트목록조회기능
-	ArrayList<Point> adminPointList(Point p, PageInfo pi);
+	int selectPointCount();
+	ArrayList<Point> selectPointList(PageInfo pi);
 	
 	//관리자 포인트지급기능
 	int adminEnrollPoint(Point p);
 	
 	//관리자쿠폰목록조회기능
-	ArrayList<Coupon> adminCouponList(Coupon c, PageInfo pi);
+	int selectCouponCount();
+	ArrayList<Coupon> selectCouponList(PageInfo pi);
 	
 	//관리자 쿠폰 목록 등록 기능
 	int adminEnrollCoupon(Coupon c);

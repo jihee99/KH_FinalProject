@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,12 @@
     
 </head>
 <body>
+	<!-- 
+		메인페이지랑 사이드바 분리해서 나중에 if(loginUser ne null) 조건구문 추가하기
+		-> loginUser ne null adminMainPage보여지게
+		-> loginUser eq null alert 접근권한이 없습니다. 하고 사용자 메인페이지로 이동
+		
+	 -->
     <div class="wrapper">
         <div class="side">
             <div id="logo">

@@ -92,8 +92,17 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return null;
 	}
 
+
+	
+	
 	@Override
-	public ArrayList<Point> adminPointList(Point p, PageInfo pi) {
+	public int selectPointCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<Point> selectPointList(PageInfo pi) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -104,16 +113,20 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return 0;
 	}
 
+	
 	@Override
-	public ArrayList<Coupon> adminCouponList(Coupon c, PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectCouponCount() {
+		return adMemDao.selectCouponCount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Coupon> selectCouponList(PageInfo pi) {
+		return adMemDao.selectCouponList(sqlSession, pi);
 	}
 
 	@Override
 	public int adminEnrollCoupon(Coupon c) {
-		// TODO Auto-generated method stub
-		return 0;
+		return adMemDao.adminEnrollCoupon(sqlSession, c);
 	}
 
 	@Override
@@ -121,6 +134,8 @@ public class AdminMemServiceImpl implements AdminMemService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 
 
