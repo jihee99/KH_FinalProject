@@ -117,7 +117,7 @@
         			//console.log(login);
         			if(pwd == ""){
         				location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
-        			}else if(pwd != "" && ((login == nick) || (login == "관리자1")){
+        			}else if(pwd != "" && ((login == nick) || (login === '나관리'))){
         				location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
         			}else{
         				$(".modal").modal();
@@ -125,7 +125,7 @@
         			}
         			
         		});
-        	})
+        	});
         	
         </script>
         

@@ -11,7 +11,6 @@ import com.kh.oceanclass.help.model.dao.HelpDao;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
-import com.kh.oceanclass.help.model.vo.QnaIn;
 
 @Service
 public class HelpServiceImpl implements HelpService{
