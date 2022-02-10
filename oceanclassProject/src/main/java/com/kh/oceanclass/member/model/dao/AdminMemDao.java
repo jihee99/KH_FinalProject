@@ -72,7 +72,11 @@ public class AdminMemDao {
 	public int adminEnrollCoupon(SqlSessionTemplate sqlSession, Coupon c) {
 		return sqlSession.insert("adMemMapper.enrollCoupon", c);
 	}
+
+	public int deleteCoupon(SqlSessionTemplate sqlSession, int cno) {
+		return sqlSession.delete("adMemMapper.deleteCoupon", cno);
+	}
 	
-	
+
 
 }

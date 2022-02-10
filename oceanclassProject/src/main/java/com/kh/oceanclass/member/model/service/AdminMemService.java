@@ -60,6 +60,9 @@ public interface AdminMemService {
 	//관리자 쿠폰 목록 등록 기능
 	int adminEnrollCoupon(Coupon c);
 	
+	//쿠폰목록 삭제 기능
+	int deleteCoupon(int cno);
+	
 	//관리자 쿠폰발급 기능
 	int adminMemCoupon(MemCoupon mc);
 	

@@ -175,4 +175,10 @@
 		     , #{dedate}
 		     )
 	</insert>
+	
+	<delete id="deleteCoupon">
+		delete 
+		  from couponlist 
+		 where cno = #{cno}
+	</delete>
 </mapper>

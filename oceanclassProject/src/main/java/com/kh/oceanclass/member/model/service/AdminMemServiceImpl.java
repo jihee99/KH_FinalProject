@@ -130,10 +130,17 @@ public class AdminMemServiceImpl implements AdminMemService {
 	}
 
 	@Override
+	public int deleteCoupon(int cno) {
+		return adMemDao.deleteCoupon(sqlSession, cno);
+	}
+	
+	@Override
 	public int adminMemCoupon(MemCoupon mc) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 
 

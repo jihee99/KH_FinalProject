@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -129,11 +130,26 @@ public class AdminMemController {
 	@ResponseBody
 	@RequestMapping(value="cenroll.ad")
 	public String insertCoupon(Coupon c) {
-		System.out.println(c);
+		//System.out.println(c);
 		int result = adMemService.adminEnrollCoupon(c);
 		return result>0? "success" : "fail";
 	}
 
+	@RequestMapping(value="cdelete.ad")
+	public String deleteCoupon(int cno, HttpSession session, Model model) {
+		System.out.println(cno);
+		int result = adMemService.deleteCoupon(cno);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "쿠폰 삭제가 완료되었습니다.");
+			return "redirect:pclist.ad";
+		} else {
+			model.addAttribute("errorMsg", "쿠폰 삭제에 실패했습니다.");
+			return "common/errorPage.jsp";
+		}
+		
+	}
+	
+	
 	
 
 	@RequestMapping(value="cgive.ad")
