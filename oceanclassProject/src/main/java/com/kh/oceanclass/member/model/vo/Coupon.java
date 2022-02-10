@@ -17,4 +17,7 @@ public class Coupon {
 	private int discount;
 	private String dedate;
 	private int count;
+	private int memNo;
+	private String use;
+	private String endate;
 }	
