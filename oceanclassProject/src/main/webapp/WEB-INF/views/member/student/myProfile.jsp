@@ -4,10 +4,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -18,62 +14,25 @@
         display: flex;
         flex-direction: column;
     }
-    #joinForm>div {
-        padding-bottom: 20px;
-        display: flex;
-    }
-    #join-text{
-        font-size: 24px;
-        font-weight: bolder;
-        color: rgb(107, 171, 213);
-        margin: 0 auto;
-        margin-top: -20px;
-    }
+    .bi{display: block; width: 100px; margin: 0 auto;}
     .textName {
         float: left;
-        width: 160px;
+        width: 180px;
         font-size: 20px;
         font-weight: bold;
         height: 40px;
         line-height: 40px;
         text-align: right;
-        margin-right: 35px;
+        margin-right: 20px;
     }
     input[type=text] {
         height: 45px;
-        width: 300px;
+        width: 500px;
         border: 1px solid lightgray;
         border-radius: 5px;
         padding: 10px;
     }
-
-    input[type=password] {
-        height: 45px;
-        width: 300px;
-        border: 1px solid lightgray;
-        border-radius: 5px;
-        padding: 10px;
-    }
-    #join-form .btn {
-        display: block;
-        font-size: 20px;
-        font-weight: bolder;
-        width: 300px;
-        height: 50px;
-        margin-bottom: 10px;
-    }
-    .box .radio-box{
-        margin-right: 25px;
-        font-size: 22px;
-        font-weight: bolder;
-    }
-    .box .radio-box input[type="radio"]{
-        margin-right: 15px;
-        width: 20px;
-        height: 20px;
-        /* vertical-align:text-bottom; */
-        margin-top: 10px;
-    }
+    .box{margin-bottom: 25px;}
     .box .input-area{
         width: 300px;
         display: flex;
@@ -82,29 +41,11 @@
         margin-right: 5px;
         flex: 1;
     }
-    .box .input-area .rightBtn{
-        height: 45px;
-        margin-left: 5px;
-        border: none;
-        background-color: rgb(245, 249, 253);
-    }
-    .box .agree-box{
-        width: 300px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 15px;
-    }
-    .box .agree-box .termsCheck{
-        margin-bottom: 10px;
-    }
-    .box .agree-box .termsCheck input[type="checkbox"]{
-        width: 20px;
-        height: 20px;
-        vertical-align: text-bottom;
-    }
-    button{
-        margin: auto;
+    .button{width: 50%; margin: 0 auto;}
+    .btn{
+        margin: 0 auto;
         margin-top: 20px;
+        margin-left: 50px;
     }
     #changeProfile{
         background-color: rgb(213, 232, 248); 
@@ -112,53 +53,87 @@
 </style>
 </head>
 <body>
-        <div class="content">
-            <div id="join-text">
-                <h2>나의 프로필</h2>
-            </div>
-            <div id="join-form">
-                <form action="" method="post" id="joinForm">
-                    <div class="box">
-                        <i class="bi bi-emoji-wink" style="font-size: 6rem; margin: auto;"></i>
-                    </div>
-                 
-                    <div class="box">
-                        <label class="textName" for="userId">아이디<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="userId" name="userId" placeholder="사용자아이디" style="width: 215px;" readonly> 
-                        </div>
-                    </div>
 
-                    <div class="box">
-                        <label class="textName" for="userPwdCk">이름<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="userPwdCk" name="userPwdCk" placeholder="신정우" readonly>
-                        </div>
-                    </div>
+	<table id="mainTable">
+		<tr>
+			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
+		</tr>
+		
+		<tr>
+			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
+			<td id="mainContent">
+				
+				<div class="content">
+				    <div id="join-text">
+				        <h2>나의 프로필</h2>
+				    </div>
+				    <div id="join-form">
+				        <div class="box">
+				            <i class="bi bi-emoji-wink" style="font-size: 6rem;"></i>
+				        </div>
+				     
+				        <div class="box">
+				            <label class="textName" for="userId">아이디<span class="star">*</span></label>
+				            <div class="input-area">
+				                <input type="text" id="userId" name="userId" value="${loginUser.userId}" style="width: 215px;" disabled> 
+				            </div>
+				        </div>
+				
+				        <div class="box">
+				            <label class="textName" for="userName">이름<span class="star">*</span></label>
+				            <div class="input-area">
+				                <input type="text" id="userPwdCk" name="userName" value="${loginUser.userName}" readonly>
+				            </div>
+				        </div>
+				
+				        <div class="box">
+				            <label class="textName" for="nickName">닉네임<span class="star">*</span></label>
+				            <div class="input-area">
+				                <input type="text" id="nickName" name="nickName" value="${loginUser.nickName}" readonly>
+				            </div>
+				        </div>
+				
+				        <div class="box">
+				            <label class="textName" for="phone">휴대전화 번호<span class="star">*</span></label>
+				            <div class="input-area">
+				                <input type="text" id="phone" name="phone" value="${loginUser.phone}" readonly>
+				            </div>
+				        </div>
+				    </div>
+				    
+				    <div class="button">
+					    <button type="button" id="changePass" class="btn btn-light" onclick="changePwd();">비밀번호 변경</button>
+					    <button type="button" id="changeProfile" class="btn" onclick="changeProfile();">프로필 수정</button>
+					</div>
+					
+				</div>
 
-                    <div class="box">
-                        <label class="textName" for="userId">닉네임<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="userId" class="w200" name="userId" placeholder="모니카쌤" readonly>
-                        </div>
-                    </div>
-
-                    <div class="box">
-                        <label class="textName" for="userId">휴대전화 번호<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="userId" class="w200" name="userId" placeholder="010-1111-2222" readonly>
-                        </div>
-                    </div>
-              
-                    <button type="submit" id="changePass" class="btn btn-light" onclick="changePwd();">비밀번호 변경</button>
-                    <button type="submit" id="changeProfile" class="btn" onclick="changeProfile();">프로필 수정</button>
-                
-                </form>
-                <br><br><br><br><br><br>
-            </div>
-			
-            
-        </div>
-    
+			</td>
+		</tr>
+	</table>
+	
+	<script>
+		function changePwd(){
+			$(".modal").modal();
+		}
+	</script>
+	
+	<div class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-header">
+		        <h5 class="modal-title">비밀번호 변경</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      	</div>
+			<div class="modal-content">
+				<div class="modal-body">
+					<p style="text-align:center;">비밀번호 변경</p>
+				</div>
+			<div class="modal-footer">
+		        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+		    </div>
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>

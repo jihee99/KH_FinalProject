@@ -40,8 +40,8 @@
                 <label style="font-size: 16px;"><span id="userName" style="font-weight: bolder;">${ loginUser.userName }</span> 님 반가워요!</label> &nbsp;&nbsp;
                 <a href="logout.me" style="font-size: 16px;">로그아웃</a>&nbsp;
                 <img src="resources/images/smallCart.png" style="width: 32px;" value="장바구니">&nbsp;&nbsp;&nbsp;
-                <img src="resources/images/user.png" style="width: 32px;" value="마이페이지">
-                 </c:otherwise>
+                <a href="myPage.me"><img src="resources/images/user.png" style="width: 32px;"></a>
+                </c:otherwise>
                </c:choose>
             </div>
         </div>

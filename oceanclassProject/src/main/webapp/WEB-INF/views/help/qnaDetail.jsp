@@ -15,6 +15,7 @@
 <style>
  	.content>table{
 		width: 80%; 
+		min-height: 300px;
 		margin:auto;
 		background-color: rgba(107, 171, 213, 0.3);
 		margin-bottom: 50px;
@@ -28,10 +29,7 @@
 	table td{
 		text-align: left;
 	}
-	.text{
-		height: 300px;
-		valign: middle;
-	}
+	#question{min-height: 200px; padding: 20px;}
 	.content>button{display: block; margin: auto;}
 </style>
 
@@ -61,13 +59,13 @@
                     <td colspan="3">${q.category}</td>
                 </tr>
                 <tr>
-                    <th>문의내용</th>
-                    <td colspan="3" class="text"><p>${q.qnaContent}</p></td>
+                    <th style="padding-top: 35px;">문의내용</th>
+                    <td colspan="3"><p id="question">${q.qnaContent}</p></td>
                 </tr>
-                <c:if test="${not empty q.ansDate}"> 
+                <c:if test="${not empty q.ansContent}"> 
 	                <tr>
 	                    <th>답변</th>
-	                    <td colspan="3">${q.ansContent}<br><br>${q.ansDate}</td>
+	                    <td colspan="3">${q.ansContent}<br><br><p style="font-size: 9px;">${q.ansDate}</p></td>
 	                </tr>
                 </c:if>
             </table>
