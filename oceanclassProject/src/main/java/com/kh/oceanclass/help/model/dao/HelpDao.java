@@ -10,6 +10,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
+import com.kh.oceanclass.help.model.vo.QnaIn;
 
 @Repository
 public class HelpDao {
@@ -54,12 +55,12 @@ public class HelpDao {
 	}
 	
 	public int insertQna(SqlSessionTemplate sqlSession, Qna q) {
-		return sqlSession.selectOne("helpMapper.insertQna", q);
+		return sqlSession.insert("helpMapper.insertQna", q);
 	}
 	
-	public int insertSecretQna(SqlSessionTemplate sqlSession, Qna q) {
-		return sqlSession.selectOne("helpMapper.insertSecretQna", q);
-	}
+//	public int insertSecretQna(SqlSessionTemplate sqlSession, QnaIn q) {
+//		return sqlSession.selectOne("helpMapper.insertSecretQna", q);
+//	}
 
 	
 	// FAQ

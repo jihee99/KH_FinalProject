@@ -21,6 +21,7 @@ public class Qna {
 	public String pwd;
 	public String ansContent;
 	public String ansDate;
-
+	
 }
+
 

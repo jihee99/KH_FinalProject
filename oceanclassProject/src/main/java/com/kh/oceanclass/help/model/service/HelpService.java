@@ -8,6 +8,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
+import com.kh.oceanclass.help.model.vo.QnaIn;
 
 @Service
 public interface HelpService {
@@ -39,7 +40,7 @@ public interface HelpService {
 	
 	int insertQna(Qna q);
 	
-	int insertSecretQna(Qna q);
+	//int insertSecretQna(QnaIn q);
 	
 }
 

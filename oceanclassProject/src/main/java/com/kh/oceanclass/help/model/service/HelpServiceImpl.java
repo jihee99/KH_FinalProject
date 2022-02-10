@@ -11,6 +11,7 @@ import com.kh.oceanclass.help.model.dao.HelpDao;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
+import com.kh.oceanclass.help.model.vo.QnaIn;
 
 @Service
 public class HelpServiceImpl implements HelpService{
@@ -68,10 +69,10 @@ public class HelpServiceImpl implements HelpService{
 		return hDao.insertQna(sqlSession, q);
 	}
 
-	@Override
-	public int insertSecretQna(Qna q) {
-		return hDao.insertSecretQna(sqlSession, q);
-	}
+//	@Override
+//	public int insertSecretQna(QnaIn q) {
+//		return hDao.insertSecretQna(sqlSession, q);
+//	}
 	
 	/*
 	 * 	FAQ 게시판

@@ -25,7 +25,7 @@
 			width: 85%;
 			text-align: left;
 		}
-		.bottom{margin-left: 140px; margin-top: 70px;}
+		.button{margin-left: 140px; margin-top: 70px;}
     </style>
 </head>
 <body>
@@ -36,13 +36,14 @@
             <p>1:1 문의 작성</p>
         </div>
         <div class="content my-5">
-        	<form id="enrollQna" method="post" action="insertQna.he" enctype="multipart/form-data"> 
-				<input type="hidden" id="mno" value="14">
+        	<form id="enrollQna" method="post" action="insertQna.he"> 
+				<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
+				<input type="hidden" id="nickName" name="nickName" value="${loginUser.nickName}">
 				<table>
 					<tr>
 					    <th><label for="category">*카테고리</label></th>
 					    <td>
-					        <select name="national">
+					        <select name="category">
 					            <option value="c">클래스</option>
 					            <option value="s">스토어</option>
 					            <option value="e">기타</option>
@@ -51,19 +52,19 @@
                     </tr>
 					<tr>
                         <th><label for="title">*제목</label></th>
-                        <td><input type="text" id="title" class="form-control" name="boardTitle" required></td>
+                        <td><input type="text" id="qnaTitle" class="form-control" name="qnaTitle" required></td>
                     </tr>
 					<tr>
                         <th><label for="content">*내용</label></th>
-                        <th><textarea id="content"  class="form-control" required name="boardContent" rows="10" style="resize:none;"></textarea></th>
+                        <td><textarea id="qnaContent" class="form-control" required name="qnaContent" rows="10" style="resize:none;"></textarea></td>
                     </tr>
 					<tr>
-						<th>비밀글</th>
-                        <td><input type="password" id="pwd" placeholder="비밀번호입력(4자리)"></td>
+						<th>비밀글 <input type="checkbox"></th>
+						<td><input type="password" id="pwd" class="form-control-sm" name="pwd" placeholder="비밀번호입력(4자리)"></td>
 					</tr>
 				</table>	
 				
-				<div class="button bottom">
+				<div class="button">
 	                <button type="submit" class="btn">등록</button>
 	                <button type="reset" class="btn">취소</button>
             	</div>

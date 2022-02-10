@@ -85,7 +85,7 @@
 	                        <td>${q.category}</td>
 	                        <td>
 	                        	${q.qnaTitle}
-	                        	<c:if test="${q.pwd ne null}">
+	                        	<c:if test="${not empty q.pwd}">
 		                    		<i class="bi bi-lock-fill"></i>
 		                    	</c:if>
 	                        </td>
@@ -117,7 +117,7 @@
         			//console.log(login);
         			if(pwd == ""){
         				location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
-        			}else if(pwd != "" && (login == nick)){
+        			}else if(pwd != "" && ((login == nick) || (login == "관리자1")){
         				location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
         			}else{
         				$(".modal").modal();

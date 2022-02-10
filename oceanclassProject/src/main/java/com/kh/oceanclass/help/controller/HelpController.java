@@ -1,7 +1,6 @@
 package com.kh.oceanclass.help.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
@@ -18,6 +16,7 @@ import com.kh.oceanclass.help.model.service.HelpService;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
+import com.kh.oceanclass.help.model.vo.QnaIn;
 
 
 @Controller
@@ -121,6 +120,7 @@ public class HelpController {
 				list.get(i).category = "기타";
 			}
 		}
+		//System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "help/qnaList";
@@ -150,7 +150,15 @@ public class HelpController {
 		
 		System.out.println(q);
 		
-		if(q.pwd.equals("")) {
+		if(q.pwd == null) {
+			q.pwd = "";
+		}
+		
+		// 비밀번호까지 해서 필드 다 채워도 NullPointerException... 
+//		at com.kh.oceanclass.help.model.dao.HelpDao.insertQna(HelpDao.java:58)
+//		at com.kh.oceanclass.help.model.service.HelpServiceImpl.insertQna(HelpServiceImpl.java:69)
+//		at com.kh.oceanclass.help.controller.HelpController.insertQna(HelpController.java:158)
+		System.out.println(q);
 			int result = hService.insertQna(q);
 			
 			if(result>0) {
@@ -160,17 +168,7 @@ public class HelpController {
 				model.addAttribute("errorMsg", "게시글 등록 실패");
 				return "common/errorPage";
 			}
-		}else {
-			int result = hService.insertSecretQna(q);
-			
-			if(result>0) {
-				session.setAttribute("alertMsg", "게시글이 등록되었습니다");
-				return "redirect:qnaList.he";
-			}else {
-				model.addAttribute("errorMsg", "게시글 등록 실패");
-				return "common/errorPage";
-			}
-		}
+		
 		
 	}
 	
