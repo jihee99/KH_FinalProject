@@ -9,17 +9,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./resources/css/stuMypage.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./resources/css/stuMypage.css?1">
 <style>
-	.searchBar{margin-bottom: 200px;}
-	.searchBar>p{
+	.searchBar>div{float:left; width: 35%; margin:0 auto; padding: 10px;}
+	.searchBar .bi{float: left; width: 20px; margin-top: -10px;}
+	.searchBar p{
+		float: left;
+		font-size:24px; 
+		width: 100px;
 		margin: 0 auto;
-		font-size:22px; 
-		width: 30%;
-		border: 1px solid;
-		
+		margin-left: 30px;
 	}
+	#point{margin-left: 180px;}
 	.conhead{
         width: 100%;
 	    height: 15%;
@@ -27,6 +29,7 @@
 	.content1{
 	    width: 100%;
 	    height: 40%;
+	    margin-top: 50px;
 	}
 	.conhead>h2{width: 30%;}
 	.conhead>a{
@@ -63,14 +66,16 @@
 				    <h2>나의 포인트/쿠폰</h2>
 				 
 					    <div class="searchBar">
-					        <p style="text-align: right;"> 
+					    	<div id="point">
 					        	<i class="bi bi-coin" style="font-size: 2.5rem;"></i> 
-					        	포인트 100p
-					        </p>
-					        <p style="text-align: left;"> 
-					        	<i class="bi bi-cash" style="font-size: 2.5rem;"></i> 
-					        	쿠폰 <a href="#" onclick="openModal();">${couponCount}</a>장
-					        </p>
+					        	<p style="width: 200px;">포인트 100p</p>
+					        </div>
+					        <div id="content">
+						        <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 
+						        <p>
+						        	쿠폰 <a href="#" onclick="openModal();">${couponCount}</a>장
+						        </p>
+					        </div>
 					    </div>
 					    <div class="content1">
 					    	<div class="conhead">
