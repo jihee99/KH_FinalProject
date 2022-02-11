@@ -17,6 +17,7 @@
 		<result column="cl_kitimg" property="clKitImg" />
 		<result column="hashtag" property="hashtag" />
 		<result column="count" property="count" />
+		<result column="nickname" property="memNo" />
 	</resultMap>
 
 	<update id="increaseCount">
@@ -30,7 +31,7 @@
 	<select id="selectClass" resultMap="classResult">
 		select
 		       clno
-		     , mno
+		     , nickname
 		     , category
 		     , cl_name
 		     , cl_content
@@ -44,7 +45,9 @@
 		     , hashtag
 		     , count
 		  from class
+          JOIN member USING (MNO)
 		 where cl_status = 'Y'
+           and grade = 'T'
 		   and clno = #{clNo}
 	</select>
 

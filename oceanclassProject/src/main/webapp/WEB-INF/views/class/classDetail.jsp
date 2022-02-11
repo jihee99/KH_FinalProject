@@ -111,7 +111,7 @@
 
         <div class="rightContent">
             <div>
-                <div>강사명</div>
+                <div>${ c.memNo }</div>
                 <div style="font-weight: bold; height: 100px;">${ c.clName }</div>
                 <div align="right">월 ${ c.clPrice }원</div>
                 <div align="right" style="font-size: 12px;">(5개월 할부)</div>

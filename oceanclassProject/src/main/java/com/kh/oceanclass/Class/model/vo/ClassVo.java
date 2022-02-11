@@ -12,7 +12,7 @@ import lombok.ToString;
 public class ClassVo {
 
 	private int clNo;
-	private int memNo;
+	private String memNo;
 	private String category;
 	private String clName;
 	private String clContent;
