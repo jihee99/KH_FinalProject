@@ -27,5 +27,6 @@ public class ClassVo {
 	private String hashtag;
 	private int count;
 	private String reason;
+	private String like;
 	
 }
