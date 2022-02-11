@@ -161,7 +161,10 @@ public class HelpController {
 			model.addAttribute("errorMsg", "게시글 등록 실패");
 			return "common/errorPage";
 		}
+	}
 	
+	@RequestMapping("searchQna.he")
+	public void searchQna() {
 		
 	}
 	
