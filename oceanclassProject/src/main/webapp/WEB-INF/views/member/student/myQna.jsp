@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,108 +22,97 @@
 </style>
 </head>
 <body>
-	<!-- 임시로 테이블해둔거!! Collspse로 할거임 -->
-	<div class="content">
-	    <h2>1:1 문의 내역</h2>
-	    <div class="searchBar">
-	        <p>기간검색</p>
-	        <button class="btn btn-info">1주일</button>
-	        <button class="btn btn-info">15일</button>
-	        <button class="btn btn-info">1개월</button>
-	        <div id="search">
-	            <select name="type" id="type">
-	                <option value="title">제목</option>
-	                <option value="value">분류</option>
-	            </select>
-	            <input type="text">
-	            <button>검색</button>
-	        </div>
-	    </div>
-	    <table class="table">
-	        <thead>
-	            <tr>
-	                <th>날짜</th>
-	                <th>분류</th>
-	                <th>제목</th>
-	                <th>답변유무</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	            <tr>
-	                <td>22/01/13</td>
-	                <td>클래스</td>
-	                <td>수강 도중 환불 가능한가요?</td>
-	                <td>답변</td>
-	            </tr>
-	        </tbody>
-	    </table>
-    
-    	<div class="paging" align="center">
-			<button class="btn btn-light">&lt;</button>
-			
-			<button class="btn btn-light">1</button>
-			<button class="btn btn-light">2</button>
-			<button class="btn btn-light">3</button>
-			<button class="btn btn-light">4</button>
-			<button class="btn btn-light">5</button>
-			
-			<button class="btn btn-light">&gt;</button>
-		</div>
-	</div>
+
+	<table id="mainTable">
+		<tr>
+			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
+		</tr>
+		
+		<tr>
+			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
+			<td id="mainContent">
+				<div class="content">
+				    <h2>1:1 문의 내역</h2>
+				    
+				    <div class="searchBar">
+				        <p>기간검색</p>
+				        <button class="btn btn-info">1주일</button>
+				        <button class="btn btn-info">15일</button>
+				        <button class="btn btn-info">1개월</button>
+				        <div id="search">
+				            <select name="type" id="type">
+				                <option value="title">제목</option>
+				                <option value="value">분류</option>
+				            </select>
+				            <input type="text">
+				            <button>검색</button>
+				        </div>
+				    </div>
+				    
+				    <table class="table">
+				        <thead>
+				            <tr>
+				                <th>날짜</th>
+				                <th>분류</th>
+				                <th>제목</th>
+				                <th>답변유무</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				        	<c:forEach var="q" items="${list}">
+					            <tr>
+					                <td>${q.createDate}</td>
+					                <td>${q.category}</td>
+					                <td>${q.qnaTitle}</td>
+					                <c:choose>
+				                        <c:when test="${not empty q.ansContent}">
+				                        	<td>등록완료<td>
+				                        </c:when>
+				                        <c:otherwise>
+				                        	<td>대기중<td>
+				                        </c:otherwise>
+			                        </c:choose>
+					            </tr>
+				            </c:forEach>
+				        </tbody>
+				    </table>
+			    
+			    	<div id="paging">
+						<ul class="pagination">
+							<c:choose>
+								<c:when test="${ pi.currentPage eq 1 }">
+									<li class="page-item disabled">
+										<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ pi.currentPage-1 }">Previous</a></li>
+								</c:otherwise>
+							</c:choose>
+							
+							
+							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+								<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ p }">${ p }</a></li>
+							</c:forEach>
+							
+							
+							<c:choose>
+								<c:when test="${ pi.currentPage eq pi.maxPage }">
+									<li class="page-item disabled">
+										<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ pi.currentPage+1 }">Next</a></li>
+								</c:otherwise>
+							</c:choose>
+			            </ul>
+			        </div>
+					
+				</div>	
+			</td>
+		</tr>
+	</table>
 
 </body>
 </html>
