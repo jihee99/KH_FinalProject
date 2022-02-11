@@ -20,7 +20,7 @@ public class ClassController {
 	
 	@RequestMapping(value="classDetail.me")
 	public String classDetail(int clNo, Model model, HttpSession session) {
-		// 클래스 상세보기 페이지
+		// 클래스 상세보기
 		
 		int result = cService.increaseCount(clNo);
 		
@@ -34,6 +34,15 @@ public class ClassController {
 			return "redirect:/";
 		}
 		
+	}
+	
+	@RequestMapping(value="classSearchList.me")
+	public String classSearchList(String keyword) {
+		// 클래스 검색 리스트
+		
+		System.out.println(keyword);
+		
+		return "class/classSearchList"; 
 	}
 	
 	@RequestMapping(value="classPay.me")

@@ -16,7 +16,8 @@ div{box-sizing: border-box;}
 
 /*검색영역 관련 스타일*/
 #header_search{
-    border: 1px solid red; margin:auto; align-items: center;
+    margin:auto; align-items: center;
+    margin-bottom: 30px;
 }
 #header_search select {
 	display:flex;
@@ -46,17 +47,19 @@ div{box-sizing: border-box;}
 </style>
 </head>
 <body>
+
 	<c:if test="${not empty alertMsg }">
 		<script>
 			alert("${alertMsg}");
 		</script>
 		<c:remove var="alertMsg"/>
 	</c:if>
+	
 	 <div id="header">
         <div id="header_1">
             <div id="header_1_left"></div>
             <div id="header_1_center">
-                 <img src="resources/images/logo.png">
+                 <img src="resources/images/logo.png" style="cursor: pointer" onclick="location.href='${pageContext.request.contextPath}'">
             </div>
             <div id="header_1_right">
 
@@ -78,14 +81,14 @@ div{box-sizing: border-box;}
         </div>
 
 		<div id="header_search" align="center">
-            <form action="">
-                <select name="" id="header_category">
-                    <option value="">클래스</option>
-                    <option value="">스토어</option>
+            <form id="search_form">
+                <select id="header_category">
+                    <option value="class" selected>클래스</option>
+                    <option value="store">스토어</option>
                 </select>
                 
-                <input type="text" name="">
-                <button type="submit">검색</button>
+                <input type="text" name="keyword" id="search_keyword">
+                <button type="button" onclick="smCk();">검색</button>
             </form>
 		</div>
 		
@@ -123,7 +126,34 @@ div{box-sizing: border-box;}
                 <li class="header_2_menu"><a href="helpList.he">HELP</a></li>
             </ul>
         </div>
+
+        <hr>
         
     </div>
+
+    <script>
+        function smCk(){
+
+            var searchForm = document.getElementById("search_form");
+            var searchKeyword = document.getElementById("search_keyword").value;
+            var category = document.getElementById("header_category").value;
+
+            if(searchKeyword.replace(/ /gi, "").length >= 2){
+                if(category == 'class'){
+                    searchForm.action = 'classSearchList.me';
+                    searchForm.submit();
+                } else{
+                    // 지현이 여기 action 링크에다가 store 링크 넣으세용
+                    // 스토어 고르고 검색하면 링크로 submit 되는 구조
+                    searchForm.action = '${pageContext.request.contextPath}';
+                    searchForm.submit();
+                }
+            } else {
+                alert("검색어는 두 글자 이상이여야 합니다.");
+            }
+
+        }
+    </script>
+
 </body>
 </html>
