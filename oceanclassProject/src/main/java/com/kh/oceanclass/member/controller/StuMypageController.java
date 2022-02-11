@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
+import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.service.MypageService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
@@ -107,6 +108,31 @@ public class StuMypageController {
 		model.addAttribute("list", list);
 		return "member/student/myPoint";
 		
+	}
+	
+	@RequestMapping("myQna.me")
+	public String myQnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int qnaCount = myService.selectQnaCount(memNo);
+		//System.out.println(qnaCount);
+		
+		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 10, 10);
+		ArrayList<Qna> list = myService.selectQnaList(pi, memNo);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).category.equals("C")) {
+				list.get(i).category = "클래스";
+			}else if(list.get(i).category.equals("S")) {
+				list.get(i).category = "스토어";
+			}else {
+				list.get(i).category = "기타";
+			}
+		}
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "member/student/myQna";
 	}
 	
 }

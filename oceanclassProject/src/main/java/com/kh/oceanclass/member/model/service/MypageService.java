@@ -3,6 +3,7 @@ package com.kh.oceanclass.member.model.service;
 import java.util.ArrayList;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 
@@ -20,5 +21,12 @@ public interface MypageService {
 	
 	// 쿠폰 리스트 조회
 	ArrayList<Coupon> selectCouponList(PageInfo pi, int memNo);
+	
+	// qna 갯수 조회
+	int selectQnaCount(int memNo);
+	
+	// qna 리스트 조회
+	ArrayList<Qna> selectQnaList(PageInfo pi, int memNo);
+	
 	
 }
