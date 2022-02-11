@@ -47,7 +47,7 @@
     
     .input-area input{
         height: 45px;
-        width: 300px;
+        width: 305px;
         border: 1px solid lightgray;
         border-radius: 5px;
         padding: 10px;
@@ -73,10 +73,14 @@
         margin-top: 10px;
     }
     .box .input-area{
-        width: 300px;
+        width: 305px;
         display: flex;
     }
     .box .input-area input[type="text"]{
+        margin-right: 5px;
+        flex: 1;
+    }
+    .box .input-area input[type="number"]{
         margin-right: 5px;
         flex: 1;
     }
@@ -104,13 +108,6 @@
         background-color: rgb(213, 232, 248); 
         float: right;
         margin-right: 17px;
-    }
-    #checkResult{
-    	margin-left: 5px;
-    	margin-bottom:-10px;
-    }#nickResult{
-    	margin-left: 5px;
-    	margin-bottom:-10px;
     }
 </style>
 </head>
@@ -141,7 +138,7 @@
                         <label class="textName" for="userId">아이디<span class="star">*</span></label>
                         <div>
 	                        <div class="input-area">
-	                            <input type="text" id="userId" name="userId" placeholder="아이디(3~12자리)" style="width: 215px;" required>
+	                            <input type="text" id="userId" name="userId" placeholder="아이디(영문,숫자3~12자리)" style="width: 215px;" required>
 	                            <button type="button" class="rightBtn btn-sm btn-light" id="idCheck">중복 확인</button>
 	                        </div>
                         <div id="checkResult" style="font-size:0.8em;"></div>
@@ -150,90 +147,189 @@
                     
                     <script>
 						$(function(){
-								// 아이디 입력하는 input요소 객체 변수에 담아두기
-								const $idInput = $("#joinForm input[name=userId]");
-								
+							
+							// 아이디 입력하는 input요소 객체 변수에 담아두기
+							const $idInput = $("#joinForm input[name=userId]");
+							// 아이디 정규 표현식
+							const idExp =/^[a-z][a-z\d]{2,11}$/;
+							
+							// 아이디 정규 표현식 ajax
+							$("#userId").blur(function () {
+								if (!idExp.test($(this).val())) {
+									console.log(idExp.test($(this).val()));
+									$('#checkResult').text("아이디는 영문과 숫자 3~12 자리로 입력해 주세요.");
+									$('#checkResult').css('color', 'red');
+									$('#userId').css('border', '2px solid red');
+									$('#userId').focus();
+								} else {
+									$('#checkResult').text('');
+									$('#userId').css('border', '1px solid black');
+									checkResultDouble();
+								}
+							});
+							
 								$idInput.keyup(function(){
 									//console.log($idInput.val());
 									
-									// 우선 최소 5글자 이상으로 입력 되었을때 ajax요청 해서 중복체크 하도록
-										
 									$("#idCheck").click(function(){
 										
 										$.ajax({
 											url:"idCheck.me",
 											data:{checkId:$idInput.val()},
 											success:function(result){
-												
-											if($idInput.val().length >= 3 && $idInput.val().length <= 12){
+											
 												
 												if(result == "NNNNN") { //사용불가능
-													// 사용자에게 메세지로 알려줘야함
 													$("#checkResult").show();
 													$("#checkResult").css("color", "red").text("중복된 아이디가 존재합니다.");
 													// 버튼 비활성화
 													$("#joinForm :submit").attr("disabled", true)
 													
 												}else if(result == "NNNNY"){ // 사용가능
-													// => 초록색 메세지 (사용 가능)출력
 													$("#checkResult").show();
 													$("#checkResult").css("color", "blue").text("사용 가능한 아이디입니다!");
 													// => 버튼 활성화
 													$("#joinForm :submit").removeAttr("disabled");
 												}
-												
-											}else{ // 3글자 미만일 경우 => 버튼 비활성화, 메세지 숨기기
-												$("#checkResult").show();
-												$("#checkResult").css("color", "red").text("3자 이상, 12자 이하로 입력해 주세요.");
-												$("#joinForm :submit").attr("disabled", true)
-											}
-												
+											
 											},error:function(){
 												console.log("아이디 중복체크용 ajax 통신 실패");
 											}
 										});	
-										
 									})
+									
+									
 								})
 							})
 					</script>
 					
                     <div class="box">
                         <label class="textName" for="userPwd">비밀번호<span class="star">*</span></label>
+                        <div>
                         <div class="input-area">
-                            <input type="password" id="userPwd" name="userPwd" placeholder="비밀번호(영문,숫자 포함 6자리 이상)" required>
+                            <input type="password" id="userPwd" name="userPwd" placeholder="비밀번호(영문,숫자 포함 6~15 자리)" required>
+                        </div>
+                        <div id="checkPw" style="font-size:0.8em;"></div>
                         </div>
                     </div>
+                    
+                    <script>
+                    	$(function(){
+                    		
+                    		// 비밀번호 정규 표현식
+    						const pwExp =/^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{6,15}$/i;
+    						
+    						// 비밀번호 정규표현식 확인
+    						$('#userPwd').blur(function () {
+    							if (!pwExp.test($(this).val())) {
+    								console.log(pwExp.test($(this).val()));
+    								$('#checkPw').text("비밀번호는 영문, 숫자 포함 6~15자리 입니다.");
+    								$('#checkPw').css('color', 'red');
+    								$('#userPwd').css('border', '2px solid red');
+    								$('#userPwd').focus();
+    								$("#joinForm :submit").attr("disabled", true)
+    							} else {
+    								$('#checkPw').text('');
+    								$('#userPwd').css('border', '1px solid black');
+    								$("#joinForm :submit").removeAttr("disabled");
+    							}
+    						});
+                    	})	
+                    </script>
 
                     <div class="box">
                         <label class="textName" for="userPwdCk">비밀번호 확인<span class="star">*</span></label>
+                        <div>
                         <div class="input-area">
-                            <input type="password" id="userPwdCk" name="userPwdCk" placeholder="비밀번호 확인">
+                            <input type="password" id="userPwdCk" name="userPwdCk" placeholder="비밀번호 확인" required>
+                        </div>
+                        <div id="checkPwCk" style="font-size:0.8em;"></div>
                         </div>
                     </div>
+                    
+                    <script>
+                    $(function(){
+                		
+						// 비밀번호 중복 확인
+						$('#userPwdCk').blur(function () {
+							if ($('#userPwd').val() != $('#userPwdCk').val()) {
+								$('#checkPwCk').text("비밀번호가 일치하지 않습니다.");
+								$('#checkPwCk').css('color', 'red');
+								$('#userPwdCk').css('border', '2px solid red');
+								$("#joinForm :submit").attr("disabled", true)
+							}else {
+								$('#checkPwCk').text('');
+								$('#userPwdCk').css('border', '1px solid black');
+								$("#joinForm :submit").removeAttr("disabled");
+							}
+						});
+                	})	
+                    </script>
 
                     <div class="box">
-                        <label class="textName" for="userPwdCk">이름<span class="star">*</span></label>
+                        <label class="textName" for="userName">이름<span class="star">*</span></label>
+                        <div>
                         <div class="input-area">
-                            <input type="text" id="userPwdCk" name="userName" placeholder="이름" required>
+                            <input type="text" id="userName" name="userName" placeholder="이름(한글 두글자 이상)" required>
+                        </div>
+                        	<div id="checkName" style="font-size:0.8em;"></div>
                         </div>
                     </div>
+					<script>
+						$(function(){
+	                		
+	                		// 이름 정규 표현식
+							const nameExp = /^[가-힣]{2,}$/;
+							
+							// 이름 정규표현식 ajax
+							$('#userName').blur(function () {
+								if (!nameExp.test($(this).val())) {
+									$('#checkName').text("한글로 두글자 이상 입력해 주십시오.");
+									$('#checkName').css('color', 'red');
+									$('#userName').css('border', '2px solid red');
+									$("#joinForm :submit").attr("disabled", true)
+								} else {
+									$('#checkName').text('');
+									$('#userName').css('border', '1px solid black');
+									$("#joinForm :submit").removeAttr("disabled");
+								}
+							});
+	                	})
+					</script>
 
                     <div class="box">
-                        <label class="textName" for="userId">닉네임<span class="star">*</span></label>
+                        <label class="textName" for="nickName">닉네임<span class="star">*</span></label>
                         <div>
 	                        <div class="input-area">
-	                            <input type="text" id="nickName" class="w200" name="nickName" placeholder="닉네임(한 2~8 / 영 2~12)" required>
-	                            <button type="button" class="rightBtn btn-sm btn-light" id="nickCheck">중복 확인</button>
+	                            <input type="text" id="nickName" class="w200" name="nickName" placeholder="닉네임(한글 2~6 자리)" required>
+	                            <button type="button" class="rightBtn btn-sm btn-light" id="nickCheck" >중복 확인</button>
 	                        </div>
 	                        <div id="nickResult" style="font-size:0.8em;"></div>
                         </div>
                     </div>
 					<script>
 						$(function(){
-							// 아이디 입력하는 input요소 객체 변수에 담아두기
+							
 							const $nickInput = $("#joinForm input[name=nickName]");
-								
+							
+							// 닉네임 정규 표현식
+							const nickExp = /^[가-힣\d]{2,6}$/;
+							
+							// 닉네임 정규표현식 ajax
+							$('#nickName').blur(function () {
+								if (!nickExp.test($(this).val())) {
+									$('#nickResult').text("한글과 숫자 2~6 자리로 입력해 주십시오.");
+									$('#nickResult').css('color', 'red');
+									$('#nickName').css('border', '2px solid red');
+									$("#joinForm :submit").attr("disabled", true)
+								} else {
+									$('#nickResult').text('');
+									$('#nickName').css('border', '1px solid black');
+									$("#joinForm :submit").removeAttr("disabled");
+								}
+							});
+							
+							
 								$nickInput.keyup(function(){
 									//console.log($idInput.val());
 									
@@ -245,10 +341,7 @@
 											data:{nickCheck:$nickInput.val()},
 											success:function(result){
 												
-											if($nickInput.val().length >= 2){
-												
 												if(result == "NNNN") { //사용불가능
-													// 사용자에게 메세지로 알려줘야함
 													$("#nickResult").show();
 													$("#nickResult").css("color", "red").text("중복된 아이디가 존재합니다.");
 													// 버튼 비활성화
@@ -256,18 +349,11 @@
 													console.log(result);
 													
 												}else if(result == "NNNY"){ // 사용가능
-													// => 초록색 메세지 (사용 가능)출력
 													$("#nickResult").show();
 													$("#nickResult").css("color", "blue").text("사용 가능한 닉네임입니다!");
 													// => 버튼 활성화
 													$("#joinForm :submit").removeAttr("disabled");
 												}
-												
-											}else{
-												$("#nickResult").show();
-												$("#nickResult").css("color", "red").text("2자 이상 입력해 주세요.");
-												$("#joinForm :submit").attr("disabled", true)
-											}
 												
 											},error:function(){
 												console.log("닉네임 중복체크용 ajax 통신 실패");
@@ -280,11 +366,35 @@
 					</script>
                     <div class="box">
                         <label class="textName" for="userId">휴대전화 번호<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="phone" class="w200" name="phone" placeholder="휴대전화 번호(숫자만)" required>
-                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">본인 인증</button>
+                        <div>
+	                        <div class="input-area">
+	                            <input type="text" id="phone" class="w200" name="phone" placeholder="휴대전화 번호(숫자만)" required>
+	                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">본인 인증</button>
+	                        </div>
+	                        <div id="phoneResult" style="font-size:0.8em;"></div>
                         </div>
                     </div>
+                    <script>
+						$(function(){
+	                		
+	                		// 휴대번호 정규 표현식
+							const phoneExp = /^[\d]{11}$/;
+							
+							// 휴대번호 정규표현식 ajax
+							$('#phone').blur(function () {
+								if (!phoneExp.test($(this).val())) {
+									$('#phoneResult').text("올바른 휴대폰 번호를 숫자만 입력해 주세요.");
+									$('#phoneResult').css('color', 'red');
+									$('#phone').css('border', '2px solid red');
+									$("#joinForm :submit").attr("disabled", true)
+								} else {
+									$('#phoneResult').text('');
+									$('#phone').css('border', '1px solid black');
+									$("#joinForm :submit").removeAttr("disabled");
+								}
+							});
+	                	})
+					</script>
                     <div class="box">
                         <label class="textName"></label>
                         <div class="input-area">
@@ -292,7 +402,7 @@
                             <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">인증 확인</button>
                         </div>
                     </div>
-
+					
                     <div class="box">
                         <label class="textName">약관동의</label>
                         <div id="termsBox" class="agree-box">
