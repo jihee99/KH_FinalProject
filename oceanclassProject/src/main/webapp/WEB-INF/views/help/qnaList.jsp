@@ -51,12 +51,12 @@
         </div>
         <div class="middle">
         	<div id="search">
-        		<form method="get">
-        			<select id="category" name="category" class="dropdown-toggle form-control-sm" style="margin-top: -1px;">
-			            <option value="wwirter">작성자</option>
+        		<form action="searchQna.he" method="get">
+        			<select id="option" name="option" class="dropdown-toggle form-control-sm" style="margin-top: -1px;">
+			            <option value="writer">작성자</option>
 			            <option value="category">카테고리</option>
 		        	</select>
-		            <input id="keyword" type="text" class="form-control form-control-sm" name="keyword" >
+		        	<input id="keyword" name="keyword" type="text" class="form-control form-control-sm">
            			<button type="submit" class="btn btn-sm" style="width:60px; margin-top: -1px;">검색</button>
         		</form>
 	        </div>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="eventMapper">
+
+	
+	<resultMap id="eventResult" type="Event">
+		<result column="eno" property="eventNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="e_title" property="eventTitle" />
+		<result column="e_content" property="eventContent" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="tag" property="tag" />
+		<result column="img" property="img" />
+	</resultMap>
+	
+
+	<!-- 공지사항 -->
+	<select id="selectEventCount" resultType="_int">
+		select
+		       count(*)
+		  from event
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectEventList" resultMap="eventResult">
+		select
+			   eno
+			 , mno
+			 , category
+			 , e_title
+			 , e_content
+			 , create_date
+			 , status
+			 , tag
+			 , img
+		  from event
+	</select>
+	
+	<!-- 
+	<select id="selectList" resultMap="noticeResult">
+		select
+		       nno
+		     , mno
+		     , category
+		     , n_title
+		     , count
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from notice
+		 where status = 'Y'
+		 order
+		    by nno desc
+	</select>
+	 -->
+	 
+	 <select id="ajaxSearchEvent" resultMap="eventResult">
+		select
+			   eno
+			 , mno
+			 , category
+			 , e_title
+			 , e_content
+			 , create_date
+			 , status
+			 , tag
+			 , img
+		  from event
+		 where category = #{category}	
+	 </select>
+
+
+	
+</mapper>
