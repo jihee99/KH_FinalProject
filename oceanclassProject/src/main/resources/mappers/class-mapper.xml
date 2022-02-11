@@ -18,6 +18,7 @@
 		<result column="hashtag" property="hashtag" />
 		<result column="count" property="count" />
 		<result column="nickname" property="memNo" />
+		<result column="like_count" property="like" />
 	</resultMap>
 
 	<update id="increaseCount">
@@ -44,11 +45,68 @@
 		     , cl_kitimg
 		     , hashtag
 		     , count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 1
+		           and refer_no = clno
+		        ) as like_count
 		  from class
           JOIN member USING (MNO)
 		 where cl_status = 'Y'
            and grade = 'T'
 		   and clno = #{clNo}
 	</select>
+	
+	<select id="classSearchList" resultMap="classResult">
+        select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_date
+		     , cl_price
+		     , cl_img
+		     , count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 1
+		           and refer_no = clno
+		        ) as like_count
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'Y'
+		   and grade = 'T'
+		   and cl_name like '%' || #{keyword} || '%'
+		 order
+		    by like_count desc
+	</select>
+	
+	<select id="checkClassLike" resultType="_int">
+		select count(*)
+		  from like_item
+		 where mno = #{memNo}
+		   and refer_no = #{referNo}
+	</select>
+	
+	<insert id="insertClassLike">
+		insert
+		  into like_item
+		values
+			 (
+			   #{memNo}
+			 , 1
+			 , #{referNo}
+			 )
+	</insert>
+	
+	<delete id="deleteClassLike">
+		delete 
+		  from like_item
+		 where mno = #{memNo}
+		   and refer_no = #{referNo}
+	</delete>
+
 
 </mapper>

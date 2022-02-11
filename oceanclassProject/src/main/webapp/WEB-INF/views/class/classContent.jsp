@@ -213,7 +213,7 @@
     <script>
 
         function classPage(clNo){
-            location.href = 'classDetail.me?clNo=' + clNo;
+            location.href = 'classDetail.me?referNo=' + clNo;
         }
 
     </script>
