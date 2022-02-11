@@ -4,7 +4,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
@@ -105,6 +105,13 @@
         float: right;
         margin-right: 17px;
     }
+    #checkResult{
+    	margin-left: 5px;
+    	margin-bottom:-10px;
+    }#nickResult{
+    	margin-left: 5px;
+    	margin-bottom:-10px;
+    }
 </style>
 </head>
 <body>
@@ -132,12 +139,65 @@
 
                     <div class="box">
                         <label class="textName" for="userId">아이디<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="userId" name="userId" placeholder="아이디(2~12자리)" style="width: 215px;" required>
-                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">중복 확인</button>
+                        <div>
+	                        <div class="input-area">
+	                            <input type="text" id="userId" name="userId" placeholder="아이디(3~12자리)" style="width: 215px;" required>
+	                            <button type="button" class="rightBtn btn-sm btn-light" id="idCheck">중복 확인</button>
+	                        </div>
+                        <div id="checkResult" style="font-size:0.8em;"></div>
                         </div>
                     </div>
-
+                    
+                    <script>
+						$(function(){
+								// 아이디 입력하는 input요소 객체 변수에 담아두기
+								const $idInput = $("#joinForm input[name=userId]");
+								
+								$idInput.keyup(function(){
+									//console.log($idInput.val());
+									
+									// 우선 최소 5글자 이상으로 입력 되었을때 ajax요청 해서 중복체크 하도록
+										
+									$("#idCheck").click(function(){
+										
+										$.ajax({
+											url:"idCheck.me",
+											data:{checkId:$idInput.val()},
+											success:function(result){
+												
+											if($idInput.val().length >= 3 && $idInput.val().length <= 12){
+												
+												if(result == "NNNNN") { //사용불가능
+													// 사용자에게 메세지로 알려줘야함
+													$("#checkResult").show();
+													$("#checkResult").css("color", "red").text("중복된 아이디가 존재합니다.");
+													// 버튼 비활성화
+													$("#joinForm :submit").attr("disabled", true)
+													
+												}else if(result == "NNNNY"){ // 사용가능
+													// => 초록색 메세지 (사용 가능)출력
+													$("#checkResult").show();
+													$("#checkResult").css("color", "blue").text("사용 가능한 아이디입니다!");
+													// => 버튼 활성화
+													$("#joinForm :submit").removeAttr("disabled");
+												}
+												
+											}else{ // 3글자 미만일 경우 => 버튼 비활성화, 메세지 숨기기
+												$("#checkResult").show();
+												$("#checkResult").css("color", "red").text("3자 이상, 12자 이하로 입력해 주세요.");
+												$("#joinForm :submit").attr("disabled", true)
+											}
+												
+											},error:function(){
+												console.log("아이디 중복체크용 ajax 통신 실패");
+											}
+										});	
+										
+									})
+								})
+							})
+					</script>
+					
                     <div class="box">
                         <label class="textName" for="userPwd">비밀번호<span class="star">*</span></label>
                         <div class="input-area">
@@ -161,16 +221,67 @@
 
                     <div class="box">
                         <label class="textName" for="userId">닉네임<span class="star">*</span></label>
-                        <div class="input-area">
-                            <input type="text" id="nickName" class="w200" name="nickName" placeholder="닉네임(한 2~8 / 영 2~12)" required>
-                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">중복 확인</button>
+                        <div>
+	                        <div class="input-area">
+	                            <input type="text" id="nickName" class="w200" name="nickName" placeholder="닉네임(한 2~8 / 영 2~12)" required>
+	                            <button type="button" class="rightBtn btn-sm btn-light" id="nickCheck">중복 확인</button>
+	                        </div>
+	                        <div id="nickResult" style="font-size:0.8em;"></div>
                         </div>
                     </div>
-
+					<script>
+						$(function(){
+							// 아이디 입력하는 input요소 객체 변수에 담아두기
+							const $nickInput = $("#joinForm input[name=nickName]");
+								
+								$nickInput.keyup(function(){
+									//console.log($idInput.val());
+									
+										
+									$("#nickCheck").click(function(){
+										
+										$.ajax({
+											url:"nickCheck.me",
+											data:{nickCheck:$nickInput.val()},
+											success:function(result){
+												
+											if($nickInput.val().length >= 2){
+												
+												if(result == "NNNN") { //사용불가능
+													// 사용자에게 메세지로 알려줘야함
+													$("#nickResult").show();
+													$("#nickResult").css("color", "red").text("중복된 아이디가 존재합니다.");
+													// 버튼 비활성화
+													$("#joinForm :submit").attr("disabled", true)
+													console.log(result);
+													
+												}else if(result == "NNNY"){ // 사용가능
+													// => 초록색 메세지 (사용 가능)출력
+													$("#nickResult").show();
+													$("#nickResult").css("color", "blue").text("사용 가능한 닉네임입니다!");
+													// => 버튼 활성화
+													$("#joinForm :submit").removeAttr("disabled");
+												}
+												
+											}else{
+												$("#nickResult").show();
+												$("#nickResult").css("color", "red").text("2자 이상 입력해 주세요.");
+												$("#joinForm :submit").attr("disabled", true)
+											}
+												
+											},error:function(){
+												console.log("닉네임 중복체크용 ajax 통신 실패");
+											}
+										});	
+										
+									})
+								})
+							})
+					</script>
                     <div class="box">
                         <label class="textName" for="userId">휴대전화 번호<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="phone" class="w200" name="phone" placeholder="휴대전화 번호(-로 구분)" required>
+                            <input type="text" id="phone" class="w200" name="phone" placeholder="휴대전화 번호(숫자만)" required>
                             <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">본인 인증</button>
                         </div>
                     </div>

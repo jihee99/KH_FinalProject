@@ -32,9 +32,14 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int idCheck(String checkId) {
-		return 0;
+		return mDao.idCheck(sqlSession, checkId);
 	}
 
+	@Override
+	public int nickCheck(String nickCheck) {
+		return mDao.nickCheck(sqlSession, nickCheck);
+	}
+	
 	@Override
 	public Member findId(Member m) {
 		return null;
@@ -44,5 +49,7 @@ public class MemberServiceImpl implements MemberService{
 	public int updatePwd(Member m) {
 		return 0;
 	}
+
+	
 	
 }

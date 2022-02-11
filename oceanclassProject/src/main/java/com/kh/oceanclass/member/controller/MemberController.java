@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.oceanclass.member.model.service.MemberService;
@@ -81,10 +82,19 @@ public class MemberController {
 			return "common/errorPage";
 		}
 	}
-	
+	@ResponseBody
 	@RequestMapping("idCheck.me")
-	public void idCheck() {
+	public String idCheck(String checkId) {
+		int count = mService.idCheck(checkId);
 		
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
+	@ResponseBody
+	@RequestMapping("nickCheck.me")
+	public String nickCheck(String nickCheck) {
+		int count = mService.nickCheck(nickCheck);
+		
+		return count > 0 ? "NNNN" : "NNNY";
 	}
 	
 	@RequestMapping("findID.me")

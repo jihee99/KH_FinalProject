@@ -13,6 +13,9 @@ public interface MemberService {
 	// 아이디 중복 체크 (select)
 	int idCheck(String checkId);
 	
+	// 닉네임 중복 체크 (select)
+	int nickCheck(String nickCheck);
+	
 	// 아이디 찾기 (select)
 	Member findId(Member m);
 	
