@@ -42,13 +42,14 @@
 </style>
 </head>
 <body>
+
     <div id="outer">
         <div id="silde">나중에 silde들어갈자리</div>
         
         <div class="items">
             <div class="items_title"><b>· HOT CLASS</b></div>
 
-            <div class="item" style="margin-right: 62px;">
+            <div class="item" style="margin-right: 62px;" onclick="classPage(1);">
                 <img src="" class="thumbnail">
                 <div style="font-size: 13px;"><b>강사명</b></div>
                 <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
@@ -208,5 +209,14 @@
         <div style="height: 150px;"></div>
 
     </div>
+
+    <script>
+
+        function classPage(clNo){
+            location.href = 'classDetail.me?referNo=' + clNo;
+        }
+
+    </script>
+
 </body>
 </html>

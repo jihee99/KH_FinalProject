@@ -8,7 +8,12 @@
 		color: rgb(107, 171, 213);
 	}
     .button{padding-left: 70px;}
-	.button>button{width: 180px; margin: 0 auto; margin-left: 70px;}
+	.button>button{
+		width: 180px; 
+		margin: 0 auto; 
+		margin-left: 70px;
+		background: rgb(224, 224, 224); 
+	}
 	.content{
 	    width: 100%;
 	    height: 100%;
@@ -21,4 +26,4 @@
 	}
 	#paging{width:fit-content; margin:auto;}
 	.content button{background: rgb(107, 171, 213); color: whitesmoke;}
-	.content button:hover{background: rgb(107, 171, 213, 0.2)}
+	button:hover{background: rgb(107, 171, 213, 0.2)}

@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="./resources/css/helpMain.css?4">
+	<link rel="stylesheet" href="./resources/css/helpMain.css?6">
 </head>
 <body>
 
@@ -21,9 +21,9 @@
             <p>공지사항</p>
         </div>
         <div class="button my-3">
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='helpList.he';">공지사항</button>
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='faqMain.he';">FAQ</button>
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='qnaMain.he';">1:1문의</button>
+            <button type="button" class="btn" onclick="location.href='helpList.he';">공지사항</button>
+            <button type="button" class="btn" onclick="location.href='faqMain.he';">FAQ</button>
+            <button type="button" class="btn" onclick="location.href='qnaMain.he';">1:1문의</button>
         </div>
         <div class="content my-5">
             <table id="noticeList" class="table table-hover">
