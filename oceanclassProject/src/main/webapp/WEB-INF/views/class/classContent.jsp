@@ -43,13 +43,6 @@
 </head>
 <body>
 
-	<c:if test="${ !empty alertMsg }">
-		<script>
-			alertify.alert("안내", "${alertMsg}");
-		</script>
-		<c:remove var="alertMsg" scope="session" />
-	</c:if>
-	
     <div id="outer">
         <div id="silde">나중에 silde들어갈자리</div>
         
