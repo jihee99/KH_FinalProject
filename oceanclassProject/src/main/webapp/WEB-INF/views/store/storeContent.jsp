@@ -55,21 +55,22 @@
                 <a href="" class="more_btn">+more</a>
             </div>
             
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>브랜드명</b></div>
-                <div>상품명이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>찜수11</span>
-                <div>
-                    <b>
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
+			<c:forEach var="p" items="${ list }">
+	            <div class="item" style="margin-right: 62px;">
+	                <img src="" class="thumbnail">
+	                <div style="font-size: 13px;"><b>${ p.memberNo }</b></div>
+	                <div>${ p.title }</div>
+	                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
+	                <span>찜수11</span>
+	                <div>
+	                    <b>
+	                        <span>${ p.price }</span>
+	                        원 
+	                    </b>
+	                </div>
+	            </div>
+			</c:forEach>
+			
             <div class="item" style="margin-right: 62px;">
                 <img src="" class="thumbnail">
                 <div style="font-size: 13px;"><b>브랜드명</b></div>

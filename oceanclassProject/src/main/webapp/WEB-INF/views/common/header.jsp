@@ -66,7 +66,7 @@
                 </li>
 
                 <li class="header_2_menu">
-                    <a href="">STORE</a>
+                    <a href="list.st">STORE</a>
                     <ul class="header_2_detail">
                         <li><a href="">클래스 상품</a></li>
                         <li><a href="">OC 에디션</a></li>
