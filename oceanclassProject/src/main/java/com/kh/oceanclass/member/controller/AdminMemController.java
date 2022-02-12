@@ -54,7 +54,7 @@ public class AdminMemController {
 			mv.setViewName("redirect:main.ad");
 		}else{ 
 			mv.addObject("errorMsg", "로그인실패");
-			mv.setViewName("member/common/logInError");
+			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}

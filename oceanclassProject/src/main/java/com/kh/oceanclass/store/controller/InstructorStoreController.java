@@ -249,7 +249,7 @@ public class InstructorStoreController {
 		
 		int result = inStoreService.updateStockCount(st);
 		//System.out.println(result);
-		return result>0? "success" : "fail";
+		return result>0? "success()" : "fail";
 	}
 	
 	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
