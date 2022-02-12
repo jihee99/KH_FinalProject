@@ -36,6 +36,7 @@
         <result column="discount" property="discount" />
         <result column="dedate" property="dedate" />
         <result column="count" property="count" />
+        <result column="maxcount" property="maxCount"/>
 	</resultMap>	
 	
 	<resultMap type="MemCoupon" id="memCouponResult">
