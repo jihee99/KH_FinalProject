@@ -71,31 +71,29 @@
                 <div id="idFind-text" align="center">
                     <span>아이디 찾기</span>
                 </div>
-                <form action="findID.me" method="post">
+                <form action="" method="post">
                     
                     <span id="top-text">휴대폰 번호</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="phone" required>                      
+                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="userId" required>                      
                     </div>
                     
                     <span id="top-text">성함</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="findId" placeholder="회원가입시 입력한 이름" name="userName" required>                      
+                      <input type="text" class="form-control" id="findId" placeholder="회원가입시 입력한 이름" name="userPwd" required>                      
                     </div>
                     <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">아이디 찾기</button>
                     
                     <!-- 일치하는 회원정보가 없을 경우 -->
-                    <!--
                     <div id="checkResult" style="margin-top: 25px;">
                         <div align="center">
                             <img src="resources/images/warning.jpg" width="25px">
                             <span style="font-size:1.4em; color: rgb(192, 57, 43); font-weight: bolder;">일치하는 회원정보가 없습니다</span>
                         </div>
                         <div align="center">
-                        <a href="" style="color: rgb(127, 127, 127); font-size: 0.9em; margin: auto; text-decoration: underline;">회원가입 하기</a>
+                        <a href="insert.me" style="color: rgb(127, 127, 127); font-size: 0.9em; margin: auto; text-decoration: underline;">회원가입 하기</a>
                         </div>
                     </div>
-                    -->
                 </form>
             </div>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>

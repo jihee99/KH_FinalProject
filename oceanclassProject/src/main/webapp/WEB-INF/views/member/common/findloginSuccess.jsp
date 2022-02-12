@@ -74,8 +74,8 @@
                         <span style="color: gray;">아이디</span>
                     </div>
                     <div id="id-area">
-                        <span id="idName">finalHell</span>
-                        <span id="idDate" style="color: gray;">가입일 2022.01.14</span>
+                        <span id="idName">${ loginUser.userId }</span>
+                        <span id="idDate" style="color: gray;">가입일 ${ loginUser.enrollDate }</span>
                     </div>
 
                     <button type="submit" id="goingLogin" class="btn" style="background-color: rgb(228, 240, 250);">로그인 하러가기</button>
@@ -84,7 +84,7 @@
                     <div id="checkResult" style="margin-top: 10px;">
                         <div align="center">
                             <span style="font-size:0.8em; color: rgb(52, 152, 219); font-weight: bolder;">설마 비밀번호도 잊으셨나요?&ensp;</span>
-                            <a href="" style="color: rgb(127, 127, 127); font-size: 0.9em; margin: auto; text-decoration: underline;">비밀번호 재설정</a>
+                            <a href="findPwdForm.me" style="color: rgb(127, 127, 127); font-size: 0.9em; margin: auto; text-decoration: underline;">비밀번호 재설정</a>
                         </div>
                     </div>
                     

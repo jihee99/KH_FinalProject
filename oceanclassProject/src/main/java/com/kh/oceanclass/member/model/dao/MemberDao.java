@@ -20,4 +20,7 @@ public class MemberDao {
 	public int nickCheck(SqlSessionTemplate sqlSession, String nickCheck) {
 		return sqlSession.selectOne("memberMapper.nickCheck", nickCheck);
 	}
+	public Member findId(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.findId", m);
+	}
 }
