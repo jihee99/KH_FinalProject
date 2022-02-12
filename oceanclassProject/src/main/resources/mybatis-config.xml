@@ -13,9 +13,10 @@
 
 		<typeAlias type="com.kh.oceanclass.store.model.vo.Product" alias="Product"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.ProductOption" alias="ProductOption"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.Stock" alias="Stock"/>
 	
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Member" alias="Member"/>
-
+		
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Report" alias="Report"/>
 		<typeAlias type="com.kh.oceanclass.member.model.vo.MemCoupon" alias="MemCoupon"/>
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Coupon" alias="Coupon"/>

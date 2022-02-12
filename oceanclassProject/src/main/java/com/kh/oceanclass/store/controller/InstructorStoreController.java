@@ -222,7 +222,12 @@ public class InstructorStoreController {
 	
 	}
 	
-	
+	//재고 리스트 연결
+	@RequestMapping(value="ststock.in")
+	public String updateStoreStockF() {
+		
+		return "store/instructorStoreStockList";
+	}
 	
 	
 	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
