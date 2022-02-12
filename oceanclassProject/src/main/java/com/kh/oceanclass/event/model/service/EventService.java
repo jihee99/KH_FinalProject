@@ -2,12 +2,9 @@ package com.kh.oceanclass.event.model.service;
 
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Service;
-
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.event.model.vo.Event;
 
-@Service
 public interface EventService {
 	
 	// 1. 이벤트 리스트
