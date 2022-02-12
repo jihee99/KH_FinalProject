@@ -146,18 +146,20 @@ public class AdminMemController {
 			model.addAttribute("errorMsg", "쿠폰 삭제에 실패했습니다.");
 			return "common/errorPage.jsp";
 		}
-		
 	}
-	
-	
-	
 
-	@RequestMapping(value="cgive.ad")
-	public String adminCouponManager(int cno) {
+	@RequestMapping(value="cgiveF.ad")
+	public String adminCouponManager(int cno, Model model) {
 		// 관리자 쿠폰 발행 페이지 확인용 메소드
 		System.out.println(cno);
+		Coupon c = adMemService.selectCoupon(cno);
+		ArrayList<Member> mlist = adMemService.selectAllMember();
+		model.addAttribute("c", c);
+		model.addAttribute("mlist", mlist);
 		return "member/admin/adminCouponWindow";
 	}
+	
+	
 	
 	@RequestMapping(value="pgive.ad")
 	public String adminPointManager() {

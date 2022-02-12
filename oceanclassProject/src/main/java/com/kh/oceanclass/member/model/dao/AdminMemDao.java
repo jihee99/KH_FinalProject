@@ -76,6 +76,14 @@ public class AdminMemDao {
 	public int deleteCoupon(SqlSessionTemplate sqlSession, int cno) {
 		return sqlSession.delete("adMemMapper.deleteCoupon", cno);
 	}
+
+	public Coupon selectCoupon(SqlSessionTemplate sqlSession, int cno) {
+		return sqlSession.selectOne("adMemMapper.selectCoupon", cno);
+	}
+
+	public ArrayList<Member> selectAllMember(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectAllMember");
+	}
 	
 
 

@@ -135,15 +135,20 @@ public class AdminMemServiceImpl implements AdminMemService {
 	}
 	
 	@Override
+	public Coupon selectCoupon(int cno) {
+		return adMemDao.selectCoupon(sqlSession, cno);
+	}
+	
+	@Override
 	public int adminMemCoupon(MemCoupon mc) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-
-
-
-
+	@Override
+	public ArrayList<Member> selectAllMember() {
+		return adMemDao.selectAllMember(sqlSession);
+	}
 
 
 }

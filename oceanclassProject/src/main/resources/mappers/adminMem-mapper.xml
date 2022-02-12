@@ -181,4 +181,24 @@
 		  from couponlist 
 		 where cno = #{cno}
 	</delete>
+	
+	<select id="selectCoupon" resultMap="couponResult">
+		select
+		       cno
+		     , cname
+		     , discount
+		     , to_char(dedate, 'YYYY-MM-DD') as dedate
+		  from couponlist
+		 where cno = #{cno}
+	</select>
+	
+	<select id="selectAllMember" resultMap="memberResult">
+		select
+			   mno
+			 , user_id
+			 , user_name
+		  from member
+		 where u_status='Y'
+		   and grade in ('S', 'T')  
+	</select>
 </mapper>

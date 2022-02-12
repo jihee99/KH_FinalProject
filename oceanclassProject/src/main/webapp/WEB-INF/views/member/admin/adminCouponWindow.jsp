@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
@@ -44,7 +45,8 @@
                     <tr>
                         <th>쿠폰명</th>
                         <td>
-                            <input id="cName" type="text" maxlength="20" placeholder="★설맞이 깜짝 10%할인쿠폰★" readonly>
+                        	<input name="couponNo" type="hidden" value="${c.couponNo }">
+                            <input name="couponName" type="text" value="${c.couponName }" readonly style="width:80%;">
                         </td>
                     </tr>
                     <tr>
@@ -61,66 +63,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                	<c:forEach var="m" items="${mlist }">
                                     <tr>
                                         <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
+                                        <td>
+                                        	${m.memNo }
+                                        	<input type="hidden" class="memNo" value="${m.memNo }">
+                                        </td>
+                                        <td>${m.userId }</td>
+                                        <td>${m.userName }</td>
                                     </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                             </div>
@@ -129,7 +82,7 @@
                     <tr>
                         <th>유효기간</th>
                         <td>
-                            <input id="deadDate" type="date" name="" id="">
+                            <input id="deadDate" type="date" value="${c.dedate }">
                         </td>
                     </tr>
                 </tbody>
@@ -176,30 +129,44 @@
                     var str = "";
                     console.log(chkArr);
                     for (var i = 0; i < chkArr.length; i++) {
-                        str += "번호"+ chkArr[i].memNo + "\n";
+                        str = "번호"+ chkArr[i] + "\n";
                     }
                     console.log(str);
-
+                    /*
+                    $.ajax({
+                    	url:"cgive.ad",
+                    	data:{
+                    		
+                    	},success:function(){
+                    		
+                    	},error:function(){
+                    		
+                    	}
+                    })
+					*/
                 });
 
                 function putCheckList(){
-                    chkArr = new Array();
+               		
+                	var obj = new Object();
                     var idxArr = new Array();
 
                     $("input[name=chBxRow]:checked").each(function(){
                         idxArr.push($("input[name=chBxRow]:checked").index(this));
                     });
-                    
+ 					                   
                     for(var i=0; i<idxArr.length; i++){
-                        var obj = new Object();
+                        var obj = "";
+                        console.log( "memNo  "+ $(".memNo").val());
+                        console.log(" number :   " + $(".memTable tbody").children().eq(idxArr[i]).children().eq(2).val());
                         /*나중에 쿠폰 번호 맞춰서 수정하기*/
-                        obj.memNo = $(".memTable tbody").children().eq(idxArr[i]).children().eq(1).text();
-                        chkArr.push(obj);
+                        var memNo  = $(".memTable tbody").children().eq(idxArr[i]).children().eq(1).text();
+                        chkArr.push(memNo);
                     }
 
                     /*회원 잘 담기는지 확인!!*/
                     console.log("idxArr:"+idxArr);
-                    console.log("chkArr"+chkArr);
+                    console.log("chkArr : "+chkArr);
                 }
 
             });
