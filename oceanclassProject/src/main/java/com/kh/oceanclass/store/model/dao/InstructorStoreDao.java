@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.Stock;
 
 @Repository
 public class InstructorStoreDao {
@@ -57,6 +58,22 @@ public class InstructorStoreDao {
 	
 	public int deleteProductOption(SqlSessionTemplate sqlSession, int pno) {
 		return sqlSession.delete("inStoreMapper.deleteProductOption", pno);
+	}
+
+	public int selectStockCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("inStoreMapper.selectStockCount");
+	}
+	
+	public ArrayList<Stock> selectStockList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStockList", null, rowBounds);
+	}
+
+	public int updateStockCount(SqlSessionTemplate sqlSession, Stock st) {
+		return sqlSession.update("inStoreMapper.updateStockCount", st);
 	}
 	
 }
