@@ -10,6 +10,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.dao.InstructorStoreDao;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.Stock;
 
 @Service
 public class InstructorStoreServiceImpl implements InstructorStoreService{
@@ -124,15 +125,19 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	}
 
 	@Override
-	public void selectStoreStockList() {
-		// TODO Auto-generated method stub
-		
+	public int selectStockCount() {
+		// 12_1. 상품 재고 조회용 카운트
+		return inStoreDao.selectStockCount(sqlSession);
 	}
 
 	@Override
-	public void selectStoreStock() {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<Stock> selectStockList(PageInfo pi) {
+		return inStoreDao.selectStockList(sqlSession, pi);
+	}
+
+	@Override
+	public int updateStockCount(Stock st) {
+		return inStoreDao.updateStockCount(sqlSession, st);	
 	}
 
 	@Override
@@ -140,6 +145,7 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 
 

@@ -102,7 +102,7 @@
 	            });
 				$('#hiddenList').val(chkArr);
 				//alert($('#hiddenList').val());	
-				console.log()
+
 				$.ajax({
 	       			url:"cgive.ad",
 	       			data:{
