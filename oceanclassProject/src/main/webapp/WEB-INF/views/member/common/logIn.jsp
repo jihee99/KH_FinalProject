@@ -133,7 +133,7 @@
                     -->
                     <div id="login-fix">
                         <input type="checkbox" id="idSaveCheck" name="idChk" value = "true">
-                        <span id="fix" href="" style="margin-right: 10px;">아이디 기억하기</span>
+                        <span id="fix" style="margin-right: 10px;">아이디 기억하기</span>
                         <input type="checkbox" disabled id="pwdSaveCheck" name="idChk" value = "true">
                         <span id="fix" href="">비밀번호 기억하기</span>
                     </div>
@@ -278,8 +278,8 @@
                     아직도 OceanClass 회원이 아니신가요? &ensp;<a style="color: rgb(52, 152, 219);" href="joinUsForm.me">회원가입 하기</a>
                 </div>
                 <div id="find">
-                    <a href="">아이디 찾기</a>&ensp; 
-                    <a href="">비밀번호 재설정</a>
+                    <a href="findIDForm.me">아이디 찾기</a>&ensp; 
+                    <a href="findPwdForm.me">비밀번호 재설정</a>
                 </div>
                 <!-- 아이디 비번 틀렸을때 -->
                 <!-- <div id="checkResult" style="font-size:1.5em; color: rgb(192, 57, 43); font-weight: bolder;">

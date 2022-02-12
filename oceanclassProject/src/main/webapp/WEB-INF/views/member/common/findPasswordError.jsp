@@ -69,23 +69,22 @@
             </div>
             <div id="idFind-form">
                 <div id="idFind-text" align="center">
-                    <span>아이디 찾기</span>
+                    <span>비밀번호 재설정</span>
                 </div>
-                <form action="findID.me" method="post">
+                <form action="" method="post">
                     
                     <span id="top-text">휴대폰 번호</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="phone" required>                      
+                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="userId" required>                      
                     </div>
                     
-                    <span id="top-text">성함</span>
+                    <span id="top-text">아이디</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="findId" placeholder="회원가입시 입력한 이름" name="userName" required>                      
+                      <input type="text" class="form-control" id="findId" placeholder="회원가입시 입력한 아이디" name="userPwd" required>                      
                     </div>
-                    <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">아이디 찾기</button>
+                    <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">비밀번호 재설정</button>
                     
                     <!-- 일치하는 회원정보가 없을 경우 -->
-                    <!--
                     <div id="checkResult" style="margin-top: 25px;">
                         <div align="center">
                             <img src="resources/images/warning.jpg" width="25px">
@@ -95,7 +94,6 @@
                         <a href="" style="color: rgb(127, 127, 127); font-size: 0.9em; margin: auto; text-decoration: underline;">회원가입 하기</a>
                         </div>
                     </div>
-                    -->
                 </form>
             </div>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>

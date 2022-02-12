@@ -81,6 +81,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		  from member
  		 where nickname = #{nickCheck}
  	</select>
-	
+ 	
+	<select id="findId" resultMap="memberResult">
+			  select
+			  	mno
+		      , user_id
+		      , user_pwd
+		      , user_name
+		      , nickname
+		      , phone
+		      , profile
+		      , point
+		      , grade
+		      , u_status
+		      , enroll_date
+		      , sleep_date
+		      , escape_date
+		  from member
+		 where u_status = 'Y'
+		   and phone = #{phone}
+		   and user_name = #{userName}
+		   
+	</select>
 	
 </mapper>
