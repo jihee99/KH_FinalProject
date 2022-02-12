@@ -67,7 +67,11 @@ public class HelpServiceImpl implements HelpService{
 	public int insertQna(Qna q) {
 		return hDao.insertQna(sqlSession, q);
 	}
-	
+
+//	@Override
+//	public int insertSecretQna(QnaIn q) {
+//		return hDao.insertSecretQna(sqlSession, q);
+//	}
 	
 	/*
 	 * 	FAQ 게시판
@@ -76,6 +80,7 @@ public class HelpServiceImpl implements HelpService{
 	public ArrayList<Faq> selectFaqList() {
 		return hDao.selectFaqList(sqlSession);
 	}
+
 
 
 

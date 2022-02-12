@@ -10,17 +10,31 @@
 		<typeAlias type="com.kh.oceanclass.help.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.oceanclass.help.model.vo.Qna" alias="Qna"/>
 		<typeAlias type="com.kh.oceanclass.help.model.vo.Faq" alias="Faq"/>
+		
+		<typeAlias type="com.kh.oceanclass.event.model.vo.Event" alias="Event"/>
 
 		<typeAlias type="com.kh.oceanclass.store.model.vo.Product" alias="Product"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.ProductOption" alias="ProductOption"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.Stock" alias="Stock"/>
 	
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Member" alias="Member"/>
+		
+		<typeAlias type="com.kh.oceanclass.member.model.vo.Report" alias="Report"/>
+		<typeAlias type="com.kh.oceanclass.member.model.vo.MemCoupon" alias="MemCoupon"/>
+		<typeAlias type="com.kh.oceanclass.member.model.vo.Coupon" alias="Coupon"/>
+		<typeAlias type="com.kh.oceanclass.member.model.vo.Point" alias="Point"/>
+		
+		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassVo" alias="Class"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/help-mapper.xml" />
 		<mapper resource="/mappers/instructorStore-mapper.xml" />
 		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/adminMem-mapper.xml" />
+		<mapper resource="/mappers/class-mapper.xml" />
+		<mapper resource="/mappers/mypage-mapper.xml" />
+		<mapper resource="/mappers/event-mapper.xml" />
 	</mappers>
 	
 </configuration>

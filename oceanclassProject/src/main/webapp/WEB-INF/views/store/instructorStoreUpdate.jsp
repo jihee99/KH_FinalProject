@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 <link rel="stylesheet" href="./resources/css/store/storeEnrollPage.css">
 <title>Insert title here</title>
 </head>
@@ -21,7 +21,7 @@
 			
 			$('#insBtn').click(function(){
 				if(index<=max){
-					var fieldHTML = '<div><input class="opStyle1" name="optionName" type="text" placeholder="옵션명" style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn2">삭제</a></div>';
+					var fieldHTML = '<div><input name="optionNo" type="hidden"><input class="opStyle1" name="optionName" type="text" placeholder="옵션명" style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn2">삭제</a></div>';
 					$('#append2').append(fieldHTML);		//add field
 					index++;	// 카운트 증가
 				}else{
@@ -40,8 +40,18 @@
 				$(this).parent('div').remove();
 				index--;	
 			});
-			
 		})
+		
+       	$(function(){
+     		if(${p.category} == 1){
+     			$("#category option:eq(0)").prop("selected", true);	
+     		} else if(${p.category} == 2) {
+     			$("#category option:eq(1)").prop("selected", true);	
+     		} else {
+     			$("#category option:eq(2)").prop("selected", true);	
+     		}
+
+     	})
 	</script>
 	
 	<!-- 강사용 메뉴바 연결하기 	-->
@@ -54,21 +64,24 @@
                 <b>상품수정하기</b>
             </div>
             <br>
-            <form method="post" action="" enctype="multipart/form-data">
+            <form method="post" action="stupdate.in" enctype="multipart/form-data">
                 <table id="pInfo">
                     <thead>
                         <tr>
-                            <th colspan="2" style="float:left;">상품기본정보</th>
+                            <th colspan="2" style="float:left; font-size:15px;">상품기본정보</th>
                         </tr>
                         <tr>
-                            <td style="line-height: 10px;">&nbsp;</td>
+                            <td style="line-height: 10px;">
+                            	&nbsp;
+                            	<input type="hidden" name="productNo" value="${p.productNo }">
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th style="width: 140px;">카테고리</th>
                             <td style="width: 750px;">
-                                <select name="category" required>
+                                <select id="category" name="category" required>
                                     <option value="1">클래스상품</option>
                                     <option value="2">OC 에디션</option>
                                     <option value="3">DIY 키트</option>
@@ -94,7 +107,9 @@
                         		<div id="append1" style="margin-left:50px; width:700px;">
 								<c:forEach var="op" items="${oplist }">
 									<div>
-										<input name="optionName" type="text" value="${op.optionName }" style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn1">삭제</a>
+										<input name="optionName" type="text" value="${op.optionName }" style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;">
+										<input name="optionNo" type="hidden" value="${op.optionNo }">
+										<a href="#" class="delBtn1">삭제</a>
 									</div>
 								</c:forEach>
                         		</div>
@@ -113,8 +128,12 @@
                         <tr class="atLine">
                             <th></th>
                             <td>
-                            	<input type="file" id="upfiles" name="reupfile" required>
-								
+                            	<input type="file" id="upfiles" name="reupfile"><br>
+								<c:if test="${ p.productImg0 ne null }">
+	                         	현재 파일 : 
+	                            <a href="${p.productImg0 }" download="${p.productImg0 }">${p.productImg0 }</a>
+	                            <input type="hidden" name="originName" value="${p.productImg0 }">
+                        		</c:if>
                             </td>
                         </tr>
                         <tr>
@@ -126,15 +145,36 @@
                         </tr>
                         <tr class="atLine">
                             <td></td>
-                            <td><input type="file" name="reupfile" required></td>
+                            <td>
+                            	<input type="file" name="reupfile"><br>
+	                            <c:if test="${ p.productImg1 ne null }">
+	                         	현재 파일 : 
+	                            <a href="${p.productImg1 }" download="${p.productImg1 }">${p.productImg1 }</a>
+	                            <input type="hidden" name="originName" value="${p.productImg1 }">
+	                       		</c:if>
+                       		</td>
                         </tr>
                         <tr class="atLine">
                             <td></td>
-                            <td><input type="file" name="reupfile"></td>
+                            <td>
+                            	<input type="file" name="reupfile"><br>
+	                            <c:if test="${ p.productImg2 ne null }">
+	                         	현재 파일 : 
+	                            <a href="${p.productImg2 }" download="${p.productImg2 }">${p.productImg2 }</a>
+	                            <input type="hidden" name="originName" value="${p.productImg2 }">
+	                       		</c:if>
+                       		</td>
                         </tr>
                         <tr class="atLine">
                             <td></td>
-                            <td><input type="file" name="reupfile"></td>
+                            <td>
+                            	<input type="file" name="reupfile"><br>
+	                            <c:if test="${ p.productImg3 ne null }">
+	                         	현재 파일 : 
+	                            <a href="${p.productImg3 }" download="${p.productImg3 }">${p.productImg3 }</a>
+	                            <input type="hidden" name="originName" value="${p.productImg3 }">
+	                       		</c:if>
+                       		</td>
                         </tr>
                         <tr>
                             <td style="line-height: 5px;">&nbsp;</td>

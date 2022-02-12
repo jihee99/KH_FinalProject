@@ -132,4 +132,36 @@
 		  from soption
 		 where pno = #{productNo}
   	</select>
+  	
+  	<update id="updateProduct">
+  		update store
+		   set  category = #{category}
+		      , title = #{title}
+		      , price = #{price}
+		      , courier = #{courier}
+		      , img1 = #{productImg0}
+		      , img2 = #{productImg1}
+		      , img3 = #{productImg2}
+		      , img4 = #{productImg3}
+		 where pno = #{productNo}
+  	</update>
+  	
+  	<update id="updateProductOption">
+  		update soption
+		   set  opname = #{optionName}
+		      , price = #{price}
+		 where opno = #{optionNo}
+  	</update>
+  	
+  	<update id="deleteProduct">
+  		update store
+		   set status = 'Y'
+		 where pno = #{pno}
+  	</update>
+  	
+  	<delete id="deleteProductOption">
+  		delete 
+		  from soption 
+		 where pno = #{pno} 
+  	</delete>
 </mapper>

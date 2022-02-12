@@ -131,7 +131,7 @@
                     </div>
 
                     <button type="submit" class="btn" style="background-color: rgb(228, 240, 250);">로그인 하기</button>
-                    <button type="submit" class="btn" style="background-color: rgb(232, 248, 239);">네이버로 로그인 하기</button>
+                    <button type="submit" class="btn" style="background-color: rgb(255, 224, 73);">카카오로 로그인 하기</button>
                 </form>
 
                 

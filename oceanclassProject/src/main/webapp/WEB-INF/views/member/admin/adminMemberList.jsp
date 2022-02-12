@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,7 @@
 <body>
 
     <!-- 관리자 사이드바 연결하기 -->
-    <jsp:include page="../../common/admin/adminMain.jsp" />
+    <jsp:include page="../../common/admin/adminSidebar.jsp" />
 
     <div class="innerOuter" align="center">
         <div class="headMenu">
@@ -64,178 +65,122 @@
                     </tr>
                 </thead>
                 <tbody>
+                	<c:forEach var="m" items="${memlist }">
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
+                        <td>${m.memNo }</td>
+                        <td>${m.userId }</td>
+                        <td>${m.userName }</td>
+                        <td>${m.nickName }</td>
+                        <td>${m.phone }</td>
+                        <td>${m.enrollDate }</td>
+                        <c:choose>
+                        	<c:when test="${m.grade eq 'S'}">
+	                        	<td style="color:rgb(90, 141, 236); font-weight: bolder;">
+	                        		일반회원
+	                        	</td>                        	
+                        	</c:when>
+                        	<c:otherwise>
+                        		<td style="color:rgb(43, 133, 91); font-weight: bolder;">
+	                        		강사회원
+	                        	</td>
+                        	</c:otherwise>
+                        </c:choose>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(43, 133, 91); font-weight: bolder;">강사</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td>22205</td>
-                        <td>user01</td>
-                        <td>김땡땡</td>
-                        <td>동그랑땡</td>
-                        <td>010-1234-1234</td>
-                        <td>2022-02-03</td>
-                        <td style="color:rgb(90, 141, 236); font-weight: bolder;">일반회원</td>
-                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
             <button class="btn">블랙리스트 조회</button>
-            <script>
-                var memArr = new Array();
-
-                $(document).ready(function() {
-
-                    $("#checkAll").click(function() {
-                        if($("#checkAll").is(":checked")) $("input[name=memChBxRow]").prop("checked", true);
-                        else $("input[name=memChBxRow]").prop("checked", false);
-
-                        putCheckList();
-                    });
-                    
-                    $("input[name=memChBxRow]").click(function() {
-                        var total = $("input[name=memChBxRow]").length;
-                        var checked = $("input[name=memChBxRow]:checked").length;
-                        
-                        if(total != checked) $("#checkAll").prop("checked", false);
-                        else $("#checkAll").prop("checked", true);
-                        
-                        putCheckList();
-                    });
-
-                    /*쿠폰버튼 눌렀을 때*/
-                    $("#couponBtn").click(function() {
-                        if(memArr.length == 0) {
-                        	/*나중에 alert로 수정하기*/
-                            console.log("체크항목없음");
-                            return;
-                        }
-
-                        var str = "";
-                        console.log(memArr);
-                        /*입력데이터에 맞춰서 수정하기*/
-                        for (var i = 0; i < memArr.length; i++) {
-                            str += "번호"+ memArr[i].memNo + "\n";
-                        }
-                        console.log(str);
-
-                    });
-
-                    function putCheckList(){
-                        memArr = new Array();
-                        var idxArr = new Array();
-
-                        $("input[name=memChBxRow]:checked").each(function(){
-                            idxArr.push($("input[name=memChBxRow]:checked").index(this));
-                        });
-
-                        for(var i=0; i<idxArr.length; i++){
-                            var obj = new Object();
-                            obj.memNo = $("#memTable tbody").children().eq(idxArr[i]).children().eq(1).text();
-                            memArr.push(obj);
-                        }
-                    }
-
-				});
-            </script>
+            
         </div>
         <div class="btn_group" align="center">
-            <button class="btn btn-light">&lt;</button>
-
-            <button class="btn btn-light">1</button>
-            <button class="btn btn-light">2</button>
-            <button class="btn btn-light">3</button>
-            <button class="btn btn-light">4</button>
-            <button class="btn btn-light">5</button>
-
-            <button class="btn btn-light">&gt;</button>
+        	<c:choose>
+           		<c:when test="${pi.currentPage eq 1 }">
+           			<button class="btn btn-light" disabled>&lt;</button>
+           		</c:when>
+           		<c:otherwise>
+           			<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${pi.currentPage - 1}'">&lt;</button>
+           		</c:otherwise>
+           	</c:choose>
+                   
+   			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+   				<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${p}'">${p }</button>
+   			</c:forEach>
+   
+   			<c:choose>
+               	<c:when test="${pi.currentPage eq pi.maxPage }">
+           			<button class="btn btn-light" disabled>&gt;</button>
+               	</c:when>
+               	<c:otherwise>
+               		<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${pi.currentPage + 1}'">&gt;</button>
+               	</c:otherwise>
+            </c:choose>
         </div>
+        
+		<script>
+            var memArr = new Array();
+
+            $(document).ready(function() {
+
+                $("#checkAll").click(function() {
+                    if($("#checkAll").is(":checked")) $("input[name=memChBxRow]").prop("checked", true);
+                    else $("input[name=memChBxRow]").prop("checked", false);
+
+                    putCheckList();
+                });
+                
+                $("input[name=memChBxRow]").click(function() {
+                    var total = $("input[name=memChBxRow]").length;
+                    var checked = $("input[name=memChBxRow]:checked").length;
+                    
+                    if(total != checked) $("#checkAll").prop("checked", false);
+                    else $("#checkAll").prop("checked", true);
+                    
+                    putCheckList();
+                });
+
+                /*쿠폰버튼 눌렀을 때*/
+                $("#couponBtn").click(function() {
+                    if(memArr.length == 0) {
+                    	/*나중에 alert로 수정하기*/
+                        console.log("체크항목없음");
+                        return;
+                    }
+
+                    var str = "";
+                    console.log(memArr);
+                    /*입력데이터에 맞춰서 수정하기*/
+                    for (var i = 0; i < memArr.length; i++) {
+                        str += "번호"+ memArr[i].memNo + "\n";
+                    }
+                    console.log(str);
+
+                });
+
+                function putCheckList(){
+                    memArr = new Array();
+                    var idxArr = new Array();
+
+                    $("input[name=memChBxRow]:checked").each(function(){
+                        idxArr.push($("input[name=memChBxRow]:checked").index(this));
+                    });
+
+                    for(var i=0; i<idxArr.length; i++){
+                        var obj = new Object();
+                        obj.memNo = $("#memTable tbody").children().eq(idxArr[i]).children().eq(1).text();
+                        memArr.push(obj);
+                    }
+                }
+                
+                $("#memS").click(function(){
+                	location.href="sMemlist.ad?grade=S";
+                })
+				$("#memT").click(function(){
+					location.href="tMemlist.ad?grade=T"
+				})
+			});
+        </script>
+        
     </div>
 
 </body>

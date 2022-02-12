@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +10,11 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 부트스트랩에서 제공하고 있는 스타일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
 
@@ -88,6 +92,13 @@
 </head>
 <body>
 
+	<c:if test="${not empty alertMsg }">
+		<script>
+		alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
+
     <div class="wrapper">
         <div class="side">
             <div id="logo">
@@ -120,7 +131,7 @@
                         <li><a href="stlist.in">내 상품</a></li>
                         <li><a href="">상품 리뷰 관리</a></li>
                         <li><a href="">상품 문의 관리</a></li>
-                        <li><a href="">재고 관리</a></li>
+                        <li><a href="ststock.in">재고 관리</a></li>
                         <li><a href="">주문 배송 관리</a></li>
                     </ul>
                 </div>

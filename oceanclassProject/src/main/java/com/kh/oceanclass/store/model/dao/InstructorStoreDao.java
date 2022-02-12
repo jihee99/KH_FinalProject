@@ -43,7 +43,20 @@ public class InstructorStoreDao {
 		return (ArrayList)sqlSession.selectList("inStoreMapper.selectProductOption", pno);
 	}
 
-	
+	public int updateProduct(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.update("inStoreMapper.updateProduct", p);
+	}
 
+	public int updateProductOption(SqlSessionTemplate sqlSession, ProductOption option) {
+		return sqlSession.update("inStoreMapper.updateProductOption", option);
+	}
+
+	public int deleteProduct(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.update("inStoreMapper.deleteProduct", pno);
+	}
+	
+	public int deleteProductOption(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.delete("inStoreMapper.deleteProductOption", pno);
+	}
 	
 }

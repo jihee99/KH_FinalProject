@@ -13,8 +13,8 @@
 <body>
 
 	<!-- 관리자 사이드바 연결하기 -->
-    <jsp:include page="../../common/admin/adminMain.jsp" />
-	
+    <jsp:include page="../../common/admin/adminSidebar.jsp" />
+   
     <div class="innerOuter" align="center">
         <div class="headMenu">
             <b>주문 내역서</b>

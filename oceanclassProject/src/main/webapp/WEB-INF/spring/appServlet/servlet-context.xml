@@ -23,6 +23,11 @@
 	
 	<context:component-scan base-package="com.kh.oceanclass" />
 	
-	
+	<interceptors>
+		<interceptor>
+			<mapping path="/sample.me" />
+			<beans:bean class="com.kh.oceanclass.common.interceptor.LoginInterceptor" id="loginInterceptor" />
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>
