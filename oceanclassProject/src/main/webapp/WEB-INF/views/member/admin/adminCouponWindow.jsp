@@ -111,9 +111,9 @@
 	       				hiddenList:$('#hiddenList').val()
 	       			},success:function(result){
 	       				alert("쿠폰 발행에 성공했습니다.");
-	       				console.log(result);
+	       				//console.log(result);
 	       				opener.parent.location.reload();
-	       				//window.close();
+	       				window.close();
 	       			},error:function(){
 	       				alert("쿠폰 발행에 실패했습니다.");
 	       				opener.parent.location.reload();
