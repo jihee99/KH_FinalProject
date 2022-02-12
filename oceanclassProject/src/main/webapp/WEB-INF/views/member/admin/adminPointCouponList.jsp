@@ -126,8 +126,8 @@
                         <td>${c.count }</td>
                         <td>${c.dedate }</td>
                         <td>
-                            <button class="crow" onclick="window.open('cgive.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
-                        	<button>삭제</button>
+                            <button class="crow" onclick="window.open('cgiveF.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
+                        	<button onclick="cdelete.ad?cno=${c.couponNo}">삭제</button>
                         </td>
                     </tr>
                     </c:forEach>                    

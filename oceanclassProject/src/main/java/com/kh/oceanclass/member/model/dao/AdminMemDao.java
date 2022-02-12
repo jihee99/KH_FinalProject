@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
 
 @Repository
@@ -72,7 +73,23 @@ public class AdminMemDao {
 	public int adminEnrollCoupon(SqlSessionTemplate sqlSession, Coupon c) {
 		return sqlSession.insert("adMemMapper.enrollCoupon", c);
 	}
+
+	public int deleteCoupon(SqlSessionTemplate sqlSession, int cno) {
+		return sqlSession.delete("adMemMapper.deleteCoupon", cno);
+	}
+
+	public Coupon selectCoupon(SqlSessionTemplate sqlSession, int cno) {
+		return sqlSession.selectOne("adMemMapper.selectCoupon", cno);
+	}
+
+	public ArrayList<Member> selectAllMember(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectAllMember");
+	}
 	
+	public int insertMemCoupon(SqlSessionTemplate sqlSession, MemCoupon memC) {
+		return sqlSession.insert("adMemMapper.insertMemCoupon", memC);
+	}
 	
+
 
 }

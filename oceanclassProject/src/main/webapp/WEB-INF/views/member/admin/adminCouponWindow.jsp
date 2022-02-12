@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
@@ -44,7 +45,10 @@
                     <tr>
                         <th>쿠폰명</th>
                         <td>
-                            <input id="cName" type="text" maxlength="20" placeholder="★설맞이 깜짝 10%할인쿠폰★" readonly>
+                        	<input id="couponNo" name="couponNo" type="hidden" value="${c.couponNo }">
+                            <input id="discount" name="discount" type="hidden" value="${c.discount }">
+                            <input id="dedate" name ="dedate" type="hidden" value="${c.dedate}">
+                            <input id="couponName" name="couponName" type="text" value="${c.couponName }" readonly style="width:80%;">
                         </td>
                     </tr>
                     <tr>
@@ -61,147 +65,71 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                	<c:forEach var="m" items="${mlist }">
                                     <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
+                                        <th><input type="checkbox" name="chBxRow" value="${m.memNo }"></th>
+                                        <td>
+                                        	${m.memNo }
+                                        	<input type="hidden" class="memNo" value="${m.memNo }">
+                                        </td>
+                                        <td>${m.userId }</td>
+                                        <td>${m.userName }</td>
                                     </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
-                                    <tr>
-                                        <th><input type="checkbox" name="chBxRow" id=""></th>
-                                        <td>001</td>
-                                        <td>user01</td>
-                                        <td>김땡땡</td>
-                                    </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
+                            <input type="hidden" name="hiddenList" id="hiddenList" value="">
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th>유효기간</th>
                         <td>
-                            <input id="deadDate" type="date" name="" id="">
+                            <input id="deadDate" type="date" value="${c.dedate }">
                         </td>
                     </tr>
                 </tbody>
             </table>
             <br>
-            <button class="btn" align="center" type="submit">지급하기</button>
+            <button class="btn" align="center" type="submit" onclick="fnGetData();">지급하기</button>
 
         <script>
-
-            var chkArr = new Array();
+			function fnGetData(){
+	            var chkArr = new Array();
+				var hiddenList 
+	            $('input:checkbox[name=chBxRow]:checked').each(function(){
+	            	chkArr.push(this.value);
+	            });
+				$('#hiddenList').val(chkArr);
+				//alert($('#hiddenList').val());	
+				console.log()
+				$.ajax({
+	       			url:"cgive.ad",
+	       			data:{
+	       				couponNo:$("#couponNo").val(),
+	       				deDate:$("#dedate").val(),
+	       				hiddenList:$('#hiddenList').val()
+	       			},success:function(result){
+	       				alert("쿠폰 발행에 성공했습니다.");
+	       				console.log(result);
+	       				opener.parent.location.reload();
+	       				//window.close();
+	       			},error:function(){
+	       				alert("쿠폰 발행에 실패했습니다.");
+	       				opener.parent.location.reload();
+	       				window.close();
+	       			}
+	       		})
+				
+			}
+			
 
             $(document).ready(function() {
-
-                $("#Allcheck").click(function() {
-                    if($("#Allcheck").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
-                    else $("input[name=chBxRow]").prop("checked", false);
-
-                    putCheckList();
-                });
+			
                 $("#checkAll").click(function() {
                     if($("#checkAll").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
                     else $("input[name=chBxRow]").prop("checked", false);
-
-                    putCheckList();
                 });
-                
-                $("input[name=chBxRow]").click(function() {
-                    var total = $("input[name=chBxRow]").length;
-                    var checked = $("input[name=chBxRow]:checked").length;
-                    
-                    if(total != checked) $("#checkAll").prop("checked", false);
-                    else $("#checkAll").prop("checked", true);
-                    
-                    putCheckList();
-                });
-
-                /* 지급하기 눌렀을 때*/
-                $(".btn").click(function() {
-                    if(chkArr.length == 0) {
-                        console.log("체크항목없음");
-                        return;
-                    }
-
-                    var str = "";
-                    console.log(chkArr);
-                    for (var i = 0; i < chkArr.length; i++) {
-                        str += "번호"+ chkArr[i].memNo + "\n";
-                    }
-                    console.log(str);
-
-                });
-
-                function putCheckList(){
-                    chkArr = new Array();
-                    var idxArr = new Array();
-
-                    $("input[name=chBxRow]:checked").each(function(){
-                        idxArr.push($("input[name=chBxRow]:checked").index(this));
-                    });
-                    
-                    for(var i=0; i<idxArr.length; i++){
-                        var obj = new Object();
-                        /*나중에 쿠폰 번호 맞춰서 수정하기*/
-                        obj.memNo = $(".memTable tbody").children().eq(idxArr[i]).children().eq(1).text();
-                        chkArr.push(obj);
-                    }
-
-                    /*회원 잘 담기는지 확인!!*/
-                    console.log("idxArr:"+idxArr);
-                    console.log("chkArr"+chkArr);
-                }
-
             });
         </script>
     </div>

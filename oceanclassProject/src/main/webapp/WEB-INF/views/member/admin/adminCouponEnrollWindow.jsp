@@ -86,6 +86,7 @@
 	       				window.close();
 	       			},error:function(){
 	       				alert("쿠폰 등록에 실패했습니다.");
+	       				opener.parent.location.reload();
 	       				window.close();
 	       			}
 	       		})

@@ -175,4 +175,61 @@
 		     , #{dedate}
 		     )
 	</insert>
+	
+	<delete id="deleteCoupon">
+		delete 
+		  from couponlist 
+		 where cno = #{cno}
+	</delete>
+	
+	<select id="selectCoupon" resultMap="couponResult">
+		select
+		       cno
+		     , cname
+		     , discount
+		     , to_char(dedate, 'YYYY-MM-DD') as dedate
+		  from couponlist
+		 where cno = #{cno}
+	</select>
+	
+	<select id="selectAllMember" resultMap="memberResult">
+		select
+			   mno
+			 , user_id
+			 , user_name
+		  from member
+		 where u_status='Y'
+		   and grade in ('S', 'T')  
+	</select>
+	
+	<insert id="insertMemCoupon">
+		insert  
+		  into COUPON
+		     (
+		       pcno
+		     , mno
+		     , cno
+		     , dedate
+		     )
+		values
+		     (
+		       SEQ_CPNO.nextval
+		     , #{memNo}
+		     , #{couponNo}
+		     , #{deDate}
+		     )
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
