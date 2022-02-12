@@ -16,8 +16,9 @@ public class Coupon {
 	private String couponName; 
 	private int discount;
 	private String dedate;
-	private int count;
 	private int memNo;
 	private String use;
 	private String endate;
+	private int count;		//현재발급된 쿠폰수
+	private int maxCount;	//최대발급 쿠폰수
 }	

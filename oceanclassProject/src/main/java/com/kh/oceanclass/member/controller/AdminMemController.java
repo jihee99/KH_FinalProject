@@ -163,20 +163,17 @@ public class AdminMemController {
 	@ResponseBody
 	@RequestMapping(value="cgive.ad")
 	public String adminCouponGive(MemCoupon memC, String hiddenList, HttpSession session, Model model) {
-		System.out.println(memC);
-		System.out.println(hiddenList);
+		//System.out.println(memC);
+		//System.out.println(hiddenList);
 
 		String[] memlist = hiddenList.split(",");
 		int result = 1;
 		for(int i=0; i<memlist.length; i++) {
 			memC.setMemNo(memlist[i]);
-			System.out.println(memC);
-			
+			//System.out.println(memC);			
 			result += adMemService.insertMemCoupon(memC);
-
 		}
-		System.out.println(result);
-
+		//System.out.println(result);
 		return result>0? "success" : "fail";
 	}
 	
