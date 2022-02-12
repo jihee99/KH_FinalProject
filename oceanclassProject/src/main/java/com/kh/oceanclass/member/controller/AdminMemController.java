@@ -18,6 +18,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.service.AdminMemService;
 import com.kh.oceanclass.member.model.vo.Coupon;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
 
 /*관리자 회원관리 관련 기능*/
@@ -33,7 +34,7 @@ public class AdminMemController {
 	
 	@RequestMapping(value="main.ad")
 	public String adminMain() {
-		return "common/admin/adminMain";
+		return "common/admin/adminMainPage";
 	}
 	
 	@RequestMapping(value="loginF.ad")
@@ -137,7 +138,7 @@ public class AdminMemController {
 
 	@RequestMapping(value="cdelete.ad")
 	public String deleteCoupon(int cno, HttpSession session, Model model) {
-		System.out.println(cno);
+		// System.out.println(cno);
 		int result = adMemService.deleteCoupon(cno);
 		if(result > 0) {
 			session.setAttribute("alertMsg", "쿠폰 삭제가 완료되었습니다.");
@@ -151,12 +152,32 @@ public class AdminMemController {
 	@RequestMapping(value="cgiveF.ad")
 	public String adminCouponManager(int cno, Model model) {
 		// 관리자 쿠폰 발행 페이지 확인용 메소드
-		System.out.println(cno);
+		//System.out.println(cno);
 		Coupon c = adMemService.selectCoupon(cno);
 		ArrayList<Member> mlist = adMemService.selectAllMember();
 		model.addAttribute("c", c);
 		model.addAttribute("mlist", mlist);
 		return "member/admin/adminCouponWindow";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="cgive.ad")
+	public String adminCouponGive(MemCoupon memC, String hiddenList, HttpSession session, Model model) {
+		System.out.println(memC);
+		System.out.println(hiddenList);
+
+		String[] memlist = hiddenList.split(",");
+		int result = 1;
+		for(int i=0; i<memlist.length; i++) {
+			memC.setMemNo(memlist[i]);
+			System.out.println(memC);
+			
+			result += adMemService.insertMemCoupon(memC);
+
+		}
+		System.out.println(result);
+
+		return result>0? "success" : "fail";
 	}
 	
 	

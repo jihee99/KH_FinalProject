@@ -65,7 +65,7 @@ public interface AdminMemService {
 	
 	//관리자 쿠폰발급 기능
 	Coupon selectCoupon(int cno);
-	int adminMemCoupon(MemCoupon mc);
+	int insertMemCoupon(MemCoupon mc);
 	
 	//멤버 전체리스트 불러오기
 	ArrayList<Member> selectAllMember();
