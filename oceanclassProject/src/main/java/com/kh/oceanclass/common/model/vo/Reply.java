@@ -9,9 +9,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Comment {
+public class Reply{
 	
-	public int commentNo;	// 댓글고유번호
+	public int replyNo;	// 댓글고유번호
 	public int memNo;		// 회원번호
 	public int boardNo;		// 게시판분류 1.이벤트 2.클래스리뷰
 	public int contentNo;	// 게시글 고유번호
