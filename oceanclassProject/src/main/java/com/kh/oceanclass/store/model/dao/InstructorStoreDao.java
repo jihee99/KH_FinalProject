@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
@@ -74,6 +75,14 @@ public class InstructorStoreDao {
 
 	public int updateStockCount(SqlSessionTemplate sqlSession, Stock st) {
 		return sqlSession.update("inStoreMapper.updateStockCount", st);
+	}
+
+	public ArrayList<Product> selectProductList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectProductList");
+	}
+
+	public int insertProductOrder(SqlSessionTemplate sqlSession, InProductOrder pOrder) {
+		return sqlSession.insert("inStoreMapper.insertProductOrder", pOrder);
 	}
 	
 }

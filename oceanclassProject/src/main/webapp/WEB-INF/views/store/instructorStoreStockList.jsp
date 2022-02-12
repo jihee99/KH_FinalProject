@@ -32,7 +32,7 @@
             </div>
             <div class="head_2_center"></div>
             <div class="head_2_right" align="right">
-                <button>발주요청서 작성하기</button>
+                <button onclick="location.href='porder.in'">발주요청서 작성하기</button>
             </div>
         </div>
         <div class="content">

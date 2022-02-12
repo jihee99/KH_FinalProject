@@ -60,13 +60,13 @@
                                     <td>상품가격 : ${p.price }</td>
                                 </tr>
                                 <tr>
-                                	<td>게시상태 : ${p.status}
+                                	<td><!-- 게시상태 : ${p.status} -->
                                 	<c:choose>
-                                    	<c:when test="${p.status eq 'Y'}">
-                                    		${p.status}게시중
+                                    	<c:when test="${p.status eq 'Y '}">
+                                    		게시중
                                     	</c:when>
-                                    	<c:when test="${p.status eq 'N'}">
-                                    		${p.status} 승인대기중
+                                    	<c:when test="${p.status eq 'N '}">
+                                    		승인대기중
                                     	</c:when>
                                     </c:choose>
                                     </td>

@@ -3,6 +3,7 @@ package com.kh.oceanclass.store.model.service;
 import java.util.ArrayList;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
@@ -67,6 +68,7 @@ public interface InstructorStoreService {
 	int updateStockCount(Stock st);
 	
 	// 14. 상품발주요청용 서비스
-	void selectStoreOrder();
+	ArrayList<Product> selectProductList();
+	int insertProductOrder(InProductOrder pOrder);
 	
 }

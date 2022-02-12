@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.dao.InstructorStoreDao;
+import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
@@ -140,11 +141,17 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		return inStoreDao.updateStockCount(sqlSession, st);	
 	}
 
+
 	@Override
-	public void selectStoreOrder() {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<Product> selectProductList() {
+		return inStoreDao.selectProductList(sqlSession);
 	}
+	
+	@Override
+	public int insertProductOrder(InProductOrder pOrder) {
+		return inStoreDao.insertProductOrder(sqlSession, pOrder);		
+	}
+
 
 
 
