@@ -20,5 +20,4 @@ public class Event {
 	public String status;
 	public String tag;
 	public String img;
-
 }

@@ -25,6 +25,8 @@
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Point" alias="Point"/>
 		
 		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassVo" alias="Class"/>
+		
+		<typeAlias type="com.kh.oceanclass.common.model.vo.Reply" alias="Reply"/>
 	</typeAliases>
 	
 	<mappers>
