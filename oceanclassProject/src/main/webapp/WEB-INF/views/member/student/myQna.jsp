@@ -19,6 +19,11 @@
 		margin-top: 30px;
 		text-align: center;
 	}
+	#myQna>tbody #answer{
+		display: none;
+	}
+	#answer{background: rgb(107, 171, 213, 0.2);}
+	#answer p{font-size: 10px; margin-top: 20px;}
 </style>
 </head>
 <body>
@@ -49,7 +54,7 @@
 				        </div>
 				    </div>
 				    
-				    <table class="table">
+				    <table class="table" id="myQna">
 				        <thead>
 				            <tr>
 				                <th>날짜</th>
@@ -60,7 +65,7 @@
 				        </thead>
 				        <tbody>
 				        	<c:forEach var="q" items="${list}">
-					            <tr>
+					            <tr id="question">
 					                <td>${q.createDate}</td>
 					                <td>${q.category}</td>
 					                <td>${q.qnaTitle}</td>
@@ -72,6 +77,9 @@
 				                        	<td>대기중<td>
 				                        </c:otherwise>
 			                        </c:choose>
+					            </tr>
+					            <tr id="answer">
+					            	<td colspan="4">${q.ansContent} <p>${q.ansDate}</p></td>
 					            </tr>
 				            </c:forEach>
 				        </tbody>
@@ -109,6 +117,18 @@
 			            </ul>
 			        </div>
 					
+					<script>
+						$(function(){
+							$("#myQna>tbody>#question").click(function(){
+								//console.log($(this));
+								$(this).toggleClass("selected");
+								$("#myQna>tbody>#question").not(this).removeClass("selected");
+								var target = $(this).next();
+								console.log(target.text());
+								target.slideToggle(300);
+							});
+						});
+					</script>
 				</div>	
 			</td>
 		</tr>
