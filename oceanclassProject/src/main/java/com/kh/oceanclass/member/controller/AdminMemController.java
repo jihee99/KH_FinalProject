@@ -123,7 +123,7 @@ public class AdminMemController {
 	
 	
 	@RequestMapping(value="cenrollF.ad")
-	public String adminCouponEnroll() {
+	public String adminCouponEnroll(HttpSession session, Model model) {
 		// 관리자 쿠폰 지급 페이지 확인용 메소드
 		return "member/admin/adminCouponEnrollWindow";
 	}
@@ -150,14 +150,20 @@ public class AdminMemController {
 	}
 
 	@RequestMapping(value="cgiveF.ad")
-	public String adminCouponManager(int cno, Model model) {
+	public String adminCouponManager(int cno, Model model, HttpSession session) {
 		// 관리자 쿠폰 발행 페이지 확인용 메소드
 		//System.out.println(cno);
-		Coupon c = adMemService.selectCoupon(cno);
-		ArrayList<Member> mlist = adMemService.selectAllMember();
-		model.addAttribute("c", c);
-		model.addAttribute("mlist", mlist);
-		return "member/admin/adminCouponWindow";
+
+		if(session.getAttribute("loginUser") != null) {
+			Coupon c = adMemService.selectCoupon(cno);
+			ArrayList<Member> mlist = adMemService.selectAllMember();
+			model.addAttribute("c", c);
+			model.addAttribute("mlist", mlist);
+			return "member/admin/adminCouponWindow";
+		} else {
+			model.addAttribute("errorMsg","접근권한이 없습니다.");
+			return "common/errorPage";
+		}
 	}
 	
 	@ResponseBody
@@ -165,7 +171,8 @@ public class AdminMemController {
 	public String adminCouponGive(MemCoupon memC, String hiddenList, HttpSession session, Model model) {
 		//System.out.println(memC);
 		//System.out.println(hiddenList);
-
+		Member m = (Member) session.getAttribute("loginUser");
+		model.addAttribute("m", m);
 		String[] memlist = hiddenList.split(",");
 		int result = 1;
 		for(int i=0; i<memlist.length; i++) {
@@ -177,8 +184,20 @@ public class AdminMemController {
 		return result>0? "success" : "fail";
 	}
 	
-	
-	
+	@RequestMapping(value="cupdateF.ad")
+	public String adminCouponUpdateF(int cno, Model model) {
+		Coupon c = adMemService.selectCoupon(cno);
+		model.addAttribute("c", c);
+		return "member/admin/adminCouponUpdateWindow";
+	}
+
+	@RequestMapping(value="cupdate.ad")
+	public String adminCouponUpdate(Coupon c, Model model) {
+		System.out.println(c);
+		int result = adMemService.updateCoupon(c);
+		return result>0? "success" : "fail";
+	}
+
 	@RequestMapping(value="pgive.ad")
 	public String adminPointManager() {
 		// 관리자 포인트 지급 페이지 확인용 메소드

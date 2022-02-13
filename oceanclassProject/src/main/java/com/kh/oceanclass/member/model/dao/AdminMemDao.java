@@ -89,6 +89,10 @@ public class AdminMemDao {
 	public int insertMemCoupon(SqlSessionTemplate sqlSession, MemCoupon memC) {
 		return sqlSession.insert("adMemMapper.insertMemCoupon", memC);
 	}
+
+	public int updateCoupon(SqlSessionTemplate sqlSession, Coupon c) {
+		return sqlSession.update("adMemMapper.updateCoupon", c);
+	}
 	
 
 
