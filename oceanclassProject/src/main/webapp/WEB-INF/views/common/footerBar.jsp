@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +60,13 @@
         <div class="footer1">
             <div id="footer_1-1">
                 <a href="">클래스 개설문의</a> 
-                <a href="">관리자 페이지</a> 
+                <c:choose>
+                	<c:when test="${loginUser.memNo == 1 }">
+                		 <a href="adminMain.co">관리자 페이지</a> 
+                	</c:when>
+                	<c:otherwise>
+                	</c:otherwise>
+                </c:choose>
             </div>
             <div id="footer_1-2">
                 <a href="">공지사항</a> 
