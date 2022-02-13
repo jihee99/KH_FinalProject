@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쿠폰 등록 페이지</title>
+<title>쿠폰 수정 페이지</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -35,7 +35,7 @@
         	<thead>
                <tr>
                    <td colspan="2">
-                       <h4>쿠폰 등록하기</h4>
+                       <h4>쿠폰 수정 하기</h4>
                        <hr>
                    </td>
                </tr>
@@ -44,14 +44,14 @@
                 <tr>
                     <th>쿠폰명</th>
                     <td>
-                    	<input type="hidden" id="memNo" name="memNo" value=" ${loginUser.memNo }"> 
-                        <input id="couponName" name="couponName" type="text" maxlength="20" placeholder="최대 20글자" required>
+                    	<input id="couponNo" type="hidden" name="couponNo" value="${c.couponNo }">
+                        <input id="couponName" name="couponName" type="text" maxlength="20" value="${c.couponName }" required>
                     </td>
                 </tr>
                 <tr>
                     <th>할인율(%)</th>
                     <td>
-                        <input id="discount" type="number" name="discount" required>
+                        <input id="discount" type="number" name="discount" value="${c.discount }" required>
                     </td>
                 </tr>
                 <tr>
@@ -63,37 +63,30 @@
                 <tr>
                     <th>유효기간</th>
                     <td>
-                        <input id="dedate" type="date" name="dedate">
+                        <input id="dedate" type="date" name="dedate" value="${c.dedate }">
                     </td>
                 </tr>
             </tbody>
         </table>
 		<br>
-		<button id="addBtn" class="btn" align="center" onclick="addCoupon();">등록하기</button>
+		<button id="addBtn" class="btn" align="center" onclick="upCoupon();">저장하기</button>
 		<script>
-	       	function winClose(){
-	       		window.close();
-	       	}
+
 	       	
-	       	function addCoupon(){
-	       		var couponName = $("#couponName").val()
-	       		console.log(couponName);
-	       		console.log($("#discount").val());
-	       		console.log($("#dedate").val());
-	       		
+	       	function upCoupon(){
 	       		$.ajax({
-	       			url:"cenroll.ad",
+	       			url:"cupdate.ad",
 	       			data:{
+	       				couponNo:$("#couponNo").val(),
 	       				couponName:$("#couponName").val(),
 	       				discount:$("#discount").val(),
-	       				dedate:$("#dedate").val(),
-	       				maxCount:$("#maxCount").val()
+	       				dedate:$("#dedate").val()
 	       			},success:function(result){
-	       				alert("쿠폰 등록에 성공했습니다.");
+	       				alert("쿠폰 정보 수정에 성공했습니다.");
 	       				opener.parent.location.reload();
 	       				window.close();
 	       			},error:function(){
-	       				alert("쿠폰 등록에 실패했습니다.");
+	       				alert("쿠폰 정보 수정에 실패했습니다.");
 	       				opener.parent.location.reload();
 	       				window.close();
 	       			}

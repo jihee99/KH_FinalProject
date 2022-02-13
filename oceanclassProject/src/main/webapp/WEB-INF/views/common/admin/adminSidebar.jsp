@@ -20,6 +20,13 @@
 		-> loginUser eq null alert 접근권한이 없습니다. 하고 사용자 메인페이지로 이동
 		
 	 -->
+	 <c:if test="${not empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
+	
     <div class="wrapper">
         <div class="side">
             <div id="logo">
