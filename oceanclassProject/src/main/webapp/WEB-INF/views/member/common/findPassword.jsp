@@ -69,18 +69,23 @@
             </div>
             <div id="idFind-form">
                 <div id="idFind-text" align="center">
-                    <span>비밀번호 재설정</span>
+                    <span>비밀번호 찾기</span>
                 </div>
-                <form action="" method="post">
+                <form action="findPwd.me" method="post">
                     
                     <span id="top-text">휴대폰 번호</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="userId" required>                      
+                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="phone" required>                      
+                    </div>
+
+                    <span id="top-text">성함</span>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="findId" placeholder="회원가입시 입력한 이름" name="userName" required>                      
                     </div>
                     
                     <span id="top-text">아이디</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="findId" placeholder="회원가입시 입력한 아이디" name="userPwd" required>                      
+                      <input type="text" class="form-control" id="findId" placeholder="회원가입시 입력한 아이디" name="userId" required>                      
                     </div>
                     <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">비밀번호 재설정</button>
                     

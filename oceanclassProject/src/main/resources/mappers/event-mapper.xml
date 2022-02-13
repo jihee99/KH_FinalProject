@@ -13,6 +13,8 @@
 		<result column="status" property="status" />
 		<result column="tag" property="tag" />
 		<result column="img" property="img" />
+		
+		<result column="maxcount" property="maxCount" />
 	</resultMap>
 	
 	<resultMap id="replyResult" type="Reply">
@@ -22,6 +24,8 @@
 		<result column="nickname" property="nickName" />
 	</resultMap>
 	
+
+	<!-- 공지사항 -->
 
 	<select id="selectEventCount" resultType="_int">
 		select
@@ -86,6 +90,27 @@
 		 where category = #{category}	
 	</select>
 
-
+	<!-- 관리자 이벤트 전체 조회 카운트-->
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from event
+	</select>
+	
+	<!-- 관리자 이벤트 전체 조회 -->
+	<select id="selectList" resultMap="eventResult">
+		select
+					ENO
+				  , CATEGORY
+				  , E_TITLE
+				  , E_CONTENT
+				  , IMG
+				  , TAG
+	              , MAXCOUNT
+			 from event
+	         join coupon using (MNO)
+	         join couponlist using (CNO)
+	</select>
+	
 	
 </mapper>

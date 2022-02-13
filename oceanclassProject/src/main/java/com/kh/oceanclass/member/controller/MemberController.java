@@ -121,7 +121,7 @@ public class MemberController {
 	@RequestMapping("findID.me")
 	public ModelAndView findID(Member m, ModelAndView mv, HttpSession session) {
 		Member loginUser = mService.findId(m);
-		System.out.println(loginUser);
+		//System.out.println(loginUser);
 		if(loginUser != null) { 
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("member/common/findloginSuccess");
@@ -137,8 +137,35 @@ public class MemberController {
 	}
 	
 	@RequestMapping("findPwd.me")
-	public void findPwd() {
+	public ModelAndView findPwd(Member m, ModelAndView mv, HttpSession session) {
+		Member loginUser = mService.findPwd(m);
+		//System.out.println(loginUser);
+		if(loginUser != null) { 
+			session.setAttribute("loginUser", loginUser);
+			mv.setViewName("member/common/passwordReset");
+		}else{ 
+			mv.setViewName("member/common/findPasswordError");
+		}
+		return mv;
+	}
+	@RequestMapping("updatePwd.me")
+	public String updatePwd(Member m, Model model, HttpSession session) {
 		
+		String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+		
+		m.setUserPwd(encPwd);
+		
+		int result = mService.updatePwd(m);
+		
+		if(result > 0) { // 성공=> 메인페이지 url재요청
+					
+			session.setAttribute("alertMsg", "비밀번호가 변경 되었습니다.");
+			return "redirect:/";
+					
+		}else {// 실패=> 에러문구 담아서 에러페이지 포워딩
+			model.addAttribute("errorMsg", "비밀번호 변경 실패");
+			return "common/errorPage";
+		}
 	}
 	
 }
