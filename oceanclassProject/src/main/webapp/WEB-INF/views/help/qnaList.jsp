@@ -114,7 +114,7 @@
         			var login = '<c:out value="${loginUser.nickName}"/>';
         			//console.log(pwd);
         			//console.log(nick);
-        			//console.log(login);
+        			console.log(login);
         			if(pwd == ""){
         				location.href='qnaDetail.he?qno=' + $(this).children("#qno").text();
         			}else if(pwd != "" && ((login == nick) || (login === '나관리'))){

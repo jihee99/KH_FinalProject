@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -59,6 +61,18 @@ public class StuMypageController {
 		
 		int result = myService.updateProfile(m);
 		System.out.println(result);
+	}
+	
+	 // 비밀번호 q변경
+	@ResponseBody
+	@RequestMapping(value="changePwd.me", produces="application/json; charset=UTF-8")
+	public String ajaxChangePwd(Member m, HttpSession session, Model model) {
+		//System.out.println(newPwd); 
+		String newEncPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+		m.setUserPwd(newEncPwd);
+		int result = myService.updatePwd(m);
+		
+		return new Gson().toJson(m);
 	}
 	
 	// 회원 탈퇴폼
@@ -110,6 +124,7 @@ public class StuMypageController {
 		
 	}
 	
+	// 1:1문의 내역
 	@RequestMapping("myQna.me")
 	public String myQnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -134,5 +149,7 @@ public class StuMypageController {
 		model.addAttribute("list", list);
 		return "member/student/myQna";
 	}
+	
+	
 	
 }

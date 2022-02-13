@@ -123,9 +123,10 @@
         			</button>
 	      		</div>
 				<div class="modal-body">
-						<p style="text-align:center;">변경할 비밀번호 : <input type="password" id="newPwd" name="newPwd" required></p>
-						<p style="text-align:center; margin-left: 18px;">비밀번호 확인 : <input type="password" id="checkPwd" name="cheeckPwd"></p>
-						<button type="button" id="changeBtn" class="btn btn-light btn-sm btn-block" style="margin:0 auto;">비밀번호 변경</button>
+					<input type="hidden" id="memNo" value="${loginUser.memNo}">
+					<p style="text-align:center;">변경할 비밀번호 : <input type="password" id="newPwd" name="newPwd" required></p>
+					<p style="text-align:center; margin-left: 18px;">비밀번호 확인 : <input type="password" id="checkPwd" name="cheeckPwd"></p>
+					<button type="button" id="changeBtn" class="btn btn-light btn-sm btn-block" style="margin:0 auto;">비밀번호 변경</button>
 				</div>
 			</div>
 		</div>
@@ -143,11 +144,30 @@
 		}
 		
 		$("#changeBtn").click(function(){
-			var newPwd = docuement.querySelector("#newPwd").value();
-			var checkPwd = docuement.querySelector("#newPwd").value();
-			
-			console.log(newPwd);
-			console.log(checkPwd);
+			var newPwd = $("#newPwd").val();
+			var checkPwd = $("#checkPwd").val();
+			var memNo = $("#memNo").val();
+			console.log(memNo);
+			if(newPwd != checkPwd){
+				alert("비밀번호가 일치하지 않습니다");
+				$("#newPwd").val('');
+				$("#checkPwd").val('');
+				$("#newPwd").focus();
+			}else{
+				$.ajax({
+					url:"changePwd.me",
+					data:{userPwd: newPwd, memNo: memNo},
+					success:function(result){
+						console.log(result);
+						alert("비밀번호가 변경되었습니다");
+						location.replace("myProfile.me");
+					},error:function(){
+						console.log("에러");
+					}
+						 
+							
+				})
+			}
 		});
 		
 	</script>

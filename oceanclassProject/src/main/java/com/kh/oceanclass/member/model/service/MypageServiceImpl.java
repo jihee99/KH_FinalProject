@@ -27,6 +27,11 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
+	public int updatePwd(Member m) {
+		return myDao.updatePwd(sqlSession, m);
+	}
+
+	@Override
 	public int deleteMem(String userId) {
 		return myDao.deleteMem(sqlSession, userId);
 	}

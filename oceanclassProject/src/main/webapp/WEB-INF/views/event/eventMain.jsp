@@ -91,7 +91,7 @@
     <script>
     	$(".img>#img").click(function(){
 	    	let eventNo = $(this).prev().val();
-	    	console.log(eventNo);
+	    	//console.log(eventNo);
 	    	location.href = 'detailEvent.ev?eno=' + eventNo;
     	})
     
