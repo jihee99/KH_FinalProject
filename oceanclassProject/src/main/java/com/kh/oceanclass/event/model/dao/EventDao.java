@@ -3,10 +3,12 @@ package com.kh.oceanclass.event.model.dao;
 import java.util.ArrayList;
 
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
 
 @Repository
@@ -27,6 +29,16 @@ public class EventDao {
 	
 	public ArrayList<Event> ajaxSearchEvent(SqlSessionTemplate sqlSession, String category){
 		return (ArrayList)sqlSession.selectList("eventMapper.ajaxSearchEvent", category);
+	}
+	
+	
+	public Event selectEvent(SqlSessionTemplate sqlSession, int eventNo) {
+		return sqlSession.selectOne("eventMapper.selectEvent", eventNo);
+	}
+	
+	
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int eventNo){
+		return (ArrayList)sqlSession.selectList("selectReply", eventNo);
 	}
 	
 }

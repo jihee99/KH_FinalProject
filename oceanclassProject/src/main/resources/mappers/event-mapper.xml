@@ -15,14 +15,21 @@
 		<result column="img" property="img" />
 	</resultMap>
 	
+	<resultMap id="replyResult" type="Reply">
+		<result column="reply_no" property="replyNo" />
+		<result column="reply_content" property="replyContent" />
+		<result column="reply_date" property="replyDate" />
+		<result column="nickname" property="nickName" />
+	</resultMap>
+	
 
-	<!-- 공지사항 -->
 	<select id="selectEventCount" resultType="_int">
 		select
 		       count(*)
 		  from event
 		 where status = 'Y'
 	</select>
+	
 	
 	<select id="selectEventList" resultMap="eventResult">
 		select
@@ -38,23 +45,33 @@
 		  from event
 	</select>
 	
-	<!-- 
-	<select id="selectList" resultMap="noticeResult">
-		select
-		       nno
-		     , mno
-		     , category
-		     , n_title
-		     , count
-		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-		  from notice
-		 where status = 'Y'
-		 order
-		    by nno desc
+	
+	<select id="selectEvent" resultMap="eventResult">
+		select 
+		       ENO
+		     , CATEGORY
+		     , E_TITLE
+		     , E_CONTENT
+		     , TAG
+		     , IMG
+		  from EVENT
+		 where ENO = #{eventNo}
 	</select>
-	 -->
+	
+		
+	<select id="selectReply" resultMap="replyResult">	
+		SELECT
+			   REPLY_NO
+		     , NICKNAME
+		     , reply_content
+		     , to_char(reply_date, 'YYYY-MM-DD') as "reply_date"
+		  from REPLY
+		  JOIN MEMBER USING (MNO)
+         WHERE CONTENT_NO = #{eventNo}
+	</select>	 
 	 
-	 <select id="ajaxSearchEvent" resultMap="eventResult">
+	 
+	<select id="ajaxSearchEvent" resultMap="eventResult">
 		select
 			   eno
 			 , mno
@@ -67,7 +84,7 @@
 			 , img
 		  from event
 		 where category = #{category}	
-	 </select>
+	</select>
 
 
 	
