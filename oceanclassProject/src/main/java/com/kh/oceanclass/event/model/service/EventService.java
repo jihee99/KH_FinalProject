@@ -3,6 +3,7 @@ package com.kh.oceanclass.event.model.service;
 import java.util.ArrayList;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
 
 public interface EventService {
@@ -14,7 +15,10 @@ public interface EventService {
 	// 2. 이벤트 상세보기
 	Event selectEvent(int eventNo);
 	
-	// 3. 이벤트 카테고리 선택
+	// 3. 이벤트 댓글 보기
+	ArrayList<Reply> selectReplyList(int eventNo);
+	
+	// 4. 이벤트 카테고리 선택
 	ArrayList<Event> ajaxSearchEvent(String category);
 	
 }

@@ -24,7 +24,7 @@
 		padding-top: 80px;
 		border: 1px solid white;
 	}
-	
+	#img:hover{border: 3px solid rgb(107, 171, 213); cursor:pointer;}
 </style>
 </head>
 <body>
@@ -48,6 +48,7 @@
         	
         	<c:forEach var="e" items="${list}">
 	            <div class="img">
+	            	<input type="hidden" id="eno" value="${e.eventNo}">
 	                <img src="${e.img}" id="img">
 	                <p>${e.eventTitle}</p>   
 	            </div>
@@ -83,11 +84,17 @@
 	            </ul>
 	        </div> 
 	        
-	     </div>
+	    </div>
 
     </div>
     
     <script>
+    	$(".img>#img").click(function(){
+	    	let eventNo = $(this).prev().val();
+	    	console.log(eventNo);
+	    	location.href = 'detailEvent.ev?eno=' + eventNo;
+    	})
+    
     	$("#A").click(function(){
     		location.href="eventMain.ev";
     	})
@@ -100,10 +107,11 @@
         			url:"ajaxSearchEvent.ev",
         			data:{category:value},
         			success:function(result){
-        				console.log(result);
         				let value = "";
         				for(let i in result){
+        					//console.log(result[i].eventNo);
         					value += '<div class="img">'
+        						   + '<input type="hidden" value="' + result[i].eventNo + '">'
         						   + '<img src="' + result[i].img + '" id="img">'
         						   + '<p>'
         						   + result[i].eventTitle
@@ -114,7 +122,7 @@
         				$("#result").html(value);
         				console.log(value);
         			},error:function(){
-        				console.log("에러");
+        				//console.log("에러");
         				alert("에러발생");
         			}
         		})
