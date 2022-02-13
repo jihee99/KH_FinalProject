@@ -267,7 +267,7 @@
                     <script>
                     $(function(){
                 		
-						// 비밀번호 중복 확인
+						// 비밀번호 일치 확인
 						$('#userPwdCk').blur(function () {
 							if ($('#userPwd').val() != $('#userPwdCk').val()) {
 								$('#checkPwCk').text("비밀번호가 일치하지 않습니다.");
