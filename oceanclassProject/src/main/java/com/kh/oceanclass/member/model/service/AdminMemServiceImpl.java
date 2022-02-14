@@ -149,5 +149,10 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return adMemDao.selectAllMember(sqlSession);
 	}
 
+	@Override
+	public int updateCoupon(Coupon c) {
+		return adMemDao.updateCoupon(sqlSession, c);
+	}
+
 
 }

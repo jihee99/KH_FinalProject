@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,37 +8,56 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./resources/css/header.css?1">
-    <link rel="stylesheet" href="./resources/css/eventMain.css?3">
+    <link rel="stylesheet" href="./resources/css/eventMain.css?5">
+<style>
+	.reply>input{
+		margin: 0 auto;
+		margin-bottom: 30px;
+	}
+	.innerOuter>button{
+		display: block;
+		width: 250px;
+		margin: 0 auto;
+		margin-top: 80px;
+		margin-bottom: 50px;
+		background: rgb(224, 224, 224)
+	}
+</style>
 </head>
 <body>
 	
 	<jsp:include page="../common/header.jsp" />
 	
     <div class="innerOuter my-3">
-    	<hr class="my-2">
         <div class="head py-5">
-            <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
+            <p>${e.eventTitle}</p>
         </div>
-        <div class="tag"><p>#2022 #홀앙희 #왕크왕귀 #갓생살자!<p></div>
+        <div class="tag"><p>${e.tag}<p></div>
         <div class="content">
-        	<img src="" alt="" style="width: 100%; height: 100%;">
+        	<img src="${e.img}" style="width: 100%; height: 100%;">
         </div>
-        <div class="reply">
-        	<p>모니카</p><input type="text"><button class="btn btn-secondary">등록</button>
-        	<table class="table">
-	            <tr>
-	                <td>아이키</td>
-	                <td>이미 갓생사는 중인데 뭘 해야 하지? 흠..</td>
-	            </tr>
-	            <tr>
-	                <td>리정</td>
-	                <td>2022년에 xc90 꼭 뽑아야지!!</td>
-	            </tr>
-        	</table>
-        </div>
+		<c:if test="${not empty list}">
+	        <div class="reply">
+	        	<c:choose>
+	        		<c:when test="${not empty loginUser}">
+	        			<p>${loginUser.nickName}</p><input type="text"><button class="btn btn-sm">등록</button>
+	        		</c:when>
+	        		<c:otherwise>
+	        			<p></p><input type="text" placeholder="로그인 후 이용 가능합니다" disabled><button class="btn btn-sm">등록</button>
+	        		</c:otherwise>
+	        	</c:choose>
+	        	<table class="table">
+	        		<c:forEach var="r" items="${list}">
+			            <tr>
+			                <td style="font-weight:600;">${r.nickName}</td>
+			                <td>${r.replyContent}</td>
+			                <td>${r.replyDate}</td>
+			            </tr>
+		            </c:forEach>
+	        	</table>
+	        </div>
+        </c:if>
+       	<button type="button" class="btn" onclick="history.back()">목록으로</button>
     </div>    
 	
 	 <jsp:include page="../common/footerBar.jsp" />

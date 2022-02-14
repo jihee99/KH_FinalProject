@@ -21,4 +21,6 @@ public class Event {
 	public String tag;
 	public String img;
 
+	public int maxCount;
+
 }

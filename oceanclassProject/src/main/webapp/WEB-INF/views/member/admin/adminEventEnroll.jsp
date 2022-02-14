@@ -137,6 +137,13 @@
                             <input type="file" id="" name="" required>
                         </div>
                     </div>
+
+                    <div class="box">
+                        <label class="textName" for="">해시 태그<span class="star"></span></label>
+                        <div class="input-area">
+                            <input type="text" id="" name="" placeholder=" 해시 태그를 입력 하세요.">
+                        </div>
+                    </div>
                     <div id="btnBox">
                         <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
                         <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>

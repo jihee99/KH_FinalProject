@@ -14,13 +14,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.store.model.service.InstructorStoreService;
+import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.Stock;
 
 /*강사 스토어 관련 기능 처리하는 controller*/
 
@@ -224,11 +228,52 @@ public class InstructorStoreController {
 	
 	//재고 리스트 연결
 	@RequestMapping(value="ststock.in")
-	public String updateStoreStockF() {
+	public ModelAndView updateStoreStockF(@RequestParam(value="cpage", defaultValue="1") int currentPage, ArrayList<Stock> slist, ModelAndView mv) {
+		int listCount = inStoreService.selectStockCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
-		return "store/instructorStoreStockList";
+		ArrayList<Stock> stlist = inStoreService.selectStockList(pi);
+		
+		for(int i=0; i<stlist.size(); i++) {
+			stlist.get(i).setAvailCount(String.valueOf(stlist.get(i).getStockCount() - stlist.get(i).getOrderCount()));
+		}
+		mv.addObject("stlist", stlist);
+		mv.addObject("pi", pi);
+		mv.setViewName("store/instructorStoreStockList");
+		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="stockUp.in")
+	public String updateStoreStock(Stock st) {
+		System.out.println(st);
+		
+		int result = inStoreService.updateStockCount(st);
+		//System.out.println(result);
+		return result>0? "success()" : "fail";
+	}
+	
+	@RequestMapping(value="porder.in")
+	public ModelAndView productOrderF(ModelAndView mv) {
+		ArrayList<Product> plist = inStoreService.selectProductList();
+		System.out.println(plist);
+		mv.addObject("plist", plist);
+		mv.setViewName("store/instructorStoreOrderForm");
+		return mv;
+	}
+	
+	@RequestMapping(value="porderE.in")
+	public String productOrder(InProductOrder pOrder, HttpSession session, Model model) {
+		System.out.println(pOrder);
+		int result = inStoreService.insertProductOrder(pOrder);
+		if(result>0) {
+			session.setAttribute("alertMsg", "발주신청이 완료되었습니다.");
+			return "redirect:ststock.in";
+		} else {
+			model.addAttribute("errorMsg", "발주신청에 실패했습니다.");
+			return "common/errorPage";
+		}
+	}
 	
 	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
 		

@@ -24,7 +24,9 @@
 		<typeAlias type="com.kh.oceanclass.store.model.vo.StorePay" alias="StorePay"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.Cart" alias="Cart"/>
 		
-	
+
+		<typeAlias type="com.kh.oceanclass.store.model.vo.InProductOrder" alias="InProductOrder"/>
+		
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Member" alias="Member"/>
 		
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Report" alias="Report"/>
@@ -33,6 +35,8 @@
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Point" alias="Point"/>
 		
 		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassVo" alias="Class"/>
+		
+		<typeAlias type="com.kh.oceanclass.common.model.vo.Reply" alias="Reply"/>
 	</typeAliases>
 	
 	<mappers>

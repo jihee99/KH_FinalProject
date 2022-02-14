@@ -45,6 +45,7 @@
                     <tr>
                         <th>쿠폰명</th>
                         <td>
+                        	<input id="memNo" name="memNo" type="hidden" value=" ${loginUser.memNo }"> 
                         	<input id="couponNo" name="couponNo" type="hidden" value="${c.couponNo }">
                             <input id="discount" name="discount" type="hidden" value="${c.discount }">
                             <input id="dedate" name ="dedate" type="hidden" value="${c.dedate}">
@@ -102,7 +103,7 @@
 	            });
 				$('#hiddenList').val(chkArr);
 				//alert($('#hiddenList').val());	
-				console.log()
+
 				$.ajax({
 	       			url:"cgive.ad",
 	       			data:{

@@ -26,6 +26,27 @@
 		<result column="price" property="price"/>
 	</resultMap>
 	
+	<resultMap id="stockResult" type="Stock">
+		<result column="pno" property="productNo" />
+		<result column="title" property="productName" />
+		<result column="stock" property="stockCount"/>
+		<result column="orderCount" property="orderCount"/>
+		<result column="soldout_yn" property="soldout"/>
+		<result column="invalue" property="inValue" />
+	</resultMap>
+	
+	<resultMap type="InProductOrder" id="pOrderResult">
+		<result column="order_no" property="orderNo" />
+		<result column="pno" property="productNo" />
+		<result column="title" property="title"/>
+		<result column="stock" property="stock"/>
+		<result column="quantity" property="quantity"/>
+		<result column="unit_price" property="unitPrice"/>
+		<result column="total" property="total"/>
+		<result column="order_site" property="orderSite"/>
+		<result column="process" property="process"/>	
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		select
 		       count(*)
@@ -103,7 +124,7 @@
 		    )
   	</insert>
   	
-  	  	<select id="selectProduct" resultMap="productResult">
+	<select id="selectProduct" resultMap="productResult">
   		select 
 		       pno
 		     , mno
@@ -155,7 +176,7 @@
   	
   	<update id="deleteProduct">
   		update store
-		   set status = 'Y'
+		   set status = 'D'
 		 where pno = #{pno}
   	</update>
   	
@@ -164,4 +185,86 @@
 		  from soption 
 		 where pno = #{pno} 
   	</delete>
+  	
+  	<select id="selectStockCount" resultType="_int">
+		select
+		       count(*)
+		  from store
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectStockList" resultMap="stockResult">
+		select 
+		       store.pno
+		     , title
+		     , stock
+		     , nvl(a.ordercount, 0) orderCount
+		     , soldout_YN
+		  from store
+		 left join 
+		      (
+		        select 
+		                pno
+		              , count(*) orderCount
+		          from 
+		              (
+		                select 
+		                       pay.order_no
+		                     , s.pno
+		                     , title
+		                  from pay
+		                  left join s_buylist s on (pay.order_no = s.order_no)
+		                  join store on s.pno = store.pno
+		                 where pay.order_status in (1,2)
+		              ) a
+		          group by pno
+		      ) a on a.pno = store.pno
+		  where status = 'Y'
+		  order
+		    by pno desc
+	</select>
+  	
+  	<update id="updateStockCount">
+  		update store
+		   set stock = stock+#{inValue} 
+		     , soldout_yn = #{soldout}
+		 where pno = #{productNo}
+  	</update>
+  	
+  	<select id="selectProductList" resultMap="productResult">
+  		select
+		       pno
+		     , title
+		     , stock
+		  from store
+		 where status = 'Y'
+		 order
+		    by pno desc
+  	</select>
+  	
+  	<insert id="insertProductOrder">
+  		insert 
+		  into s_order
+		      (
+		        order_no
+		      , pno
+		      , title
+		      , stock
+		      , quantity
+		      , unit_price
+		      , total
+		      , order_site
+		      )
+		 values
+		      (
+		        SEQ_SIONO.nextval
+		      , #{productNo}
+		      , #{title}
+		      , #{stock}
+		      , #{quantity}
+		      , #{unitPrice}
+		      , #{total}
+		      , #{orderSite}
+		      )
+  	</insert>
 </mapper>

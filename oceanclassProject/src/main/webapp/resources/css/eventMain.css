@@ -16,6 +16,7 @@
 		margin-left: 50px;
 		background: rgb(224, 224, 224); 
 	}
+	button:hover{background: rgb(107, 171, 213, 0.2)}
 	.content{
 		width: 100%; 
 		height: 1000px;
@@ -27,10 +28,10 @@
     
     /* 이벤트 상세페이지 스타일 */
     .tag>p{font-size: 24px; font-weight: 600; margin-top: 50px;}
-    .reply{width: 80%; margin:auto; margin-top: 50px;}
-    .reply>p{ float: left; margin-left: 100px;}
-    .reply>input{width: 60%; float: left;}
+    .reply{width: 80%; margin:0 auto; margin-top: 80px;}
+    .reply>p{float: left; width: 50px; margin-left: 100px; margin-right: 30px; font-weight: 600;}
+    .reply>input{width: 60%; float: left; margin: 0 auto;}
     .reply>table{width: 100%; text-align: center;}
-    
+ 	.reply>button, .btn{background: rgb(107, 171, 213, 0.2)};}
     /* 페이징바 */
     #paging{margin-bottom: 50px;}

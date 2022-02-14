@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,20 +134,22 @@
             <div id="content-wrap">
 
                 <div id="btnBox">
-                    <button class="btn" id="blueBtn">등록</button>
+                    <button class="btn" id="blueBtn" onclick="location.href='';">등록</button>
                 </div>
 
                 <div id="statusBox">
                     <button class="btn">전체</button>
-                    <button class="btn">진행중</button>
-                    <button class="btn">종료</button>
+                    <button class="btn" name="STATUS" value="Y">진행중</button>
+                    <button class="btn" name="STATUS" value="N">종료</button>
                 </div>
 
                 <div id="eventBox">
+                
+                <c:forEach var="e" items="${ list }">
                     <div id="imgBox">
                         <div class="img">
                             <img src="resources/images/event1.jpg" style="width: 480px; height: 210px;">
-                            <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
+                            <p>${e.eventContent }</p>
                         </div>
                         <div class="img">
                             <img src="resources/images/event2.jpg" alt="" style="width: 480px; height: 210px;">
@@ -163,17 +166,34 @@
                             <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
                         </div>
                     </div>
+                </c:forEach>
                 </div>
+                
+                
                 <div class="paging" align="center">
-                    <button class="btn btn-light">&lt;</button>
-                    
-                    <button class="btn btn-light">1</button>
-                    <button class="btn btn-light">2</button>
-                    <button class="btn btn-light">3</button>
-                    <button class="btn btn-light">4</button>
-                    <button class="btn btn-light">5</button>
-                    
-                    <button class="btn btn-light">&gt;</button>
+                
+                <c:choose>
+                	<c:when test="${ pi.currentPage eq 1 }">
+                		<li class="page-item disabled"><a href="#">Previous</a></li>
+                    </c:when>
+                	<c:otherwise>
+                    	<button class="btn btn-light"><a href="aeList.bo?cpage=${ pi.currentPage-1 }">&lt;</a></button>
+                	</c:otherwise>
+               </c:choose>
+                
+               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">     
+                    <button class="btn btn-light"><a href="aeList.bo?cpage=${ p }">${ p }</a></button>
+               </c:forEach>
+               
+               <c:choose>
+                    <c:when test="${ pi.currentPage eq pi.maxPage }">     
+                    	<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    	<button class="btn btn-light"><a href="list.bo?cpage=${ pi.currentPage+1 }">&gt;</a></button>
+                	</c:otherwise>
+                </c:choose>
+                
                 </div>
             </div>
             <br><br><br>

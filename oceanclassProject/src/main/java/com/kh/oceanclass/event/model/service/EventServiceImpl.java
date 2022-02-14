@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.dao.EventDao;
 import com.kh.oceanclass.event.model.vo.Event;
 
@@ -18,6 +19,7 @@ public class EventServiceImpl implements EventService{
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession; 
+	
 	
 	@Override
 	public int selectEventCount() {
@@ -31,8 +33,12 @@ public class EventServiceImpl implements EventService{
 
 	@Override
 	public Event selectEvent(int eventNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return eDao.selectEvent(sqlSession, eventNo);
+	}
+	
+	@Override
+	public ArrayList<Reply> selectReplyList(int eventNo) {
+		return eDao.selectReplyList(sqlSession, eventNo);
 	}
 
 	@Override

@@ -27,10 +27,17 @@
 	<update id="updateProfile">
 		update
 			   member
-		   set nickname = ${nickName}
-		   	 , phone = ${phone}
-		   	 , profile = ${profileImg}
-		 where mno = ${memNo}
+		   set nickname = #{nickName}
+		   	 , phone = #{phone}
+		   	 , profile = #{profileImg}
+		 where mno = #{memNo}
+	</update>
+	
+	<update id="updatePwd">
+		update
+			   member
+		   set user_pwd = #{userPwd}
+		 where mno = #{memNo}
 	</update>
 	
 	<update id="deleteMem">
@@ -76,6 +83,7 @@
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , password
 		     , a_content
+		     , a_date
 		  from qna
 		  join member using (mno)
 		 where mno = #{memNo}

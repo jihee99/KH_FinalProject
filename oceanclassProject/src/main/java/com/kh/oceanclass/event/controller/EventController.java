@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.event.model.service.EventService;
 import com.kh.oceanclass.event.model.vo.Event;
@@ -40,8 +41,20 @@ public class EventController {
 		//System.out.println(category);
 		
 		ArrayList<Event> list = eService.ajaxSearchEvent(category);
-		System.out.println(list);
+		//System.out.println(list);
 		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping("detailEvent.ev")
+	public String selectEvent(int eno, Model model) {
+		//System.out.println(eno);
+		Event e = eService.selectEvent(eno);
+		ArrayList<Reply> list = eService.selectReplyList(eno);
+		//System.out.println(e);
+		//System.out.println(list);
+		model.addAttribute("e", e);
+		model.addAttribute("list", list);
+		return "event/eventDetail";
 	}
 	
 	

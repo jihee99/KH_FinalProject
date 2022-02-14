@@ -13,6 +13,9 @@ public interface MypageService {
 	// 프로필수정
 	int updateProfile(Member m);
 	
+	// 비밀번호 변경
+	int  updatePwd(Member m);
+	
 	// 회원탈퇴
 	int deleteMem(String userId);
 	

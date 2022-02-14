@@ -127,7 +127,8 @@
                         <td>${c.dedate }</td>
                         <td>
                             <button class="crow" onclick="window.open('cgiveF.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
-                        	<button onclick="cdelete.ad?cno=${c.couponNo}">삭제</button>
+                        	<button onclick="window.open('cupdateF.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=450, menubar=no, status=no, toolbar=no, resizable=no')">수정</button>
+                        	<button onclick="location.href='cdelete.ad?cno=${c.couponNo}'">삭제</button>
                         </td>
                     </tr>
                     </c:forEach>                    
@@ -175,67 +176,6 @@
                     $('.content_point').css('display','none');
                     $('.content_coupon').css('display','block');
                 }
-            })
-
-            var chkArr = new Array();
-
-            $(document).ready(function() {
-
-                $("#Allcheck").click(function() {
-                    if($("#Allcheck").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
-                    else $("input[name=chBxRow]").prop("checked", false);
-
-                    putCheckList();
-                });
-                $("#checkAll").click(function() {
-                    if($("#checkAll").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
-                    else $("input[name=chBxRow]").prop("checked", false);
-
-                    putCheckList();
-                });
-                
-                $("input[name=chBxRow]").click(function() {
-                    var total = $("input[name=chBxRow]").length;
-                    var checked = $("input[name=chBxRow]:checked").length;
-                    
-                    if(total != checked) $("#checkAll").prop("checked", false);
-                    else $("#checkAll").prop("checked", true);
-                    
-                    putCheckList();
-                });
-
-                /* 선택삭제 눌렀을 때*/
-                $("#deleteBtn").click(function() {
-                    if(chkArr.length == 0) {
-                        console.log("체크항목없음");
-                        return;
-                    }
-
-                    var str = "";
-                    console.log(chkArr);
-                    for (var i = 0; i < chkArr.length; i++) {
-                        str += "번호"+ chkArr[i].memNo + "\n";
-                    }
-                    console.log(str);
-
-                });
-
-                function putCheckList(){
-                    chkArr = new Array();
-                    var idxArr = new Array();
-
-                    $("input[name=chBxRow]:checked").each(function(){
-                        idxArr.push($("input[name=chBxRow]:checked").index(this));
-                    });
-
-                    for(var i=0; i<idxArr.length; i++){
-                        var obj = new Object();
-                        /*나중에 쿠폰 번호 맞춰서 수정하기*/
-                        obj.memNo = $("#contentTable tbody").children().eq(idxArr[i]).children().eq(1).text();
-                        chkArr.push(obj);
-                    }
-                }
-
             });
         </script>
     </div>

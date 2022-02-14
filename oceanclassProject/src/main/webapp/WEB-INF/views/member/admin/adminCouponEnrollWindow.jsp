@@ -44,6 +44,7 @@
                 <tr>
                     <th>쿠폰명</th>
                     <td>
+                    	<input type="hidden" id="memNo" name="memNo" value=" ${loginUser.memNo }"> 
                         <input id="couponName" name="couponName" type="text" maxlength="20" placeholder="최대 20글자" required>
                     </td>
                 </tr>
@@ -51,6 +52,12 @@
                     <th>할인율(%)</th>
                     <td>
                         <input id="discount" type="number" name="discount" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th>최대발급수량</th>
+                    <td>
+                        <input id="maxCount" type="number" name="maxCount" value="${c.maxCount }" required>
                     </td>
                 </tr>
                 <tr>
@@ -79,7 +86,8 @@
 	       			data:{
 	       				couponName:$("#couponName").val(),
 	       				discount:$("#discount").val(),
-	       				dedate:$("#dedate").val()
+	       				dedate:$("#dedate").val(),
+	       				maxCount:$("#maxCount").val()
 	       			},success:function(result){
 	       				alert("쿠폰 등록에 성공했습니다.");
 	       				opener.parent.location.reload();

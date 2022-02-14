@@ -19,6 +19,9 @@ public interface MemberService {
 	// 아이디 찾기 (select)
 	Member findId(Member m);
 	
+	// 비밀번호 찾기 (select)
+	Member findPwd(Member m);
+	
 	// 비밀번호 재설정 (update)
 	int updatePwd(Member m);
 	

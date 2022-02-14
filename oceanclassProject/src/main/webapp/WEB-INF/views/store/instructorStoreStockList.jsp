@@ -1,23 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="./resources/css/store/instructorStoreStockList.css">
 </head>
 <body>
 
 	<!-- 강사용 메뉴바 연결하기 -->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
-		
     <div class="innerOuter" align="center">
         <div class="headMenu">
             <br><br>
             <b>상품 재고 관리</b>
         </div>
+        <c:choose>
+		<c:when test="${loginUser ne null }">
+			
+
         <div class="head_2">
             <div class="head_2_left">
                 <form id="searchForm">
@@ -27,11 +32,11 @@
             </div>
             <div class="head_2_center"></div>
             <div class="head_2_right" align="right">
-                <button>발주요청서 작성하기</button>
+                <button onclick="location.href='porder.in'">발주요청서 작성하기</button>
             </div>
         </div>
         <div class="content">
-            <table class="table table-sm table-light stockTable">
+            <table id="stockList" class="table table-sm table-light stockTable">
                 <thead class="thead-light">
                     <tr>
                         <th width="130">상품번호</th>
@@ -45,152 +50,106 @@
                         <th width="60">비고</th>
                     </tr>
                 </thead>
+                
                 <tbody>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                           	<td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form>
-                            <td>P1233</td>
-                            <td>펀치 니들 자수 패키지 DIY 취미세트 ...</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>-3</td>
-                            <td><input type="number"></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><input type="checkbox" name="" id=""></td>
-                            <td><button class="btn" type="submit">저장</button></td>
-                        </form>
-                    </tr>
+                	<c:forEach var="st" items="${stlist }">
+                		<input type="hidden" name="soldValue" class="soldValue" value="${st.soldout }">
+                    	<tr>
+                            <td>
+                            	<input type="hidden" name="productNo" class="productNo" value="${st.productNo }">
+                            	${st.productNo }
+                            </td>
+                            <td>${st.productName }</td>
+                            <td>${st.orderCount }</td>
+                            <td>${st.stockCount }</td>
+                            <td>${st.availCount }</td>
+                            <td><input type="number" name="inValue" class="inValue"></td>
+                     		<td>
+                     			<input type="checkbox" name="soldYN" class="soldYN" id="soldY" value="1"></td>
+                     		<td><input type="checkbox" name="soldYN" class="soldYN" id="soldN" value="0"></td> 
+                            <td><button class="btn stockBtn"  style="height:35px;">저장</button></td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
-        </div>
-        <div class="btn_group" align="center">
-            <button class="btn btn-light">&lt;</button>
+       	</div>
+       	<div class="btn_group" align="center">
+        	<c:choose>
+        		<c:when test="${pi.currentPage eq 1 }">
+        			<button class="btn btn-light" disabled>&lt;</button>
+        		</c:when>
+        		<c:otherwise>
+        			<button class="btn btn-light" onclick="location.href='ststock.in?cpage=${pi.currentPage - 1}'">&lt;</button>
+        		</c:otherwise>
+        	</c:choose>
+                
+			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+				<button class="btn btn-light" onclick="location.href='ststock.in?cpage=${p}'">${p }</button>
+			</c:forEach>
 
-            <button class="btn btn-light">1</button>
-            <button class="btn btn-light">2</button>
-            <button class="btn btn-light">3</button>
-            <button class="btn btn-light">4</button>
-            <button class="btn btn-light">5</button>
-
-            <button class="btn btn-light">&gt;</button>
+			<c:choose>
+               	<c:when test="${pi.currentPage eq pi.maxPage }">
+           			<button class="btn btn-light" disabled>&gt;</button>
+               	</c:when>
+               	<c:otherwise>
+               		<button class="btn btn-light" onclick="location.href='ststock.in?cpage=${pi.currentPage + 1}'">&gt;</button>
+               	</c:otherwise>
+            </c:choose>
         </div>
+        
+        <script>
+        	$(function(){
+        		var soldValue = $("input[name=soldValue]").val();
+		        //console.log(soldValue)
+				if(soldValue == "N "){
+					$("input[value=1]").attr('checked', true);
+				}else{
+					$("input[value=0]").attr('checked', true);
+				}
+        	})
+        	$(".stockBtn").on('click' , function(){
+        		var thisRow = $(this).closest('tr'); 
+
+        		var productNo = thisRow.find('td:eq(0)').find('input').val();
+        		var inValue = thisRow.find('td:eq(5)').find('input').val();
+        		if(inValue==""){
+        			inValue = 0;
+        			console.log(inValue);
+        		}
+        		var soldY = thisRow.find('td:eq(6)').find('input:checked').val();
+        		var soldN = thisRow.find('td:eq(7)').find('input:checked').val();
+        		var soldYN = "";
+        		if(soldY == 1 || soldN == null){  //해당상품이 품절이 아닐때 
+        			soldYN = "N";
+        		} else if(soldY == null || soldN == 0) {	// 품절일때 
+        			soldYN = "Y";
+        		}
+        		
+        		$.ajax({
+        			url:"stockUp.in",
+        			data:{
+        				productNo:productNo,
+        				inValue:inValue,
+						soldout:soldYN
+        			},success:function(result){
+        				alert("상품 재고 수정이 완료되었습니다.");
+        				
+        			},error:function(){
+        				alert("상품 재고 수정에 실패했습니다.");
+        			}
+        		})
+				location.reload();
+        	})
+        </script>
+        </c:when>
+		<c:otherwise>
+			<script>
+				alert("접근권한이 없습니다.");
+				location.href='/oceanclass';
+			</script>
+		</c:otherwise>
+		</c:choose>	
     </div>
-	
+
 </body>
 </html>

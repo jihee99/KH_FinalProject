@@ -23,12 +23,15 @@
             <br>
             
             <!-- loginUser가 teacher일때만 보여지게 하기 -->
+			<c:choose>
+			<c:when test="${loginUser ne null and loginUser.grade eq 'T'}">
+				
 
-            <c:if test="${loginUser ne null and loginUser.grade eq 'T'}">
+
             <div class="btn_area_1" align="right">
                 <button class="btn btn-lg" onclick="location.href='stenrollF.in'">+상품추가하기</button>
             </div>
-            </c:if>
+            
             <!-- 개별 상품 정보 보여지는 폼 -->
             <c:forEach var="p" items="${list }">
             <div class="contentBox">
@@ -57,13 +60,13 @@
                                     <td>상품가격 : ${p.price }</td>
                                 </tr>
                                 <tr>
-                                	<td>게시상태 : ${p.status}
+                                	<td><!-- 게시상태 : ${p.status} -->
                                 	<c:choose>
-                                    	<c:when test="${p.status eq 'Y'}">
-                                    		${p.status}게시중
+                                    	<c:when test="${p.status eq 'Y '}">
+                                    		게시중
                                     	</c:when>
-                                    	<c:when test="${p.status eq 'N'}">
-                                    		${p.status} 승인대기중
+                                    	<c:when test="${p.status eq 'N '}">
+                                    		승인대기중
                                     	</c:when>
                                     </c:choose>
                                     </td>
@@ -106,6 +109,14 @@
                    	</c:otherwise>
                 </c:choose>
             </div>
+			</c:when>
+			<c:otherwise>
+				<script>
+				alert("접근권한이 없습니다.");
+				location.href='/oceanclass';
+				</script>
+			</c:otherwise>
+			</c:choose>
         </div>
     </div>   
 </body>

@@ -49,6 +49,7 @@
                 </tbody>
             </table>
         </div>
+        
         <script>
         	$(function(){
         		$("#noticeList>tbody>tr").click(function(){

@@ -37,20 +37,13 @@
         margin: 0 auto;
     }
     #findId {
-        width: 250px;
+        width: 360px;
         height: 50px !important;
         padding: 10px;
         border: 1px solid lightgray;
         border-radius: 5px;
         margin-right: 10px;
         /* box-shadow: 1px 1px 1px gray inset; */
-    }
-    .rightBtn{
-        width: 90px;
-        height: 45px;
-        /* margin-left: 5px; */
-        border: none;
-        background-color: rgb(228, 240, 250);
     }
     #findIdBtn {
         display: block;
@@ -78,20 +71,16 @@
                 <div id="idFind-text" align="center">
                     <span>아이디 찾기</span>
                 </div>
-                <form action="" method="post">
+                <form action="findID.me" method="post">
                     
                     <span id="top-text">휴대폰 번호</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="userId" required>
-                      <button type="button" class="rightBtn btn-sm" onclick="idCheck();">본인 인증</button>
-                      
+                      <input type="text" class="form-control" id="findId" placeholder="휴대번호(숫자만)" name="phone" required>                      
                     </div>
                     
-                    <span id="top-text">인증 번호</span>
+                    <span id="top-text">성함</span>
                     <div class="form-group">
-                      <input type="number" class="form-control" id="findId" placeholder="SMS로 수신된 인증번호" name="userPwd" required>
-                      <button type="button" class="rightBtn btn-sm" onclick="idCheck();">확인</button>
-                      
+                      <input type="text" class="form-control" id="findId" placeholder="회원가입시 입력한 이름" name="userName" required>                      
                     </div>
                     <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">아이디 찾기</button>
                     

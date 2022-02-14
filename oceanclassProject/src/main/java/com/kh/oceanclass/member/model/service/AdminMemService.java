@@ -70,6 +70,9 @@ public interface AdminMemService {
 	//멤버 전체리스트 불러오기
 	ArrayList<Member> selectAllMember();
 	
+	//쿠폰정보 수정하기
+	int updateCoupon(Coupon c);
+	
 	//------------주문------------
 	//관리자 클래스 주문목록조회기능
 	
