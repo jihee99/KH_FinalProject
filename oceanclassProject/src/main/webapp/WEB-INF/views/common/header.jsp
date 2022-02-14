@@ -89,6 +89,9 @@ div{box-sizing: border-box;}
                     <option value="store">스토어</option>
                 </select>
                 
+                <input type="hidden" name="cpage" value="1">
+                <input type="hidden" name="category" value="0">
+                <input type="hidden" name="array" value="like">
                 <input type="text" name="keyword" id="search_keyword">
                 <button type="button" onclick="smCk();">검색</button>
             </form>

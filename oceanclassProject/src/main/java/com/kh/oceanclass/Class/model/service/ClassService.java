@@ -1,9 +1,11 @@
 package com.kh.oceanclass.Class.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
+import com.kh.oceanclass.common.model.vo.PageInfo;
 
 public interface ClassService {
 
@@ -12,7 +14,8 @@ public interface ClassService {
 	ClassVo selectClass(int clNo);
 	
 	// 클래스 검색용
-	ArrayList<ClassVo> classSearchList(String keyword);
+	int classSearchListCount(HashMap<String, String> map);
+	ArrayList<ClassVo> classSearchList(HashMap<String, String> map, PageInfo pi);
 
 	// 클래스 찜하기용
 	int checkClassLike(LikeVo li);

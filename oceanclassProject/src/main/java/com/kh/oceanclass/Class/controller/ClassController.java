@@ -1,6 +1,7 @@
 package com.kh.oceanclass.Class.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,9 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kh.oceanclass.Class.model.service.ClassServiceImpl;
+import com.kh.oceanclass.Class.model.vo.ClassLikeCk;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
+import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.vo.Member;
 
 /*사용자 클래스 관련 기능 처리하는 controller*/
@@ -24,29 +29,28 @@ public class ClassController {
 	private ClassServiceImpl cService;
 	
 	@RequestMapping(value="classDetail.me")
-	public String classDetail(int referNo, Model model, HttpSession session) {
+	public String classDetail(LikeVo li, Model model, HttpSession session) {
 		// 클래스 상세보기
 		
-		int result = cService.increaseCount(referNo);
+		int result = cService.increaseCount(li.getReferNo());
 		
 		if(result > 0) {
 			// 조회수 증가 성공 -> 정상적인 페이지 -> 내용 넣어서 상세보기 해오기
 			if(session.getAttribute("loginUser") != null) {
 				// 로그인 한 회원이라면 찜 했는지 안했는지도 확인하기
 				int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-				LikeVo li2 = new LikeVo();
-				li2.setMemNo(memNo);
-				li2.setReferNo(referNo);
-				int ckResult = cService.checkClassLike(li2);
+				li.setMemNo(memNo);
+				int ckResult = cService.checkClassLike(li);
 				if(ckResult > 0) {
-					// 찜 안되어있는 상태
-					model.addAttribute("like", "n");
+					// 찜 되어있는 상태
+					model.addAttribute("likeCk", "Y");
 				} else {
-					model.addAttribute("like", "y");
+					// 찜 안되어있는 상태
+					model.addAttribute("likeCk", "N");
 				}
 			} 
 			
-			ClassVo c = cService.selectClass(referNo);
+			ClassVo c = cService.selectClass(li.getReferNo());
 			model.addAttribute("c", c);
 			return "class/classDetail";
 		} else {
@@ -57,18 +61,38 @@ public class ClassController {
 	}
 
 	@RequestMapping(value="classSearchList.me")
-	public String classSearchList(String keyword, Model model, HttpSession session) {
+	public String classSearchList(int cpage, String keyword, String category, String array, Model model, HttpSession session) {
 		// 클래스 검색 리스트
+
+		HashMap<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("category", category);
+		map.put("array", array);
 		
-		ArrayList<ClassVo> list = cService.classSearchList(keyword);
+		int listCount = cService.classSearchListCount(map); // 조회할 리스트 갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 6);
+		ArrayList<ClassVo> list = cService.classSearchList(map, pi); // 조회할 리스트 목록
+
+		/*
+		if(session.getAttribute("loginUser") != null) {
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+			model.addAttribute("memNo", memNo);
+		}
+		*/
 		
+		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("category", category);
+		model.addAttribute("array", array);
 		return "class/classSearchList"; 
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="likeClass.me", produces="text/html; charset=UTF-8")
+	@RequestMapping(value="likeClass.me", produces="application/json; charset=UTF-8")
 	public String classLike(LikeVo li, String grade) {
+
+		ClassLikeCk lck = new ClassLikeCk();
 		
 		//학생인지 아닌지부터 확인
 		if(grade.equals("S")) {
@@ -76,27 +100,37 @@ public class ClassController {
 			int result1 = cService.checkClassLike(li);
 			
 			if(result1 > 0) {
-				// 이미 찜한 적 있음 -> 찜 내역 삭제
+				// 이미 찜한 적 있음 -> 찜 내역 삭제 후 찜 수 다시 조회
 				int result2 = cService.deleteClassLike(li);
+				ClassVo c = cService.selectClass(li.getReferNo());
 				
-				if(result2 > 0) {
-					// 삭제 완료
-					return "dd";
+				if(result2 > 0 && c != null) {
+					// 삭제 완료 및 request에 담기
+					lck.setMessage("dd");
+					lck.setLikeCount(c.getLike());
+					return new Gson().toJson(lck);
 				} 
 			} else {
-				// 찜 한 적 없음
+				// 찜 한 적 없음 -> 찜 내역 추가 후 찜 수 다시 조회
 				int result2 = cService.insertClassLike(li);
-				
+				ClassVo c = cService.selectClass(li.getReferNo());
+
 				if(result2 > 0) {
-					// 찜 성공
-					return "ss";
+					// 찜 성공 및 request에 담기
+					lck.setMessage("ss");
+					lck.setLikeCount(c.getLike());
+					return new Gson().toJson(lck);
 				} 
 			}
 		} else {
-			return "gradeCkNo";
+			lck.setMessage("gradeCkNo");
+			lck.setLikeCount("0");
+			return new Gson().toJson(lck);
 		}
 		
-		return "ff";
+		lck.setMessage("ff");
+		lck.setLikeCount("0");
+		return new Gson().toJson(lck);
 	}
 	
 	@RequestMapping(value="classPay.me")

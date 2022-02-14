@@ -58,6 +58,43 @@
 		   and clno = #{clNo}
 	</select>
 	
+	<select id="classSearchListCount" resultType="_int">
+        select count(*)
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'Y'
+		   and grade = 'T'
+		   and cl_name like '%' || #{keyword} || '%'
+		   <choose>
+		 		<when test="category == '1'">
+		 			and category = 1
+		 		</when>
+		 		<when test="category == '2'">
+		 			and category = 2
+		 		</when>
+		 		<when test="category == '3'">
+		 			and category = 3
+		 		</when>
+		 		<when test="category == '4'">
+		 			and category = 4
+		 		</when>
+		 		<when test="category == '5'">
+		 			and category = 5
+		 		</when>
+		 		<when test="category == '6'">
+		 			and category = 6
+		 		</when>
+		 		<when test="category == '7'">
+		 			and category = 7
+		 		</when>
+		 		<when test="category == '8'">
+		 			and category = 8
+		 		</when>
+		 		<otherwise>
+		 		</otherwise>
+		   </choose>
+	</select>
+	
 	<select id="classSearchList" resultMap="classResult">
         select
 		       clno
@@ -79,8 +116,45 @@
 		 where cl_status = 'Y'
 		   and grade = 'T'
 		   and cl_name like '%' || #{keyword} || '%'
-		 order
-		    by like_count desc
+		   <choose>
+				<when test="category == 1">
+				   and category = 1
+				</when>
+				<when test="category == 2">
+				   and category = 2
+				</when>
+				<when test="category == 3">
+				   and category = 3
+				</when>
+				<when test="category == 4">
+				   and category = 4
+				</when>
+				<when test="category == 5">
+				   and category = 5
+				</when>
+				<when test="category == 6">
+				   and category = 6
+				</when>
+				<when test="category == 7">
+				   and category = 7
+				</when>
+				<when test="category == 8">
+				   and category = 8
+				</when>
+				<otherwise>
+				
+				</otherwise>
+		   </choose>
+   		   <choose>
+		   		<when test="array == 'like'">
+					 order
+					    by like_count desc
+		   		</when>
+		   		<when test="array == 'date'">
+					 order
+					    by cl_date desc
+		   		</when>
+		   </choose>
 	</select>
 	
 	<select id="checkClassLike" resultType="_int">
