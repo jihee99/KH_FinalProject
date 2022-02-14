@@ -33,7 +33,7 @@
     }
     #content-wrap{
         margin: auto;
-        width: 700px;
+        width: 800px;
     }
     #cl-wrap{
         /* box-sizing: border-box; border:1px solid black; */
@@ -89,7 +89,7 @@
             <div id="content-wrap">
                 <div id="cl-wrap">
                     <div id="cl-img">
-                        <img src="resources/images/bomi7.jpg" style="width: 150px;">
+                        <img src="../../../../resources/images/bomi7.jpg" style="width: 250px; height: 150px;">
                     </div>
                     <div id="cl-box">
                         <div id="cl-category">

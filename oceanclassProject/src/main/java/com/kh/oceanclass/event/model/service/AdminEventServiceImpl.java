@@ -28,15 +28,25 @@ public class AdminEventServiceImpl implements AdminEventService{
 	public ArrayList<Event> selectList(PageInfo pi) {
 		return aeDao.selectList(sqlSession, pi);
 	}
-
+	
 	@Override
 	public int statusListCount() {
-		return 0;
+		return aeDao.statusListCount(sqlSession);
 	}
 	
 	@Override
 	public ArrayList<Event> statusList(PageInfo pi) {
-		return null;
+		return aeDao.statusList(sqlSession, pi);
+	}
+	
+	@Override
+	public int statusNListCount() {
+		return aeDao.statusNListCount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Event> statusNList(PageInfo pi) {
+		return aeDao.statusNList(sqlSession, pi);
 	}
 
 	@Override

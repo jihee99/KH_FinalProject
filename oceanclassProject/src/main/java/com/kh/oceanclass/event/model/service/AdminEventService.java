@@ -12,9 +12,13 @@ public interface AdminEventService {
 	int selectListCount();
 	ArrayList<Event> selectList(PageInfo pi);
 	
-	// 2. 이벤트 진행중/종료 리스트 페이지 서비스(페이징)
+	// 2-1. 이벤트 진행중 리스트 페이지 서비스(페이징)
 	int statusListCount();
 	ArrayList<Event> statusList(PageInfo pi);
+	
+	// 2-2. 이벤트 종료 리스트 페이지 서비스(페이징)
+	int statusNListCount();
+	ArrayList<Event> statusNList(PageInfo pi);
 	
 	// 3. 이벤트 작성하기 서비스
 	int insertEvent(Event b);

@@ -45,6 +45,11 @@
         font-size: 30px;
         margin-bottom: 150px;
     }
+    .content{
+		width: 100%;
+		height: 1000px; 
+        margin-top: 20px;
+	}
     #content-wrap{
         margin: auto;
     }
@@ -119,19 +124,17 @@
     	padding: 20px; 
     	margin-bottom: 20px;
     	}
+    
     #imgBox{
     	height: 900px;
     }
+    
     .img>p{
     	text-align: center; 
     	font-size: 20px; 
     	font-weight: 600;
     	}
-    .content{
-		width: 100%; 
-		height: 1000px;
-        margin-top: 20px;
-	}
+    
 	#paging{
 		padding-top: 80px;
 	}
@@ -158,7 +161,7 @@
                 <div id="statusBox">
                     <button onclick="location.href='eList.ad';" class="btn">전체</button>
                     <button onclick="location.href='eYList.ad';" class="btn" name="status" value="Y">진행중</button>
-                    <button onclick="location.href='eNList.ad';" id="N" class="btn" name="status" value="N">종료</button>
+                    <button onclick="location.href='eNList.ad';" class="btn" name="status" value="N">종료</button>
                 </div>
 
                 <div class="content" id="result">
@@ -181,12 +184,12 @@
 								</li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="eList.ad?cpage=${ pi.currentPage-1 }">&laquo;&laquo;</a></li>
+								<li class="page-item"><a class="page-link" href="eYList.ad?cpage=${ pi.currentPage-1 }">&laquo;&laquo;</a></li>
 							</c:otherwise>
 						</c:choose>
 						
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="eList.ad?cpage=${ p }">${ p }</a></li>
+							<li class="page-item"><a class="page-link" href="eYList.ad?cpage=${ p }">${ p }</a></li>
 						</c:forEach>
 						
 						<c:choose>
@@ -196,7 +199,7 @@
 								</li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="eList.ad?cpage=${ pi.currentPage+1 }">&raquo;&raquo;</a></li>
+								<li class="page-item"><a class="page-link" href="eYList.ad?cpage=${ pi.currentPage+1 }">&raquo;&raquo;</a></li>
 							</c:otherwise>
 						</c:choose>
 		            </ul>

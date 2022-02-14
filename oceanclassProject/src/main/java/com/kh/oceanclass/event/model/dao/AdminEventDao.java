@@ -23,4 +23,27 @@ public class AdminEventDao {
 		return (ArrayList)sqlSession.selectList("eventMapper.selectList", null, rowBounds);
 	}
 	
+	public int statusListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("eventMapper.statusListCount");
+	}
+	
+	public ArrayList<Event> statusList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("eventMapper.statusList", null, rowBounds);
+	}
+	
+	public int statusNListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("eventMapper.statusNListCount");
+	}
+	
+	public ArrayList<Event> statusNList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("eventMapper.statusNList", null, rowBounds);
+	}
 }
