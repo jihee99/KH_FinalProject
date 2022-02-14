@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /*관리자 회원관리 관련 기능*/
 
 @Controller
-public class AdminMemController {
-
+public class TeacherMemController {
+	
+	/*
 	@RequestMapping(value="pclist.ad")
 	public String adminCPList() {
 		// 관리자 포인트,쿠폰 리스트 목록 확인용 메소드
@@ -31,5 +32,5 @@ public class AdminMemController {
 		// 관리자 포인트 지급 페이지 확인용 메소드
 		return "member/admin/adminCouponWindow";
 	}
-	
+	*/
 }

@@ -109,6 +109,15 @@
                             <th width="200">총 결제금액</th>
                             <td width="250" colspan="3" style="font-size: 15px;">${sOrder.payAmount }</td>
                         </tr>
+                        
+                        <c:if test="${sOrder.refundNo ne ''}">				
+	                        <tr>
+	                            <th width="200">환불신청일</th>
+	                            <td width="250">${sOrder.refundDate }</td>
+	                           	<th width="200">환불처리상태</th>
+	                            <td width="250">${sOrder.refundStatus }</td>
+	                        </tr>	
+						</c:if>
                     </table>
                 </div>
 

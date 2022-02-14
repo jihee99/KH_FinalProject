@@ -127,6 +127,58 @@ public class InstructorStoreController {
 	@RequestMapping(value = "stupdate.in")
 	public String updateProduct(Product p, ProductOption option, MultipartFile[] reupfile, String[] originName, HttpSession session, Model model) {
 		
+//		System.out.println(p);
+//		System.out.println(option);
+	
+		for(int i=0; i<reupfile.length; i++) {
+			System.out.println(reupfile[i]);	
+			System.out.println();
+		}
+		
+		for(int i=0; i<originName.length; i++) {
+			System.out.println(originName[i]);	
+			System.out.println();
+		}
+
+		//옵션수정파트먼저
+		int result1 = 1;			// 옵션 개수가 변하지 않거나 작을때 결과
+		int result2 = 1;			// 옵션 개수가 변했을 때 결과
+		// 1. 옵션이 원래 있었을 때
+		if(option.getOptionNo() != null) {
+			String[] opNameArr = option.getOptionName().split(",");
+			String[] opNoArr = option.getOptionNo().split(",");
+			
+			for(int i=0; i<opNameArr.length; i++) {
+				System.out.println(i +" : " + opNameArr[i]);
+			}
+			
+			for(int i=0; i<opNoArr.length; i++) {
+				System.out.println(i +" : " + opNoArr[i]);
+			}
+			
+			ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
+			
+			for(int i=0; i<opNameArr.length; i++) {
+				oplist.add(new ProductOption());
+				oplist.get(i).setProductNo(p.productNo);
+				oplist.get(i).setOptionName(opNameArr[i]);
+				oplist.get(i).setPrice(option.getPrice());
+			}
+			for(int i=0; i<opNoArr.length; i++) {
+				oplist.get(i).setOptionNo(opNoArr[i]);
+			}
+			
+			for(int i=0; i<oplist.size(); i++) {
+				if(oplist.get(i).getOptionNo() != null) {
+					result1 *= inStoreService.updateProductOption(oplist.get(i));
+				}else {
+					result1 *= inStoreService.insertProductOption(oplist.get(i));
+				}
+			}
+			System.out.println("result1 : " + result1);
+		}
+		
+		
 		// 받아온 originName을 p객체에 삽입
 		for(int i = 0; i<originName.length; i++) {
 			if(i==0) {
@@ -144,7 +196,7 @@ public class InstructorStoreController {
 		for(int j=0; j<reupfile.length; j++) {
 			// 첨부파일이 있다면
 			if(!reupfile[j].getOriginalFilename().equals("")) {
-				System.out.println("1111");
+				System.out.println("re YYYY");
 				for(int i = 0; i<originName.length; i++) {
 					if(i==0) {
 						if(p.productImg0 != null) {
@@ -170,7 +222,9 @@ public class InstructorStoreController {
 				}
 			}
 		}
+		
 		ArrayList<String> changeList = saveFile(reupfile, session);
+		
 		for(int i=0; i<changeList.size(); i++) {
 			if(i==0) {
 				p.productImg0 = changeList.get(i);
@@ -183,34 +237,16 @@ public class InstructorStoreController {
  			}
 		}
 		
-		// 옵션수정섹션
-		String[] opNameArr = option.getOptionName().split(",");
-		String[] opNoArr = option.getOptionNo().split(",");
-		ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
+		result2 = inStoreService.updateProduct(p);
 		
-		// 옵션이 존재할 때
-		if(opNameArr.length>0) {	
-			// 문자열로 반환된 optionName을 각각의 객체로 분리
-			for(int i=0; i<opNameArr.length; i++) {
-				oplist.add(new ProductOption());
-				oplist.get(i).setOptionNo(opNoArr[i]);
-				oplist.get(i).setProductNo(p.productNo);
-				oplist.get(i).setOptionName(opNameArr[i]);
-				oplist.get(i).setPrice(option.getPrice());
-			}
-		}
-
-		int result1 = inStoreService.updateProduct(p);
-		int result2 = 1;
-		for(int i=0; i<oplist.size(); i++) {
-			result2 = result2 * inStoreService.updateProductOption(oplist.get(i));
-		}
+		System.out.println(result1);
+		System.out.println(result2);
 		
 		session.setAttribute("alertMsg", "상품 수정이 완료되었습니다.");
 		return "redirect:stlist.in";
 	}
 	
-	//파일명변경 배열로
+
 	@RequestMapping(value="stdelete.in")
 	public String deleteProduct(int pno, Model model, HttpSession session) {
 		int result1 = inStoreService.deleteProduct(pno);
@@ -290,14 +326,14 @@ public class InstructorStoreController {
 				
 				String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/store/");
 				
-				changeList.add("resources/uploadFiles/store/"+changeName);
 				try {
 					upfile[i].transferTo(new File(savePath + changeName));
-				} catch (IllegalStateException | IOException e1) {
+				} catch (IllegalStateException | IOException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e.printStackTrace();
 				}
 				
+				changeList.add("resources/uploadFiles/store/"+changeName);
 			}
 		}
 		return changeList;

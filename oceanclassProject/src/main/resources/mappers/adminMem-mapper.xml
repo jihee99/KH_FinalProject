@@ -333,7 +333,7 @@
 		     , use_coupon
 		     , pay.point
 		     , d_fee
-		     , REFUND_DATE
+		     , to_char(REFUND_DATE, 'YYYY-MM-DD HH24:MI:SS') REFUND_DATE
 		     , REFUND_NO
 		     , REFUND_STATUS
 		 from pay
