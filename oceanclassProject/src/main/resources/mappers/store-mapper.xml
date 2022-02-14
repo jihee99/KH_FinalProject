@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="storeMapper">
 
-	<resultMap id="productResult" type="Product">
+	<resultMap id="storeResult" type="Product">
 	  	<result column="pno" property="productNo"/>
 	  	<result column="mno" property="memberNo"/>
 	  	<result column="category" property="category"/>
@@ -38,9 +38,8 @@
 			 , status
 			 , img1
 		  from store
-		  join member m using (mno)
 		 where status = 'Y'
 		 order
-		 	by product_no desc
+		 	by pno desc
 	</select>
 </mapper>

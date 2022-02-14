@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
 <link rel="stylesheet" href="./resources/css/header.css">
 <style>
@@ -111,7 +113,7 @@ div{box-sizing: border-box;}
                 </li>
 
                 <li class="header_2_menu">
-                    <a href="list.st">STORE</a>
+                    <a href="storeList.st">STORE</a>
                     <ul class="header_2_detail">
                         <li><a href="">클래스 상품</a></li>
                         <li><a href="">OC 에디션</a></li>

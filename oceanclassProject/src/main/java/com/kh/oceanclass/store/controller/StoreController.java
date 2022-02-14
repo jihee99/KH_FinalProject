@@ -21,21 +21,41 @@ public class StoreController {
 	@Autowired
 	private StoreService sService;
 	
-	@RequestMapping("list.st")
+	@RequestMapping(value="storeList.st")
 	public String selectList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
 		 
 		//System.out.println(currentPage);
 		int listCount = sService.selectListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 8);
+		ArrayList<Product> list = sService.selectList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		// 포워딩할 뷰(/WEB-INF/views/ store/storeContent .jsp)
+		return "store/storeContent";
+		
+	}
+	
+	@RequestMapping(value="storeSearchList.st")
+	public String selectSearchList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+		 
+		//System.out.println(currentPage);
+		int listCount = sService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 8);
 		ArrayList<Product> list = sService.selectList(pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		// 포워딩할 뷰(/WEB-INF/views/ store/storeContent .jsp)
-		return "store/storeContent";
+		return "store/storeSearchList";
 		
 	}
 	
+	@RequestMapping(value="productMain.pr")
+	public String selectProduct() {
+		return "store/productDetailMain";
+	}
 }

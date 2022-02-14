@@ -52,12 +52,50 @@
         
         <div class="items">
             <div class="items_title"><b>· HOT ITEM</b> <!--띄어쓰기-->
-                <a href="" class="more_btn">+more</a>
+                <a href="storeSearchList.st" class="more_btn">+more</a>
             </div>
             
-			<c:forEach var="p" items="${ list }">
+            
+			<c:forEach var="p" items="${ list }" end="3">
 	            <div class="item" style="margin-right: 62px;">
-	                <img src="" class="thumbnail">
+	                <img src="${ p.productImg0 }" class="thumbnail" onclick="">
+	                <div style="font-size: 13px;"><b>${ p.memberNo }</b></div>
+	                <div class="title">${ p.title }</div>
+	                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
+	                <span>찜수11</span>
+	                <div>
+	                    <b>
+	                        <span>${ p.price }</span>
+	                        원 
+	                    </b>
+	                </div>
+            		<input type="hidden" id="pno" name="pno" value="${ p.productNo }">
+	            </div>
+			</c:forEach>
+			
+			<script>
+	        	$(function(){
+	        		$(".item").click(function(){
+	        			location.href = 'productMain.pr?pno=' + $("#pno").value();
+	        		});
+	        	})
+	        	
+	        	$(function(){
+	        		$(".title").click(function(){
+	        			location.href = 'productMain.pr?pno=' + $("#pno").value();
+	        		});
+	        	})
+			</script>
+			
+
+        <div class="items">
+            <div class="items_title"><b>· NEW ITEM</b> <!--띄어쓰기-->
+                <a href="storeSearchList.st" class="more_btn">+more</a>
+            </div>
+
+			<c:forEach var="p" items="${ list }" end="3">
+	            <div class="item" style="margin-right: 62px;">
+	                <img src="${ p.productImg0 }" class="thumbnail">
 	                <div style="font-size: 13px;"><b>${ p.memberNo }</b></div>
 	                <div>${ p.title }</div>
 	                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
@@ -69,111 +107,9 @@
 	                    </b>
 	                </div>
 	            </div>
+	           	
 			</c:forEach>
-			
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>브랜드명</b></div>
-                <div>상품명이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>찜수11</span>
-                <div>
-                    <b>
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
 
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>브랜드명</b></div>
-                <div>상품명이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>찜수11</span>
-                <div>
-                    <b>
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>브랜드명</b></div>
-                <div>상품명이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <div>
-                    <b>
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-        </div>
-
-        <div class="items">
-            <div class="items_title"><b>· NEW ITEM</b> <!--띄어쓰기-->
-                <a href="" class="more_btn">+more</a>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>브랜드명</b></div>
-                <div>상품명이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <div>
-                    <b>
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>브랜드명</b></div>
-                <div>상품명이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <div>
-                    <b>
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-            
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>브랜드명</b></div>
-                <div>상품명이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <div>
-                    <b>
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>브랜드명</b></div>
-                <div>상품명이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <div>
-                    <b>
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
         </div>
 
         <div style="height: 150px;"></div>

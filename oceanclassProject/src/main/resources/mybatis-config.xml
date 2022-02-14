@@ -16,6 +16,14 @@
 		<typeAlias type="com.kh.oceanclass.store.model.vo.Product" alias="Product"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.ProductOption" alias="ProductOption"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.Stock" alias="Stock"/>
+		
+		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreReview" alias="StoreReview"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreReviewFile" alias="StoreReviewFile"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreBuyList" alias="StoreBuyList"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreRefund" alias="StoreRefund"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.StorePay" alias="StorePay"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.Cart" alias="Cart"/>
+		
 	
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Member" alias="Member"/>
 		
@@ -35,6 +43,7 @@
 		<mapper resource="/mappers/class-mapper.xml" />
 		<mapper resource="/mappers/mypage-mapper.xml" />
 		<mapper resource="/mappers/event-mapper.xml" />
+		<mapper resource="/mappers/store-mapper.xml" />
 	</mappers>
 	
 </configuration>

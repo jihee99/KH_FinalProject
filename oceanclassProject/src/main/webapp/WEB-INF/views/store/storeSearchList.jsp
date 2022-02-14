@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,9 +53,9 @@
 	<div id="outer">
 		<div id="selectBar" class="form-group">
 			<select class="form-control" id="sel1" style="width: 15%; float: left; margin-right: 10px;">
-				<option>CLASS PRODUCT</option>
-				<option>OC EDITION</option>
-				<option>DIY KIT</option>
+				<option value="1">CLASS PRODUCT</option>
+				<option value="2">OC EDITION</option>
+				<option value="3">DIY KIT</option>
 				<option selected style="display: none;">카테고리</option>
 			</select>
 
@@ -64,176 +65,52 @@
 				<option>리뷰순</option>
 			</select>
 		</div>
-
 		<div class="items">
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-        </div>
-
-        <div class="items">
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-        </div>
+			<c:forEach var="p" items="${ list }">
+	            <div class="item" style="margin-right: 62px;">
+	                <img src="${ p.productImg0 }" class="thumbnail">
+	                <div style="font-size: 13px;"><b>${ p.memberNo }</b></div>
+	                <div>${ p.title }</div>
+	                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
+	                <span>12345</span>
+	                <div>
+	                    <b>
+	                        <span>${ p.price }</span>
+	                        원 
+	                    </b>
+	                </div>
+	            </div>
+			</c:forEach>
+		</div>
 
 		<div id="pagingArea">
 			<ul class="pagination">
-				<li class="page-item"><a class="page-link" href="">Previous</a></li>
-		
-				<li class="page-item"><a class="page-link" href="">1</a></li>
-				<li class="page-item"><a class="page-link" href="">2</a></li>
-				<li class="page-item"><a class="page-link" href="">3</a></li>
 
-				<li class="page-item"><a class="page-link" href="">Next</a></li>
+				<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>					
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="storeSearchList.st?cpage=${ pi.currentPage-1 }">Previous</a></li>					
+					</c:otherwise>				
+				</c:choose>
+		
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<li class="page-item"><a class="page-link" href="storeSearchList.st?cpage=${ p }">${ p }</a></li>
+				</c:forEach>
+				
+				<c:choose>
+					<c:when test="${ pi.currentPage eq pi.maxPage }">
+						<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="storeSearchList.st?cpage=${ pi.currentPage+1 }">Next</a></li>					
+					</c:otherwise>	
+				</c:choose>
 			</ul>
 		</div>
 
-	</div>
+	
 		
 	<jsp:include page="../common/footerBar.jsp" />
 
