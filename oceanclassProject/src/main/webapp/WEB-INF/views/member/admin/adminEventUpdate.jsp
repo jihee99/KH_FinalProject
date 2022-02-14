@@ -137,9 +137,16 @@
                             <input type="file" id="" name="" required>
                         </div>
                     </div>
+
+                    <div class="box">
+                        <label class="textName" for="">해시 태그<span class="star"></span></label>
+                        <div class="input-area">
+                            <input type="text" id="" name="" value="#2022 이벤트">
+                        </div>
+                    </div>
                     <div id="btnBox">
                         <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
-                        <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
+                        <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >종료</button>
                         <button type="submit" id="Enroll" class="btn" style="background-color: rgb(211, 84, 0); color: white;">삭제</button>
                     </div>
                 </form>
