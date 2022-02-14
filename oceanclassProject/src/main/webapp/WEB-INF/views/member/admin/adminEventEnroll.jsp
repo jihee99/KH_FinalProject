@@ -96,7 +96,7 @@
 </head>
 <body>
 	<div style="height: auto; margin: auto; width: 1600px;">
-        <jsp:include page="../../common/admin/adminMain.jsp" />
+        <jsp:include page="../../common/admin/adminSidebar.jsp" />
         <div id="wrap">
             <div id="top-area">
                 <span id="bord-name">이벤트 등록</span>
