@@ -151,7 +151,7 @@
 	   			</c:forEach>
 	   
 	   			<c:choose>
-	               	<c:when test="${pi.currentPage eq cPi.maxPage }">
+	               	<c:when test="${cPi.currentPage eq cPi.maxPage }">
 	           			<button class="btn btn-light" disabled>&gt;</button>
 	               	</c:when>
 	               	<c:otherwise>

@@ -2,12 +2,16 @@ package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
 
+import org.apache.catalina.Store;
+
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.member.model.vo.Report;
+import com.kh.oceanclass.store.model.vo.StoreOrder;
 
 public interface AdminMemService {
 	
@@ -75,12 +79,27 @@ public interface AdminMemService {
 	
 	//------------주문------------
 	//관리자 클래스 주문목록조회기능
+	int selectClassOrderCount();
+	ArrayList<ClassVo> selectClassOrderList(PageInfo pi);
 	
 	//관리자 스토어 주문목록조회기능
+	int selectStoreOrderCount();
+	ArrayList<StoreOrder> selectStoreOrderList(PageInfo pi);
+
+	//관리자 스토어 주문내역 삭제 기능
+	int deleteStoreOrder(String storeNo);
 	
-	//관리자 주문목록 상세조회 기능
+	//관리자 클래스 주문 상세조회
+	ClassVo selectClassOrder(String cOrderNo);
+	
+	// 관리자 스토어 주문 상세조회 
+	StoreOrder selectStoreOrder(String sOrderNo);
+
+
 	
 	//관리자 주문상태변경기능 
+	
+	
 	
 	//환불처리 어떻게 하지..................................................
 	//미쳤나봐 왜이렇게 많지, 언제 다해.?

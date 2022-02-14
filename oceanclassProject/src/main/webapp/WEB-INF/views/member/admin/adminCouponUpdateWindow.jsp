@@ -80,6 +80,7 @@
 	       				couponNo:$("#couponNo").val(),
 	       				couponName:$("#couponName").val(),
 	       				discount:$("#discount").val(),
+	       				maxCount:$("#maxCount").val(),
 	       				dedate:$("#dedate").val()
 	       			},success:function(result){
 	       				alert("쿠폰 정보 수정에 성공했습니다.");

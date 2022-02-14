@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +19,7 @@ import com.kh.oceanclass.member.model.service.AdminMemService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.store.model.vo.StoreOrder;
 
 /*관리자 회원관리 관련 기능*/
 
@@ -202,5 +202,60 @@ public class AdminMemController {
 	public String adminPointManager() {
 		// 관리자 포인트 지급 페이지 확인용 메소드
 		return "member/admin/adminPointWindow";
+	}
+	
+	@RequestMapping(value="orlist.ad")
+	public String adminOrderList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+		// 클래스주문 카운트, 클래스 pi객체, 클래스주문리스트
+//		int clistCount = adMemService.selectClassOrderCount();
+//		PageInfo cPi = Pagination.getPageInfo(clistCount, currentPage, 5, 10);
+//		ArrayList<ClassOrder> clist = adMemService.selectClassOrderList(cPi);
+		
+		
+		// 스토어 주문 카운트, 스토어 pi객체, 스토어 주문리스트
+		int slistCount = adMemService.selectStoreOrderCount();
+		PageInfo sPi = Pagination.getPageInfo(slistCount, currentPage, 5, 10);
+		ArrayList<StoreOrder> slist = adMemService.selectStoreOrderList(sPi);
+		
+		System.out.println("slistCount : "+ slistCount);
+		System.out.println("sPi : " + sPi);
+		System.out.println("slist : "+ slist);
+		
+//		model.addAttribute("cPi", cPi);
+//		model.addAttribute("list", clist);
+
+		model.addAttribute("sPi", sPi);
+		model.addAttribute("slist", slist);
+		return "member/admin/adminOrderList";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="sodelete.ad")
+	public String deleteStoreOrderList(String hiddenList) {
+		
+		String[] slist = hiddenList.split(",");
+		int result = 1;
+		
+		for(int i=0; i<slist.length; i++) {
+			String storeNo = slist[i];
+			System.out.println(storeNo);
+			result *= adMemService.deleteStoreOrder(storeNo);
+		}
+		
+		return result>0? "success" : "fail";
+	}
+	
+	@RequestMapping(value="sodetail.ad")
+	public String selectStoreOrderDetailF(String ono, Model model) {
+		StoreOrder so = adMemService.selectStoreOrder(ono);
+		model.addAttribute("sOrder", so);
+		return "member/admin/adminOrderDetail";
+	}
+	
+	
+	
+	@RequestMapping(value="rplist.ad")
+	public String adminReportList() {
+		return "member/admin/adminReportList";
 	}
 }

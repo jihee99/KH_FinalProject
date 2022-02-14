@@ -2,10 +2,12 @@ package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
 
+import org.apache.catalina.Store;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.dao.AdminMemDao;
 import com.kh.oceanclass.member.model.vo.Coupon;
@@ -13,6 +15,7 @@ import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.member.model.vo.Report;
+import com.kh.oceanclass.store.model.vo.StoreOrder;
 
 @Service
 public class AdminMemServiceImpl implements AdminMemService {
@@ -153,6 +156,45 @@ public class AdminMemServiceImpl implements AdminMemService {
 	public int updateCoupon(Coupon c) {
 		return adMemDao.updateCoupon(sqlSession, c);
 	}
+
+	@Override
+	public int selectClassOrderCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<ClassVo> selectClassOrderList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectStoreOrderCount() {
+		return adMemDao.selectStoreOrderCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<StoreOrder> selectStoreOrderList(PageInfo pi) {
+		return adMemDao.selectStoreOrderList(sqlSession, pi);
+	}
+	
+	@Override
+	public int deleteStoreOrder(String storeNo) {
+		return adMemDao.deleteStoreOrder(sqlSession, storeNo);
+	}
+
+	@Override
+	public ClassVo selectClassOrder(String cOrderNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public StoreOrder selectStoreOrder(String sOrderNo) {
+		return adMemDao.selectStoreOrder(sqlSession, sOrderNo);
+	}
+
 
 
 }

@@ -26,7 +26,8 @@
 		
 
 		<typeAlias type="com.kh.oceanclass.store.model.vo.InProductOrder" alias="InProductOrder"/>
-		
+		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreOrder" alias="StoreOrder"/>
+				
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Member" alias="Member"/>
 		
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Report" alias="Report"/>

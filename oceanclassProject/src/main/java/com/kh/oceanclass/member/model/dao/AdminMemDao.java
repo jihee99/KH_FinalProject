@@ -10,6 +10,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.store.model.vo.StoreOrder;
 
 @Repository
 public class AdminMemDao {
@@ -93,6 +94,40 @@ public class AdminMemDao {
 	public int updateCoupon(SqlSessionTemplate sqlSession, Coupon c) {
 		return sqlSession.update("adMemMapper.updateCoupon", c);
 	}
+
+	/*클래스주문내역 조회 관련 메소드
+	public int selectClassOrderCount(SqlSessionTemplate sqlSession) {
+		return 0;
+	}
+
+	public ArrayList<Store??> selectClassOrderList(sqlSessionTemplate sqlSession, PageInfo pi){
+		return "";
+	}
+	*/
+	
+	public int selectStoreOrderCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adMemMapper.selectStoreOrderCount");
+	}
+
+	public ArrayList<StoreOrder> selectStoreOrderList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectStoreOrderList", null, rowBounds);
+	}
+
+	public int deleteStoreOrder(SqlSessionTemplate sqlSession, String storeNo) {
+		return sqlSession.delete("adMemMapper.deleteStoreOrder", storeNo);
+	}
+
+	public StoreOrder selectStoreOrder(SqlSessionTemplate sqlSession, String sOrderNo) {
+		return sqlSession.selectOne("adMemMapper.selectStoreOrder", sOrderNo);
+	}
+	
+
+	
 	
 
 
