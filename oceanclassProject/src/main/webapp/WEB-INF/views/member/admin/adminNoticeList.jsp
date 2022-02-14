@@ -131,7 +131,7 @@
 <body>
     
     <div style="width: 1600px; height: auto; margin: auto;">
-    	<jsp:include page="../../common/admin/adminMain.jsp" />
+    	<jsp:include page="../../common/admin/adminSidebar.jsp" />
         <div class="wrap">
             <div id="top-area">
                 <span id="bord-name">공지사항 관리</span>
