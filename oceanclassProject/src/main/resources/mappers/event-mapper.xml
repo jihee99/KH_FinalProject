@@ -106,10 +106,7 @@
 				  , E_CONTENT
 				  , IMG
 				  , TAG
-	              , MAXCOUNT
 			 from event
-	         join coupon using (MNO)
-	         join couponlist using (CNO)
 	</select>
 	
 	
