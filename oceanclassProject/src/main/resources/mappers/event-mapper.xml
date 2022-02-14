@@ -13,8 +13,6 @@
 		<result column="status" property="status" />
 		<result column="tag" property="tag" />
 		<result column="img" property="img" />
-		
-		<result column="maxcount" property="maxCount" />
 	</resultMap>
 	
 	<resultMap id="replyResult" type="Reply">

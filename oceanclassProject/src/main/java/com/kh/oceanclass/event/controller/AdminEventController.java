@@ -19,13 +19,13 @@ public class AdminEventController {
 	@Autowired
 	private AdminEventService aeService;
 	
-	@RequestMapping("aeList.bo")
+	@RequestMapping("eList.ad")
 	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
 		//System.out.println(currentPage);
 		int listCount = aeService.selectListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 6, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 6);
 		ArrayList<Event> list = aeService.selectList(pi);
 		
 		mv.addObject("pi",pi).addObject("list",list).setViewName("member/admin/adminEventList");

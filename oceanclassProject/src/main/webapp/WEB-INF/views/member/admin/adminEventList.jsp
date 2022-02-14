@@ -9,6 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -112,20 +115,29 @@
         width: 250px;
         background-color: lightgray;
     }
-    #imgBox{
-        display: flex;
-        justify-content:space-between;
-        margin-bottom: 15px;
-    }
-    .img p{
-        text-align: center;
-    }
+    .img{
+    	float:left; 
+    	padding: 20px; 
+    	margin-bottom: 20px;
+    	}
+    .img>p{
+    	text-align: center; 
+    	font-size: 20px; 
+    	font-weight: 600;
+    	}
+    .pagination{
+		width: 25%;
+		margin: 0 auto;
+		padding-top: 80px;
+		border: 1px solid white;
+	}
+    .pagination>li>a, .pagination>li>span { border-radius: 50% !important;margin: 0 5px;}
 </style>  
 </head>
 <body>
     
     <div style="width: 1600px; height: auto; margin: auto;">
-    	<jsp:include page="../../common/admin/adminMain.jsp" />
+    	<jsp:include page="../../common/admin/adminSidebar.jsp" />
         <div class="wrap">
             <div id="top-area">
                 <span id="bord-name">이벤트 관리</span>
@@ -143,60 +155,49 @@
                     <button class="btn" name="STATUS" value="N">종료</button>
                 </div>
 
-                <div id="eventBox">
                 
-                <c:forEach var="e" items="${ list }">
                     <div id="imgBox">
-                        <div class="img">
-                            <img src="resources/images/event1.jpg" style="width: 480px; height: 210px;">
-                            <p>${e.eventContent }</p>
-                        </div>
-                        <div class="img">
-                            <img src="resources/images/event2.jpg" alt="" style="width: 480px; height: 210px;">
-                            <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
-                        </div>
-                    </div>
-                    <div id="imgBox">
-                        <div class="img">
-                            <img src="resources/images/event5.jpg" alt="" style="width: 480px; height: 210px;">
-                            <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
-                        </div>
-                        <div class="img">
-                            <img src="resources/images/event4.png" alt="" style="width: 480px; height: 210px;">
-                            <p>새해 이벤트! 댓글 달고 어흥 쿠폰 받자!</p>
-                        </div>
-                    </div>
-                </c:forEach>
-                </div>
+                        <c:forEach var="e" items="${list}">
+				            <div class="img">
+				            	<input type="hidden" id="eno" value="${e.eventNo}">
+				                <img src="${e.img}" style="width: 460px; height: 210px;" id="img">
+				                <p>${e.eventTitle}</p>   
+				            </div>
+				        </c:forEach>
+                	</div>
                 
                 
-                <div class="paging" align="center">
-                
-                <c:choose>
-                	<c:when test="${ pi.currentPage eq 1 }">
-                		<li class="page-item disabled"><a href="#">Previous</a></li>
-                    </c:when>
-                	<c:otherwise>
-                    	<button class="btn btn-light"><a href="aeList.bo?cpage=${ pi.currentPage-1 }">&lt;</a></button>
-                	</c:otherwise>
-               </c:choose>
-                
-               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">     
-                    <button class="btn btn-light"><a href="aeList.bo?cpage=${ p }">${ p }</a></button>
-               </c:forEach>
-               
-               <c:choose>
-                    <c:when test="${ pi.currentPage eq pi.maxPage }">     
-                    	<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                    </c:when>
-                    <c:otherwise>
-                    	<button class="btn btn-light"><a href="list.bo?cpage=${ pi.currentPage+1 }">&gt;</a></button>
-                	</c:otherwise>
-                </c:choose>
-                
-                </div>
+	               <div id="paging">
+					<ul class="pagination">
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="eList.ad?cpage=${ pi.currentPage-1 }">Previous</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item"><a class="page-link" href="eList.ad?cpage=${ p }">${ p }</a></li>
+						</c:forEach>
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="eList.ad?cpage=${ pi.currentPage+1 }">Next</a></li>
+							</c:otherwise>
+						</c:choose>
+		            </ul>
+		        </div> 
             </div>
-            <br><br><br>
+          <br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />
     </div>
