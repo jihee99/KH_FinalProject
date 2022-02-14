@@ -42,4 +42,24 @@
 		 order
 		 	by pno desc
 	</select>
+	
+	<select id="categorySearch" resultMap="storeResult">
+				select
+			   pno
+			 , mno
+			 , category
+			 , title
+			 , price
+			 , courier
+			 , soldout_yn
+			 , status
+			 , img1
+		  from store
+		 where status = 'Y'
+		   and category = ${category}
+		 order
+		 	by pno desc
+			 
+	</select>
+	
 </mapper>

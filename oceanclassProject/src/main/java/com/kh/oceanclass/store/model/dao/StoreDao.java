@@ -24,5 +24,9 @@ public class StoreDao {
 		return (ArrayList)sqlSession.selectList("storeMapper.selectList", null, rowBounds);
 		
 	}
+	
+	public ArrayList<Product> categorySearch(SqlSessionTemplate sqlSession, String category){
+		return (ArrayList)sqlSession.selectList("storeMapper.categorySearch", category);
+	}
 
 }

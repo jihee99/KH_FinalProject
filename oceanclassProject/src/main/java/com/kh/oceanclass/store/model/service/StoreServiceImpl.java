@@ -59,6 +59,11 @@ public class StoreServiceImpl implements StoreService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public ArrayList<Product> categorySearch(String category) {
+		return sDao.categorySearch(sqlSession, category);
+	}
 	
 	
 	
