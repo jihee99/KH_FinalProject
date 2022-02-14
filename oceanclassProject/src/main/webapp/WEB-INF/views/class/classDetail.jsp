@@ -55,6 +55,7 @@
         <input type="hidden" id="memNo" value="${ loginUser.memNo }">
         <input type="hidden" id="grade" value="${ loginUser.grade }">
         <input type="hidden" id="clNo" value="${ c.clNo }">
+        <input type="hidden" id="likeCk" value="${ likeCk }">
 
         <div class="leftContent">
             <div id="titleImg">
@@ -141,11 +142,11 @@
                     <button type="button" class="btn" style="background-color: #6babd5; width:160px; font-weight: bold; color: white;">클래스 구매하기</button>
                     <button type="button" class="btn" style="background-color: rgb(184, 184, 184); width:90px;" onclick="likeCk();">
                         <c:choose>
-                        	<c:when test="${ like == 'y' && !empty loginUser }">
-                        		<img src="resources/images/heart1.png" width="20" height="20" id="likeImg">
+                        	<c:when test="${ likeCk == 'Y' }">
+                        		<img src="resources/images/heart2.png" width="20" height="20" id="likeImg">
 							</c:when>
 							<c:otherwise>
-                        		<img src="resources/images/heart2.png" width="20" height="20" id="likeImg">
+                        		<img src="resources/images/heart1.png" width="20" height="20" id="likeImg">
 							</c:otherwise>
 						</c:choose>                        
                         <span id="likeCount">${ c.like }</span>
@@ -261,11 +262,7 @@
             }
         }
 
-        $(function(){
-            price();
-        })
-
-        function price(){
+        window.onload = function(){
 
             var price = document.getElementById("classPrice").innerHTML;
             var cutPrice = price.substring(0, 5);
@@ -279,10 +276,6 @@
 
         function likeCk(){
 
-            //console.log(document.getElementById("memNo").value);
-            //console.log(document.getElementById("grade").value);
-            //console.log(document.getElementById("clNo").value);
-           	
             if(document.getElementById("memNo").value == ""){
                 alert("로그인 후 이용 가능한 서비스 입니다.");
             } else{
@@ -294,13 +287,15 @@
                         referNo:document.getElementById("clNo").value
                     }, success:function(likeResult){
 						
-                        if(likeResult == 'gradeCkNo'){
+                        if(likeResult.message == 'gradeCkNo'){
                             alert("학생 회원만 가능한 서비스입니다.");
-						} else if(likeResult == 'ss'){
+						} else if(likeResult.message == 'ss'){
                             document.getElementById("likeImg").src = "resources/images/heart2.png";
+                            document.getElementById("likeCount").innerHTML = likeResult.likeCount;
                             alert("찜 목록에 추가 되었습니다!");
-                        } else if(likeResult == 'dd'){
+                        } else if(likeResult.message == 'dd'){
                             document.getElementById("likeImg").src = "resources/images/heart1.png";
+                            document.getElementById("likeCount").innerHTML = likeResult.likeCount;
                             alert("찜 목록에서 삭제되었습니다.");
                         } else {
                             alert("비정상적인 요청입니다.");
