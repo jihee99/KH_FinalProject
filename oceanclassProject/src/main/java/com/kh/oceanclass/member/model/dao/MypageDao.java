@@ -49,5 +49,33 @@ public class MypageDao {
 		
 		return (ArrayList)sqlSession.selectList("myMapper.selectQnaList", memNo, rowBounds);
 	}
+	
+	public int myQnaCount(SqlSessionTemplate sqlSession, Qna q) {
+		if(q.createDate.equals("week")) {
+			return sqlSession.selectOne("myMapper.myQnaWeekCount", q);
+		}else if(q.createDate.equals("2week")) {
+			return sqlSession.selectOne("myMapper.myQna2WeekCount", q);
+		}else {
+			return sqlSession.selectOne("myMapper.myQnaMonthCount", q);
+		}
+	}
+	
+	public ArrayList<Qna> selectMyQnaList(SqlSessionTemplate sqlSession, PageInfo pi, Qna q){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		if(q.createDate.equals("week")) {
+			return (ArrayList)sqlSession.selectList("myMapper.myQnaWeek", q, rowBounds);
+		}else if(q.createDate.equals("2week")) {
+			return (ArrayList)sqlSession.selectList("myMapper.myQna2Week", q, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("myMapper.myQnaMonth", q, rowBounds);
+		}
+	}
+	
+	public int checkNick(SqlSessionTemplate sqlSession, String nickName){
+		return sqlSession.selectOne("myMapper.checkNick", nickName);
+	}
 
 }// class

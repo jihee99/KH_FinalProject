@@ -14,15 +14,18 @@
 <style>
 	.searchBar>p{margin-right: 30px; margin-left: 70px;}
 	#search{width:450px; margin-left: 450px;}
-	.table{
+	#myQna{
 		width:100%;
+		margin: 0 auto;
 		margin-top: 30px;
 		text-align: center;
+		margin-bottom: 50px;
 	}
-	#myQna>tbody #answer{
+	#question, #answer{
 		display: none;
+		background: whitesmoke;
 	}
-	#answer{background: rgb(107, 171, 213, 0.2);}
+	#qna:hover{cursor:pointer;}
 	#answer p{font-size: 10px; margin-top: 20px;}
 </style>
 </head>
@@ -41,9 +44,10 @@
 				    
 				    <div class="searchBar">
 				        <p>기간검색</p>
-				        <button class="btn btn-info">1주일</button>
-				        <button class="btn btn-info">15일</button>
-				        <button class="btn btn-info">1개월</button>
+				        <input type="hidden" id="memNo" value="${loginUser.memNo}">
+				        <button class="btn btn-info" id="week" value="week">1주일</button>
+				        <button class="btn btn-info" id="2week" value="2week">15일</button>
+				        <button class="btn btn-info" id="month" value="month">1개월</button>
 				        <div id="search">
 				            <select name="type" id="type">
 				                <option value="title">제목</option>
@@ -54,33 +58,89 @@
 				        </div>
 				    </div>
 				    
+				    <script>
+				    	$(function(){
+				    		$(".btn").click(function(){
+				    			let value = $(this).val();
+				    			let memNo = $("#memNo").val();	
+				    			//console.log(value);
+				    			$.ajax({
+				    				url:"ajaxMyQna.me",
+				    				data:{createDate: value,
+				    					  memNo: memNo},
+				    				success:function(result){
+				    					console.log(result);
+				    					let qna = '<tr id="qna">';
+				    					for(let i in result.list){
+				    						qna += '<td>' + result.list[i].createDate + '</td>'
+				    						 	 + '<td>' + result.list[i].category + '</td>'
+				    						 	 + '<td>' + result.list[i].qnaTitle + '</td>'
+				    						if(result.list[i].ansContent == ''){
+				    							qna += '<td>답변대기</td>'
+				    						}else{
+				    							qna += '<td>답변완료</td>'
+				    						}
+				    						qna += '</tr>' 
+				    							 + '<tr id="question">'
+				    						 	 + '<td></td>'
+				    						 	 + '<td>내용</td>'
+				    						 	 + '<td colspan="2" style="text-align: left; padding-left: 100px;">' + result.list[i].qnaContent + '</td>'
+				    						 	 + '</tr>'
+			    						 	if(result.list[i].ansContent != ''){
+				    							qna += '<tr id="answer"> <td></td> <td>답변</td> <td colspan="2" style="text-align: left; padding-left: 100px;">'
+				    								 + result.list[i].ansContent
+				    								 + '<p>'
+				    								 + result.list[i].ansDate
+				    								 + '</p></td></tr>'
+				    						}	 	 
+				    					}
+				    					console.log(qna);
+					    				$("#result").html(qna);
+				    				},error:function(){
+				    					console.log("에러ㅠㅠ");
+				    				}
+				    			})
+				    		})
+				    	})
+				    </script>
+				    
+				    
 				    <table class="table" id="myQna">
 				        <thead>
-				            <tr>
+				            <tr class="table-light">
 				                <th>날짜</th>
 				                <th>분류</th>
 				                <th>제목</th>
 				                <th>답변유무</th>
 				            </tr>
 				        </thead>
-				        <tbody>
+				        <tbody id="result">
 				        	<c:forEach var="q" items="${list}">
-					            <tr id="question">
+					            <tr id="qna">
 					                <td>${q.createDate}</td>
 					                <td>${q.category}</td>
 					                <td>${q.qnaTitle}</td>
 					                <c:choose>
 				                        <c:when test="${not empty q.ansContent}">
-				                        	<td>등록완료<td>
+				                        	<td>등록완료</td>
 				                        </c:when>
 				                        <c:otherwise>
-				                        	<td>대기중<td>
+				                        	<td>대기중</td>
 				                        </c:otherwise>
 			                        </c:choose>
 					            </tr>
-					            <tr id="answer">
-					            	<td colspan="4">${q.ansContent} <p>${q.ansDate}</p></td>
+					            <tr id="question">
+					            	<td></td>
+					            	<td>내용</td>
+					            	<td colspan="2" style="text-align: left; padding-left: 100px;">${q.qnaContent}</td>
 					            </tr>
+					            <c:if test="${not empty q.ansContent}"> 
+						            <tr id="answer">
+						            	<td></td>
+						            	<td>답변</td>
+						            	<td colspan="2" style="text-align: left; padding-left: 100px;">${q.ansContent} <p>${q.ansDate}</p></td>
+						            </tr>
+					            </c:if>
 				            </c:forEach>
 				        </tbody>
 				    </table>
@@ -119,13 +179,15 @@
 					
 					<script>
 						$(function(){
-							$("#myQna>tbody>#question").click(function(){
+							$("#myQna>tbody>#qna").click(function(){
 								//console.log($(this));
 								$(this).toggleClass("selected");
-								$("#myQna>tbody>#question").not(this).removeClass("selected");
-								var target = $(this).next();
-								console.log(target.text());
-								target.slideToggle(300);
+								$("#myQna>tbody>#qna").not(this).removeClass("selected");
+								var targetQ = $(this).next();
+								var targetA = $(this).next().next();
+								//console.log(targetQ.text());
+								targetQ.slideToggle(200);
+								targetA.slideToggle(200);
 							});
 						});
 					</script>

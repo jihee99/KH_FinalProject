@@ -8,11 +8,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 	<link rel="stylesheet" href="./resources/css/stuMypage.css?3">
+
 </head>
 <body>
 	<div class="side">
 	    <div id="profile">
-	    	<img src="resources/images/bomi7.jpg">
+	    	<img src="${loginUser.profileImg}">
 	    	<p id="sideName">${loginUser.nickName}님</p>
 	    </div>
 	    <div class="menu">
