@@ -49,6 +49,39 @@
         <result column="dedate" property="deDate" />
 	</resultMap>
 	
+	<resultMap type="StoreOrder" id="storeOrderResult">
+		<!-- pay table -->
+		<result column="order_no" property="orderNo" />
+		<result column="mno" property="memNo" />
+		<result column="address" property="address" />
+		<result column="pay_amount" property="payAmount" />
+		<result column="pay_date" property="payDate" />
+		<result column="pay_method" property="payMethod" />
+		<result column="order_status" property="orderStatus" />
+		<result column="pay_status" property="payStatus" />
+		<result column="deposit_ck" property="depositCK" />
+		<result column="use_point" property="usePoint" />
+		<result column="use_coupon" property="useCoupon" />
+		<result column="point" property="point" />
+		<result column="dfee" property="delFee" />
+		
+		<!-- s_buylist table -->
+		<result column="pno" property="productNo" />
+		<result column="opno" property="optionNo" />
+		<result column="quantity" property="quantity" />
+		<result column="price" property="price" />
+		
+		<!-- s_refund -->
+		<result column="refund_no" property="refundNo" />
+		<result column="refund_date" property="refundDate" />
+		<result column="refund_status" property="refundStatus" />
+		
+		<!-- additional columns -->
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		
+	</resultMap>
+	
 	<select id="loginAdmin" resultMap="memberResult">
 		select
 			  	mno
@@ -252,12 +285,63 @@
 		where cno = #{couponNo}
 	</update>
 	
+	<select id="selectStoreOrderCount" resultType="_int">
+		select count(*)
+  		  from pay
+	</select>
+	
+	<select id="selectStoreOrderList" resultMap="storeOrderResult">
+		select 
+		       order_no
+		     , mno
+		     , user_id
+		     , user_name
+		     , pay_amount
+		     , pay_date
+		     , pay_method
+		     , order_status
+		     , refund_date
+		 from pay
+		left join s_refund using (order_no)
+		join member using(mno)
+		order by order_no desc
+	</select>
+	
+	<delete id="deleteStoreOrder">
+		delete 
+		  from pay 
+		 where order_no = #{storeNo}
+	</delete>
 	
 	
 	
 	
 	
-	
+	<select id="selectStoreOrder" resultMap="storeOrderResult">
+		select
+		       order_no
+		     , mno
+		     , user_name
+		     , address
+		     , pay_amount
+		     , to_char(pay_date, 'YYYY-MM-DD HH24:MI:SS') pay_date
+		     , pay_method
+		     , order_status
+		     , pay_status
+		     , deposit_ck
+		     , use_point
+		     , use_coupon
+		     , pay.point
+		     , d_fee
+		     , REFUND_DATE
+		     , REFUND_NO
+		     , REFUND_STATUS
+		 from pay
+		left join s_refund using (order_no)
+		join member using(mno)
+		where order_no = #{sOrderNo}
+     
+	</select>
 	
 	
 	

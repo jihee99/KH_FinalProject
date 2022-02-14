@@ -14,13 +14,16 @@ label[for="class"], label[for="store"]{top: -1.5px; margin-top: 4px;}
 .content_1 table input[type="text"]{width:250px;}
 .content_1 button{width: 99%; height: 160px;}
 
-.content_2{width: 100%; font-size: 14px; margin-top:20px;}
-.content_2>b{float:left; margin-left: 10px; font-size: 16px; line-height: 33px;}
-#orderTable{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
-#orderTable thead{line-height: 35px; font-size: 14px; background: lightgray;}
+#classArea{width: 100%; font-size: 14px; margin-top:20px;}
+#classArea>b{float:left; margin-left: 10px; font-size: 16px; line-height: 33px;}
+#storeArea{width: 100%; font-size: 14px; margin-top:20px;}
+#storeArea>b{float:left; margin-left: 10px; font-size: 16px; line-height: 33px;}
+#classTable{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
+#classTable thead{line-height: 35px; font-size: 14px; background: lightgray;}
+#storeTable{margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;}
+#storeTable thead{line-height: 35px; font-size: 14px; background: lightgray;}
 
-
-.content_2>button{
+.delBtn{
     float: right; margin-right: 10px; margin-bottom: 5px;
     font-weight: bold; color: white;
     background: rgb(172, 11, 11);
