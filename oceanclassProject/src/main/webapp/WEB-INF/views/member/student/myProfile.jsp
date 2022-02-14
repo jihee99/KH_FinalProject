@@ -124,7 +124,7 @@
 	      		</div>
 				<div class="modal-body">
 					<input type="hidden" id="memNo" value="${loginUser.memNo}">
-					<p style="text-align:center;">변경할 비밀번호 : <input type="password" id="newPwd" name="newPwd" required></p>
+					<p style="text-align:center;">변경할 비밀번호 : <input type="password" id="newPwd" name="newPwd" placeholder="영문,숫자 포함 6자리 이상" required></p>
 					<p style="text-align:center; margin-left: 18px;">비밀번호 확인 : <input type="password" id="checkPwd" name="cheeckPwd"></p>
 					<button type="button" id="changeBtn" class="btn btn-light btn-sm btn-block" style="margin:0 auto;">비밀번호 변경</button>
 				</div>
@@ -144,10 +144,30 @@
 		}
 		
 		$("#changeBtn").click(function(){
+			
+			var newPwd = $("#newPwd").val();
+			console.log(newPwd);
+			// 비밀번호 정규 표현식
+			const pwExp =/^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{6,15}$/i;
+			if (!pwExp.test(newPwd)) {
+				console.log("여기");
+				alert("비밀번호는 영문, 숫자 포함 6~15자리 입니다.");
+				$("#newPwd").val('');
+				$("#checkPwd").val('');
+				$("#newPwd").focus();
+			} else{
+				console.log("저기");
+				insertPwd();
+			}
+		
+		});
+		
+		function insertPwd(){
+			
 			var newPwd = $("#newPwd").val();
 			var checkPwd = $("#checkPwd").val();
-			var memNo = $("#memNo").val();
-			console.log(memNo);
+			var memNo = $("#memNo").val();	
+		
 			if(newPwd != checkPwd){
 				alert("비밀번호가 일치하지 않습니다");
 				$("#newPwd").val('');
@@ -168,7 +188,8 @@
 							
 				})
 			}
-		});
+		}
+			
 		
 	</script>
 
