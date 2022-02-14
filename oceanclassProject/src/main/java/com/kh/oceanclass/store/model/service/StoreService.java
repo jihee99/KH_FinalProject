@@ -13,6 +13,9 @@ public interface StoreService {
 	int selectListCount();
 	ArrayList<Product> selectList(PageInfo pi);
 	
+	// 1-2. 스토어 카테고리 검색
+	ArrayList<Product> categorySearch(String category);
+	
 	// 2. 상품 상세조회용 서비스
 	Product selectProduct(int productNo);
 	

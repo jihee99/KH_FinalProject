@@ -52,14 +52,16 @@
 
 	<div id="outer">
 		<div id="selectBar" class="form-group">
-			<select class="form-control" id="sel1" style="width: 15%; float: left; margin-right: 10px;">
+		<form action="storeSearchList.st" method="post">
+			<select class="form-control" name="sel1" id="sel1" style="width: 15%; float: left; margin-right: 10px;">
 				<option value="1">CLASS PRODUCT</option>
 				<option value="2">OC EDITION</option>
 				<option value="3">DIY KIT</option>
 				<option selected style="display: none;">카테고리</option>
 			</select>
-
-			<select id="order" class="form-control" id="sel1" style="width: 15%;">
+		</form>
+			
+			<select id="order" class="form-control" name="sel2" id="sel2" style="width: 15%;">
 				<option selected>인기순</option><!-- 구매수 높은 순 -->
 				<option>추천순</option><!-- 찜수 높은 순 -->
 				<option>리뷰순</option>
@@ -109,10 +111,55 @@
 				</c:choose>
 			</ul>
 		</div>
+		
+	</div>
 
 	
 		
 	<jsp:include page="../common/footerBar.jsp" />
+	
+	<script>
+		$("select[name=sel1]").change(function(){
+			console.log($(this).val()); //value값 가져오기
+			
+			//$((this)).val().submit();
+		});
+		
+    	$(function(){
+    		$("#sel1").change(function(){
+        		let value = $(this).val();
+        		//console.log(value);
+        		$.ajax({
+        			url:"categorySearch.cs",
+        			data:{category:value},
+        			success:function(list){
+        				console.log(list);
+        				let value = "";
+        				for(let i in list){
+        					value += "<div class='item' style='margin-right: 62px;'>"
+        						   + 	"<img src='" + list[i].productImg0 + "' class='thumbnail'>"
+        	                	   + 	"<div style='font-size: 13px;'>" + "<b>" + list[i].memberNo + "</b>" + "</div>"
+        	                	   + 	"<div>" + list[i].title + "</div>"
+        	                	   + 	"<img src='resources/images/heart1.png' style='width: 15px; height: 15px;'>"
+        	                       + 	"<span>" + list[i].productNo + "</span>"
+        	                	   + 	"<div>"
+        	                       +		"<b>"
+        	                       + 			"<span>" + list[i].price + "</span>"
+        	                       +		"원"
+        	                       + 		"</b>"
+        	                       + 	"</div>"
+        	                	   + "</div>";
+        				}
+        				
+        				$(".items").html(value);
+        			},error:function(){
+        				alert("에러발생");
+        			}
+        		})
+        	})
+    	  })
+		
+	</script>
 
 </body>
 </html>

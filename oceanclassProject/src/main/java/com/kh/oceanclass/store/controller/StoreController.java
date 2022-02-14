@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.store.model.service.StoreService;
@@ -38,7 +41,7 @@ public class StoreController {
 	}
 	
 	@RequestMapping(value="storeSearchList.st")
-	public String selectSearchList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+	public String selectSearchList(@RequestParam(value="cpage",defaultValue="1")int currentPage, Model model) {
 		 
 		//System.out.println(currentPage);
 		int listCount = sService.selectListCount();
@@ -57,5 +60,21 @@ public class StoreController {
 	@RequestMapping(value="productMain.pr")
 	public String selectProduct() {
 		return "store/productDetailMain";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="categorySearch.cs", produces="application/json; charset=utf-8")
+	public String categorySearch(String category, Model model, ModelAndView mv) {
+		System.out.println(category);
+		
+		ArrayList<Product> list = sService.categorySearch(category);
+		//model.addAttribute("list", list);
+		
+		//mv.addObject("list", list)
+		  //.setViewName("store/storeSearchList");
+		
+		System.out.println(list);
+		
+		return new Gson().toJson(list);
 	}
 }
