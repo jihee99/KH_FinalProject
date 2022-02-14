@@ -147,12 +147,8 @@
 
                 price[i].innerHTML = price1 + "," + price2;
             }
-
-        }
-        
-        window.onload = function(){
-        	
-			var cpageD = document.getElementById("currentPateDate");
+            
+            var cpageD = document.getElementById("currentPateDate");
 			var keywordD = document.getElementById("keywordData");
 			var categoryD = document.getElementById("categoryData");
 			var arrayD = document.getElementById("arrayData");
@@ -186,7 +182,7 @@
 				case 'like' : arrayLike.selected = true; break;
 				case 'date' : arrayDate.selected = true; break;
 			}
-			
+
         }
         
 		function conditionCate(){
