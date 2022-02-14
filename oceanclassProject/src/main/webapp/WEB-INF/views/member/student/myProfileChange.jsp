@@ -61,15 +61,15 @@
 		                <h2>프로필 수정</h2>
 		            </div>
 		            <div id="join-form">
-		                <form id="changeProfile" method="post" action="changeProfile.me">
+		                <form id="changeProfile" method="post" action="changeProfile.me" enctype="multipart/form-data">
 		                	<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
 		                    <div class="box">
 		                   		<div id="preview"></div>
 		                    </div>
 		                   
 		                    <div class="box">
-		                        <label class="textName" for="st/tc">프로필 이미지</label>
-		                        <input type="file" id="profileImg" name="profileImg" class="form-control" accept=".gif, .jpg, .png" style="width: 300px;">
+		                        <label class="textName" for="upfile">프로필 이미지</label>
+		                        <input type="file" id="upfile" name="upfile" class="form-control" accept=".gif, .jpg, .png" style="width: 300px;">
 		                    </div>
 		                 
 		
@@ -81,37 +81,134 @@
 		                    </div>
 		
 		                    <div class="box">
-		                        <label class="textName" for="userPwdCk">이름</label>
+		                        <label class="textName" for="userName">이름</label>
 		                        <div class="input-area">
-		                            <input type="text" id="userPwdCk" name="userPwdCk" value="${loginUser.userName}" disabled>
+		                            <input type="text" id="userName" name="uuserName" value="${loginUser.userName}" disabled>
 		                        </div>
 		                    </div>
 		
 		                    <div class="box">
-		                        <label class="textName" for="userId">닉네임<span class="star">*</span></label>
+		                        <label class="textName" for="nickName">닉네임<span class="star">*</span></label>
 		                        <div class="input-area">
 		                            <input type="text" id="nickName" name="nickName" class="w200" value="${loginUser.nickName}" required>
-		                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">중복 확인</button>
+		                            <button type="button" class="rightBtn btn-sm btn-light" onclick="nickCheck();">중복 확인</button>
 		                        </div>
 		                    </div>
-		
+		                    
+		                    <script>
+		                    	function nickCheck(){
+		                    		let $nickInput = $("#nickName").val();
+									const nickExp = /^[가-힣\d]{2,6}$/;	// 닉네임 정규 표현식
+									
+									if (!nickExp.test($nickInput)) {
+										alert("한글과 숫자 2~6 자리로 입력해 주십시오.");
+										$("#nickName").val('');
+										$("#nickName").focus();
+									} else {
+										$.ajax({
+			                    			url:"checkNick.me",
+			                    			data:{nickName:$nickInput},
+			                    			success:function(result){
+			                    				//console.log(result);
+			                    				if(result>0){
+			                    					alert("중복된 닉네임입니다. 다른 닉네임을 사용해주세요.");
+			                    					$("#nickName").val('');
+													$("#nickName").focus();
+			                    				}else{
+				                    				alert("사용가능한 닉네임입니다");
+			                    				}
+			                    			},error:function(){
+			                    				console.log("닉네임중복체크실패");
+			                    			}
+			                    		})
+									}
+		                    	}
+		                    </script>
+		                     
 		                    <div class="box">
-		                        <label class="textName" for="userId">휴대전화 번호<span class="star">*</span></label>
+		                        <label class="textName" for="phone">휴대전화 번호<span class="star">*</span></label>
 		                        <div class="input-area">
 		                            <input type="text" id="phone" name="phone" class="w200" value="${loginUser.phone}" required>
-		                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">본인 인증</button>
+		                            <button type="button" class="rightBtn btn-sm btn-light" onclick="phoneCheck();">본인 인증</button>
 		                        </div>
+		                        <div id="phoneResult" style="font-size:0.8em;"></div>
 		                    </div>
+		                    
+		                    <script>
+								$(function(){
+			                		
+									const phoneExp = /^[\d]{11}$/; // 휴대번호 정규 표현식
+									
+									$('#phone').blur(function () {
+										if (!phoneExp.test($(this).val())) {
+											$('#phoneResult').text("올바른 휴대폰 번호를 숫자만 입력해 주세요.");
+											$('#phoneResult').css('color', 'red');
+											$('#phone').css('border', '2px solid red');
+											$("#joinForm :submit").attr("disabled", true)
+										} else {
+											$('#phoneResult').text("본인인증을 진행해주세요.");
+											$('#phoneResult').css('color', 'blue');
+											$('#phone').css('border', '1px solid black');
+										}
+									});
+			                	});
+			                	
+			                	var code2 = ""; 
+			                    function phoneCheck(){ 
+			                    	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); 
+			                    	var phone = $("#phone").val(); 
+			                    		$.ajax({ 
+			                    			type:"GET", 
+			                    			url:"phoneCheck?phone=" + phone, 
+			                    			cache : false, 
+			                    			success:function(data){ 
+			                   					if(data == "error"){ 
+			                   						alert("휴대폰 번호가 올바르지 않습니다.") 
+			                   						$("#PhoneChk").text("유효한 번호를 입력해주세요."); 
+			                   						$("#PhoneChk").css("color","red"); 
+			                   						$("#phone").attr("autofocus",true); 
+			                    				}else{ 
+			                    					$("#phone2").attr("disabled",false); 
+			                    					$("#phoneChk2").css("display","inline-block"); 
+			                    					$("#PhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오."); 
+			                    					$("#PhoneChk").css("color","green"); 
+			                    					$("#phone").attr("readonly",true); 
+			                    					code2 = data; 
+			                    				} 
+			                    			} 
+			                    	}); 
+			                    };
+							</script>
+		                    
 		                    <div class="box">
 		                        <label class="textName"></label>
 		                        <div class="input-area">
 		                            <input type="text" id="checkNo" name="checkNo" placeholder="인증번호" required>
-		                            <button type="button" class="rightBtn btn-sm btn-light" onclick="idCheck();">인증 확인</button>
+		                            <button type="button" class="rightBtn btn-sm btn-light" onclick="numCheck();">인증 확인</button>
+		                            <input type="hidden" id="phoneDoubleChk"/>
 		                        </div>
+		                        <div id="PhoneChk" style="font-size:0.8em;"></div>
 		                    </div>
 		                    
+		                    <script>
+		                    //휴대폰 인증번호 대조 
+		                    function numCheck(){ 
+			                  	  if($("#checkNo").val() == code2){ 
+			                  		  $("#PhoneChk").text("인증번호가 일치합니다."); 
+			                  		  $("#PhoneChk").css("color","green"); 
+			                  		  $("#phoneDoubleChk").val("true"); 
+			                  		  $("#checkNo").attr("disabled",true); 
+			                  	  }else{ 
+			                  		  $("#PhoneChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다."); 
+			                  		  $("#PhoneChk").css("color","red"); 
+			                  		  $("#phoneDoubleChk").val("false"); 
+			                  		  $(this).attr("autofocus",true); 
+			                  	} 
+			                  };
+		                    </script>
+		                    
 		                    <div class="button">
-							    <button type="submit" id="changeBtn" class="btn">수정</button>
+							    <button type="submit" class="btn">수정</button>
 							    <button type="reset" class="btn btn-light">취소</button>
 							</div>
 		                </form>
@@ -124,7 +221,7 @@
 	</table>
 	
 	<script>
-		$('#profileImg').change(function(){
+		$('#upfile').change(function(){
 			setPreview(this);
 		})
 		

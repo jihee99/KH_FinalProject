@@ -77,20 +77,95 @@
 	<select id="selectQnaList" resultMap="myQnaResult">
 		select
 		       qno
-		     , nickname
 		     , category
 		     , q_title
+		     , q_content
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-		     , password
 		     , a_content
 		     , a_date
 		  from qna
-		  join member using (mno)
 		 where mno = #{memNo}
 		 order
 		    by qno desc
 	</select>
+	 
+	<select id="myQnaWeekCount" resultType="_int">
+		select
+			   count(*)
+		  from qna
+		 where mno = #{memNo}
+		   and round(sysdate - create_date) <![CDATA[<=]]> 7
+	</select>
 	
-
-
+	<select id="myQnaWeek" resultMap="myQnaResult">
+		select
+		       qno
+		     , category
+		     , q_title
+		     , q_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , a_content
+		     , a_date
+		  from qna
+		 where mno = #{memNo}
+		   and round(sysdate - create_date) <![CDATA[<=]]> 7 
+		 order
+		    by qno desc
+	</select>
+	
+	<select id="myQna2WeekCount" resultType="_int">
+		select
+			   count(*)
+		  from qna
+		 where mno = #{memNo}
+		   and round(sysdate - create_date) <![CDATA[<=]]> 14 
+	</select>
+	
+	<select id="myQna2Week" resultMap="myQnaResult">
+		select
+		       qno
+		     , category
+		     , q_title
+		     , q_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , a_content
+		     , a_date
+		  from qna
+		 where mno = #{memNo}
+		   and round(sysdate - create_date) <![CDATA[<=]]> 14
+		 order
+		    by qno desc
+	</select>
+	
+	<select id="myQnaMonthCount" resultType="_int">
+		select
+			   count(*)
+		  from qna
+		 where mno = #{memNo}
+		   and round(sysdate - create_date) <![CDATA[<=]]> 31
+	</select>
+	
+	<select id="myQnaMonth" resultMap="myQnaResult">
+		select
+		       qno
+		     , category
+		     , q_title
+		     , q_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , a_content
+		     , a_date
+		  from qna
+		 where mno = #{memNo}
+		   and round(sysdate - create_date) <![CDATA[<=]]> 31
+		 order
+		    by qno desc
+	</select>
+	
+	<select id="checkNick" resultType="_int">
+		select 
+			   count(*)
+  		  from member
+ 		 where nickname = #{nickName}
+	</select>
+	
 </mapper>

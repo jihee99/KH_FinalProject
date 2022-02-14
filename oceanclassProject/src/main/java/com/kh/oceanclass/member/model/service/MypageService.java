@@ -31,5 +31,13 @@ public interface MypageService {
 	// qna 리스트 조회
 	ArrayList<Qna> selectQnaList(PageInfo pi, int memNo);
 	
+	// qna 기간검색 갯수
+	int myQnaCount(Qna q);
+	
+	// qna 기간검색 리스트
+	ArrayList<Qna> selectMyQnaList(PageInfo pi, Qna q);
+	
+	// 닉네임 중복
+	int checkNick(String nickName);
 	
 }

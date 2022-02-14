@@ -56,5 +56,21 @@ public class MypageServiceImpl implements MypageService{
 		return myDao.selectQnaList(sqlSession, pi, memNo);
 	}
 
+	@Override
+	public int myQnaCount(Qna q) {
+		return myDao.myQnaCount(sqlSession, q);
+	}
+
+	@Override
+	public ArrayList<Qna> selectMyQnaList(PageInfo pi, Qna q) {
+		return myDao.selectMyQnaList(sqlSession, pi, q);
+	}
+
+	@Override
+	public int checkNick(String nickName) {
+		return myDao.checkNick(sqlSession, nickName);
+	}
+
+
 
 }

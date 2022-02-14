@@ -50,6 +50,8 @@
     #changeProfile{
         background-color: rgb(213, 232, 248); 
     }
+    .img{width: 200px; height: 200px; border:1px solid lightgray; margin: 0 auto; margin-bottom: 20px;}
+    .img>img{width: 100%;}
 </style>
 </head>
 <body>
@@ -69,7 +71,7 @@
 				    </div>
 				    <div id="join-form">
 				        <div class="box">
-				            <i class="bi bi-emoji-wink" style="font-size: 6rem;"></i>
+				            <div class="img"><img src="${loginUser.profileImg}"></div>
 				        </div>
 				     
 				        <div class="box">
@@ -164,9 +166,9 @@
 		
 		function insertPwd(){
 			
-			var newPwd = $("#newPwd").val();
-			var checkPwd = $("#checkPwd").val();
-			var memNo = $("#memNo").val();	
+			let newPwd = $("#newPwd").val();
+			let checkPwd = $("#checkPwd").val();
+			let memNo = $("#memNo").val();	
 		
 			if(newPwd != checkPwd){
 				alert("비밀번호가 일치하지 않습니다");
