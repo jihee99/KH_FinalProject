@@ -76,10 +76,6 @@
 	       	}
 	       	
 	       	function addCoupon(){
-	       		var couponName = $("#couponName").val()
-	       		console.log(couponName);
-	       		console.log($("#discount").val());
-	       		console.log($("#dedate").val());
 	       		
 	       		$.ajax({
 	       			url:"cenroll.ad",
