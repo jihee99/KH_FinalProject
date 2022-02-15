@@ -149,5 +149,59 @@
 			 where status = 'N'
 	</select>
 	
+	<insert id="insertEvent">
+		insert
+		  into event
+		  (
+		    ENO
+		  , MNO
+		  , CATEGORY
+		  , E_TITLE
+		  , E_CONTENT
+		  , IMG
+		  , TAG
+		  )
+		  values
+		  (
+		    seq_eno.nextval
+		  , #{memNo}
+		  , #{category}
+		  , #{eventTitle}
+		  , #{eventContent}
+		  , #{img}
+		  , #{tag}
+		  )
+	</insert>
 	
+	
+	<select id="selectEventAd" resultMap="eventResult">
+		select
+			    ENO
+			  , MNO
+			  , CATEGORY
+			  , E_TITLE
+			  , E_CONTENT
+			  , IMG
+			  , TAG
+		  from event
+		 where eno = #{eventNo}
+	</select>
+	
+	<update id="endEvent">
+		update
+        	   event
+		   set status = 'N' 
+		 where eno = #{eventNo}
+	</update>
+	
+	<update id="updateEvent">
+		update
+        	   event
+		   set category = #{category}
+		   	 , e_title = #{eventTitle}
+		     , e_content = #{eventContent}
+		     , img = #{img}
+		     , tag = #{tag}  
+		 where eno = #{eventNo}
+	</update>
 </mapper>

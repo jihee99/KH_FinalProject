@@ -21,19 +21,16 @@ public interface AdminEventService {
 	ArrayList<Event> statusNList(PageInfo pi);
 	
 	// 3. 이벤트 작성하기 서비스
-	int insertEvent(Event b);
+	int insertEvent(Event e);
 	
 	// 4. 이벤트 상세조회용 서비스
 	Event selectEvent(int eventNo);
 	
-	// 5. 이벤트 삭제용 서비스
-	int deleteEvent(int eventNo);
+	// 5. 이벤트 종료용 서비스
+	int endEvent(int eventNo);
 	
 	// 6. 이벤트 수정용 서비스
 	int updateEvent(Event e);
-	
-	// 7. 이벤트 종료용 서비스
-	int endEvent(Event e);
 	
 	
 }
