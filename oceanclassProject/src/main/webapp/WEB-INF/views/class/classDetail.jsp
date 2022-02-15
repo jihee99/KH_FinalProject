@@ -80,15 +80,15 @@
 
             <div id="classContent">
                 <div id="mainImg">
-                    <img src="${ c.clImg2 }" width="100%" height="500px">
+                    <img src="${ c.clImg2 }" width="100%">
                 </div>
                 <div id="curriculum" style="display:none;">
-                    <img src="${ c.clImg3 }" width="100%" height="500px">
+                    <img src="${ c.clImg3 }" width="100%">
                 </div>
                 <div id="kit" style="display:none;">
                 	<c:choose>
                 		<c:when test="${ c.kit == 'Y' }">
-		                    <img src="${ c.clKitImg }" width="100%" height="500px">
+		                    <img src="${ c.clKitImg }" width="100%">
                 		</c:when>
                 		<c:otherwise>
                 			<br>
