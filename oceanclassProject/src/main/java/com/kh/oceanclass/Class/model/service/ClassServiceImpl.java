@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.Class.model.dao.ClassDao;
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
@@ -54,6 +55,31 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public int deleteClassLike(LikeVo li) {
 		return cDao.deleteClassLike(sqlSession, li);
+	}
+
+	@Override
+	public ArrayList<ClassReview> selectClassReviewList(int clNo) {
+		return cDao.selectClassReviewList(sqlSession, clNo);
+	}
+
+	@Override
+	public ArrayList<ClassReview> selectClassReviewTopList(int clNo) {
+		return cDao.selectClassReviewTopList(sqlSession, clNo);
+	}
+
+	@Override
+	public ArrayList<ClassReview> selectClassReviewMainList(int clNo) {
+		return cDao.selectClassReviewMainList(sqlSession, clNo);
+	}
+
+	@Override
+	public int classReviewListCount(int clNo) {
+		return cDao.classReviewListCount(sqlSession, clNo);
+	}
+
+	@Override
+	public ArrayList<ClassReview> selectClassReviewListPaging(int clNo, PageInfo pi) {
+		return cDao.selectClassReviewListPaging(sqlSession, clNo, pi);
 	}
 
 
