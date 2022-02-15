@@ -12,15 +12,12 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./resources/css/helpMain.css?6">
 <style>
+	#option{float:left;}
 	.middle{
 		width: 100%;
 		margin: auto;
 		margin-top: 50px;
 		margin-bottom: -20px;
-	}
-	#category{
-		width: 10%;
-		float:left
 	}
     .middle input{
     	width: 200px; 
