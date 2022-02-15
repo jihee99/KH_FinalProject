@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
@@ -77,5 +78,18 @@ public class MypageDao {
 	public int checkNick(SqlSessionTemplate sqlSession, String nickName){
 		return sqlSession.selectOne("myMapper.checkNick", nickName);
 	}
+	
+	public int likeClassCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("myMapper.likeClassCount", memNo);
+	}
+	
+	public ArrayList<ClassVo> selectLikeClass(SqlSessionTemplate sqlSession, PageInfo pi, int memNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("myMapper.selectLikeClass", memNo, rowBounds);
+	}
+	
 
 }// class

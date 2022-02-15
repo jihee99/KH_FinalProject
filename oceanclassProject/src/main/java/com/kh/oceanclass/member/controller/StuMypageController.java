@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -209,10 +210,9 @@ public class StuMypageController {
 		return result;
 	}
 	
-	
-	
 	// 넘어온 첨부파일 그자체를 서버 폴더에 저장
 	public String saveFile(MultipartFile upfile, HttpSession session) {
+
 		String originName = upfile.getOriginalFilename(); // "flower.png"
 		
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // 년월일시분초
@@ -232,4 +232,28 @@ public class StuMypageController {
 		
 		return changeName;
 	}
+	
+	// 찜한 클래스
+	@RequestMapping("likeClass.me")
+	public String likeClass(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int likeClassCount = myService.likeClassCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(likeClassCount, currentPage, 5, 6);
+		ArrayList<ClassVo> list = myService.selectLikeClass(pi, memNo);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "member/student/myClassLike";
+	}
+	// 클래스 후기(리뷰)
+//	@RequestMapping("myReview.me")
+//	public String myReview(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+//		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+//		
+//		int reviewCount = myService.selectReviewCount(memNo);
+//		return "member/student/myClassReview";
+//	}
+	
 }
