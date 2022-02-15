@@ -177,10 +177,13 @@ public class StuMypageController {
 		Map<String, Object> map = new HashMap();
 		
 		int qnaCount = myService.myQnaCount(q);
-		//System.out.println(qnaCount);
 		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 5, 5);
 		ArrayList<Qna> list = myService.selectMyQnaList(pi, q);
 		
+		System.out.println(qnaCount);
+		//System.out.println(currentPage);
+		//System.out.println(list);
+	
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).category.equals("C")) {
 				list.get(i).category = "클래스";
