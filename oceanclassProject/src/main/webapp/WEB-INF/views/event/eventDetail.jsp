@@ -40,7 +40,7 @@
 	        <div class="reply">
 	        	<c:choose>
 	        		<c:when test="${not empty loginUser}">
-	        			<p>${loginUser.nickName}</p><input type="text"><button class="btn btn-sm">등록</button>
+	        			<p style="width:100px;">${loginUser.nickName}</p><input type="text"><button class="btn btn-sm">등록</button>
 	        		</c:when>
 	        		<c:otherwise>
 	        			<p></p><input type="text" placeholder="로그인 후 이용 가능합니다" disabled><button class="btn btn-sm">등록</button>
