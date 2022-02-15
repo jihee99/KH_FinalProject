@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +26,8 @@
         display: inline-block;
         width: 300px; 
         height: 250px;
+        margin:10px;
+        margin-bottom: 30px;
     }
 </style>
 </head>
@@ -33,214 +36,200 @@
         
         <p style="color: #6babd5; font-weight: bold;">실제 수강생 후기</p>
         <br>
+        
+        <c:choose>
+        	<c:when test="${ !empty crList }">
+		        <div id="starZone" align="center">
+		            <img src="resources/images/star.png" width="30px" height="30px">
+		            
+		    		<c:set var="starSum" value="0" />
+					<c:forEach var="cr" items="${ crList }">
+			    		<c:set var="starSum" value="${ starSum + cr.star }" />
+					</c:forEach>
+		            <c:set var="starAverage" value="${ starSum / crList.size() }" />
+					
+					<c:choose>
+						<c:when test="${ 1 <= starAverage && starAverage < 1.5 }">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+						</c:when>
+						<c:when test="${ 1.5 <= starAverage && starAverage < 2  }">
+							<img src="resources/images/star3.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+						</c:when>
+						<c:when test="${ 2 <= starAverage && starAverage < 2.5 }">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+						</c:when>
+						<c:when test="${ 2.5 <= starAverage && starAverage < 3 }">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star3.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+						</c:when>
+						<c:when test="${ 3 <= starAverage && starAverage < 3.5 }">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+						</c:when>
+						<c:when test="${ 3.5 <= starAverage && starAverage < 4 }">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star3.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+						</c:when>
+						<c:when test="${ 4 <= starAverage && starAverage < 4.5 }">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star2.png" width="30px" height="30px">
+						</c:when>
+						<c:when test="${ 4.5 <= starAverage && starAverage < 5 }">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star.png" width="30px" height="30px">
+							<img src="resources/images/star3.png" width="30px" height="30px">
+						</c:when>
+						<c:otherwise>
+				            <img src="resources/images/star.png" width="30px" height="30px">
+					        <img src="resources/images/star.png" width="30px" height="30px">
+					        <img src="resources/images/star.png" width="30px" height="30px">
+					        <img src="resources/images/star.png" width="30px" height="30px">
+						</c:otherwise>
+					</c:choose>	
+			
+		            <span id="average" style="font-size: 20px; font-weight: bold; margin-left: 5px;">
+	            		<fmt:formatNumber value="${ starAverage }" pattern=".0"/><br>
+		            </span>
+		            <br>
+		            
+		            <span style="color: gray; font-size: 15px;">총 ${ crList.size() }개</span>
+		            
+		            <button type="button" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px; margin-left: 10px; font-weight: bold;" data-toggle="modal" data-target="#reviewModal">후기 작성하기</button>
+		        </div>
+			
+				<c:if test="${ !empty crTopList }">
+			        <br>
+			        <div id="imgZone" align="center">
+			        	<c:forEach var="r" items="${ crTopList }">
+				            <img src="${ r.filePath }" width="100px" height="100">
+			        	</c:forEach>
+			        </div>
+				</c:if>
+	            <hr>
+		
+		        <div id="reviewZone">
+		        	<c:forEach var="r" items="${ crMainList }">
+		                <div class="bestReview">
+		                    <div class="profile">
+		                        <div style="float:left; margin-right: 10px;">
+		                            <img src="" width="50px" height="50px">
+		                        </div>
+		                        <div>
+		                            <div style="font-weight: bold;">${ r.memNo }</div>
+		                            <div style="display: flex;">
+		                                <div style="margin-right: 5px;">
+		                                    <img src="resources/images/star.png" width="12px" height="12px">
+											<c:choose>
+												<c:when test="${ 1.0 <= r.star && r.star < 1.5 }">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+												</c:when>
+												<c:when test="${ 1.5 <= r.star && r.star < 2.0  }">
+													<img src="resources/images/star3.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+												</c:when>
+												<c:when test="${ 2.0 <= r.star && r.star < 2.5 }">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+												</c:when>
+												<c:when test="${ 2.5 <= r.star && r.star < 3.0 }">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star3.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+												</c:when>
+												<c:when test="${ 3.0 <= r.star && r.star < 3.5 }">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+												</c:when>
+												<c:when test="${ 3.5 <= r.star && r.star < 4.0 }">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star3.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+												</c:when>
+												<c:when test="${ 4.0 <= r.star && r.star < 4.5 }">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star2.png" width="12px" height="12px">
+												</c:when>
+												<c:when test="${ 4.5 <= r.star && r.star < 5.0 }">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star3.png" width="12px" height="12px">
+												</c:when>
+												<c:otherwise>
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+													<img src="resources/images/star.png" width="12px" height="12px">
+												</c:otherwise>
+											</c:choose>		
 
-        <div id="starZone" align="center">
-            <img src="resources/images/star.png" width="30px" height="30px">
-            <img src="resources/images/star.png" width="30px" height="30px">
-            <img src="resources/images/star.png" width="30px" height="30px">
-            <img src="resources/images/star.png" width="30px" height="30px">
-            <img src="resources/images/star.png" width="30px" height="30px">
-            <span><b>4.9</b></span>
-            <span style="color: gray; font-size: 12px;">총 40개</span>
-            
-            <button type="button" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px; margin-left: 50px;" data-toggle="modal" data-target="#reviewModal">후기 작성하기</button>
-        </div>
-        <br>
-
-        <div id="imgZone" align="center">
-            <img src="" width="100px" height="100">
-            <img src="" width="100px" height="100">
-            <img src="" width="100px" height="100">
-            <img src="" width="100px" height="100">
-            <img src="" width="100px" height="100">
-            <hr>
-        </div>
-        <br>
-
-        <div id="reviewZone">
-            <div class="reviewContent1">
-                <div class="bestReview">
-                    <div class="profile">
-                        <div style="float:left; margin-right: 10px;">
-                            <img src="" width="50px" height="50px">
-                        </div>
-                        <div>
-                            <div style="font-weight: bold;">김하나</div>
-                            <div style="display: flex;">
-                                <div style="margin-right: 5px;">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                </div>
-                                <div style="font-size: 13px; color: gray; line-height: 27px;">2022년 01월 01일</div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="reviewContent" style="margin-top: 10px;">
-                        <pre style="width:100%; height:150px;">
-    이것은리뷰내용입니다
-    길게길게 써보는중~
-    여러
-    줄
-    작
-    성
-    시
-    옆에 스크롤~
-                        </pre>
-                    </div>
-    
-                    <div class="reivewFooter" style="font-size: 13px;">
-                        <span>댓글 0</span>
-                        <span>
-                            <img src="resources/images/like.png" width="15" height="15">
-                            0
-                        </span>
-                        <span style="float:right">신고하기</span>
-                    </div>
-                </div>
-    
-                <div class="bestReview" style="float: right;">
-                    <div class="profile">
-                        <div style="float:left; margin-right: 10px;">
-                            <img src="" width="50px" height="50px">
-                        </div>
-                        <div>
-                            <div style="font-weight: bold;">김하나</div>
-                            <div style="display: flex;">
-                                <div style="margin-right: 5px;">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                </div>
-                                <div style="font-size: 13px; color: gray; line-height: 27px;">2022년 01월 01일</div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="reviewContent" style="margin-top: 10px;">
-                        <pre style="width:100%; height:150px;">
-    이것은리뷰내용입니다
-    길게길게 써보는중~
-    여러
-    줄
-    작
-    성
-    시
-    옆에 스크롤~
-                        </pre>
-                    </div>
-    
-                    <div class="reivewFooter" style="font-size: 13px;">
-                        <span>댓글 0</span>
-                        <span>
-                            <img src="resources/images/like.png" width="15" height="15">
-                            0
-                        </span>
-                        <span style="float:right">신고하기</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="reviewContent2" style="margin-top: 30px;">
-                <div class="bestReview">
-                    <div class="profile">
-                        <div style="float:left; margin-right: 10px;">
-                            <img src="" width="50px" height="50px">
-                        </div>
-                        <div>
-                            <div style="font-weight: bold;">김하나</div>
-                            <div style="display: flex;">
-                                <div style="margin-right: 5px;">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                </div>
-                                <div style="font-size: 13px; color: gray; line-height: 27px;">2022년 01월 01일</div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="reviewContent" style="margin-top: 10px;">
-                        <pre style="width:100%; height:150px;">
-    이것은리뷰내용입니다
-    길게길게 써보는중~
-    여러
-    줄
-    작
-    성
-    시
-    옆에 스크롤~
-                        </pre>
-                    </div>
-    
-                    <div class="reivewFooter" style="font-size: 13px;">
-                        <span>댓글 0</span>
-                        <span>
-                            <img src="resources/images/like.png" width="15" height="15">
-                            0
-                        </span>
-                        <span style="float:right">신고하기</span>
-                    </div>
-                </div>
-    
-                <div class="bestReview" style="float: right;">
-                    <div class="profile">
-                        <div style="float:left; margin-right: 10px;">
-                            <img src="" width="50px" height="50px">
-                        </div>
-                        <div>
-                            <div style="font-weight: bold;">김하나</div>
-                            <div style="display: flex;">
-                                <div style="margin-right: 5px;">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                </div>
-                                <div style="font-size: 13px; color: gray; line-height: 27px;">2022년 01월 01일</div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="reviewContent" style="margin-top: 10px;">
-                        <pre style="width:100%; height:150px;">
-    이것은리뷰내용입니다
-    길게길게 써보는중~
-    여러
-    줄
-    작
-    성
-    시
-    옆에 스크롤~
-                        </pre>
-                    </div>
-    
-                    <div class="reivewFooter" style="font-size: 13px;">
-                        <span>댓글 0</span>
-                        <span>
-                            <img src="resources/images/like.png" width="15" height="15">
-                            0
-                        </span>
-                        <span style="float:right">신고하기</span>
-                    </div>
-                </div>
-            </div>
-            <br><br>
-
-            <div class="allReview">
-                <button type="button" class="btn" style="background-color: #6babd5; width: 100%; color: white;">모든 리뷰 보기</button>
-                <!-- 버튼 누르면 새창 띄워지게 -->
-            </div>    
-
-        </div>
+		                                </div>
+		                                <div style="font-size: 13px; color: gray; line-height: 27px;">${ r.createDate }</div>
+		                            </div>
+		                        </div>
+		                    </div>
+		    
+		                    <div class="reviewContent" style="margin-top: 10px;">
+		                        <pre style="width:100%; height:150px;">${ r.content }</pre>
+		                    </div>
+			    
+		                    <div class="reivewFooter" style="font-size: 13px;">
+		                        <span>댓글 0</span>
+		                        <span>
+		                            <img src="resources/images/like.png" width="15" height="15" style="margin-bottom: 5px; margin-left: 5px;"> ${ r.recommend }
+		                        </span>
+		                        <span style="float:right">신고하기</span>
+		                    </div>
+		                </div>
+		        	</c:forEach>
+	                
+		            <br><br>
+		            <div class="allReview">
+		                <button type="button" class="btn" style="background-color: #6babd5; width: 100%; color: white;" onclick="allReview(${c.clNo});">모든 리뷰 보기</button>
+		                <!-- 버튼 누르면 새창 띄워지게 -->
+		            </div>    
+		
+		        </div>
+        	</c:when>
+        	<c:otherwise>
+            	<div>
+            		아직 해당 클래스에 후기가 존재하지 않습니다.<br>
+            		후기를 작성해보세요!
+            	</div><br>
+	            <button type="button" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px;" data-toggle="modal" data-target="#reviewModal">후기 작성하기</button>
+        	</c:otherwise>
+        </c:choose>
     </div>
 
     <!-- 글 작성하기시 보여질 modal -->
@@ -268,5 +257,11 @@
         </form>
     </div>
 
-</body>
+	<script>
+		function allReview(clNo){
+            window.open("classReviewList.me?cpage=1&&clNo=" + clNo, "클래스리뷰목록", "width=650, height=800, resizeable=no, location=no");
+        }
+	</script>
+
+</body>	
 </html>

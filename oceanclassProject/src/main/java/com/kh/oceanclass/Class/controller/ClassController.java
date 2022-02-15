@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kh.oceanclass.Class.model.service.ClassServiceImpl;
 import com.kh.oceanclass.Class.model.vo.ClassLikeCk;
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
@@ -32,29 +33,41 @@ public class ClassController {
 	public String classDetail(LikeVo li, Model model, HttpSession session) {
 		// 클래스 상세보기
 		
+		// 조회수 증가
 		int result = cService.increaseCount(li.getReferNo());
 		
 		if(result > 0) {
-			// 조회수 증가 성공 -> 정상적인 페이지 -> 내용 넣어서 상세보기 해오기
 			if(session.getAttribute("loginUser") != null) {
 				// 로그인 한 회원이라면 찜 했는지 안했는지도 확인하기
 				int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 				li.setMemNo(memNo);
 				int ckResult = cService.checkClassLike(li);
 				if(ckResult > 0) {
-					// 찜 되어있는 상태
 					model.addAttribute("likeCk", "Y");
 				} else {
-					// 찜 안되어있는 상태
 					model.addAttribute("likeCk", "N");
 				}
 			} 
-			
+			// 클래스 정보
 			ClassVo c = cService.selectClass(li.getReferNo());
+			// 클래스 리뷰 리스트
+			ArrayList<ClassReview> crList = cService.selectClassReviewList(li.getReferNo());
+			// 리뷰 메인 4개 리스트 (도움순) + 리뷰 top5 (이미지)
+			if(!crList.isEmpty()) {
+				ArrayList<ClassReview> crMainList = cService.selectClassReviewMainList(li.getReferNo());
+				model.addAttribute("crMainList", crMainList);
+				
+				ArrayList<ClassReview> crTopList = cService.selectClassReviewTopList(li.getReferNo());
+				if(!crTopList.isEmpty()) {
+					model.addAttribute("crTopList", crTopList);
+				}
+			}
+			
 			model.addAttribute("c", c);
+			model.addAttribute("crList", crList);
 			return "class/classDetail";
 		} else {
-			session.setAttribute("alertMsg", "조회할 수 없는 클래스입니다.");
+			session.setAttribute("alertMsg", "잘못 된 접근입니다.");
 			return "redirect:/";
 		}
 		
@@ -133,6 +146,26 @@ public class ClassController {
 		return new Gson().toJson(lck);
 	}
 	
+	@RequestMapping(value="classReviewList.me")
+	public String classReviewList(int cpage, int clNo, Model model) {
+		// 클래스 리뷰 리스트 페이지
+		
+		int listCount = cService.classReviewListCount(clNo); // 조회할 리뷰 갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 3);
+		ArrayList<ClassReview> reviewList = cService.selectClassReviewListPaging(clNo, pi); // 클래스 리뷰 리스트(페이징 처리)
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("reviewClNo", clNo);
+		model.addAttribute("reviewList", reviewList);
+		return "class/classReviewList";
+	}
+	
+	@RequestMapping(value="classReviewDetail.me")
+	public String classReviewDetail() {
+		// 클래스 리뷰 디테일 이동용(뷰 확인용) 메소드
+		return "class/classReviewDetail";
+	}
+	
 	@RequestMapping(value="classPay.me")
 	public String classPay() {
 		// 클래스 결제 페이지 이동용(뷰 확인용) 메소드
@@ -145,16 +178,6 @@ public class ClassController {
 		return "class/classPayComplate";
 	}
 	
-	@RequestMapping(value="classReviewList.me")
-	public String classReviewList() {
-		// 클래스 리뷰 리스트 이동용(뷰 확인용) 메소드
-		return "class/classReviewList";
-	}
 	
-	@RequestMapping(value="classReviewDetail.me")
-	public String classReviewDetail() {
-		// 클래스 리뷰 디테일 이동용(뷰 확인용) 메소드
-		return "class/classReviewDetail";
-	}
 	
 }

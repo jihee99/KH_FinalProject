@@ -13,9 +13,8 @@
 <style>
     .outer{
         width: 600px;
-        height: 1100px;
+        height: 1000px;
         margin:auto;
-        border: 1px solid black;
     }
     .outer>div{
         margin: 30px;
@@ -24,6 +23,8 @@
 		width:fit-content;
 		margin:auto;
 		margin-top: 50px;
+	}
+	.reviewItem{
 		margin-bottom: 50px;
 	}
 </style>
@@ -32,163 +33,120 @@
 
     <div class="outer">
         <div>
-            <div style="font-weight: bold; font-size: 17px;">실제 수강생 후기 전체 보기</div>
+            <div style="font-weight: bold; font-size: 17px; color: #6babd5;">실제 수강생 후기 전체 보기</div>
             <hr><br>
 
             <div id="reviewZone">
-                <div class="reviewContent">
-                    <div class="profile">
-                        <div style="float:left; margin-right: 10px;">
-                            <img src="" width="50px" height="50px">
-                        </div>
-                        <div>
-                            <div style="font-weight: bold;">김하나</div>
-                            <div style="display: flex;">
-                                <div style="margin-right: 5px;">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                </div>
-                                <div style="font-size: 13px; color: gray; line-height: 27px;">2022년 01월 01일</div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="reviewContent" style="margin-top: 10px;">
-                        <pre style="width:100%; height:150px;">
-<img src="" width="200" height="100">
-이것은리뷰내용입니다
-길게길게 써보는중~
-여러
-줄
-작
-성
-시
-옆에 스크롤~
-                        </pre>
-                    </div>
-    
-                    <div class="reivewFooter" style="font-size: 13px;">
-                        <span>댓글 0</span>
-                        <span style="margin-left: 10px;">
-                            <img src="resources/images/like.png" width="15" height="15">
-                            0
-                        </span>
-                        <span style="float:right">신고하기</span>
-                    </div>
-                </div>
-                <br>
-
-                <div class="reviewContent">
-                    <div class="profile">
-                        <div style="float:left; margin-right: 10px;">
-                            <img src="" width="50px" height="50px">
-                        </div>
-                        <div>
-                            <div style="font-weight: bold;">김하나</div>
-                            <div style="display: flex;">
-                                <div style="margin-right: 5px;">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                </div>
-                                <div style="font-size: 13px; color: gray; line-height: 27px;">2022년 01월 01일</div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="reviewContent" style="margin-top: 10px;">
-                        <pre style="width:100%; height:150px;">
-이것은리뷰내용입니다
-길게길게 써보는중~
-여러
-줄
-작
-성
-시
-옆에 스크롤~
-                        </pre>
-                    </div>
-    
-                    <div class="reivewFooter" style="font-size: 13px;">
-                        <span>댓글 0</span>
-                        <span style="margin-left: 10px;">
-                            <img src="resources/images/like.png" width="15" height="15">
-                            0
-                        </span>
-                        <span style="float:right">신고하기</span>
-                    </div>
-                </div>
-                <br>
-
-                <div class="reviewContent">
-                    <div class="profile">
-                        <div style="float:left; margin-right: 10px;">
-                            <img src="" width="50px" height="50px">
-                        </div>
-                        <div>
-                            <div style="font-weight: bold;">김하나</div>
-                            <div style="display: flex;">
-                                <div style="margin-right: 5px;">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                    <img src="resources/images/star.png" width="12px" height="12px">
-                                </div>
-                                <div style="font-size: 13px; color: gray; line-height: 27px;">2022년 01월 01일</div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="reviewContent" style="margin-top: 10px;">
-                        <pre style="width:100%; height:150px;">
-이것은리뷰내용입니다
-길게길게 써보는중~
-여러
-줄
-작
-성
-시
-옆에 스크롤~
-                        </pre>
-                    </div>
-    
-                    <div class="reivewFooter" style="font-size: 13px;">
-                        <span>댓글 0</span>
-                        <span style="margin-left: 10px;">
-                            <img src="resources/images/like.png" width="15" height="15">
-                            0
-                        </span>
-                        <span style="float:right">신고하기</span>
-                    </div>
-                </div>
-                <br>
-
+            	<c:forEach var="ri" items="${ reviewList }">
+	            	<div class="reviewItem">
+		                <div class="profile">
+		                    <div style="float:left; margin-right: 10px;">
+		                        <img src="" width="50px" height="50px">
+		                    </div>
+		                    <div>
+		                        <div style="font-weight: bold;">${ ri.memNo }</div>
+		                        <div style="display: flex;">
+		                            <div style="margin-right: 5px;">
+		                                <img src="resources/images/star.png" width="12px" height="12px">
+		                                <c:choose>
+		                                	<c:when test="${ 1.0 <= ri.star && ri.star < 1.5 }">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+											</c:when>
+											<c:when test="${ 1.5 <= ri.star && ri.star < 2.0  }">
+												<img src="resources/images/star3.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+											</c:when>
+											<c:when test="${ 2.0 <= ri.star && ri.star < 2.5 }">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+											</c:when>
+											<c:when test="${ 2.5 <= ri.star && ri.star < 3.0 }">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star3.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+											</c:when>
+											<c:when test="${ 3.0 <= ri.star && ri.star < 3.5 }">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+											</c:when>
+											<c:when test="${ 3.5 <= ri.star && ri.star < 4.0 }">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star3.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+											</c:when>
+											<c:when test="${ 4.0 <= ri.star && ri.star < 4.5 }">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star2.png" width="12px" height="12px">
+											</c:when>
+											<c:when test="${ 4.5 <= ri.star && ri.star < 5.0 }">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star3.png" width="12px" height="12px">
+											</c:when>
+											<c:otherwise>
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+												<img src="resources/images/star.png" width="12px" height="12px">
+											</c:otherwise>
+		                                </c:choose>
+		                            </div>
+		                            <div style="font-size: 13px; color: gray; line-height: 27px;">${ ri.createDate }</div>
+		                        </div>
+		                    </div>
+		                </div>
+		
+		                <div class="reviewContent" style="margin-top: 10px;">
+		                    <pre style="width:100%; height:150px;">
+            					<c:if test="${ !empty ri.filePath }">
+<img src="${ ri.filePath }" width="400">
+								</c:if>
+${ ri.content }
+		                    </pre>
+						</div>
+		   
+		                <div class="reivewFooter" style="font-size: 13px;">
+		                    <span>댓글 0</span>
+		                    <span style="margin-left: 10px;">
+		                        <img src="resources/images/like.png" width="15" height="15"> ${ ri.recommend }
+		                    </span>
+		                    <span style="float:right">신고하기</span>
+		                </div>
+		            </div>
+				</c:forEach>
             </div>
-
+	            
+	
             <div id="pagingArea">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="">Previous</a></li>
-            
-                    <li class="page-item"><a class="page-link" href="">1</a></li>
-                    <li class="page-item"><a class="page-link" href="">2</a></li>
-                    <li class="page-item"><a class="page-link" href="">3</a></li>
-        
-                    <li class="page-item"><a class="page-link" href="">Next</a></li>
+                	<c:if test="${ pi.currentPage > 1 }">
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage - 1 }&clNo=${ reviewClNo }">Previous</a></li>
+					</c:if>
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ p }&clNo=${ reviewClNo }">${ p }</a></li>
+					</c:forEach>
+					<c:if test="${ pi.currentPage != pi.maxPage }">
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage + 1 }&clNo=${ reviewClNo }">Next</a></li>
+					</c:if>
                 </ul>
             </div>
         </div>
 
     </div>
-
-    <script>
-
-    </script>
 
 </body>
 </html>

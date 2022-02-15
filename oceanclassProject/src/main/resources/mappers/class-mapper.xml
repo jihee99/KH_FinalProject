@@ -20,6 +20,19 @@
 		<result column="nickname" property="memNo" />
 		<result column="like_count" property="like" />
 	</resultMap>
+	
+	<resultMap id="classReviewResult" type="ClassReview">
+		<result column="c_rno" property="crNo" />
+		<result column="clno" property="clNo" />
+		<result column="mno" property="memNo" />
+		<result column="user_name" property="memNo" />
+		<result column="content" property="content" />
+		<result column="star" property="star" />
+		<result column="filepath" property="filePath" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="reconum" property="recommend" />
+	</resultMap>
 
 	<update id="increaseCount">
 		update 
@@ -181,6 +194,78 @@
 		 where mno = #{memNo}
 		   and refer_no = #{referNo}
 	</delete>
+	
+	<select id="selectClassReviewList" resultMap="classReviewResult">
+		select c.c_rno
+		     , c.clno
+		     , user_name
+		     , c.content
+		     , c.star
+		     , c.FILEPATH
+		     , to_char(c.create_date, 'YYYY-MM-DD') as create_date
+		     , status
+   		     , (
+		        select count(*)
+		          from recommend
+		         where gb_no = 1
+		           and refer_no = c_rno
+		        ) as reconum
+		  from class_review c
+          join member using (mno)
+		 where status = 'Y'
+		   and clno = #{clNo}
+	     order
+   			by create_date desc
+	</select>
+	
+	<select id="selectClassReviewTopList" resultMap="classReviewResult">
+		select c.c_rno
+		     , c.clno
+		     , c.mno
+		     , c.FILEPATH
+		     , c.status
+		     , (
+		        select count(*)
+		          from recommend
+		         where gb_no = 1
+		           and refer_no = c_rno
+		        ) as reconum
+		  from class_review c
+		 where status = 'Y'
+		   and filePath is not null
+		   and clno = #{clNo}
+		 order
+		    by reconum desc
+	</select>
 
-
+	<select id="selectClassReviewMainList" resultMap="classReviewResult">
+		select c.c_rno
+		     , c.clno
+		     , user_name
+		     , c.content
+		     , c.star
+		     , c.FILEPATH
+		     , to_char(create_date, 'YYYY-MM-DD') as create_date
+		     , c.status
+		     , (
+		        select count(*)
+		          from recommend
+		         where gb_no = 1
+		           and refer_no = c_rno
+		        ) as reconum
+		  from class_review c
+          join member using (mno)
+		 where status = 'Y'
+		   and clno = #{clNo}
+		 order
+		    by reconum desc
+	</select>
+	
+	<select id="classReviewListCount" resultType="_int">
+		select count(*)
+		  from class_review
+		 where status = 'Y'
+		   and clNo = #{clNo}
+	</select>
+	
 </mapper>
