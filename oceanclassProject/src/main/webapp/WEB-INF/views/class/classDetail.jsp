@@ -79,7 +79,7 @@
             <br>
 
             <div id="classContent">
-                <div id="mainImg">
+                <div id="mainImage">
                     <img src="${ c.clImg2 }" width="100%">
                 </div>
                 <div id="curriculum" style="display:none;">
@@ -157,6 +157,18 @@
     </div>
 
     <script>
+
+        window.onload = function(){
+
+            var price = document.getElementById("classPrice").innerHTML;
+
+            var price1 = price.substring(0, price.length - 3);
+            var price2 = price.substring(price.length - 3);
+
+            document.getElementById("classPrice").innerHTML = price1 + "," + price2 + "원";
+
+        }
+
         function changeView(view){
             /* 네비 글씨 */
             let nevi1 = document.getElementById("nevi1");
@@ -167,7 +179,7 @@
             let nevi6 = document.getElementById("nevi6");
 
             /* 내용 */
-            let main = document.getElementById("mainImg");
+            let main = document.getElementById("mainImage");
             let curriculum = document.getElementById("curriculum");
             let kit = document.getElementById("kit");
             let review = document.getElementById("review");
@@ -262,17 +274,6 @@
             }
         }
 
-        window.onload = function(){
-
-            var price = document.getElementById("classPrice").innerHTML;
-
-            var price1 = price.substring(0, price.length - 3);
-            var price2 = price.substring(price.length - 3);
-
-            document.getElementById("classPrice").innerHTML = price1 + "," + price2 + "원";
-
-        }
-
         function likeCk(){
 
             if(document.getElementById("memNo").value == ""){
@@ -307,6 +308,7 @@
             }
               
         }
+
     </script>
 
     <jsp:include page="../common/footerBar.jsp" />
