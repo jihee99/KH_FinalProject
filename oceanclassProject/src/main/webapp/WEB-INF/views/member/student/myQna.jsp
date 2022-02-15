@@ -19,7 +19,7 @@
 		margin: 0 auto;
 		margin-top: 30px;
 		text-align: center;
-		margin-bottom: 50px;
+		margin-bottom: 50px; 
 	}
 	#question, #answer{
 		display: none;
@@ -27,6 +27,7 @@
 	}
 	#qna:hover{cursor:pointer;}
 	#answer p{font-size: 10px; margin-top: 20px;}
+	.selected{background:skyblue;}
 </style>
 </head>
 <body>
@@ -61,46 +62,99 @@
 				    <script>
 				    	$(function(){
 				    		$(".btn").click(function(){
-				    			let value = $(this).val();
-				    			let memNo = $("#memNo").val();	
-				    			//console.log(value);
-				    			$.ajax({
-				    				url:"ajaxMyQna.me",
-				    				data:{createDate: value,
-				    					  memNo: memNo},
-				    				success:function(result){
-				    					console.log(result);
-				    					let qna = '<tr id="qna">';
-				    					for(let i in result.list){
-				    						qna += '<td>' + result.list[i].createDate + '</td>'
-				    						 	 + '<td>' + result.list[i].category + '</td>'
-				    						 	 + '<td>' + result.list[i].qnaTitle + '</td>'
-				    						if(result.list[i].ansContent == ''){
-				    							qna += '<td>답변대기</td>'
-				    						}else{
-				    							qna += '<td>답변완료</td>'
-				    						}
-				    						qna += '</tr>' 
-				    							 + '<tr id="question">'
-				    						 	 + '<td></td>'
-				    						 	 + '<td>내용</td>'
-				    						 	 + '<td colspan="2" style="text-align: left; padding-left: 100px;">' + result.list[i].qnaContent + '</td>'
-				    						 	 + '</tr>'
-			    						 	if(result.list[i].ansContent != ''){
-				    							qna += '<tr id="answer"> <td></td> <td>답변</td> <td colspan="2" style="text-align: left; padding-left: 100px;">'
-				    								 + result.list[i].ansContent
-				    								 + '<p>'
-				    								 + result.list[i].ansDate
-				    								 + '</p></td></tr>'
-				    						}	 	 
-				    					}
-				    					console.log(qna);
-					    				$("#result").html(qna);
-				    				},error:function(){
-				    					console.log("에러ㅠㅠ");
-				    				}
-				    			})
-				    		})
+				    			let value = $(this).val();			// 날짜버튼값
+					    		$(document).on("click", ".btn", function(){		// 클래스가 btn인 요소들에 click이벤트 발생시
+
+					    			let cpage = 1;
+					    			if($(this).is("a")){			// .btn중에 a태그인 것을 찾아서 현재페이지값 저장
+					    				cpage = $(this).text();		
+					    			}
+					    			
+					    			let memNo = $("#memNo").val();	
+					    			
+					    			//console.log(value);
+					    			//console.log(cpage);
+					    			$.ajax({
+					    				url:"ajaxMyQna.me",
+					    				data:{createDate: value,		// 날짜
+					    					  memNo: memNo,				// 회원번호
+					    					  cpage: cpage},			// 현재페이지수
+					    				success:function(result){
+					    					let qna = '';
+					    					for(let i in result.list){
+					    						let answer = result.list[i].ansContent;
+					    						qna += '<tr id="qna">'
+					    							 + '<td>' + result.list[i].createDate + '</td>'
+					    						 	 + '<td>' + result.list[i].category + '</td>'
+					    						 	 + '<td>' + result.list[i].qnaTitle + '</td>'
+					    						if(!(answer == "" || answer == null || answer == "undefined" || answer == undefined)){
+					    							qna += '<td>답변완료</td>'
+					    						}else{
+					    							qna += '<td>답변대기</td>'
+					    						}
+					    						//console.log("중간" + qna);
+					    						qna += '</tr>' 
+					    							 + '<tr id="question">'
+					    						 	 + '<td></td>'
+					    						 	 + '<td>내용</td>'
+					    						 	 + '<td colspan="2" style="text-align: left; padding-left: 100px;">' + result.list[i].qnaContent + '</td>'
+					    						 	 + '</tr>'
+				    						 	//if(answer != "" || answer != null || answer != "undefined" || answer != undefined){
+				    						 	//if(!answer){
+				    						 	//if(typeof answer != "" || answer != null || answer != "undefined" || answer != undefined){ 
+				    						 	if(!(answer == "" || answer == null || answer == "undefined" || answer == undefined)){
+					    							 qna += '<tr id="answer"> <td></td> <td>답변</td> <td colspan="2" style="text-align: left; padding-left: 100px;">'
+					    								  + result.list[i].ansContent
+					    								  + '<p>'
+					    								  + result.list[i].ansDate
+					    								  + '</p></td></tr>'
+					    						}else{
+					    							qna += ''
+					    						}	 	 
+					    						//console.log(result.list[i].ansContent)
+					    					}
+					    					//console.log(qna);
+						    				$("#result").html(qna);
+						    				
+						    				// ajax 결과 클릭 시 내용답변 뿌려주는 
+											$("#myQna>tbody>#qna").click(function(){
+												$(this).toggleClass("selected");
+												$("#myQna>tbody>#qna").not(this).removeClass("selected");
+												var targetQ = $(this).next();
+												var targetA = $(this).next().next();
+												//console.log(targetQ.text());
+												targetQ.fadeToggle(200);
+												targetA.fadeToggle(200);
+											});
+						    				
+						    					let page = '<ul class="pagination">';
+							    					if(result.pi.currentPage == 1 ){
+							    						page += '<li class="page-item disabled"> <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+							    					}else{
+							    						page += '<li class="page-item"><a class="page-link btn">Previous</a></li>'
+							    					}
+							    					
+													for(let j=result.pi.startPage; j<=result.pi.endPage; j++){
+														page += '<li class="page-item"><a class="page-link btn">'
+															  + j 
+															  + '</a></li>'
+													}
+													
+													if(result.pi.currentPage == result.pi.maxPage){
+														page += '<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' 
+													}else{
+														page += '<li class="page-item"><a class="page-link btn">Next</a></li>'
+													}
+						    					page += '</ul>'
+						    					$("#paging").html(page);
+						    					//console.log(page);
+						    				
+					    				},error:function(){
+					    					console.log("에러ㅠㅠ");
+					    				}
+					    			})
+					    		})
+					    	})
 				    	})
 				    </script>
 				    
@@ -144,6 +198,21 @@
 				            </c:forEach>
 				        </tbody>
 				    </table>
+				    
+				    <script>
+						$(function(){
+							$("#myQna>tbody>#qna").click(function(){
+								//console.log($(this));
+								$(this).toggleClass("selected");
+								$("#myQna>tbody>#qna").not(this).removeClass("selected");
+								var targetQ = $(this).next();
+								var targetA = $(this).next().next();
+								//console.log(targetQ.text());
+								targetQ.fadeToggle(200);
+								targetA.fadeToggle(200);
+							});
+						});
+					</script>
 			    
 			    	<div id="paging">
 						<ul class="pagination">
@@ -154,13 +223,13 @@
 									</li>
 								</c:when>
 								<c:otherwise>
-									<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ pi.currentPage-1 }">Previous</a></li>
+									<li class="page-item"><a class="page-link" href="myQna.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
 								</c:otherwise>
 							</c:choose>
 							
 							
 							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-								<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ p }">${ p }</a></li>
+								<li class="page-item"><a class="page-link" href="myQna.me?cpage=${ p }">${ p }</a></li>
 							</c:forEach>
 							
 							
@@ -171,26 +240,13 @@
 									</li>
 								</c:when>
 								<c:otherwise>
-									<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ pi.currentPage+1 }">Next</a></li>
+									<li class="page-item"><a class="page-link" href="myQna.me?cpage=${ pi.currentPage+1 }">Next</a></li>
 								</c:otherwise>
 							</c:choose>
 			            </ul>
 			        </div>
 					
-					<script>
-						$(function(){
-							$("#myQna>tbody>#qna").click(function(){
-								//console.log($(this));
-								$(this).toggleClass("selected");
-								$("#myQna>tbody>#qna").not(this).removeClass("selected");
-								var targetQ = $(this).next();
-								var targetA = $(this).next().next();
-								//console.log(targetQ.text());
-								targetQ.slideToggle(200);
-								targetA.slideToggle(200);
-							});
-						});
-					</script>
+					
 				</div>	
 			</td>
 		</tr>
