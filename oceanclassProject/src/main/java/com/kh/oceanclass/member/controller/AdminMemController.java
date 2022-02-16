@@ -19,7 +19,9 @@ import com.kh.oceanclass.member.model.service.AdminMemService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreRefund;
 
 /*관리자 회원관리 관련 기능*/
 
@@ -248,14 +250,42 @@ public class AdminMemController {
 	@RequestMapping(value="sodetail.ad")
 	public String selectStoreOrderDetailF(String ono, Model model) {
 		StoreOrder so = adMemService.selectStoreOrder(ono);
+		ArrayList<StoreBuyList> buylist = adMemService.selectBuyList(ono);
+		System.out.println(buylist);
 		model.addAttribute("sOrder", so);
+		model.addAttribute("buylist", buylist);
 		return "member/admin/adminOrderDetail";
 	}
 	
+	@RequestMapping(value="orcancleF.ad")
+	public String orderCancleFrom(String ono, Model model) {
+		StoreOrder so = adMemService.selectStoreOrder(ono);
+		model.addAttribute("order", so);
+		System.out.println(so);
+		return "member/admin/adminOrderCancleForm";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="orcancle.ad")
+	public String orderCancle(StoreRefund refund, Model model) {
+		System.out.println(refund);
+		int result1 = adMemService.insertStoreRefund(refund);
+		int result2 = adMemService.updateStoreOrderCancle(refund);
+		return result1*result2 >0? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="orsupdate.ad")
+	public String updateorderStatus(StoreOrder order) {
+		System.out.println(order);
+		int result = adMemService.updateorderStatus(order);
+		
+		return result >0? "success" : "fail";
+	}
 	
 	@RequestMapping(value="rplist.ad")
 	public String adminReportList() {
+		
 		return "member/admin/adminReportList";
 	}
 }

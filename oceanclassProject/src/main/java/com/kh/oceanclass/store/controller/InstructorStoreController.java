@@ -70,7 +70,27 @@ public class InstructorStoreController {
 				oplist.get(i).setPrice(option.getPrice());
 			}
 		}	
+		for(int i=0; i<upfile.length; i++) {
+			System.out.println(upfile[i]);
+		}
+		System.out.println();
 		
+		for(int i=0; i<upfile.length; i++) {
+			System.out.println(upfile[i]);
+			if(!upfile[i].getOriginalFilename().equals("")) {
+				String changeName = saveFile(upfile[i], session);
+				if(i==0) {
+					p.setProductImg0("resources/uploadFiles/" + changeName);
+				} else if(i==1) {
+					p.setProductImg1("resources/uploadFiles/" + changeName);
+	 			} else if(i==2) {
+	 				p.setProductImg2("resources/uploadFiles/" + changeName);
+	 			} else {
+	 				p.setProductImg3("resources/uploadFiles/" + changeName);
+	 			}
+			}
+		}
+		/*
 		ArrayList<String> changeList = saveFile(upfile, session);
 		//System.out.println(changeList);
 		
@@ -86,6 +106,8 @@ public class InstructorStoreController {
  			}
 		}
 		//System.out.println(p);
+		*/
+		System.out.println(p);
 		
 		int result1 = inStoreService.insertProduct(p);
 		int result2 = 1;
@@ -143,11 +165,11 @@ public class InstructorStoreController {
 		//옵션수정파트먼저
 		int result1 = 1;			// 옵션 개수가 변하지 않거나 작을때 결과
 		int result2 = 1;			// 옵션 개수가 변했을 때 결과
-		// 1. 옵션이 원래 있었을 때
+
 		if(option.getOptionNo() != null) {
 			String[] opNameArr = option.getOptionName().split(",");
 			String[] opNoArr = option.getOptionNo().split(",");
-			
+			// 1. 옵션이 원래 있었을 때			
 			for(int i=0; i<opNameArr.length; i++) {
 				System.out.println(i +" : " + opNameArr[i]);
 			}
@@ -167,29 +189,30 @@ public class InstructorStoreController {
 			for(int i=0; i<opNoArr.length; i++) {
 				oplist.get(i).setOptionNo(opNoArr[i]);
 			}
-			
+			//System.out.println("0-----------------옵션수정------------------");
 			for(int i=0; i<oplist.size(); i++) {
 				if(oplist.get(i).getOptionNo() != null) {
 					result1 *= inStoreService.updateProductOption(oplist.get(i));
 				}else {
-					result1 *= inStoreService.insertProductOption(oplist.get(i));
+					result1 *= inStoreService.upinsertProductOption(oplist.get(i));
 				}
+				System.out.println(oplist.get(i));
 			}
-			System.out.println("result1 : " + result1);
+			//System.out.println("0-----------------옵션수정------------------");
 		}
 		
 		
 		// 받아온 originName을 p객체에 삽입
 		for(int i = 0; i<originName.length; i++) {
 			if(i==0) {
-				p.productImg0 = originName[i];
+				p.setProductImg0("resources/uploadFiles/" + originName);
 			} else if(i==1) {
-				p.productImg1 = originName[i];
-			} else if(i==2) {
-				p.productImg2 = originName[i];
-			} else if(i==3) {
-				p.productImg3 = originName[i];
-			}
+				p.setProductImg1("resources/uploadFiles/" + originName);
+ 			} else if(i==2) {
+ 				p.setProductImg2("resources/uploadFiles/" + originName);
+ 			} else {
+ 				p.setProductImg3("resources/uploadFiles/" + originName);
+ 			}
 		}
 		
 		// 첨부파일 수정 섹션
@@ -223,20 +246,22 @@ public class InstructorStoreController {
 			}
 		}
 		
-		ArrayList<String> changeList = saveFile(reupfile, session);
-		
-		for(int i=0; i<changeList.size(); i++) {
-			if(i==0) {
-				p.productImg0 = changeList.get(i);
-			} else if(i==1) {
-				p.productImg1 = changeList.get(i);
- 			} else if(i==2) {
- 				p.productImg2 = changeList.get(i);
- 			} else {
- 				p.productImg3 = changeList.get(i);
- 			}
+		for(int i=0; i<reupfile.length; i++) {
+			System.out.println(reupfile[i]);
+			if(!reupfile[i].getOriginalFilename().equals("")) {
+				String changeName = saveFile(reupfile[i], session);
+				if(i==0) {
+					p.setProductImg0("resources/uploadFiles/" + changeName);
+				} else if(i==1) {
+					p.setProductImg1("resources/uploadFiles/" + changeName);
+	 			} else if(i==2) {
+	 				p.setProductImg2("resources/uploadFiles/" + changeName);
+	 			} else {
+	 				p.setProductImg3("resources/uploadFiles/" + changeName);
+	 			}
+			}
 		}
-		
+
 		result2 = inStoreService.updateProduct(p);
 		
 		System.out.println(result1);
@@ -311,6 +336,31 @@ public class InstructorStoreController {
 		}
 	}
 	
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+		
+		String originName = upfile.getOriginalFilename();
+		System.out.println(upfile);
+		System.out.println(originName);
+		// 20220118103507 =>년월일시분초
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());	// "20220118104009"
+		int ranNum = (int)(Math.random() * 90000 + 10000);	//23412 랜덤값
+		String ext = originName.substring(originName.lastIndexOf("."));	//".png"
+		System.out.println(ext);
+
+		String changeName = currentTime + ranNum + ext;
+		System.out.println(changeName);
+		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		return changeName;
+	}
+	
+	/* savefile배열로
 	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
 		
 		ArrayList<String> changeList = new ArrayList();
@@ -338,7 +388,7 @@ public class InstructorStoreController {
 		}
 		return changeList;
 	}
-	
+	*/
 
 		
 }

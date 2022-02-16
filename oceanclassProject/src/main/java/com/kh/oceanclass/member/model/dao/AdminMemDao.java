@@ -10,7 +10,9 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreRefund;
 
 @Repository
 public class AdminMemDao {
@@ -124,6 +126,22 @@ public class AdminMemDao {
 
 	public StoreOrder selectStoreOrder(SqlSessionTemplate sqlSession, String sOrderNo) {
 		return sqlSession.selectOne("adMemMapper.selectStoreOrder", sOrderNo);
+	}
+
+	public ArrayList<StoreBuyList> selectBuyList(SqlSessionTemplate sqlSession, String sOrderNo) {
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectStoreBuyList", sOrderNo);
+	}
+
+	public int insertStoreRefund(SqlSessionTemplate sqlSession, StoreRefund refund) {
+		return sqlSession.insert("adMemMapper.insertStoreRefund", refund);
+	}
+
+	public int updateStoreOrderCancle(SqlSessionTemplate sqlSession, StoreRefund refund) {
+		return sqlSession.update("adMemMapper.updateStoreOrderCancle", refund);
+	}
+
+	public int updateorderStatus(SqlSessionTemplate sqlSession, StoreOrder order) {
+		return sqlSession.update("adMemMapper.upadteOrderStatus", order);
 	}
 	
 

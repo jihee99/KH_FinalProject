@@ -2,7 +2,6 @@ package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
 
-import org.apache.catalina.Store;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,9 @@ import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.member.model.vo.Report;
+import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreRefund;
 
 @Service
 public class AdminMemServiceImpl implements AdminMemService {
@@ -193,6 +194,26 @@ public class AdminMemServiceImpl implements AdminMemService {
 	@Override
 	public StoreOrder selectStoreOrder(String sOrderNo) {
 		return adMemDao.selectStoreOrder(sqlSession, sOrderNo);
+	}
+
+	@Override
+	public ArrayList<StoreBuyList> selectBuyList(String sOrderNo) {
+		return adMemDao.selectBuyList(sqlSession, sOrderNo);
+	}
+
+	@Override
+	public int insertStoreRefund(StoreRefund refund) {
+		return adMemDao.insertStoreRefund(sqlSession, refund);
+	}
+
+	@Override
+	public int updateStoreOrderCancle(StoreRefund refund) {
+		return adMemDao.updateStoreOrderCancle(sqlSession, refund);
+	}
+
+	@Override
+	public int updateorderStatus(StoreOrder order) {
+		return adMemDao.updateorderStatus(sqlSession, order);
 	}
 
 
