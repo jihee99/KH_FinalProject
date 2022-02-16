@@ -106,10 +106,11 @@
                     <div class="box">
                         <label class="textName" for="">공지사항 카테고리<span class="star">*</span></label>
                         <div class="input-area">
-                            <select name="" id="">
-                                <option value="">클래스</option>
-                                <option value="">스토어</option>
-                                <option value="">강사</option>
+                            <select name="category" id="">
+                                <option value="C">클래스</option>
+			                    <option value="S">스토어</option>
+			                    <option value="T">강사</option>
+			                    <option value="E">기타</option>
                             </select>
                         </div>
                     </div>
@@ -131,9 +132,24 @@
                     <div class="box">
                         <label class="textName" for="">파일 첨부<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="file" id="" name="" required>
+                            <img id="imgFile" width="450" height="230" src="">
+                            <input type="hidden" name="filePath" value="${e.img}">
+                            <input type="hidden" name="img" value="${e.img}">
+                            <input type="file" id="" name="reupfile" onchange="loadImg(this);">
                         </div>
                     </div>
+                    <script>
+                        function loadImg(inputFile) {
+                            if(inputFile.files.length == 1) {
+                                const reader = new FileReader();
+                                reader.readAsDataURL(inputFile.files[0]);
+
+                                reader.onload = function(e) {
+                                    $("#imgFile").attr("src", e.target.result);
+                                }
+                            }
+                        }
+                    </script>
                     <div id="btnBox">
                         <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
                         <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>

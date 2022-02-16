@@ -106,10 +106,11 @@
                     <div class="box">
                         <label class="textName" for="">공지사항 카테고리<span class="star">*</span></label>
                         <div class="input-area">
-                            <select name="" id="">
-                                <option value="">클래스</option>
-                                <option value="">스토어</option>
-                                <option value="">강사</option>
+                            <select name="category" id="">
+                                <option value="C">클래스</option>
+			                    <option value="S">스토어</option>
+			                    <option value="T">강사</option>
+			                    <option value="E">기타</option>
                             </select>
                         </div>
                     </div>

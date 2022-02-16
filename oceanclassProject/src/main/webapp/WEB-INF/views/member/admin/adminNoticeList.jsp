@@ -138,11 +138,11 @@
             </div>
             <!-- 회원 조회 -->
             <div class="search-box pb-5">
-                <select class="selectpicker show-tick p-2" style="width: 120px;">
-                    <option>전체</option>
-                    <option>클래스</option>
-                    <option>스토어</option>
-                    <option>강사</option>
+                <select name="category" class="selectpicker show-tick p-2" style="width: 120px;">
+                    <option value="C">클래스</option>
+                    <option value="S">스토어</option>
+                    <option value="T">강사</option>
+                    <option value="E">기타</option>
                 </select>
                 <div class="search">
                     <form class="form-inline" action="">
