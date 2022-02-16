@@ -44,9 +44,9 @@
 					    <th><label for="category">*카테고리</label></th>
 					    <td>
 					        <select name="category">
-					            <option value="c">클래스</option>
-					            <option value="s">스토어</option>
-					            <option value="e">기타</option>
+					            <option value="C">클래스</option>
+					            <option value="S">스토어</option>
+					            <option value="E">기타</option>
 					        </select>
 					    </td>
                     </tr>
