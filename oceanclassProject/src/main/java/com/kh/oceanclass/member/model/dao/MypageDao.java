@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -91,5 +92,16 @@ public class MypageDao {
 		return (ArrayList)sqlSession.selectList("myMapper.selectLikeClass", memNo, rowBounds);
 	}
 	
-
+	public int classReviewCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("myMapper.classReviewCount", memNo);
+	}
+	
+	public ArrayList<ClassReview> classReviewList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("myMapper.classReviewList", memNo, rowBounds);
+	}
+	
 }// class

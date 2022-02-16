@@ -2,6 +2,7 @@ package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -48,9 +49,9 @@ public interface MypageService {
 	ArrayList<ClassVo> selectLikeClass(PageInfo pi, int memNo);
 	
 	// review 갯수
-	//int selectReviewCount(int memNo);
+	int classReviewCount(int memNo);
 	
 	// review 리스트 조회
-	//ArrayList<Review> selectReviewList(PageInfo pi, int memNo);
+	ArrayList<ClassReview> classReviewList(PageInfo pi, int memNo);
 	
 }

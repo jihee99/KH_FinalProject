@@ -26,7 +26,7 @@
 	
 	<resultMap id="myClassResult" type="Class">
 		<result column="clNo" property="clNo" />
-		<result column="memNo" property="memNo" />
+		<result column="mNo" property="memNo" />
 		<result column="category" property="category" />
 		<result column="cl_name" property="clName" />
 		<result column="cl_date" property="clDate" />
@@ -34,6 +34,20 @@
 		<result column="cl_status" property="clStatus" />
 		<result column="cl_img" property="clImg" />
 		<result column="like" property="like" />
+	</resultMap>
+	
+	<resultMap id="classReviewResult" type="ClassReview">
+		<result column="c_rno" property="crNo" />
+		<result column="clno" property="clNo" />
+		<result column="mno" property="memNo" />
+		<result column="content" property="content" />
+		<result column="star" property="star" />
+		<result column="filepath" property="filePath" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="reconum" property="recommend" />
+		<result column="cl_name" property="clName" />
+		<result column="cl_img" property="img" />
 	</resultMap>
 	
 	<!-- 정보수정용 -->
@@ -204,6 +218,27 @@
 		  from class c
 		  join like_item l on (c.clno = l.refer_no)
 		  where l.mno = #{mno}
+	</select>
+	
+	<select id="classReviewCount" resultType="_int">
+	select count(*)
+	  from class_review
+	 where mno = #{mno}
+	</select>
+	
+	<select id="classReviewList" resultMap="classReviewResult">
+		select
+		       class_review.clno as "clno"
+		     , class_review.mno as "mno"
+		     , class.cl_name
+		     , content
+		     , star
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , cl_img
+		  from class_review
+		  join class on (class_review.clno = class.clno)
+		  where class_review.mno = #{mno}
+		 
 	</select>
 	
 </mapper>
