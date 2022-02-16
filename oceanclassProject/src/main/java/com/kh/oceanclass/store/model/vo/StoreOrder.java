@@ -35,6 +35,7 @@ public class StoreOrder {
 	private int quantity;
 	private int price;
 	private String productName;
+	private String title;
 	private String optionName;
 	
 	//s_refund

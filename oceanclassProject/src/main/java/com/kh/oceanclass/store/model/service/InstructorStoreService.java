@@ -32,8 +32,10 @@ public interface InstructorStoreService {
 	int updateProduct(Product p);
 	
 	// 4.2 상품 옵션 수정용 서비스
+	// (기존 옵션 수와 동일하거나 더 작을 때)
 	int updateProductOption(ProductOption option);
-	
+	// (기존 옵션 수보다 많아졌을 때)
+	int upinsertProductOption(ProductOption option);
 	
 	// 5.1 상품 삭제용 서비스
 	int deleteProduct(int pno);
