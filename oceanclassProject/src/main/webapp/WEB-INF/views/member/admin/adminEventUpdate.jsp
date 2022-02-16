@@ -105,7 +105,7 @@
             <div id="enroll-form">
                 <form action="" method="post" id="detailForm" enctype="multipart/form-data">
                     <input type="hidden" id="memNo" name="mno" value="${loginUser.memNo}">
-                    <input type="hidden" id="eventNo" name="eno" value="${e.eventNo}">
+                    <input type="hidden" id="eventNo" name="eventNo" value="${e.eventNo}">
                     <div class="box">
                         <label class="textName" for="">이벤트 카테고리<span class="star">*</span></label>
                         <div class="input-area">
@@ -115,7 +115,7 @@
                                 <option value="S">스토어</option>
                                 <option value="P">포인트</option>
                                 <option value="R">댓글</option>
-                                <option value="CP">기타</option>
+                                <option value="CP">쿠폰</option>
                             </select>
                         </div>
                     </div>

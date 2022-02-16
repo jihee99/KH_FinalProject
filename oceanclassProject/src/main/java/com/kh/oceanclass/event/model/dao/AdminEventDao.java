@@ -58,6 +58,7 @@ public class AdminEventDao {
 		return sqlSession.update("eventMapper.endEvent", eventNo);
 	}
 	public int updateEvent(SqlSessionTemplate sqlSession, Event e) {
+		System.out.println(e);
 		return sqlSession.update("eventMapper.updateEvent", e);
 	}
 }
