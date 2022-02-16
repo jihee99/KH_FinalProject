@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,7 +103,8 @@
                 <span id="bord-name">공지사항 등록</span>
             </div>
             <div id="enroll-form">
-                <form action="" method="post" id="enrollForm">
+                <form action="insertNotice.ad" method="post" id="enrollForm" enctype="multipart/form-data">
+                    <input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
                     <div class="box">
                         <label class="textName" for="">공지사항 카테고리<span class="star">*</span></label>
                         <div class="input-area">
@@ -114,30 +116,30 @@
                             </select>
                         </div>
                     </div>
-
+					
                     <div class="box">
                         <label class="textName" for="">제목<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="" name="" placeholder="제목을 입력 하세요." required>
+                            <input type="text" id="" name="noTitle" placeholder="제목을 입력 하세요." required>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">내용<span class="star">*</span></label>
                         <div class="input-area">
-                            <textarea name="" id="" cols="58" rows="8" placeholder="내용을 입력 하세요."></textarea>
+                            <textarea name="noContent" id="" cols="58" rows="8" placeholder="내용을 입력 하세요."></textarea>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">파일 첨부<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="file" id="" name="" required>
+                            <input type="file" id="upfile" name="upfile" accept=".gif, .jpg, .png" >
                         </div>
                     </div>
                     <div id="btnBox">
                         <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-                        <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
+                        <button type="button" onclick="history.back()" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
                     </div>
                 </form>
             </div>

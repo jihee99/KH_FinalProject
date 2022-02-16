@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 <style>
     /* 전체 감싸는 div */
     .wrap{
-        width: 1000px;
+        width: 1070px;
         height: auto;
         margin: auto;
         margin-top: 50px;
@@ -42,6 +43,7 @@
     }
     #content-wrap{
         margin: auto;
+        margin-left: 30px;
     }
     #cl-img{
         margin-left: 15px;
@@ -90,6 +92,7 @@
     .search-box{
         display: flex;
         margin-bottom: 80px;
+        margin-left: 30px;
     }
     /* 검색 박스 */
     .search .form-control{
@@ -114,7 +117,7 @@
     }
     .dateBtn{
         display: flex;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
         justify-content: space-between;
     }
     #btnGroup{
@@ -122,10 +125,21 @@
         height: 30px;
         line-height: 0px;
     }
+    #delbtn{
+    	width: 70px;
+        height: 30px;
+        line-height: 0px;
+    }
     #blueBtn{
         background-color: rgb(107, 171, 213);
         color: white;
     }
+    #paging{
+		padding-top: 10px;
+	}
+	.pagination {
+	    justify-content: center;
+	}
 </style>  
 </head>
 <body>
@@ -137,6 +151,8 @@
                 <span id="bord-name">공지사항 관리</span>
             </div>
             <!-- 회원 조회 -->
+            <input type="hidden" id="memNo" name="mno" value="${loginUser.memNo}">
+            <input type="hidden" id="eventNo" name="nno" value="${n.noNo}">
             <div class="search-box pb-5">
                 <select name="category" class="selectpicker show-tick p-2" style="width: 120px;">
                     <option value="C">클래스</option>
@@ -144,6 +160,7 @@
                     <option value="T">강사</option>
                     <option value="E">기타</option>
                 </select>
+                
                 <div class="search">
                     <form class="form-inline" action="">
                       <input class="form-control p-4" type="text" placeholder="제목을 입력해주세요." style="width: 350px;">
@@ -159,79 +176,102 @@
                         <input class="form-control mr-2" type="date"> ~ <input class="form-control ml-2" type="date">
                     </div>
                     <div id="btnBox" style="float: right;">
-                        <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-                        <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
-                        <button class="btn btn-danger" id="btnGroup">삭제</button>
+                        <button onclick="location.href='noticeEnrollForm.ad';" class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
+                        <button class="btn btn-danger" type="submit" id="delbtn">삭제</button>
                     </div>
                 </div>
+                
                 <div id="tableBox">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th width="100px"><input type="checkbox" name="" value=""></th>
+                                <th width="80px"><input type="checkbox" id="all_select"></th>
+                                <th width="80px">글번호</th>
                                 <th width="130px">카테고리</th>
-                                <th width="450px">제목</th>
+                                <th width="430px">제목</th>
                                 <th width="150px">작성자</th>
                                 <th width="100px">작성일</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>기타</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
+                        	<c:forEach var="n" items="${ list }">
+                                <tr id="tb" data-tr_value="1">
+                                    <td class="ck"><input type="checkbox" name="selectCheck" value=""></td>
+                                    <td class="td nno">${ n.noNo }</td>
+                                    <td class="td category">${ n.category }</td>
+                                    <td class="td">${ n.noTitle }</td>
+                                    <td class="td">${ n.nickname }</td>
+                                    <td class="td">${ n.createDate }</td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                <div class="paging" align="center">
-                    <button class="btn btn-light">&lt;</button>
-                    
-                    <button class="btn btn-light">1</button>
-                    <button class="btn btn-light">2</button>
-                    <button class="btn btn-light">3</button>
-                    <button class="btn btn-light">4</button>
-                    <button class="btn btn-light">5</button>
-                    
-                    <button class="btn btn-light">&gt;</button>
-                </div>
+                <script>
+	                $('#all_select').click(function(){
+	            		if($("input:checkbox[id='all_select']").prop("checked")) {
+	            			$("input[type=checkbox]").prop("checked",true);
+	            		}else{
+	            			$("input[type=checkbox]").prop("checked",false);
+	            		}
+	            	});
+	                
+		        	$(function(){
+		        		$(".td").click(function(){
+		        			location.href = 'noticeDetail.ad?nno=' + $(this).siblings(".nno").text();
+		        		});
+		        	})
+		        	
+		        	var cknArr = [];
+	            	$(function(){
+	            		$(".ck").click(function(){
+	            			var ckn = $(this).siblings(".nno").text();
+	            			console.log(ckn);
+	            			
+	            			cknArr.push(ckn);
+	            			console.log(cknArr);
+	            			
+	            			$("#delbtn").click(function(){
+	            				for(let i in cknArr){
+	                          	  console.log(cknArr[i]);
+	                          	  let ckn = cknArr[i];
+				            	  
+	                          	  location.href = 'noticeDelete.ad?nno=' + cknArr[i];
+	                          	  
+	            				}
+				            });
+	            		});
+	            	})
+		        </script>
+                <div id="paging" align="center">
+					<ul class="pagination">
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="noticeList.ad?cpage=${ pi.currentPage-1 }">&laquo;&laquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item"><a class="page-link" href="noticeList.ad?cpage=${ p }">${ p }</a></li>
+						</c:forEach>
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="noticeList.ad?cpage=${ pi.currentPage+1 }">&raquo;&raquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+		            </ul>
+		        </div> 
             </div>
             <br><br><br>
         </div>

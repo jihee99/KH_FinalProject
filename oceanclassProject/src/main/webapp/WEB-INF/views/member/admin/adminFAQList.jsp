@@ -45,6 +45,7 @@
     }
     #cl-img{
         margin-left: 15px;
+        margin-left: 30px;
     }
     #cl-wrap{
         /* box-sizing: border-box; border:1px solid black; */
@@ -90,6 +91,7 @@
     .search-box{
         display: flex;
         margin-bottom: 80px;
+        margin-left: 30px;
     }
     /* 검색 박스 */
     .search .form-control{
@@ -126,6 +128,12 @@
         background-color: rgb(107, 171, 213);
         color: white;
     }
+    #paging{
+		padding-top: 10px;
+	}
+	.pagination {
+	    justify-content: center;
+	}
 </style>  
 </head>
 <body>
@@ -160,7 +168,6 @@
                     </div>
                     <div id="btnBox" style="float: right;">
                         <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-                        <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
                         <button class="btn btn-danger" id="btnGroup">삭제</button>
                     </div>
                 </div>
@@ -168,56 +175,25 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th width="100px"><input type="checkbox" name="" value=""></th>
+                                <th width="80px"><input type="checkbox" id="all_select"></th>
+                                <th width="80px">글번호</th>
                                 <th width="130px">카테고리</th>
-                                <th width="450px">제목</th>
+                                <th width="430px">제목</th>
                                 <th width="150px">작성자</th>
                                 <th width="100px">작성일</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>클래스 뉴 개편 안내사항</td>
-                                <td>관리자1</td>
-                                <td>2022-01-02</td>
-                            </tr>
+                            <c:forEach var="n" items="${ list }">
+                                <tr id="tb" data-tr_value="1">
+                                    <td class="ck"><input type="checkbox" name="selectCheck" value=""></td>
+                                    <td class="td nno">${ n.noNo }</td>
+                                    <td class="td category">${ n.category }</td>
+                                    <td class="td">${ n.noTitle }</td>
+                                    <td class="td">${ n.nickname }</td>
+                                    <td class="td">${ n.createDate }</td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
