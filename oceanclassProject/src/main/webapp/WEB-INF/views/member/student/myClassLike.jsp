@@ -23,7 +23,7 @@
 	}
 	.conhead>h2{width: 30%; font-weight: 900;}
     .item{width:40%; height: 80%; float:left; margin: 35px; overflow: hidden;}
-    .item img{display:block; width: 100%; height: 90%; vertical-align: middle}
+    .item img{display:block; width: 100%; height: 200px; vertical-align: middle}
     .item>#ctitle{text-align: center; font-size: 20px; font-weight: 600; }
     #paging{
     	display: table;
