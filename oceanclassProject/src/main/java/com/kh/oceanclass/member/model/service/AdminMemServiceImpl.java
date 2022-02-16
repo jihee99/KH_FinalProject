@@ -65,17 +65,19 @@ public class AdminMemServiceImpl implements AdminMemService {
 	
 	
 	
+	@Override
+	public int adminReportCount() {
+		return adMemDao.selectReportCount(sqlSession);
+	}
 	
-
 	@Override
 	public ArrayList<Report> adminReportList(PageInfo pi) {
-		return null;
+		return adMemDao.selectReportList(sqlSession, pi);
 	}
 
 	@Override
-	public Report adminReportdetail(int reportNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public Report selectReportDetail(Report rp) {
+		return adMemDao.selectReportDetail(sqlSession, rp);
 	}
 
 	@Override

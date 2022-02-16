@@ -10,6 +10,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
 import com.kh.oceanclass.store.model.vo.StoreRefund;
@@ -142,6 +143,28 @@ public class AdminMemDao {
 
 	public int updateorderStatus(SqlSessionTemplate sqlSession, StoreOrder order) {
 		return sqlSession.update("adMemMapper.upadteOrderStatus", order);
+	}
+
+	public int selectReportCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adMemMapper.selectReportCount");
+	}
+
+	public ArrayList<Report> selectReportList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectReportList", null, rowBounds);
+	}
+
+	public Report selectReportDetail(SqlSessionTemplate sqlSession, Report rp) {
+		if(rp.getRefCategory().equals("SR")) {
+			return sqlSession.selectOne("adMemMapper.selectReportStoreReview", rp);
+		} else if(rp.getRefCategory().equals("CR")) {
+			return sqlSession.selectOne("adMemMapper.selectReportClassReview", rp);
+		} else {
+			return sqlSession.selectOne("adMemMapper.selectReportReply", rp);
+		}
 	}
 	
 

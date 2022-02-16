@@ -19,6 +19,7 @@ import com.kh.oceanclass.member.model.service.AdminMemService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
 import com.kh.oceanclass.store.model.vo.StoreRefund;
@@ -284,8 +285,44 @@ public class AdminMemController {
 	}
 	
 	@RequestMapping(value="rplist.ad")
-	public String adminReportList() {
+	public String adminReportList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+		int listCount = adMemService.adminReportCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		ArrayList<Report> reportList = adMemService.adminReportList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("rpList", reportList);
 		
 		return "member/admin/adminReportList";
 	}
+	
+	@RequestMapping(value="rpdetail.ad")
+	public String adminReportDetail(String rpno, String category,  Model model) {
+		System.out.println(rpno);
+		System.out.println(category);
+		Report rp = new Report();
+		
+		rp.setReportNo(rpno);
+		rp.setRefCategory(category);
+
+		
+		Report report = adMemService.selectReportDetail(rp);
+		System.out.println(report);
+		model.addAttribute("rp", report);
+		return "member/admin/adminReportDetail";
+	}
+	
+	@RequestMapping(value="blacklist.ad")
+	public String adminSelectBlackList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+//		int listCount = adMemService.adminReportCount();
+//		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+//		ArrayList<Report> reportList = adMemService.adminReportList(pi);
+		
+//		model.addAttribute("pi", pi);
+//		model.addAttribute("rpList", reportList);
+		
+		return "member/admin/adminBlackList";
+	}
+	
+	
 }

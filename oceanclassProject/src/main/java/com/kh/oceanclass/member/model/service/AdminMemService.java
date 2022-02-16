@@ -33,10 +33,11 @@ public interface AdminMemService {
 	
 	//------------신고------------
 	//관리자 신고내역 조회기능
+	int adminReportCount();
 	ArrayList<Report> adminReportList(PageInfo pi);
 	
 	//관리자 신고내역 상세보기 기능
-	Report adminReportdetail(int reportNo);
+	Report selectReportDetail(Report rp);
 	
 	//관리자 신고내역 복구 기능
 	int adminReportRestore(int reportNo);

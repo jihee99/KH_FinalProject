@@ -49,6 +49,15 @@
         <result column="dedate" property="deDate" />
 	</resultMap>
 	
+	<resultMap type="Report" id="reportResult">
+		<result column="report_no" property="reportNo"/>
+		<result column="reported_mno" property="reportMemNo"/>
+		<result column="bcategory" property="refCategory"/>
+		<result column="rep_bno" property="refBNo"/>
+		<result column="content" property="content"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	
 	<resultMap type="StoreOrder" id="storeOrderResult">
 		<!-- pay table -->
 		<result column="order_no" property="orderNo" />
@@ -97,6 +106,8 @@
 		<result column="refund" property="refund" />
 		<result column="refund_date" property="refundDate"/>
 		<result column="refund_status" property="refundStatus" />
+		<result column="user_id" property="userId" />
+		<result column="rpcontent" property="rpContent" />
 	</resultMap>
 	
 	<select id="loginAdmin" resultMap="memberResult">
@@ -400,5 +411,80 @@
 		   set order_status = #{orderStatus}
 		 where order_no = #{orderNo}
 	</update>
+	
+	<select id="selectReportCount" resultType="_int">
+		select count(*)
+  		  from report
+	</select>
+	
+	<select id="selectReportList" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+		      , bcategory
+		      , rep_bno
+		      , content
+		      , status
+		  from report
+		 order
+		    by report_no desc
+	</select>
+	
+	<select id="selectReportStoreReview" resultMap="reportResult">
+		select 
+		        report_no
+		      , reported_mno
+		      , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , rv.content as rpcontent
+		  from report rp
+		  join s_review rv on rv.rno = rp.rep_bno
+		  join member using (mno)
+		  where report_no = #{reportNo}
+	</select>
+	
+	<select id="selectReportClassReview" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+    		  , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , rv.content as rpcontent
+		  from report rp
+		  join class_review rv on rv.c_rno = rp.rep_bno
+		  join member using (mno)
+		  where report_no = #{reportNo}
+	</select>
+	
+	<select id="selectReportReply" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+		      , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , rv.reply_content as rpcontent
+		  from report rp
+		  join reply rv on rv.reply_no = rp.rep_bno
+		  join member using (mno) 
+		  where report_no = #{reportNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>
