@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,7 @@
         margin: 0 auto;
         display: flex;
     }
-    #enrollForm>div {
+    #adminNoticeUdForm>div {
         padding-bottom: 30px;
         display: flex;
     }
@@ -102,7 +103,9 @@
                 <span id="bord-name">공지사항 수정</span>
             </div>
             <div id="enroll-form">
-                <form action="" method="post" id="enrollForm">
+                <form action="" method="post" id="adminNoticeUdForm" enctype="multipart/form-data">
+                    <input type="hidden" id="memNo" name="mno" value="${loginUser.memNo}">
+                    <input type="hidden" id="noNo" name="noNo" value="${n.noNo}">
                     <div class="box">
                         <label class="textName" for="">공지사항 카테고리<span class="star">*</span></label>
                         <div class="input-area">
@@ -114,27 +117,37 @@
                             </select>
                         </div>
                     </div>
-
+                    
+					<script>
+                    	$(function(){
+                    		$("select[name=category] option").each(function(){
+                    			if($(this).val() == "${n.category}"){
+                    				$(this).attr("selected", true);
+                    			}
+                    		})
+                    	})
+                    </script>
+                    
                     <div class="box">
                         <label class="textName" for="">제목<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="" name="" value="클래스 뉴 개편 사항" required>
+                            <input type="text" id="" name="noTitle" value="${ n.noTitle }" required>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">내용<span class="star">*</span></label>
                         <div class="input-area">
-                            <textarea name="" id="" cols="58" rows="8">안녕하세요 오션클래스 관리자입니다.</textarea>
+                            <textarea name="noContent" id="" cols="58" rows="8">${ n.noContent }</textarea>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">파일 첨부<span class="star">*</span></label>
                         <div class="input-area">
-                            <img id="imgFile" width="450" height="230" src="">
-                            <input type="hidden" name="filePath" value="${e.img}">
-                            <input type="hidden" name="img" value="${e.img}">
+                            <img id="imgFile" width="450" height="230" src="${n.img}">
+                            <input type="hidden" name="filePath" value="${n.img}">
+                            <input type="hidden" name="img" value="${n.img}">
                             <input type="file" id="" name="reupfile" onchange="loadImg(this);">
                         </div>
                     </div>
@@ -151,11 +164,16 @@
                         }
                     </script>
                     <div id="btnBox">
-                        <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
-                        <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
+                        <button onclick="postFormSubmit();" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
+                        <button type="button" onclick="history.back()" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
                     </div>
                 </form>
             </div>
+            <script>
+           		function postFormSubmit(){
+           			$("#adminNoticeUdForm").attr("action", "noticeUpdate.ad").submit();
+           		}
+           	</script>
             <br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />
