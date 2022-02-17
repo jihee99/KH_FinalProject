@@ -1,6 +1,8 @@
 package com.kh.oceanclass.event.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.common.template.Pagination;
@@ -55,6 +58,19 @@ public class EventController {
 		model.addAttribute("e", e);
 		model.addAttribute("list", list);
 		return "event/eventDetail";
+	}
+	
+	@RequestMapping("tagSelect.ev")
+	public String tagSelect(@RequestParam(value="cpage", defaultValue="1") int currentPage, String selectTag, Model model) {
+		System.out.println(selectTag);
+		int listCount = eService.tagSelectCount(selectTag);
+		PageInfo pi  = Pagination.getPageInfo(listCount, currentPage, 5, 6);
+		ArrayList<ClassVo> list = eService.tagSelectList(pi);
+		System.out.println(list);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "event/tagSelectResult";
 	}
 	
 	
