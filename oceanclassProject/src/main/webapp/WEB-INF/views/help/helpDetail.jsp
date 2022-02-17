@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,7 @@
 		margin:auto;
 		background-color: rgba(107, 171, 213, 0.3);
 		margin-bottom: 50px;
+		border: 1px solid red;
 	}
 	table th{ 
 		width: 20%; 
@@ -28,8 +30,7 @@
 		text-align: left;
 	}
 	.text{
-		height: 300px;
-		valign: middle;
+		height: 400px;
 	}
 	.content>button{display: block; margin: auto;}
 </style>
@@ -55,8 +56,13 @@
                     <td>${n.createDate}</td>
                 </tr>
                 <tr>
-                    <th class="text">문의내용</th>
-                    <td colspan="3" class="text">${n.noContent}</td>
+                    <th class="text" style="vertical-align: middle">문의내용</th>
+                    <td colspan="3" class="text"  style="vertical-align: middle">
+                    ${n.noContent}
+                    <c:if test="${not empty n.img}">
+                    	<img src="${n.img}" style="width: 100%; height: 80%; margin-top: 30px;">
+                    </c:if>
+					</td>
                 </tr>
             </table>
             <button type="button" class="btn" onclick="history.back()">목록으로</button>

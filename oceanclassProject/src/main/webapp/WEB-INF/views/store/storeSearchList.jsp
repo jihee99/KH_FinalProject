@@ -12,7 +12,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
 	#outer{
-		width: 1000px;
+		width: 1200px;
         margin:auto;
         margin-top: 50px;
 	}
@@ -31,8 +31,8 @@
     .item>span{
         font-size: 12px;
     }
-    .item *{
-        cursor:pointer;
+    .thumbnail, .title, #likeImg{
+    	cursor:pointer;
     }
     .thumbnail{
         width: 100%;
@@ -48,9 +48,13 @@
 </head>
 <body>
 
-	<jsp:include page="../common/header.jsp" />
 
+	<jsp:include page="../common/header.jsp" />
+	
 	<div id="outer">
+	
+		<input type="hidden" id="memNo" value="${ loginUser.memNo }">
+        
 		<div id="selectBar" class="form-group">
 		<form action="storeSearchList.st" method="post">
 			<select class="form-control" name="sel1" id="sel1" style="width: 15%; float: left; margin-right: 10px;">
@@ -59,26 +63,34 @@
 				<option value="3">DIY KIT</option>
 				<option selected style="display: none;">카테고리</option>
 			</select>
-		</form>
-			
+		
 			<select id="order" class="form-control" name="sel2" id="sel2" style="width: 15%;">
-				<option selected>인기순</option><!-- 구매수 높은 순 -->
-				<option>추천순</option><!-- 찜수 높은 순 -->
-				<option>리뷰순</option>
+				<option selected value="4">인기순</option><!-- 구매수 높은 순 -->
+				<option value="5">추천순</option><!-- 찜수 높은 순 -->
+				<option value="6">리뷰순</option>
 			</select>
+		</form>
 		</div>
 		<div class="items">
 			<c:forEach var="p" items="${ list }">
 	            <div class="item" style="margin-right: 62px;">
-	                <img src="${ p.productImg0 }" class="thumbnail">
+	                <img src="${ p.productImg0 }" class="thumbnail" onclick="goDetail(${p.productNo});">
 	                <div style="font-size: 13px;"><b>${ p.memberNo }</b></div>
-	                <div>${ p.title }</div>
-	                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-	                <span>12345</span>
+	                <div class="title" onclick="goDetail(${p.productNo});">${ p.title }</div>
+	                <div id="likeArea">
+		                <c:choose>
+                        	<c:when test="${ p.likeCk == 1 }">
+                        		<img src="resources/images/heart2.png" width="20" height="20" id="likeImg" onclick="likeCk(${p.productNo}, this);">
+							</c:when>
+							<c:otherwise>
+                        		<img src="resources/images/heart1.png" width="20" height="20" id="likeImg" onclick="likeCk(${p.productNo}, this);">
+							</c:otherwise>
+						</c:choose>   
+		                <span id="likeCount">${ p.like}</span>
+	                </div>
 	                <div>
 	                    <b>
-	                        <span>${ p.price }</span>
-	                        원 
+	                        <span>${ p.price }</span>원 
 	                    </b>
 	                </div>
 	            </div>
@@ -119,29 +131,33 @@
 	<jsp:include page="../common/footerBar.jsp" />
 	
 	<script>
-		$("select[name=sel1]").change(function(){
-			console.log($(this).val()); //value값 가져오기
-			
-			//$((this)).val().submit();
-		});
 		
     	$(function(){
     		$("#sel1").change(function(){
         		let value = $(this).val();
-        		//console.log(value);
+        		let value2 = $("#memNo").val();
+        		let value3 = $(this).next().val();
+        		
         		$.ajax({
         			url:"categorySearch.cs",
-        			data:{category:value},
+        			data:{category:value,
+        				  memberNo:value2,
+        				  sort:value3},
         			success:function(list){
-        				console.log(list);
         				let value = "";
         				for(let i in list){
         					value += "<div class='item' style='margin-right: 62px;'>"
-        						   + 	"<img src='" + list[i].productImg0 + "' class='thumbnail'>"
+        						   + 	"<img src='" + list[i].productImg0 + "' class='thumbnail' onclick='goDetail(" + list[i].productNo +  ");'>"
         	                	   + 	"<div style='font-size: 13px;'>" + "<b>" + list[i].memberNo + "</b>" + "</div>"
-        	                	   + 	"<div>" + list[i].title + "</div>"
-        	                	   + 	"<img src='resources/images/heart1.png' style='width: 15px; height: 15px;'>"
-        	                       + 	"<span>" + list[i].productNo + "</span>"
+        	                	   + 	"<div class='title' onclick='goDetail(" + list[i].productNo +  ");'>" + list[i].title + "</div>"
+        	   	                   + 	"<div id='likeArea'>";
+        			        if( list[i].likeCk == 1){
+        			        	value +=  	"<img src='resources/images/heart2.png' width='20' height='20' id='likeImg' onclick='likeCk(" + list[i].productNo + ", this);'>";
+        			        }else {
+        			        	value +=  	"<img src='resources/images/heart1.png' width='20' height='20' id='likeImg' onclick='likeCk(" + list[i].productNo +  ", this);'>";
+        			                }
+        	   	            	value +=    "<span id='likeCount'>" + list[i].like + "</span>"
+        		                   +    "</div>"
         	                	   + 	"<div>"
         	                       +		"<b>"
         	                       + 			"<span>" + list[i].price + "</span>"
@@ -149,6 +165,7 @@
         	                       + 		"</b>"
         	                       + 	"</div>"
         	                	   + "</div>";
+        	                	   
         				}
         				
         				$(".items").html(value);
@@ -158,6 +175,79 @@
         		})
         	})
     	  })
+    	
+    	  /*
+    	function likeCk(){
+    		
+			console.log(window.event.target);
+			
+			
+            if(document.getElementById("memNo").value == ""){
+                alert("로그인 후 이용 가능한 서비스 입니다.");
+            } else{
+                $.ajax({
+                    url:"likeStore.st",
+                    data:{
+                        memNo:document.getElementById("memNo").value,
+                        referNo:document.getElementById("pno").value
+                    }, success:function(likeResult){
+						
+                        if(likeResult.message == 'ss'){
+                        	window.event.target.src = "resources/images/heart2.png";
+                            document.getElementById("likeCount").innerHTML = likeResult.likeCount;
+                            alert("찜 목록에 추가 되었습니다!");
+                        } else if(likeResult.message == 'dd'){
+                        	window.event.target.src = "resources/images/heart1.png";
+                            document.getElementById("likeCount").innerHTML = likeResult.likeCount;
+                            alert("찜 목록에서 삭제되었습니다.");
+                        } else {
+                            alert("비정상적인 요청입니다.");
+                        }
+                    	
+                    }, error:function(){
+                        console.log("찜하기 ajax 통신 실패");
+                    }
+           	    })
+            }
+              
+        }
+    	*/
+		
+		function goDetail(no) {
+			   location.href = "productMain.pr?pno=" + no;
+			}
+    	
+		function likeCk(pno, img){
+			//console.log(window.event.target);
+			
+    			 if(document.getElementById("memNo").value == ""){
+    	                alert("로그인 후 이용 가능한 서비스 입니다.");
+    	            } else{
+    	                $.ajax({
+    	                    url:"likeStore.st",
+    	                    data:{
+    	                        memNo:document.getElementById("memNo").value,
+    	                        referNo:pno
+    	                    }, success:function(likeResult){
+    							console.log(likeResult);
+    	                        if(likeResult.message == 'ss'){
+    	                            img.src = "resources/images/heart2.png";
+    	                            $(img).next().html(likeResult.likeCount);
+    	                            alert("찜 목록에 추가 되었습니다!");
+    	                        } else if(likeResult.message == 'dd'){
+    	                        	img.src = "resources/images/heart1.png";
+    	                            $(img).next().html(likeResult.likeCount);
+    	                            alert("찜 목록에서 삭제되었습니다.");
+    	                        } else {
+    	                            alert("비정상적인 요청입니다.");
+    	                        }
+    	                    	
+    	                    }, error:function(){
+    	                        console.log("찜하기 ajax 통신 실패");
+    	                    }
+    	           	    })
+    	            }
+    		}
 		
 	</script>
 

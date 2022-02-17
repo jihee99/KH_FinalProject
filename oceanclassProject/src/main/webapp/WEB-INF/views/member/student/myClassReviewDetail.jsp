@@ -15,10 +15,11 @@
 <style>
 	.conhead{margin-bottom: 20px;}
 	.conhead>h2{margin-bottom: 20px;}
-	.conreview{width:90%; height: 18%; margin: 0 auto; margin-bottom: 10px; border:1px solid;}
-	.img{width:30%; height: 100%; float:left; border:1px solid;}
-	.review{width:70%; height: 100%; margin-left: 230px; padding: 20px; text-align: left;}
-	.img img{width: 100%;}
+	.conreview{width:90%; height: 200px; margin: 0 auto; margin-bottom: 20px; margin-left: 70px;}
+	.img{width:35%; height: 100%; float:left;}
+	.review{width:65%; height: 100%; margin-left: 280px; padding: 10px; text-align: left;}
+	.img img{width: 100%; height: 80%;}
+	.img p{font-size: 24px; text-align: center;}
 	.title{font-size: 24px; font-weight:600;}
 </style>
 </head>
@@ -39,19 +40,31 @@
 					    <div class="conreview">
 				            <div class="img">
 				            	<a><img src="${c.img}"></a>
+				            	<p>${c.star}</p>
 				            </div>
 				            <div class="review">
 				            	<p class="title">
 					            	<c:choose>
-					            		<c:when test="${fn:length(c.clName) gt 24}">
-					            			<c:out value="${fn:substring(c.clName, 0, 23)}"></c:out>..
+					            		<c:when test="${fn:length(c.clName) gt 21}">
+					            			<c:out value="${fn:substring(c.clName, 0, 20)}"></c:out>
+					            			..
 					            		</c:when>
 					            		<c:otherwise>
 					            			<c:out value="${c.clName}"></c:out>
 					            		</c:otherwise>
 						            </c:choose>
 					            </p>
-				            	<p>${c.content}</p>
+				            	<p>
+				            		<c:choose>
+					            		<c:when test="${fn:length(c.content) gt 101}">
+					            			<c:out value="${fn:substring(c.content, 0, 100)}"></c:out>
+					            			..
+					            		</c:when>
+					            		<c:otherwise>
+					            			<c:out value="${c.content}"></c:out>
+					            		</c:otherwise>
+						            </c:choose>
+				            	</p>
 				            </div>
 				            
 					    </div>

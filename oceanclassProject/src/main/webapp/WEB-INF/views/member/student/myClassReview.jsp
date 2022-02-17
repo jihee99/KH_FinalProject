@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,7 +83,17 @@
 					        	<c:forEach var="c" items="${list}" begin="0" end="4">
 						            <tr>
 						                <td>${c.clName}</td>
-						                <td>${c.content}</td>
+						                <td>
+							                <c:choose>
+						            		<c:when test="${fn:length(c.content) gt 25}">
+						            			<c:out value="${fn:substring(c.content, 0, 24)}"></c:out>
+						            			..
+						            		</c:when>
+						            		<c:otherwise>
+						            			<c:out value="${c.content}"></c:out>
+						            		</c:otherwise>
+							            	</c:choose>
+						                </td>
 						            </tr>
 					            </c:forEach>
 					        </tbody>
