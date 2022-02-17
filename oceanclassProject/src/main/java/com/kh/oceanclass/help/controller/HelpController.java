@@ -65,6 +65,7 @@ public class HelpController {
 			}else {
 				n.category = "기타";
 			}
+			//System.out.println(n);
 			model.addAttribute("n", n);
 			return "help/helpDetail";
 		}else {
