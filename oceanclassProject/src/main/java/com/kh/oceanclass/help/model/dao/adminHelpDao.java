@@ -15,6 +15,8 @@ import com.kh.oceanclass.help.model.vo.Qna;
 @Repository
 public class adminHelpDao {
 	
+	// 공지사항
+	
 	public int selectNtListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adminHelpMapper.selectNtListCount");
 	}
@@ -37,5 +39,31 @@ public class adminHelpDao {
 	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {
 		//System.out.println(n);
 		return sqlSession.update("adminHelpMapper.updateNotice", n);
+	}
+	
+	// FAQ
+	
+	public int selectFaqListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminHelpMapper.selectFaqListCount");
+	}
+	public ArrayList<Faq> selectFaqList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminHelpMapper.selectFaqList", null, rowBounds);
+	}
+	public int insertFaq(SqlSessionTemplate sqlSession, Faq f) {
+		return sqlSession.insert("adminHelpMapper.insertFaq", f);
+	}
+	public Faq selectFaq(SqlSessionTemplate sqlSession, int faqNo) {
+		return sqlSession.selectOne("adminHelpMapper.selectFaqAd", faqNo);
+	}
+	public int deleteFaq(SqlSessionTemplate sqlSession, int faqNo) {
+		return sqlSession.update("adminHelpMapper.deleteFaq", faqNo);
+	}
+	public int updateFaq(SqlSessionTemplate sqlSession, Faq f) {
+		//System.out.println(n);
+		return sqlSession.update("adminHelpMapper.updateFaq", f);
 	}
 }

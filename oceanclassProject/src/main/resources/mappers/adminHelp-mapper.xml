@@ -114,4 +114,75 @@
 		 where nno = #{noNo}
 	</update>
 	
+	
+	<!-- Faq -->
+	<select id="selectFaqListCount" resultType="_int">
+		select
+		       count(*)
+		  from faq
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectFaqList" resultMap="faqResult">
+		select
+		       fno
+		     , mno
+		     , category
+		     , f_title
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from faq
+          join member using (mno)
+		 where status = 'Y'
+		 order
+		    by fno desc
+	</select>
+	
+	<insert id="insertFaq">
+		insert
+		  into FAQ
+		  (
+		    FNO
+		  , MNO
+		  , CATEGORY
+		  , F_TITLE
+		  , F_CONTENT
+		  )
+		  values
+		  (
+		    seq_fno.nextval
+		  , #{memNo}
+		  , #{category}
+		  , #{faqTitle}
+		  , #{faqContent}
+		  )
+	</insert>
+	
+	<select id="selectFaqAd" resultMap="faqResult">
+		select
+			    FNO
+			  , MNO
+			  , CATEGORY
+			  , F_TITLE
+			  , F_CONTENT
+		  from FAQ
+		 where FNO = #{faqNo}
+	</select>
+	
+	<update id="deleteFaq">
+		update
+        	   faq
+		   set status = 'N' 
+		 where fno = #{faqNo}
+	</update>
+	
+	<update id="updateFaq">
+		update
+        	   faq
+		   set category = #{category}
+		   	 , f_title = #{faqTitle}
+		     , f_content = #{faqContent}
+		 where fno = #{faqNo}
+	</update>
+	
 </mapper>

@@ -31,6 +31,8 @@ public class adminHelpController {
 	@Autowired
 	private adminHelpService ahService;
 	
+	// 공지사항
+	
 	@RequestMapping("noticeList.ad")
 	public ModelAndView selectNtListCount(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
@@ -145,6 +147,88 @@ public class adminHelpController {
 		if(result > 0) { // 수정 성공 
 			session.setAttribute("alertMsg", "공지사항 내용이 수정 되었습니다.");
 			return "redirect:noticeList.ad";
+			
+		}else { // 수정 실패 
+			model.addAttribute("errorMsg", "공지사항 수정 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	// faq 
+	
+	@RequestMapping("faqList.ad")
+	public ModelAndView selectFaqListCount(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+		
+		int listCount = ahService.selectFaqListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Faq> list = ahService.selectFaqList(pi);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).category.equals("C")) {
+				list.get(i).category = "클래스";
+			}else if(list.get(i).category.equals("S")) {
+				list.get(i).category = "스토어";
+			}else {
+				list.get(i).category = "기타";
+			}
+		}
+		
+		mv.addObject("pi",pi).addObject("list",list).setViewName("member/admin/adminFAQList");
+		
+		return mv;
+	}
+	@RequestMapping("faqEnrollForm.ad")
+	public String faqEnrollForm() {
+		
+		return "member/admin/adminFAQEnroll";
+	}
+	@RequestMapping("insertFaq.ad")
+	public String insertFaq(Faq f, HttpSession session, Model model) {
+		
+		int result = ahService.insertFaq(f);
+		
+		if(result > 0) { // 성공
+			session.setAttribute("alertMsg", "성공적으로 FAQ 게시글이 등록 되었습니다.");
+			return "redirect:faqList.ad";
+		}else { // 실패
+			model.addAttribute("errorMsg", "게시글 등록 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	@RequestMapping("faqDetail.ad")
+	public String selectFaq(int fno, Model model) {
+		
+			Faq f = ahService.selectFaq(fno);
+			model.addAttribute("f", f);
+			//System.out.println(n);
+			return "member/admin/adminFaqUpdate";
+		
+	}
+	@RequestMapping("faqDelete.ad")
+	public String deleteFaq(int fno, Model model, HttpSession session) {
+		
+		int result = ahService.deleteFaq(fno);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "FAQ 게시글이 삭제 되었습니다.");
+			return "redirect:faqList.ad";
+		}else{
+			model.addAttribute("errorMsg", "삭제 실패");
+			return "common/errorPage";
+		}
+	}
+	@RequestMapping("faqUpdate.ad")
+	public String updateFaq(Faq f, HttpSession session, Model model) {
+		
+		int result = ahService.updateFaq(f);
+		
+		if(result > 0) { // 수정 성공 
+			session.setAttribute("alertMsg", "공지사항 내용이 수정 되었습니다.");
+			return "redirect:faqList.ad";
 			
 		}else { // 수정 실패 
 			model.addAttribute("errorMsg", "공지사항 수정 실패");

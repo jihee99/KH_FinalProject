@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,7 @@
         margin: 0 auto;
         display: flex;
     }
-    #enrollForm>div {
+    #adminFaqUdForm>div {
         padding-bottom: 30px;
         display: flex;
     }
@@ -102,37 +103,54 @@
                 <span id="bord-name">FAQ 수정</span>
             </div>
             <div id="enroll-form">
-                <form action="" method="post" id="enrollForm">
+                <form action="" method="post" id="adminFaqUdForm">
+                	<input type="hidden" id="memNo" name="mno" value="${loginUser.memNo}">
+                    <input type="hidden" id="faqNo" name="faqNo" value="${f.faqNo}">
                     <div class="box">
                         <label class="textName" for="">FAQ 카테고리<span class="star">*</span></label>
                         <div class="input-area">
-                            <select name="" id="">
-                                <option value="">클래스</option>
-                                <option value="">스토어</option>
-                                <option value="">기타</option>
+                            <select name="category" id="">
+                                <option value="C">클래스</option>
+                                <option value="S">스토어</option>
+                                <option value="E">기타</option>
                             </select>
                         </div>
                     </div>
 
+					<script>
+                    	$(function(){
+                    		$("select[name=category] option").each(function(){
+                    			if($(this).val() == "${f.category}"){
+                    				$(this).attr("selected", true);
+                    			}
+                    		})
+                    	})
+                    </script>
+
                     <div class="box">
                         <label class="textName" for="">제목<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="" name="" value="상품 등록이 허용 되기까지 며칠이 소요 되나요?" required>
+                            <input type="text" id="" name="faqTitle" value="${ f.faqTitle }" required>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">내용<span class="star">*</span></label>
                         <div class="input-area">
-                            <textarea name="" id="" cols="58" rows="8">상품등록까진 귀찮으면 2주요.</textarea>
+                            <textarea name="faqContent" id="" cols="58" rows="8">${ f.faqContent }</textarea>
                         </div>
                     </div>
                     <div id="btnBox">
-                        <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
-                        <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
+                        <button onclick="postFormSubmit();" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
+                        <button type="button" onclick="history.back()" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
                     </div>
                 </form>
             </div>
+            <script>
+           		function postFormSubmit(){
+           			$("#adminFaqUdForm").attr("action", "faqUpdate.ad").submit();
+           		}
+           	</script>
             <br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />
