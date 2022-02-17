@@ -35,7 +35,7 @@
 	
 	<jsp:include page="../common/header.jsp" />
 	
-    <div class="innerOuter my-3">
+    <div class="innerOuter my-3" id="outer">
         <div class="head py-5">
             <p>${e.eventTitle}</p>
         </div>
@@ -52,29 +52,87 @@
         <div class="content">
         	<img src="${e.img}" style="width: 100%; height: 100%;">
         </div>
-		<c:if test="${not empty list}">
-	        <div class="reply">
+        
+        <table class="table" id="replyTable">
+        	<thead>
+        		<tr></tr>
 	        	<c:choose>
 	        		<c:when test="${not empty loginUser}">
-	        			<p style="width:100px;">${loginUser.nickName}</p><input type="text"><button class="btn btn-sm">등록</button>
+	        			<th style="vertical-align: middle; text-align: middle;">${loginUser.nickName}</th>
+	        			<th>
+	        				<input id="reply" class="form-control" style="width:100%">
+	        			</th>
+	        			<th style="vertical-align: middle"><button class="btn btn-light" onclick="addReply();">등록</button></th>
 	        		</c:when>
 	        		<c:otherwise>
-	        			<p></p><input type="text" placeholder="로그인 후 이용 가능합니다" disabled><button class="btn btn-sm">등록</button>
+	        			<th></th>
+	        			<th>
+	        				<textarea class="form-control" cols="30" rows="1" style="resize:none; width:100%" readonly>로그인한 사용자만 이용가능한 서비스입니다. 로그인 후 이용바랍니다.</textarea>
+	        			</th>
+	        			<th style="vertical-align: middle"><button class="btn btn-light" disabled>등록</button></th>
 	        		</c:otherwise>
 	        	</c:choose>
-	        	<table class="table">
-	        		<c:forEach var="r" items="${list}">
-			            <tr>
-			                <td style="font-weight:600;">${r.nickName}</td>
-			                <td>${r.replyContent}</td>
-			                <td>${r.replyDate}</td>
-			            </tr>
-		            </c:forEach>
-	        	</table>
-	        </div>
-        </c:if>
+        	</thead>
+       		<tbody style="text-align:center;">
+       		</tbody>
+        </table>
        	<button type="button" class="btn" onclick="history.back()">목록으로</button>
     </div>    
+    
+    <script>
+    
+		$(function(){
+			replyList();
+		})    
+		
+		function replyList(){
+			$.ajax({
+				url:"replyList.ev",
+				data:{contentNo: ${e.eventNo}},
+				success:function(list){
+					//console.log(list);
+					
+					let value = "";
+    				for(let i in list){
+    					value += "<tr>"
+		                       +    "<th>" + list[i].nickName + "</th>"
+		                       +    "<td>" + list[i].replyContent + "</td>"
+		                       +    "<td>" + list[i].replyDate + "</td>"
+		                       + "</tr>";
+    				}
+    				
+    				$("#replyTable tbody").html(value);
+    				
+				},error:function(){
+					console.log("댓글조회실패여기오지마ㅠㅠ");
+				}
+			})
+		}
+    
+    	function addReply(){
+    		reply = $("#reply").val();
+    		//console.log(reply);
+    		if(reply.trim().length != 0){
+    			$.ajax({
+    				url: "replyInsert.ev",
+    				data:{
+    					memNo: '${loginUser.memNo}',
+    					contentNo: ${e.eventNo},
+    					replyContent: reply
+    				},success:function(result){
+    					if(result == "1"){
+    						replyList();
+    						$("#reply").val("");
+    					}
+    				},error:function(){
+    					console.log("댓글추가실패오지마ㅠㅠ");
+    				}
+    			})
+    		}else{
+    			alert("댓글 작성 후 등록해주세요!");
+    		}
+    	}
+    </script>
     
     <!-- 
     <script>

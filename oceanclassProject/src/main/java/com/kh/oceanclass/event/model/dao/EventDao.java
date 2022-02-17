@@ -32,13 +32,18 @@ public class EventDao {
 	}
 	
 	
-	public Event selectEvent(SqlSessionTemplate sqlSession, int eventNo) {
-		return sqlSession.selectOne("eventMapper.selectEvent", eventNo);
+	public Event selectEvent(SqlSessionTemplate sqlSession, int contentNo) {
+		return sqlSession.selectOne("eventMapper.selectEvent", contentNo);
 	}
 	
 	
 	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int eventNo){
-		return (ArrayList)sqlSession.selectList("selectReply", eventNo);
+		return (ArrayList)sqlSession.selectList("eventMapper.selectReply", eventNo);
+	}
+	
+	
+	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("eventMapper.insertReply", r);
 	}
 	
 	

@@ -17,12 +17,15 @@ public interface EventService {
 	Event selectEvent(int eventNo);
 	
 	// 3. 이벤트 댓글 보기
-	ArrayList<Reply> selectReplyList(int eventNo);
+	ArrayList<Reply> selectReplyList(int contentNo);
 	
-	// 4. 이벤트 카테고리 선택
+	// 4. 이벤트 댓글 쓰기
+	int insertReply(Reply r);
+	
+	// 5. 이벤트 카테고리 선택
 	ArrayList<Event> ajaxSearchEvent(String category);
 	
-	// 5. 태그 리스트
+	// 6. 태그 리스트
 	int tagSelectCount(String tag);
 	ArrayList<ClassVo> tagSelectList(PageInfo pi);
 	
