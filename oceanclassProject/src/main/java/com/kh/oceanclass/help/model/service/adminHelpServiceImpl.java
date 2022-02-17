@@ -89,35 +89,28 @@ public class adminHelpServiceImpl implements adminHelpService{
 	
 	@Override
 	public int selectQnaListCount() {
-		return 0;
+		return ahDao.selectQnaListCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<Qna> selectQnaList(PageInfo pi) {
-		return null;
+		return ahDao.selectQnaList(sqlSession, pi);
 	}
 
 	@Override
 	public int insertQna(Qna q) {
-		return 0;
+		return ahDao.insertQna(sqlSession, q);
 	}
 
 	@Override
 	public Qna selectQna(int qnaNo) {
-		return null;
+		return ahDao.selectQna(sqlSession, qnaNo);
 	}
 
 	@Override
 	public int deleteQna(int qnaNo) {
-		return 0;
+		return ahDao.deleteQna(sqlSession, qnaNo);
 	}
-
-	@Override
-	public int updateQna(Qna q) {
-		return 0;
-	}
-
-	
 
 
 

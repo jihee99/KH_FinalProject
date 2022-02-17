@@ -38,6 +38,8 @@
 		<result column="f_content" property="faqContent" />
 		<result column="create_date" property="createDate" />
 		<result column="status" property="status" />
+		
+		<result column="nickname" property="nickname" />
 	</resultMap>
 
 	<!-- 공지사항 -->
@@ -183,6 +185,63 @@
 		   	 , f_title = #{faqTitle}
 		     , f_content = #{faqContent}
 		 where fno = #{faqNo}
+	</update>
+	
+	
+	<!-- Qna -->
+	<select id="selectQnaListCount" resultType="_int">
+		select
+		       count(*)
+		  from qna
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectQnaList" resultMap="qnaResult">
+		select
+		       qno
+		     , category
+		     , q_title
+		     , q_content
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , a_content
+		  from qna
+          join member using (mno)
+		 where status = 'Y'
+		 order
+		    by qno desc
+	</select>
+	
+	<update id="insertQna">
+		update      
+              qna
+          set
+              a_content = #{ansContent}
+            , a_date = SYSDATE
+		 where qno = #{qnaNo}
+	</update>
+	
+	<select id="selectQna" resultMap="qnaResult">
+		select
+               qno
+             , mno
+             , category
+             , q_title
+             , q_content
+             , nickname
+             , create_date
+             , a_content
+             , a_date
+		  from qna
+		  join member using (mno)
+		 where qno = #{qnaNo}
+	</select>
+	
+	<update id="deleteQna">
+		update
+        	   qna
+		   set status = 'N' 
+		 where qno = #{qnaNo}
 	</update>
 	
 </mapper>

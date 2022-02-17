@@ -204,7 +204,7 @@ public class adminHelpController {
 			Faq f = ahService.selectFaq(fno);
 			model.addAttribute("f", f);
 			//System.out.println(n);
-			return "member/admin/adminFaqUpdate";
+			return "member/admin/adminFAQUpdate";
 		
 	}
 	@RequestMapping("faqDelete.ad")
@@ -227,7 +227,7 @@ public class adminHelpController {
 		int result = ahService.updateFaq(f);
 		
 		if(result > 0) { // 수정 성공 
-			session.setAttribute("alertMsg", "공지사항 내용이 수정 되었습니다.");
+			session.setAttribute("alertMsg", "FAQ 내용이 수정 되었습니다.");
 			return "redirect:faqList.ad";
 			
 		}else { // 수정 실패 
@@ -235,6 +235,79 @@ public class adminHelpController {
 			return "common/errorPage";
 		}
 		
+	}
+	
+	// Qna
+
+	@RequestMapping("qnaList.ad")
+	public ModelAndView selectQnaListCount(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+		
+		int listCount = ahService.selectQnaListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Qna> list = ahService.selectQnaList(pi);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).category.equals("c")) {
+				list.get(i).category = "클래스";
+			}else if(list.get(i).category.equals("s")) {
+				list.get(i).category = "스토어";
+			}else {
+				list.get(i).category = "기타";
+			}
+		}
+		
+		mv.addObject("pi",pi).addObject("list",list).setViewName("member/admin/admin1to1List");
+		
+		return mv;
+	}
+	@RequestMapping("qnaEnrollForm.ad")
+	public String qnaEnrollForm() {
+		
+		return "member/admin/admin1to1Enroll";
+	}
+	@RequestMapping("insertQna.ad")
+	public String insertQna(Qna q, HttpSession session, Model model) {
+		
+		int result = ahService.insertQna(q);
+		
+		if(result > 0) { // 성공
+			session.setAttribute("alertMsg", "성공적으로 답변이 등록/수정 되었습니다.");
+			return "redirect:qnaList.ad";
+		}else { // 실패
+			model.addAttribute("errorMsg", "게시글 등록 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	@RequestMapping("qnaDetail.ad")
+	public String selectQna(int qno, Model model) {
+		
+			Qna q = ahService.selectQna(qno);
+			if(q.category.equals("c")) {
+				q.category = "클래스";
+			}else if(q.category.equals("s")) {
+				q.category = "스토어";
+			}else {
+				q.category = "기타";
+			}
+			model.addAttribute("q", q);
+			return "member/admin/admin1to1Enroll";
+		
+	}
+	@RequestMapping("qnaDelete.ad")
+	public String deleteQna(int qno, Model model, HttpSession session) {
+		
+		int result = ahService.deleteQna(qno);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "문의글이 삭제 되었습니다.");
+			return "redirect:faqList.ad";
+		}else{
+			model.addAttribute("errorMsg", "삭제 실패");
+			return "common/errorPage";
+		}
 	}
 
 } 

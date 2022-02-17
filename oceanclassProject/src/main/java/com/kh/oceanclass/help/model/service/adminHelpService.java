@@ -50,7 +50,7 @@ public interface adminHelpService {
 	int selectQnaListCount();
 	ArrayList<Qna> selectQnaList(PageInfo pi);
 	
-	// 2. Qna 작성 서비스
+	// 2. Qna 작성/수정 서비스
 	int insertQna(Qna q);
 	
 	// 3. Qna 상세 조회
@@ -59,7 +59,5 @@ public interface adminHelpService {
 	// 4. Qna 삭제
 	int deleteQna(int qnaNo);
 	
-	// 5. Qna 수정
-	int updateQna(Qna q);
 }
 

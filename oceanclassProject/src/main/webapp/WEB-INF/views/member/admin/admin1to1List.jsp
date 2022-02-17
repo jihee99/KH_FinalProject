@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 <style>
     /* 전체 감싸는 div */
     .wrap{
-        width: 1000px;
+        width: 1050px;
         height: auto;
         margin: auto;
         margin-top: 50px;
@@ -42,6 +43,7 @@
     }
     #content-wrap{
         margin: auto;
+        margin-left: 30px;
     }
     #cl-img{
         margin-left: 15px;
@@ -84,12 +86,13 @@
         margin-bottom: 100px;
     }
     #tableBox{
-        height: 700px;
+        height: 600px;
     }
     /* 셀렉트 박스 */
     .search-box{
         display: flex;
         margin-bottom: 80px;
+        margin-left: 30px;
     }
     /* 검색 박스 */
     .search .form-control{
@@ -114,18 +117,25 @@
     }
     .dateBtn{
         display: flex;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
         justify-content: space-between;
     }
     #btnGroup{
         width: 70px;
         height: 30px;
         line-height: 0px;
+        margin-right:30px;
     }
     #blueBtn{
         background-color: rgb(107, 171, 213);
         color: white;
     }
+    #paging{
+		padding-top: 10px;
+	}
+	.pagination {
+	    justify-content: center;
+	}
 </style>  
 </head>
 <body>
@@ -137,12 +147,14 @@
                 <span id="bord-name">1:1 문의 관리</span>
             </div>
             <!-- 회원 조회 -->
+            <input type="hidden" id="memNo" name="mno" value="${loginUser.memNo}">
+            <input type="hidden" id="qnaNo" name="qno" value="${q.qnaNo}">
             <div class="search-box pb-5">
-                <select class="selectpicker show-tick p-2" style="width: 120px;">
+                <select name="category" class="selectpicker show-tick p-2" style="width: 120px;">
                     <option>전체</option>
-                    <option>클래스</option>
-                    <option>스토어</option>
-                    <option>강사</option>
+                    <option value="c">클래스</option>
+                    <option value="s">스토어</option>
+                    <option value="e">기타</option>
                 </select>
                 <div class="search">
                     <form class="form-inline" action="">
@@ -159,8 +171,6 @@
                         <input class="form-control mr-2" type="date"> ~ <input class="form-control ml-2" type="date">
                     </div>
                     <div id="btnBox" style="float: right;">
-                        <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-                        <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">수정</button>
                         <button class="btn btn-danger" id="btnGroup">삭제</button>
                     </div>
                 </div>
@@ -168,77 +178,104 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th width="80px"><input type="checkbox" name="" value=""></th>
+                                <th width="50px"><input type="checkbox" name="" value=""></th>
+                                <th width="80px">글번호</th>
                                 <th width="130px">카테고리</th>
-                                <th width="430px">제목</th>
+                                <th width="420px">제목</th>
                                 <th width="150px">작성자</th>
                                 <th width="140px">작성일</th>
                                 <th width="100px">처리상태</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>안녕하세요 관리자님 환불 가능한가요</td>
-                                <td>강아지</td>
-                                <td>2022-01-02</td>
-                                <td>미답변</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>스토어</td>
-                                <td>수강도중 환불 가능 한가요?</td>
-                                <td>모니카</td>
-                                <td>2022-01-02</td>
-                                <td>답변</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>안녕하세요 관리자님 환불 가능한가요</td>
-                                <td>강아지</td>
-                                <td>2022-01-02</td>
-                                <td>미답변</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>스토어</td>
-                                <td>수강도중 환불 가능 한가요?</td>
-                                <td>모니카</td>
-                                <td>2022-01-02</td>
-                                <td>답변</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>클래스</td>
-                                <td>안녕하세요 관리자님 환불 가능한가요</td>
-                                <td>강아지</td>
-                                <td>2022-01-02</td>
-                                <td>미답변</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" value=""></td>
-                                <td>스토어</td>
-                                <td>수강도중 환불 가능 한가요?</td>
-                                <td>모니카</td>
-                                <td>2022-01-02</td>
-                                <td>답변</td>
-                            </tr>
+                            <c:forEach var="q" items="${ list }">
+                                <tr id="tb" data-tr_value="1">
+                                    <td class="ck"><input type="checkbox" name="selectCheck" value=""></td>
+                                    <td class="td qno">${ q.qnaNo }</td>
+                                    <td class="td category">${ q.category }</td>
+                                    <td class="td">${ q.qnaTitle }</td>
+                                    <td class="td">${ q.nickName }</td>
+                                    <td class="td">${ q.createDate }</td>
+                                    <c:choose>
+				                        <c:when test="${not empty q.ansContent}">
+				                        	<td class="td">답변완료<td>
+				                        </c:when>
+				                        <c:otherwise>
+				                        	<td class="td">미답변<td>
+				                        </c:otherwise>
+			                        </c:choose>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                <div class="paging" align="center">
-                    <button class="btn btn-light">&lt;</button>
-                    
-                    <button class="btn btn-light">1</button>
-                    <button class="btn btn-light">2</button>
-                    <button class="btn btn-light">3</button>
-                    <button class="btn btn-light">4</button>
-                    <button class="btn btn-light">5</button>
-                    
-                    <button class="btn btn-light">&gt;</button>
-                </div>
+                
+                <script>
+	                $('#all_select').click(function(){
+	            		if($("input:checkbox[id='all_select']").prop("checked")) {
+	            			$("input[type=checkbox]").prop("checked",true);
+	            		}else{
+	            			$("input[type=checkbox]").prop("checked",false);
+	            		}
+	            	});
+	                
+		        	$(function(){
+		        		$(".td").click(function(){
+		        			location.href = 'qnaDetail.ad?qno=' + $(this).siblings(".qno").text();
+		        		});
+		        	})
+		        	
+		        	var cknArr = [];
+	            	$(function(){
+	            		$(".ck").click(function(){
+	            			var ckn = $(this).siblings(".qno").text();
+	            			console.log(ckn);
+	            			
+	            			cknArr.push(ckn);
+	            			console.log(cknArr);
+	            			
+	            			$("#delbtn").click(function(){
+	            				for(let i in cknArr){
+	                          	  console.log(cknArr[i]);
+	                          	  let ckn = cknArr[i];
+				            	  
+	                          	  location.href = 'qnaDelete.ad?qno=' + cknArr[i];
+	                          	  
+	            				}
+				            });
+	            		});
+	            	})
+		        </script>
+                
+                <div id="paging" align="center">
+					<ul class="pagination">
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="qnaList.ad?cpage=${ pi.currentPage-1 }">&laquo;&laquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item"><a class="page-link" href="qnaList.ad?cpage=${ p }">${ p }</a></li>
+						</c:forEach>
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="qnaList.ad?cpage=${ pi.currentPage+1 }">&raquo;&raquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+		            </ul>
+		        </div> 
             </div>
             <br><br><br>
         </div>

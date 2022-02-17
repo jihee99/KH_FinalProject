@@ -33,6 +33,7 @@
         width: 650px;
         margin: 0 auto;
         display: flex;
+        height: 700px;
     }
     #adminFaqUdForm>div {
         padding-bottom: 30px;
