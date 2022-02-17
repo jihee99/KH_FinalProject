@@ -76,9 +76,9 @@ public class EventController {
 	}
 	
 	@RequestMapping("tagSelect.ev")
-	public String tagSelect(@RequestParam(value="cpage", defaultValue="1") int currentPage, String selectTag, Model model) {
-		System.out.println(selectTag);
-		int listCount = eService.tagSelectCount(selectTag);
+	public String tagSelect(@RequestParam(value="cpage", defaultValue="1") int currentPage, String hashtag, Model model) {
+		System.out.println(hashtag);
+		int listCount = eService.tagSelectCount(hashtag);
 		PageInfo pi  = Pagination.getPageInfo(listCount, currentPage, 5, 6);
 		ArrayList<ClassVo> list = eService.tagSelectList(pi);
 		System.out.println(list);

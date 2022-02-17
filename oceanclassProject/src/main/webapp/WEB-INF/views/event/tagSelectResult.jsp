@@ -25,16 +25,30 @@
 		border: 1px solid white;
 	}
 	#img:hover{border: 3px solid rgb(107, 171, 213); cursor:pointer;}
+	.head{width: 100%; height: 10%; border: 1px solid;}
+	.head>p{height: 100%; font-size: 100px;}
 </style>
 </head>
 <body>
+
+	<jsp:include page="../common/header.jsp" />
+	
     <div class="innerOuter my-3">
-        <div class="head py-3">
-            <p>${hashtag}</p>
-        </div>
-        
         <div class="content" id="result">
-        	
+        
+			<div class="head py-3">
+	            <p>${hashtag}</p>
+	        </div>
+
+        	<c:forEach var="c" items="${list}">
+        		
+	            <div class="img">
+	            	<input type="hidden" id="clno" value="${c.clNo}">
+	                <img src="${c.clImg}" id="img">
+	                <p>${c.clName}</p>   
+	            </div>
+	            
+	 		</c:forEach> 
         	
 			<div id="paging">
 				<ul class="pagination">
@@ -68,8 +82,10 @@
 		           </ul>
 		       </div>
 	        
-		</div>        
-	
+		</div>       
     </div>
+    
+    <jsp:include page="../common/footerBar.jsp" />
+    
 </body>
 </html>

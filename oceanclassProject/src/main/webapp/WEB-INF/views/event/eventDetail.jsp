@@ -44,7 +44,8 @@
 	        	<c:if test="${not empty e.tag}">
 		        	<c:set var="tagArr" value="${fn:split(e.tag, ' ')}"></c:set>
 		        	<c:forEach var="t" items="${tagArr}">
-		        		<button type="submit" class="tag" id="selectTag" value="${t}">${t}</button>
+        				<input type="hidden" id="hashtag" name="hashtag" value="${t}">
+		        		<button type="submit" class="btn">${t}</button>
 		        	</c:forEach>
 	        	</c:if>
         	</form>
