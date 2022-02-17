@@ -22,6 +22,7 @@ public interface ClassService {
 	ClassReview selectClassReviewDetail(int crNo);
 	int selectReplyListCount(int crNo);
 	ArrayList<Reply> selectReplyList(int crNo, PageInfo pi);
+	int insertClassReviewReply(Reply r);
 	
 	// 클래스 검색용
 	int classSearchListCount(HashMap<String, String> map);
@@ -31,4 +32,10 @@ public interface ClassService {
 	int checkClassLike(LikeVo li);
 	int insertClassLike(LikeVo li);
 	int deleteClassLike(LikeVo li);
+	
+	// 클래스 추천용
+	int checkRecommend(ClassReview cr);
+	int deleteRecommend(ClassReview cr);
+	int insertRecommend(ClassReview cr);
+	
 }

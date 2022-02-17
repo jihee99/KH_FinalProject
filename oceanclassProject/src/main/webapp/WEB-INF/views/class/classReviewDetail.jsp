@@ -29,6 +29,15 @@
 </head>
 <body>
 
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alert('${ alertMsg }');
+		</script>
+		<c:remove var="alertMsg" />
+	</c:if>
+	
+	<input type="hidden" id="grade" value="${ loginUser.grade }">
+
     <div class="outer">
         <div>
             <div style="font-weight: bold; font-size: 17px; color: #6babd5;">실제 수강생 후기 전체 보기</div>
@@ -118,25 +127,39 @@ ${ cr.content }
                 </div>
 
                 <div class="reivewFooter" style="font-size: 13px;">
-                    <button type="button" class="btn" style="background-color: lightgray; margin-bottom: 5px; height:30px; line-height: 15px;">
-                        <img src="resources/images/like.png" width="20" height="20">
-                        <span style="font-size: 13px;">
-                            도움이 됐어요
-                        </span>
-                    </button>
+                <c:choose>
+                	<c:when test="${ recoCk == 'Y' && !empty loginUser}">
+        			    <button type="button" id="recommendBtn" onclick="recommendCk();" class="btn" style="background-color: #6babd5; margin-bottom: 5px; height:30px; line-height: 15px; color: white;">
+	                        <img src="resources/images/like.png" width="20" height="20">
+	                        <span style="font-size: 13px;">도움이 됐어요</span>
+	                    </button>
+                	</c:when>
+                	<c:otherwise>
+	                    <button type="button" id="recommendBtn" onclick="recommendCk();" class="btn" style="background-color: lightgray; margin-bottom: 5px; height:30px; line-height: 15px;">
+	                        <img src="resources/images/like.png" width="20" height="20">
+	                        <span style="font-size: 13px;">도움이 됐어요</span>
+	                    </button>
+                	</c:otherwise>
+                </c:choose>
                     <span style="margin-left:5px;">${ cr.recommend }명에게 도움이 되었어요!</span>
                     <br><br>
-                    <span>댓글 ${ replyList.size() }</span>
+                    <span>
+                    	댓글 ${ cr.replyNum }
+                    </span>
                     <span style="float:right">신고하기</span>
                 </div>
             </div>
             <br>
 
             <div class="reply">
-            	<form id="replyArea">
+            	<form id="replyArea" action="enrollClassReviewReply.me" onsubmit="return loginCheck();">
 	                <div class="inputArea">
 	                    <img src="resources/images/reply2.png" width="40px" height="40px" style="margin-bottom: 5px;">
-	                    <input type="text" class="form-control" style="width: 400px; display: inline-block;" placeholder="댓글 내용을 입력해주세요.">
+	                    <input type="text" class="form-control" name="replyContent" style="width: 400px; display: inline-block;" placeholder="댓글 내용을 입력해주세요.">
+	                    <input type="hidden" id="crNo" name="contentNo" value="${ cr.crNo }">
+	                    <input type="hidden" id="memNo" name="memNo" value="${ loginUser.memNo }">
+	                    <input type="hidden" id="clNo" name="clNo" value="${ reviewClNo }">
+	                    <input type="hidden" id="returnPage" name="returnPage" value="${ returnPage }">
 	                    <button type="submit" class="btn" style="background-color: #6babd5; width: 80px; color: white; margin-bottom: 5px;">등록</button>
 	                </div><br>
                 </form>
@@ -184,6 +207,34 @@ ${ r.replyContent }
         </div>
 
     </div>
+    
+    <script>
+
+    	function loginCheck(){
+    		var loginCk = document.getElementById("memNo").value;
+
+            if(loginCk == ""){
+				alert("로그인 한 회원만 댓글 등록이 가능합니다.");
+				return false;
+			} else{
+				return true;
+			}
+    	}
+    
+    	function recommendCk(){
+    		if(document.getElementById("memNo").value == ""){
+                alert("로그인 후 이용 가능한 서비스 입니다.");
+            } else{
+				location.href = 
+					'recommendClass.me?grade=' + document.getElementById("grade").value 
+					+ "&crNo=" + document.getElementById("crNo").value
+					+ "&clNo=" + document.getElementById("clNo").value
+					+ "&returnPage=" + document.getElementById("returnPage").value
+					+ "&memNo=" + document.getElementById("memNo").value;
+            }
+    	}
+    
+    </script>
 
 </body>
 </html>

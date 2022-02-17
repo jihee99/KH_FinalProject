@@ -98,6 +98,24 @@ public class ClassServiceImpl implements ClassService {
 		return cDao.selectReplyList(sqlSession, crNo, pi);
 	}
 
+	@Override
+	public int insertClassReviewReply(Reply r) {
+		return cDao.insertClassReviewReply(sqlSession, r);
+	}
 
+	@Override
+	public int checkRecommend(ClassReview cr) {
+		return cDao.checkRecommend(sqlSession, cr);
+	}
+
+	@Override
+	public int deleteRecommend(ClassReview cr) {
+		return cDao.deleteRecommend(sqlSession, cr);
+	}
+
+	@Override
+	public int insertRecommend(ClassReview cr) {
+		return cDao.insertRecommend(sqlSession, cr);
+	}
 	
 }

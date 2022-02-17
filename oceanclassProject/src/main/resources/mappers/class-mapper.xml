@@ -303,6 +303,13 @@
 		         where gb_no = 1
 		           and refer_no = c_rno
 		        ) as reconum
+            , (
+                select count(*)
+                  from reply
+                 where reply_status = 'Y'
+                   and board_no = 2
+                   and content_no = c_rno
+              ) as replynum
 		  from class_review r
           join member using (mno)
 		 where status = 'Y'
@@ -330,5 +337,46 @@
 		 where reply_status = 'Y'
 		   and content_no = #{crNo}
 	</select>
+	
+	<insert id="insertClassReviewReply">
+		insert 
+		  into reply
+		values
+			 ( 
+			   SEQ_CMNO.NEXTVAL
+			 , #{memNo}
+			 , 2
+			 , #{contentNo}
+			 , #{replyContent}
+			 , sysdate
+			 , 'Y'
+			 )
+	</insert>
+	
+	<select id="checkRecommend" resultType="_int">
+		select count(*)
+		  from recommend
+		 where gb_no = 1
+		   and refer_no = #{crNo}
+		   and mno = #{memNo}
+	</select>
+	
+	<delete id="deleteRecommend">
+		delete 
+		  from recommend
+		 where mno = #{memNo}
+		   and refer_no = #{crNo}
+	</delete>
+	
+	<insert id="insertRecommend">
+		insert
+		  into recommend
+		values
+			 (
+			   #{memNo}
+			 , 1
+			 , #{crNo}
+			 )
+	</insert>
 	
 </mapper>

@@ -73,7 +73,6 @@ public class ClassDao {
 		
 		return (ArrayList)sqlSession.selectList("classMapper.selectClassReviewList", clNo, rowBounds);
 	}
-	
 	public ClassReview selectClassReviewDetail(SqlSessionTemplate sqlSession, int crNo) {
 		return sqlSession.selectOne("classMapper.selectClassReviewDetail", crNo);
 	}
@@ -90,4 +89,19 @@ public class ClassDao {
 		return (ArrayList)sqlSession.selectList("classMapper.selectReplyList", crNo, rowBounds);
 	}
 	
+	public int insertClassReviewReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("classMapper.insertClassReviewReply", r);
+	}
+	
+	public int checkRecommend(SqlSessionTemplate sqlSession, ClassReview cr) {
+		return sqlSession.selectOne("classMapper.checkRecommend", cr);
+	}
+	
+	public int deleteRecommend(SqlSessionTemplate sqlSession, ClassReview cr) {
+		return sqlSession.delete("classMapper.deleteRecommend", cr);
+	}
+	
+	public int insertRecommend(SqlSessionTemplate sqlSession, ClassReview cr) {
+		return sqlSession.insert("classMapper.insertRecommend", cr);
+	}
 }
