@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style>
     #outer{
-        width: 1000px;
+        width: 1200px;
         margin:auto;
         margin-top: 20px;
     }
@@ -55,36 +55,66 @@
                 <a href="storeSearchList.st" class="more_btn">+more</a>
             </div>
             
-            
 			<c:forEach var="p" items="${ list }" end="3">
 	            <div class="item" style="margin-right: 62px;">
-	                <img src="${ p.productImg0 }" class="thumbnail" onclick="">
+	                <img src="${ p.productImg0 }" class="thumbnail" onclick="goDetail(${p.productNo});">
 	                <div style="font-size: 13px;"><b>${ p.memberNo }</b></div>
-	                <div class="title">${ p.title }</div>
-	                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-	                <span>찜수11</span>
+	                <div class="title" onclick="goDetail(${p.productNo});">${ p.title }</div>
+	                <div id="likeArea">
+		                <c:choose>
+                        	<c:when test="${ p.likeCk == 1 }">
+                        		<img src="resources/images/heart2.png" width="20" height="20" id="likeImg" onclick="likeCk(${p.productNo}, this);">
+							</c:when>
+							<c:otherwise>
+                        		<img src="resources/images/heart1.png" width="20" height="20" id="likeImg" onclick="likeCk(${p.productNo}, this);">
+							</c:otherwise>
+						</c:choose>   
+		                <span id="likeCount">${ p.like}</span>
+	                </div>
 	                <div>
 	                    <b>
-	                        <span>${ p.price }</span>
-	                        원 
+	                        <span>${ p.price }</span>원 
 	                    </b>
 	                </div>
-            		<input type="hidden" id="pno" name="pno" value="${ p.productNo }">
 	            </div>
 			</c:forEach>
 			
 			<script>
-	        	$(function(){
-	        		$(".item").click(function(){
-	        			location.href = 'productMain.pr?pno=' + $("#pno").value();
-	        		});
-	        	})
-	        	
-	        	$(function(){
-	        		$(".title").click(function(){
-	        			location.href = 'productMain.pr?pno=' + $("#pno").value();
-	        		});
-	        	})
+				function goDetail(no) {
+				   location.href = "productMain.pr?pno=" + no;
+				}
+				
+				function likeCk(pno, img){
+					//console.log(window.event.target);
+					
+		    			 if(document.getElementById("memNo").value == ""){
+		    	                alert("로그인 후 이용 가능한 서비스 입니다.");
+		    	            } else{
+		    	                $.ajax({
+		    	                    url:"likeStore.st",
+		    	                    data:{
+		    	                        memNo:document.getElementById("memNo").value,
+		    	                        referNo:pno
+		    	                    }, success:function(likeResult){
+		    							console.log(likeResult);
+		    	                        if(likeResult.message == 'ss'){
+		    	                            img.src = "resources/images/heart2.png";
+		    	                            $(img).next().html(likeResult.likeCount);
+		    	                            alert("찜 목록에 추가 되었습니다!");
+		    	                        } else if(likeResult.message == 'dd'){
+		    	                        	img.src = "resources/images/heart1.png";
+		    	                            $(img).next().html(likeResult.likeCount);
+		    	                            alert("찜 목록에서 삭제되었습니다.");
+		    	                        } else {
+		    	                            alert("비정상적인 요청입니다.");
+		    	                        }
+		    	                    	
+		    	                    }, error:function(){
+		    	                        console.log("찜하기 ajax 통신 실패");
+		    	                    }
+		    	           	    })
+		    	            }
+		    		}
 			</script>
 			
 
@@ -95,19 +125,26 @@
 
 			<c:forEach var="p" items="${ list }" end="3">
 	            <div class="item" style="margin-right: 62px;">
-	                <img src="${ p.productImg0 }" class="thumbnail">
+	                <img src="${ p.productImg0 }" class="thumbnail" onclick="goDetail(${p.productNo});">
 	                <div style="font-size: 13px;"><b>${ p.memberNo }</b></div>
-	                <div>${ p.title }</div>
-	                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-	                <span>찜수11</span>
+	                <div class="title" onclick="goDetail(${p.productNo});">${ p.title }</div>
+	                <div id="likeArea">
+		                <c:choose>
+                        	<c:when test="${ p.likeCk == 1 }">
+                        		<img src="resources/images/heart2.png" width="20" height="20" id="likeImg" onclick="likeCk(${p.productNo}, this);">
+							</c:when>
+							<c:otherwise>
+                        		<img src="resources/images/heart1.png" width="20" height="20" id="likeImg" onclick="likeCk(${p.productNo}, this);">
+							</c:otherwise>
+						</c:choose>   
+		                <span id="likeCount">${ p.like}</span>
+	                </div>
 	                <div>
 	                    <b>
-	                        <span>${ p.price }</span>
-	                        원 
+	                        <span>${ p.price }</span>원 
 	                    </b>
 	                </div>
 	            </div>
-	           	
 			</c:forEach>
 
         </div>
