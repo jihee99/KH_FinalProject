@@ -478,6 +478,51 @@
 		  where report_no = #{reportNo}
 	</select>
 	
+	<update id="adminReportDelete">
+		update report
+		  set status = 'Y'
+		where report_no = #{reportNo}
+	</update>
+	
+	<update id="adminReportRollback">
+		update report
+		  set status = 'B'
+		where report_no = #{reportNo}
+	</update>
+	
+	<select id="selectBlackListCount"  resultType="_int">
+		select count(*)
+		  from member
+		 where report > 2
+		   and u_status = 'Y'
+	</select>
+		
+	<select id="selectReportMemList" resultMap="memberResult">
+		select mno
+		     , user_id
+		     , nickname
+		     , user_name
+		     , report
+		     , u_status
+		  from member
+		 where report > 2
+		 order by mno desc
+	</select>
+	
+	<update id="updateBlackMemBack">
+		update member
+		   set u_status = 'Y'
+		      ,report = 0
+		 where mno = #{mno}
+	</update>
+	
+	
+	
+	<update id="updateBlackMemOut">
+		update member
+		   set u_status = 'N'
+		 where mno = #{mno}
+	</update>
 	
 	
 	

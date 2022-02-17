@@ -166,8 +166,36 @@ public class AdminMemDao {
 			return sqlSession.selectOne("adMemMapper.selectReportReply", rp);
 		}
 	}
-	
 
+	public int adminReportRollback(SqlSessionTemplate sqlSession, String reportNo) {
+		return sqlSession.update("adMemMapper.adminReportRollback", reportNo);
+	}
+
+	public int adminReportDelete(SqlSessionTemplate sqlSession, String reportNo) {
+		return sqlSession.update("adMemMapper.adminReportDelete", reportNo);
+	}
+
+	public int adminBlackListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adMemMapper.selectBlackListCount");
+	}
+
+	public ArrayList<Member> adminReportMemList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectReportMemList", null, rowBounds);
+	}
+
+	public int blackMemBack(SqlSessionTemplate sqlSession, String mno) {
+		return sqlSession.update("adMemMapper.updateBlackMemBack", mno);
+	}
+
+	public int blackMemOut(SqlSessionTemplate sqlSession, String mno) {
+		return sqlSession.update("adMemMapper.updateBlackMemOut", mno);
+	}
+	
+	
 	
 	
 

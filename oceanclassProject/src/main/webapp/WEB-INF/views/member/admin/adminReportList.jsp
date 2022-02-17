@@ -97,7 +97,7 @@
             </table>
         </div>
         <div style="float:left; margin-top:10px;">
-    		<button id="bBtn" class="btn btn-sm" style="background: rgb(172, 1, 1); font-size: 16px; color: white;">블랙리스트 목록 보기</button>
+    		<button id="bBtn" class="btn btn-sm" style="background: rgb(172, 1, 1); font-size: 16px; color: white;" onclick="location.href='blList.ad'">블랙리스트 목록 보기</button>
         </div>
         <div class="btn_group" align="center">
 			<c:choose>
