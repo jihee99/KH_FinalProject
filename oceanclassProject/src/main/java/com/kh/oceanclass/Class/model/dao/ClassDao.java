@@ -11,6 +11,7 @@ import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 
 @Repository
 public class ClassDao {
@@ -71,6 +72,22 @@ public class ClassDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("classMapper.selectClassReviewList", clNo, rowBounds);
+	}
+	
+	public ClassReview selectClassReviewDetail(SqlSessionTemplate sqlSession, int crNo) {
+		return sqlSession.selectOne("classMapper.selectClassReviewDetail", crNo);
+	}
+	
+	public int selectReplyListCount(SqlSessionTemplate sqlSession, int crNo) {
+		return sqlSession.selectOne("classMapper.selectReplyListCount", crNo);
+	}
+	
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int crNo, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("classMapper.selectReplyList", crNo, rowBounds);
 	}
 	
 }

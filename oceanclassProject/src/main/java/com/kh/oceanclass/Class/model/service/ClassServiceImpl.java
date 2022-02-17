@@ -12,6 +12,7 @@ import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -80,6 +81,21 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public ArrayList<ClassReview> selectClassReviewListPaging(int clNo, PageInfo pi) {
 		return cDao.selectClassReviewListPaging(sqlSession, clNo, pi);
+	}
+
+	@Override
+	public ClassReview selectClassReviewDetail(int crNo) {
+		return cDao.selectClassReviewDetail(sqlSession, crNo);
+	}
+
+	@Override
+	public int selectReplyListCount(int crNo) {
+		return cDao.selectReplyListCount(sqlSession, crNo);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int crNo, PageInfo pi) {
+		return cDao.selectReplyList(sqlSession, crNo, pi);
 	}
 
 

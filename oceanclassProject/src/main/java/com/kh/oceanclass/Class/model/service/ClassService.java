@@ -7,6 +7,7 @@ import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 
 public interface ClassService {
 
@@ -18,6 +19,9 @@ public interface ClassService {
 	ArrayList<ClassReview> selectClassReviewMainList(int clNo);
 	int classReviewListCount(int clNo);
 	ArrayList<ClassReview> selectClassReviewListPaging(int clNo, PageInfo pi);
+	ClassReview selectClassReviewDetail(int crNo);
+	int selectReplyListCount(int crNo);
+	ArrayList<Reply> selectReplyList(int crNo, PageInfo pi);
 	
 	// 클래스 검색용
 	int classSearchListCount(HashMap<String, String> map);

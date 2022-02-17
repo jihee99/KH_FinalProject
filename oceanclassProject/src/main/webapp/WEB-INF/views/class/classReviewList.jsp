@@ -13,7 +13,7 @@
 <style>
     .outer{
         width: 600px;
-        height: 1000px;
+        /*height: 1000px;*/
         margin:auto;
     }
     .outer>div{
@@ -26,6 +26,7 @@
 	}
 	.reviewItem{
 		margin-bottom: 50px;
+		cursor: pointer;
 	}
 </style>
 </head>
@@ -38,7 +39,7 @@
 
             <div id="reviewZone">
             	<c:forEach var="ri" items="${ reviewList }">
-	            	<div class="reviewItem">
+	            	<div class="reviewItem" onclick="location.href='classReviewDetail.me?crNo=${ ri.crNo }&cpage=1&clNo=${ reviewClNo }&rpage=${ pi.currentPage }'">
 		                <div class="profile">
 		                    <div style="float:left; margin-right: 10px;">
 		                        <img src="" width="50px" height="50px">
@@ -111,7 +112,7 @@
 		                </div>
 		
 		                <div class="reviewContent" style="margin-top: 10px;">
-		                    <pre style="width:100%; height:150px;">
+		                    <pre style="width:100%;">
             					<c:if test="${ !empty ri.filePath }">
 <img src="${ ri.filePath }" width="400">
 								</c:if>
@@ -120,7 +121,7 @@ ${ ri.content }
 						</div>
 		   
 		                <div class="reivewFooter" style="font-size: 13px;">
-		                    <span>댓글 0</span>
+		                    <span>댓글 ${ ri.replyNum }</span>
 		                    <span style="margin-left: 10px;">
 		                        <img src="resources/images/like.png" width="15" height="15"> ${ ri.recommend }
 		                    </span>
@@ -129,8 +130,8 @@ ${ ri.content }
 		            </div>
 				</c:forEach>
             </div>
+            <br><br>
 	            
-	
             <div id="pagingArea">
                 <ul class="pagination">
                 	<c:if test="${ pi.currentPage > 1 }">

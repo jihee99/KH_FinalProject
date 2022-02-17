@@ -18,6 +18,7 @@ import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.vo.Member;
 
@@ -161,8 +162,20 @@ public class ClassController {
 	}
 	
 	@RequestMapping(value="classReviewDetail.me")
-	public String classReviewDetail() {
-		// 클래스 리뷰 디테일 이동용(뷰 확인용) 메소드
+	public String classReviewDetail(int crNo, int cpage, int clNo, int rpage, Model model) {
+		// 클래스 리뷰 디테일 
+		
+		ClassReview cr = cService.selectClassReviewDetail(crNo); // 리뷰 디테일 정보
+		
+		int listCount = cService.selectReplyListCount(crNo); // 조회할 댓글 갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 4);
+		ArrayList<Reply> replyList = cService.selectReplyList(crNo, pi); // 조회할 댓글 리스트
+				
+		model.addAttribute("cr", cr);
+		model.addAttribute("pi", pi);
+		model.addAttribute("reviewClNo", clNo);
+		model.addAttribute("returnPage", rpage);
+		model.addAttribute("replyList", replyList);
 		return "class/classReviewDetail";
 	}
 	
