@@ -273,6 +273,8 @@ public class StuMypageController {
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
 		ArrayList<ClassReview> list = myService.classReviewList(pi, memNo);
 		//System.out.println(list);
+		
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassReviewDetail";

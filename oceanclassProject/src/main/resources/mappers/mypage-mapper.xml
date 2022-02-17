@@ -228,17 +228,23 @@
 	
 	<select id="classReviewList" resultMap="classReviewResult">
 		select
-		       class_review.clno as "clno"
+			   c_rno
+		     , class_review.clno as "clno"
 		     , class_review.mno as "mno"
 		     , class.cl_name
 		     , content
-		     , star
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , cl_img
+		     , case when star <![CDATA[<=]]> 5 and star <![CDATA[>]]> 4 then '★★★★★'
+		     		when star <![CDATA[<=]]> 4 and star <![CDATA[>]]> 3 then '★★★★☆'
+		     		when star <![CDATA[<=]]> 3 and star <![CDATA[>]]> 2 then '★★★☆☆'
+		     		when star <![CDATA[<=]]> 2 and star <![CDATA[>]]> 1 then '★★☆☆☆'
+		     	    when star <![CDATA[<=]]> 1 then '★☆☆☆☆'  end as star
 		  from class_review
 		  join class on (class_review.clno = class.clno)
 		  where class_review.mno = #{mno}
-		 
+		  order 
+		     by c_rno desc
 	</select>
 	
 </mapper>
