@@ -49,9 +49,9 @@
         <div class="middle">
         	<div id="search">
         		<form action="searchQna.he" method="get">
-        			<select id="option" name="option" class="dropdown-toggle form-control-sm" style="margin-top: -1px;">
-			            <option value="writer">작성자</option>
-			            <option value="category">카테고리</option>
+        			<select id="option" name="option" class="dropdown-toggle form-control-sm" style="margin-top: -1px;" onchange="changeOption(option)">
+			            <option id="writer" value="writer">작성자</option>
+			            <option id="category" value="category">카테고리</option>
 		        	</select>
 		        	<input id="keyword" name="keyword" type="text" class="form-control form-control-sm">
            			<button type="submit" class="btn btn-sm" style="width:60px; margin-top: -1px;">검색</button>
@@ -61,6 +61,12 @@
 				<button type="button" class="btn qs" style="margin-top: -35px;" onclick="location.href='qnaForm.he';">문의하기</button>
         	</c:if>
         </div>
+        
+        <script>
+        	function changeOption(option){
+        		console.log(option.text());
+        	}
+        </script>
         
         <div class="content my-5">
             <table id="qnaList" class="table table-hover">

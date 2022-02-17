@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -80,6 +81,16 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<ClassVo> selectLikeClass(PageInfo pi, int memNo) {
 		return myDao.selectLikeClass(sqlSession, pi, memNo);
+	}
+
+	@Override
+	public int classReviewCount(int memNo) {
+		return myDao.classReviewCount(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<ClassReview> classReviewList(PageInfo pi, int memNo) {
+		return myDao.classReviewList(sqlSession, pi, memNo);
 	}
 
 

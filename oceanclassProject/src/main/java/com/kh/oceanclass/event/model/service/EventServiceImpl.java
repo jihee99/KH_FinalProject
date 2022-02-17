@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.dao.EventDao;
@@ -44,6 +45,16 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public ArrayList<Event> ajaxSearchEvent(String category) {
 		return eDao.ajaxSearchEvent(sqlSession, category);
+	}
+
+	@Override
+	public int tagSelectCount(String tag) {
+		return eDao.tagSelectCount(sqlSession, tag);
+	}
+
+	@Override
+	public ArrayList<ClassVo> tagSelectList(PageInfo pi) {
+		return eDao.tagSelectList(sqlSession, pi);
 	}
 
 }

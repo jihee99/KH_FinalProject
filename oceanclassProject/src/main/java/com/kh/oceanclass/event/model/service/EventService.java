@@ -2,6 +2,7 @@ package com.kh.oceanclass.event.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
@@ -20,5 +21,9 @@ public interface EventService {
 	
 	// 4. 이벤트 카테고리 선택
 	ArrayList<Event> ajaxSearchEvent(String category);
+	
+	// 5. 태그 리스트
+	int tagSelectCount(String tag);
+	ArrayList<ClassVo> tagSelectList(PageInfo pi);
 	
 }
