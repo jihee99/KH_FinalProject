@@ -104,4 +104,12 @@ public class ClassDao {
 	public int insertRecommend(SqlSessionTemplate sqlSession, ClassReview cr) {
 		return sqlSession.insert("classMapper.insertRecommend", cr);
 	}
+	
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.update("classMapper.deleteReply", replyNo);
+	}
+	
+	public int updateReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("classMapper.updateReply", r);
+	}
 }

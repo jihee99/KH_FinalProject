@@ -234,6 +234,28 @@ public class ClassController {
 		return "redirect:classReviewDetail.me?crNo=" + cr.getCrNo() + "&cpage=1&clNo=" + cr.getClNo() + "&rpage=" + returnPage; 
 	}
 	
+	@RequestMapping(value="deleteReply.me")
+	public String deleteReply(int replyNo, int crNo, int clNo, int returnPage, HttpSession session) {
+		int result = cService.deleteReply(replyNo);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "댓글을 삭제하였습니다.");
+		} else {
+			session.setAttribute("alertMsg", "댓글 삭제에 실패하였습니다.");
+		}
+		return "redirect:classReviewDetail.me?crNo=" + crNo + "&cpage=1&clNo=" + clNo + "&rpage=" + returnPage;
+	}
+	
+	@RequestMapping(value="updateClassReviewReply")
+	public String updateReply(Reply r, int clNo, int returnPage, HttpSession session) {
+		System.out.println(r);
+		int result = cService.updateReply(r);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "댓글을 수정하였습니다.");
+		} else {
+			session.setAttribute("alertMsg", "댓글 수정에 실패하였습니다.");
+		}
+		return "redirect:classReviewDetail.me?crNo=" + r.getContentNo() + "&cpage=1&clNo=" + clNo + "&rpage=" + returnPage;
+	}
 	
 	@RequestMapping(value="classPay.me")
 	public String classPay() {

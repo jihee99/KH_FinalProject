@@ -14,15 +14,21 @@ public interface ClassService {
 	// 클래스 상세보기용
 	int increaseCount(int clNo);
 	ClassVo selectClass(int clNo);
+	
+	// 클래스 리뷰용
 	ArrayList<ClassReview> selectClassReviewList(int clNo);
 	ArrayList<ClassReview> selectClassReviewTopList(int clNo);
 	ArrayList<ClassReview> selectClassReviewMainList(int clNo);
 	int classReviewListCount(int clNo);
 	ArrayList<ClassReview> selectClassReviewListPaging(int clNo, PageInfo pi);
 	ClassReview selectClassReviewDetail(int crNo);
+	
+	// 클래스 리뷰 댓글용
 	int selectReplyListCount(int crNo);
 	ArrayList<Reply> selectReplyList(int crNo, PageInfo pi);
 	int insertClassReviewReply(Reply r);
+	int deleteReply(int replyNo);
+	int updateReply(Reply r);
 	
 	// 클래스 검색용
 	int classSearchListCount(HashMap<String, String> map);

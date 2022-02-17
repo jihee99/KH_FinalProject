@@ -273,6 +273,13 @@
 		         where gb_no = 1
 		           and refer_no = c_rno
 		        ) as reconum
+		     , (
+               	select count(*)
+                  from reply
+                 where board_no = 2
+                   and reply_status = 'Y'
+                   and content_no = c_rno
+                ) as replynum
 		  from class_review c
           join member using (mno)
 		 where status = 'Y'
@@ -336,6 +343,8 @@
 		  join member using (mno)
 		 where reply_status = 'Y'
 		   and content_no = #{crNo}
+		 order
+            by reply_date desc
 	</select>
 	
 	<insert id="insertClassReviewReply">
@@ -379,4 +388,17 @@
 			 )
 	</insert>
 	
+	<update id="deleteReply">
+		update reply
+		   set REPLY_STATUS = 'N'
+		 where REPLY_NO = #{replyNo}
+	</update>
+	
+	<update id="updateReply">
+		update reply
+		   set reply_content = #{replyContent}
+		 where reply_status = 'Y'
+		   and reply_no = #{replyNo}
+	</update>
+		
 </mapper>

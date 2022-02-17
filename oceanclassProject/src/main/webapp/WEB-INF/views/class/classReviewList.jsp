@@ -112,7 +112,7 @@
 		                </div>
 		
 		                <div class="reviewContent" style="margin-top: 10px;">
-		                    <pre style="width:100%;">
+		                    <pre style="width:100%; white-space: pre-wrap;">
             					<c:if test="${ !empty ri.filePath }">
 <img src="${ ri.filePath }" width="400">
 								</c:if>
@@ -125,12 +125,11 @@ ${ ri.content }
 		                    <span style="margin-left: 10px;">
 		                        <img src="resources/images/like.png" width="15" height="15"> ${ ri.recommend }
 		                    </span>
-		                    <span style="float:right">신고하기</span>
+		                    <!-- <span style="float:right">신고하기</span> -->
 		                </div>
 		            </div>
 				</c:forEach>
             </div>
-            <br><br>
 	            
             <div id="pagingArea">
                 <ul class="pagination">

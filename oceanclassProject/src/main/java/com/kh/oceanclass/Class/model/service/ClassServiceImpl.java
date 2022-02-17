@@ -117,5 +117,15 @@ public class ClassServiceImpl implements ClassService {
 	public int insertRecommend(ClassReview cr) {
 		return cDao.insertRecommend(sqlSession, cr);
 	}
+
+	@Override
+	public int deleteReply(int replyNo) {
+		return cDao.deleteReply(sqlSession, replyNo);
+	}
+
+	@Override
+	public int updateReply(Reply r) {
+		return cDao.updateReply(sqlSession, r);
+	}
 	
 }

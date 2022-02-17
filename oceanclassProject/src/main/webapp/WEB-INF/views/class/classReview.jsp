@@ -119,7 +119,7 @@
 			        <br>
 			        <div id="imgZone" align="center">
 			        	<c:forEach var="r" items="${ crTopList }">
-				            <img src="${ r.filePath }" width="100px" height="100">
+				            <img src="${ r.filePath }" width="100px" height="100" style="cursor:pointer;" onclick="detailPage(${r.crNo})">
 			        	</c:forEach>
 			        </div>
 				</c:if>
@@ -127,7 +127,7 @@
 		
 		        <div id="reviewZone">
 		        	<c:forEach var="r" items="${ crMainList }">
-		                <div class="bestReview">
+		                <div class="bestReview" style="cursor:pointer;" onclick="detailPage(${r.crNo})">
 		                    <div class="profile">
 		                        <div style="float:left; margin-right: 10px;">
 		                            <img src="" width="50px" height="50px">
@@ -201,15 +201,15 @@
 		                    </div>
 		    
 		                    <div class="reviewContent" style="margin-top: 10px;">
-		                        <pre style="width:100%; height:150px;">${ r.content }</pre>
+		                        <pre style="width:100%; height:150px; white-space: pre-wrap;">${ r.content }</pre>
 		                    </div>
 			    
 		                    <div class="reivewFooter" style="font-size: 13px;">
-		                        <span>댓글 0</span>
+		                        <span>댓글 ${ r.replyNum }</span>
 		                        <span>
 		                            <img src="resources/images/like.png" width="15" height="15" style="margin-bottom: 5px; margin-left: 5px;"> ${ r.recommend }
 		                        </span>
-		                        <span style="float:right">신고하기</span>
+		                        <!--  <span style="float:right">신고하기</span>-->
 		                    </div>
 		                </div>
 		        	</c:forEach>
@@ -261,6 +261,10 @@
 		function allReview(clNo){
             window.open("classReviewList.me?cpage=1&&clNo=" + clNo, "클래스리뷰목록", "width=650, height=800, resizeable=no, location=no");
         }
+		
+		function detailPage(crNo){
+			window.open('classReviewDetail.me?crNo=' + crNo + '&cpage=1&clNo=${c.clNo}&rpage=1', "클래스리뷰목록", "width=650, height=800, resizeable=no, location=no");
+		}
 	</script>
 
 </body>	
