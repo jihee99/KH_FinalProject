@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="style.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <style>

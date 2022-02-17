@@ -150,7 +150,7 @@ div{box-sizing: border-box;}
                 } else{
                     // 지현이 여기 action 링크에다가 store 링크 넣으세용
                     // 스토어 고르고 검색하면 링크로 submit 되는 구조
-                    searchForm.action = '${pageContext.request.contextPath}';
+                    searchForm.action = 'storeSearchList.st';
                     searchForm.submit();
                 }
             } else {
