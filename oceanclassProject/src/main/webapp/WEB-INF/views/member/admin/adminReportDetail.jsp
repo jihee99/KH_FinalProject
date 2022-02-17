@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,37 +25,47 @@
             <br>
             <b>신고정보</b>
             <hr>
-            <button id="reBtn" class="btn btn-sm">복구하기</button>
-            <button id="deBtn" class="btn btn-sm">선택삭제</button>
-            <table>
-                <tr>
-                    <th width="180">신고번호</th>
-                    <td width="300">3942</td>
-                    <th width="180">게시글분류</th>
-                    <td width="300">댓글</td>
-                </tr>
-                <tr>
-                    <th>작성자</th>
-                    <td>user01</td>
-                    <th>처리상태</th>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <th>신고사유</th>
-                    <td colspan="3">무분별한 욕설 및 비방</td>
-                </tr>
-            </table>
-            <br>
-            <b>신고글 내용</b>
-            <div>
-
-                여기에 글씨 보여지게 할건데 
-
-            </div>
-        </div>
+            <form action="">
+	            <input type="button" id="reBtn" class="btn btn-sm" value="복구하기">
+	            <button id="deBtn" class="btn btn-sm" onclick="">삭제하기</button>
+	            <table>
+	                <tr>
+	                    <th width="180">신고번호</th>
+	                    <td width="300">${rp.reportNo }</td>
+	                    <th width="180">게시글분류</th>
+	                    <td width="300">
+	                       	<c:choose>
+	                       		<c:when test="${rp.refCategory eq 'SR'}">
+	                       			스토어 리뷰
+	                       		</c:when>
+	                       		<c:when test="${rp.refCategory eq 'CR'}">클래스 리뷰</c:when>
+	                       		<c:otherwise>댓글</c:otherwise>
+	                       	</c:choose>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <th>작성자</th>
+	                    <td>${rp.userId }</td>
+	                    <th>처리상태</th>
+	                    <td>${rp.status }</td>
+	                </tr>
+	                <tr>
+	                    <th>신고사유</th>
+	                    <td colspan="3">${rp.content }</td>
+	                </tr>
+	            </table>
+	            <br>
+	            <b>신고글 내용</b>
+	            <div>
+	
+	               ${rp.rpContent }
+	
+	            </div>
+	        </div>
+        </form>
         <div align="center">
             <br>
-            <button class="btn" style="background: lightgray;">목록보기</button>
+            <button class="btn" style="background: lightgray;" onclick="history.back();">목록보기</button>
         </div>
     </div>
 

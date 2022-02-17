@@ -152,7 +152,7 @@
             <div id="content-wrap">
 
                 <div id="btnBox">
-                    <button class="btn" id="blueBtn" onclick="location.href='';">등록</button>
+                    <button class="btn" id="blueBtn" onclick="location.href='evEnrollForm.ad';">등록</button>
                 </div>
 
                 <div id="statusBox">
@@ -171,6 +171,15 @@
 				            </div>
 				        </c:forEach>
                 	</div>
+                	
+                	<script>
+			        	$(function(){
+			        		$(".img>#img").click(function(){
+			        			let eventNo = $(this).prev().val();
+			        			location.href = 'evDetail.ad?eno=' + eventNo;
+			        		});
+			        	})
+			        </script>
                 	
 	               <div id="paging" align="center">
 					<ul class="pagination">

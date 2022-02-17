@@ -53,6 +53,10 @@ public class InstructorStoreDao {
 		return sqlSession.update("inStoreMapper.updateProductOption", option);
 	}
 
+	public int upinsertProductOption(SqlSessionTemplate sqlSession, ProductOption option) {
+		return sqlSession.insert("inStoreMapper.upinsertProductOption", option);
+	}
+	
 	public int deleteProduct(SqlSessionTemplate sqlSession, int pno) {
 		return sqlSession.update("inStoreMapper.deleteProduct", pno);
 	}
@@ -81,8 +85,10 @@ public class InstructorStoreDao {
 		return (ArrayList)sqlSession.selectList("inStoreMapper.selectProductList");
 	}
 
+	
 	public int insertProductOrder(SqlSessionTemplate sqlSession, InProductOrder pOrder) {
 		return sqlSession.insert("inStoreMapper.insertProductOrder", pOrder);
 	}
+
 	
 }

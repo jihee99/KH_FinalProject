@@ -19,7 +19,10 @@ import com.kh.oceanclass.member.model.service.AdminMemService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
+import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreRefund;
 
 /*관리자 회원관리 관련 기능*/
 
@@ -248,14 +251,78 @@ public class AdminMemController {
 	@RequestMapping(value="sodetail.ad")
 	public String selectStoreOrderDetailF(String ono, Model model) {
 		StoreOrder so = adMemService.selectStoreOrder(ono);
+		ArrayList<StoreBuyList> buylist = adMemService.selectBuyList(ono);
+		System.out.println(buylist);
 		model.addAttribute("sOrder", so);
+		model.addAttribute("buylist", buylist);
 		return "member/admin/adminOrderDetail";
 	}
 	
+	@RequestMapping(value="orcancleF.ad")
+	public String orderCancleFrom(String ono, Model model) {
+		StoreOrder so = adMemService.selectStoreOrder(ono);
+		model.addAttribute("order", so);
+		System.out.println(so);
+		return "member/admin/adminOrderCancleForm";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="orcancle.ad")
+	public String orderCancle(StoreRefund refund, Model model) {
+		System.out.println(refund);
+		int result1 = adMemService.insertStoreRefund(refund);
+		int result2 = adMemService.updateStoreOrderCancle(refund);
+		return result1*result2 >0? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="orsupdate.ad")
+	public String updateorderStatus(StoreOrder order) {
+		System.out.println(order);
+		int result = adMemService.updateorderStatus(order);
+		
+		return result >0? "success" : "fail";
+	}
 	
 	@RequestMapping(value="rplist.ad")
-	public String adminReportList() {
+	public String adminReportList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+		int listCount = adMemService.adminReportCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		ArrayList<Report> reportList = adMemService.adminReportList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("rpList", reportList);
+		
 		return "member/admin/adminReportList";
 	}
+	
+	@RequestMapping(value="rpdetail.ad")
+	public String adminReportDetail(String rpno, String category,  Model model) {
+		System.out.println(rpno);
+		System.out.println(category);
+		Report rp = new Report();
+		
+		rp.setReportNo(rpno);
+		rp.setRefCategory(category);
+
+		
+		Report report = adMemService.selectReportDetail(rp);
+		System.out.println(report);
+		model.addAttribute("rp", report);
+		return "member/admin/adminReportDetail";
+	}
+	
+	@RequestMapping(value="blacklist.ad")
+	public String adminSelectBlackList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+//		int listCount = adMemService.adminReportCount();
+//		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+//		ArrayList<Report> reportList = adMemService.adminReportList(pi);
+		
+//		model.addAttribute("pi", pi);
+//		model.addAttribute("rpList", reportList);
+		
+		return "member/admin/adminBlackList";
+	}
+	
+	
 }

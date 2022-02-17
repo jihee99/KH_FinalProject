@@ -13,10 +13,13 @@ import lombok.ToString;
 @ToString
 public class Report {
 
-	private int reportNo;
+	private String reportNo;
 	private int reportMemNo;
 	private String refCategory;
-	private int refBNo;
+	private String refBNo;
 	private String content;
 	private String status;
+	
+	private String userId;
+	private String rpContent;	//신고된 게시글의 내용
 }

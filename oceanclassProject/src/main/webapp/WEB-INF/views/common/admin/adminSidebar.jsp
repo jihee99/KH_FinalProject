@@ -73,7 +73,7 @@
                 <div id="menu5">
                     <p>고객센터</p>
                     <ul>
-                        <li><a href="">공지사항 관리</a></li>
+                        <li><a href="noticeList.ad">공지사항 관리</a></li>
                         <li><a href="">FAQ 관리</a></li>
                         <li><a href="">1:1문의 관리</a></li>
                         <li><a href="eList.ad">이벤트 관리</a></li>

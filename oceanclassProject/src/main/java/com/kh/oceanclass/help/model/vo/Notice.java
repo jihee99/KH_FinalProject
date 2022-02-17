@@ -20,5 +20,7 @@ public class Notice {
 	public String createDate;
 	public String status;
 	public String img;
+	
+	public String nickname;
 
 }

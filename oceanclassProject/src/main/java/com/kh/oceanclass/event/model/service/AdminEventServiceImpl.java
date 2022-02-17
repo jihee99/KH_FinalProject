@@ -50,29 +50,25 @@ public class AdminEventServiceImpl implements AdminEventService{
 	}
 
 	@Override
-	public int insertEvent(Event b) {
-		return 0;
+	public int insertEvent(Event e) {
+		return aeDao.insertEvent(sqlSession, e);
 	}
 
 	@Override
 	public Event selectEvent(int eventNo) {
-		return null;
+		return aeDao.selectEvent(sqlSession, eventNo);
 	}
 
 	@Override
-	public int deleteEvent(int eventNo) {
-		return 0;
+	public int endEvent(int eventNo) {
+		return aeDao.endEvent(sqlSession, eventNo);
 	}
 
 	@Override
 	public int updateEvent(Event e) {
-		return 0;
+		return aeDao.updateEvent(sqlSession, e);
 	}
 
-	@Override
-	public int endEvent(Event e) {
-		return 0;
-	}
 
 
 }

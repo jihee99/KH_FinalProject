@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminHelpMapper">
+
+	
+	<resultMap id="noticeResult" type="Notice">
+		<result column="nno" property="noNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="n_title" property="noTitle" />
+		<result column="n_content" property="noContent" />
+		<result column="count" property="count" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="img" property="img" />
+		
+		<result column="nickname" property="nickname" />
+	</resultMap>
+	
+	<resultMap id="qnaResult" type="Qna">
+		<result column="qno" property="qnaNo" />
+		<result column="mno" property="memNo" />
+		<result column="nickname" property="nickName" />
+		<result column="category" property="category" />
+		<result column="q_title" property="qnaTitle" />
+		<result column="q_content" property="qnaContent" />
+		<result column="create_date" property="createDate" />
+		<result column="password" property="pwd" />
+		<result column="a_content" property="ansContent" />
+		<result column="a_date" property="ansDate" />
+	</resultMap>
+	
+	<resultMap id="faqResult" type="Faq">
+		<result column="fno" property="faqNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="f_title" property="faqTitle" />
+		<result column="f_content" property="faqContent" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<!-- 공지사항 -->
+	<select id="selectNtListCount" resultType="_int">
+		select
+		       count(*)
+		  from notice
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectNtList" resultMap="noticeResult">
+		select
+		       nno
+		     , mno
+		     , category
+		     , n_title
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from notice
+          join member using (mno)
+		 where status = 'Y'
+		 order
+		    by nno desc
+	</select>
+	
+	<insert id="insertNotice">
+		insert
+		  into notice
+		  (
+		    NNO
+		  , MNO
+		  , CATEGORY
+		  , N_TITLE
+		  , N_CONTENT
+		  , IMG
+		  )
+		  values
+		  (
+		    seq_nno.nextval
+		  , #{memNo}
+		  , #{category}
+		  , #{noTitle}
+		  , #{noContent}
+		  , #{img}
+		  )
+	</insert>
+	
+	<select id="selectNoticeAd" resultMap="noticeResult">
+		select
+			    NNO
+			  , MNO
+			  , CATEGORY
+			  , N_TITLE
+			  , N_CONTENT
+			  , IMG
+		  from notice
+		 where nno = #{noNo}
+	</select>
+	
+	<update id="deleteNotice">
+		update
+        	   notice
+		   set status = 'N' 
+		 where nno = #{noNo}
+	</update>
+	
+	<update id="updateNotice">
+		update
+        	   notice
+		   set category = #{category}
+		   	 , n_title = #{noTitle}
+		     , n_content = #{noContent}
+		     , img = #{img} 
+		 where nno = #{noNo}
+	</update>
+	
+</mapper>

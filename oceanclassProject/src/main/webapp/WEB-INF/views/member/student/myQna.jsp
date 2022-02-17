@@ -12,8 +12,9 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.searchBar>p{margin-right: 30px; margin-left: 70px;}
-	#search{width:450px; margin-left: 450px;}
+	.searchBar p{float: left; margin-right: 30px; font-weight: 800;}
+	.button{ width: 45%; float: left; margin-left: 50px;}
+	.search{ width:45%; float: left;}
 	#myQna{
 		width:100%;
 		margin: 0 auto;
@@ -44,22 +45,80 @@
 				    <h2>1:1 문의 내역</h2>
 				    
 				    <div class="searchBar">
-				        <p>기간검색</p>
-				        <input type="hidden" id="memNo" value="${loginUser.memNo}">
-				        <button class="btn btn-info" id="week" value="week">1주일</button>
-				        <button class="btn btn-info" id="2week" value="2week">15일</button>
-				        <button class="btn btn-info" id="month" value="month">1개월</button>
-				        <div id="search">
-				            <select name="type" id="type">
-				                <option value="title">제목</option>
-				                <option value="value">분류</option>
+				        <div class="button">
+				        	<p>기간검색</p>
+					        <input type="hidden" id="memNo" value="${loginUser.memNo}">
+					        <button class="btn btn-info" id="week" value="week">1주일</button>
+					        <button class="btn btn-info" id="2week" value="2week">15일</button>
+					        <button class="btn btn-info" id="month" value="month">1개월</button>
+					    </div>    
+				        <div class="search">
+				            <select name="option" id="option">
+				                <option value="t">제목</option>
+				                <option value="c">분류</option>
 				            </select>
-				            <input type="text">
+				            <input type="text" id="text">
 				            <button>검색</button>
 				        </div>
 				    </div>
 				    
+				    <table class="table" id="myQna">
+				        <thead>
+				            <tr class="table-light">
+				                <th>날짜</th>
+				                <th>분류</th>
+				                <th>제목</th>
+				                <th>답변유무</th>
+				            </tr>
+				        </thead>
+				        <tbody id="result">
+				        	<c:forEach var="q" items="${list}">
+					            <tr id="qna">
+					                <td>${q.createDate}</td>
+					                <td>${q.category}</td>
+					                <td>${q.qnaTitle}</td>
+					                <c:choose>
+				                        <c:when test="${not empty q.ansContent}">
+				                        	<td>등록완료</td>
+				                        </c:when>
+				                        <c:otherwise>
+				                        	<td>대기중</td>
+				                        </c:otherwise>
+			                        </c:choose>
+					            </tr>
+					            <tr id="question">
+					            	<td></td>
+					            	<td>내용</td>
+					            	<td colspan="2" style="text-align: left; padding-left: 100px;">${q.qnaContent}</td>
+					            </tr>
+					            <c:if test="${not empty q.ansContent}"> 
+						            <tr id="answer">
+						            	<td></td>
+						            	<td>답변</td>
+						            	<td colspan="2" style="text-align: left; padding-left: 100px;">${q.ansContent} <p>${q.ansDate}</p></td>
+						            </tr>
+					            </c:if>
+				            </c:forEach>
+				        </tbody>
+				    </table>
+				    <!-- 목록 상세보기 -->
 				    <script>
+						$(function(){
+							$("#myQna>tbody>#qna").click(function(){
+								//console.log($(this));
+								$(this).toggleClass("selected");
+								$("#myQna>tbody>#qna").not(this).removeClass("selected");
+								var targetQ = $(this).next();
+								var targetA = $(this).next().next();
+								//console.log(targetQ.text());
+								targetQ.fadeToggle(200);
+								targetA.fadeToggle(200);
+							});
+						});
+					</script>
+					
+					<!-- 기간 선택 후 목록 출력 및 상세보기 -->
+					<script>
 				    	$(function(){
 				    		$(".btn").click(function(){
 				    			let value = $(this).val();			// 날짜버튼값
@@ -157,62 +216,6 @@
 					    	})
 				    	})
 				    </script>
-				    
-				    
-				    <table class="table" id="myQna">
-				        <thead>
-				            <tr class="table-light">
-				                <th>날짜</th>
-				                <th>분류</th>
-				                <th>제목</th>
-				                <th>답변유무</th>
-				            </tr>
-				        </thead>
-				        <tbody id="result">
-				        	<c:forEach var="q" items="${list}">
-					            <tr id="qna">
-					                <td>${q.createDate}</td>
-					                <td>${q.category}</td>
-					                <td>${q.qnaTitle}</td>
-					                <c:choose>
-				                        <c:when test="${not empty q.ansContent}">
-				                        	<td>등록완료</td>
-				                        </c:when>
-				                        <c:otherwise>
-				                        	<td>대기중</td>
-				                        </c:otherwise>
-			                        </c:choose>
-					            </tr>
-					            <tr id="question">
-					            	<td></td>
-					            	<td>내용</td>
-					            	<td colspan="2" style="text-align: left; padding-left: 100px;">${q.qnaContent}</td>
-					            </tr>
-					            <c:if test="${not empty q.ansContent}"> 
-						            <tr id="answer">
-						            	<td></td>
-						            	<td>답변</td>
-						            	<td colspan="2" style="text-align: left; padding-left: 100px;">${q.ansContent} <p>${q.ansDate}</p></td>
-						            </tr>
-					            </c:if>
-				            </c:forEach>
-				        </tbody>
-				    </table>
-				    
-				    <script>
-						$(function(){
-							$("#myQna>tbody>#qna").click(function(){
-								//console.log($(this));
-								$(this).toggleClass("selected");
-								$("#myQna>tbody>#qna").not(this).removeClass("selected");
-								var targetQ = $(this).next();
-								var targetA = $(this).next().next();
-								//console.log(targetQ.text());
-								targetQ.fadeToggle(200);
-								targetA.fadeToggle(200);
-							});
-						});
-					</script>
 			    
 			    	<div id="paging">
 						<ul class="pagination">

@@ -13,6 +13,8 @@
 		<result column="status" property="status" />
 		<result column="tag" property="tag" />
 		<result column="img" property="img" />
+		<result column="img" property="couponImg" />
+		<result column="maxCount" property="maxCount" />
 	</resultMap>
 	
 	<resultMap id="replyResult" type="Reply">
@@ -20,6 +22,16 @@
 		<result column="reply_content" property="replyContent" />
 		<result column="reply_date" property="replyDate" />
 		<result column="nickname" property="nickName" />
+	</resultMap>
+	
+	<resultMap id="classResult" type="Class">
+		<result column="clno" property="clNo" />
+		<result column="category" property="category" />
+		<result column="cl_name" property="clName" />
+		<result column="cl_date" property="clDate" />
+		<result column="cl_price" property="clPrice" />
+		<result column="cl_img" property="clImg" />
+		<result column="like_count" property="like" />
 	</resultMap>
 	
 
@@ -149,5 +161,89 @@
 			 where status = 'N'
 	</select>
 	
+	<insert id="insertEvent">
+		insert
+		  into event
+		  (
+		    ENO
+		  , MNO
+		  , CATEGORY
+		  , E_TITLE
+		  , E_CONTENT
+		  , IMG
+		  , TAG
+		  )
+		  values
+		  (
+		    seq_eno.nextval
+		  , #{memNo}
+		  , #{category}
+		  , #{eventTitle}
+		  , #{eventContent}
+		  , #{img}
+		  , #{tag}
+		  )
+	</insert>
+	
+	
+	<select id="selectEventAd" resultMap="eventResult">
+		select
+			    ENO
+			  , MNO
+			  , CATEGORY
+			  , E_TITLE
+			  , E_CONTENT
+			  , IMG
+			  , TAG
+		  from event
+		 where eno = #{eventNo}
+	</select>
+	
+	<update id="endEvent">
+		update
+        	   event
+		   set status = 'N' 
+		 where eno = #{eventNo}
+	</update>
+	
+	<update id="updateEvent">
+		update
+        	   event
+		   set category = #{category}
+		   	 , e_title = #{eventTitle}
+		     , e_content = #{eventContent}
+		     , img = #{img}
+		     , tag = #{tag}  
+		 where eno = #{eventNo}
+	</update>
+	
+	
+	<!-- 태그  -->
+	<select id="tagSelecetCount" resultType="_int">
+		select
+		       count(*)
+		  from class
+		 where cl_status = 'Y'
+		   and hashtag like '%'||#{tag}||'%'
+	</select>
+	
+	<select id="tagSelectList" resultMap="classResult">
+		select
+		       clno
+		     , category
+		     , cl_name
+		     , cl_price
+		     , cl_img
+		  from class
+		 where hashtag like '%'||#{tag}||'%'
+		 order
+		    by clno desc
+	</select>
+	
+	<select id="tagLickClass" resultType="_int">
+		select count(*)
+		  from like_item
+		 where refer_no = '#{clno}'
+	</select>
 	
 </mapper>

@@ -18,5 +18,7 @@ public class StoreBuyList {
 	private int optionNo;
 	private int quantity;
 	private int price;
+	
+	private String title;
 
 }

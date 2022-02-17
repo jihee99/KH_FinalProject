@@ -50,8 +50,7 @@
      		} else {
      			$("#category option:eq(2)").prop("selected", true);	
      		}
-
-     	})
+     	});
 	</script>
 	
 	<!-- 강사용 메뉴바 연결하기 	-->

@@ -2,8 +2,6 @@ package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
 
-import org.apache.catalina.Store;
-
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
@@ -11,7 +9,9 @@ import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.member.model.vo.Report;
+import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreRefund;
 
 public interface AdminMemService {
 	
@@ -33,10 +33,11 @@ public interface AdminMemService {
 	
 	//------------신고------------
 	//관리자 신고내역 조회기능
+	int adminReportCount();
 	ArrayList<Report> adminReportList(PageInfo pi);
 	
 	//관리자 신고내역 상세보기 기능
-	Report adminReportdetail(int reportNo);
+	Report selectReportDetail(Report rp);
 	
 	//관리자 신고내역 복구 기능
 	int adminReportRestore(int reportNo);
@@ -94,11 +95,14 @@ public interface AdminMemService {
 	
 	// 관리자 스토어 주문 상세조회 
 	StoreOrder selectStoreOrder(String sOrderNo);
-
-
+	ArrayList<StoreBuyList> selectBuyList(String sOrderNo);
 	
-	//관리자 주문상태변경기능 
 	
+	//관리자 주문취소
+	int insertStoreRefund(StoreRefund refund);
+	int updateStoreOrderCancle(StoreRefund refund);
+
+	int updateorderStatus(StoreOrder order);
 	
 	
 	//환불처리 어떻게 하지..................................................

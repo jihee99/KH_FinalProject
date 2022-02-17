@@ -46,4 +46,19 @@ public class AdminEventDao {
 		
 		return (ArrayList)sqlSession.selectList("eventMapper.statusNList", null, rowBounds);
 	}
+	
+	public int insertEvent(SqlSessionTemplate sqlSession, Event e) {
+		return sqlSession.insert("eventMapper.insertEvent", e);
+	}
+	
+	public Event selectEvent(SqlSessionTemplate sqlSession, int eventNo) {
+		return sqlSession.selectOne("eventMapper.selectEventAd", eventNo);
+	}
+	public int endEvent(SqlSessionTemplate sqlSession, int eventNo) {
+		return sqlSession.update("eventMapper.endEvent", eventNo);
+	}
+	public int updateEvent(SqlSessionTemplate sqlSession, Event e) {
+		System.out.println(e);
+		return sqlSession.update("eventMapper.updateEvent", e);
+	}
 }

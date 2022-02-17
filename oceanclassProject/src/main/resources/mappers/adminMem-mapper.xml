@@ -49,10 +49,20 @@
         <result column="dedate" property="deDate" />
 	</resultMap>
 	
+	<resultMap type="Report" id="reportResult">
+		<result column="report_no" property="reportNo"/>
+		<result column="reported_mno" property="reportMemNo"/>
+		<result column="bcategory" property="refCategory"/>
+		<result column="rep_bno" property="refBNo"/>
+		<result column="content" property="content"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	
 	<resultMap type="StoreOrder" id="storeOrderResult">
 		<!-- pay table -->
 		<result column="order_no" property="orderNo" />
 		<result column="mno" property="memNo" />
+		<result column="phone" property="phone" />
 		<result column="address" property="address" />
 		<result column="pay_amount" property="payAmount" />
 		<result column="pay_date" property="payDate" />
@@ -79,7 +89,25 @@
 		<!-- additional columns -->
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
-		
+	</resultMap>
+	
+	<resultMap type="StoreBuyList" id="buyListResult">
+		<result column="order_no" property="orderNo" />
+ 		<result column="pno" property="productNo" />
+		<result column="opno" property="optionNo" />
+		<result column="quantity" property="quantity" />
+		<result column="price" property="price" />
+		<result column="title" property="title" />
+	</resultMap>
+	
+	<resultMap type="StoreRefund" id="refundResult">
+		<result column="refund_no" property="refundNo" />
+		<result column="order_no" property="orderNo" />
+		<result column="refund" property="refund" />
+		<result column="refund_date" property="refundDate"/>
+		<result column="refund_status" property="refundStatus" />
+		<result column="user_id" property="userId" />
+		<result column="rpcontent" property="rpContent" />
 	</resultMap>
 	
 	<select id="loginAdmin" resultMap="memberResult">
@@ -313,16 +341,13 @@
 		 where order_no = #{storeNo}
 	</delete>
 	
-	
-	
-	
-	
 	<select id="selectStoreOrder" resultMap="storeOrderResult">
 		select
 		       order_no
 		     , mno
 		     , user_name
 		     , address
+		     , phone
 		     , pay_amount
 		     , to_char(pay_date, 'YYYY-MM-DD HH24:MI:SS') pay_date
 		     , pay_method
@@ -333,15 +358,131 @@
 		     , use_coupon
 		     , pay.point
 		     , d_fee
-		     , REFUND_DATE
+		     , to_char(REFUND_DATE, 'YYYY-MM-DD HH24:MI:SS') REFUND_DATE
 		     , REFUND_NO
 		     , REFUND_STATUS
 		 from pay
 		left join s_refund using (order_no)
 		join member using(mno)
 		where order_no = #{sOrderNo}
-     
 	</select>
+	
+	<select id="selectStoreBuyList" resultMap="buyListResult">
+		select 
+		       order_no
+		     , pno
+		     , title
+		     , opno
+		     , quantity
+		     , s.price
+		 from s_buylist s 
+		 join store using (pno)
+		 where order_no = ${sOrderNo}
+	</select>
+	
+	<insert id="insertStoreRefund">    
+		insert
+		  into s_refund
+		      (
+		        refund_no
+		      , order_no
+		      , refund
+		      , refund_date
+		      , refund_status
+		      )
+		 values
+		       (
+		         SEQ_SREFUNDNO.nextval
+		       , #{orderNo}
+		       , #{refund}
+		       , sysdate
+		       , 2
+		       )
+	</insert>
+	
+	<update id="updateStoreOrderCancle">
+		update pay
+		   set order_status = 6
+		 where order_no = #{orderNo}
+	</update>
+	
+		<update id="upadteOrderStatus">
+		update pay
+		   set order_status = #{orderStatus}
+		 where order_no = #{orderNo}
+	</update>
+	
+	<select id="selectReportCount" resultType="_int">
+		select count(*)
+  		  from report
+	</select>
+	
+	<select id="selectReportList" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+		      , bcategory
+		      , rep_bno
+		      , content
+		      , status
+		  from report
+		 order
+		    by report_no desc
+	</select>
+	
+	<select id="selectReportStoreReview" resultMap="reportResult">
+		select 
+		        report_no
+		      , reported_mno
+		      , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , rv.content as rpcontent
+		  from report rp
+		  join s_review rv on rv.rno = rp.rep_bno
+		  join member using (mno)
+		  where report_no = #{reportNo}
+	</select>
+	
+	<select id="selectReportClassReview" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+    		  , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , rv.content as rpcontent
+		  from report rp
+		  join class_review rv on rv.c_rno = rp.rep_bno
+		  join member using (mno)
+		  where report_no = #{reportNo}
+	</select>
+	
+	<select id="selectReportReply" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+		      , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , rv.reply_content as rpcontent
+		  from report rp
+		  join reply rv on rv.reply_no = rp.rep_bno
+		  join member using (mno) 
+		  where report_no = #{reportNo}
+	</select>
+	
+	
+	
+	
+	
+	
 	
 	
 	

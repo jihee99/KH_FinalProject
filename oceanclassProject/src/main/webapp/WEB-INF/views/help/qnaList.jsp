@@ -12,15 +12,12 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./resources/css/helpMain.css?6">
 <style>
+	#option{float:left;}
 	.middle{
 		width: 100%;
 		margin: auto;
 		margin-top: 50px;
 		margin-bottom: -20px;
-	}
-	#category{
-		width: 10%;
-		float:left
 	}
     .middle input{
     	width: 200px; 
@@ -52,9 +49,9 @@
         <div class="middle">
         	<div id="search">
         		<form action="searchQna.he" method="get">
-        			<select id="option" name="option" class="dropdown-toggle form-control-sm" style="margin-top: -1px;">
-			            <option value="writer">작성자</option>
-			            <option value="category">카테고리</option>
+        			<select id="option" name="option" class="dropdown-toggle form-control-sm" style="margin-top: -1px;" onchange="changeOption(option)">
+			            <option id="writer" value="writer">작성자</option>
+			            <option id="category" value="category">카테고리</option>
 		        	</select>
 		        	<input id="keyword" name="keyword" type="text" class="form-control form-control-sm">
            			<button type="submit" class="btn btn-sm" style="width:60px; margin-top: -1px;">검색</button>
@@ -64,6 +61,12 @@
 				<button type="button" class="btn qs" style="margin-top: -35px;" onclick="location.href='qnaForm.he';">문의하기</button>
         	</c:if>
         </div>
+        
+        <script>
+        	function changeOption(option){
+        		console.log(option.text());
+        	}
+        </script>
         
         <div class="content my-5">
             <table id="qnaList" class="table table-hover">

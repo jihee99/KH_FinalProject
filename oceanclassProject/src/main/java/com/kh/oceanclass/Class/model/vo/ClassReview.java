@@ -21,4 +21,7 @@ public class ClassReview {
 	private String status;
 	private int recommend;
 	
+	private String clName;
+	private String img;
+	
 }

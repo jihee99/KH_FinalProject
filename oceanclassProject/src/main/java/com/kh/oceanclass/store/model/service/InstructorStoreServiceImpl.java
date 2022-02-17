@@ -70,6 +70,12 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		
 	}
 	
+	@Override
+	public int upinsertProductOption(ProductOption option) {
+		// 4-2. 기존 옵션 수보다 많을 때 사용
+		return inStoreDao.upinsertProductOption(sqlSession, option);
+	}
+
 	
 	@Override
 	public int deleteProduct(int pno) {

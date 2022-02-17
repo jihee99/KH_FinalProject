@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,30 +19,98 @@
 	}
 	.content1{
 	    width: 100%;
-	    height: 30%;
+	    height: 50%;
 	}
 	.conhead>h2{width: 30%; font-weight: 900;}
-    .item{width:25%; float:left; margin: 30px; overflow: hidden;}
-    .item img{display:block; width: 100%;}
-    .item>p{text-align: center; font-size: 20px; font-weight: 600;}
+    .item{width:40%; height: 80%; float:left; margin: 35px; overflow: hidden;}
+    .item img{display:block; width: 100%; height: 200px; vertical-align: middle}
+    .item>#ctitle{text-align: center; font-size: 20px; font-weight: 600; }
+    #paging{
+    	display: table;
+    }
 </style>
 </head>
 <body>
-	<div class="content">
-	    <div class="content1">
-	        <div class="conhead">
-	            <h2>찜한 클래스</h2>
-	        </div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와 함께하..</p></div>
-	        <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-	    </div>  
-	</div>
+	<table id="mainTable">
+		<tr>
+			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
+		</tr>
+		
+		<tr>
+			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
+			<td id="mainContent">
+				<div class="content">
+				    <div class="content1">
+				        <div class="conhead">
+				            <h2>찜한 클래스</h2>
+				        </div>
+				        <c:forEach var="c" items="${list}">
+				            <div class="item">
+				            	<a><img src="${c.clImg}"></a>
+				            	<input type="hidden" value="${c.clNo}">
+				            	<p id="ctitle">
+					            	<c:choose>
+					            		<c:when test="${fn:length(c.clName) gt 18}">
+					            			<c:out value="${fn:substring(c.clName, 0, 18)}"></c:out>..
+					            		</c:when>
+					            		<c:otherwise>
+					            			<c:out value="${c.clName}"></c:out>
+					            		</c:otherwise>
+					            	</c:choose>
+				            	</p>
+				            </div>
+			            </c:forEach>
+				    </div> 
+			    	<div id="paging">
+						<ul class="pagination">
+							<c:choose>
+								<c:when test="${ pi.currentPage eq 1 }">
+									<li class="page-item disabled">
+										<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+								</c:otherwise>
+							</c:choose>
+							
+							
+							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+								<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ p }">${ p }</a></li>
+							</c:forEach>
+							
+							
+							<c:choose>
+								<c:when test="${ pi.currentPage eq pi.maxPage }">
+									<li class="page-item disabled">
+										<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+								</c:otherwise>
+							</c:choose>
+			            </ul>
+					</div>
+				</div>
+				
+				<script>
+					$("a").click(function(){
+						console.log($(this).next().val());
+						$.ajax({
+							url:"classDetail.me",
+							data:{clNo:$(this).next().val(), 
+								  referNo:$(this).next().val()},
+							success:function(result){
+								console.log("성공");
+							}
+						})
+					})
+				</script>
+				
+			</td>
+		</tr>
+	</table>
+	
 </body>
 </html>

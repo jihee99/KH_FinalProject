@@ -24,6 +24,33 @@
 		<result column="a_date" property="ansDate" />
 	</resultMap>
 	
+	<resultMap id="myClassResult" type="Class">
+		<result column="clNo" property="clNo" />
+		<result column="mNo" property="memNo" />
+		<result column="category" property="category" />
+		<result column="cl_name" property="clName" />
+		<result column="cl_date" property="clDate" />
+		<result column="cl_price" property="clPrice" />
+		<result column="cl_status" property="clStatus" />
+		<result column="cl_img" property="clImg" />
+		<result column="like" property="like" />
+	</resultMap>
+	
+	<resultMap id="classReviewResult" type="ClassReview">
+		<result column="c_rno" property="crNo" />
+		<result column="clno" property="clNo" />
+		<result column="mno" property="memNo" />
+		<result column="content" property="content" />
+		<result column="star" property="star" />
+		<result column="filepath" property="filePath" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="reconum" property="recommend" />
+		<result column="cl_name" property="clName" />
+		<result column="cl_img" property="img" />
+	</resultMap>
+	
+	<!-- 정보수정용 -->
 	<update id="updateProfile">
 		update
 			   member
@@ -47,6 +74,15 @@
 		 where user_id = #{userId}
 	</update>
 	
+	<select id="checkNick" resultType="_int">
+		select 
+			   count(*)
+  		  from member
+ 		 where nickname = #{nickName}
+	</select>
+	
+	
+	<!-- 적립금/쿠폰 -->
 	<select id="selectCouponCount" resultType="_int">
 		select 
 			   count(*)
@@ -67,6 +103,8 @@
 		 WHERE MNO = #{memNo}
 	</select>
 	
+	
+	<!-- 1:1문의 -->
 	<select id="selectQnaCount" resultType="_int">
 		select 
 			   count(*)
@@ -161,11 +199,46 @@
 		    by qno desc
 	</select>
 	
-	<select id="checkNick" resultType="_int">
+	
+	<!-- 클래스 -->
+	<select id="likeClassCount" resultType="_int">
+		select count(*)
+		  from like_item
+		 where mno = #{memNo}
+	</select>
+	
+	<select id="selectLikeClass" resultMap="myClassResult">
 		select 
-			   count(*)
-  		  from member
- 		 where nickname = #{nickName}
+		       clno
+		     , l.mno as "mno"
+		     , cl_name
+		     , cl_price
+		     , to_char(cl_date, 'YYYY-MM-DD') as "cl_date"
+		     , cl_img
+		  from class c
+		  join like_item l on (c.clno = l.refer_no)
+		  where l.mno = #{mno}
+	</select>
+	
+	<select id="classReviewCount" resultType="_int">
+	select count(*)
+	  from class_review
+	 where mno = #{mno}
+	</select>
+	
+	<select id="classReviewList" resultMap="classReviewResult">
+		select
+		       class_review.clno as "clno"
+		     , class_review.mno as "mno"
+		     , class.cl_name
+		     , content
+		     , star
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , cl_img
+		  from class_review
+		  join class on (class_review.clno = class.clno)
+		  where class_review.mno = #{mno}
+		 
 	</select>
 	
 </mapper>

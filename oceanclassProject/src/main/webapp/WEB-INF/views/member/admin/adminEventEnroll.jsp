@@ -102,17 +102,18 @@
                 <span id="bord-name">이벤트 등록</span>
             </div>
             <div id="enroll-form">
-                <form action="" method="post" id="enrollForm">
+                <form action="evInsert.ad" method="post" id="enrollForm" enctype="multipart/form-data">
+                    <input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
                     <div class="box">
                         <label class="textName" for="">이벤트 카테고리<span class="star">*</span></label>
                         <div class="input-area">
-                            <select name="" id="">
-                                <option value="">전체</option>
-                                <option value="">클래스</option>
-                                <option value="">스토어</option>
-                                <option value="">포인트</option>
-                                <option value="">댓글</option>
-                                <option value="">기타</option>
+                            <select name="category" id="">
+                                <option value="A">전체</option>
+                                <option value="C">클래스</option>
+                                <option value="S">스토어</option>
+                                <option value="P">포인트</option>
+                                <option value="R">댓글</option>
+                                <option value="CP">기타</option>
                             </select>
                         </div>
                     </div>
@@ -120,33 +121,33 @@
                     <div class="box">
                         <label class="textName" for="">제목<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="" name="" placeholder="제목을 입력 하세요." required>
+                            <input type="text" id="" name="eventTitle" placeholder="제목을 입력 하세요." required>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">내용<span class="star">*</span></label>
                         <div class="input-area">
-                            <textarea name="" id="" cols="58" rows="8" placeholder="내용을 입력 하세요."></textarea>
+                            <textarea name="eventContent" id="" cols="58" rows="8" placeholder="내용을 입력 하세요."></textarea>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">파일 첨부<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="file" id="" name="" required>
+                            <input type="file" id="upfile" name="upfile" accept=".gif, .jpg, .png" required>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">해시 태그<span class="star"></span></label>
                         <div class="input-area">
-                            <input type="text" id="" name="" placeholder=" 해시 태그를 입력 하세요.">
+                            <input type="text" id="" name="tag" placeholder=" 해시 태그를 입력 하세요.">
                         </div>
                     </div>
                     <div id="btnBox">
                         <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-                        <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
+                        <button type="button" onclick="history.back()" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
                     </div>
                 </form>
             </div>
