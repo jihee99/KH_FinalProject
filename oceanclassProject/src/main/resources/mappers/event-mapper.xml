@@ -19,8 +19,12 @@
 	
 	<resultMap id="replyResult" type="Reply">
 		<result column="reply_no" property="replyNo" />
+		<result column="mno" property="memNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="content_no" property="contentNo" />
 		<result column="reply_content" property="replyContent" />
 		<result column="reply_date" property="replyDate" />
+		<result column="reply_status" property="replyStatus" />
 		<result column="nickname" property="nickName" />
 	</resultMap>
 	
@@ -81,8 +85,31 @@
 		     , to_char(reply_date, 'YYYY-MM-DD') as "reply_date"
 		  from REPLY
 		  JOIN MEMBER USING (MNO)
-         WHERE CONTENT_NO = #{eventNo}
+         WHERE CONTENT_NO = #{contentNo}
+        order
+           by reply_no desc
 	</select>	 
+	
+	
+	<select id="insertReply" resultType="_int">
+		insert
+		  into reply
+			 (
+			   reply_no
+			 , mno
+		  	 , board_no
+			 , content_no
+			 , reply_content
+			 )
+			 values
+			 (
+			   seq_reno.nextval
+			 , #{memNo}
+			 , 1
+			 , #{contentNo}
+			 , #{replyContent}
+			 )
+	</select>
 	 
 	 
 	<select id="ajaxSearchEvent" resultMap="eventResult">

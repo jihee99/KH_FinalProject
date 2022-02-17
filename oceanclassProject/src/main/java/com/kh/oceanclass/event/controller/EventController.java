@@ -52,12 +52,27 @@ public class EventController {
 	public String selectEvent(int eno, Model model) {
 		//System.out.println(eno);
 		Event e = eService.selectEvent(eno);
-		ArrayList<Reply> list = eService.selectReplyList(eno);
 		//System.out.println(e);
 		//System.out.println(list);
 		model.addAttribute("e", e);
-		model.addAttribute("list", list);
 		return "event/eventDetail";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="replyList.ev", produces="application/json; charset=utf-8")
+	public String ajaxSelectReplyList(int contentNo) {
+		ArrayList<Reply> list = eService.selectReplyList(contentNo);
+		
+		return new Gson().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping("replyInsert.ev")
+	public String ajaxreplyInsert(Reply r) {
+		int result = eService.insertReply(r);
+		//System.out.println(result);
+		return result>0 ? "1" : "0";
 	}
 	
 	@RequestMapping("tagSelect.ev")

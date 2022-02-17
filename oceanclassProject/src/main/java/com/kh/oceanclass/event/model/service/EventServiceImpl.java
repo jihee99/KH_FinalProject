@@ -38,8 +38,13 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	@Override
-	public ArrayList<Reply> selectReplyList(int eventNo) {
-		return eDao.selectReplyList(sqlSession, eventNo);
+	public ArrayList<Reply> selectReplyList(int contentNo) {
+		return eDao.selectReplyList(sqlSession, contentNo);
+	}
+	
+	@Override
+	public int insertReply(Reply r) {
+		return eDao.insertReply(sqlSession, r);
 	}
 
 	@Override
@@ -56,5 +61,7 @@ public class EventServiceImpl implements EventService{
 	public ArrayList<ClassVo> tagSelectList(PageInfo pi) {
 		return eDao.tagSelectList(sqlSession, pi);
 	}
+
+	
 
 }
