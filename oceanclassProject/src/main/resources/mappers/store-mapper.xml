@@ -17,6 +17,16 @@
 	  	<result column="img2" property="productImg1"/>
 	  	<result column="img3" property="productImg2"/>
 	 	<result column="img4" property="productImg3"/>
+	 	<result column="nickname" property="memberNo" />
+	 	<result column="like_count" property="like" />
+	 	<result column="likeck" property="likeCk" />
+	</resultMap>
+	
+	<resultMap id="optionResult" type="ProductOption">
+		<result column="opno" property="optionNo"/>
+		<result column="pno" property="productNo"/>
+		<result column="opname" property="optionName"/>
+		<result column="price" property="price"/>
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
@@ -29,7 +39,7 @@
 	<select id="selectList" resultMap="storeResult">
 		select
 			   pno
-			 , mno
+			 , nickname
 			 , category
 			 , title
 			 , price
@@ -37,16 +47,33 @@
 			 , soldout_yn
 			 , status
 			 , img1
-		  from store
+			 , img2
+			 , img3
+			 , img4
+			 , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and refer_no = pno
+		        ) as like_count
+		      , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and mno = #{memberNo} 
+		           and refer_no = pno
+		       ) as likeck
+		  from store 
+		  join member using (mno)
 		 where status = 'Y'
 		 order
 		 	by pno desc
 	</select>
 	
 	<select id="categorySearch" resultMap="storeResult">
-				select
+		select
 			   pno
-			 , mno
+			 , nickname
 			 , category
 			 , title
 			 , price
@@ -54,12 +81,102 @@
 			 , soldout_yn
 			 , status
 			 , img1
-		  from store
+			 , img2
+			 , img3
+			 , img4
+			 , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and refer_no = pno
+		        ) as like_count
+		     , 	(
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and mno = #{memberNo} 
+		           and refer_no = pno
+		       ) as likeck
+		  from store 
+		  join member using (mno)
 		 where status = 'Y'
-		   and category = ${category}
+		   and category = #{category}
 		 order
 		 	by pno desc
-			 
+		 	<!-- 
+		 	   <c:if test=" sort == 4 ">
+	   		        주문많은순
+		 	   </c:if>
+		 	   <c:if test=" sort == 5">
+		 	   		찜 많은순
+		 	   </c:if>
+		 	   <c:if test=" sort == 6">
+		 	   		찜 많은순
+		 	   </c:if>
+			 --> 
 	</select>
 	
+	<select id="likeCheck" resultType="_int">
+		select
+			   count(*)
+		  from like_item
+		 where mno = #{memNo}
+		   and refer_no = #{referNo}
+	</select>
+	
+	<insert id="insertLike">
+		insert
+		  into like_item
+		values
+			 (
+			   #{memNo}
+			 , 2
+			 , #{referNo}
+			 )
+	</insert>
+	
+	<delete id="deleteLike">
+		delete 
+		  from like_item
+		 where mno = #{memNo}
+		   and refer_no = #{referNo}
+	</delete>
+	
+	
+	<select id="selectProduct" resultMap="storeResult">
+	   select
+			   pno
+			 , nickname
+			 , category
+			 , title
+			 , price
+			 , courier
+			 , soldout_yn
+			 , status
+			 , img1
+			 , img2
+			 , img3
+			 , img4
+			 , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and refer_no = pno
+		        ) as like_count
+		  from store 
+		  join member using (mno)
+		 where status = 'Y'
+		   and pno = #{ pno }
+		 order
+		 	by pno desc   
+	</select>
+	
+	<select id="selectOption" resultMap="optionResult">
+		select
+			   OPNO
+			 , OPNAME
+	         , PRICE
+		  from soption
+		 where pno = #{pno}	
+	</select>
 </mapper>

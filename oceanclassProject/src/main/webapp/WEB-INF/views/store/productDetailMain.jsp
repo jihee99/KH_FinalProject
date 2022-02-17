@@ -1,41 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="style.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <style>
-/* 찜하기 어떻게 할지 고민중
-.checkbox .input:checked {
-    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_checkbox_20x20_green-5ea29ba9c7d082e58dab31430cd738ae.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-.checkbox .input {
-    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_checkbox_20x20_white-7458b93102d0e841a2fc3dd7fbd4f61c.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: inline-block;
-    border: 0;
-    width: 20px;
-    height: 20px;
-    vertical-align: top;
-    -webkit-appearance: none;
-    cursor: pointer;
-    outline: none;
-}
-*/
-.inner_outer{
+.innerOuter{
     margin: auto;
     font-family:tahoma, 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
 }
 .product_info{
     float: left;
-    margin-left: 400px;
 }
 .product_title_image{
     width: 700px;
@@ -74,9 +53,9 @@
 .quick_menu{
     width: 350px;
     height: 400px;
-    position: absolute;
+    position: fixed;
     top: 53px;
-    right: 400px;
+    right: 350px;
     background:rgba(212, 212, 212, 0.493);
 }
 .product_discription{
@@ -99,17 +78,21 @@
 .button_area{position: absolute; left: 22px;}
 .product_title_image>img{ width:100%; height:100%; object-fit: cover;}
 .product_detail_image>img{width: 100%; object-fit: cover;}
-
+#productOption option{ font-size:15px;}
 </style>
 </head>
 <body>
-    <div class="inner_outer">
+    <div class="innerOuter">
+    	<jsp:include page="../common/header.jsp" />
         
         <hr>
         <br><br>
         <div class="product_info">
             <div class="product_title_image">
-                <img src="https://cdn.class101.net/images/3d2d0e04-fee3-47f8-b5bc-e4d001a7c6e9/2048xauto.webp">
+                <img src="${ p.productImg0 }">
+                <form action="post" method="">
+                <input type="hidden" name="productNo" value="${ p.productNo }">
+                </form>
             </div>
             <br>
             <div class="menu_bar">
@@ -125,7 +108,8 @@
             <br><br>
 
             <div class="product_detail_image">
-                <img src="https://shop-phinf.pstatic.net/20210930_277/1632984101944hz4e2_JPEG/21212132313.jpg?type=w860">
+                <img src="${ p.productImg1 }">
+                
                 <p>상품소개글 상품소개글</p>
             </div>
             
@@ -134,18 +118,23 @@
 
         <div class="quick_menu">
             <div class="product_discription">
-                <span class="product_merchant_name">브랜드명</span> <br>
-                <span class="product_name">상품명상품명</span> <br>
+                <span class="product_merchant_name">${ p.memberNo }</span> <br>
+                <span style="display:block; width:300px" class="product_name">${ p.title }</span> <br>
                 <span class="delivery_fee">무료배송</span>
             </div>
             <div class="price_area">
-                <s>50,000원</s> <br>
+                <s>${ p.price } 원</s> <br>
                 <span class="discount_persent">30% </span>
-                <span class="price">35,000원</span>
+                <span class="price">${ p.price } 원</span>
             </div>
             <br><br>
-            <select name="" id="" style="width: 305px; height: 40px; margin-left:22px;">
-                <option value="">옵션선택</option>
+            <select name="productOption" id="productOption" style="width: 305px; height: 40px; margin-left:22px;">
+                <option value="" selected>옵션선택</option>
+            	<c:forEach var="o" items="${ list }">
+					<option value="${ o.optionNo }" >${ o.optionName }
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+													 ${ o.price }</option>                
+                </c:forEach>
             </select>
             <br><br>
             <div class="button_area" align="center">
@@ -156,6 +145,18 @@
         </div>
 
     </div>
+    
+    <script>
+    function scroll_follow( id )
+    {
+      $(window).scroll(function( )  //스크롤이 움직일때마다 이벤트 발생
+      { 
+          var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
+          $( id ).stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
+       });
+    }
+     scroll_follow( ".quick_menu" );
+    </script>
 
 
 </body>

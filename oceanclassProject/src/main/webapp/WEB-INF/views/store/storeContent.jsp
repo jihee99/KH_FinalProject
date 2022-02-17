@@ -50,6 +50,8 @@
     <div id="outer">
         <div id="silde">나중에 silde들어갈자리</div>
         
+        <input type="hidden" id="memNo" value="${ loginUser.memNo }">
+        
         <div class="items">
             <div class="items_title"><b>· HOT ITEM</b> <!--띄어쓰기-->
                 <a href="storeSearchList.st" class="more_btn">+more</a>

@@ -48,8 +48,9 @@
 </head>
 <body>
 
-	<jsp:include page="../common/header.jsp" />
 
+	<jsp:include page="../common/header.jsp" />
+	
 	<div id="outer">
 	
 		<input type="hidden" id="memNo" value="${ loginUser.memNo }">
