@@ -325,4 +325,57 @@ public class AdminMemController {
 	}
 	
 	
+	@RequestMapping(value="rpdelete.ad")
+	public String adminReportDelete(String rpno, HttpSession session) {
+		
+		int result = adMemService.adminReportDelete(rpno);
+		if(result>0) {
+			session.setAttribute("alertMsg", "신고 게시글 삭제가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "신고 게시글 삭제가 실패했습니다.");
+		}
+		return "redirect:rplist.ad";
+	}
+	
+	@RequestMapping(value="rpback.ad")
+	public String adminReportRollback(String rpno, HttpSession session) {
+		
+		int result = adMemService.adminReportRollback(rpno);
+		if(result>0) {
+			session.setAttribute("alertMsg", "신고 게시글 삭제가 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "신고 게시글 삭제가 실패했습니다.");
+		}
+		return "redirect:rplist.ad";
+	}
+	
+	@RequestMapping(value="blList.ad")
+	public String adminBlackList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+		int listCount = adMemService.adminBlackListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Member> blList = adMemService.adminReportMemList(pi);
+		model.addAttribute("model", model);
+		model.addAttribute("blList", blList);
+		return "member/admin/adminBlackListPage";
+	}
+	
+	
+	@RequestMapping(value="bmback.ad")
+	public String adminBlackMemBack(String mno, HttpSession session) {
+		int result = adMemService.blackMemBack(mno);
+		if(result>0) {
+			session.setAttribute("alertMsg", "회원상태 복구를 완료했습니다.");
+		}
+		return "redirect:blList.ad";
+	}
+	
+	@RequestMapping(value="bmout.ad")
+	public String adminBlackMemOut(String mno, HttpSession session) {
+		int result = adMemService.blackMemOut(mno);
+		if(result>0) {
+			session.setAttribute("alertMsg", "회원상태 복구에 실패했습니다.");
+		}
+		return "redirect:blList.ad";
+	}
 }

@@ -81,24 +81,38 @@ public class AdminMemServiceImpl implements AdminMemService {
 	}
 
 	@Override
-	public int adminReportRestore(int reportNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int adminReportRollback(String reportNo) {
+		return adMemDao.adminReportRollback(sqlSession, reportNo);
 	}
 
 	@Override
-	public int adminReportDelete(int reportNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int adminReportDelete(String reportNo) {
+		return adMemDao.adminReportDelete(sqlSession, reportNo);
 	}
 
 	@Override
-	public ArrayList<Member> adminReportMemList(Member m, PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public int adminBlackListCount() {
+		return adMemDao.adminBlackListCount(sqlSession);
 	}
 
+	@Override
+	public ArrayList<Member> adminReportMemList(PageInfo pi) {
+		return adMemDao.adminReportMemList(sqlSession, pi);
+	}
 
+	@Override
+	public int blackMemBack(String mno) {
+		// 블랙리스트 등록 회원 복구
+		return adMemDao.blackMemBack(sqlSession, mno);
+	}
+
+	@Override
+	public int blackMemOut(String mno) {
+		// 블랙리스트 등록 회원 탈퇴
+		return adMemDao.blackMemOut(sqlSession, mno);
+	}
+	
+	
 	
 	
 	@Override
@@ -217,6 +231,7 @@ public class AdminMemServiceImpl implements AdminMemService {
 	public int updateorderStatus(StoreOrder order) {
 		return adMemDao.updateorderStatus(sqlSession, order);
 	}
+
 
 
 
