@@ -11,6 +11,7 @@ import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 
 @Repository
 public class ClassDao {
@@ -72,5 +73,43 @@ public class ClassDao {
 		
 		return (ArrayList)sqlSession.selectList("classMapper.selectClassReviewList", clNo, rowBounds);
 	}
+	public ClassReview selectClassReviewDetail(SqlSessionTemplate sqlSession, int crNo) {
+		return sqlSession.selectOne("classMapper.selectClassReviewDetail", crNo);
+	}
 	
+	public int selectReplyListCount(SqlSessionTemplate sqlSession, int crNo) {
+		return sqlSession.selectOne("classMapper.selectReplyListCount", crNo);
+	}
+	
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int crNo, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("classMapper.selectReplyList", crNo, rowBounds);
+	}
+	
+	public int insertClassReviewReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("classMapper.insertClassReviewReply", r);
+	}
+	
+	public int checkRecommend(SqlSessionTemplate sqlSession, ClassReview cr) {
+		return sqlSession.selectOne("classMapper.checkRecommend", cr);
+	}
+	
+	public int deleteRecommend(SqlSessionTemplate sqlSession, ClassReview cr) {
+		return sqlSession.delete("classMapper.deleteRecommend", cr);
+	}
+	
+	public int insertRecommend(SqlSessionTemplate sqlSession, ClassReview cr) {
+		return sqlSession.insert("classMapper.insertRecommend", cr);
+	}
+	
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.update("classMapper.deleteReply", replyNo);
+	}
+	
+	public int updateReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("classMapper.updateReply", r);
+	}
 }

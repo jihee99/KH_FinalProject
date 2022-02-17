@@ -26,12 +26,25 @@
 		<result column="clno" property="clNo" />
 		<result column="mno" property="memNo" />
 		<result column="user_name" property="memNo" />
+		<result column="nickname" property="memNo" />
 		<result column="content" property="content" />
 		<result column="star" property="star" />
 		<result column="filepath" property="filePath" />
 		<result column="create_date" property="createDate" />
 		<result column="status" property="status" />
 		<result column="reconum" property="recommend" />
+		<result column="replynum" property="replyNum" />
+	</resultMap>
+	
+	<resultMap id="classReviewReplyResult" type="Reply">
+		<result column="reply_no" property="replyNo" />
+		<result column="mno" property="memNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="content_no" property="contentNo" />
+		<result column="reply_content" property="replyContent" />
+		<result column="reply_date" property="replyDate" />
+		<result column="reply_status" property="replyStatus" />
+		<result column="nickname" property="nickName" />
 	</resultMap>
 
 	<update id="increaseCount">
@@ -198,7 +211,7 @@
 	<select id="selectClassReviewList" resultMap="classReviewResult">
 		select c.c_rno
 		     , c.clno
-		     , user_name
+		     , nickname
 		     , c.content
 		     , c.star
 		     , c.FILEPATH
@@ -210,6 +223,13 @@
 		         where gb_no = 1
 		           and refer_no = c_rno
 		        ) as reconum
+            , (
+            select count(*)
+              from reply
+             where reply_status = 'Y'
+               and board_no = 2
+               and content_no = c_rno
+              ) as replynum
 		  from class_review c
           join member using (mno)
 		 where status = 'Y'
@@ -241,7 +261,7 @@
 	<select id="selectClassReviewMainList" resultMap="classReviewResult">
 		select c.c_rno
 		     , c.clno
-		     , user_name
+		     , nickname
 		     , c.content
 		     , c.star
 		     , c.FILEPATH
@@ -253,6 +273,13 @@
 		         where gb_no = 1
 		           and refer_no = c_rno
 		        ) as reconum
+		     , (
+               	select count(*)
+                  from reply
+                 where board_no = 2
+                   and reply_status = 'Y'
+                   and content_no = c_rno
+                ) as replynum
 		  from class_review c
           join member using (mno)
 		 where status = 'Y'
@@ -268,4 +295,110 @@
 		   and clNo = #{clNo}
 	</select>
 	
+	<select id="selectClassReviewDetail" resultMap="classReviewResult">
+		select c_rno
+		     , r.clno
+		     , nickname
+		     , content
+		     , star
+		     , filepath
+		     , to_char(r.create_date, 'YYYY-MM-DD') as create_date
+		     , r.status
+		     , (
+		        select count(*)
+		          from recommend
+		         where gb_no = 1
+		           and refer_no = c_rno
+		        ) as reconum
+            , (
+                select count(*)
+                  from reply
+                 where reply_status = 'Y'
+                   and board_no = 2
+                   and content_no = c_rno
+              ) as replynum
+		  from class_review r
+          join member using (mno)
+		 where status = 'Y'
+		   and c_rno = #{crNo}
+	</select>
+	
+	<select id="selectReplyListCount" resultType="_int">
+		select count(*)
+		  from reply
+		 where REPLY_STATUS = 'Y'
+		   and board_no = 2
+		   and content_no = #{crNo}
+	</select>
+	
+	<select id="selectReplyList" resultMap="classReviewReplyResult">
+		select REPLY_NO
+		     , nickname
+		     , board_no
+		     , content_no
+		     , reply_content
+		     , to_char(reply_date, 'YYYY-MM-DD') as reply_date
+		     , reply_status
+		  from reply
+		  join member using (mno)
+		 where reply_status = 'Y'
+		   and content_no = #{crNo}
+		 order
+            by reply_date desc
+	</select>
+	
+	<insert id="insertClassReviewReply">
+		insert 
+		  into reply
+		values
+			 ( 
+			   SEQ_CMNO.NEXTVAL
+			 , #{memNo}
+			 , 2
+			 , #{contentNo}
+			 , #{replyContent}
+			 , sysdate
+			 , 'Y'
+			 )
+	</insert>
+	
+	<select id="checkRecommend" resultType="_int">
+		select count(*)
+		  from recommend
+		 where gb_no = 1
+		   and refer_no = #{crNo}
+		   and mno = #{memNo}
+	</select>
+	
+	<delete id="deleteRecommend">
+		delete 
+		  from recommend
+		 where mno = #{memNo}
+		   and refer_no = #{crNo}
+	</delete>
+	
+	<insert id="insertRecommend">
+		insert
+		  into recommend
+		values
+			 (
+			   #{memNo}
+			 , 1
+			 , #{crNo}
+			 )
+	</insert>
+	
+	<update id="deleteReply">
+		update reply
+		   set REPLY_STATUS = 'N'
+		 where REPLY_NO = #{replyNo}
+	</update>
+	
+	<update id="updateReply">
+		update reply
+		   set reply_content = #{replyContent}
+		 where reply_status = 'Y'
+		   and reply_no = #{replyNo}
+	</update>
+		
 </mapper>

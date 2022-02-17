@@ -66,4 +66,26 @@ public class adminHelpDao {
 		//System.out.println(n);
 		return sqlSession.update("adminHelpMapper.updateFaq", f);
 	}
+	
+	// QNA
+	
+	public int selectQnaListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminHelpMapper.selectQnaListCount");
+	}
+	public ArrayList<Qna> selectQnaList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminHelpMapper.selectQnaList", null, rowBounds);
+	}
+	public int insertQna(SqlSessionTemplate sqlSession, Qna q) {
+		return sqlSession.update("adminHelpMapper.insertQna", q);
+	}
+	public Qna selectQna(SqlSessionTemplate sqlSession, int qnaNo) {
+		return sqlSession.selectOne("adminHelpMapper.selectQna", qnaNo);
+	}
+	public int deleteQna(SqlSessionTemplate sqlSession, int qnaNo) {
+		return sqlSession.update("adminHelpMapper.deleteQna", qnaNo);
+	}
 }

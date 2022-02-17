@@ -19,5 +19,7 @@ public class Faq {
 	public String faqContent;
 	public String createDate;
 	public String status;
+	
+	public String nickname;
 
 }

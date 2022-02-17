@@ -188,7 +188,7 @@
                                 <th width="130px">카테고리</th>
                                 <th width="430px">제목</th>
                                 <th width="150px">작성자</th>
-                                <th width="100px">작성일</th>
+                                <th width="120px">작성일</th>
                             </tr>
                         </thead>
                         <tbody>

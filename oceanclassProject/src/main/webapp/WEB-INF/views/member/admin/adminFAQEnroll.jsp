@@ -103,7 +103,7 @@
                 <span id="bord-name">FAQ 등록</span>
             </div>
             <div id="enroll-form">
-                <form action="" method="post" id="enrollForm">
+                <form action="insertFaq.ad" method="post" id="enrollForm">
                 	<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
                     <div class="box">
                         <label class="textName" for="">FAQ 카테고리<span class="star">*</span></label>
@@ -119,14 +119,14 @@
                     <div class="box">
                         <label class="textName" for="">제목<span class="star">*</span></label>
                         <div class="input-area">
-                            <input type="text" id="" name="" placeholder="제목을 입력 하세요." required>
+                            <input type="text" id="" name="faqTitle" placeholder="제목을 입력 하세요." required>
                         </div>
                     </div>
 
                     <div class="box">
                         <label class="textName" for="">내용<span class="star">*</span></label>
                         <div class="input-area">
-                            <textarea name="" id="" cols="58" rows="8" placeholder="내용을 입력 하세요."></textarea>
+                            <textarea name="faqContent" id="" cols="58" rows="8" placeholder="내용을 입력 하세요."></textarea>
                         </div>
                     </div>
                     <div id="btnBox">

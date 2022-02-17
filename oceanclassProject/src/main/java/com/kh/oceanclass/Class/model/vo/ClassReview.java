@@ -20,6 +20,7 @@ public class ClassReview {
 	private String createDate;
 	private String status;
 	private int recommend;
+	private int replyNum;
 	
 	private String clName;
 	private String img;

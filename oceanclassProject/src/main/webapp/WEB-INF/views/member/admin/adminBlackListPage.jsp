@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,39 +58,58 @@
                         <th width="100">닉네임</th>
                         <th width="100">이름</th>
                         <th width="80">신고횟수</th>
-                        <th width="150">블랙리스트 등록일</th>
+                        <th width="80">회원상태</th>
                         <th width="100"></th>
                     </tr>
                 </thead>
                 <tbody>
+                	<c:forEach var="b" items="${blList }" >
                     <tr>
-                        <form>
-                            <td>231</td>
-                            <td>user01</td>
-                            <td>ㅇㅇ</td>
-                            <td>김XX</td>
-                            <td>3</td>
-                            <td>2022-02-03</td>
-                            <td>
-                                <button>복구</button>
-                                <button>탈퇴</button>
-                            </td>
-                        </form>
+	                    <td>${b.memNo }</td>
+	                    <td>${b.userId }</td>
+	                    <td>${b.nickName }</td>
+	                    <td>${b.userName }</td>
+                	    <td>${b.report }</td>
+	                    <td>
+	                    	<c:choose>
+	                    		<c:when test="${b.userStatus eq 'Y' }">유효</c:when>
+	                    		<c:when test="${b.userStatus eq 'H' }">휴면</c:when>
+	                    		<c:when test="${b.userStatus eq 'B' }">블랙</c:when>
+	                    		<c:otherwise>탈퇴</c:otherwise>	                    		
+	                    	</c:choose>
+	                    </td>
+	                    <td>
+	                        <button onclick="location.href='bmback.ad?mno=${b.memNo}'">복구</button>
+	                        <button onclick="location.href='bmout.ad?mno=${b.memNo}'">탈퇴</button>	                        
+	                    </td>
                     </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
-        <div class="btn_group" align="center">
-            <button class="btn btn-light">&lt;</button>
-
-            <button class="btn btn-light">1</button>
-            <button class="btn btn-light">2</button>
-            <button class="btn btn-light">3</button>
-            <button class="btn btn-light">4</button>
-            <button class="btn btn-light">5</button>
-
-            <button class="btn btn-light">&gt;</button>
-        </div>
+		<div class="btn_group" align="center">
+				<c:choose>
+	           		<c:when test="${pi.currentPage eq 1 }">
+	           			<button class="btn btn-light" disabled>&lt;</button>
+	           		</c:when>
+	           		<c:otherwise>
+	           			<button class="btn btn-light" onclick="location.href='blList.ad?cpage=${pi.currentPage - 1}'">&lt;</button>
+	           		</c:otherwise>
+	           	</c:choose>
+	                   
+	   			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+	   				<button class="btn btn-light" onclick="location.href='blList.ad?cpage=${p}'">${p }</button>
+	   			</c:forEach>
+	   
+	   			<c:choose>
+	               	<c:when test="${pi.currentPage eq pi.maxPage }">
+	           			<button class="btn btn-light" disabled>&gt;</button>
+	               	</c:when>
+	               	<c:otherwise>
+	               		<button class="btn btn-light" onclick="location.href='blList.ad?cpage=${pi.currentPage + 1}'">&gt;</button>
+	               	</c:otherwise>
+	            </c:choose>
+        	</div>
     </div>
 </body>
 </html>

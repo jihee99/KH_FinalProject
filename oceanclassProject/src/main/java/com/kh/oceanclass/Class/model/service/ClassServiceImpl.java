@@ -12,6 +12,7 @@ import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -82,6 +83,49 @@ public class ClassServiceImpl implements ClassService {
 		return cDao.selectClassReviewListPaging(sqlSession, clNo, pi);
 	}
 
+	@Override
+	public ClassReview selectClassReviewDetail(int crNo) {
+		return cDao.selectClassReviewDetail(sqlSession, crNo);
+	}
 
+	@Override
+	public int selectReplyListCount(int crNo) {
+		return cDao.selectReplyListCount(sqlSession, crNo);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int crNo, PageInfo pi) {
+		return cDao.selectReplyList(sqlSession, crNo, pi);
+	}
+
+	@Override
+	public int insertClassReviewReply(Reply r) {
+		return cDao.insertClassReviewReply(sqlSession, r);
+	}
+
+	@Override
+	public int checkRecommend(ClassReview cr) {
+		return cDao.checkRecommend(sqlSession, cr);
+	}
+
+	@Override
+	public int deleteRecommend(ClassReview cr) {
+		return cDao.deleteRecommend(sqlSession, cr);
+	}
+
+	@Override
+	public int insertRecommend(ClassReview cr) {
+		return cDao.insertRecommend(sqlSession, cr);
+	}
+
+	@Override
+	public int deleteReply(int replyNo) {
+		return cDao.deleteReply(sqlSession, replyNo);
+	}
+
+	@Override
+	public int updateReply(Reply r) {
+		return cDao.updateReply(sqlSession, r);
+	}
 	
 }

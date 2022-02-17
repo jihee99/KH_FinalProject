@@ -18,6 +18,7 @@ import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.vo.Member;
 
@@ -161,9 +162,99 @@ public class ClassController {
 	}
 	
 	@RequestMapping(value="classReviewDetail.me")
-	public String classReviewDetail() {
-		// 클래스 리뷰 디테일 이동용(뷰 확인용) 메소드
+	public String classReviewDetail(ClassReview c, int cpage, int rpage, Model model, HttpSession session) {
+		// 클래스 리뷰 디테일 
+		
+		ClassReview cr = cService.selectClassReviewDetail(c.getCrNo()); // 리뷰 디테일 정보
+		
+		int listCount = cService.selectReplyListCount(c.getCrNo()); // 조회할 댓글 갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 4);
+		ArrayList<Reply> replyList = cService.selectReplyList(c.getCrNo(), pi); // 조회할 댓글 리스트
+		
+		if(session.getAttribute("loginUser") != null) {
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+			c.setMemNo(memNo + "");
+			int ckResult = cService.checkRecommend(c);
+			if(ckResult > 0) {
+				model.addAttribute("recoCk", "Y");
+			} else {
+				model.addAttribute("recoCk", "N");
+			}
+		}
+				
+		model.addAttribute("cr", cr);
+		model.addAttribute("pi", pi);
+		model.addAttribute("reviewClNo", c.getClNo());
+		model.addAttribute("returnPage", rpage);
+		model.addAttribute("replyList", replyList);
 		return "class/classReviewDetail";
+	}
+	
+	@RequestMapping(value="enrollClassReviewReply.me")
+	public String insertClassReviewReply(Reply r, int clNo, int returnPage, HttpSession session) {
+		
+		int result = cService.insertClassReviewReply(r);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "댓글이 등록되었습니다!");
+		} else {
+			session.setAttribute("alertMsg", "댓글 등록에 실패하였습니다.");
+		}
+		
+		return "redirect:classReviewDetail.me?crNo=" + r.getContentNo() + "&cpage=1&clNo=" + clNo + "&rpage=" + returnPage;
+	}
+	
+	@RequestMapping(value="recommendClass.me")
+	public String recommendClass(String grade, ClassReview cr, int returnPage, HttpSession session) {
+		
+		if(grade.equals("S")) {
+			
+			int result1 = cService.checkRecommend(cr);
+			if(result1 > 0) {
+				// 추천 한 적 있음
+				int result2 = cService.deleteRecommend(cr);
+				if(result2 > 0) {
+					session.setAttribute("alertMsg", "해당 리뷰 추천을 제거하였습니다.");
+				} else {
+					session.setAttribute("alertMsg", "리뷰 추천 제거에 실패하였습니다.");
+				}
+			} else {
+				// 추천 한 적 없음
+				int result2 = cService.insertRecommend(cr);
+				if(result2 > 0) {
+					session.setAttribute("alertMsg", "해당 리뷰를 추천하였습니다!");
+				} else {
+					session.setAttribute("alertMsg", "리뷰 추천에 실패하였습니다.");
+				}
+			}
+		} else {
+			session.setAttribute("alertMsg", "학생 회원만 가능한 서비스입니다.");
+		}
+		
+		return "redirect:classReviewDetail.me?crNo=" + cr.getCrNo() + "&cpage=1&clNo=" + cr.getClNo() + "&rpage=" + returnPage; 
+	}
+	
+	@RequestMapping(value="deleteReply.me")
+	public String deleteReply(int replyNo, int crNo, int clNo, int returnPage, HttpSession session) {
+		int result = cService.deleteReply(replyNo);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "댓글을 삭제하였습니다.");
+		} else {
+			session.setAttribute("alertMsg", "댓글 삭제에 실패하였습니다.");
+		}
+		return "redirect:classReviewDetail.me?crNo=" + crNo + "&cpage=1&clNo=" + clNo + "&rpage=" + returnPage;
+	}
+	
+	@RequestMapping(value="updateClassReviewReply")
+	public String updateReply(Reply r, int clNo, int returnPage, HttpSession session) {
+		System.out.println(r);
+		int result = cService.updateReply(r);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "댓글을 수정하였습니다.");
+		} else {
+			session.setAttribute("alertMsg", "댓글 수정에 실패하였습니다.");
+		}
+		return "redirect:classReviewDetail.me?crNo=" + r.getContentNo() + "&cpage=1&clNo=" + clNo + "&rpage=" + returnPage;
 	}
 	
 	@RequestMapping(value="classPay.me")
@@ -177,6 +268,7 @@ public class ClassController {
 		// 클래스 결제 완료 페이지 이동용(뷰 확인용) 메소드
 		return "class/classPayComplate";
 	}
+	
 	
 	
 	
