@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,13 +104,14 @@
             </div>
             <div id="enroll-form">
                 <form action="" method="post" id="enrollForm">
+                	<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
                     <div class="box">
                         <label class="textName" for="">FAQ 카테고리<span class="star">*</span></label>
                         <div class="input-area">
-                            <select name="" id="">
-                                <option value="">클래스</option>
-                                <option value="">스토어</option>
-                                <option value="">기타</option>
+                            <select name="category" id="">
+                                <option value="C">클래스</option>
+                                <option value="S">스토어</option>
+                                <option value="E">기타</option>
                             </select>
                         </div>
                     </div>
@@ -129,7 +131,7 @@
                     </div>
                     <div id="btnBox">
                         <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-                        <button type="submit" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
+                        <button type="button" onclick="history.back()" id="cancel" class="btn" style="background-color:gray; color: white;" >취소</button>
                     </div>
                 </form>
             </div>

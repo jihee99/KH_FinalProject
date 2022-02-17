@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -124,6 +125,11 @@
         height: 30px;
         line-height: 0px;
     }
+    #delbtn{
+    	width: 70px;
+        height: 30px;
+        line-height: 0px;
+    }
     #blueBtn{
         background-color: rgb(107, 171, 213);
         color: white;
@@ -145,12 +151,14 @@
                 <span id="bord-name">FAQ 관리</span>
             </div>
             <!-- 회원 조회 -->
+            <input type="hidden" id="memNo" name="mno" value="${loginUser.memNo}">
+            <input type="hidden" id="faqNo" name="fno" value="${f.faqNo}">
             <div class="search-box pb-5">
-                <select class="selectpicker show-tick p-2" style="width: 120px;">
-                    <option>전체</option>
-                    <option>클래스</option>
-                    <option>스토어</option>
-                    <option>기타</option>
+                <select name="category" class="selectpicker show-tick p-2" style="width: 120px;">
+                    <option value="A">전체</option>
+                    <option value="C">클래스</option>
+                    <option value="S">스토어</option>
+                    <option value="E">기타</option>
                 </select>
                 <div class="search">
                     <form class="form-inline" action="">
@@ -167,8 +175,8 @@
                         <input class="form-control mr-2" type="date"> ~ <input class="form-control ml-2" type="date">
                     </div>
                     <div id="btnBox" style="float: right;">
-                        <button class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-                        <button class="btn btn-danger" id="btnGroup">삭제</button>
+                        <button onclick="location.href='faqEnrollForm.ad';" class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
+                        <button class="btn btn-danger" type="submit" id="delbtn">삭제</button>
                     </div>
                 </div>
                 <div id="tableBox">
@@ -184,30 +192,84 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="n" items="${ list }">
+                            <c:forEach var="f" items="${ list }">
                                 <tr id="tb" data-tr_value="1">
                                     <td class="ck"><input type="checkbox" name="selectCheck" value=""></td>
-                                    <td class="td nno">${ n.noNo }</td>
-                                    <td class="td category">${ n.category }</td>
-                                    <td class="td">${ n.noTitle }</td>
-                                    <td class="td">${ n.nickname }</td>
-                                    <td class="td">${ n.createDate }</td>
+                                    <td class="td fno">${ f.faqNo }</td>
+                                    <td class="td category">${ f.category }</td>
+                                    <td class="td">${ f.faqTitle }</td>
+                                    <td class="td">${ f.nickname }</td>
+                                    <td class="td">${ f.createDate }</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                <div class="paging" align="center">
-                    <button class="btn btn-light">&lt;</button>
-                    
-                    <button class="btn btn-light">1</button>
-                    <button class="btn btn-light">2</button>
-                    <button class="btn btn-light">3</button>
-                    <button class="btn btn-light">4</button>
-                    <button class="btn btn-light">5</button>
-                    
-                    <button class="btn btn-light">&gt;</button>
-                </div>
+                <script>
+	                $('#all_select').click(function(){
+	            		if($("input:checkbox[id='all_select']").prop("checked")) {
+	            			$("input[type=checkbox]").prop("checked",true);
+	            		}else{
+	            			$("input[type=checkbox]").prop("checked",false);
+	            		}
+	            	});
+	                
+		        	$(function(){
+		        		$(".td").click(function(){
+		        			location.href = 'faqDetail.ad?fno=' + $(this).siblings(".fno").text();
+		        		});
+		        	})
+		        	
+		        	var cknArr = [];
+	            	$(function(){
+	            		$(".ck").click(function(){
+	            			var ckn = $(this).siblings(".fno").text();
+	            			console.log(ckn);
+	            			
+	            			cknArr.push(ckn);
+	            			console.log(cknArr);
+	            			
+	            			$("#delbtn").click(function(){
+	            				for(let i in cknArr){
+	                          	  console.log(cknArr[i]);
+	                          	  let ckn = cknArr[i];
+				            	  
+	                          	  location.href = 'faqDelete.ad?fno=' + cknArr[i];
+	                          	  
+	            				}
+				            });
+	            		});
+	            	})
+		        </script>
+                <div id="paging" align="center">
+					<ul class="pagination">
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="faqList.ad?cpage=${ pi.currentPage-1 }">&laquo;&laquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item"><a class="page-link" href="faqList.ad?cpage=${ p }">${ p }</a></li>
+						</c:forEach>
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="faqList.ad?cpage=${ pi.currentPage+1 }">&raquo;&raquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+		            </ul>
+		        </div> 
             </div>
             <br><br><br>
         </div>

@@ -57,32 +57,32 @@ public class adminHelpServiceImpl implements adminHelpService{
 	
 	@Override
 	public int selectFaqListCount() {
-		return 0;
+		return ahDao.selectFaqListCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<Faq> selectFaqList(PageInfo pi) {
-		return null;
+		return ahDao.selectFaqList(sqlSession, pi);
 	}
 
 	@Override
 	public int insertFaq(Faq f) {
-		return 0;
+		return ahDao.insertFaq(sqlSession, f);
 	}
 
 	@Override
-	public Notice selectFaq(int faqNo) {
-		return null;
+	public Faq selectFaq(int faqNo) {
+		return ahDao.selectFaq(sqlSession, faqNo);
 	}
 
 	@Override
 	public int deleteFaq(int faqNo) {
-		return 0;
+		return ahDao.deleteFaq(sqlSession, faqNo);
 	}
 
 	@Override
 	public int updateFaq(Faq f) {
-		return 0;
+		return ahDao.updateFaq(sqlSession, f);
 	}
 
 	// Qna
@@ -103,7 +103,7 @@ public class adminHelpServiceImpl implements adminHelpService{
 	}
 
 	@Override
-	public Notice selectQna(int qnaNo) {
+	public Qna selectQna(int qnaNo) {
 		return null;
 	}
 

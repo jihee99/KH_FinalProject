@@ -36,7 +36,7 @@ public interface adminHelpService {
 	int insertFaq(Faq f);
 	
 	// 3. FAQ 상세 조회
-	Notice selectFaq(int faqNo);
+	Faq selectFaq(int faqNo);
 	
 	// 4. FAQ 삭제
 	int deleteFaq(int faqNo);
@@ -54,7 +54,7 @@ public interface adminHelpService {
 	int insertQna(Qna q);
 	
 	// 3. Qna 상세 조회
-	Notice selectQna(int qnaNo);
+	Qna selectQna(int qnaNo);
 	
 	// 4. Qna 삭제
 	int deleteQna(int qnaNo);
