@@ -20,7 +20,7 @@
 	        <p>클래스 관리</p>
 	        <ul>
 	            <li><a href="?page=myClass.jsp">나의 클래스</a></li>
-	            <li><a href="myReview.me">클래스 문의/후기</a></li>  <!-- myReview.me -->
+	            <li><a href="myReview.me">클래스 문의/리뷰</a></li>  <!-- myReview.me -->
 	            <li><a href="likeClass.me">찜한 클래스</a></li>
 	        </ul>
 	    </div>
@@ -28,7 +28,7 @@
 	        <p>상품 관리</p>
 	        <ul>
 	            <li><a href="?page=myShopping.jsp">주문 조회</a></li>
-	            <li><a href="?page=myShoppingReview.jsp">상품 문의/후기</a></li>
+	            <li><a href="?page=myShoppingReview.jsp">상품 문의/리뷰</a></li>
 	            <li><a href="?page=myShoppingLike.jsp">찜한 상품</a></li>
 	        </ul>
 	    </div>

@@ -36,6 +36,18 @@ public class HelpDao {
 		return sqlSession.selectOne("helpMapper.selectNotice", noNo);
 	}
 	
+	public int selectHelpSearchCount(SqlSessionTemplate sqlSession, String category) {
+		return sqlSession.selectOne("helpMapper.selectHelpSearchCount", category);
+	}
+	
+	public ArrayList<Notice> selectHelpSearchList(SqlSessionTemplate sqlSession, PageInfo pi, String category){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("helpMapper.selectHelpSearchList", category, rowBounds);
+	}
+	
 	
 	// 1:1 문의
 	public int selectQnaCount(SqlSessionTemplate sqlSession) {

@@ -45,6 +45,15 @@ public class HelpServiceImpl implements HelpService{
 		return hDao.selectNotice(sqlSession, nno);
 	}
 	
+	@Override
+	public int selectHelpSearchCount(String category) {
+		return hDao.selectHelpSearchCount(sqlSession, category);
+	}
+	
+	@Override
+	public ArrayList<Notice> selectHelpSearchList(PageInfo pi, String category){
+		return hDao.selectHelpSearchList(sqlSession, pi, category);
+	}
 	
 	/*
 	 * 	1:1문의 게시판
@@ -97,6 +106,5 @@ public class HelpServiceImpl implements HelpService{
 	public ArrayList<Faq> selectFaqList() {
 		return hDao.selectFaqList(sqlSession);
 	}
-
 
 }

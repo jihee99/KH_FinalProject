@@ -2,6 +2,7 @@ package com.kh.oceanclass.help.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
@@ -75,6 +77,33 @@ public class HelpController {
 			return "common/errorPage";
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="searchHelpList.he", produces="application/json; charset=UTF-8")
+	public Map<String, Object> ajaxSearchHelpList(@RequestParam(value="cpage", defaultValue="1") int currentPage, 
+												  String category, Model model) {
+		//System.out.println(category);
+		Map<String, Object> map = new HashMap();
+		int listCount = hService.selectHelpSearchCount(category);
+		//System.out.println(listCount);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Notice> list = hService.selectHelpSearchList(pi, category);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		return map;
+	}
+	
 	
 	/*
 	 * 	faq 관련 메소드

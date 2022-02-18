@@ -79,8 +79,31 @@
 		     , img
 		  from notice
 		 where nno = #{noNo}
+		   and status = 'Y'
 	</select>
 	
+	<select id="selectHelpSearchCount" resultType="_int">
+		select
+			   count(*)
+		  from notice
+		 where category = #{category}
+		   and status = 'Y'
+	</select>
+	
+	<select id="selectHelpSearchList" resultMap="noticeResult">
+		select
+		       nno
+		     , mno
+		     , category
+		     , n_title
+		     , count
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from notice
+		 where category = #{category}
+		   and status = 'Y'
+		 order
+		 	by nno desc
+	</select>
 	
 	<!-- 1:1문의 -->
 	<select id="selectQnaCount" resultType="_int">
@@ -101,6 +124,7 @@
 		     , a_content
 		  from qna
 		  join member using (mno)
+		 where status = 'Y'
 		 order
 		    by qno desc
 	</select>
@@ -119,6 +143,7 @@
 		  from qna
 		  join member using (mno)
 		 where qno = #{qno}
+		   and status = 'Y'
 	</select>
 	
 	<insert id="insertQna">
@@ -148,6 +173,7 @@
 			   count(*)
 		  from qna
 		 where category = #{category}
+		   and status = 'Y'
 	</select>
 	
 	<select id="selectCategoryQnaList" resultMap="qnaResult">
@@ -164,6 +190,7 @@
 		  from qna
 		  join member using (mno)
 		 where category = #{category}
+		   and status = 'Y'
 		 order 
 		 	by qno desc
 	</select>
@@ -173,6 +200,7 @@
 		  from qna
 		  join member using(mno)
 		 where nickname = #{nickName}
+		   and status = 'Y'
 	</select>
 	
 	<select id="selectNickQnaList" resultMap="qnaResult">
@@ -189,6 +217,7 @@
 		  from qna
 		  join member using (mno)
 		 where nickname = #{nickName}
+		   and status = 'Y'
 		 order 
 		 	by qno desc
 	</select>
@@ -201,6 +230,7 @@
 			 , f_title
 			 , f_content
 		  from faq
+		 where status = 'Y'
          order 
             by category
 	</select>
