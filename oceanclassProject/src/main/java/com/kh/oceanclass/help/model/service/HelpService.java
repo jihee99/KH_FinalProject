@@ -21,27 +21,34 @@ public interface HelpService {
 	int increaseCount(int noNo);
 	Notice selectNotice(int noNo);
 	
+	// 3. 공지사항 검색
+	int selectHelpSearchCount(String category);
+	ArrayList<Notice> selectHelpSearchList(PageInfo pi, String category);
+	
 	/*
 	 * 	faq 게시판
 	 */
 	// 1. faq리스트
 	ArrayList<Faq> selectFaqList();
 	
+	
 	/*
 	 * 	1:1 문의 게시판
 	 */
+	// 1. qna리스트
 	int selectQnaCount();
 	ArrayList<Qna> selectQnaList(PageInfo pi);
-	
+	// 2. qna 상세보기
 	Qna selectQna(int qno);
 	
+	// 3. qna 작성
 	int insertQna(Qna q);
 	
-	// 카테고리 검색
+	// 4. 카테고리 검색
 	int selectCategoryCount(String category);
 	ArrayList<Qna> selectCategoryQnaList(PageInfo pi, String category);
 	
-	// 닉네임 검색
+	// 5. 닉네임 검색
 	int selectNickCount(String nickName);
 	ArrayList<Qna> selectNickQnaList(PageInfo pi, String nickName);
 	
