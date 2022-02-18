@@ -53,9 +53,9 @@ public class MypageDao {
 	}
 	
 	public int myQnaCount(SqlSessionTemplate sqlSession, Qna q) {
-		if(q.createDate.equals("week")) {
+		if(q.getCreateDate().equals("week")) {
 			return sqlSession.selectOne("myMapper.myQnaWeekCount", q);
-		}else if(q.createDate.equals("2week")) {
+		}else if(q.getCreateDate().equals("2week")) {
 			return sqlSession.selectOne("myMapper.myQna2WeekCount", q);
 		}else {
 			return sqlSession.selectOne("myMapper.myQnaMonthCount", q);
@@ -67,9 +67,9 @@ public class MypageDao {
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		if(q.createDate.equals("week")) {
+		if(q.getCreateDate().equals("week")) {
 			return (ArrayList)sqlSession.selectList("myMapper.myQnaWeek", q, rowBounds);
-		}else if(q.createDate.equals("2week")) {
+		}else if(q.getCreateDate().equals("2week")) {
 			return (ArrayList)sqlSession.selectList("myMapper.myQna2Week", q, rowBounds);
 		}else {
 			return (ArrayList)sqlSession.selectList("myMapper.myQnaMonth", q, rowBounds);

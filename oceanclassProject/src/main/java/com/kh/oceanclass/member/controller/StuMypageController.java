@@ -156,12 +156,12 @@ public class StuMypageController {
 		ArrayList<Qna> list = myService.selectQnaList(pi, memNo);
 		
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).category.equals("C")) {
-				list.get(i).category = "클래스";
-			}else if(list.get(i).category.equals("S")) {
-				list.get(i).category = "스토어";
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
 			}else {
-				list.get(i).category = "기타";
+				list.get(i).setCategory("기타");
 			}
 		}
 		
@@ -173,8 +173,7 @@ public class StuMypageController {
 	// 1:1 문의 검색
 	@ResponseBody
 	@RequestMapping(value="ajaxMyQna.me", produces="application/json; charset=UTF-8")
-	public Map<String, Object> ajaxMyQna(@RequestParam(value="cpage", defaultValue="1") int currentPage, 
-							Qna q, HttpSession session, Model model) {
+	public Map<String, Object> ajaxMyQna(@RequestParam(value="cpage", defaultValue="1") int currentPage, Qna q, Model model) {
 		//System.out.println(q);
 		Map<String, Object> map = new HashMap();
 		
@@ -187,18 +186,18 @@ public class StuMypageController {
 		//System.out.println(list);
 	
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).category.equals("C")) {
-				list.get(i).category = "클래스";
-			}else if(list.get(i).category.equals("S")) {
-				list.get(i).category = "스토어";
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
 			}else {
-				list.get(i).category = "기타";
+				list.get(i).setCategory("기타");
 			}
 		}
 		
-		//System.out.println(list);
 		map.put("pi", pi);
 		map.put("list", list);
+		//System.out.println(map);
 		return map;
 	}
 	
@@ -264,6 +263,7 @@ public class StuMypageController {
 		return "member/student/myClassReview";
 	}
 	
+	// 클래스 리뷰 디테일
 	@RequestMapping("myClassReviewDetail.me")
 	public String myClassReviewDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();

@@ -12,6 +12,14 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="./resources/css/helpMain.css?6">
 </head>
+<style>
+	
+	.label{float:left; padding-left: 30px; vertical-align: middle; margin-right: 10px; padding-top: 5px;}
+	#searchArea{float:right; margin-top: 30px;}
+    .label>ul>li{margin:0 auto; float:left; margin-left: 30px;}
+    #searchArea>button{background: rgb(107, 171, 213); color: whitesmoke;}
+	#searchArea>button:hover{background: rgb(107, 171, 213, 0.2); color:black;}
+</style>
 <body>
 
 	<jsp:include page="../common/header.jsp" />
@@ -25,6 +33,84 @@
             <button type="button" class="btn" onclick="location.href='faqMain.he';">FAQ</button>
             <button type="button" class="btn" onclick="location.href='qnaMain.he';">1:1문의</button>
         </div>
+        <div id="searchArea">
+	        <div class="label">
+	        	<ul>
+	        		<li>
+	        			<input type="radio" class="form-check-input" id="C" name="category" value="C">
+	        			<label for="C">클래스</label>
+	        		</li>
+	        		<li>
+	        			<input type="radio" class="form-check-input" id="S" name="category" value="S">
+	        			<label for="S">스토어</label>
+	        		</li>
+	        		<li>
+	        			<input type="radio" class="form-check-input" id="E" name="category" value="E">
+	        			<label for="E">기타</label>
+	        		</li>
+	        	</ul>
+	        </div>
+        </div>
+        
+        <script>
+        	$(".label label").click(function(){
+        		let category = $(this).prev().val();
+        		console.log(category);
+        		$.ajax({
+        			url: "searchHelpList.he",
+        			data: {category:category},
+        			dataType: 'json',
+        			success:function(result){
+        				
+        				console.log(result);
+        				let help = '';
+        				for(let i in result.list){
+        					console.log(result.list[i].noNo);
+        					help += '<tr>'
+	                        	  + '<td id="nno">' + result.list[i].noNo + '</td>'
+	                        	  + '<td>' + result.list[i].category + '</td>'
+	                              + '<td>' + result.list[i].noTitle + '</td>'
+	                        	  + '<td>' + result.list[i].createDate + '</td>'
+	                        	  + '<td>' + result.list[i].count + '</td>'
+	                    		  + '</tr>'
+        				}
+        				console.log(help);
+        				$("#result").html(help);
+        				
+        				let page = '<ul class="pagination">';
+	    					if(result.pi.currentPage == 1 ){
+	    						page += '<li class="page-item disabled"> <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+	    					}else{
+	    						page += '<li class="page-item"><a class="page-link btn">Previous</a></li>'
+	    					}
+	    					
+							for(let j=result.pi.startPage; j<=result.pi.endPage; j++){
+								page += '<li class="page-item"><a class="page-link btn">'
+									  + j 
+									  + '</a></li>'
+							}
+							
+							if(result.pi.currentPage == result.pi.maxPage){
+								page += '<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' 
+							}else{
+								page += '<li class="page-item"><a class="page-link btn">Next</a></li>'
+							}
+						page += '</ul>'
+						$("#paging").html(page);
+						
+						$(function(){
+        	        		$("#noticeList>tbody>tr").click(function(){
+        	        			location.href = 'detail.he?nno=' + $(this).children("#nno").text();
+        	        		});
+        	        	})
+					
+        			},error:function(){
+        				console.log("여기오지마ㅠㅠ");
+        			}
+        		})
+        	});
+        </script>
+        
         <div class="content my-5">
             <table id="noticeList" class="table table-hover">
                 <thead>
@@ -36,7 +122,7 @@
                         <th>조회수</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="result">
                 	<c:forEach var="n" items="${list}"> 
 	                    <tr>	
 	                        <td id="nno">${n.noNo}</td>
