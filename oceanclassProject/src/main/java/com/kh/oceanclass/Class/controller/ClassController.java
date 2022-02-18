@@ -247,7 +247,6 @@ public class ClassController {
 	
 	@RequestMapping(value="updateClassReviewReply")
 	public String updateReply(Reply r, int clNo, int returnPage, HttpSession session) {
-		System.out.println(r);
 		int result = cService.updateReply(r);
 		if(result > 0) {
 			session.setAttribute("alertMsg", "댓글을 수정하였습니다.");
