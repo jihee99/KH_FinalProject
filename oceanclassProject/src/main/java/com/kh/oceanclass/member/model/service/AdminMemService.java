@@ -1,6 +1,7 @@
 package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
@@ -55,6 +56,10 @@ public interface AdminMemService {
 	//블랙리스트 회원 탈퇴하기 기능
 	int blackMemOut(String mno);
 	
+	// 신고 검색기능
+	int adminReportSearchCount(HashMap<String, String> map);
+	ArrayList<Report> adminReportSearchList(PageInfo pi, HashMap<String, String> map);
+	
 	//------------쿠폰/포인트------------
 	//관리자포인트목록조회기능
 	int selectPointCount();
@@ -108,6 +113,7 @@ public interface AdminMemService {
 	int updateStoreOrderCancle(StoreRefund refund);
 
 	int updateorderStatus(StoreOrder order);
+
 	
 	
 	//환불처리 어떻게 하지..................................................

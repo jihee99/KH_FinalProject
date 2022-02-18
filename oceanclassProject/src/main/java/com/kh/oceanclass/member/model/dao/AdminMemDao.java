@@ -1,6 +1,7 @@
 package com.kh.oceanclass.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -193,6 +194,19 @@ public class AdminMemDao {
 
 	public int blackMemOut(SqlSessionTemplate sqlSession, String mno) {
 		return sqlSession.update("adMemMapper.updateBlackMemOut", mno);
+	}
+
+	public int adminReportSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectReportSearchCount", map);
+	}
+
+	public ArrayList<Report> adminReportSearchLig(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String,String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectReportSearchList", map, rowBounds);
 	}
 	
 	

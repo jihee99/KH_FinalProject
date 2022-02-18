@@ -1,9 +1,12 @@
 package com.kh.oceanclass.member.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -342,9 +345,9 @@ public class AdminMemController {
 		
 		int result = adMemService.adminReportRollback(rpno);
 		if(result>0) {
-			session.setAttribute("alertMsg", "신고 게시글 삭제가 완료되었습니다.");
+			session.setAttribute("alertMsg", "신고 게시글 복구가 완료되었습니다.");
 		} else {
-			session.setAttribute("alertMsg", "신고 게시글 삭제가 실패했습니다.");
+			session.setAttribute("alertMsg", "신고 게시글 복구에 실패했습니다.");
 		}
 		return "redirect:rplist.ad";
 	}
@@ -377,5 +380,43 @@ public class AdminMemController {
 			session.setAttribute("alertMsg", "회원상태 복구에 실패했습니다.");
 		}
 		return "redirect:blList.ad";
+	}
+	
+	@RequestMapping(value="rpsearch.ad")
+	public String adminSearchReportList(@RequestParam(value="cpage",defaultValue="1") int currentPage, String key, String status, String sDate, String eDate, Model model) {
+		
+		System.out.println(key);
+		System.out.println(status);
+		System.out.println(sDate);
+		System.out.println(eDate);
+
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("status", status);
+		model.addAttribute("status", status);
+		if(!sDate.equals("")) {
+			map.put("sDate", sDate);
+			model.addAttribute("sDate", sDate);
+		}
+		if(!eDate.equals("")) {
+			map.put("eDate", eDate);	
+			model.addAttribute("eDate", eDate);
+		}
+		if(!key.equals("")) {
+			map.put("key", key);
+			model.addAttribute("key", key);
+		}
+
+		System.out.println(map);
+		int listCount = adMemService.adminReportSearchCount(map);
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Report> rlist = adMemService.adminReportSearchList(pi, map);
+		model.addAttribute("pi", pi);
+		model.addAttribute("rlist", rlist);
+		
+		System.out.println(rlist);
+		return "member/admin/adminReportSearchList";
 	}
 }

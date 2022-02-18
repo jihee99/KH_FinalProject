@@ -1,6 +1,7 @@
 package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +113,15 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return adMemDao.blackMemOut(sqlSession, mno);
 	}
 	
-	
+	@Override
+	public int adminReportSearchCount(HashMap<String, String> map) {
+		return adMemDao.adminReportSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Report> adminReportSearchList(PageInfo pi, HashMap<String, String> map) {
+		return adMemDao.adminReportSearchLig(sqlSession, pi, map);
+	}
 	
 	
 	@Override
@@ -232,6 +241,7 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return adMemDao.updateorderStatus(sqlSession, order);
 	}
 
+	
 
 
 
