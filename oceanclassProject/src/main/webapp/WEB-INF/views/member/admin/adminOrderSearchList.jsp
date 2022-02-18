@@ -22,7 +22,7 @@
     <jsp:include page="../../common/admin/adminSidebar.jsp" />
 	
 	
-    <div class="innerOuter" align="center">
+        <div class="innerOuter" align="center">
         <div class="headMenu">
             <b>주문 내역 관리</b>
         </div>
@@ -74,6 +74,7 @@
                 </table>
             </form>
         </div>
+
 
 
         

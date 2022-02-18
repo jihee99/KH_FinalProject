@@ -213,9 +213,9 @@ public class AdminMemController {
 	@RequestMapping(value="orlist.ad")
 	public String adminOrderList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
 		// 클래스주문 카운트, 클래스 pi객체, 클래스주문리스트
-//		int clistCount = adMemService.selectClassOrderCount();
-//		PageInfo cPi = Pagination.getPageInfo(clistCount, currentPage, 5, 10);
-//		ArrayList<ClassOrder> clist = adMemService.selectClassOrderList(cPi);
+		int clistCount = adMemService.selectClassOrderCount();
+		PageInfo cPi = Pagination.getPageInfo(clistCount, currentPage, 5, 10);
+		//ArrayList<ClassOrder> clist = adMemService.selectClassOrderList(cPi);
 		
 		
 		// 스토어 주문 카운트, 스토어 pi객체, 스토어 주문리스트
@@ -385,12 +385,6 @@ public class AdminMemController {
 	@RequestMapping(value="rpsearch.ad")
 	public String adminSearchReportList(@RequestParam(value="cpage",defaultValue="1") int currentPage, String key, String status, String sDate, String eDate, Model model) {
 		
-		System.out.println(key);
-		System.out.println(status);
-		System.out.println(sDate);
-		System.out.println(eDate);
-
-		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("status", status);
 		model.addAttribute("status", status);
@@ -407,16 +401,16 @@ public class AdminMemController {
 			model.addAttribute("key", key);
 		}
 
-		System.out.println(map);
+		//System.out.println(map);
 		int listCount = adMemService.adminReportSearchCount(map);
-		System.out.println(listCount);
+		//System.out.println(listCount);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Report> rlist = adMemService.adminReportSearchList(pi, map);
 		model.addAttribute("pi", pi);
 		model.addAttribute("rlist", rlist);
 		
-		System.out.println(rlist);
+		//System.out.println(rlist);
 		return "member/admin/adminReportSearchList";
 	}
 }

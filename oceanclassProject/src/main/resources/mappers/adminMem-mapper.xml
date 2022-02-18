@@ -333,7 +333,7 @@
 		 from pay
 		left join s_refund using (order_no)
 		join member using(mno)
-		order by order_no desc
+		order by pay_date desc
 	</select>
 	
 	<delete id="deleteStoreOrder">

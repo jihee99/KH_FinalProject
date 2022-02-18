@@ -73,20 +73,20 @@
                         <td>${sOrder.payMethod }</td>
                         <th>주문상태</th>
                         <td>
-                        <c:choose>
-				<c:when test="${sOrder.orderStatus eq 1 }">
-					<select class="orderStatus">
-						<option value="1">주문접수</option>
-						<option value="2">상품준비중</option>
-					</select>
-				</c:when>
-				<c:when test="${sOrder.orderStatus eq 2 }">상품준비중</c:when>
-				<c:when test="${sOrder.orderStatus eq 3 }">배송시작</c:when>
-				<c:when test="${sOrder.orderStatus eq 4 }">배송중</c:when>
-				<c:when test="${sOrder.orderStatus eq 5 }">배송완료</c:when>
-				<c:when test="${sOrder.orderStatus eq 6 }">주문취소</c:when>
-				<c:when test="${sOrder.orderStatus eq 7 }">취소완료</c:when>
-			</c:choose>
+                        	<c:choose>
+                        		<c:when test="${sOrder.orderStatus eq 1 }">
+		                        	<select class="orderStatus">
+		                        		<option value="1">주문접수</option>
+		                        		<option value="2">상품준비중</option>
+		                        	</select>                        		
+                        		</c:when>
+                        		<c:when test="${sOrder.orderStatus eq 2 }">상품준비중</c:when>
+								<c:when test="${sOrder.orderStatus eq 3 }">배송시작</c:when>
+								<c:when test="${sOrder.orderStatus eq 4 }">배송중</c:when>
+								<c:when test="${sOrder.orderStatus eq 5 }">배송완료</c:when>
+								<c:when test="${sOrder.orderStatus eq 6 }">주문취소</c:when>
+								<c:when test="${sOrder.orderStatus eq 7 }">취소완료</c:when>
+                        	</c:choose>
                         </td>
                     </tr>
                 </table>
@@ -184,7 +184,6 @@
 	       				location.reload();
 	       			}
 	       		});
-
         	}
         </script>
     </div>

@@ -185,8 +185,7 @@ public class AdminMemServiceImpl implements AdminMemService {
 
 	@Override
 	public int selectClassOrderCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return adMemDao.selectClassOrderCount(sqlSession);
 	}
 
 	@Override

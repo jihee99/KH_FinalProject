@@ -99,15 +99,14 @@ public class AdminMemDao {
 		return sqlSession.update("adMemMapper.updateCoupon", c);
 	}
 
-	/*클래스주문내역 조회 관련 메소드
 	public int selectClassOrderCount(SqlSessionTemplate sqlSession) {
-		return 0;
+		return sqlSession.selectOne("adMemMapper.selectClassOrderCount");
 	}
+	
+//	public ArrayList<Store??> selectClassOrderList(sqlSessionTemplate sqlSession, PageInfo pi){
+//		return "";
+//	}
 
-	public ArrayList<Store??> selectClassOrderList(sqlSessionTemplate sqlSession, PageInfo pi){
-		return "";
-	}
-	*/
 	
 	public int selectStoreOrderCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adMemMapper.selectStoreOrderCount");
@@ -122,6 +121,15 @@ public class AdminMemDao {
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectStoreOrderList", null, rowBounds);
 	}
 
+
+	
+	
+	
+	
+	
+	
+	
+	
 	public int deleteStoreOrder(SqlSessionTemplate sqlSession, String storeNo) {
 		return sqlSession.delete("adMemMapper.deleteStoreOrder", storeNo);
 	}
@@ -208,7 +216,8 @@ public class AdminMemDao {
 		
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectReportSearchList", map, rowBounds);
 	}
-	
+
+
 	
 	
 	
