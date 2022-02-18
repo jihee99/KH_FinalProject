@@ -34,7 +34,7 @@
 			<td id="mainContent">
 				<div class="content">
 				    <div class="conhead">
-				        <h2>클래스 후기</h2>
+				        <h2>클래스 리뷰</h2>
 				    </div>
 				    <c:forEach var="c" items="${list}">
 					    <div class="conreview">

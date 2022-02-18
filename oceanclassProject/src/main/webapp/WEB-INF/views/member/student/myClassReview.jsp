@@ -69,14 +69,14 @@
 					</div>  
 					<div class="content1">
 					    <div class="conhead">
-					        <h2>클래스 후기</h2>
+					        <h2>클래스 리뷰</h2>
 					        <a href="myClassReviewDetail.me">더보기</a>
 					    </div>
 					    <table class="table">
 					        <thead>
 					            <tr>
 					                <th>클래스</th>
-					                <th>후기</th>
+					                <th>리뷰</th>
 					            </tr>
 					        </thead>
 					        <tbody>

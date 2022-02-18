@@ -139,6 +139,9 @@
 					    					  memNo: memNo,				// 회원번호
 					    					  cpage: cpage},			// 현재페이지수
 					    				success:function(result){
+						    				console.log(result);
+						    				
+						    			
 					    					let qna = '';
 					    					for(let i in result.list){
 					    						let answer = result.list[i].ansContent;
@@ -186,26 +189,26 @@
 												targetA.fadeToggle(200);
 											});
 						    				
-						    					let page = '<ul class="pagination">';
-							    					if(result.pi.currentPage == 1 ){
-							    						page += '<li class="page-item disabled"> <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
-							    					}else{
-							    						page += '<li class="page-item"><a class="page-link btn">Previous</a></li>'
-							    					}
-							    					
-													for(let j=result.pi.startPage; j<=result.pi.endPage; j++){
-														page += '<li class="page-item"><a class="page-link btn">'
-															  + j 
-															  + '</a></li>'
-													}
-													
-													if(result.pi.currentPage == result.pi.maxPage){
-														page += '<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' 
-													}else{
-														page += '<li class="page-item"><a class="page-link btn">Next</a></li>'
-													}
-						    					page += '</ul>'
-						    					$("#paging").html(page);
+					    					let page = '<ul class="pagination">';
+						    					if(result.pi.currentPage == 1 ){
+						    						page += '<li class="page-item disabled"> <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+						    					}else{
+						    						page += '<li class="page-item"><a class="page-link btn">Previous</a></li>'
+						    					}
+						    					
+												for(let j=result.pi.startPage; j<=result.pi.endPage; j++){
+													page += '<li class="page-item"><a class="page-link btn">'
+														  + j 
+														  + '</a></li>'
+												}
+												
+												if(result.pi.currentPage == result.pi.maxPage){
+													page += '<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' 
+												}else{
+													page += '<li class="page-item"><a class="page-link btn">Next</a></li>'
+												}
+					    					page += '</ul>'
+					    					$("#paging").html(page);
 						    					//console.log(page);
 						    				
 					    				},error:function(){
