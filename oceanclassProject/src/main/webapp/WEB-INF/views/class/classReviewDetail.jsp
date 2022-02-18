@@ -200,7 +200,7 @@ ${ r.replyContent }
 			                    
 			                    <div id="${ r.replyNo }replyUpdateArea" style="display:none">
 				                   	<form action="updateClassReviewReply" onsubmit="return replyUpdateCheck(${r.replyNo});">
-				                   		<input type="text" id="${ r.replyNo }updateReplyContent" class="form-control" name="replyContent" style="width: 450px; display: inline-block;" placeholder="수정할 댓글 내용을 입력해주세요.">
+				                   		<input type="text" id="${ r.replyNo }updateReplyContent" class="form-control" name="replyContent" style="width: 450px; display: inline-block;" placeholder="수정할 댓글 내용을 입력해주세요." value="${ r.replyContent }">
 				             			<input type="hidden" name="replyNo" value="${ r.replyNo }">
 					                    <input type="hidden" name="memNo" value="${ loginUser.memNo }">
 				             			<input type="hidden" name="contentNo" value="${ cr.crNo }">
