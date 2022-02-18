@@ -86,7 +86,7 @@
                     <tr>
                         <th><input type="checkbox" id="cCheckAll"></th>
                         <th width="100">주문번호</th>
-                        <th width="100">주문분류</th>
+                        <th width="110">주문자아이디</th>
                         <th width="100">주문자명</th>
                         <th width="!00">총금액</th>
                         <th width="100">주문상태</th>

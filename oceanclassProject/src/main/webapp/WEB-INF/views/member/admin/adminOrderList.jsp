@@ -33,10 +33,10 @@
                     <tr>
                         <th width="100">주문분류</th>
                         <td width="300">
-                            <input type="radio" class="orderType" name="category" id="class" value="class">
+                            <input type="radio" class="orderType" name="category" id="class" value="c" checked>
                             <label for="class">클래스</label>
                             &nbsp;&nbsp;&nbsp;
-                            <input type="radio" class="orderType" name="category" id="store" value="store" checked="checked">
+                            <input type="radio" class="orderType" name="category" id="store" value="s">
                             <label for="store">스토어</label>
                         </td>
                         <td width="80" rowspan="5">
@@ -75,58 +75,80 @@
             </form>
         </div>
 
-
-        
-        <div id="classArea" style="display: none;">
-            <b>통합주문목록(123)</b>
-            <button onclick="classDelete();" class="btn delBtn">삭제</button>
+        <div id="classArea">
+            <b style="float:left; margin-left: 10px; font-size: 16px; line-height: 33px;">통합주문목록(${cPi.listCount })</b>
+            <button onclick="classDelete();" class="btn" style="float: right; margin-right: 10px; margin-bottom: 5px; font-weight: bold; color: white; background: rgb(172, 11, 11);">삭제</button>
             <table id="classTable">
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="cCheckAll"></th>
                         <th width="100">주문번호</th>
-                        <th width="100">주문분류</th>
+                        <th width="110">주문자아이디</th>
                         <th width="100">주문자명</th>
-                        <th width="!00">총금액</th>
-                        <th width="100">주문상태</th>
+                        <th width="100">총금액</th>
+                        <th width="100">열람여부</th>
                         <th width="200">주문일자</th>
                         <th width="200">취소일자</th>
                         <th width="100">결제방법</th>
                     </tr>
                 </thead>
                 <tbody>
+                	<c:forEach var="c" items="${clist }">
                     <tr>
                         <td><input type="checkbox" name="classChkRow" value="클래스번호넣기"></td>
-                        <td class="orderNo">CO432</td>
-                        <td>클래스</td>
-                        <td>김땡땡</td>
-                        <td>75,000</td>
-                        <td>주문접수</td>
-                        <td>2022-02-03 12:24:32</td>
-                        <td>--</td>
-                        <td>카드</td>
+                        <td class="orderNo">${c.coNo }</td>
+                        <td>${c.userId }</td>
+                        <td>${c.userName }</td>
+                        <td>${c.price }</td>
+                        <td>${c.readingCheck }</td>
+                        <td>${c.paymentDate }</td>
+                        <td>
+                        	<c:choose>
+                        		<c:when test="${c.requestDate ne null }">${c.requestDate }</c:when>
+                        		<c:otherwise>--</c:otherwise>
+                        	</c:choose>
+                        </td>
+                        <td>
+                        	<c:choose>
+                        		<c:when test="${c.paymentOption eq 2 }">--</c:when>
+                        		<c:otherwise>카드?무통장</c:otherwise>
+                        	</c:choose>
+                        </td>
                     </tr>
+                    </c:forEach>
                 </tbody>
             </table>
             
             <input type="hidden" name="hiddenList1" id="hiddenList1" value="">
-            
             <div class="btn_group" align="center">
-	            <button class="btn btn-light">&lt;</button>
-	
-	            <button class="btn btn-light">1</button>
-	            <button class="btn btn-light">2</button>
-	            <button class="btn btn-light">3</button>
-	            <button class="btn btn-light">4</button>
-	            <button class="btn btn-light">5</button>
-	
-	            <button class="btn btn-light">&gt;</button>
+				<c:choose>
+	           		<c:when test="${cPi.currentPage eq 1 }">
+	           			<button class="btn btn-light" disabled>&lt;</button>
+	           		</c:when>
+	           		<c:otherwise>
+	           			<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${cPi.currentPage - 1}'">&lt;</button>
+	           		</c:otherwise>
+	           	</c:choose>
+	                   
+	   			<c:forEach var="p" begin="${cPi.startPage }" end="${cPi.endPage }">
+	   				<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${p}'">${p }</button>
+	   			</c:forEach>
+	   
+	   			<c:choose>
+	               	<c:when test="${cPi.currentPage eq cPi.maxPage }">
+	           			<button class="btn btn-light" disabled>&gt;</button>
+	               	</c:when>
+	               	<c:otherwise>
+	               		<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${cPi.currentPage + 1}'">&gt;</button>
+	               	</c:otherwise>
+	            </c:choose>
         	</div>
+
         </div>
         
         <div id="storeArea" style="width: 100%; font-size: 14px; margin-top:20px;">
             <b style="float:left; margin-left: 10px; font-size: 16px; line-height: 33px;">통합주문목록(${sPi.listCount })</b>
-            <button onclick="storeDelete();" class="btn" style="    float: right; margin-right: 10px; margin-bottom: 5px; font-weight: bold; color: white; background: rgb(172, 11, 11);">삭제</button>
+            <button onclick="storeDelete();" class="btn" style="float: right; margin-right: 10px; margin-bottom: 5px; font-weight: bold; color: white; background: rgb(172, 11, 11);">삭제</button>
             <table id="storeTable" style="margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;">
                 <thead>
                     <tr>
@@ -239,7 +261,17 @@
 			}
 	        
 			$(document).ready(function() {
-	        	
+				
+	        	console.log($("input[type=radio][name=category]").val());
+				/*라디오 버튼에 따른 동적 화면 구현*/
+				if($("input[type=radio][name=category]").val() == 'c'){
+					 $('#classArea').css('display','block');
+	                 $('#storeArea').css('display','none');
+				}else{
+                    $('#classArea').css('display','none');
+                    $('#storeArea').css('display','block');
+				}
+				
 	        	/* 클래스 테이블 전체선택 */
 	            $("#cCheckAll").click(function() {
 	                if($("#cCheckAll").is(":checked")) $("input[name=classChkRow]").prop("checked", true);
@@ -278,27 +310,18 @@
 	                console.log(endDate);
                         
                 });
-                    
-				
-				/*라디오 버튼에 따른 동적 화면 구현*/
-	            $("input[type=radio][name=orderType]").on('click',function(){
-	                var chkValue = $('input[type=radio][name=orderType]:checked').val();
 
-	                console.log(chkValue);
-
-	                if(chkValue == "class"){
-	                    $('#classArea').css('display','block');
-	                    $('#storeArea').css('display','none');
-	                } else if(chkValue == "store"){
-	                    $('#classArea').css('display','none');
-	                    $('#storeArea').css('display','block');
-	                }
-	            });
 				
 				/* 스토어테이블 tr 주문내역 상세보기 */
-				$("#storeTable tbody tr").click(function(){
-					console.log($(this).children(".orderNo").text());
-					location.href='sodetail.ad?ono=' + $(this).children(".orderNo").text();
+				$("#storeTable tbody tr td[class='orderNo']").click(function(){
+					console.log($(this).text());
+					location.href='sodetail.ad?ono=' + $(this).text();
+				});
+				
+				/* 클래스테이블 tr 주문내역 상세보기 */
+				$("#classTable tbody tr td[class='orderNo']").click(function(){
+					console.log($(this).text());
+					location.href='codetail.ad?ono=' + $(this).text();
 				});
 
 			});
