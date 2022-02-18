@@ -77,12 +77,15 @@ public class EventController {
 	
 	@RequestMapping("tagSelect.ev")
 	public String tagSelect(@RequestParam(value="cpage", defaultValue="1") int currentPage, String hashtag, Model model) {
-		System.out.println(hashtag);
+//		System.out.println(hashtag);
+		String selectTag = hashtag;
 		int listCount = eService.tagSelectCount(hashtag);
 		PageInfo pi  = Pagination.getPageInfo(listCount, currentPage, 5, 6);
-		ArrayList<ClassVo> list = eService.tagSelectList(pi);
-		System.out.println(list);
+		ArrayList<ClassVo> list = eService.tagSelectList(pi, hashtag);
+//		System.out.println(listCount);
+//		System.out.println(list);
 		
+		model.addAttribute("selectTag", selectTag);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "event/tagSelectResult";

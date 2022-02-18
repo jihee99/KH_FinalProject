@@ -10,6 +10,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
+import com.kh.oceanclass.member.model.vo.Member;
 
 @Repository
 public class HelpDao {
@@ -56,7 +57,30 @@ public class HelpDao {
 	public int insertQna(SqlSessionTemplate sqlSession, Qna q) {
 		return sqlSession.insert("helpMapper.insertQna", q);
 	}
-
+	
+	public int selectCategoryCount(SqlSessionTemplate sqlSession, String category) {
+		return sqlSession.selectOne("helpMapper.selectCategoryCount", category);
+	}
+	
+	public ArrayList<Qna> selectCategoryQnaList(SqlSessionTemplate sqlSession, PageInfo pi, String category){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("helpMapper.selectCategoryQnaList", category, rowBounds);
+	}
+	
+	public int selectNickCount(SqlSessionTemplate sqlSession, String nickName) {
+		return sqlSession.selectOne("helpMapper.selectNickCount", nickName);
+	}
+	
+	public ArrayList<Qna> selectNickQnaList(SqlSessionTemplate sqlSession, PageInfo pi, String nickName){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("helpMapper.selectNickQnaList", nickName, rowBounds);
+	}
 	
 	// FAQ
 	public ArrayList<Faq> selectFaqList(SqlSessionTemplate sqlSession){

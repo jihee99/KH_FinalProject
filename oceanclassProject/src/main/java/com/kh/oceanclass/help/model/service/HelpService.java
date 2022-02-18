@@ -6,6 +6,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
+import com.kh.oceanclass.member.model.vo.Member;
 
 public interface HelpService {
 	
@@ -36,7 +37,15 @@ public interface HelpService {
 	
 	int insertQna(Qna q);
 	
-	//int insertSecretQna(QnaIn q);
+	// 카테고리 검색
+	int selectCategoryCount(String category);
+	ArrayList<Qna> selectCategoryQnaList(PageInfo pi, String category);
+	
+	// 닉네임 검색
+	int selectNickCount(String nickName);
+	ArrayList<Qna> selectNickQnaList(PageInfo pi, String nickName);
+	
+	
 	
 }
 

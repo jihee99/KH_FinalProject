@@ -11,16 +11,16 @@ import lombok.ToString;
 @ToString
 public class Notice {
 	
-	public int noNo;
-	public int memNo;
-	public String category;
-	public String noTitle;
-	public String noContent;
-	public int count;
-	public String createDate;
-	public String status;
-	public String img;
+	private int noNo;
+	private int memNo;
+	private String category;
+	private String noTitle;
+	private String noContent;
+	private int count;
+	private String createDate;
+	private String status;
+	private String img;
 	
-	public String nickname;
+	private String nickname;
 
 }

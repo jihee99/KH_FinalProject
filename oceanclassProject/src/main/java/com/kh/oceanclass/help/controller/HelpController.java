@@ -1,6 +1,7 @@
 package com.kh.oceanclass.help.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,7 @@ import com.kh.oceanclass.help.model.service.HelpService;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
+import com.kh.oceanclass.member.model.vo.Member;
 
 
 @Controller
@@ -38,12 +40,12 @@ public class HelpController {
 		ArrayList<Notice> list = hService.selectList(pi);
 		// System.out.println(list);
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).category.equals("C")) {
-				list.get(i).category = "클래스";
-			}else if(list.get(i).category.equals("S")) {
-				list.get(i).category = "스토어";
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
 			}else {
-				list.get(i).category = "기타";
+				list.get(i).setCategory("기타");
 			}
 		}
 		model.addAttribute("pi", pi);
@@ -58,12 +60,12 @@ public class HelpController {
 		
 		if(result>0){
 			Notice n = hService.selectNotice(nno);
-			if(n.category.equals("C")) {
-				n.category = "클래스";
-			}else if(n.category.equals("S")) {
-				n.category = "스토어";
+			if(n.getCategory().equals("C")) {
+				n.setCategory("클래스");
+			}else if(n.getCategory().equals("S")) {
+				n.setCategory("스토어");
 			}else {
-				n.category = "기타";
+				n.setCategory("기타");
 			}
 			//System.out.println(n);
 			model.addAttribute("n", n);
@@ -81,12 +83,12 @@ public class HelpController {
 	public String faqMain(Model model) {
 		ArrayList<Faq> list = hService.selectFaqList();
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).category.equals("C")) {
-				list.get(i).category = "클래스";
-			}else if(list.get(i).category.equals("S")) {
-				list.get(i).category = "스토어";
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
 			}else {
-				list.get(i).category = "기타";
+				list.get(i).setCategory("기타");
 			}
 		}
 		model.addAttribute("list", list);
@@ -112,12 +114,12 @@ public class HelpController {
 		ArrayList<Qna> list = hService.selectQnaList(pi);
 		//System.out.println(list);
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).category.equals("C")) {
-				list.get(i).category = "클래스";
-			}else if(list.get(i).category.equals("S")) {
-				list.get(i).category = "스토어";
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
 			}else {
-				list.get(i).category = "기타";
+				list.get(i).setCategory("기타");
 			}
 		}
 		//System.out.println(list);
@@ -129,12 +131,12 @@ public class HelpController {
 	@RequestMapping("qnaDetail.he")
 	public String selectQna(int qno, Model model) {
 		Qna q = hService.selectQna(qno);
-		if(q.category.equals("C")) {
-			q.category = "클래스";
-		}else if(q.category.equals("S")) {
-			q.category = "스토어";
+		if(q.getCategory().equals("C")) {
+			q.setCategory("클래스");
+		}else if(q.getCategory().equals("S")) {
+			q.setCategory("스토어");
 		}else {
-			q.category = "기타";
+			q.setCategory("기타");
 		}
 		model.addAttribute("q", q);
 		return "help/qnaDetail";
@@ -148,8 +150,8 @@ public class HelpController {
 	@RequestMapping("insertQna.he")
 	public String insertQna(Qna q, HttpSession session, Model model) {
 		
-		if(q.pwd == null) {
-			q.pwd = "";
+		if(q.getPwd() == null) {
+			q.setPwd("");
 		}
 		//System.out.println(q);
 		
@@ -164,8 +166,52 @@ public class HelpController {
 		}
 	}
 	
-	@RequestMapping("searchQna.he")
-	public void searchQna() {
+	@RequestMapping("searchQnaList.he")		//qna객체에 한번에 넘기는 것 보다 따로 넘기는게 깔끔
+	public String searchQnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String option, String nickName, String category, Model model) {
+		//System.out.println(q);
+		if(option.equals("category")) {
+			int qnaCategoryCount = hService.selectCategoryCount(category);
+			//System.out.println(qnaCategoryCount);
+			PageInfo pi = Pagination.getPageInfo(qnaCategoryCount, currentPage, 10, 10);
+			ArrayList<Qna> list = hService.selectCategoryQnaList(pi, category);
+			//System.out.println(list);
+			for(int i=0; i<list.size(); i++) {
+				if(list.get(i).getCategory().equals("C")) {
+					list.get(i).setCategory("클래스");
+				}else if(list.get(i).getCategory().equals("S")) {
+					list.get(i).setCategory("스토어");
+				}else {
+					list.get(i).setCategory("기타");
+				}
+			}
+			//System.out.println(list);
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+			model.addAttribute("option", option);
+			model.addAttribute("category", category);
+			return "help/qnaList";
+		}else {
+			int qnaNickCount = hService.selectNickCount(nickName);
+			//System.out.println(qnaNickCount);
+			PageInfo pi = Pagination.getPageInfo(qnaNickCount, currentPage, 10, 10);
+			ArrayList<Qna> list = hService.selectNickQnaList(pi, nickName);
+			//System.out.println(list);
+			for(int i=0; i<list.size(); i++) {
+				if(list.get(i).getCategory().equals("C")) {
+					list.get(i).setCategory("클래스");
+				}else if(list.get(i).getCategory().equals("S")) {
+					list.get(i).setCategory("스토어");
+				}else {
+					list.get(i).setCategory("기타");
+				}
+			}
+			//System.out.println(list);
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+			model.addAttribute("option", option);
+			model.addAttribute("nickName", nickName);
+			return "help/qnaList";
+		}
 		
 	}
 	

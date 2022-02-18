@@ -23,12 +23,17 @@
 		margin-bottom: 50px;
 		background: rgb(224, 224, 224)
 	}
-	/*
-	.tags>button{
-		padding: 0;
-		border: none;
-		background: none;
-	}*/
+	.tags button{
+		border: 0;
+		outline: 0;
+		background: white;
+		font-weight: 600;
+		font-size: 24px;
+		float: left;
+		margin-bottom: 30px;
+		margin-left: 30px;
+	}
+	.tags button:hover{color: rgb(107, 171, 213, 0.7)}
 </style>
 </head>
 <body>
@@ -40,18 +45,18 @@
             <p>${e.eventTitle}</p>
         </div>
         <div class="tags">
-        	<form id="tagSelect" method="post" action="tagSelect.ev">
-	        	<c:if test="${not empty e.tag}">
-		        	<c:set var="tagArr" value="${fn:split(e.tag, ' ')}"></c:set>
-		        	<c:forEach var="t" items="${tagArr}">
-        				<input type="hidden" id="hashtag" name="hashtag" value="${t}">
-		        		<button type="submit" class="btn">${t}</button>
-		        	</c:forEach>
-	        	</c:if>
-        	</form>
+        	<c:if test="${not empty e.tag}">
+	        	<c:set var="tagArr" value="${fn:split(e.tag, ' ')}"></c:set>
+	        	<c:forEach var="t" items="${tagArr}">
+	        		<form id="tagSelect" method="post" action="tagSelect.ev">
+       				<input type="hidden" id="hashtag" name="hashtag" value="${t}">
+	        			<button type="submit" >${t}</button>
+	        		</form>
+	        	</c:forEach>
+        	</c:if>
         </div>
         <div class="content">
-        	<img src="${e.img}" style="width: 100%; height: 100%;">
+        	<img src="${e.img}" style="width: 100%; height: 90%;">
         </div>
         
         <table class="table" id="replyTable">
@@ -68,7 +73,7 @@
 	        		<c:otherwise>
 	        			<th></th>
 	        			<th>
-	        				<textarea class="form-control" cols="30" rows="1" style="resize:none; width:100%" readonly>로그인한 사용자만 이용가능한 서비스입니다. 로그인 후 이용바랍니다.</textarea>
+	        				<textarea class="form-control" cols="30" rows="1" style="resize:none; width:100%" readonly>로그인 후 이용바랍니다.</textarea>
 	        			</th>
 	        			<th style="vertical-align: middle"><button class="btn btn-light" disabled>등록</button></th>
 	        		</c:otherwise>
@@ -134,33 +139,6 @@
     		}
     	}
     </script>
-    
-    <!-- 
-    <script>
-    	$(".tag").click(function(){
-    		//console.log("여기");
-    		var tag = $(this).text();
-    		console.log(tag);
-    		$.ajax({
-    			url: "ajaxTagSelect.ev",
-    			data: {selectTag:tag},
-    			success:function(result){
-    				$.ajax({
-    					url: "tagSelect.ev",
-    					data: {list: result},
-    					success:function(result){
-    						
-    					}, error:function(){
-    						
-    					}
-    				})
-    			},error:function(){
-    				console.log("error");
-    			}
-    		})
-    	})
-    </script>
-    -->
 	
 	 <jsp:include page="../common/footerBar.jsp" />
 	

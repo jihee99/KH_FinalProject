@@ -31,6 +31,10 @@
     }
     .middle button{background: rgb(107, 171, 213); color: whitesmoke;}
     button:hover{background: rgb(107, 171, 213, 0.2)}
+    #searchArea{width: 90%;}
+    .label{float:left; padding-left: 30px; vertical-align: middle; margin-right: 10px; padding-top: 5px;}
+    #searchArea>label{margin:0 auto;}
+    input[type='radio']{width: 15px; margin-right: 50px; margin-top: -1px; vertical-align: middle; }
 </style>
 </head>
 <body>
@@ -48,12 +52,12 @@
         </div>
         <div class="middle">
         	<div id="search">
-        		<form action="searchQna.he" method="get">
-        			<select id="option" name="option" class="dropdown-toggle form-control-sm" style="margin-top: -1px;" onchange="changeOption(option)">
+		        <form action="searchQnaList.he" method="get">	
+        			<select id="option" name="option" class="dropdown-toggle form-control-sm" style="margin-top: -1px;">
 			            <option id="writer" value="writer">작성자</option>
 			            <option id="category" value="category">카테고리</option>
 		        	</select>
-		        	<input id="keyword" name="keyword" type="text" class="form-control form-control-sm">
+		        	<div id="searchArea"><input id="nickName" name="nickName" type="text" class="form-control form-control-sm"></div>
            			<button type="submit" class="btn btn-sm" style="width:60px; margin-top: -1px;">검색</button>
         		</form>
 	        </div>
@@ -63,9 +67,20 @@
         </div>
         
         <script>
-        	function changeOption(option){
-        		console.log(option.text());
-        	}
+        	$("#option").change(function(){
+        		let option = $(this).val();
+        		//console.log(option);
+        		let value = ''
+        		if(option == "category"){
+        			value += '<div class="label"><label><input type="radio" class="form-check-input" id="category" name="category" value="C">클래스</label></div>'
+        				 + '<div class="label"><label><input type="radio" class="form-check-input" id="category" name="category" value="S">스토어</label></div>'
+        				 + '<div class="label"><label><input type="radio" class="form-check-input" id="category" name="category" value="E">기타</label></div>'
+        			$("#searchArea").html(value);	 
+        		}else{
+        			value += '<input id="nickName" name="nickName" type="text" class="form-control form-control-sm">'
+        			$("#searchArea").html(value);
+        		}
+        	})
         </script>
         
         <div class="content my-5">
@@ -132,8 +147,8 @@
         	
         </script>
         
-         <div id="paging">
-			<ul class="pagination">
+       <div id="paging">
+       		<ul class="pagination">
 				<c:choose>
 					<c:when test="${ pi.currentPage eq 1 }">
 						<li class="page-item disabled">
@@ -141,15 +156,27 @@
 						</li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ pi.currentPage-1 }">Previous</a></li>
+						<li class="page-item"><a class="page-link" href="searchQnaList.he?cpage=${ pi.currentPage-1 }">Previous</a></li>
 					</c:otherwise>
 				</c:choose>
 				
-				
-				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-					<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ p }">${ p }</a></li>
+				<c:forEach  var="p" begin="${pi.startPage}" end="${pi.endPage}">
+					<c:choose>
+						<c:when test="${ empty option }">
+							<li class="page-item"><a class="page-link" href="searchQnaList.he?cpage=${ p }">${ p }</a></li>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${ option == 'category'}">
+									<li class="page-item"><a class="page-link" href="searchQnaList.he?cpage=${p}&option=${ option }&category=${ category }">${p}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="searchQnaList.he?cpage=${p}&option=${ option }&nickName=${ nickName }">${p}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
-				
 				
 				<c:choose>
 					<c:when test="${ pi.currentPage eq pi.maxPage }">
@@ -158,11 +185,11 @@
 						</li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="qnaList.he?cpage=${ pi.currentPage+1 }">Next</a></li>
+						<li class="page-item"><a class="page-link" href="searchQnaList.he?cpage=${pi.currentPage+1}">Next</a></li>
 					</c:otherwise>
 				</c:choose>
-            </ul>
-        </div>
+			</ul>
+		</div>
 	</div>
 	
 	
