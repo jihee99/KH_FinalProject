@@ -143,6 +143,55 @@
 		     )
 	</insert>
 	
+	<select id="selectCategoryCount" resultType="_int">
+		select
+			   count(*)
+		  from qna
+		 where category = #{category}
+	</select>
+	
+	<select id="selectCategoryQnaList" resultMap="qnaResult">
+		select
+			   qno
+		     , nickname
+		     , category
+		     , q_title
+		     , q_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , password
+		     , a_content
+		     , a_date
+		  from qna
+		  join member using (mno)
+		 where category = #{category}
+		 order 
+		 	by qno desc
+	</select>
+	
+	<select id="selectNickCount" resultType="_int">
+		select count(*)
+		  from qna
+		  join member using(mno)
+		 where nickname = #{nickName}
+	</select>
+	
+	<select id="selectNickQnaList" resultMap="qnaResult">
+		select
+			   qno
+		     , nickname
+		     , category
+		     , q_title
+		     , q_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , password
+		     , a_content
+		     , a_date
+		  from qna
+		  join member using (mno)
+		 where nickname = #{nickName}
+		 order 
+		 	by qno desc
+	</select>
 
 	<!-- FAQ -->
 	<select id="selectFaqList" resultMap="faqResult">

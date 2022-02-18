@@ -58,8 +58,8 @@ public class EventServiceImpl implements EventService{
 	}
 
 	@Override
-	public ArrayList<ClassVo> tagSelectList(PageInfo pi) {
-		return eDao.tagSelectList(sqlSession, pi);
+	public ArrayList<ClassVo> tagSelectList(PageInfo pi, String hashtag) {
+		return eDao.tagSelectList(sqlSession, pi, hashtag);
 	}
 
 	

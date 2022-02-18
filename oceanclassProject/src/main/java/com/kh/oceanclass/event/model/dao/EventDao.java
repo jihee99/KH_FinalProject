@@ -52,12 +52,12 @@ public class EventDao {
 	}
 	
 	
-	public ArrayList<ClassVo> tagSelectList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<ClassVo> tagSelectList(SqlSessionTemplate sqlSession, PageInfo pi, String hashtag){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("eventMapper.tagSelectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("eventMapper.tagSelectList", hashtag, rowBounds);
 	}
 	
 }

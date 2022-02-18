@@ -12,14 +12,14 @@ import lombok.ToString;
 
 public class Faq {
 	
-	public int faqNo;
-	public int memNo;
-	public String category;
-	public String faqTitle;
-	public String faqContent;
-	public String createDate;
-	public String status;
+	private int faqNo;
+	private int memNo;
+	private String category;
+	private String faqTitle;
+	private String faqContent;
+	private String createDate;
+	private String status;
 	
-	public String nickname;
+	private String nickname;
 
 }
