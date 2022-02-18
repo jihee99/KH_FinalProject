@@ -116,6 +116,57 @@
 		 where nno = #{noNo}
 	</update>
 	
+	<select id="searchNtListCount" resultType="_int">
+		select
+		       count(*)
+		  from notice
+		 where status = 'Y'
+		 <if test='category == "C"'>
+	       and category = 'C'
+	     </if> 
+	     <if test='category == "S"'>
+	       and category = 'S'
+	     </if> 
+	     <if test='category == "T"'> 
+	       and category = 'T'
+	     </if>
+	     <if test='category == "E"'> 
+	       and category = 'E'
+	     </if>
+	     <if test='category == "A"'>
+	     </if>  
+		 and n_title like '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="searchNtList" resultMap="noticeResult">
+		select
+		       nno
+		     , mno
+		     , category
+		     , n_title
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from notice
+          join member using (mno)
+		 where status = 'Y'
+		 <if test='category == "C"'>
+	       and category = 'C'
+	     </if> 
+	     <if test='category == "S"'>
+	       and category = 'S'
+	     </if> 
+	     <if test='category == "T"'> 
+	       and category = 'T'
+	     </if>
+	     <if test='category == "E"'> 
+	       and category = 'E'
+	     </if>
+	     <if test='category == "A"'>
+	     </if>  
+		 and n_title like '%' || #{keyword} || '%'
+		 order
+		    by nno desc
+	</select>
 	
 	<!-- Faq -->
 	<select id="selectFaqListCount" resultType="_int">
@@ -187,6 +238,52 @@
 		 where fno = #{faqNo}
 	</update>
 	
+	<select id="searchFaqListCount" resultType="_int">
+		select
+		       count(*)
+		  from faq
+		 where status = 'Y'
+		 <if test='category == "C"'>
+	       and category = 'C'
+	     </if> 
+	     <if test='category == "S"'>
+	       and category = 'S'
+	     </if>
+	     <if test='category == "E"'> 
+	       and category = 'E'
+	     </if>
+	     <if test='category == "A"'>
+	     </if>  
+		 and f_title like '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="searchFaqList" resultMap="faqResult">
+		select
+		       fno
+		     , mno
+		     , category
+		     , f_title
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from faq
+          join member using (mno)
+		 where status = 'Y'
+		 <if test='category == "C"'>
+	       and category = 'C'
+	     </if> 
+	     <if test='category == "S"'>
+	       and category = 'S'
+	     </if>
+	     <if test='category == "E"'> 
+	       and category = 'E'
+	     </if>
+	     <if test='category == "A"'>
+	     </if>  
+		 and f_title like '%' || #{keyword} || '%'
+		 order
+		    by fno desc
+	</select>
+	
 	
 	<!-- Qna -->
 	<select id="selectQnaListCount" resultType="_int">
@@ -243,5 +340,52 @@
 		   set status = 'N' 
 		 where qno = #{qnaNo}
 	</update>
+	
+	<select id="searchQnaListCount" resultType="_int">
+		select
+		       count(*)
+		  from qna
+		 where status = 'Y'
+		 <if test='category == "C"'>
+	       and category = 'C'
+	     </if> 
+	     <if test='category == "S"'>
+	       and category = 'S'
+	     </if>
+	     <if test='category == "E"'> 
+	       and category = 'E'
+	     </if>
+	     <if test='category == "A"'>
+	     </if>  
+		 and q_title like '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="searchQnaList" resultMap="qnaResult">
+		select
+		        qno
+		     , category
+		     , q_title
+		     , q_content
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , a_content
+		  from qna
+          join member using (mno)
+		 where status = 'Y'
+		 <if test='category == "C"'>
+	       and category = 'C'
+	     </if> 
+	     <if test='category == "S"'>
+	       and category = 'S'
+	     </if>
+	     <if test='category == "E"'> 
+	       and category = 'E'
+	     </if>
+	     <if test='category == "A"'>
+	     </if>  
+		 and q_title like '%' || #{keyword} || '%'
+		 order
+		    by qno desc
+	</select>
 	
 </mapper>

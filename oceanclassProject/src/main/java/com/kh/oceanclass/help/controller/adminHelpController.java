@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,14 +43,14 @@ public class adminHelpController {
 		ArrayList<Notice> list = ahService.selectNtList(pi);
 		//System.out.println(list);
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).category.equals("C")) {
-				list.get(i).category = "클래스";
-			}else if(list.get(i).category.equals("S")) {
-				list.get(i).category = "스토어";
-			}else if(list.get(i).category.equals("T")) {
-				list.get(i).category = "강사";
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else if(list.get(i).getCategory().equals("T")) {
+				list.get(i).setCategory("강사");
 			}else {
-				list.get(i).category = "기타";
+				list.get(i).setCategory("기타");
 			}
 		}
 		
@@ -155,6 +156,35 @@ public class adminHelpController {
 		
 	}
 	
+	@RequestMapping("noticeSearch.ad")
+	public String searchNtList(int cpage, String keyword, String category, Model model, HttpSession session) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("category", category);
+		
+		int listScCount = ahService.searchNtListCount(map);
+		PageInfo pi = Pagination.getPageInfo(listScCount, cpage, 5, 10);
+		ArrayList<Notice> list = ahService.searchNtList(pi, map);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else if(list.get(i).getCategory().equals("T")) {
+				list.get(i).setCategory("강사");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+		
+		model.addAttribute("category",category).addAttribute("keyword",keyword).addAttribute("pi",pi).addAttribute("list",list);
+		//System.out.println(category);
+		//System.out.println(keyword);
+		return "member/admin/adminNoticeList";
+	}
+	
 	// faq 
 	
 	@RequestMapping("faqList.ad")
@@ -166,12 +196,12 @@ public class adminHelpController {
 		ArrayList<Faq> list = ahService.selectFaqList(pi);
 		//System.out.println(list);
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).category.equals("C")) {
-				list.get(i).category = "클래스";
-			}else if(list.get(i).category.equals("S")) {
-				list.get(i).category = "스토어";
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
 			}else {
-				list.get(i).category = "기타";
+				list.get(i).setCategory("기타");
 			}
 		}
 		
@@ -237,6 +267,33 @@ public class adminHelpController {
 		
 	}
 	
+	@RequestMapping("faqSearch.ad")
+	public String searchFaqList(int cpage, String keyword, String category, Model model, HttpSession session) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("category", category);
+		
+		int listCount = ahService.searchFaqListCount(map);
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 10);
+		ArrayList<Faq> list = ahService.searchFaqList(pi, map);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+		
+		model.addAttribute("category",category).addAttribute("keyword",keyword).addAttribute("pi",pi).addAttribute("list",list);
+		System.out.println(category);
+		System.out.println(keyword);
+		return "member/admin/adminFAQList";
+	}
+	
 	// Qna
 
 	@RequestMapping("qnaList.ad")
@@ -248,12 +305,12 @@ public class adminHelpController {
 		ArrayList<Qna> list = ahService.selectQnaList(pi);
 		//System.out.println(list);
 		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).category.equals("c")) {
-				list.get(i).category = "클래스";
-			}else if(list.get(i).category.equals("s")) {
-				list.get(i).category = "스토어";
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
 			}else {
-				list.get(i).category = "기타";
+				list.get(i).setCategory("기타");
 			}
 		}
 		
@@ -284,12 +341,12 @@ public class adminHelpController {
 	public String selectQna(int qno, Model model) {
 		
 			Qna q = ahService.selectQna(qno);
-			if(q.category.equals("c")) {
-				q.category = "클래스";
-			}else if(q.category.equals("s")) {
-				q.category = "스토어";
+			if(q.getCategory().equals("C")) {
+				q.setCategory("클래스");
+			}else if(q.getCategory().equals("S")) {
+				q.setCategory("스토어");
 			}else {
-				q.category = "기타";
+				q.setCategory("기타");
 			}
 			model.addAttribute("q", q);
 			return "member/admin/admin1to1Enroll";
@@ -308,6 +365,33 @@ public class adminHelpController {
 			model.addAttribute("errorMsg", "삭제 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping("qnaSearch.ad")
+	public String searchQnaList(int cpage, String keyword, String category, Model model, HttpSession session) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("category", category);
+		
+		int listCount = ahService.searchQnaListCount(map);
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 10);
+		ArrayList<Qna> list = ahService.searchQnaList(pi, map);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+		
+		model.addAttribute("category",category).addAttribute("keyword",keyword).addAttribute("pi",pi).addAttribute("list",list);
+		//System.out.println(category);
+		//System.out.println(keyword);
+		return "member/admin/admin1to1List";
 	}
 
 } 

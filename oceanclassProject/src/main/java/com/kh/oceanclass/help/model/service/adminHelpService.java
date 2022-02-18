@@ -1,6 +1,7 @@
 package com.kh.oceanclass.help.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.event.model.vo.Event;
@@ -26,6 +27,9 @@ public interface adminHelpService {
 	// 5. 공지사항 수정
 	int updateNotice(Notice n);
 	
+	// 6. 공지사항 검색
+	int searchNtListCount(HashMap<String, String> map);
+	ArrayList<Notice> searchNtList(PageInfo pi, HashMap<String, String> map);
 	
 	
 	// 1. FAQ 리스트 (페이징)
@@ -44,8 +48,11 @@ public interface adminHelpService {
 	// 5. FAQ 수정
 	int updateFaq(Faq f);
 	
+	// 6. FAQ 검색
+	int searchFaqListCount(HashMap<String, String> map);
+	ArrayList<Faq> searchFaqList(PageInfo pi, HashMap<String, String> map);
 	
-	
+		
 	// 1. Qna 리스트 (페이징)
 	int selectQnaListCount();
 	ArrayList<Qna> selectQnaList(PageInfo pi);
@@ -58,6 +65,10 @@ public interface adminHelpService {
 	
 	// 4. Qna 삭제
 	int deleteQna(int qnaNo);
+	
+	// 5. Qna 검색
+	int searchQnaListCount(HashMap<String, String> map);
+	ArrayList<Qna> searchQnaList(PageInfo pi, HashMap<String, String> map);
 	
 }
 

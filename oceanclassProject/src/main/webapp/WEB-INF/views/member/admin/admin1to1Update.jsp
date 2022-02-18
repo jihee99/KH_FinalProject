@@ -95,7 +95,7 @@
 	                	</table>
 	                <div id="btnBox">
 	                    <button type="submit" id="Enroll" class="btn" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-	                    <button type="button" id="cancel" class="btn" style="background-color:gray; color: white;" >목록</button>
+	                    <button type="button" id="cancel" onclick="history.back()" class="btn" style="background-color:gray; color: white;" >목록</button>
 	                </div>
                 </form>
             </div>

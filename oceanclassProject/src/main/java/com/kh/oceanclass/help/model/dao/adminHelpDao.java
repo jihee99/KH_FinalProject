@@ -1,11 +1,13 @@
 package com.kh.oceanclass.help.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.help.model.vo.Faq;
@@ -40,6 +42,16 @@ public class adminHelpDao {
 		//System.out.println(n);
 		return sqlSession.update("adminHelpMapper.updateNotice", n);
 	}
+	public int searchNtListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adminHelpMapper.searchNtListCount", map);
+	}
+	public ArrayList<Notice> searchNtList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminHelpMapper.searchNtList", map, rowBounds);
+	}
 	
 	// FAQ
 	
@@ -66,6 +78,16 @@ public class adminHelpDao {
 		//System.out.println(n);
 		return sqlSession.update("adminHelpMapper.updateFaq", f);
 	}
+	public int searchFaqListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adminHelpMapper.searchFaqListCount", map);
+	}
+	public ArrayList<Faq> searchFaqList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminHelpMapper.searchFaqList", map, rowBounds);
+	}
 	
 	// QNA
 	
@@ -87,5 +109,16 @@ public class adminHelpDao {
 	}
 	public int deleteQna(SqlSessionTemplate sqlSession, int qnaNo) {
 		return sqlSession.update("adminHelpMapper.deleteQna", qnaNo);
+	}
+	
+	public int searchQnaListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adminHelpMapper.searchQnaListCount", map);
+	}
+	public ArrayList<Qna> searchQnaList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminHelpMapper.searchQnaList", map, rowBounds);
 	}
 }
