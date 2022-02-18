@@ -51,7 +51,8 @@
 				            	<p id="ctitle">
 					            	<c:choose>
 					            		<c:when test="${fn:length(c.clName) gt 18}">
-					            			<c:out value="${fn:substring(c.clName, 0, 18)}"></c:out>..
+					            			<c:out value="${fn:substring(c.clName, 0, 18)}"></c:out>
+					            			..
 					            		</c:when>
 					            		<c:otherwise>
 					            			<c:out value="${c.clName}"></c:out>
@@ -102,6 +103,7 @@
 							data:{clNo:$(this).next().val(), 
 								  referNo:$(this).next().val()},
 							success:function(result){
+								console.log(result);
 								console.log("성공");
 							}
 						})
