@@ -440,8 +440,14 @@
 	
 	<update id="updateReview">
 		update class_review
-		   set content = #{cr.content},
-		   	   star = #{cr.star}
+		   set content = #{content},
+		   	   star = #{star}
+		   	   <if test="filePathMessage == 'uuuuu'">
+		   	   		, filePath = #{filePath}
+		   	   </if>
+		   	   <if test="filePathMessage == 'ddddd'">
+		   	   		, filePath = null
+		   	   </if>
 		 where c_rno = #{crNo}
 		   and status = 'Y'
 	</update>

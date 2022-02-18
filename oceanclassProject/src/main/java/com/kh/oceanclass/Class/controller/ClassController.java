@@ -307,40 +307,37 @@ public class ClassController {
 		}
 	}
 	
-	/*
-	@RequestMapping(value="updateClassReviewForm.me")
-	public String updateReviewForm(ClassReview cr, int rpage, Model model) {
-		model.addAttribute("cr", cr);
-		model.addAttribute("rpage", rpage);
-		return "class/classReviewUpdate";
-	}
-	*/
-	
-	@RequestMapping(value="updateClassReview.me")
+	@RequestMapping("updateClassReview.me")
 	public String updateReview(MultipartFile upfile, ClassReview cr, int rpage, String changeCk, HttpSession session) {
 		
-		// 첨부파일 새로 들어왔는지 확인
-		if(changeCk == "change") {
-			// 첨부파일 변경 있음 (변경|삭제)
-			if(!upfile.getOriginalFilename().equals("")) {
-				// 변경
-				String originName = upfile.getOriginalFilename();
-				String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/creview/");
-				try {
-					upfile.transferTo(new File(savePath + originName));
-				} catch (IllegalStateException | IOException e) {
-					e.printStackTrace();
-				}
-				cr.setFilePath("resources/uploadFiles/creview/" + originName);
-				cr.setFilePathMessage("uuuuu");
-			} else {
+		if(!upfile.getOriginalFilename().equals("")) {
+			// 변경or추가
+			String originName = upfile.getOriginalFilename();
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/creview/");
+			try {
+				upfile.transferTo(new File(savePath + originName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			cr.setFilePath("resources/uploadFiles/creview/" + originName);
+			cr.setFilePathMessage("uuuuu");
+		} else {
+			// 첨부파일 삭제된건지, 원래 그대로 저장 된건지 확인
+			if(changeCk.equals("change")) {
 				// 삭제
+				cr.setFilePathMessage("ddddd");
 			}
 		}
-		
-		// 내용이랑 별점은 무조건 변경, 나머지는 동적 sql로 처리
+		// 내용이랑 별점은 무조건 변경, 파일은 동적 sql로 처리
 		int result = cService.updateReview(cr);
 		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 후기를 수정하였습니다!");
+		} else {
+			session.setAttribute("alertMsg", "후기 수정에 실패하였습니다.");
+		}
+		
+		return "redirect:classReviewDetail.me?crNo=" + cr.getCrNo() + "&cpage=1&clNo=" + cr.getClNo() + "&rpage=" + rpage;
 	}
 	
 	@RequestMapping(value="classPay.me")

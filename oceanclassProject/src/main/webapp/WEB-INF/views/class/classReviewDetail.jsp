@@ -245,7 +245,7 @@ ${ r.replyContent }
 		    	<div class="modal-dialog">
 		        	<form action="updateClassReview.me" method="post" enctype="multipart/form-data" onsubmit="return updateReviewFormCheck();">
 		        		<input type="hidden" name="memNo" value="${ loginUser.memNo }">
-		        		<input type="hidden" name="clNo" value="${ c.clNo }">
+		        		<input type="hidden" name="clNo" value="${ reviewClNo }">
 		        		<input type="hidden" name="crNo" value="${ cr.crNo }">
 		        		<input type="hidden" name="rpage" value="${ returnPage }">
                     	<input type="hidden" id="changeCk" name="changeCk" value="nochange">
@@ -398,11 +398,23 @@ ${ r.replyContent }
 					document.getElementById("updateThumbnailArea").src = e.target.result;
 					document.getElementById("updateThumbnailArea").style.display = 'block';
 					document.getElementById("originFileName").style.display = 'none';
-					document.getElementById("changeCk").value = 'change';
 				}
 			} else { // 선택되었던 파일 취소
 				document.getElementById("updateThumbnailArea").src = null;
 				document.getElementById("updateThumbnailArea").style.display = 'none';
+				document.getElementById("originFileName").style.display = 'none';
+				
+				/*
+				if(${ cr.filePath } == ''){
+					document.getElementById("updateThumbnailArea").src = null;
+					document.getElementById("updateThumbnailArea").style.display = 'none';
+					document.getElementById("originFileName").style.display = 'none';
+				} else {
+					document.getElementById("updateThumbnailArea").src = '${ cr.filePath }';
+					document.getElementById("updateThumbnailArea").style.display = 'block';
+					document.getElementById("originFileName").style.display = 'block';
+				}
+				*/
 			}
 		}
     	
