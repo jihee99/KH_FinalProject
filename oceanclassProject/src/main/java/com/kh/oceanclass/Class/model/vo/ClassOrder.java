@@ -24,4 +24,14 @@ public class ClassOrder {
 	private int pointSave;
 	private String readingCheck;
 	
+	//관리자 주문내역 조회시 추가로 필요한 데이터
+	private String userId;
+	private String userName;
+	private String requestDate;
+	
+	//주문내역 상세조회시 필요한 데이터
+	private String refundNo;
+	private String clName;
+	private String clPrice;
+	private String phone;
 }
