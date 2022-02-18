@@ -140,6 +140,14 @@
 	.pagination {
 	    justify-content: center;
 	}
+    #dateBtn{
+        width: 50px;
+        height: 38px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        line-height: 38px;
+        background-color: white;
+    }
 </style>  
 </head>
 <body>
@@ -153,27 +161,39 @@
             <!-- 회원 조회 -->
             <input type="hidden" id="memNo" name="mno" value="${loginUser.memNo}">
             <input type="hidden" id="eventNo" name="nno" value="${n.noNo}">
-            <div class="search-box pb-5">
-                <select name="category" class="selectpicker show-tick p-2" style="width: 120px;">
-                    <option value="C">클래스</option>
-                    <option value="S">스토어</option>
-                    <option value="T">강사</option>
-                    <option value="E">기타</option>
-                </select>
-                
-                <div class="search">
-                    <form class="form-inline" action="">
-                      <input class="form-control p-4" type="text" placeholder="제목을 입력해주세요." style="width: 350px;">
-                      <button class="btn" type="submit">
-                        <span class="material-icons">search</span>                                    
-                      </button>
-                    </form>
-                </div>
-            </div>
+            <form class="form-inline" action="noticeSearch.ad" method="get">
+            	<input type="hidden" name="cpage" value="1">
+            	<div class="search-box pb-5" id="search-area">
+	                <select name="category" class="selectpicker show-tick p-2" style="width: 120px;">
+	                    <option value="A">전체</option>
+	                    <option value="C">클래스</option>
+	                    <option value="S">스토어</option>
+	                    <option value="T">강사</option>
+	                    <option value="E">기타</option>
+	                </select>
+	                
+	                <div class="search">
+	                      <input class="form-control p-4" name="keyword" type="text" placeholder="제목을 입력해주세요." style="width: 350px;">
+	                      <button class="btn" type="submit">
+	                      	<span class="material-icons">search</span>                                    
+	                      </button>
+	                </div>
+            	</div>
+            </form>
+            
+            <c:if test="${ not empty category }">
+			<script>
+				$(function(){
+					$("#search-area option[value=${category}]").attr("selected", true);
+				})
+			</script>
+		</c:if>
+            
             <div id="content-wrap" >
                 <div class="dateBtn">
                     <div class="d-flex" style="width: 160px;">
                         <input class="form-control mr-2" type="date"> ~ <input class="form-control ml-2" type="date">
+                        <button class="material-icons" id="dateBtn" type="submit">search</button>
                     </div>
                     <div id="btnBox" style="float: right;">
                         <button onclick="location.href='noticeEnrollForm.ad';" class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
@@ -257,7 +277,14 @@
 						</c:choose>
 						
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="noticeList.ad?cpage=${ p }">${ p }</a></li>
+							<c:choose>
+								<c:when test="${ empty category }">
+									<li class="page-item"><a class="page-link" href="noticeList.ad?cpage=${ p }">${ p }</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="noticeSearch.ad?cpage=${ p }&category=${ category }&keyword=${keyword}">${ p }</a></li>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 						
 						<c:choose>

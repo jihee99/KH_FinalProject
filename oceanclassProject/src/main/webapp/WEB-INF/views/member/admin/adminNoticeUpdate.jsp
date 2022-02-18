@@ -145,9 +145,11 @@
                     <div class="box">
                         <label class="textName" for="">파일 첨부<span class="star">*</span></label>
                         <div class="input-area">
-                            <img id="imgFile" width="450" height="230" src="${n.img}">
-                            <input type="hidden" name="filePath" value="${n.img}">
-                            <input type="hidden" name="img" value="${n.img}">
+                        	<c:if test="${ not empty n.img }">
+	                            <img id="imgFile" width="450" height="230" src="${n.img}">
+	                            <input type="hidden" name="filePath" value="${n.img}">
+	                            <input type="hidden" name="img" value="${n.img}">
+                            </c:if>
                             <input type="file" id="" name="reupfile" onchange="loadImg(this);">
                         </div>
                     </div>

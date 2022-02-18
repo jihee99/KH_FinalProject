@@ -1,6 +1,7 @@
 package com.kh.oceanclass.help.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,16 @@ public class adminHelpServiceImpl implements adminHelpService{
 	public int updateNotice(Notice n) {
 		return ahDao.updateNotice(sqlSession, n);
 	}
+	
+	@Override
+	public int searchNtListCount(HashMap<String, String> map) {
+		return ahDao.searchNtListCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Notice> searchNtList(PageInfo pi, HashMap<String, String> map) {
+		return ahDao.searchNtList(sqlSession, pi, map);
+	}
 
 	// Faq
 	
@@ -84,6 +95,16 @@ public class adminHelpServiceImpl implements adminHelpService{
 	public int updateFaq(Faq f) {
 		return ahDao.updateFaq(sqlSession, f);
 	}
+	
+	@Override
+	public int searchFaqListCount(HashMap<String, String> map) {
+		return ahDao.searchFaqListCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Faq> searchFaqList(PageInfo pi, HashMap<String, String> map) {
+		return ahDao.searchFaqList(sqlSession, pi, map);
+	}
 
 	// Qna
 	
@@ -111,7 +132,15 @@ public class adminHelpServiceImpl implements adminHelpService{
 	public int deleteQna(int qnaNo) {
 		return ahDao.deleteQna(sqlSession, qnaNo);
 	}
+	
+	@Override
+	public int searchQnaListCount(HashMap<String, String> map) {
+		return ahDao.searchQnaListCount(sqlSession, map);
+	}
 
-
+	@Override
+	public ArrayList<Qna> searchQnaList(PageInfo pi, HashMap<String, String> map) {
+		return ahDao.searchQnaList(sqlSession, pi, map);
+	}
 
 }
