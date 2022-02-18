@@ -1,5 +1,7 @@
 package com.kh.oceanclass.Class.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kh.oceanclass.Class.model.service.ClassServiceImpl;
 import com.kh.oceanclass.Class.model.vo.ClassLikeCk;
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -77,7 +81,6 @@ public class ClassController {
 	@RequestMapping(value="classSearchList.me")
 	public String classSearchList(int cpage, String keyword, String category, String array, Model model, HttpSession session) {
 		// 클래스 검색 리스트
-
 		HashMap<String, String> map = new HashMap<>();
 		map.put("keyword", keyword);
 		map.put("category", category);
@@ -103,7 +106,7 @@ public class ClassController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="likeClass.me", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="classLikeCheck.me", produces="application/json; charset=UTF-8")
 	public String classLike(LikeVo li, String grade) {
 
 		ClassLikeCk lck = new ClassLikeCk();
@@ -144,6 +147,7 @@ public class ClassController {
 		
 		lck.setMessage("ff");
 		lck.setLikeCount("0");
+		System.out.println(new Gson().toJson(lck));
 		return new Gson().toJson(lck);
 	}
 	
@@ -254,6 +258,89 @@ public class ClassController {
 			session.setAttribute("alertMsg", "댓글 수정에 실패하였습니다.");
 		}
 		return "redirect:classReviewDetail.me?crNo=" + r.getContentNo() + "&cpage=1&clNo=" + clNo + "&rpage=" + returnPage;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="enrollClassReviewCheck.me")
+	public String ajaxEnrollReviewCheck(ClassOrder co) {
+		int result = cService.enrollReviewCheck(co);
+		if(result > 0) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
+	}
+	
+	@RequestMapping(value="enrollClassReview.me")
+	public String enrollClassReview(MultipartFile upfile, ClassReview cr, HttpSession session) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			String originName = upfile.getOriginalFilename();
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/creview/");
+			try {
+				upfile.transferTo(new File(savePath + originName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			cr.setFilePath("resources/uploadFiles/creview/" + originName);
+		}
+		
+		int result = cService.insertClassReview(cr);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 후기가 등록되었습니다!");
+		} else {
+			session.setAttribute("alertMsg", "후기 등록에 실패하였습니다.");
+		}
+		
+		return "redirect:classDetail.me?referNo=" + cr.getClNo();
+	}
+	
+	@RequestMapping(value="deleteClassReview.me")
+	public String deleteReview(int crNo, int clNo, int rpage, HttpSession session) {
+		int result = cService.deleteReview(crNo);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "후기가 삭제되었습니다.");
+			return "redirect:classReviewList.me?cpage=1&clNo=" + clNo;
+		} else {
+			session.setAttribute("alertMsg", "후기 삭제에 실패하였습니다.");
+			return "redirect:classReviewDetail.me?crNo=" + crNo + "&cpage=1&clNo=" + clNo + "&rpage=" + rpage;
+		}
+	}
+	
+	/*
+	@RequestMapping(value="updateClassReviewForm.me")
+	public String updateReviewForm(ClassReview cr, int rpage, Model model) {
+		model.addAttribute("cr", cr);
+		model.addAttribute("rpage", rpage);
+		return "class/classReviewUpdate";
+	}
+	*/
+	
+	@RequestMapping(value="updateClassReview.me")
+	public String updateReview(MultipartFile upfile, ClassReview cr, int rpage, String changeCk, HttpSession session) {
+		
+		// 첨부파일 새로 들어왔는지 확인
+		if(changeCk == "change") {
+			// 첨부파일 변경 있음 (변경|삭제)
+			if(!upfile.getOriginalFilename().equals("")) {
+				// 변경
+				String originName = upfile.getOriginalFilename();
+				String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/creview/");
+				try {
+					upfile.transferTo(new File(savePath + originName));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				cr.setFilePath("resources/uploadFiles/creview/" + originName);
+				cr.setFilePathMessage("uuuuu");
+			} else {
+				// 삭제
+			}
+		}
+		
+		// 내용이랑 별점은 무조건 변경, 나머지는 동적 sql로 처리
+		int result = cService.updateReview(cr);
+		
 	}
 	
 	@RequestMapping(value="classPay.me")

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.Class.model.dao.ClassDao;
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -126,6 +127,26 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public int updateReply(Reply r) {
 		return cDao.updateReply(sqlSession, r);
+	}
+
+	@Override
+	public int enrollReviewCheck(ClassOrder co) {
+		return cDao.enrollReviewCheck(sqlSession, co);
+	}
+
+	@Override
+	public int insertClassReview(ClassReview cr) {
+		return cDao.insertClassReview(sqlSession, cr);
+	}
+
+	@Override
+	public int deleteReview(int crNo) {
+		return cDao.deleteReview(sqlSession, crNo);
+	}
+
+	@Override
+	public int updateReview(ClassReview cr) {
+		return cDao.updateReview(sqlSession, cr);
 	}
 	
 }

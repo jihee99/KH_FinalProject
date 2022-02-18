@@ -51,6 +51,13 @@
                         <img src="" width="50px" height="50px">
                     </div>
                     <div>
+                    	<c:if test="${ loginUser.nickName == cr.memNo }">
+	               	    	<div style="float:right;">
+		                    	<!--  <button type="button" onclick="updateReview(${cr.crNo}, ${reviewClNo}, ${returnPage}, ${ loginUser.memNo })" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">수정</button>-->
+		                    	<button type="button" onclick="updateReview();" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">수정</button>
+		                    	<button type="button" onclick="deleteReview(${cr.crNo}, ${reviewClNo}, ${returnPage});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
+	                    	</div>
+                    	</c:if>
                         <div style="font-weight: bold;">${ cr.memNo }</div>
                         <div style="display: flex;">
                             <div style="margin-right: 5px;">
@@ -117,7 +124,7 @@
                     </div>
                 </div>
 
-                <div class="reviewContent" style="margin-top: 10px;">
+                <div class="reviewContent" style="margin-top: 10px; margin-bottom:50px;">
                     <pre style="width:100%; white-space: pre-wrap;">
                     <c:if test="${ !empty cr.filePath }">
 <img src="${ cr.filePath }" width="400">
@@ -231,15 +238,72 @@ ${ r.replyContent }
 		                </ul>
 		            </div>
 	            </c:if>
-                
             </div>
 
+			<!-- 글 수정하기시 보여질 modal -->
+		    <div id="updateReviewModal" class="modal fade" role="dialog">
+		    	<div class="modal-dialog">
+		        	<form action="updateClassReview.me" method="post" enctype="multipart/form-data" onsubmit="return updateReviewFormCheck();">
+		        		<input type="hidden" name="memNo" value="${ loginUser.memNo }">
+		        		<input type="hidden" name="clNo" value="${ c.clNo }">
+		        		<input type="hidden" name="crNo" value="${ cr.crNo }">
+		        		<input type="hidden" name="rpage" value="${ returnPage }">
+                    	<input type="hidden" id="changeCk" name="changeCk" value="nochange">
+		                <!-- Modal content-->
+		                <div class="modal-content">
+		                    <div class="modal-header">
+		                        <h4 class="modal-title">후기 작성하기</h4>
+		                        <!--  
+		                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		                    	-->
+		                    </div>
+		                    <div class="modal-body">
+		                    	<c:choose>
+		                    		<c:when test="${ !empty cr.filePath }">
+				                    	<img src="${ cr.filePath }" id="updateThumbnailArea" style="width:30%; display:block;"><br>
+				                        <div id="originFileName">
+				                       		기존 파일: ${ cr.filePath.substring(cr.filePath.lastIndexOf('/') + 1, cr.filePath.length()).toLowerCase() }
+				                        	<button type="button" onclick="deleteFile();" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
+				                        </div>
+				                        <input type="file" id="updateFile" name="upfile" style="width:70%;" onchange="updateThumbnail(this);">
+		                    		</c:when>
+		                    		<c:otherwise>
+				                    	<img id="updateThumbnailArea" style="width:30%; display:none;"><br>
+				                        <input type="file" id="updateFile" name="upfile" style="width:70%;" onchange="updateThumbnail(this);">
+		                    		</c:otherwise>
+		                    	</c:choose>
+		                    	<div style="float:right;">
+		                    		<span><img src="resources/images/star.png" width="12" height="12">별점</span>
+		                    		<span>
+		                    			<select name="star">
+		                    				<option value="${ cr.star }" style="display:none;" selected>${ cr.star }점</option>
+		                    				<option value="1">1점</option>
+		                    				<option value="1.5">1.5점</option>
+		                    				<option value="2">2점</option>
+		                    				<option value="2.5">2.5점</option>
+		                    				<option value="3">3점</option>
+		                    				<option value="3.5">3.5점</option>
+		                    				<option value="4">4점</option>
+		                    				<option value="4.5">4.5점</option>
+		                    				<option value="5">5점</option>
+		                    			</select>
+		                    		</span>
+		                    	</div>
+		                        <textarea name="content" id="updateContent" style="width: 100%; height: 500px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요.">${ cr.content }</textarea>
+		                    </div>
+		                    <div class="modal-footer">
+		                        <button type="submit" class="btn" style="background-color: #6babd5;">수정</button>
+		                        <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>
+		                    </div>
+		                </div>
+		       		</form>
+		        </div>
+		    </div>
         </div>
 
     </div>
     
     <script>
-
     	function replyCheck(){
     		var loginCk = document.getElementById("memNo").value;
 			var iReplyContent = document.getElementById("insertReplyContent").value;
@@ -309,7 +373,73 @@ ${ r.replyContent }
 				return false;
     		}
     	}
+    	
+    	function deleteReview(crNo, clNo, returnPage){
+    		if(confirm("정말로 삭제하시겠습니까?\n삭제 후 복구는 불가능합니다.") == true){
+    			//console.log(crNo, clNo, returnPage);
+    			location.href = 'deleteClassReview.me?crNo=' + crNo + "&clNo=" + clNo + "&rpage=" + returnPage;
+    		}
+    	}
     
+    	function updateReview(crNo, clNo, returnPage, memNo){
+    		//location.href = 'updateClassReviewForm.me?memNo=' + memNo + '&crNo=' + crNo + "&clNo=" + clNo + "&rpage=" + returnPage;
+    		$("#updateReviewModal").modal();
+    	}
+    	
+    	function updateThumbnail(inputFile){
+			if(inputFile.files.length == 1){
+				// 파일을 읽어들일 객체
+				const reader = new FileReader();
+				// 해당 파일을 읽어들이는 순간 해당 파일만의 고유한 url 부여
+				reader.readAsDataURL(inputFile.files[0]);
+				// 파일 읽어들이기가 완료되었을때 실행할 함수 정의
+				reader.onload = function(e) {
+					// e.target.result -> 읽어들인 파일의 고유한 url 정의되어있음
+					document.getElementById("updateThumbnailArea").src = e.target.result;
+					document.getElementById("updateThumbnailArea").style.display = 'block';
+					document.getElementById("originFileName").style.display = 'none';
+					document.getElementById("changeCk").value = 'change';
+				}
+			} else { // 선택되었던 파일 취소
+				document.getElementById("updateThumbnailArea").src = null;
+				document.getElementById("updateThumbnailArea").style.display = 'none';
+			}
+		}
+    	
+    	function deleteFile(){
+    		document.getElementById("changeCk").value = 'change';
+			document.getElementById("originFileName").style.display = 'none';
+			document.getElementById("updateThumbnailArea").src = null;
+			document.getElementById("updateThumbnailArea").style.display = 'none';
+    	}
+    	
+    	function updateReviewFormCheck(){
+    		var file = document.getElementById("updateFile").value;
+			var content = document.getElementById("updateContent").value;
+			
+			var pathpoint = file.lastIndexOf('.');
+			var filepoint = file.substring(pathpoint+1, file.length);
+			var filetype = filepoint.toLowerCase();
+			
+			if(content.replace(/ /gi, "").length < 5){
+				alert("후기 내용은 5글자 이상 입력해야 합니다.");
+				return false;
+			} else if(file == ""){
+				return true;
+			} else if(filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
+				alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
+				return false;
+			} else if(filetype == 'bmp'){
+				var q = confirm('BMP 파일은 웹 상에서 사용하기엔 적절한 이미지 포맷이 아닙니다.\n그래도 첨부 하시겠습니까?');
+		        if(q == true){
+		        	return true;
+		        } else {
+		        	return false;
+		        }
+			} else {
+				return true;
+			}
+    	}
     </script>
 
 </body>
