@@ -3,6 +3,7 @@ package com.kh.oceanclass.Class.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -22,6 +23,10 @@ public interface ClassService {
 	int classReviewListCount(int clNo);
 	ArrayList<ClassReview> selectClassReviewListPaging(int clNo, PageInfo pi);
 	ClassReview selectClassReviewDetail(int crNo);
+	int enrollReviewCheck(ClassOrder co);
+	int insertClassReview(ClassReview cr);
+	int deleteReview(int crNo);
+	int updateReview(ClassReview cr);
 	
 	// 클래스 리뷰 댓글용
 	int selectReplyListCount(int crNo);

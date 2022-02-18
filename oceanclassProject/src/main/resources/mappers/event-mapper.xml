@@ -261,8 +261,9 @@
 		     , cl_name
 		     , cl_price
 		     , cl_img
+		     , hashtag
 		  from class
-		 where hashtag like '%'||#{tag}||'%'
+		 where hashtag like '%'||#{hashtag}||'%'
 		 order
 		    by clno desc
 	</select>

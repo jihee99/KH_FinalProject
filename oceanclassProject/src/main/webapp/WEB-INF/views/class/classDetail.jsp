@@ -280,13 +280,12 @@
                 alert("로그인 후 이용 가능한 서비스 입니다.");
             } else{
                 $.ajax({
-                    url:"likeClass.me",
+                    url:"classLikeCheck.me",
                     data:{
                         memNo:document.getElementById("memNo").value, 
                         grade:document.getElementById("grade").value,
                         referNo:document.getElementById("clNo").value
                     }, success:function(likeResult){
-						
                         if(likeResult.message == 'gradeCkNo'){
                             alert("학생 회원만 가능한 서비스입니다.");
 						} else if(likeResult.message == 'ss'){
@@ -300,7 +299,6 @@
                         } else {
                             alert("비정상적인 요청입니다.");
                         }
-                    	
                     }, error:function(){
                         console.log("찜하기 ajax 통신 실패");
                     }
@@ -308,7 +306,7 @@
             }
               
         }
-
+        
     </script>
 
     <jsp:include page="../common/footerBar.jsp" />

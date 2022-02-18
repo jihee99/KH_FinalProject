@@ -33,7 +33,8 @@
 </head>
 <body>
     <div class="reviewOuter">
-        
+        <input type="hidden" id="mNo" value="${ loginUser.memNo }">		
+
         <p style="color: #6babd5; font-weight: bold;">실제 수강생 후기</p>
         <br>
         
@@ -112,10 +113,10 @@
 		            
 		            <span style="color: gray; font-size: 15px;">총 ${ crList.size() }개</span>
 		            
-		            <button type="button" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px; margin-left: 10px; font-weight: bold;" data-toggle="modal" data-target="#reviewModal">후기 작성하기</button>
+		            <button type="button" id="enrollBtn" onclick="enrollReviewCk(${c.clNo});" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px; margin-left: 10px; font-weight: bold;">후기 작성하기</button>
 		        </div>
 			
-				<c:if test="${ !empty crTopList }">
+				<c:if test="${ !empty crTopList }">	
 			        <br>
 			        <div id="imgZone" align="center">
 			        	<c:forEach var="r" items="${ crTopList }">
@@ -234,27 +235,46 @@
 
     <!-- 글 작성하기시 보여질 modal -->
     <div id="reviewModal" class="modal fade" role="dialog">
-        <form action="" method="post">
-            <div class="modal-dialog">
-        
+    	<div class="modal-dialog">
+        	<form action="enrollClassReview.me" method="post" enctype="multipart/form-data" onsubmit="return enrollReviewFormCheck();">
+        		<input type="hidden" name="memNo" value="${ loginUser.memNo }">
+        		<input type="hidden" name="clNo" value="${ c.clNo }">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">글 작성하기</h4>
+                        <h4 class="modal-title">후기 작성하기</h4>
+                        <!--  
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    	-->
                     </div>
                     <div class="modal-body">
-                        <input type="file" name="thumbnail">
-                        <textarea style="width: 100%; height: 200px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요."></textarea>
+                    	<img id="thumbnailArea" style="width:30%; display:none;"><br>
+                        <input type="file" id="enrollFile" name="upfile" style="width:70%;" onchange="insertThumbnail(this);">
+                    	<div style="float:right;">
+                    		<span><img src="resources/images/star.png" width="12" height="12">별점</span>
+                    		<span>
+                    			<select name="star">
+                    				<option value="1">1점</option>
+                    				<option value="1.5">1.5점</option>
+                    				<option value="2">2점</option>
+                    				<option value="2.5">2.5점</option>
+                    				<option value="3">3점</option>
+                    				<option value="3.5">3.5점</option>
+                    				<option value="4">4점</option>
+                    				<option value="4.5">4.5점</option>
+                    				<option value="5" selected>5점</option>
+                    			</select>
+                    		</span>
+                    	</div>
+                        <textarea name="content" id="enrollContent" style="width: 100%; height: 500px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요."></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn" data-dismiss="modal" style="background-color: #6babd5;">작성</button>
+                        <button type="submit" class="btn" style="background-color: #6babd5;">작성</button>
                         <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>
                     </div>
                 </div>
-        
-            </div>
-        </form>
+       		</form>
+        </div>
     </div>
 
 	<script>
@@ -264,6 +284,75 @@
 		
 		function detailPage(crNo){
 			window.open('classReviewDetail.me?crNo=' + crNo + '&cpage=1&clNo=${c.clNo}&rpage=1', "클래스리뷰목록", "width=650, height=800, resizeable=no, location=no");
+		}
+		
+		function insertThumbnail(inputFile){
+			if(inputFile.files.length == 1){
+				// 파일을 읽어들일 객체
+				const reader = new FileReader();
+				// 해당 파일을 읽어들이는 순간 해당 파일만의 고유한 url 부여
+				reader.readAsDataURL(inputFile.files[0]);
+				// 파일 읽어들이기가 완료되었을때 실행할 함수 정의
+				reader.onload = function(e) {
+					// e.target.result -> 읽어들인 파일의 고유한 url 정의되어있음
+					document.getElementById("thumbnailArea").src = e.target.result;
+					document.getElementById("thumbnailArea").style.display = 'block';
+				}
+			} else { // 선택되었던 파일 취소
+				document.getElementById("thumbnailArea").src = null;
+				document.getElementById("thumbnailArea").style.display = 'none';
+			}
+		}
+		
+		function enrollReviewCk(classNo){
+			var memNo = document.getElementById("mNo").value;
+			
+			if(memNo == ""){
+				alert("로그인 한 회원만 후기를 작성할 수 있습니다.");
+			} else {
+				//ajax로 주문내역 있는지 확인
+				$.ajax({
+					url:"enrollClassReviewCheck.me",
+					data:{memNo:memNo,clNo:classNo},
+					success:function(result){
+						if(result == 'yyyyy'){
+							 $("#reviewModal").modal();
+						} else {
+							alert("클래스 구매 후 강의를 열람한 회원만 후기를 작성할 수 있습니다.");
+						}
+					}, error:function(){
+						console.log("후기 작성용 ajax 통신 실패");
+					}
+				})
+			}
+		}
+		
+		function enrollReviewFormCheck(){
+			var file = document.getElementById("enrollFile").value;
+			var content = document.getElementById("enrollContent").value;
+			
+			var pathpoint = file.lastIndexOf('.');
+			var filepoint = file.substring(pathpoint+1, file.length);
+			var filetype = filepoint.toLowerCase();
+			
+			if(content.replace(/ /gi, "").length < 5){
+				alert("후기 내용은 5글자 이상 입력해야 합니다.");
+				return false;
+			} else if(file == ""){
+				return true;
+			} else if(filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
+				alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
+				return false;
+			} else if(filetype == 'bmp'){
+				var q = confirm('BMP 파일은 웹 상에서 사용하기엔 적절한 이미지 포맷이 아닙니다.\n그래도 첨부 하시겠습니까?');
+		        if(q == true){
+		        	return true;
+		        } else {
+		        	return false;
+		        }
+			} else {
+				return true;
+			}
 		}
 	</script>
 

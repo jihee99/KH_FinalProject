@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -111,5 +112,21 @@ public class ClassDao {
 	
 	public int updateReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.update("classMapper.updateReply", r);
+	}
+	
+	public int enrollReviewCheck(SqlSessionTemplate sqlSession, ClassOrder co) {
+		return sqlSession.selectOne("classMapper.enrollReviewCheck", co);
+	}
+	
+	public int insertClassReview(SqlSessionTemplate sqlSession, ClassReview cr) {
+		return sqlSession.insert("classMapper.insertClassReview", cr);
+	}
+	
+	public int deleteReview(SqlSessionTemplate sqlSession, int crNo) {
+		return sqlSession.update("classMapper.deleteReview", crNo);
+	}
+	
+	public int updateReview(SqlSessionTemplate sqlSession, ClassReview cr) {
+		return sqlSession.update("classMapper.updateReview", cr);
 	}
 }

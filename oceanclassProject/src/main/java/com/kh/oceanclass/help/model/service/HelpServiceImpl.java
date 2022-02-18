@@ -11,6 +11,7 @@ import com.kh.oceanclass.help.model.dao.HelpDao;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.help.model.vo.Qna;
+import com.kh.oceanclass.member.model.vo.Member;
 
 @Service
 public class HelpServiceImpl implements HelpService{
@@ -68,10 +69,26 @@ public class HelpServiceImpl implements HelpService{
 		return hDao.insertQna(sqlSession, q);
 	}
 
-//	@Override
-//	public int insertSecretQna(QnaIn q) {
-//		return hDao.insertSecretQna(sqlSession, q);
-//	}
+	@Override
+	public int selectCategoryCount(String category) {
+		return hDao.selectCategoryCount(sqlSession, category);
+	}
+
+	@Override
+	public int selectNickCount(String nickName) {
+		return hDao.selectNickCount(sqlSession, nickName);
+	}
+
+	@Override
+	public ArrayList<Qna> selectCategoryQnaList(PageInfo pi, String category) {
+		return hDao.selectCategoryQnaList(sqlSession, pi, category);
+	}
+
+	@Override
+	public ArrayList<Qna> selectNickQnaList(PageInfo pi, String nickName) {
+		return hDao.selectNickQnaList(sqlSession, pi, nickName);
+	}
+
 	
 	/*
 	 * 	FAQ 게시판
@@ -80,8 +97,6 @@ public class HelpServiceImpl implements HelpService{
 	public ArrayList<Faq> selectFaqList() {
 		return hDao.selectFaqList(sqlSession);
 	}
-
-
 
 
 }

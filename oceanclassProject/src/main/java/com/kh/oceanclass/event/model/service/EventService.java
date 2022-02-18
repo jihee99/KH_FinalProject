@@ -27,6 +27,6 @@ public interface EventService {
 	
 	// 6. 태그 리스트
 	int tagSelectCount(String tag);
-	ArrayList<ClassVo> tagSelectList(PageInfo pi);
+	ArrayList<ClassVo> tagSelectList(PageInfo pi, String hashtag);
 	
 }

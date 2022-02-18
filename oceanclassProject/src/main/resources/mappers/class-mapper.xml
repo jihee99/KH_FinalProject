@@ -235,7 +235,7 @@
 		 where status = 'Y'
 		   and clno = #{clNo}
 	     order
-   			by create_date desc
+   			by c_rno desc
 	</select>
 	
 	<select id="selectClassReviewTopList" resultMap="classReviewResult">
@@ -344,7 +344,7 @@
 		 where reply_status = 'Y'
 		   and content_no = #{crNo}
 		 order
-            by reply_date desc
+            by reply_no desc
 	</select>
 	
 	<insert id="insertClassReviewReply">
@@ -400,5 +400,51 @@
 		 where reply_status = 'Y'
 		   and reply_no = #{replyNo}
 	</update>
+	
+	<select id="enrollReviewCheck" resultType="_int">
+		select count(*)
+		  from class_order
+		 where reading_check = 'Y'
+		   and clNo = #{clNo}
+		   and mno = #{memNo}
+	</select>
+	
+	<insert id="insertClassReview">
+		insert
+		  into class_review
+		values
+			 (
+			   SEQ_CRNO.NEXTVAL
+			 , #{clNo}
+			 , #{memNo}
+			 , #{content}
+			 , #{star}
+			 <choose>
+			 	<when test="filePath != null">
+			 		, #{filePath}
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
+			 , sysdate
+			 , 'Y'
+			 )
+	</insert>
+	
+	<update id="deleteReview">
+		update class_review
+		   set status = 'N'
+		 where c_rno = #{crNo}
+	</update>
+	
+	<update id="updateReview">
+		update class_review
+		   set content = #{cr.content},
+		   	   star = #{cr.star}
+		 where c_rno = #{crNo}
+		   and status = 'Y'
+	</update>
+	
 		
 </mapper>

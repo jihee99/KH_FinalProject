@@ -10,18 +10,18 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Event {
-	
-	public int eventNo;
-	public int memNo;
-	public String category;
-	public String eventTitle;
-	public String eventContent;
-	public String createDate;
-	public String status;
-	public String tag;
-	public String img;
 
-	public String couponImg;
-	public int maxCount;
+	private int eventNo;
+	private int memNo;
+	private String category;
+	private String eventTitle;
+	private String eventContent;
+	private String createDate;
+	private String status;
+	private String tag;
+	private String img;
+
+	private String couponImg;
+	private int maxCount;
 
 }
