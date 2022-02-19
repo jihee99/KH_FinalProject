@@ -23,7 +23,6 @@
 		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreRefund" alias="StoreRefund"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.StorePay" alias="StorePay"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.Cart" alias="Cart"/>
-		
 
 		<typeAlias type="com.kh.oceanclass.store.model.vo.InProductOrder" alias="InProductOrder"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreOrder" alias="StoreOrder"/>
@@ -41,6 +40,7 @@
 		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassRefund" alias="ClassRefund"/>
 		
 		<typeAlias type="com.kh.oceanclass.common.model.vo.Reply" alias="Reply"/>
+		<typeAlias type="com.kh.oceanclass.common.model.vo.CsQna" alias="CsQna"/>
 	</typeAliases>
 	
 	<mappers>
