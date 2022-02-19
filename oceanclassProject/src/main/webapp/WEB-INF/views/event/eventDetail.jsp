@@ -56,7 +56,15 @@
         	</c:if>
         </div>
         <div class="content">
-        	<img src="${e.img}" style="width: 100%; height: 90%;">
+        	<c:choose>
+        		<c:when test="${category eq 'CP'}">
+        			<img src="${e.img}" style="width: 50%; height: 50%;">
+        			<button type="button" class="btn btn-lg">다운로드</button>
+        		</c:when>
+        		<c:otherwise>
+        			<img src="${e.img}" style="width: 100%; height: 90%;">
+        		</c:otherwise>
+        	</c:choose>
         </div>
         
         <table class="table" id="replyTable">

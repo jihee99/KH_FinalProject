@@ -14,9 +14,11 @@
     <link rel="stylesheet" href="./resources/css/eventMain.css?4">
     
 <style>
+	.img{}
 	#img{
 		width: 100%; 
-		height: 100%;
+		height: 80%;
+		border: 1px solid;
 	}
 	.pagination{
 		width: 25%;
@@ -43,7 +45,6 @@
 	            <div class="img">
 	            	<input type="hidden" id="clno" value="${c.clNo}">
 	            	<form id="classDetail" method="post" action="classDetail.me">
-	            		<input type="hidden" id="clNo" name="clNo" value="${c.clNo}">
 	            		<input type="hidden" id="referNo" name="referNo" value="${c.clNo}">
 		                <img src="${c.clImg}" id="img">
 		            </form>    
@@ -53,6 +54,23 @@
 	 		</c:forEach> 
 		</div>       
 		
+		<!--
+		<script>
+			$("#classDetail>img").click(function(){
+				let referNo = $(this).prev().val();
+				console.log(referNo);
+				$.ajax({
+					url:"classDetail.me",
+					data:{referNo:referNo},
+					success:function(){
+						console.log("^^");
+					},error:function(){
+						console.log("ㅠㅠ");
+					}
+				})
+			})
+		</script>
+		 -->
 		
 		<div id="paging">
 			<ul class="pagination">

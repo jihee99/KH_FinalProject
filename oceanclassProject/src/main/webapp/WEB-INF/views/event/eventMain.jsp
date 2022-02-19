@@ -45,7 +45,6 @@
         </div>
         
         <div class="content" id="result">
-        	
         	<c:forEach var="e" items="${list}">
 	            <div class="img">
 	            	<input type="hidden" id="eno" value="${e.eventNo}">
