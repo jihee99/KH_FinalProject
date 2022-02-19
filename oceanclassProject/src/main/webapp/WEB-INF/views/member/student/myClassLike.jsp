@@ -28,6 +28,23 @@
     #paging{
     	display: table;
     }
+    .content1>p{
+    	text-align: center;
+    	font-size : 24px;
+    	font-weight: 800;
+    	padding: 30px;
+    	margin-top: 50px;
+    	margin-bottom: 50px;
+    }
+    .content1>button{
+    	display: block; 
+    	margin: 0 auto;
+    	background-color: rgb(107, 171, 213, 0.2);
+    	font-sixe: 20px;
+    	font-weight: 800;
+    	width: 300px;
+    }
+    
 </style>
 </head>
 <body>
@@ -44,55 +61,64 @@
 				        <div class="conhead">
 				            <h2>찜한 클래스</h2>
 				        </div>
-				        <c:forEach var="c" items="${list}">
-				            <div class="item">
-				            	<a><img src="${c.clImg}"></a>
-				            	<input type="hidden" value="${c.clNo}">
-				            	<p id="ctitle">
-					            	<c:choose>
-					            		<c:when test="${fn:length(c.clName) gt 18}">
-					            			<c:out value="${fn:substring(c.clName, 0, 18)}"></c:out>
-					            			..
-					            		</c:when>
-					            		<c:otherwise>
-					            			<c:out value="${c.clName}"></c:out>
-					            		</c:otherwise>
-					            	</c:choose>
-				            	</p>
-				            </div>
-			            </c:forEach>
+				        <c:choose>
+			        		<c:when test="${empty list}">
+			        			<p>찜한 클래스가 없습니다</p>
+			        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
+			        		</c:when>
+				        	<c:otherwise>
+						        <c:forEach var="c" items="${list}">
+						            <div class="item">
+						            	<a><img src="${c.clImg}"></a>
+						            	<input type="hidden" value="${c.clNo}">
+						            	<p id="ctitle">
+							            	<c:choose>
+							            		<c:when test="${fn:length(c.clName) gt 18}">
+							            			<c:out value="${fn:substring(c.clName, 0, 18)}"></c:out>
+							            			..
+							            		</c:when>
+							            		<c:otherwise>
+							            			<c:out value="${c.clName}"></c:out>
+							            		</c:otherwise>
+							            	</c:choose>
+						            	</p>
+						            </div>
+					            </c:forEach>
+					            
+					            <div id="paging">
+									<ul class="pagination">
+										<c:choose>
+											<c:when test="${ pi.currentPage eq 1 }">
+												<li class="page-item disabled">
+													<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+											</c:otherwise>
+										</c:choose>
+										
+										
+										<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+											<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ p }">${ p }</a></li>
+										</c:forEach>
+										
+										
+										<c:choose>
+											<c:when test="${ pi.currentPage eq pi.maxPage }">
+												<li class="page-item disabled">
+													<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+											</c:otherwise>
+										</c:choose>
+						            </ul>
+								</div>
+					    	</c:otherwise>			        
+				        </c:choose>      
 				    </div> 
-			    	<div id="paging">
-						<ul class="pagination">
-							<c:choose>
-								<c:when test="${ pi.currentPage eq 1 }">
-									<li class="page-item disabled">
-										<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
-								</c:otherwise>
-							</c:choose>
-							
-							
-							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-								<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ p }">${ p }</a></li>
-							</c:forEach>
-							
-							
-							<c:choose>
-								<c:when test="${ pi.currentPage eq pi.maxPage }">
-									<li class="page-item disabled">
-										<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="page-item"><a class="page-link" href="likeClass.me?cpage=${ pi.currentPage+1 }">Next</a></li>
-								</c:otherwise>
-							</c:choose>
-			            </ul>
-					</div>
 				</div>
 				
 				<script>

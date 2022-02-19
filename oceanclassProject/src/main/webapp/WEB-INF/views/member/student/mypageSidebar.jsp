@@ -29,7 +29,7 @@
 	        <ul>
 	            <li><a href="?page=myShopping.jsp">주문 조회</a></li>
 	            <li><a href="?page=myShoppingReview.jsp">상품 문의/리뷰</a></li>
-	            <li><a href="?page=myShoppingLike.jsp">찜한 상품</a></li>
+	            <li><a href="likeProduct.me">찜한 상품</a></li>
 	        </ul>
 	    </div>
 	    <div class="menu">

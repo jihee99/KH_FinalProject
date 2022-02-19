@@ -8,6 +8,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.store.model.vo.Product;
 
 public interface MypageService {
 
@@ -53,5 +54,11 @@ public interface MypageService {
 	
 	// review 리스트 조회
 	ArrayList<ClassReview> classReviewList(PageInfo pi, int memNo);
+	
+	// 좋아요 상품 갯수
+	int likeProductCount(int memNo);
+	
+	// 좋아요 상품 리스트
+	ArrayList<Product> selectLikeProduct(PageInfo pi, int memNo);
 	
 }

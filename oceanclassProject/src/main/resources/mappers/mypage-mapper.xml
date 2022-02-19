@@ -50,6 +50,8 @@
 		<result column="cl_img" property="img" />
 	</resultMap>
 	
+
+	
 	<!-- 정보수정용 -->
 	<update id="updateProfile">
 		update
@@ -205,6 +207,7 @@
 		select count(*)
 		  from like_item
 		 where mno = #{memNo}
+		   and gb_no = 1
 	</select>
 	
 	<select id="selectLikeClass" resultMap="myClassResult">
@@ -245,6 +248,39 @@
 		  where class_review.mno = #{mno}
 		  order 
 		     by c_rno desc
+	</select>
+	
+	
+	<resultMap id="storeResult" type="Product">
+	  	<result column="pno" property="productNo"/>
+	  	<result column="mno" property="memberNo"/>
+	  	<result column="category" property="category"/>
+	  	<result column="title" property="title"/>
+	  	<result column="price" property="price"/>
+	  	<result column="soldout_yn" property="soldoutYN"/>
+	  	<result column="status" property="status"/>
+	  	<result column="img1" property="productImg0"/>
+	</resultMap>
+	
+	<!-- 스토어 -->
+	<select id="likeProductCount" resultType="_int">
+		select count(*)
+		  from like_item
+		 where mno = #{memNo}
+		   and gb_no = 2
+	</select>
+	
+	<select id="selectLikeProduct" resultMap="storeResult">
+		select 
+		       pno
+		     , s.mno as "mno"
+		     , title
+		     , price
+		     , img1
+             , status
+		  from store s
+		  join like_item l on (s.pno = l.refer_no)
+		  where l.mno = #{memNo} 
 	</select>
 	
 </mapper>

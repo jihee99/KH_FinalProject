@@ -13,6 +13,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.dao.MypageDao;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.store.model.vo.Product;
 
 @Service
 public class MypageServiceImpl implements MypageService{
@@ -91,6 +92,16 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<ClassReview> classReviewList(PageInfo pi, int memNo) {
 		return myDao.classReviewList(sqlSession, pi, memNo);
+	}
+
+	@Override
+	public int likeProductCount(int memNo) {
+		return myDao.likeProductCount(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<Product> selectLikeProduct(PageInfo pi, int memNo) {
+		return myDao.selectLikeProduct(sqlSession, pi, memNo);
 	}
 
 
