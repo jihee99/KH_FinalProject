@@ -1,12 +1,10 @@
 package com.kh.oceanclass.member.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassRefund;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.service.AdminMemService;
@@ -212,23 +212,21 @@ public class AdminMemController {
 	
 	@RequestMapping(value="orlist.ad")
 	public String adminOrderList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+
 		// 클래스주문 카운트, 클래스 pi객체, 클래스주문리스트
 		int clistCount = adMemService.selectClassOrderCount();
 		PageInfo cPi = Pagination.getPageInfo(clistCount, currentPage, 5, 10);
-		//ArrayList<ClassOrder> clist = adMemService.selectClassOrderList(cPi);
-		
+		ArrayList<ClassOrder> clist = adMemService.selectClassOrderList(cPi);
+		System.out.println(clistCount);
+		System.out.println(clist);
 		
 		// 스토어 주문 카운트, 스토어 pi객체, 스토어 주문리스트
 		int slistCount = adMemService.selectStoreOrderCount();
 		PageInfo sPi = Pagination.getPageInfo(slistCount, currentPage, 5, 10);
 		ArrayList<StoreOrder> slist = adMemService.selectStoreOrderList(sPi);
-		
-		System.out.println("slistCount : "+ slistCount);
-		System.out.println("sPi : " + sPi);
-		System.out.println("slist : "+ slist);
-		
-//		model.addAttribute("cPi", cPi);
-//		model.addAttribute("list", clist);
+				
+		model.addAttribute("cPi", cPi);
+		model.addAttribute("clist", clist);
 
 		model.addAttribute("sPi", sPi);
 		model.addAttribute("slist", slist);
@@ -258,7 +256,17 @@ public class AdminMemController {
 		System.out.println(buylist);
 		model.addAttribute("sOrder", so);
 		model.addAttribute("buylist", buylist);
-		return "member/admin/adminOrderDetail";
+		return "member/admin/adminStoreOrderDetail";
+	}
+	
+	@RequestMapping(value="codetail.ad")
+	public String selectClassOrderDetailF(String ono, Model model) {
+		ClassOrder co = adMemService.selectClassOrder(ono);
+		System.out.println(co);
+
+		model.addAttribute("co", co);
+		//model.addAttribute("buylist", buylist);
+		return "member/admin/adminClassOrderDetail";
 	}
 	
 	@RequestMapping(value="orcancleF.ad")
@@ -269,13 +277,30 @@ public class AdminMemController {
 		return "member/admin/adminOrderCancleForm";
 	}
 	
+	@RequestMapping(value="corcancleF.ad")
+	public String classOrderCancleFrom(String ono, Model model) {
+		ClassOrder co = adMemService.selectClassOrder(ono);
+		model.addAttribute("order", co);
+		System.out.println(co);
+		return "member/admin/adminClassOrderCancleForm";
+	}
+	
+	
 	@ResponseBody
 	@RequestMapping(value="orcancle.ad")
-	public String orderCancle(StoreRefund refund, Model model) {
+	public String classOrderCancle(StoreRefund refund, Model model) {
 		System.out.println(refund);
 		int result1 = adMemService.insertStoreRefund(refund);
 		int result2 = adMemService.updateStoreOrderCancle(refund);
 		return result1*result2 >0? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="corcancle.ad")
+	public String storeOrderCancle(ClassRefund refund, Model model) {
+		System.out.println(refund);
+		int result = adMemService.insertClassRefund(refund);
+		return result >0? "success" : "fail";
 	}
 	
 	@ResponseBody
@@ -286,6 +311,55 @@ public class AdminMemController {
 		
 		return result >0? "success" : "fail";
 	}
+	
+	
+	@RequestMapping(value="orsearch.ad")
+	public String adminOrderSearch(@RequestParam(value="cpage",defaultValue="1") int currentPage, String category, String key, String sDate, String eDate, String lev, Model model) {
+		/*
+		System.out.println(category);
+		System.out.println(sDate);
+		System.out.println(eDate);
+		System.out.println(key);
+		System.out.println(lev);
+		
+		HashMap<String, String> map = new HashMap<>();
+		if(!category.equals("")) {
+			map.put("category", category);	
+		}
+		if(!sDate.equals("")) {
+			map.put("sDate", sDate);
+		}
+		if(!eDate.equals("")) {
+			map.put("eDate", eDate);
+		}
+		if(!key.equals("")) {
+			map.put("key", key);
+		}
+		
+		System.out.println(map);
+
+		if(category.equals("c")) {
+			//클래스일 경우 
+			int clistCount = adMemService.adminSearchClassCount(map);
+			PageInfo cPi = Pagination.getPageInfo(clistCount, currentPage, 5, 10);
+			ArrayList<ClassOrder> clist = adMemService.adminSearchClassList(map, cPi);
+ 			
+ 			model.addAttribute("cPi", cPi);
+ 			model.addAttribute("clist",clist);
+ 		}else if(category.equals("s")) {
+ 			//스토어일 경우 
+ 			int slistCount= adMemService.adminSearchStoreCount(map);
+ 			PageInfo sPi = Pagination.getPageInfo(slistCount, currentPage, 5, 10);
+ 			ArrayList<StoreOrder> slist = adMemService.adminSearchStoreList(map, sPi);
+ 			model.addAttribute("sPi", sPi);
+ 			model.addAttribute("slist",slist);
+ 		}
+ 		
+		return "";
+		*/
+	}
+
+	
 	
 	@RequestMapping(value="rplist.ad")
 	public String adminReportList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {

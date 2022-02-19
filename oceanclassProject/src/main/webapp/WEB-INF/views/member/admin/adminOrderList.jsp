@@ -54,21 +54,21 @@
                     <tr>
                         <th>주문상태</th>
                         <td>
-                            <label><input type="checkbox" name="lev" id="" value="">주문접수</label>&nbsp;&nbsp;
-                            <label><input type="checkbox" name="lev" id="" value="">결제완료</label>&nbsp;&nbsp;
-                            <label><input type="checkbox" name="lev" id="" value="">상품준비</label>&nbsp;&nbsp;
-                            <label><input type="checkbox" name="lev" id="" value="">배송시작</label>&nbsp;&nbsp;
+                            <label><input type="checkbox" name="lev" id="" value="0">주문접수</label>&nbsp;&nbsp;
+                            <label><input type="checkbox" name="lev" id="" value="1">결제완료</label>&nbsp;&nbsp;
+                            <label><input type="checkbox" name="lev" id="" value="2">상품준비</label>&nbsp;&nbsp;
+                            <label><input type="checkbox" name="lev" id="" value="3">배송시작</label>&nbsp;&nbsp;
                             <br>
-                            <label><input type="checkbox" name="lev" id="" value="">배송중</label>&nbsp;&nbsp;
-                            <label style="color: green;"><input type="checkbox" name="lev" id="" value="">배송완료</label>&nbsp;&nbsp;
-                            <label style="color: red;"><input type="checkbox" name="lev" id="" value="">취소접수</label>&nbsp;&nbsp;
-                            <label><input type="checkbox" name="lev" id="" value="">취소완료</label>&nbsp;&nbsp;
+                            <label><input type="checkbox" name="lev" id="" value="4">배송중</label>&nbsp;&nbsp;
+                            <label style="color: green;"><input type="checkbox" name="lev" id="" value="5">배송완료</label>&nbsp;&nbsp;
+                            <label style="color: red;"><input type="checkbox" name="lev" id="" value="6">취소접수</label>&nbsp;&nbsp;
+                            <label><input type="checkbox" name="lev" id="" value="7">취소완료</label>&nbsp;&nbsp;
                         </td>
                     </tr>
                     <tr>
                         <th>검색조건</th>
                         <td>
-                            <input type="text" name="key" id="" placeholder="주문번호를 입력하세요">
+                            <input type="text" name="key" id="keyword" placeholder="주문번호를 입력하세요">
                         </td>
                     </tr>
                 </table>
@@ -261,8 +261,9 @@
 			}
 	        
 			$(document).ready(function() {
-				
+				var type = $("input[type=radio][name=category]").val();
 	        	console.log($("input[type=radio][name=category]").val());
+	        	console.log(type);
 				/*라디오 버튼에 따른 동적 화면 구현*/
 				if($("input[type=radio][name=category]").val() == 'c'){
 					 $('#classArea').css('display','block');
@@ -271,6 +272,24 @@
                     $('#classArea').css('display','none');
                     $('#storeArea').css('display','block');
 				}
+				
+				$("input[type=radio][name=category]").on('click',function(){
+	                var chkValue = $('input[type=radio][name=category]:checked').val();
+	               
+	                console.log(chkValue);
+
+	                if(chkValue == "c"){
+	                    $('#classArea').css('display','block');
+	                    $('#storeArea').css('display','none');
+	                } else if(chkValue == "s"){
+	                    $('#classArea').css('display','none');
+	                    $('#storeArea').css('display','block');
+	                }
+	                $('input[name=sDate]').prop("checked", false);
+	                $('input[name=eDate]').prop("checked", false);
+	                $('input[name=lev]').prop("checked", false);
+	                $('input[name=key]').val("");
+	            });
 				
 	        	/* 클래스 테이블 전체선택 */
 	            $("#cCheckAll").click(function() {

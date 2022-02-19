@@ -7,6 +7,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassRefund;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
@@ -103,10 +105,14 @@ public class AdminMemDao {
 		return sqlSession.selectOne("adMemMapper.selectClassOrderCount");
 	}
 	
-//	public ArrayList<Store??> selectClassOrderList(sqlSessionTemplate sqlSession, PageInfo pi){
-//		return "";
-//	}
+	public ArrayList<ClassOrder> selectClassOrderList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
 
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectClassOrderList", null, rowBounds);
+	}
 	
 	public int selectStoreOrderCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adMemMapper.selectStoreOrderCount");
@@ -121,23 +127,30 @@ public class AdminMemDao {
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectStoreOrderList", null, rowBounds);
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-	
 	public int deleteStoreOrder(SqlSessionTemplate sqlSession, String storeNo) {
 		return sqlSession.delete("adMemMapper.deleteStoreOrder", storeNo);
 	}
+
+	public int deleteClassOrder(SqlSessionTemplate sqlSession, String classNo) {
+		return 0;
+	}
+	
+	public ClassOrder selectClassOrder(SqlSessionTemplate sqlSession, String classNo) {
+		return sqlSession.selectOne("adMemMapper.selectClassOrder", classNo);
+	}
+	
+	
+	
+	
+	
+	
 
 	public StoreOrder selectStoreOrder(SqlSessionTemplate sqlSession, String sOrderNo) {
 		return sqlSession.selectOne("adMemMapper.selectStoreOrder", sOrderNo);
 	}
 
+	
+	
 	public ArrayList<StoreBuyList> selectBuyList(SqlSessionTemplate sqlSession, String sOrderNo) {
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectStoreBuyList", sOrderNo);
 	}
@@ -216,6 +229,40 @@ public class AdminMemDao {
 		
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectReportSearchList", map, rowBounds);
 	}
+
+	public int insertClassRefund(SqlSessionTemplate sqlSession, ClassRefund refund) {
+		return sqlSession.insert("adMemMapper.insertClassRefund", refund);
+	}
+
+	public int adminSearchClassCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectSearchClassCount", map);
+	}
+	
+	public ArrayList<ClassOrder> selectSearchClassList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchClassList", null, rowBounds);
+	}
+
+	public int adminSearchStoreCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectSearchStoreCount", map);
+	}
+
+	public ArrayList<StoreOrder> adminSearchStoreList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return null;
+	}
+
+
+
+
 
 
 	

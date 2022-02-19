@@ -3,6 +3,8 @@ package com.kh.oceanclass.member.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassRefund;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
@@ -91,7 +93,7 @@ public interface AdminMemService {
 	//------------주문------------
 	//관리자 클래스 주문목록조회기능
 	int selectClassOrderCount();
-	ArrayList<ClassVo> selectClassOrderList(PageInfo pi);
+	ArrayList<ClassOrder> selectClassOrderList(PageInfo pi);
 	
 	//관리자 스토어 주문목록조회기능
 	int selectStoreOrderCount();
@@ -100,8 +102,11 @@ public interface AdminMemService {
 	//관리자 스토어 주문내역 삭제 기능
 	int deleteStoreOrder(String storeNo);
 	
+	//관리자 클래스 주문내역 삭제기능
+	int deleteClassOrder(String classNo);
+	
 	//관리자 클래스 주문 상세조회
-	ClassVo selectClassOrder(String cOrderNo);
+	ClassOrder selectClassOrder(String classNo);
 	
 	// 관리자 스토어 주문 상세조회 
 	StoreOrder selectStoreOrder(String sOrderNo);
@@ -113,9 +118,14 @@ public interface AdminMemService {
 	int updateStoreOrderCancle(StoreRefund refund);
 
 	int updateorderStatus(StoreOrder order);
+	
+	int insertClassRefund(ClassRefund refund);
 
+	int adminSearchClassCount(HashMap<String, String> map);
+	ArrayList<ClassOrder> adminSearchClassList(HashMap<String, String> map, PageInfo pi);
+
+	int adminSearchStoreCount(HashMap<String, String> map);
+	ArrayList<StoreOrder> adminSearchStoreList(HashMap<String, String> map, PageInfo pi);
 	
 	
-	//환불처리 어떻게 하지..................................................
-	//미쳤나봐 왜이렇게 많지, 언제 다해.?
 }

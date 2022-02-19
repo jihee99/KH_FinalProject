@@ -43,7 +43,7 @@
                     <tr>
                         <th>주문번호</th>
                         <td>
-                            <input type="text" value="${order.coNo }" name="orderNo" style="width: 80%;" readonly>
+                            <input type="text" value="${order.coNo }" name="coNo" style="width: 80%;" readonly>
                         </td>
                     </tr>
                     <tr>
@@ -65,20 +65,21 @@
 
         <script>
 			function orderCancle(){
-				console.log($("input[name=orderNo]").val());
-				console.log($("textarea[name=refund]").val());
+				console.log($("input[name=coNo]").val());
+				console.log($("textarea[name=reason]").val());
+				
 				$.ajax({
-	       			url:"orcancle.ad",
+	       			url:"corcancle.ad",
 	       			data:{
-	       				orderNo:$("input[name=orderNo]").val(),
-	       				refund:$("textarea[name=refund]").val()
+	       				coNo:$("input[name=coNo]").val(),
+	       				reason:$("textarea[name=reason]").val()
 	       			},success:function(result){
-	       				alert("주문 취소에 성공했습니다.");
+	       				alert("결제 취소에 성공했습니다.");
 	       				//console.log(result);
 	       				opener.parent.location.reload();
 	       				window.close();
 	       			},error:function(){
-	       				alert("주문 취소에 실패했습니다.");
+	       				alert("결제 취소에 실패했습니다.");
 	       				opener.parent.location.reload();
 	       				window.close();
 	       			}
