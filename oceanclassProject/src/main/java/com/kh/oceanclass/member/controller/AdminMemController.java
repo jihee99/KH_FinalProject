@@ -355,8 +355,8 @@ public class AdminMemController {
  			model.addAttribute("slist",slist);
  		}
  		
+		 */	
 		return "";
-		*/
 	}
 
 	
