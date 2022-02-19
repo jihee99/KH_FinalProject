@@ -73,20 +73,20 @@
                         <td>${sOrder.payMethod }</td>
                         <th>주문상태</th>
                         <td>
-                        <c:choose>
-				<c:when test="${sOrder.orderStatus eq 1 }">
-					<select class="orderStatus">
-						<option value="1">주문접수</option>
-						<option value="2">상품준비중</option>
-					</select>
-				</c:when>
-				<c:when test="${sOrder.orderStatus eq 2 }">상품준비중</c:when>
-				<c:when test="${sOrder.orderStatus eq 3 }">배송시작</c:when>
-				<c:when test="${sOrder.orderStatus eq 4 }">배송중</c:when>
-				<c:when test="${sOrder.orderStatus eq 5 }">배송완료</c:when>
-				<c:when test="${sOrder.orderStatus eq 6 }">주문취소</c:when>
-				<c:when test="${sOrder.orderStatus eq 7 }">취소완료</c:when>
-			</c:choose>
+                        	<c:choose>
+                        		<c:when test="${sOrder.orderStatus eq 1 }">
+		                        	<select class="orderStatus">
+		                        		<option value="1">주문접수</option>
+		                        		<option value="2">상품준비중</option>
+		                        	</select>                        		
+                        		</c:when>
+                        		<c:when test="${sOrder.orderStatus eq 2 }">상품준비중</c:when>
+								<c:when test="${sOrder.orderStatus eq 3 }">배송시작</c:when>
+								<c:when test="${sOrder.orderStatus eq 4 }">배송중</c:when>
+								<c:when test="${sOrder.orderStatus eq 5 }">배송완료</c:when>
+								<c:when test="${sOrder.orderStatus eq 6 }">주문취소</c:when>
+								<c:when test="${sOrder.orderStatus eq 7 }">취소완료</c:when>
+                        	</c:choose>
                         </td>
                     </tr>
                 </table>
@@ -123,7 +123,7 @@
                         	<th width="200">환불처리상태</th>
                          <td width="250">${sOrder.refundStatus }</td>
                      </tr>	
-		</c:if>
+					</c:if>
                 </table>
             </div>
 
@@ -160,7 +160,7 @@
             <div align="center">
                 <button id="reBtn" class="btn btn-lg" type="submit" onclick="window.open('orcancleF.ad?ono=${sOrder.orderNo }','회원쿠폰지급페이지','width=550, height=380, menubar=no, status=no, toolbar=no, resizable=no')">주문취소</button>
             	<input id="saveBtn" class="btn btn-lg" onclick="orderSave();" type="button" value="저장하기">
-                <input id="listBtn" class="btn btn-lg" type="button" onclick="history.back();" value="목록보기">
+                <input id="listBtn" class="btn btn-lg" type="button" onclick="location.href='orlist.ad'" value="목록보기">
             </div>   
         </div>
         
@@ -184,7 +184,6 @@
 	       				location.reload();
 	       			}
 	       		});
-
         	}
         </script>
     </div>

@@ -1,11 +1,14 @@
 package com.kh.oceanclass.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassRefund;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
@@ -98,15 +101,18 @@ public class AdminMemDao {
 		return sqlSession.update("adMemMapper.updateCoupon", c);
 	}
 
-	/*클래스주문내역 조회 관련 메소드
 	public int selectClassOrderCount(SqlSessionTemplate sqlSession) {
-		return 0;
+		return sqlSession.selectOne("adMemMapper.selectClassOrderCount");
 	}
+	
+	public ArrayList<ClassOrder> selectClassOrderList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
 
-	public ArrayList<Store??> selectClassOrderList(sqlSessionTemplate sqlSession, PageInfo pi){
-		return "";
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectClassOrderList", null, rowBounds);
 	}
-	*/
 	
 	public int selectStoreOrderCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adMemMapper.selectStoreOrderCount");
@@ -125,10 +131,26 @@ public class AdminMemDao {
 		return sqlSession.delete("adMemMapper.deleteStoreOrder", storeNo);
 	}
 
+	public int deleteClassOrder(SqlSessionTemplate sqlSession, String classNo) {
+		return 0;
+	}
+	
+	public ClassOrder selectClassOrder(SqlSessionTemplate sqlSession, String classNo) {
+		return sqlSession.selectOne("adMemMapper.selectClassOrder", classNo);
+	}
+	
+	
+	
+	
+	
+	
+
 	public StoreOrder selectStoreOrder(SqlSessionTemplate sqlSession, String sOrderNo) {
 		return sqlSession.selectOne("adMemMapper.selectStoreOrder", sOrderNo);
 	}
 
+	
+	
 	public ArrayList<StoreBuyList> selectBuyList(SqlSessionTemplate sqlSession, String sOrderNo) {
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectStoreBuyList", sOrderNo);
 	}
@@ -194,7 +216,55 @@ public class AdminMemDao {
 	public int blackMemOut(SqlSessionTemplate sqlSession, String mno) {
 		return sqlSession.update("adMemMapper.updateBlackMemOut", mno);
 	}
+
+	public int adminReportSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectReportSearchCount", map);
+	}
+
+	public ArrayList<Report> adminReportSearchLig(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String,String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectReportSearchList", map, rowBounds);
+	}
+
+	public int insertClassRefund(SqlSessionTemplate sqlSession, ClassRefund refund) {
+		return sqlSession.insert("adMemMapper.insertClassRefund", refund);
+	}
+
+	public int adminSearchClassCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectSearchClassCount", map);
+	}
 	
+	public ArrayList<ClassOrder> selectSearchClassList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchClassList", null, rowBounds);
+	}
+
+	public int adminSearchStoreCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectSearchStoreCount", map);
+	}
+
+	public ArrayList<StoreOrder> adminSearchStoreList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return null;
+	}
+
+
+
+
+
+
 	
 	
 	

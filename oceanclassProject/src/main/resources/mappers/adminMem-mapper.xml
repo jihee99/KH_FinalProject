@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//E" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adMemMapper">
 
 	<resultMap type="Member" id="memberResult">
@@ -56,6 +56,7 @@
 		<result column="rep_bno" property="refBNo"/>
 		<result column="content" property="content"/>
 		<result column="status" property="status"/>
+		<result column="user_id" property="userId"/>
 	</resultMap>
 	
 	<resultMap type="StoreOrder" id="storeOrderResult">
@@ -108,6 +109,37 @@
 		<result column="refund_status" property="refundStatus" />
 		<result column="user_id" property="userId" />
 		<result column="rpcontent" property="rpContent" />
+	</resultMap>
+	
+	<resultMap type="ClassOrder" id="classOrderResult">
+		<result column="c_ono" property="coNo"/>
+		<result column="clno" property="clNo"/>
+		<result column="mno" property="memNo"/>
+		<result column="price" property="price"/>
+		<result column="point_use" property="pointUse"/>
+		<result column="pcno" property="pcNo"/>
+		<result column="amount" property="amount"/>
+		<result column="payment_date" property="paymentDate"/>
+		<result column="payment_option" property="paymentOption"/>
+		<result column="deposit" property="deposit"/>
+		<result column="point_save" property="pointSave"/>
+		<result column="reading_check" property="readingCheck"/>
+		
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<!-- 환불관련 정보 -->
+		<result column="request_date" property="requestDate"/>
+		<result column="cl_name" property="clName"/>
+		<result column="cl_price" property="clPrice"/>
+		<result column="phone" property="phone"/>
+	</resultMap>
+	
+	<resultMap type="ClassRefund" id="classRefundResult">
+		<result column="c_refundno" property="clRefundNo"/>
+		<result column="c_ono" property="coNo"/>
+		<result column="reason" property="reason"/>
+		<result column="request_date" property="requestDate"/>
+		<result column="status" property="status"/>	
 	</resultMap>
 	
 	<select id="loginAdmin" resultMap="memberResult">
@@ -313,6 +345,30 @@
 		where cno = #{couponNo}
 	</update>
 	
+	
+	<select id="selectClassOrderCount" resultType="_int">
+		select count(*)
+  		  from class_order
+	</select>
+
+	<select id="selectClassOrderList" resultMap="classOrderResult">
+		select 
+		       c_ono
+		     , clno
+		     , mno
+		     , user_id
+		     , user_name
+		     , price
+		     , payment_date
+		     , payment_option
+		     , request_date
+	         , reading_check
+		 from class_order
+		left join class_refund using (c_ono)
+		join member using(mno)
+		order by c_ono desc
+	</select>	
+	
 	<select id="selectStoreOrderCount" resultType="_int">
 		select count(*)
   		  from pay
@@ -332,7 +388,7 @@
 		 from pay
 		left join s_refund using (order_no)
 		join member using(mno)
-		order by order_no desc
+		order by pay_date desc
 	</select>
 	
 	<delete id="deleteStoreOrder">
@@ -365,6 +421,33 @@
 		left join s_refund using (order_no)
 		join member using(mno)
 		where order_no = #{sOrderNo}
+	</select>
+	
+	<select id="selectClassOrder" resultMap="classOrderResult">
+		select
+		       c_ono
+		     , clno
+		     , user_id
+		     , user_name
+		     , price
+		     , point_use
+		     , pcno
+		     , amount
+		     , to_char(payment_date, 'YYYY-MM-DD HH24:MI:SS') payment_date
+		     , payment_option
+		     , deposit
+		     , point_save
+		     , reading_check
+		     , c_refundno
+		     , to_char(request_date, 'YYYY-MM-DD HH24:MI:SS') request_date
+		     , cl_name
+		     , cl_price
+		     , phone
+		 from class_order c
+		 left join class_refund using (c_ono)
+		join member using(mno)
+		join class using(clno)
+		where c_ono = #{classNo}
 	</select>
 	
 	<select id="selectStoreBuyList" resultMap="buyListResult">
@@ -412,6 +495,109 @@
 		 where order_no = #{orderNo}
 	</update>
 	
+	<insert id="insertClassRefund">    
+		insert
+		  into class_refund
+		      (
+		        c_refundno
+		      , c_ono
+		      , reason
+		      , request_date
+		      , status
+		      )
+		 values
+		       (
+		         SEQ_CREFUNDNO.nextval
+		       , #{coNo}
+		       , #{reason}
+		       , sysdate
+		       , 2
+		       )
+	</insert>
+
+	<select id="selectSearchClassCount" resultType="_int">
+		select count(*)
+		 from class_order
+		 join member on member.mno = class_order.mno
+		 where deposit in ('Y','N','null')
+		<if test="sDate!=null and eDate!=null">
+		     and payment_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+		</if>
+		<if test="key != null">
+		    and c_ono like '%' || #{key} || '%'
+		</if>
+	</select>
+	
+	<select id="selectSearchClassList" resultMap="classOrderResult">
+		select 
+		       c_ono
+		     , clno
+		     , mno
+		     , user_id
+		     , user_name
+		     , price
+		     , payment_date
+		     , payment_option
+		     , request_date
+		     , reading_check
+		 from class_order
+		left join class_refund using (c_ono)
+		join member using(mno)
+		 where deposit in ('Y','N','null')
+		<if test="sDate!=null and eDate!=null">
+		     and payment_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+		</if>
+		<if test="key != null">
+		    and c_ono like '%' || #{key} || '%'
+		</if>
+		order by c_ono desc
+	</select>
+	
+	<select id="selectSearchStoreCount" resultType="_int">
+		select count(*)
+		  from pay
+		  join member using (mno)
+		where mno != 0
+		<if test="sDate!=null and eDate!=null">
+		     and pay_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+		</if>
+		<if test="key != null">
+		    and order_no like '%' || #{key} || '%'
+		</if>
+		<if test="lev != null">
+		    and order_status in (#{lev});
+		</if>
+
+	</select>
+	
+	<select id="selectSearchStoreList" resultMap="storeOrderResult">
+		select 
+		       order_no
+		     , mno
+		     , user_id
+		     , user_name
+		     , pay_amount
+		     , pay_date
+		     , pay_method
+		     , order_status
+		     , refund_date
+		  from pay
+		left join s_refund using (order_no)
+		join member using(mno)
+		where mno != 0
+		<if test="sDate!=null and eDate!=null">
+		     and pay_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+		</if>
+		<if test="key != null">
+		    and order_no like '%' || #{key} || '%'
+		</if>
+
+		order by pay_date desc
+	</select>
+	
+	
+
+	
 	<select id="selectReportCount" resultType="_int">
 		select count(*)
   		  from report
@@ -421,11 +607,13 @@
 		select
 		        report_no
 		      , reported_mno
+              , user_id
 		      , bcategory
 		      , rep_bno
 		      , content
 		      , status
-		  from report
+		  from report r
+          join member m on r.reported_mno = m.mno
 		 order
 		    by report_no desc
 	</select>
@@ -524,9 +712,41 @@
 		 where mno = #{mno}
 	</update>
 	
+	<!-- 검색조건 : status(필수선택),  key-->
+	<select id="selectReportSearchCount" resultType="_int">
+		select count(*)
+		 from report 
+		 join member on member.mno = report.reported_mno
+		 where report.status = #{status}
+		<if test="sDate!=null and eDate!=null">
+			 and report_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+		</if>
+		<if test="key != null">
+			and user_id like '%' || #{key} || '%'
+		</if>
+	</select>
 	
-	
-	
+	<select id="selectReportSearchList" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+		      , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , rv.content as rpcontent
+		  from report rp
+		  join class_review rv on rv.c_rno = rp.rep_bno
+		  join member using (mno)
+		 where rp.status = #{status}
+		<if test="sDate!=null and eDate!=null">
+			 and report_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+		</if>
+		<if test="key != null">
+			and user_id like '%' || #{key} || '%'
+		</if>
+	</select>
 	
 	
 	

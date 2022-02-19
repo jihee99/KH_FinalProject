@@ -68,7 +68,7 @@
                     <tr>
                         <th>검색조건</th>
                         <td>
-                            <input type="text" name="key" id="keyword" placeholder="주문번호를 입력하세요">
+                            <input type="text" name="key" id="" placeholder="주문번호를 입력하세요">
                         </td>
                     </tr>
                 </table>
@@ -262,8 +262,7 @@
 	        
 			$(document).ready(function() {
 				var type = $("input[type=radio][name=category]").val();
-	        	console.log($("input[type=radio][name=category]").val());
-	        	console.log(type);
+	        	
 				/*라디오 버튼에 따른 동적 화면 구현*/
 				if($("input[type=radio][name=category]").val() == 'c'){
 					 $('#classArea').css('display','block');
@@ -275,9 +274,6 @@
 				
 				$("input[type=radio][name=category]").on('click',function(){
 	                var chkValue = $('input[type=radio][name=category]:checked').val();
-	               
-	                console.log(chkValue);
-
 	                if(chkValue == "c"){
 	                    $('#classArea').css('display','block');
 	                    $('#storeArea').css('display','none');
@@ -285,10 +281,9 @@
 	                    $('#classArea').css('display','none');
 	                    $('#storeArea').css('display','block');
 	                }
-	                $('input[name=sDate]').prop("checked", false);
-	                $('input[name=eDate]').prop("checked", false);
+	                
 	                $('input[name=lev]').prop("checked", false);
-	                $('input[name=key]').val("");
+	                $('input[name=key]').prop("checked", false);
 	            });
 				
 	        	/* 클래스 테이블 전체선택 */

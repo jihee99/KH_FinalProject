@@ -1,11 +1,14 @@
 package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassRefund;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.dao.AdminMemDao;
@@ -112,7 +115,15 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return adMemDao.blackMemOut(sqlSession, mno);
 	}
 	
-	
+	@Override
+	public int adminReportSearchCount(HashMap<String, String> map) {
+		return adMemDao.adminReportSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Report> adminReportSearchList(PageInfo pi, HashMap<String, String> map) {
+		return adMemDao.adminReportSearchLig(sqlSession, pi, map);
+	}
 	
 	
 	@Override
@@ -176,14 +187,12 @@ public class AdminMemServiceImpl implements AdminMemService {
 
 	@Override
 	public int selectClassOrderCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return adMemDao.selectClassOrderCount(sqlSession);
 	}
 
 	@Override
-	public ArrayList<ClassVo> selectClassOrderList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<ClassOrder> selectClassOrderList(PageInfo pi) {
+		return adMemDao.selectClassOrderList(sqlSession, pi);
 	}
 
 	@Override
@@ -200,11 +209,15 @@ public class AdminMemServiceImpl implements AdminMemService {
 	public int deleteStoreOrder(String storeNo) {
 		return adMemDao.deleteStoreOrder(sqlSession, storeNo);
 	}
-
+	
 	@Override
-	public ClassVo selectClassOrder(String cOrderNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int deleteClassOrder(String classNo) {
+		return adMemDao.deleteClassOrder(sqlSession, classNo);
+	}
+	
+	@Override
+	public ClassOrder selectClassOrder(String classNo) {
+		return adMemDao.selectClassOrder(sqlSession, classNo);
 	}
 
 	@Override
@@ -232,6 +245,34 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return adMemDao.updateorderStatus(sqlSession, order);
 	}
 
+	@Override
+	public int insertClassRefund(ClassRefund refund) {
+		return adMemDao.insertClassRefund(sqlSession, refund);
+	}
+
+	@Override
+	public int adminSearchClassCount(HashMap<String, String> map) {
+		return adMemDao.adminSearchClassCount(sqlSession, map);
+	}
+	
+	@Override
+	public ArrayList<ClassOrder> adminSearchClassList(HashMap<String, String> map, PageInfo pi) {
+		return adMemDao.selectSearchClassList(sqlSession, map, pi);
+	}
+
+
+	@Override
+	public int adminSearchStoreCount(HashMap<String, String> map) {
+		return adMemDao.adminSearchStoreCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<StoreOrder> adminSearchStoreList(HashMap<String, String> map, PageInfo pi) {
+		return adMemDao.adminSearchStoreList(sqlSession, map, pi);
+	}
+
+
+	
 
 
 
