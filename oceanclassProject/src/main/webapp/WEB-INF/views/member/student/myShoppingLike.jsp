@@ -28,6 +28,22 @@
     #paging{
     	display: table;
     }
+    .content1>p{
+    	text-align: center;
+    	font-size : 24px;
+    	font-weight: 800;
+    	padding: 30px;
+    	margin-top: 50px;
+    	margin-bottom: 50px;
+    }
+    .content1>button{
+    	display: block; 
+    	margin: 0 auto;
+    	background-color: rgb(107, 171, 213, 0.2);
+    	font-sixe: 20px;
+    	font-weight: 800;
+    	width: 300px;
+    }
 </style>
 </head>
 <body>
@@ -47,7 +63,7 @@
 				        <c:choose>
 			        		<c:when test="${empty list}">
 			        			<p>찜한 상품이 없습니다</p>
-			        			<button type="button">지금 찜하러 가기!</button>
+			        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
 			        		</c:when>
 				        	<c:otherwise>
 				        		<c:forEach var="s" items="${list}">
@@ -100,8 +116,6 @@
 							</c:otherwise>			        
 				        </c:choose>
 				    </div> 
-				    
-			    	
 				</div>
 				
 				<script>
