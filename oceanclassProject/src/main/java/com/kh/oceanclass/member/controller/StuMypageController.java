@@ -28,6 +28,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.service.MypageService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.store.model.vo.Product;
 
 @Controller
 public class StuMypageController {
@@ -278,6 +279,22 @@ public class StuMypageController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassReviewDetail";
+	}
+	
+	
+	// 찜한 상품
+	@RequestMapping("likeProduct.me")
+	public String likeProduct(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int likeProductCount = myService.likeProductCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(likeProductCount, currentPage, 5, 6);
+		ArrayList<Product> list = myService.selectLikeProduct(pi, memNo);
+		//System.out.println(list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "member/student/myShoppingLike";
 	}
 	
 }
