@@ -441,7 +441,7 @@ public class AdminMemController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		ArrayList<Member> blList = adMemService.adminReportMemList(pi);
-		model.addAttribute("model", model);
+		model.addAttribute("pi", pi);
 		model.addAttribute("blList", blList);
 		return "member/admin/adminBlackListPage";
 	}
