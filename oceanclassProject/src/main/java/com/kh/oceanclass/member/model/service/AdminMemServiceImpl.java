@@ -117,20 +117,17 @@ public class AdminMemServiceImpl implements AdminMemService {
 	
 	@Override
 	public int selectPointCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return adMemDao.selectPointCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<Point> selectPointList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		return adMemDao.selectPointList(sqlSession, pi);
 	}
 
 	@Override
 	public int adminEnrollPoint(Point p) {
-		// TODO Auto-generated method stub
-		return 0;
+		return adMemDao.adminEnrollPoint(sqlSession, p);
 	}
 
 	

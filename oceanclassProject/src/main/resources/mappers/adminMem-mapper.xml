@@ -28,6 +28,9 @@
 		<result column="p_price" property="pointPrice" />	
 		<result column="reason" property="reason" />	
 		<result column="deadline" property="deadLine" />	
+		
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
 	</resultMap>	
 	
 	<resultMap type="Coupon" id="couponResult">
@@ -245,6 +248,29 @@
 		    by mno desc
 	</select>
 	
+	<!-- 포인트 목록 카운트 -->
+	<select id="selectPointCount" resultType="_int">
+		select count(*)
+		 from point
+		 where deadline > sysdate
+	</select>
+	
+	<!-- 포인트 목록 조회용 -->
+	<select id="selectPointList" resultMap="pointResult">
+		select
+		       pno
+		     , user_id
+		     , user_name
+		     , reason
+		     , p_price
+		     , to_char(p_date, 'YYYY-MM-DD HH24:MI:SS') p_date
+		     , to_char(deadline, 'YYYY-MM-DD HH24:MI:SS') deadline
+		 from point
+		 join member using (mno)
+		 where deadline > sysdate
+		 order by pno
+	</select>
+	
 	<!-- 쿠폰목록 카운트 -->
 	<select id="selectCouponCount" resultType="_int">
 		select
@@ -340,16 +366,39 @@
 	</insert>
 	
 	<update id="updateCoupon">
-		update couponlist
+		update COUPONLIST
 		   set (
-		          cname = #{couponName}
+		          CNAME = #{couponName}
 		        , discount = #{discount}
-		        , maxcount = #{maxCount}
-		        , dedate = #{dedate}
-		        , endate = sysdate
+		        , MAXCOUNT = #{maxCount}
+		        , DEDATE = #{dedate}
 		        )
-		where cno = #{couponNo}
+		where CNO = #{couponNo}
 	</update>
+	
+	
+	<!-- 포인트 지급용  -->
+	<insert id="insertPoint">
+		insert 
+		  into point
+		      (
+		         pno
+		       , mno
+		       , type
+		       , p_price
+		       , reason
+		       , deadline
+		      )
+		 values
+		      (
+		        SEQ_PNO.NEXTVAL
+		      , #{memNo}
+		      , '1'
+		      , #{pointPrice}
+		      , #{reason}
+		      , #{deadLine}
+      )
+	</insert>
 	
 	
 	<select id="selectClassOrderCount" resultType="_int">
@@ -663,7 +712,6 @@
 		select count(*)
 		  from member
 		 where report > 2
-		   and u_status = 'Y'
 	</select>
 		
 	<select id="selectReportMemList" resultMap="memberResult">

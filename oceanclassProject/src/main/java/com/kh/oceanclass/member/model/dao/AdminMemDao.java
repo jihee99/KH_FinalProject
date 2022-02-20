@@ -13,6 +13,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
@@ -51,6 +52,18 @@ public class AdminMemDao {
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchMemList", map, rowBounds);
 	}
 
+	public int selectPointCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adMemMapper.selectPointCount");
+	}
+
+	public ArrayList<Point> selectPointList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectPointList", null, rowBounds);
+	}
 
 	public int selectCouponCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adMemMapper.selectCouponCount");
@@ -88,6 +101,11 @@ public class AdminMemDao {
 	public int updateCoupon(SqlSessionTemplate sqlSession, Coupon c) {
 		return sqlSession.update("adMemMapper.updateCoupon", c);
 	}
+	
+	public int adminEnrollPoint(SqlSessionTemplate sqlSession, Point p) {
+		return sqlSession.insert("adMemMapper.insertPoint", p);
+	}
+	
 
 	public int selectClassOrderCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adMemMapper.selectClassOrderCount");
@@ -247,6 +265,8 @@ public class AdminMemDao {
 		
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchStoreList", map, rowBounds);
 	}
+
+
 
 
 

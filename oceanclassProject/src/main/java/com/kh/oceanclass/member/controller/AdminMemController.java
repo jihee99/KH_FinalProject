@@ -22,6 +22,7 @@ import com.kh.oceanclass.member.model.service.AdminMemService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
@@ -83,18 +84,13 @@ public class AdminMemController {
 	public ModelAndView selectSMemList(@RequestParam(value="cpage",defaultValue="1") int currentPage, String type, String key, ModelAndView mv) {
 		HashMap<String, String> map = new HashMap<>();
 		
-		System.out.println(type + " / " + key );
-		
 		map.put("type", type);
 		map.put("key",key);
-		System.out.println(map);
 		
 		int listCount = adMemService.selectSearchMemCount(map);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Member> memlist = adMemService.selectSearchMemList(pi, map);
-		
-		System.out.println(pi);
-		System.out.println(memlist);
+
 		
 		mv.addObject("key", key);
 		mv.addObject("type", type);
@@ -113,11 +109,17 @@ public class AdminMemController {
 		PageInfo cPi = Pagination.getPageInfo(clistCount, currentCPage, 5, 10);
 		ArrayList<Coupon> clist = adMemService.selectCouponList(cPi);
 		
-		/*
+		
 		int plistCount = adMemService.selectPointCount();
 		PageInfo pPi = Pagination.getPageInfo(plistCount, currentPPage, 5, 10);
 		ArrayList<Point> plist = adMemService.selectPointList(pPi);
-		*/
+		
+		mv.addObject("pPi", pPi);
+		mv.addObject("plist", plist);
+		
+		System.out.println(pPi);
+		System.out.println(plist);
+		
 		mv.addObject("cPi", cPi);
 		mv.addObject("clist", clist);
 		
@@ -194,7 +196,8 @@ public class AdminMemController {
 		model.addAttribute("c", c);
 		return "member/admin/adminCouponUpdateWindow";
 	}
-
+	
+	@ResponseBody
 	@RequestMapping(value="cupdate.ad")
 	public String adminCouponUpdate(Coupon c, Model model) {
 		System.out.println(c);
@@ -202,10 +205,20 @@ public class AdminMemController {
 		return result>0? "success" : "fail";
 	}
 
-	@RequestMapping(value="pgive.ad")
-	public String adminPointManager() {
-		// 관리자 포인트 지급 페이지 확인용 메소드
+	@RequestMapping(value="pgiveF.ad")
+	public String adminPointManager(Model model) {
+		ArrayList<Member> mlist = adMemService.selectAllMember();
+		model.addAttribute("mlist", mlist);
 		return "member/admin/adminPointWindow";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="pgive.ad")
+	public String adminPointGive(Point p, Model model) {
+		System.out.println(p);
+		int result = adMemService.adminEnrollPoint(p);
+		
+		return result>0? "success" : "fail";
 	}
 	
 	@RequestMapping(value="orlist.ad")
@@ -428,14 +441,12 @@ public class AdminMemController {
 	}
 	
 	@RequestMapping(value="blList.ad")
-	public String adminBlackList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+	public String adminBlackList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
 		int listCount = adMemService.adminBlackListCount();
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		ArrayList<Member> blList = adMemService.adminReportMemList(pi);
-		
-		System.out.println(pi);
-		System.out.println(blList);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("blList", blList);
