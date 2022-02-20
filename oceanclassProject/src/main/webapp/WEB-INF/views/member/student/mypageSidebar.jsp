@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +9,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 	<link rel="stylesheet" href="./resources/css/stuMypage.css?3">
-
 </head>
 <body>
 	<div class="side">
 	    <div id="profile">
-	    	<img src="${loginUser.profileImg}">
+	    	<c:choose>
+	    		<c:when test="${not empty loginUser.profileImg}">
+	    			<img src="${loginUser.profileImg}">
+	    		</c:when>
+	    		<c:otherwise>
+	    			<i class="bi bi-person-circle" style="font-size: 6rem; color: cornflowerblue;"></i>
+	    		</c:otherwise>
+	    	</c:choose>
 	    	<p id="sideName">${loginUser.nickName}님</p>
 	    </div>
 	    <div class="menu">

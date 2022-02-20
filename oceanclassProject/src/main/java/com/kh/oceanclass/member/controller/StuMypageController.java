@@ -63,15 +63,19 @@ public class StuMypageController {
 	public String changeProfile(Member m, MultipartFile upfile, HttpSession session, Model model) {
 		
 		System.out.println(upfile);
-		String changeName = saveFile(upfile, session);
+		if(!upfile.getOriginalFilename().equals("")) {		
+			String changeName = saveFile(upfile, session);
+			m.setProfileImg("resources/uploadFiles/" + changeName);
+		}else {				// 프로필 사진 없을 경우
+			m.setProfileImg("");
+		}
 		
-		m.setProfileImg("resources/uploadFiles/" + changeName);
-		
-		System.out.println(m);
+		//System.out.println(m);
 		int result = myService.updateProfile(m);
-		System.out.println(result);
+		//System.out.println(result);
 		if(result>0) {
 			session.setAttribute("alertMsg", "정보 수정 완료");
+			//return "member/student/myProfile";
 			return "redirect:myProfile.me";
 		}else {
 			model.addAttribute("errorMsg", "정보수정실패");

@@ -64,9 +64,13 @@
 		                <form id="changeProfile" method="post" action="changeProfile.me" enctype="multipart/form-data">
 		                	<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
 		                    <div class="box">
-		                   		<div id="preview"></div>
+		                   		<div id="preview">
+		                   			<c:if test="${not empty loginUser.profileImg}">
+						    			<img src="${loginUser.profileImg}">
+						    		</c:if>
+		                   		</div>
 		                    </div>
-		                   
+		                    
 		                    <div class="box">
 		                        <label class="textName" for="upfile">프로필 이미지</label>
 		                        <input type="file" id="upfile" name="upfile" class="form-control" accept=".gif, .jpg, .png" style="width: 300px;">
