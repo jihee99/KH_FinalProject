@@ -9,6 +9,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StoreReview;
 
 public interface MypageService {
 
@@ -49,10 +50,10 @@ public interface MypageService {
 	// 좋아요 클래스 리스트
 	ArrayList<ClassVo> selectLikeClass(PageInfo pi, int memNo);
 	
-	// review 갯수
+	// 클래스 review 갯수
 	int classReviewCount(int memNo);
 	
-	// review 리스트 조회
+	// 클래스 review 리스트 조회
 	ArrayList<ClassReview> classReviewList(PageInfo pi, int memNo);
 	
 	// 좋아요 상품 갯수
@@ -60,5 +61,12 @@ public interface MypageService {
 	
 	// 좋아요 상품 리스트
 	ArrayList<Product> selectLikeProduct(PageInfo pi, int memNo);
+	
+	// 스토어 문의 갯수
+	int shoppingQnaCount(int memNo);
+	
+	// 스토어 문의 리스트 조회
+	ArrayList<StoreReview> shoppingQnaList(PageInfo pi, int memNo);
+	
 	
 }

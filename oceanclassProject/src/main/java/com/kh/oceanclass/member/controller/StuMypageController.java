@@ -29,6 +29,7 @@ import com.kh.oceanclass.member.model.service.MypageService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Controller
 public class StuMypageController {
@@ -41,27 +42,21 @@ public class StuMypageController {
 
 	// 메인 이동
 	@RequestMapping("home.me")
-	public String home() {
-		return "/main";
-	}
-	
+	public String home() {return "/main";}
+
+
+//프로필 관련	
 	// 마이페이지 이동
 	@RequestMapping("myPage.me")
-	public String myPage() {
-		return "member/student/mypageMain";
-	}
+	public String myPage() {return "member/student/mypageMain";}
 	
 	// 프로필 확인
 	@RequestMapping("myProfile.me")
-	public String myProfile() {
-		return "member/student/myProfile";
-	}
+	public String myProfile() {return "member/student/myProfile";}
 	
 	// 프로필 수정폼
 	@RequestMapping("formProfile.me")
-	public String formProfile() {
-		return "member/student/myProfileChange";
-	}
+	public String formProfile() {return "member/student/myProfileChange";}
 	
 	// 프로필 변경
 	@RequestMapping("changeProfile.me")
@@ -126,8 +121,42 @@ public class StuMypageController {
 			return "redirect:myDeleteForm.me";
 		}
 	}
+
+	// 닉네임 중복검사
+	@ResponseBody
+	@RequestMapping("checkNick.me")
+	public int checkNick(String nickName) {
+		//System.out.println(nickName);
+		int result = myService.checkNick(nickName);
+		return result;
+	}
 	
-	// 포인트/쿠폰페이지
+	// 넘어온 첨부파일 그자체를 서버 폴더에 저장
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+
+		String originName = upfile.getOriginalFilename(); // "flower.png"
+		
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // 년월일시분초
+		int ranNum = (int)(Math.random() * 90000 + 10000); // 5자리 랜덤값
+		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"
+		
+		String changeName = currentTime + ranNum + ext;
+				
+		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
+	}
+	
+	
+	
+//포인트/쿠폰페이지
 	@RequestMapping("pointCoupon.me")
 	public String couponList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -145,7 +174,9 @@ public class StuMypageController {
 		
 	}
 	
-	// 1:1문의 내역
+	
+	
+//1:1문의 내역
 	@RequestMapping("myQna.me")
 	public String myQnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -202,38 +233,9 @@ public class StuMypageController {
 		return map;
 	}
 	
-	// 닉네임 중복검사
-	@ResponseBody
-	@RequestMapping("checkNick.me")
-	public int checkNick(String nickName) {
-		//System.out.println(nickName);
-		int result = myService.checkNick(nickName);
-		return result;
-	}
 	
-	// 넘어온 첨부파일 그자체를 서버 폴더에 저장
-	public String saveFile(MultipartFile upfile, HttpSession session) {
-
-		String originName = upfile.getOriginalFilename(); // "flower.png"
-		
-		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // 년월일시분초
-		int ranNum = (int)(Math.random() * 90000 + 10000); // 5자리 랜덤값
-		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"
-		
-		String changeName = currentTime + ranNum + ext;
-				
-		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
-		
-		try {
-			upfile.transferTo(new File(savePath + changeName));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return changeName;
-	}
 	
+//클래스	
 	// 찜한 클래스
 	@RequestMapping("likeClass.me")
 	public String likeClass(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
@@ -275,13 +277,14 @@ public class StuMypageController {
 		ArrayList<ClassReview> list = myService.classReviewList(pi, memNo);
 		//System.out.println(list);
 		
-		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassReviewDetail";
 	}
 	
 	
+	
+//스토어	
 	// 찜한 상품
 	@RequestMapping("likeProduct.me")
 	public String likeProduct(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
@@ -295,6 +298,36 @@ public class StuMypageController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShoppingLike";
+	}
+	
+	// 상품리뷰
+	@RequestMapping("myShoppingReview.me")
+	public String myShoppingReview(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int reviewCount = myService.shoppingQnaCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 6);
+		ArrayList<StoreReview> list = myService.shoppingQnaList(pi, memNo);
+		//System.out.println(list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "member/student/myShoppingReview";
+	}
+	
+	// 상품 리뷰 디테일
+	@RequestMapping("myShoppingReviewDetail.me")
+	public String myShoppingReviewDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int reviewCount = myService.shoppingQnaCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
+		ArrayList<StoreReview> list = myService.shoppingQnaList(pi, memNo);
+		//System.out.println(list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "member/student/myShoppingReviewDetail";
 	}
 	
 }

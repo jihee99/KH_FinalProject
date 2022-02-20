@@ -13,6 +13,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Repository
 public class MypageDao {
@@ -128,6 +129,18 @@ public class MypageDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("myMapper.selectLikeProduct", memNo, rowBounds);
+	}
+	
+	public int shoppingQnaCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("myMapper.shoppingQnaCount", memNo);
+	}
+	
+	public ArrayList<StoreReview> shoppingQnaList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("myMapper.shoppingQnaList", memNo, rowBounds);
 	}
 	
 }// class
