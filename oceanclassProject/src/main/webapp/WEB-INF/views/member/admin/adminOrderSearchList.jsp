@@ -293,7 +293,7 @@
 
 				
 				/* 주문내역 상세보기 */
-				$("#storeTable tbody tr td[class='orderNo']").click(function(){
+				$("#classTable tbody tr td[class='orderNo']").click(function(){
 					if(type == 's'){
 						console.log($(this).text());
 						location.href='sodetail.ad?ono=' + $(this).text();
