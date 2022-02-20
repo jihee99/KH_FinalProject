@@ -80,24 +80,32 @@
 					            </tr>
 					        </thead>
 					        <tbody>
-					        	<c:forEach var="c" items="${list}" begin="0" end="4">
-						            <tr>
-						                <td>${c.clName}</td>
-						                <td>
-							                <c:choose>
-						            		<c:when test="${fn:length(c.content) gt 25}">
-						            			<c:out value="${fn:substring(c.content, 0, 24)}"></c:out>
-						            			..
-						            		</c:when>
-						            		<c:otherwise>
-						            			<c:out value="${c.content}"></c:out>
-						            		</c:otherwise>
-							            	</c:choose>
-						                </td>
-						            </tr>
-					            </c:forEach>
+					        	<c:choose>
+					        		<c:when test="${empty list}">
+					        			<p>등록된 리뷰가 없습니다</p>
+					        		</c:when>
+					        		<c:otherwise>
+					        			<c:forEach var="c" items="${list}" begin="0" end="4">
+								            <tr>
+								                <td>${c.clName}</td>
+								                <td>
+									                <c:choose>
+								            		<c:when test="${fn:length(c.content) gt 25}">
+								            			<c:out value="${fn:substring(c.content, 0, 24)}"></c:out>
+								            			..
+								            		</c:when>
+								            		<c:otherwise>
+								            			<c:out value="${c.content}"></c:out>
+								            		</c:otherwise>
+									            	</c:choose>
+								                </td>
+								            </tr>
+							            </c:forEach>
+					        		</c:otherwise>
+					        	</c:choose>
 					        </tbody>
 					    </table>
+					    
 					 </div> 
 			  	</div>
 			</td>

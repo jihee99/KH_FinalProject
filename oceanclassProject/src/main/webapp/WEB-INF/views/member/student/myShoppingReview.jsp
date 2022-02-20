@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,81 +33,81 @@
 	    margin: auto;
 	    text-align: center;
 	}
-	h4{color: gray; font-weight: bolder; margin-bottom: 25px;}
 </style>
 </head>
 <body>
-	<div class="content">
-		<div class="content1">
-		    <div class="conhead">
-		        <h2>상품 문의</h2>
-		        <a href="?page=myShoppingQnaDetail.jsp">더보기</a>
-		    </div>
-		    <table class="table">
-		        <thead>
-		            <tr>
-		                <th>상품</th>
-		                <th>내용</th>
-		                <th>답변상태</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-		            <tr>
-		                <td>갤럭시Z-FLIP3 라벤더 색상 자급제..</td>
-		                <td>퀵으로 배송 받을 수 있나요?..</td>
-		                <td>답변완료</td>
-		            </tr>
-		            <tr>
-		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
-		                <td>퀵으로 배송 받을 수 있나요?..</td>
-		                <td>답변완료</td>
-		            </tr>
-		            <tr>
-		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
-		                <td>퀵으로 배송 받을 수 있나요?..</td>
-		                <td>답변완료</td>
-		            </tr>
-		        </tbody>
-		    </table>
-		</div>  
-		<div class="content1">
-		    <div class="conhead">
-		        <h2>상품 후기</h2>
-		        <a href="?page=myShoppingReviewDetail.jsp">더보기</a>
-		    </div>
-		    <!-- 후기 있을 경우 -->
-		    <table class="table">
-		        <thead>
-		            <tr>
-		                <th>상품</th>
-		                <th>내용</th>
-		                <th>날짜</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-		            <tr>
-		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
-		                <td>역시 다른건 다 필요없고 이쁜게 진리인..</td>
-		                <td>2021-02-10</td>
-		            </tr>
-		            <tr>
-		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
-		                <td>역시 다른건 다 필요없고 이쁜게 진리인..</td>
-		                <td>2021-02-10</td>
-		            </tr>
-		            <tr>
-		                <td>갤럭시Z FLIP 라벤더 색상 자급제..</td>
-		                <td>역시 다른건 다 필요없고 이쁜게 진리인..</td>
-		                <td>2021-02-10</td>
-		            </tr>
-		        </tbody>
-		    </table>
-		    
-		    <!-- 후기 없을 경우  -->
-		    <h4>등록한 후기가 없습니다.</h4>
-		    <button class="btn btn-info">후기 등록하고 포인트 받기!</button>
-		</div> 
-	</div>
+	<table id="mainTable">
+		<tr>
+			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
+		</tr>
+		
+		<tr>
+			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
+			<td id="mainContent">
+				<div class="content">
+					<div class="content1">
+					    <div class="conhead">
+					        <h2>스토어 문의</h2>
+					        <a href="myShoppingReviewDetail.me">더보기</a>
+					    </div>
+					    <table class="table">
+					        <thead>
+					            <tr>
+					                <th>상품</th>
+					                <th>리뷰</th>
+					            </tr>
+					        </thead>
+					        <tbody>
+					        	<c:choose>
+					        		<c:when test="${empty list}">
+					        			<p>등록된 리뷰가 없습니다</p>
+					        		</c:when>
+					        		<c:otherwise>
+					        			<c:forEach var="s" items="${list}" begin="0" end="4">
+								            <tr>
+								                <td>${s.title}</td>
+								                <td>
+									                <c:choose>
+								            		<c:when test="${fn:length(s.content) gt 25}">
+								            			<c:out value="${fn:substring(s.content, 0, 24)}"></c:out>
+								            			..
+								            		</c:when>
+								            		<c:otherwise>
+								            			<c:out value="${s.content}"></c:out>
+								            		</c:otherwise>
+									            	</c:choose>
+								                </td>
+								            </tr>
+							            </c:forEach>
+					        		</c:otherwise>
+					        	</c:choose>
+					        </tbody>
+					    </table>
+					 </div> 
+					 
+					 <div class="content1">
+					    <div class="conhead">
+					        <h2>스토어 리뷰</h2>
+					        <a href="스토어">더보기</a>
+					    </div>
+					    <table class="table">
+					        <thead>
+					            <tr>
+					                <th>상품</th>
+					                <th>리뷰</th>
+					            </tr>
+					        </thead>
+					        <tbody>
+					        
+					        </tbody>
+					    </table>
+					</div>  
+					
+					 
+			  	</div>
+			</td>
+		</tr>
+	</table>
 
 </body>
 </html>
