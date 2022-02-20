@@ -244,7 +244,7 @@ public class AdminMemDao {
 
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchClassList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchClassList", map, rowBounds);
 	}
 
 	public int adminSearchStoreCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
@@ -257,7 +257,7 @@ public class AdminMemDao {
 
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return null;
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchStoreList", map, rowBounds);
 	}
 
 

@@ -315,7 +315,7 @@ public class AdminMemController {
 	
 	@RequestMapping(value="orsearch.ad")
 	public String adminOrderSearch(@RequestParam(value="cpage",defaultValue="1") int currentPage, String category, String key, String sDate, String eDate, String lev, Model model) {
-		/*
+		
 		System.out.println(category);
 		System.out.println(sDate);
 		System.out.println(eDate);
@@ -325,38 +325,47 @@ public class AdminMemController {
 		HashMap<String, String> map = new HashMap<>();
 		if(!category.equals("")) {
 			map.put("category", category);	
+			model.addAttribute("category", category);
 		}
 		if(!sDate.equals("")) {
 			map.put("sDate", sDate);
+			model.addAttribute("sDate", sDate);
 		}
 		if(!eDate.equals("")) {
 			map.put("eDate", eDate);
+			model.addAttribute("eDate", eDate);
 		}
 		if(!key.equals("")) {
 			map.put("key", key);
+			model.addAttribute("key", key);
 		}
 		
 		System.out.println(map);
 
 		if(category.equals("c")) {
 			//클래스일 경우 
-			int clistCount = adMemService.adminSearchClassCount(map);
-			PageInfo cPi = Pagination.getPageInfo(clistCount, currentPage, 5, 10);
-			ArrayList<ClassOrder> clist = adMemService.adminSearchClassList(map, cPi);
- 			
- 			model.addAttribute("cPi", cPi);
- 			model.addAttribute("clist",clist);
+			int listCount = adMemService.adminSearchClassCount(map);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+			ArrayList<ClassOrder> list = adMemService.adminSearchClassList(map, pi);
+ 			model.addAttribute("pi", pi);
+ 			model.addAttribute("list",list);
+ 			System.out.println(pi);
+ 			System.out.println(list);
  		}else if(category.equals("s")) {
  			//스토어일 경우 
- 			int slistCount= adMemService.adminSearchStoreCount(map);
- 			PageInfo sPi = Pagination.getPageInfo(slistCount, currentPage, 5, 10);
- 			ArrayList<StoreOrder> slist = adMemService.adminSearchStoreList(map, sPi);
- 			model.addAttribute("sPi", sPi);
- 			model.addAttribute("slist",slist);
+ 			int listCount= adMemService.adminSearchStoreCount(map);
+ 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+ 			ArrayList<StoreOrder> list = adMemService.adminSearchStoreList(map, pi);
+ 			model.addAttribute("pi", pi);
+ 			model.addAttribute("list",list);
+ 			System.out.println(pi);
+ 			System.out.println(list);
+ 		} else {
+ 			model.addAttribute("errorMsg", "조회에 실패하였습니다.");
+ 			return "common/errorPage";
  		}
  		
-		 */	
-		return "";
+		return "member/admin/adminOrderSearchList";
 	}
 
 	

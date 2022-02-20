@@ -519,13 +519,8 @@
 		select count(*)
 		 from class_order
 		 join member on member.mno = class_order.mno
-		 where deposit in ('Y','N','null')
-		<if test="sDate!=null and eDate!=null">
-		     and payment_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
-		</if>
-		<if test="key != null">
-		    and c_ono like '%' || #{key} || '%'
-		</if>
+		where payment_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+  		  and c_ono like '%' || #{key} || '%'
 	</select>
 	
 	<select id="selectSearchClassList" resultMap="classOrderResult">
@@ -541,33 +536,19 @@
 		     , request_date
 		     , reading_check
 		 from class_order
-		left join class_refund using (c_ono)
-		join member using(mno)
-		 where deposit in ('Y','N','null')
-		<if test="sDate!=null and eDate!=null">
-		     and payment_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
-		</if>
-		<if test="key != null">
-		    and c_ono like '%' || #{key} || '%'
-		</if>
-		order by c_ono desc
+		 left join class_refund using (c_ono)
+		 join member using(mno)
+		where payment_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+  		  and c_ono like '%' || #{key} || '%'
+		order by payment_date desc		 
 	</select>
 	
 	<select id="selectSearchStoreCount" resultType="_int">
 		select count(*)
 		  from pay
 		  join member using (mno)
-		where mno != 0
-		<if test="sDate!=null and eDate!=null">
-		     and pay_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
-		</if>
-		<if test="key != null">
-		    and order_no like '%' || #{key} || '%'
-		</if>
-		<if test="lev != null">
-		    and order_status in (#{lev});
-		</if>
-
+		where pay_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+		  and order_no like '%' || #{key} || '%'
 	</select>
 	
 	<select id="selectSearchStoreList" resultMap="storeOrderResult">
@@ -584,15 +565,9 @@
 		  from pay
 		left join s_refund using (order_no)
 		join member using(mno)
-		where mno != 0
-		<if test="sDate!=null and eDate!=null">
-		     and pay_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
-		</if>
-		<if test="key != null">
-		    and order_no like '%' || #{key} || '%'
-		</if>
-
-		order by pay_date desc
+		where pay_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
+		  and order_no like '%' || #{key} || '%'
+		order by pay_date desc		  
 	</select>
 	
 	

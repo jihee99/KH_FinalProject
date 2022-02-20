@@ -46,9 +46,9 @@
                     <tr>
                         <th>기간검색</th>
                         <td>
-                            <input type="date" name="sDate" id="">
+                            <input type="date" name="sDate" id="" required>
                              -
-                            <input type="date" name="eDate" id="">
+                            <input type="date" name="eDate" id="" required>
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +68,7 @@
                     <tr>
                         <th>검색조건</th>
                         <td>
-                            <input type="text" name="key" id="keyword" placeholder="주문번호를 입력하세요">
+                            <input type="text" name="key" id="keyword" placeholder="주문번호를 입력하세요" required>
                         </td>
                     </tr>
                 </table>
