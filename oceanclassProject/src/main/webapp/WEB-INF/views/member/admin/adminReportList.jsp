@@ -154,8 +154,7 @@
 			location.href='rpdetail.ad?rpno=' + $(this).children(".rpNo").text() + '&category=' + $(this).children(".category").text();
 		});
 
-		
-		
+
 		     
 	</script>
 </body>

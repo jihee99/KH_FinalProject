@@ -46,27 +46,16 @@ public class AdminMemServiceImpl implements AdminMemService {
 	}
 	
 	@Override
-	public int selectSMemCount() {
-		return adMemDao.selectSMemCount(sqlSession);
+	public int selectSearchMemCount(HashMap<String, String> map) {
+		return adMemDao.selectSearchMemCount(sqlSession, map);
 	}
 
 	@Override
-	public ArrayList<Member> selectSMemList(PageInfo pi) {
-		return adMemDao.selectSMemList(sqlSession, pi);
-	}
-
-	@Override
-	public int selectTMemCount() {
-		return adMemDao.selectTMemCount(sqlSession);
-	}
-
-	@Override
-	public ArrayList<Member> selectTMemList(PageInfo pi) {
-		return adMemDao.selectTMemList(sqlSession, pi);
+	public ArrayList<Member> selectSearchMemList(PageInfo pi, HashMap<String, String> map) {
+		return adMemDao.selectSearchMemList(sqlSession, map, pi);
 	}
 	
-	
-	
+//-----------------------------------------------------------------------	
 	
 	@Override
 	public int adminReportCount() {
@@ -128,20 +117,17 @@ public class AdminMemServiceImpl implements AdminMemService {
 	
 	@Override
 	public int selectPointCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return adMemDao.selectPointCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<Point> selectPointList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		return adMemDao.selectPointList(sqlSession, pi);
 	}
 
 	@Override
 	public int adminEnrollPoint(Point p) {
-		// TODO Auto-generated method stub
-		return 0;
+		return adMemDao.adminEnrollPoint(sqlSession, p);
 	}
 
 	

@@ -13,6 +13,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
@@ -38,30 +39,30 @@ public class AdminMemDao {
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectMemList", null, rowBounds);
 	}
 
-	public int selectSMemCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("adMemMapper.selectSMemCount");
+	public int selectSearchMemCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectSearchMemCount", map);
 	}
 
-	public ArrayList<Member> selectSMemList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Member> selectSearchMemList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
-		return (ArrayList)sqlSession.selectList("adMemMapper.selectSMemList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchMemList", map, rowBounds);
 	}
 
-	public int selectTMemCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("adMemMapper.selectTMemCount");
+	public int selectPointCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adMemMapper.selectPointCount");
 	}
 
-	public ArrayList<Member> selectTMemList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Point> selectPointList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-
-		return (ArrayList)sqlSession.selectList("adMemMapper.selectTMemList", null, rowBounds);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectPointList", null, rowBounds);
 	}
 
 	public int selectCouponCount(SqlSessionTemplate sqlSession) {
@@ -100,6 +101,11 @@ public class AdminMemDao {
 	public int updateCoupon(SqlSessionTemplate sqlSession, Coupon c) {
 		return sqlSession.update("adMemMapper.updateCoupon", c);
 	}
+	
+	public int adminEnrollPoint(SqlSessionTemplate sqlSession, Point p) {
+		return sqlSession.insert("adMemMapper.insertPoint", p);
+	}
+	
 
 	public int selectClassOrderCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adMemMapper.selectClassOrderCount");
@@ -244,7 +250,7 @@ public class AdminMemDao {
 
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchClassList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchClassList", map, rowBounds);
 	}
 
 	public int adminSearchStoreCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
@@ -257,8 +263,10 @@ public class AdminMemDao {
 
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return null;
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchStoreList", map, rowBounds);
 	}
+
+
 
 
 

@@ -28,12 +28,14 @@
         </div>
         <div class="content_1">
             <b>통합주문 검색</b>
-            <form action="orsearch.ad">
+           	<form action="orsearch.ad">
+            	<input type="hidden" id="category" value="${category }">
+            	<input type="hidden" id="lev" value="${lev }">
                 <table>
                     <tr>
                         <th width="100">주문분류</th>
                         <td width="300">
-                            <input type="radio" class="orderType" name="category" id="class" value="c" checked>
+                            <input type="radio" class="orderType" name="category" id="class" value="c">
                             <label for="class">클래스</label>
                             &nbsp;&nbsp;&nbsp;
                             <input type="radio" class="orderType" name="category" id="store" value="s">
@@ -46,9 +48,9 @@
                     <tr>
                         <th>기간검색</th>
                         <td>
-                            <input type="date" name="sDate" id="">
+                            <input type="date" name="sDate" id="" value="${sDate }" required>
                              -
-                            <input type="date" name="eDate" id="">
+                            <input type="date" name="eDate" id="" value="${eDate }" required>
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +70,7 @@
                     <tr>
                         <th>검색조건</th>
                         <td>
-                            <input type="text" name="key" id="" placeholder="주문번호를 입력하세요">
+                            <input type="text" name="key" id="keyword" placeholder="주문번호를 입력하세요" value="${key }" required>
                         </td>
                     </tr>
                 </table>
@@ -76,7 +78,7 @@
         </div>
 
         <div id="classArea">
-            <b style="float:left; margin-left: 10px; font-size: 16px; line-height: 33px;">통합주문목록(${cPi.listCount })</b>
+            <b style="float:left; margin-left: 10px; font-size: 16px; line-height: 33px;">통합주문목록(${pi.listCount })</b>
             <button onclick="classDelete();" class="btn" style="float: right; margin-right: 10px; margin-bottom: 5px; font-weight: bold; color: white; background: rgb(172, 11, 11);">삭제</button>
             <table id="classTable">
                 <thead>
@@ -93,133 +95,91 @@
                     </tr>
                 </thead>
                 <tbody>
-                	<c:forEach var="c" items="${clist }">
-                    <tr>
-                        <td><input type="checkbox" name="classChkRow" value="클래스번호넣기"></td>
-                        <td class="orderNo">${c.coNo }</td>
-                        <td>${c.userId }</td>
-                        <td>${c.userName }</td>
-                        <td>${c.price }</td>
-                        <td>${c.readingCheck }</td>
-                        <td>${c.paymentDate }</td>
-                        <td>
-                        	<c:choose>
-                        		<c:when test="${c.requestDate ne null }">${c.requestDate }</c:when>
-                        		<c:otherwise>--</c:otherwise>
-                        	</c:choose>
-                        </td>
-                        <td>
-                        	<c:choose>
-                        		<c:when test="${c.paymentOption eq 2 }">--</c:when>
-                        		<c:otherwise>카드?무통장</c:otherwise>
-                        	</c:choose>
-                        </td>
-                    </tr>
-                    </c:forEach>
+                	<c:choose>
+					<c:when test="${category eq 'c' }">
+	                	<c:forEach var="c" items="${list }">
+	                    <tr>
+	                        <td><input type="checkbox" name="classChkRow" value="클래스번호넣기"></td>
+	                        <td class="orderNo">${c.coNo }</td>
+	                        <td>${c.userId }</td>
+	                        <td>${c.userName }</td>
+	                        <td>${c.price }</td>
+	                        <td>${c.readingCheck }</td>
+	                        <td>${c.paymentDate }</td>
+	                        <td>
+	                        	<c:choose>
+	                        		<c:when test="${c.requestDate ne null }">${c.requestDate }</c:when>
+	                        		<c:otherwise>--</c:otherwise>
+	                        	</c:choose>
+	                        </td>
+	                        <td>
+	                        	<c:choose>
+	                        		<c:when test="${c.paymentOption eq 2 }">--</c:when>
+	                        		<c:otherwise>카드?무통장</c:otherwise>
+	                        	</c:choose>
+	                        </td>
+	                    </tr>
+	                    </c:forEach>
+                    </c:when>
+                    <c:when test="${category eq 's' }">
+	                    <c:forEach var="store" items="${list }">
+	                    <tr>
+	                        <td><input type="checkbox" name="storeChkRow" value="${store.orderNo }"></td>
+	                        <td class="orderNo">${store.orderNo }</td>
+	                        <td>${store.userId }</td>
+	                        <td>${store.userName }</td>
+	                        <td>${store.payAmount }</td>
+	                        <td>
+							<c:choose>
+								<c:when test="${store.orderStatus eq 1 }">주문접수</c:when>
+								<c:when test="${store.orderStatus eq 2 }">상품준비중</c:when>
+								<c:when test="${store.orderStatus eq 3 }">배송시작</c:when>
+								<c:when test="${store.orderStatus eq 4 }">배송중</c:when>
+								<c:when test="${store.orderStatus eq 5 }">배송완료</c:when>
+								<c:when test="${store.orderStatus eq 6 }">주문취소</c:when>
+								<c:when test="${store.orderStatus eq 7 }">취소완료</c:when>
+							</c:choose>
+							</td>
+	                        <td>${store.payDate }</td>
+	                        <td>
+	                        	<c:choose>
+	                        		<c:when test="${store.refundDate eq null}"> -- </c:when>
+	                        		<c:otherwise>${store.refundDate }</c:otherwise>
+	                        	</c:choose>
+	                        </td>
+	                        <td>${store.payMethod }</td>
+	                    </tr>
+					</c:forEach>
+                </c:when>
+                </c:choose>
                 </tbody>
             </table>
             
             <input type="hidden" name="hiddenList1" id="hiddenList1" value="">
             <div class="btn_group" align="center">
 				<c:choose>
-	           		<c:when test="${cPi.currentPage eq 1 }">
+	           		<c:when test="${pi.currentPage eq 1 }">
 	           			<button class="btn btn-light" disabled>&lt;</button>
 	           		</c:when>
 	           		<c:otherwise>
-	           			<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${cPi.currentPage - 1}'">&lt;</button>
+	           			<button class="btn btn-light" onclick="location.href='orsearch.ad?cpage=${pi.currentPage - 1}&category=${category }&sDate=${sDate }&eDate=${eDate }&key=${key }'">&lt;</button>
 	           		</c:otherwise>
 	           	</c:choose>
 	                   
-	   			<c:forEach var="p" begin="${cPi.startPage }" end="${cPi.endPage }">
-	   				<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${p}'">${p }</button>
+	   			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+	   				<button class="btn btn-light" onclick="location.href='orsearch.ad?cpage=${p}&category=${category }&sDate=${sDate }&eDate=${eDate }&key=${key }'">${p }</button>
 	   			</c:forEach>
 	   
 	   			<c:choose>
-	               	<c:when test="${cPi.currentPage eq cPi.maxPage }">
+	               	<c:when test="${pi.currentPage eq pi.maxPage }">
 	           			<button class="btn btn-light" disabled>&gt;</button>
 	               	</c:when>
 	               	<c:otherwise>
-	               		<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${cPi.currentPage + 1}'">&gt;</button>
+	               		<button class="btn btn-light" onclick="location.href='orsearch.ad?cpage=${pi.currentPage + 1}&category=${category }&sDate=${sDate }&eDate=${eDate }&key=${key }'">&gt;</button>
 	               	</c:otherwise>
 	            </c:choose>
         	</div>
 
-        </div>
-        
-        <div id="storeArea" style="width: 100%; font-size: 14px; margin-top:20px;">
-            <b style="float:left; margin-left: 10px; font-size: 16px; line-height: 33px;">통합주문목록(${sPi.listCount })</b>
-            <button onclick="storeDelete();" class="btn" style="float: right; margin-right: 10px; margin-bottom: 5px; font-weight: bold; color: white; background: rgb(172, 11, 11);">삭제</button>
-            <table id="storeTable" style="margin: 5px 8px; text-align: center; width: 98%; line-height: 24px;">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="sCheckAll"></th>
-                        <th width="100">주문번호</th>
-                        <th width="110">주문자아이디</th>
-                        <th width="110">주문자명</th>
-                        <th width="100">총금액</th>
-                        <th width="100">주문상태</th>
-                        <th width="200">주문일자</th>
-                        <th width="200">취소일자</th>
-                        <th width="100">결제방법</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="store" items="${slist }">
-                    <tr>
-                        <td><input type="checkbox" name="storeChkRow" value="${store.orderNo }"></td>
-                        <td class="orderNo">${store.orderNo }</td>
-                        <td>${store.userId }</td>
-                        <td>${store.userName }</td>
-                        <td>${store.payAmount }</td>
-                        <td>
-						<c:choose>
-							<c:when test="${store.orderStatus eq 1 }">주문접수</c:when>
-							<c:when test="${store.orderStatus eq 2 }">상품준비중</c:when>
-							<c:when test="${store.orderStatus eq 3 }">배송시작</c:when>
-							<c:when test="${store.orderStatus eq 4 }">배송중</c:when>
-							<c:when test="${store.orderStatus eq 5 }">배송완료</c:when>
-							<c:when test="${store.orderStatus eq 6 }">주문취소</c:when>
-							<c:when test="${store.orderStatus eq 7 }">취소완료</c:when>
-						</c:choose>
-						</td>
-                        <td>${store.payDate }</td>
-                        <td>
-                        	<c:choose>
-                        		<c:when test="${store.refundDate eq null}"> -- </c:when>
-                        		<c:otherwise>${store.refundDate }</c:otherwise>
-                        	</c:choose>
-                        </td>
-                        <td>${store.payMethod }</td>
-                    </tr>
-				</c:forEach>
-                </tbody>
-            </table>
-            
-            <input type="hidden" name="hiddenList2" id="hiddenList2" value="">
-            
-            <div class="btn_group" align="center">
-				<c:choose>
-	           		<c:when test="${sPi.currentPage eq 1 }">
-	           			<button class="btn btn-light" disabled>&lt;</button>
-	           		</c:when>
-	           		<c:otherwise>
-	           			<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${sPi.currentPage - 1}'">&lt;</button>
-	           		</c:otherwise>
-	           	</c:choose>
-	                   
-	   			<c:forEach var="p" begin="${sPi.startPage }" end="${sPi.endPage }">
-	   				<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${p}'">${p }</button>
-	   			</c:forEach>
-	   
-	   			<c:choose>
-	               	<c:when test="${sPi.currentPage eq sPi.maxPage }">
-	           			<button class="btn btn-light" disabled>&gt;</button>
-	               	</c:when>
-	               	<c:otherwise>
-	               		<button class="btn btn-light" onclick="location.href='orlist.ad?cpage=${sPi.currentPage + 1}'">&gt;</button>
-	               	</c:otherwise>
-	            </c:choose>
-        	</div>
         </div>
         
 		<script>
@@ -244,13 +204,13 @@
 				$('input:checkbox[name=storeChkRow]:checked').each(function(){
 	            	chkArr.push(this.value);
 	            });
-				$('#hiddenList2').val(chkArr);
-				console.log($('#hiddenList2').val());
+				$('#hiddenList1').val(chkArr);
+				console.log($('#hiddenList1').val());
 
 				$.ajax({
 					url:"sodelete.ad",
 					data:{
-						hiddenList:$("#hiddenList2").val()
+						hiddenList:$("#hiddenList1").val()
 					},success:function(result){
 						
 					},error:function(){
@@ -261,9 +221,15 @@
 			}
 	        
 			$(document).ready(function() {
-				var type = $("input[type=radio][name=category]").val();
-	        	
-				/*라디오 버튼에 따른 동적 화면 구현*/
+				var type = $("#category").val();
+	       		console.log(type);
+				if(type == 'c'){
+					$("#class").prop("checked", true);
+				} else if(type == 's'){
+					$("#store").prop("checked",true);
+				}
+				
+				/*라디오 버튼에 따른 동적 화면 구현
 				if($("input[type=radio][name=category]").val() == 'c'){
 					 $('#classArea').css('display','block');
 	                 $('#storeArea').css('display','none');
@@ -285,7 +251,7 @@
 	                $('input[name=lev]').prop("checked", false);
 	                $('input[name=key]').prop("checked", false);
 	            });
-				
+				*/
 	        	/* 클래스 테이블 전체선택 */
 	            $("#cCheckAll").click(function() {
 	                if($("#cCheckAll").is(":checked")) $("input[name=classChkRow]").prop("checked", true);
@@ -326,17 +292,18 @@
                 });
 
 				
-				/* 스토어테이블 tr 주문내역 상세보기 */
-				$("#storeTable tbody tr td[class='orderNo']").click(function(){
-					console.log($(this).text());
-					location.href='sodetail.ad?ono=' + $(this).text();
-				});
-				
-				/* 클래스테이블 tr 주문내역 상세보기 */
+				/* 주문내역 상세보기 */
 				$("#classTable tbody tr td[class='orderNo']").click(function(){
-					console.log($(this).text());
-					location.href='codetail.ad?ono=' + $(this).text();
+					if(type == 's'){
+						console.log($(this).text());
+						location.href='sodetail.ad?ono=' + $(this).text();
+					} else if(type =='c'){
+						console.log($(this).text());
+						location.href='codetail.ad?ono=' + $(this).text();
+					}
+					
 				});
+		
 
 			});
         </script>

@@ -32,21 +32,21 @@
         </div>
         <div class="head_2">
             <div class="head_2_left">
-                <form id="searchForm" action="pcsearch.ad">
+                <form id="searchForm">
                     <table>
                         <tr>
                             <th>분 &nbsp; &nbsp; &nbsp; 류</th>
                             <td>
-                                <input type="radio" class="searchType" name="type" id="point" value="p">
+                                <input type="radio" class="searchType" name="searchType" id="point" value="point">
                                 <label for="point">포인트</label>
-                                <input type="radio" class="searchType" name="type" id="coupon" value="c">
+                                <input type="radio" class="searchType" name="searchType" id="coupon" value="coupon" checked="checked">
                                 <label for="coupon">쿠폰</label>
                             </td>
                         </tr>
                         <tr>
                             <th>회원검색</th>
                             <td>
-                                <input type="text" id="searchKey" placeholder="아이디를 입력하세요" name="key"> 
+                                <input type="text" id="searchKey" placeholder="아이디를 입력하세요"> 
                                 <button type="submit">검색</button>
                             </td>
                         </tr>
@@ -57,11 +57,12 @@
             <div class="head_2_right"></div>
         </div>
         <div class="content_point" style="display: none;">
-        	<button class="btn" id="pointBtn" onclick="window.open('pgiveF.ad','포인트지급페이지','width=550, height=420, menubar=no, status=no, toolbar=no, resizable=no')">개별포인트관리</button>
+        	<button class="btn" id="pointBtn" onclick="window.open('pgive.ad','포인트지급페이지','width=550, height=420, menubar=no, status=no, toolbar=no, resizable=no')">개별포인트관리</button>
             <br><br>
             <table id="contentTable">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="checkAll"></th>
                         <th width="120">아이디</th>
                         <th width="120">회원명</th>
                         <th width="200">포인트내용</th>
@@ -73,6 +74,7 @@
                 <tbody>
                 <c:forEach var="p" items="${plist }">
                     <tr>
+                        <td><input type="checkbox" name="chBxRow" id=""></td>
                         <td>${p.userId }</td>
                         <td>${p.userName }</td>
                         <td>${p.reason }</td>
@@ -175,24 +177,19 @@
 
         <script>
             /*라디오 버튼에 따른 동적 화면 구현*/
-            $("input[type=radio][class=searchType]").on('click',function(){
-                var chkValue = $('input[type=radio][name=type]:checked').val();
+            $("input[type=radio][name=searchType]").on('click',function(){
+                var chkValue = $('input[type=radio][name=searchType]:checked').val();
 
                 console.log(chkValue);
 
-                if(chkValue == "p"){
+                if(chkValue == "point"){
                     $('.content_point').css('display','block');
                     $('.content_coupon').css('display','none');
-                } else if(chkValue == "c"){
+                } else if(chkValue == "coupon"){
                     $('.content_point').css('display','none');
                     $('.content_coupon').css('display','block');
                 }
             });
-            
-            $(function(){
-            	var type = $('input[type=radio][name=type]:checked').val();
-            	console.log(type);
-            })
         </script>
     </div>
     

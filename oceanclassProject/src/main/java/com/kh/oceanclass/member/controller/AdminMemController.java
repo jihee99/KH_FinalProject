@@ -22,6 +22,7 @@ import com.kh.oceanclass.member.model.service.AdminMemService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
@@ -79,34 +80,27 @@ public class AdminMemController {
 		return mv;
 	}
 
-	@RequestMapping(value="sMemlist.ad")
-	public ModelAndView selectSMemList(@RequestParam(value="cpage",defaultValue="1") int currentPage, ModelAndView mv) {
+	@RequestMapping(value="memsearch.ad")
+	public ModelAndView selectSMemList(@RequestParam(value="cpage",defaultValue="1") int currentPage, String type, String key, ModelAndView mv) {
+		HashMap<String, String> map = new HashMap<>();
 		
-		int listCount = adMemService.selectSMemCount();
+		map.put("type", type);
+		map.put("key",key);
+		
+		int listCount = adMemService.selectSearchMemCount(map);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Member> memlist = adMemService.selectSMemList(pi);
+		ArrayList<Member> memlist = adMemService.selectSearchMemList(pi, map);
+
 		
+		mv.addObject("key", key);
+		mv.addObject("type", type);
 		mv.addObject("pi", pi);
 		mv.addObject("memlist", memlist);
-		mv.setViewName("member/admin/adminMemberList");
+		mv.setViewName("member/admin/adminMemberSearchList");
 		
 		return mv;
 	}
 	
-	@RequestMapping(value="tMemlist.ad")
-	public ModelAndView selectTMemList(@RequestParam(value="cpage",defaultValue="1") int currentPage, ModelAndView mv) {
-		
-		int listCount = adMemService.selectTMemCount();
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Member> memlist = adMemService.selectTMemList(pi);
-		
-		mv.addObject("pi", pi);
-		mv.addObject("memlist", memlist);
-		mv.setViewName("member/admin/adminMemberList");
-		
-		return mv;
-	}
-
 	
 	
 	@RequestMapping(value="pclist.ad")
@@ -115,11 +109,17 @@ public class AdminMemController {
 		PageInfo cPi = Pagination.getPageInfo(clistCount, currentCPage, 5, 10);
 		ArrayList<Coupon> clist = adMemService.selectCouponList(cPi);
 		
-		/*
+		
 		int plistCount = adMemService.selectPointCount();
 		PageInfo pPi = Pagination.getPageInfo(plistCount, currentPPage, 5, 10);
 		ArrayList<Point> plist = adMemService.selectPointList(pPi);
-		*/
+		
+		mv.addObject("pPi", pPi);
+		mv.addObject("plist", plist);
+		
+		System.out.println(pPi);
+		System.out.println(plist);
+		
 		mv.addObject("cPi", cPi);
 		mv.addObject("clist", clist);
 		
@@ -196,7 +196,8 @@ public class AdminMemController {
 		model.addAttribute("c", c);
 		return "member/admin/adminCouponUpdateWindow";
 	}
-
+	
+	@ResponseBody
 	@RequestMapping(value="cupdate.ad")
 	public String adminCouponUpdate(Coupon c, Model model) {
 		System.out.println(c);
@@ -204,10 +205,20 @@ public class AdminMemController {
 		return result>0? "success" : "fail";
 	}
 
-	@RequestMapping(value="pgive.ad")
-	public String adminPointManager() {
-		// 관리자 포인트 지급 페이지 확인용 메소드
+	@RequestMapping(value="pgiveF.ad")
+	public String adminPointManager(Model model) {
+		ArrayList<Member> mlist = adMemService.selectAllMember();
+		model.addAttribute("mlist", mlist);
 		return "member/admin/adminPointWindow";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="pgive.ad")
+	public String adminPointGive(Point p, Model model) {
+		System.out.println(p);
+		int result = adMemService.adminEnrollPoint(p);
+		
+		return result>0? "success" : "fail";
 	}
 	
 	@RequestMapping(value="orlist.ad")
@@ -315,48 +326,51 @@ public class AdminMemController {
 	
 	@RequestMapping(value="orsearch.ad")
 	public String adminOrderSearch(@RequestParam(value="cpage",defaultValue="1") int currentPage, String category, String key, String sDate, String eDate, String lev, Model model) {
-		/*
-		System.out.println(category);
-		System.out.println(sDate);
-		System.out.println(eDate);
-		System.out.println(key);
-		System.out.println(lev);
-		
+
 		HashMap<String, String> map = new HashMap<>();
 		if(!category.equals("")) {
 			map.put("category", category);	
+			model.addAttribute("category", category);
 		}
 		if(!sDate.equals("")) {
 			map.put("sDate", sDate);
+			model.addAttribute("sDate", sDate);
 		}
 		if(!eDate.equals("")) {
 			map.put("eDate", eDate);
+			model.addAttribute("eDate", eDate);
 		}
 		if(!key.equals("")) {
 			map.put("key", key);
+			model.addAttribute("key", key);
 		}
 		
 		System.out.println(map);
 
 		if(category.equals("c")) {
 			//클래스일 경우 
-			int clistCount = adMemService.adminSearchClassCount(map);
-			PageInfo cPi = Pagination.getPageInfo(clistCount, currentPage, 5, 10);
-			ArrayList<ClassOrder> clist = adMemService.adminSearchClassList(map, cPi);
- 			
- 			model.addAttribute("cPi", cPi);
- 			model.addAttribute("clist",clist);
+			int listCount = adMemService.adminSearchClassCount(map);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+			ArrayList<ClassOrder> list = adMemService.adminSearchClassList(map, pi);
+ 			model.addAttribute("pi", pi);
+ 			model.addAttribute("list",list);
+ 			System.out.println(pi);
+ 			System.out.println(list);
  		}else if(category.equals("s")) {
  			//스토어일 경우 
- 			int slistCount= adMemService.adminSearchStoreCount(map);
- 			PageInfo sPi = Pagination.getPageInfo(slistCount, currentPage, 5, 10);
- 			ArrayList<StoreOrder> slist = adMemService.adminSearchStoreList(map, sPi);
- 			model.addAttribute("sPi", sPi);
- 			model.addAttribute("slist",slist);
+ 			int listCount= adMemService.adminSearchStoreCount(map);
+ 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+ 			ArrayList<StoreOrder> list = adMemService.adminSearchStoreList(map, pi);
+ 			model.addAttribute("pi", pi);
+ 			model.addAttribute("list",list);
+ 			System.out.println(pi);
+ 			System.out.println(list);
+ 		} else {
+ 			model.addAttribute("errorMsg", "조회에 실패하였습니다.");
+ 			return "common/errorPage";
  		}
  		
-		 */	
-		return "";
+		return "member/admin/adminOrderSearchList";
 	}
 
 	
@@ -427,12 +441,14 @@ public class AdminMemController {
 	}
 	
 	@RequestMapping(value="blList.ad")
-	public String adminBlackList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
+	public String adminBlackList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
 		int listCount = adMemService.adminBlackListCount();
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		ArrayList<Member> blList = adMemService.adminReportMemList(pi);
-		model.addAttribute("model", model);
+		
+		model.addAttribute("pi", pi);
 		model.addAttribute("blList", blList);
 		return "member/admin/adminBlackListPage";
 	}
