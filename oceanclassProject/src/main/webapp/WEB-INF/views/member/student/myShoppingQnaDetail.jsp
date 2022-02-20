@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,112 +13,98 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
 <style>
-	.search{float: right;}
-	.search>input{
-		width:200px; 
-		margin-bottom: 20px;
-	}
-	table{
-	    width: 90%;
-	    margin: auto;
-	    text-align: center;
-	}
+	.conhead{margin-bottom: 20px;}
+	.conhead>h2{margin-bottom: 20px;}
+	.conreview{width:90%; height: 200px; margin: 0 auto; margin-bottom: 20px; margin-left: 70px;}
+	.img{width:35%; height: 100%; float:left;}
+	.review{width:65%; height: 100%; margin-left: 280px; padding: 10px; text-align: left;}
+	.img img{width: 100%; height: 80%;}
+	.img p{font-size: 24px; text-align: center;}
+	.title{font-size: 24px; font-weight:600;}
 </style>
 </head>
 <body>
-	<div class="content">
-	    <div class="conhead">
-	        <h2>클래스 문의</h2>
-	    </div>
-	    <div class="search">
-	    	<input type="text">
-            <button class="btn btn-info">검색</button>
-	    </div>
-		<table class="table">
-	        <thead>
-	        	<tr>
-	                <th>상품</th>
-	                <th>문의 내용</th>
-	                <th>날짜</th>
-	                <th>답변상태</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	            <tr>
-	                <td>갤럭시Z-FLIP3 라벤더 색..</td>
-	                <td>퀵으로 배송 받을 수 있나요? 지역..</td>
-	                <td>2022-01-02</td>
-	                <td>답변완료</td>
-	            </tr>
-	        </tbody>
-		</table>
+	<table id="mainTable">
+		<tr>
+			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
+		</tr>
 		
-		<div class="paging" align="center">
-			<button class="btn btn-light">&lt;</button>
-			
-			<button class="btn btn-light">1</button>
-			<button class="btn btn-light">2</button>
-			<button class="btn btn-light">3</button>
-			<button class="btn btn-light">4</button>
-			<button class="btn btn-light">5</button>
-			
-			<button class="btn btn-light">&gt;</button>
-		</div>
-		
-	</div>
+		<tr>
+			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
+			<td id="mainContent">
+				<div class="content">
+				    <div class="conhead">
+				        <h2>상품 문의</h2>
+				    </div>
+				    <c:forEach var="c" items="${list}">
+					    <div class="conreview">
+				            <div class="img">
+				            	<a><img src="${c.img}"></a>
+				            	<p>${c.star}</p>
+				            </div>
+				            <div class="review">
+				            	<p class="title">
+					            	<c:choose>
+					            		<c:when test="${fn:length(c.clName) gt 21}">
+					            			<c:out value="${fn:substring(c.clName, 0, 20)}"></c:out>
+					            			..
+					            		</c:when>
+					            		<c:otherwise>
+					            			<c:out value="${c.clName}"></c:out>
+					            		</c:otherwise>
+						            </c:choose>
+					            </p>
+				            	<p>
+				            		<c:choose>
+					            		<c:when test="${fn:length(c.content) gt 101}">
+					            			<c:out value="${fn:substring(c.content, 0, 100)}"></c:out>
+					            			..
+					            		</c:when>
+					            		<c:otherwise>
+					            			<c:out value="${c.content}"></c:out>
+					            		</c:otherwise>
+						            </c:choose>
+				            	</p>
+				            </div>
+				            
+					    </div>
+				    </c:forEach>
+				</div>    
+				 
+				<div id="paging">
+					<ul class="pagination">
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ p }">${ p }</a></li>
+						</c:forEach>
+						
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+							</c:otherwise>
+						</c:choose>
+		            </ul>
+		        </div>
+			 
+			</td>
+		</tr>
+	</table>
 </body>
 </html>

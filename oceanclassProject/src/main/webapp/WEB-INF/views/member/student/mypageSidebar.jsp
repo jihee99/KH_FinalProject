@@ -28,7 +28,7 @@
 	        <p>상품 관리</p>
 	        <ul>
 	            <li><a href="?page=myShopping.jsp">주문 조회</a></li>
-	            <li><a href="?page=myShoppingReview.jsp">상품 문의/리뷰</a></li>
+	            <li><a href="myShoppingReview.me">상품 문의/리뷰</a></li>
 	            <li><a href="likeProduct.me">찜한 상품</a></li>
 	        </ul>
 	    </div>

@@ -50,9 +50,33 @@
 		<result column="cl_img" property="img" />
 	</resultMap>
 	
-
+	<resultMap id="storeResult" type="Product">
+	  	<result column="pno" property="productNo"/>
+	  	<result column="mno" property="memberNo"/>
+	  	<result column="category" property="category"/>
+	  	<result column="title" property="title"/>
+	  	<result column="price" property="price"/>
+	  	<result column="soldout_yn" property="soldoutYN"/>
+	  	<result column="status" property="status"/>
+	  	<result column="img1" property="productImg0"/>
+	</resultMap>
 	
-	<!-- 정보수정용 -->
+	<resultMap id="csResult" type="CsQna">
+	  	<result column="cs_qno" property="csQno"/>
+	  	<result column="mno" property="memNo"/>
+	  	<result column="gb_no" property="gbNo"/>
+	  	<result column="refer_no" property="referNo"/>
+	  	<result column="title" property="title"/>
+	  	<result column="content" property="content"/>
+	  	<result column="create_date" property="createDate" />
+	  	<result column="pwd" property="pwd"/>
+	  	<result column="filepath" property="filePath"/>
+	  	<result column="status" property="status"/>
+	  	<result column="answer_content" property="answerContent"/>
+	  	<result column="answer_date" property="answerDate" />
+	</resultMap>	
+
+<!-- 정보수정용 -->
 	<update id="updateProfile">
 		update
 			   member
@@ -84,7 +108,7 @@
 	</select>
 	
 	
-	<!-- 적립금/쿠폰 -->
+<!-- 적립금/쿠폰 -->
 	<select id="selectCouponCount" resultType="_int">
 		select 
 			   count(*)
@@ -106,7 +130,7 @@
 	</select>
 	
 	
-	<!-- 1:1문의 -->
+<!-- 1:1문의 -->
 	<select id="selectQnaCount" resultType="_int">
 		select 
 			   count(*)
@@ -202,7 +226,7 @@
 	</select>
 	
 	
-	<!-- 클래스 -->
+<!-- 클래스 -->
 	<select id="likeClassCount" resultType="_int">
 		select count(*)
 		  from like_item
@@ -251,18 +275,8 @@
 	</select>
 	
 	
-	<resultMap id="storeResult" type="Product">
-	  	<result column="pno" property="productNo"/>
-	  	<result column="mno" property="memberNo"/>
-	  	<result column="category" property="category"/>
-	  	<result column="title" property="title"/>
-	  	<result column="price" property="price"/>
-	  	<result column="soldout_yn" property="soldoutYN"/>
-	  	<result column="status" property="status"/>
-	  	<result column="img1" property="productImg0"/>
-	</resultMap>
 	
-	<!-- 스토어 -->
+<!-- 스토어 -->
 	<select id="likeProductCount" resultType="_int">
 		select count(*)
 		  from like_item
@@ -281,6 +295,31 @@
 		  from store s
 		  join like_item l on (s.pno = l.refer_no)
 		  where l.mno = #{memNo} 
+	</select>
+	
+	<select id="shoppingQnaCount" resultType="_int">
+		select count(*)
+		  from cs_qna
+		 where mno = #{memNo} 
+	</select>
+	 
+	<select id="shoppingQnaList" resultMap="csResult">
+		select 
+		       cs_qno
+		     , mno
+		     , gb_no
+		     , refer_no
+		     , title
+		     , content
+		     , create_date
+		     , status
+		     , filepath
+		     , status
+		     , answer_content
+		     , answer_date
+		  from cs_qna
+		 where mno = #{memNo}
+		   and gb_no = 2
 	</select>
 	
 </mapper>

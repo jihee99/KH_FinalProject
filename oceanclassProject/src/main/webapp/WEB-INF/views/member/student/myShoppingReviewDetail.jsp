@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,57 +44,70 @@
 </style>
 </head>
 <body>
-	<div class="content">
-	    <div class="conhead">
-	        <h2>상품 후기</h2>
-	    </div>
-		<div class="list">
-        	<div id="img">
-        		<a href=""><img src="resources/images/logo.png" alt=""></a>
-            	<p>별점~~~~~</p>
-        	</div>
-        	<div class="explain">
-                <h4>갤럭시Z FLIP 라벤더 색상 자급제 당일출고</h4>
-                <p id="stitle">역시 다른건 다 필요없고 이쁜게 진리인걸 증명하는!!</p>
-                <p>배터리 모자라도 괜찮아ㅠ 내 6s보단 배터리 많아ㅠ 카메라 후져도..</p>		<!-- 35자 내외로 표시하면 될듯? -->
-            </div>
-	    </div>
-		<div class="list">
-        	<div id="img">
-        		<a href=""><img src="resources/images/logo.png" alt=""></a>
-            	<p>별점~~~~~</p>
-        	</div>
-        	<div class="explain">
-                <h4>잔슨빌 육즙 가득한 스모크 소세지 2300g</h4>
-                <p id="stitle">맛있어요</p>
-                <p>크루원들이랑 배터지게 먹었네요. 존맛탱</p>
-            </div>
-	    </div>
-	    <div class="list">
-        	<div id="img">
-        		<a href=""><img src="resources/images/logo.png" alt=""></a>
-            	<p>별점~~~~~</p>
-        	</div>
-        	<div class="explain">
-                <h4>홈트레이닝 필수품! </h4>
-                <p id="stitle">저도 이제 홈트고수가 되겠습니다</p>
-                <p>에휴 망할 코로나~~ 집에서라도 열운동 하려고 샀습니다. 이제 근..</p>
-            </div>
-	    </div>
-	    
-	    <div class="paging" align="center">
-			<button class="btn btn-light">&lt;</button>
+
+	<table id="mainTable">
+		<tr>
+			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
+		</tr>
+		
+		<tr>
+			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
+			<td id="mainContent">
 			
-			<button class="btn btn-light">1</button>
-			<button class="btn btn-light">2</button>
-			<button class="btn btn-light">3</button>
-			<button class="btn btn-light">4</button>
-			<button class="btn btn-light">5</button>
-			
-			<button class="btn btn-light">&gt;</button>
-		</div>
-	    
-	</div>
+				<div class="content">
+				    <div class="conhead">
+				        <h2>상품 문의</h2>
+				    </div>
+				    <c:forEach var="s" items="${list}">
+						<div class="list">
+				        	<div id="img">
+				        		<a href=""><img src="" alt=""></a>
+				            	<p>별점~~~~~</p>
+				        	</div>
+				        	<div class="explain">
+				                <h4>갤럭시Z FLIP 라벤더 색상 자급제 당일출고</h4>
+				                <p id="stitle">역시 다른건 다 필요없고 이쁜게 진리인걸 증명하는!!</p>
+				                <p>배터리 모자라도 괜찮아ㅠ 내 6s보단 배터리 많아ㅠ 카메라 후져도..</p>	
+				            </div>
+					    </div>
+				    </c:forEach>
+				</div>
+			 
+			 	<div id="paging">
+					<ul class="pagination">
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ p }">${ p }</a></li>
+						</c:forEach>
+						
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+							</c:otherwise>
+						</c:choose>
+		            </ul>
+		        </div>
+			 	
+			</td>
+		</tr>
+	</table>
 	
 </body>
 </html>
