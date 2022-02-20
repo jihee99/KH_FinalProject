@@ -22,4 +22,7 @@ public class Point {
 	private String reason;			// 사유
 	private String deadLine;		// 사용기한
 	
+	private String userId;
+	private String userName;
+	
 }
