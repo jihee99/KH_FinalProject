@@ -29,6 +29,7 @@
 		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreOrder" alias="StoreOrder"/>
 				
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.oceanclass.member.model.vo.Teacher" alias="Teacher"/>
 		
 		<typeAlias type="com.kh.oceanclass.member.model.vo.Report" alias="Report"/>
 		<typeAlias type="com.kh.oceanclass.member.model.vo.MemCoupon" alias="MemCoupon"/>
@@ -51,6 +52,7 @@
 		<mapper resource="/mappers/adminMem-mapper.xml" />
 		<mapper resource="/mappers/class-mapper.xml" />
 		<mapper resource="/mappers/mypage-mapper.xml" />
+		<mapper resource="/mappers/tcmypage-mapper.xml" />
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/store-mapper.xml" />
 	</mappers>
