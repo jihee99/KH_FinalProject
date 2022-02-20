@@ -268,7 +268,7 @@
 		 from point
 		 join member using (mno)
 		 where deadline > sysdate
-		 order by pno
+		 order by pno desc
 	</select>
 	
 	<!-- 쿠폰목록 카운트 -->
@@ -367,12 +367,10 @@
 	
 	<update id="updateCoupon">
 		update COUPONLIST
-		   set (
-		          CNAME = #{couponName}
-		        , discount = #{discount}
-		        , MAXCOUNT = #{maxCount}
-		        , DEDATE = #{dedate}
-		        )
+		   set CNAME = #{couponName}
+		     , discount = #{discount}
+		     , MAXCOUNT = #{maxCount}
+		     , DEDATE = #{dedate}
 		where CNO = #{couponNo}
 	</update>
 	

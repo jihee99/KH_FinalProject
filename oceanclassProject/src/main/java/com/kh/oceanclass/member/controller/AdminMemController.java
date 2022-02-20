@@ -160,16 +160,12 @@ public class AdminMemController {
 		// 관리자 쿠폰 발행 페이지 확인용 메소드
 		//System.out.println(cno);
 
-		if(session.getAttribute("loginUser") != null) {
-			Coupon c = adMemService.selectCoupon(cno);
-			ArrayList<Member> mlist = adMemService.selectAllMember();
-			model.addAttribute("c", c);
-			model.addAttribute("mlist", mlist);
-			return "member/admin/adminCouponWindow";
-		} else {
-			model.addAttribute("errorMsg","접근권한이 없습니다.");
-			return "common/errorPage";
-		}
+		Coupon c = adMemService.selectCoupon(cno);
+		ArrayList<Member> mlist = adMemService.selectAllMember();
+		model.addAttribute("c", c);
+		model.addAttribute("mlist", mlist);
+		return "member/admin/adminCouponWindow";
+
 	}
 	
 	@ResponseBody
