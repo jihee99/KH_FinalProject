@@ -188,16 +188,19 @@
 			</c:if>
             
             <div id="content-wrap" >
-                <div class="dateBtn">
-                    <div class="d-flex" style="width: 160px;">
-                        <input class="form-control mr-2" type="date"> ~ <input class="form-control ml-2" type="date">
-                        <button class="material-icons" id="dateBtn" type="submit">search</button>
-                    </div>
-                    <div id="btnBox" style="float: right;">
-                        <button onclick="location.href='faqEnrollForm.ad';" class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
-                        <button class="btn btn-danger" type="submit" id="delbtn">삭제</button>
-                    </div>
-                </div>
+	            <div class="dateBtn">
+            		<form action="faqDateSearch.ad" method="get">
+	            	<input type="hidden" name="cpage" value="1">
+	                    <div class="d-flex" style="width: 160px;">
+	                        <input class="form-control mr-2" type="date" name="toDate"> ~ <input name="fromDate" class="form-control ml-2" type="date">
+	                        <button class="material-icons" id="dateBtn" type="submit">search</button>
+	                    </div>
+                	</form>
+	                    <div id="btnBox" style="float: right;">
+	                        <button onclick="location.href='faqEnrollForm.ad';" class="btn" id="btnGroup" style="background-color: rgb(107, 171, 213); color: white;">등록</button>
+	                        <button class="btn btn-danger" type="submit" id="delbtn">삭제</button>
+	                    </div>
+	                </div>
                 <div id="tableBox">
                     <table class="table table-hover">
                         <thead>
@@ -259,6 +262,29 @@
 				            });
 	            		});
 	            	})
+	            	
+	            	$("#dateBtn").click(function(){
+	 
+	                var startDate = $( "input[name='toDate']" ).val();
+	                var startDateArr = startDate.split('-');
+	
+	                var endDate = $( "input[name='fromDate']" ).val();
+	                var endDateArr = endDate.split('-');
+	                        
+	                var startDateCompare = new Date(startDateArr[0], startDateArr[1], startDateArr[2]);
+	                var endDateCompare = new Date(endDateArr[0], endDateArr[1], endDateArr[2]);
+	                
+	                if(startDateCompare.getTime() > endDateCompare.getTime()) {
+	                    
+	                    alert("시작날짜와 종료날짜를 확인해 주세요.");
+	                    
+	                    return;
+	                }
+	                
+	                //console.log(startDate);
+	                //console.log(endDate);
+                        
+                });
 		        </script>
                 <div id="paging" align="center">
 					<ul class="pagination">

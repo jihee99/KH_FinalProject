@@ -69,7 +69,7 @@
             </div>
             <div id="idFind-form">
                 <div id="idFind-text" align="center">
-                    <span>비밀번호 찾기</span>
+                    <span>비밀번호 재설정</span>
                 </div>
                 <form action="findPwd.me" method="post">
                     

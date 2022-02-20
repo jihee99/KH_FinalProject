@@ -59,7 +59,7 @@
 
 
 /*채팅관련 스타일*/
-#iChat{position: fixed; top: 600px; left: 1400px; background: none; border: none;}
+#iChat{position: fixed; top: 1000px; left: 1800px; background: none; border: none;}
 #iChat>img{width: 80px;}
 
 #iChatModal{
@@ -103,7 +103,7 @@
     <div class="wrapper">
         <div class="side">
             <div id="logo">
-                <img src="resources/images/logo.png" width="100%">
+                <a href="home.me"><img src="resources/images/logo.png" width="100%"></a>
             </div>
             <!--  
             <div id="search">
@@ -115,7 +115,7 @@
                 <div id="menu1">
                     <p>강사 정보</p>
                     <ul>
-                        <li><a href="?page=tcMyPage.jsp">강사 정보</a></li>
+                        <li><a href="myPage.tc">강사 정보</a></li>
                     </ul>
                 </div>
                 <div id="menu2">

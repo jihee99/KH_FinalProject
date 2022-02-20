@@ -31,6 +31,10 @@ public interface adminHelpService {
 	int searchNtListCount(HashMap<String, String> map);
 	ArrayList<Notice> searchNtList(PageInfo pi, HashMap<String, String> map);
 	
+	// 7. 공지사항 날짜 검색
+	int dateSearchNtListCount(HashMap<String, String> map);
+	ArrayList<Notice> dateSearchNtList(PageInfo pi, HashMap<String, String> map);
+	
 	
 	// 1. FAQ 리스트 (페이징)
 	int selectFaqListCount();
@@ -52,6 +56,9 @@ public interface adminHelpService {
 	int searchFaqListCount(HashMap<String, String> map);
 	ArrayList<Faq> searchFaqList(PageInfo pi, HashMap<String, String> map);
 	
+	// 7. FAQ 날짜 검색
+	int dateSearchFaqListCount(HashMap<String, String> map);
+	ArrayList<Faq> dateSearchFaqList(PageInfo pi, HashMap<String, String> map);
 		
 	// 1. Qna 리스트 (페이징)
 	int selectQnaListCount();
@@ -69,6 +76,10 @@ public interface adminHelpService {
 	// 5. Qna 검색
 	int searchQnaListCount(HashMap<String, String> map);
 	ArrayList<Qna> searchQnaList(PageInfo pi, HashMap<String, String> map);
+
+	// 7. Qna 날짜 검색
+	int dateSearchQnaListCount(HashMap<String, String> map);
+	ArrayList<Qna> dateSearchQnaList(PageInfo pi, HashMap<String, String> map);
 	
 }
 

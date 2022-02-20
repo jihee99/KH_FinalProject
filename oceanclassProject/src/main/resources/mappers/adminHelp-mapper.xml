@@ -168,6 +168,34 @@
 		    by nno desc
 	</select>
 	
+	<select id="dateSearchNtListCount" resultType="_int">
+		select
+		       count(*)
+		  from notice
+		 where status = 'Y'
+		 <if test="toDate!=null and fromDate!=null">
+		     and create_date between TO_DATE(#{toDate},'YYYY-MM-DD') and TO_DATE(#{fromDate},'YYYY-MM-DD')
+		 </if>
+	</select>
+	
+	<select id="dateSearchNtList" resultMap="noticeResult">
+		select
+		       nno
+		     , mno
+		     , category
+		     , n_title
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from notice
+          join member using (mno)
+		 where status = 'Y'
+		 <if test="toDate!=null and fromDate!=null">
+		     and create_date between TO_DATE(#{toDate},'YYYY-MM-DD') and TO_DATE(#{fromDate},'YYYY-MM-DD')
+		 </if>
+		 order
+		    by nno desc
+	</select>
+	
 	<!-- Faq -->
 	<select id="selectFaqListCount" resultType="_int">
 		select
@@ -284,6 +312,33 @@
 		    by fno desc
 	</select>
 	
+	<select id="dateSearchFaqListCount" resultType="_int">
+		select
+		       count(*)
+		  from faq
+		 where status = 'Y'
+		 <if test="toDate!=null and fromDate!=null">
+		     and create_date between TO_DATE(#{toDate},'YYYY-MM-DD') and TO_DATE(#{fromDate},'YYYY-MM-DD')
+		 </if>
+	</select>
+	
+	<select id="dateSearchFaqList" resultMap="faqResult">
+		select
+		       fno
+		     , mno
+		     , category
+		     , f_title
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from faq
+          join member using (mno)
+		 where status = 'Y'
+		 <if test="toDate!=null and fromDate!=null">
+		     and create_date between TO_DATE(#{toDate},'YYYY-MM-DD') and TO_DATE(#{fromDate},'YYYY-MM-DD')
+		 </if>
+		 order
+		    by fno desc
+	</select>
 	
 	<!-- Qna -->
 	<select id="selectQnaListCount" resultType="_int">
@@ -384,6 +439,35 @@
 	     <if test='category == "A"'>
 	     </if>  
 		 and q_title like '%' || #{keyword} || '%'
+		 order
+		    by qno desc
+	</select>
+	
+	<select id="dateSearchQnaListCount" resultType="_int">
+		select
+		       count(*)
+		  from qna
+		 where status = 'Y'
+		 <if test="toDate!=null and fromDate!=null">
+		     and create_date between TO_DATE(#{toDate},'YYYY-MM-DD') and TO_DATE(#{fromDate},'YYYY-MM-DD')
+		 </if>
+	</select>
+	
+	<select id="dateSearchQnaList" resultMap="qnaResult">
+		select
+		       qno
+		     , category
+		     , q_title
+		     , q_content
+             , nickname
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , a_content
+		  from qna
+          join member using (mno)
+		 where status = 'Y'
+		 <if test="toDate!=null and fromDate!=null">
+		     and create_date between TO_DATE(#{toDate},'YYYY-MM-DD') and TO_DATE(#{fromDate},'YYYY-MM-DD')
+		 </if>
 		 order
 		    by qno desc
 	</select>

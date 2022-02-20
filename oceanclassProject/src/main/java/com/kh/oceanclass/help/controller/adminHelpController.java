@@ -185,6 +185,35 @@ public class adminHelpController {
 		return "member/admin/adminNoticeList";
 	}
 	
+	
+	@RequestMapping("noticeDateSearch.ad")
+	public String dateSearchNtList(int cpage, String toDate, String fromDate, Model model, HttpSession session) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("toDate", toDate);
+		map.put("fromDate", fromDate);
+		
+		int listScCount = ahService.dateSearchNtListCount(map);
+		PageInfo pi = Pagination.getPageInfo(listScCount, cpage, 5, 10);
+		ArrayList<Notice> list = ahService.dateSearchNtList(pi, map);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else if(list.get(i).getCategory().equals("T")) {
+				list.get(i).setCategory("강사");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+		
+		model.addAttribute("toDate",toDate).addAttribute("fromDate",fromDate).addAttribute("pi",pi).addAttribute("list",list);
+		//System.out.println(toDate);
+		//System.out.println(fromDate);
+		return "member/admin/adminNoticeList";
+	}
 	// faq 
 	
 	@RequestMapping("faqList.ad")
@@ -294,6 +323,33 @@ public class adminHelpController {
 		return "member/admin/adminFAQList";
 	}
 	
+	@RequestMapping("faqDateSearch.ad")
+	public String dateSearchFaqList(int cpage, String toDate, String fromDate, Model model, HttpSession session) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("toDate", toDate);
+		map.put("fromDate", fromDate);
+		
+		int listScCount = ahService.dateSearchFaqListCount(map);
+		PageInfo pi = Pagination.getPageInfo(listScCount, cpage, 5, 10);
+		ArrayList<Faq> list = ahService.dateSearchFaqList(pi, map);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+		
+		model.addAttribute("toDate",toDate).addAttribute("fromDate",fromDate).addAttribute("pi",pi).addAttribute("list",list);
+		//System.out.println(toDate);
+		//System.out.println(fromDate);
+		return "member/admin/adminFAQList";
+	}
+	
 	// Qna
 
 	@RequestMapping("qnaList.ad")
@@ -391,6 +447,33 @@ public class adminHelpController {
 		model.addAttribute("category",category).addAttribute("keyword",keyword).addAttribute("pi",pi).addAttribute("list",list);
 		//System.out.println(category);
 		//System.out.println(keyword);
+		return "member/admin/admin1to1List";
+	}
+	
+	@RequestMapping("qnaDateSearch.ad")
+	public String dateSearchQnaList(int cpage, String toDate, String fromDate, Model model, HttpSession session) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("toDate", toDate);
+		map.put("fromDate", fromDate);
+		
+		int listScCount = ahService.dateSearchQnaListCount(map);
+		PageInfo pi = Pagination.getPageInfo(listScCount, cpage, 5, 10);
+		ArrayList<Qna> list = ahService.dateSearchQnaList(pi, map);
+		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+		
+		model.addAttribute("toDate",toDate).addAttribute("fromDate",fromDate).addAttribute("pi",pi).addAttribute("list",list);
+		//System.out.println(toDate);
+		//System.out.println(fromDate);
 		return "member/admin/admin1to1List";
 	}
 
