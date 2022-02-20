@@ -13,17 +13,20 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
 <style>
-	.conhead{margin-bottom: 20px;}
-	.conhead>h2{margin-bottom: 20px;}
-	.conreview{width:90%; height: 200px; margin: 0 auto; margin-bottom: 20px; margin-left: 70px;}
-	.img{width:35%; height: 100%; float:left;}
-	.review{width:65%; height: 100%; margin-left: 280px; padding: 10px; text-align: left;}
-	.img img{width: 100%; height: 80%;}
-	.img p{font-size: 24px; text-align: center;}
-	.title{font-size: 24px; font-weight:600;}
+	.table{
+		width: 90%;
+		margin: 0 auto;
+		margin-top: 30px;
+	}
+	.pagination{
+		width: 90%;
+		margin: 0 auto;
+		margin-top: 50px;
+	}
 </style>
 </head>
 <body>
+
 	<table id="mainTable">
 		<tr>
 			<td colspan="2" style="height:200px;"><jsp:include page="mypageHeader.jsp" flush="false" /></td>
@@ -32,79 +35,95 @@
 		<tr>
 			<td id="mainSide"><jsp:include page="mypageSidebar.jsp" flush="false" /></td>
 			<td id="mainContent">
+			
 				<div class="content">
 				    <div class="conhead">
 				        <h2>상품 문의</h2>
 				    </div>
-				    <c:forEach var="c" items="${list}">
-					    <div class="conreview">
-				            <div class="img">
-				            	<a><img src="${c.img}"></a>
-				            	<p>${c.star}</p>
-				            </div>
-				            <div class="review">
-				            	<p class="title">
-					            	<c:choose>
-					            		<c:when test="${fn:length(c.clName) gt 21}">
-					            			<c:out value="${fn:substring(c.clName, 0, 20)}"></c:out>
+					<table class="table">
+			            <thead>
+			                <tr>
+			                    <th>상품</th> 
+				                <th>문의제목</th>
+				                <th>문의내용</th>
+				                <th>답변유무</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			            	<c:forEach var="s" items="${list}">
+			            		<input type="hidden" id="referNo" name="referNo" value="${s.referNo}">
+					            <tr>
+					                <td>${s.proTitle}</td>
+					                 <td>${s.title}</td>
+					                <td>
+						                <c:choose>
+					            		<c:when test="${fn:length(s.content) gt 25}">
+					            			<c:out value="${fn:substring(s.content, 0, 24)}"></c:out>
 					            			..
 					            		</c:when>
 					            		<c:otherwise>
-					            			<c:out value="${c.clName}"></c:out>
+					            			<c:out value="${s.content}"></c:out>
 					            		</c:otherwise>
-						            </c:choose>
-					            </p>
-				            	<p>
-				            		<c:choose>
-					            		<c:when test="${fn:length(c.content) gt 101}">
-					            			<c:out value="${fn:substring(c.content, 0, 100)}"></c:out>
-					            			..
-					            		</c:when>
-					            		<c:otherwise>
-					            			<c:out value="${c.content}"></c:out>
-					            		</c:otherwise>
-						            </c:choose>
-				            	</p>
-				            </div>
-				            
-					    </div>
-				    </c:forEach>
-				</div>    
-				 
-				<div id="paging">
-					<ul class="pagination">
-						<c:choose>
-							<c:when test="${ pi.currentPage eq 1 }">
-								<li class="page-item disabled">
-									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
-							</c:otherwise>
-						</c:choose>
-						
-						
-						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ p }">${ p }</a></li>
-						</c:forEach>
-						
-						
-						<c:choose>
-							<c:when test="${ pi.currentPage eq pi.maxPage }">
-								<li class="page-item disabled">
-									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ pi.currentPage+1 }">Next</a></li>
-							</c:otherwise>
-						</c:choose>
-		            </ul>
-		        </div>
-			 
+						            	</c:choose>
+					                </td>
+					                <c:choose>
+				                        <c:when test="${not empty s.answerContent}">
+				                        	<td>등록완료</td>
+				                        </c:when>
+				                        <c:otherwise>
+				                        	<td>대기중</td>
+				                        </c:otherwise>
+			                        </c:choose>
+					            </tr>
+				            </c:forEach>
+			            </tbody>
+			        </table>
+			        
+			        <script>
+			        	$(function(){
+			        		$("#qnaList>tbody>tr").click(function(){
+			        			var pno = $($(this)[0]).children().first().val();
+			        			location.href='productMain.pr?pno=' + pno;
+			        		});
+			        	});
+			        </script>
+			        
+				 	<div id="paging">
+						<ul class="pagination">
+							<c:choose>
+								<c:when test="${ pi.currentPage eq 1 }">
+									<li class="page-item disabled">
+										<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="myShoppingQnaDetail.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+								</c:otherwise>
+							</c:choose>
+							
+							
+							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+								<li class="page-item"><a class="page-link" href="myShoppingQnaDetail.me?cpage=${ p }">${ p }</a></li>
+							</c:forEach>
+							
+							
+							<c:choose>
+								<c:when test="${ pi.currentPage eq pi.maxPage }">
+									<li class="page-item disabled">
+										<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="myShoppingQnaDetail.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+								</c:otherwise>
+							</c:choose>
+			            </ul>
+			        </div>
+				</div>
+				
 			</td>
 		</tr>
 	</table>
+	
 </body>
 </html>

@@ -300,7 +300,7 @@ public class StuMypageController {
 		return "member/student/myShoppingLike";
 	}
 	
-	// 상품리뷰
+	// 상품리뷰&Qna
 	@RequestMapping("myShoppingReview.me")
 	public String myShoppingReview(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -315,19 +315,19 @@ public class StuMypageController {
 		return "member/student/myShoppingReview";
 	}
 	
-	// 상품 리뷰 디테일
-	@RequestMapping("myShoppingReviewDetail.me")
+	// 상품 Qna 디테일
+	@RequestMapping("myShoppingQnaDetail.me")
 	public String myShoppingReviewDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		
 		int reviewCount = myService.shoppingQnaCount(memNo);
 		
-		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
+		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 10);
 		ArrayList<StoreReview> list = myService.shoppingQnaList(pi, memNo);
 		//System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		return "member/student/myShoppingReviewDetail";
+		return "member/student/myShoppingQnaDetail";
 	}
 	
 }

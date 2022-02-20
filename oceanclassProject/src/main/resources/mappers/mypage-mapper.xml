@@ -74,6 +74,7 @@
 	  	<result column="status" property="status"/>
 	  	<result column="answer_content" property="answerContent"/>
 	  	<result column="answer_date" property="answerDate" />
+	  	<result column="pro_title" property="proTitle" />
 	</resultMap>	
 
 <!-- 정보수정용 -->
@@ -303,23 +304,26 @@
 		 where mno = #{memNo} 
 	</select>
 	 
-	<select id="shoppingQnaList" resultMap="csResult">
+	<select id="shoppingQnaList" resultMap="csResult">				  
 		select 
 		       cs_qno
-		     , mno
+		     , cs.mno
 		     , gb_no
 		     , refer_no
-		     , title
+		     , cs.title
 		     , content
 		     , create_date
-		     , status
 		     , filepath
-		     , status
+		     , cs.status
 		     , answer_content
 		     , answer_date
-		  from cs_qna
-		 where mno = #{memNo}
+		     , s.title as "pro_title"
+		  from cs_qna cs
+		  join store s on ( cs.refer_no = s.pno)
+		 where cs.mno = #{memNo}
 		   and gb_no = 2
+		 order 
+		    by cs_qno desc
 	</select>
 	
 </mapper>
