@@ -184,15 +184,27 @@
 			</c:if>
             
             <div id="content-wrap" >
-                <div class="dateBtn">
-                    <div class="d-flex" style="width: 160px;">
-                        <input class="form-control mr-2" type="date" name="toDate"> ~ <input class="form-control ml-2" id="fromDate" type="date">
-                        <button class="material-icons" id="dateBtn" type="submit">search</button>
-                    </div>
-                    <div id="btnBox" style="float: right;">
-                        <button class="btn btn-danger" id="btnGroup">삭제</button>
-                    </div>
-                </div>
+	            <div class="dateBtn">
+	            	<form action="qnaDateSearch.ad" method="get">
+	            	<input type="hidden" name="cpage" value="1">
+	                    <div class="d-flex" style="width: 160px;" id="date-area">
+	                        <input class="form-control mr-2" type="date" name="toDate"> ~ <input class="form-control ml-2" name="fromDate" type="date">
+	                        <button class="material-icons" id="dateBtn" type="submit">search</button>
+	                    </div>
+	            	</form>
+	            	
+	            	<c:if test="${ not empty toDate }">
+						<script>
+							$(function(){
+								$("#date-area input[type=date]").attr("selected", true);
+							})
+						</script>
+					</c:if>
+	            	
+	                    <div id="btnBox" style="float: right;">
+	                        <button class="btn btn-danger" id="btnGroup">삭제</button>
+	                    </div>
+	                </div>
                 <div id="tableBox">
                     <table class="table table-hover">
                         <thead>
@@ -264,6 +276,29 @@
 				            });
 	            		});
 	            	})
+	            	
+	            	$("#dateBtn").click(function(){
+	 
+	                var startDate = $( "input[name='toDate']" ).val();
+	                var startDateArr = startDate.split('-');
+	
+	                var endDate = $( "input[name='fromDate']" ).val();
+	                var endDateArr = endDate.split('-');
+	                        
+	                var startDateCompare = new Date(startDateArr[0], startDateArr[1], startDateArr[2]);
+	                var endDateCompare = new Date(endDateArr[0], endDateArr[1], endDateArr[2]);
+	                
+	                if(startDateCompare.getTime() > endDateCompare.getTime()) {
+	                    
+	                    alert("시작날짜와 종료날짜를 확인해 주세요.");
+	                    
+	                    return;
+	                }
+	                
+	                //console.log(startDate);
+	                //console.log(endDate);
+                        
+                });
 		        </script>
                 
                 <div id="paging" align="center">

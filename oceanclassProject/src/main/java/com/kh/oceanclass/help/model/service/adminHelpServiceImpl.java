@@ -63,6 +63,16 @@ public class adminHelpServiceImpl implements adminHelpService{
 	public ArrayList<Notice> searchNtList(PageInfo pi, HashMap<String, String> map) {
 		return ahDao.searchNtList(sqlSession, pi, map);
 	}
+	
+	@Override
+	public int dateSearchNtListCount(HashMap<String, String> map) {
+		return ahDao.dateSearchNtListCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Notice> dateSearchNtList(PageInfo pi, HashMap<String, String> map) {
+		return ahDao.dateSearchNtList(sqlSession, pi, map);
+	}
 
 	// Faq
 	
@@ -105,7 +115,17 @@ public class adminHelpServiceImpl implements adminHelpService{
 	public ArrayList<Faq> searchFaqList(PageInfo pi, HashMap<String, String> map) {
 		return ahDao.searchFaqList(sqlSession, pi, map);
 	}
+	
+	@Override
+	public int dateSearchFaqListCount(HashMap<String, String> map) {
+		return ahDao.dateSearchFaqListCount(sqlSession, map);
+	}
 
+	@Override
+	public ArrayList<Faq> dateSearchFaqList(PageInfo pi, HashMap<String, String> map) {
+		return ahDao.dateSearchFaqList(sqlSession, pi, map);
+	}
+	
 	// Qna
 	
 	@Override
@@ -142,5 +162,15 @@ public class adminHelpServiceImpl implements adminHelpService{
 	public ArrayList<Qna> searchQnaList(PageInfo pi, HashMap<String, String> map) {
 		return ahDao.searchQnaList(sqlSession, pi, map);
 	}
+	
+	@Override
+	public int dateSearchQnaListCount(HashMap<String, String> map) {
+		return ahDao.dateSearchQnaListCount(sqlSession, map);
+	}
 
+	@Override
+	public ArrayList<Qna> dateSearchQnaList(PageInfo pi, HashMap<String, String> map) {
+		return ahDao.dateSearchQnaList(sqlSession, pi, map);
+	}
+	
 }

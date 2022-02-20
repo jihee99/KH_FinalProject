@@ -141,7 +141,7 @@
             </div>
             <div id="content-wrap">
                 <form action="" method="post" id="form-area">
-                    
+                <input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
                     <div class="form-group">
                         <div class="img-box">
                             <img src="resources/images/user.png" style="width: 100px;">
@@ -220,12 +220,20 @@
                         <!-- 플러스버튼 클릭시 sns 입력 폼이 들어올 자리 -->
                     </div>
 
-                    <button type="submit" id="findIdBtn" class="btn" style="background-color: lightgray; margin-top: 40px;">비밀번호 변경하기</button>
+                    <button onclick="formSubmit(1)" id="findIdBtn" class="btn" style="background-color: lightgray; margin-top: 40px;">비밀번호 변경하기</button>
                     <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">수정하기</button>
                     <button type="submit" id="findIdBtn" class="btn" style="background-color: lightgray;">탈퇴하기</button>
-
                 </form>
             </div>
+            <script>
+           		function formSubmit(num){
+           			if(num == 1){ // 수정하기 클릭시
+           				$("#form-area").attr("action", "findPwdForm.me").submit();
+           			}else{ // 종료하기 클릭시
+           				$("#detailForm").attr("action", "evEnd.ad").submit();
+           			}
+           		}
+           	</script>
             <br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />

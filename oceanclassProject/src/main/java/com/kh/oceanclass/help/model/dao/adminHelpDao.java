@@ -53,6 +53,17 @@ public class adminHelpDao {
 		return (ArrayList)sqlSession.selectList("adminHelpMapper.searchNtList", map, rowBounds);
 	}
 	
+	public int dateSearchNtListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adminHelpMapper.dateSearchNtListCount", map);
+	}
+	public ArrayList<Notice> dateSearchNtList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminHelpMapper.dateSearchNtList", map, rowBounds);
+	}
+	
 	// FAQ
 	
 	public int selectFaqListCount(SqlSessionTemplate sqlSession) {
@@ -89,6 +100,17 @@ public class adminHelpDao {
 		return (ArrayList)sqlSession.selectList("adminHelpMapper.searchFaqList", map, rowBounds);
 	}
 	
+	public int dateSearchFaqListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adminHelpMapper.dateSearchFaqListCount", map);
+	}
+	public ArrayList<Faq> dateSearchFaqList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminHelpMapper.dateSearchFaqList", map, rowBounds);
+	}
+	
 	// QNA
 	
 	public int selectQnaListCount(SqlSessionTemplate sqlSession) {
@@ -120,5 +142,15 @@ public class adminHelpDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("adminHelpMapper.searchQnaList", map, rowBounds);
+	}
+	public int dateSearchQnaListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adminHelpMapper.dateSearchQnaListCount", map);
+	}
+	public ArrayList<Qna> dateSearchQnaList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminHelpMapper.dateSearchQnaList", map, rowBounds);
 	}
 }
