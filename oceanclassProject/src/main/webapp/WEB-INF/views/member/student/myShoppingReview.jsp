@@ -46,26 +46,32 @@
 			<td id="mainContent">
 				<div class="content">
 					<div class="content1">
-					    <div class="conhead">
-					        <h2>스토어 문의</h2>
-					        <a href="myShoppingReviewDetail.me">더보기</a>
-					    </div>
-					    <table class="table">
-					        <thead>
-					            <tr>
-					                <th>상품</th>
-					                <th>리뷰</th>
-					            </tr>
-					        </thead>
-					        <tbody>
-					        	<c:choose>
-					        		<c:when test="${empty list}">
-					        			<p>등록된 리뷰가 없습니다</p>
-					        		</c:when>
-					        		<c:otherwise>
+						<c:choose>
+					    	<c:when test="${empty list}">
+					    		<div class="conhead">
+							        <h2>스토어 문의</h2>
+							    </div>
+					    		<p style="font-size:18px; font-weight:800; text-align:center; margin-top: 50px;">
+					    			등록된 문의가 없습니다
+					    		</p>
+					    	</c:when>
+					    	<c:otherwise>
+					    		<div class="conhead">
+							        <h2>스토어 문의</h2>
+							        <a href="myShoppingQnaDetail.me">더보기</a>
+							    </div>
+							    <table class="table">
+							        <thead>
+							            <tr>
+							                <th>상품</th>
+							                <th>문의내용</th>
+							                <th>답변유무</th>
+							            </tr>
+							        </thead>
+							        <tbody>
 					        			<c:forEach var="s" items="${list}" begin="0" end="4">
 								            <tr>
-								                <td>${s.title}</td>
+								                <td>${s.proTitle}</td>
 								                <td>
 									                <c:choose>
 								            		<c:when test="${fn:length(s.content) gt 25}">
@@ -77,12 +83,20 @@
 								            		</c:otherwise>
 									            	</c:choose>
 								                </td>
+								                <c:choose>
+							                        <c:when test="${not empty s.answerContent}">
+							                        	<td>등록완료</td>
+							                        </c:when>
+							                        <c:otherwise>
+							                        	<td>대기중</td>
+							                        </c:otherwise>
+						                        </c:choose>
 								            </tr>
 							            </c:forEach>
-					        		</c:otherwise>
-					        	</c:choose>
-					        </tbody>
-					    </table>
+							        </tbody>
+						        </table>
+					        </c:otherwise>
+					 	</c:choose>	
 					 </div> 
 					 
 					 <div class="content1">

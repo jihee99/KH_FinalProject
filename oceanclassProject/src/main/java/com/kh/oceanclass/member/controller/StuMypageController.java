@@ -63,15 +63,19 @@ public class StuMypageController {
 	public String changeProfile(Member m, MultipartFile upfile, HttpSession session, Model model) {
 		
 		System.out.println(upfile);
-		String changeName = saveFile(upfile, session);
+		if(!upfile.getOriginalFilename().equals("")) {		
+			String changeName = saveFile(upfile, session);
+			m.setProfileImg("resources/uploadFiles/" + changeName);
+		}else {				// 프로필 사진 없을 경우
+			m.setProfileImg("");
+		}
 		
-		m.setProfileImg("resources/uploadFiles/" + changeName);
-		
-		System.out.println(m);
+		//System.out.println(m);
 		int result = myService.updateProfile(m);
-		System.out.println(result);
+		//System.out.println(result);
 		if(result>0) {
 			session.setAttribute("alertMsg", "정보 수정 완료");
+			//return "member/student/myProfile";
 			return "redirect:myProfile.me";
 		}else {
 			model.addAttribute("errorMsg", "정보수정실패");
@@ -300,7 +304,7 @@ public class StuMypageController {
 		return "member/student/myShoppingLike";
 	}
 	
-	// 상품리뷰
+	// 상품리뷰&Qna
 	@RequestMapping("myShoppingReview.me")
 	public String myShoppingReview(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -315,19 +319,19 @@ public class StuMypageController {
 		return "member/student/myShoppingReview";
 	}
 	
-	// 상품 리뷰 디테일
-	@RequestMapping("myShoppingReviewDetail.me")
+	// 상품 Qna 디테일
+	@RequestMapping("myShoppingQnaDetail.me")
 	public String myShoppingReviewDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		
 		int reviewCount = myService.shoppingQnaCount(memNo);
 		
-		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
+		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 10);
 		ArrayList<StoreReview> list = myService.shoppingQnaList(pi, memNo);
 		//System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		return "member/student/myShoppingReviewDetail";
+		return "member/student/myShoppingQnaDetail";
 	}
 	
 }

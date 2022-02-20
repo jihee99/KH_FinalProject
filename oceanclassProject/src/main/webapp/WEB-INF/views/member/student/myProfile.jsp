@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +51,7 @@
     #changeProfile{
         background-color: rgb(213, 232, 248); 
     }
-    .img{width: 200px; height: 200px; border:1px solid lightgray; margin: 0 auto; margin-bottom: 20px;}
+    .img{width: 200px; height: 200px; margin: 0 auto; margin-bottom: 20px;}
     .img>img{width: 100%;}
 </style>
 </head>
@@ -71,7 +72,16 @@
 				    </div>
 				    <div id="join-form">
 				        <div class="box">
-				            <div class="img"><img src="${loginUser.profileImg}"></div>
+				            <c:choose>
+					    		<c:when test="${not empty loginUser.profileImg}">
+					    			<div class="img">
+					    				<img src="${loginUser.profileImg}">
+					    			</div>
+					    		</c:when>
+					    		<c:otherwise>
+					    			<i class="bi bi-person-circle" style="font-size: 6rem; color: cornflowerblue;"></i>
+					    		</c:otherwise>
+					    	</c:choose>
 				        </div>
 				     
 				        <div class="box">
