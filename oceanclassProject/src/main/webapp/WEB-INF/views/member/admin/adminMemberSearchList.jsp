@@ -24,21 +24,22 @@
         </div>
         <div class="head_2">
             <div class="head_2_left">
-                <form id="searchForm">
+                <form id="searchForm" action="memsearch.ad">
+                <input type="hidden" id="type" value="${type }">
                     <table>
                         <tr>
                             <th>회원분류</th>
                             <td>
-                                <input type="radio" class="memberType" name="memberType" id="memT">
+                                <input type="radio" class="memberType" name="type" id="memT" value="T">
                                 <label for="memT">강사</label>
-                                <input type="radio" class="memberType" name="memberType" id="memS">
+                                <input type="radio" class="memberType" name="type" id="memS" value="S">
                                 <label for="memS">일반회원</label>
                             </td>
                         </tr>
                         <tr>
-                            <th>회원검색</th>
+                            <th>회원검색&nbsp;</th>
                             <td>
-                                <input type="text" id="searchKey" placeholder="회원명을 입력하세요"> 
+                                <input type="text" id="key" name="key" placeholder="회원명을 입력하세요" value="${key }"> 
                                 <button type="submit">검색</button>
                             </td>
                         </tr>
@@ -90,7 +91,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <button class="btn">블랙리스트 조회</button>
+            <button class="btn" onclick="location.href='blList.ad'">블랙리스트 조회</button>
             
         </div>
         <div class="btn_group" align="center">
@@ -100,12 +101,12 @@
            			<button class="btn btn-light" disabled>&lt;</button>
            		</c:when>
            		<c:otherwise>
-           			<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${pi.currentPage - 1}'">&lt;</button>
+           			<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${pi.currentPage - 1}&type=${type }&key=${key }'">&lt;</button>
            		</c:otherwise>
            	</c:choose>
                    
    			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-   				<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${p}'">${p }</button>
+   				<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${p}&type=${type }&key=${key }'">${p }</button>
    			</c:forEach>
    
    			<c:choose>
@@ -113,7 +114,7 @@
            			<button class="btn btn-light" disabled>&gt;</button>
                	</c:when>
                	<c:otherwise>
-               		<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${pi.currentPage + 1}'">&gt;</button>
+               		<button class="btn btn-light" onclick="location.href='memlist.ad?cpage=${pi.currentPage + 1}&type=${type }&key=${key }'">&gt;</button>
                	</c:otherwise>
             </c:choose>
         </div>
@@ -122,7 +123,13 @@
             var memArr = new Array();
 
             $(document).ready(function() {
-
+				var type = $("#type").val();
+				if(type == 'T'){
+					$("#memT").prop("checked", true);
+				}else if(type == 'S'){
+					$("#memS").prop("checked", true);
+				}
+				
                 $("#checkAll").click(function() {
                     if($("#checkAll").is(":checked")) $("input[name=memChBxRow]").prop("checked", true);
                     else $("input[name=memChBxRow]").prop("checked", false);
@@ -172,13 +179,14 @@
                         memArr.push(obj);
                     }
                 }
-                
+                /*
                 $("#memS").click(function(){
                 	location.href="sMemlist.ad?grade=S";
                 })
 				$("#memT").click(function(){
 					location.href="tMemlist.ad?grade=T"
 				})
+				*/
 			});
         </script>
         

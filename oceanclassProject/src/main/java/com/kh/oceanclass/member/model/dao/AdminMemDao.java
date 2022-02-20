@@ -38,31 +38,19 @@ public class AdminMemDao {
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectMemList", null, rowBounds);
 	}
 
-	public int selectSMemCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("adMemMapper.selectSMemCount");
+	public int selectSearchMemCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectSearchMemCount", map);
 	}
 
-	public ArrayList<Member> selectSMemList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Member> selectSearchMemList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
-		return (ArrayList)sqlSession.selectList("adMemMapper.selectSMemList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchMemList", map, rowBounds);
 	}
 
-	public int selectTMemCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("adMemMapper.selectTMemCount");
-	}
-
-	public ArrayList<Member> selectTMemList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
-		int limit = pi.getBoardLimit();
-		
-		RowBounds rowBounds = new RowBounds(offset, limit);
-
-		return (ArrayList)sqlSession.selectList("adMemMapper.selectTMemList", null, rowBounds);
-	}
 
 	public int selectCouponCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adMemMapper.selectCouponCount");

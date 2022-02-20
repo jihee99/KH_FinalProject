@@ -79,34 +79,32 @@ public class AdminMemController {
 		return mv;
 	}
 
-	@RequestMapping(value="sMemlist.ad")
-	public ModelAndView selectSMemList(@RequestParam(value="cpage",defaultValue="1") int currentPage, ModelAndView mv) {
+	@RequestMapping(value="memsearch.ad")
+	public ModelAndView selectSMemList(@RequestParam(value="cpage",defaultValue="1") int currentPage, String type, String key, ModelAndView mv) {
+		HashMap<String, String> map = new HashMap<>();
 		
-		int listCount = adMemService.selectSMemCount();
+		System.out.println(type + " / " + key );
+		
+		map.put("type", type);
+		map.put("key",key);
+		System.out.println(map);
+		
+		int listCount = adMemService.selectSearchMemCount(map);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Member> memlist = adMemService.selectSMemList(pi);
+		ArrayList<Member> memlist = adMemService.selectSearchMemList(pi, map);
 		
+		System.out.println(pi);
+		System.out.println(memlist);
+		
+		mv.addObject("key", key);
+		mv.addObject("type", type);
 		mv.addObject("pi", pi);
 		mv.addObject("memlist", memlist);
-		mv.setViewName("member/admin/adminMemberList");
+		mv.setViewName("member/admin/adminMemberSearchList");
 		
 		return mv;
 	}
 	
-	@RequestMapping(value="tMemlist.ad")
-	public ModelAndView selectTMemList(@RequestParam(value="cpage",defaultValue="1") int currentPage, ModelAndView mv) {
-		
-		int listCount = adMemService.selectTMemCount();
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Member> memlist = adMemService.selectTMemList(pi);
-		
-		mv.addObject("pi", pi);
-		mv.addObject("memlist", memlist);
-		mv.setViewName("member/admin/adminMemberList");
-		
-		return mv;
-	}
-
 	
 	
 	@RequestMapping(value="pclist.ad")
@@ -315,13 +313,7 @@ public class AdminMemController {
 	
 	@RequestMapping(value="orsearch.ad")
 	public String adminOrderSearch(@RequestParam(value="cpage",defaultValue="1") int currentPage, String category, String key, String sDate, String eDate, String lev, Model model) {
-		
-		System.out.println(category);
-		System.out.println(sDate);
-		System.out.println(eDate);
-		System.out.println(key);
-		System.out.println(lev);
-		
+
 		HashMap<String, String> map = new HashMap<>();
 		if(!category.equals("")) {
 			map.put("category", category);	
@@ -441,6 +433,10 @@ public class AdminMemController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		ArrayList<Member> blList = adMemService.adminReportMemList(pi);
+		
+		System.out.println(pi);
+		System.out.println(blList);
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("blList", blList);
 		return "member/admin/adminBlackListPage";

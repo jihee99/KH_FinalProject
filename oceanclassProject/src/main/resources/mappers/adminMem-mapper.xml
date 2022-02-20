@@ -188,16 +188,19 @@
 	</select>
 	
 	<!-- 학생 회원 수 조회 -->
-	<select id="selectSMemCount" resultType="_int">
+	<select id="selectSearchMemCount" resultType="_int">
 		select
 		       count(*)
 		  from member
-		 where u_status = 'Y'
-		   and grade = 'S'
+		 where u_status = 'Y'<!--  -->
+		   and grade = #{type}
+		   <if test="key != null">
+		   and user_name like '%' || #{key} || '%'
+		   </if>
 	</select>
 	
 	<!-- 학생회원 목록 조회 -->
-	<select id="selectSMemList" resultMap="memberResult">
+	<select id="selectSearchMemList" resultMap="memberResult">
 		select
 			  	mno
 		      , user_id
@@ -208,7 +211,10 @@
 		      , enroll_date
 		  from member
 		 where u_status = 'Y'
-		   and grade = 'S'
+		   and grade = #{type}
+		   <if test="key != null">
+		   and user_name like '%' || #{key} || '%'
+		   </if>
 		 order
 		    by mno desc
 	</select>

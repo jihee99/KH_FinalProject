@@ -27,12 +27,9 @@ public interface AdminMemService {
 	int selectMemCount();
 	ArrayList<Member> selectMemList(PageInfo pi);
 	
-	int selectSMemCount();
-	ArrayList<Member> selectSMemList(PageInfo pi);
-	
-	int selectTMemCount();
-	ArrayList<Member> selectTMemList(PageInfo pi);
-	
+	int selectSearchMemCount(HashMap<String, String> map);
+	ArrayList<Member> selectSearchMemList(PageInfo pi, HashMap<String, String> map);
+
 	
 	//------------신고------------
 	//관리자 신고내역 조회기능

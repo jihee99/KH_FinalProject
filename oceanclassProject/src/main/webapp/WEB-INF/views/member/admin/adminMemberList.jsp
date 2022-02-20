@@ -24,21 +24,21 @@
         </div>
         <div class="head_2">
             <div class="head_2_left">
-                <form id="searchForm">
+                <form id="searchForm" action="memsearch.ad">
                     <table>
                         <tr>
                             <th>회원분류</th>
                             <td>
-                                <input type="radio" class="memberType" name="memberType" id="memT">
+                                <input type="radio" class="memberType" name="type" id="memT" value="T">
                                 <label for="memT">강사</label>
-                                <input type="radio" class="memberType" name="memberType" id="memS">
+                                <input type="radio" class="memberType" name="type" id="memS" value="S">
                                 <label for="memS">일반회원</label>
                             </td>
                         </tr>
                         <tr>
-                            <th>회원검색</th>
+                            <th>회원검색&nbsp;</th>
                             <td>
-                                <input type="text" id="searchKey" placeholder="회원명을 입력하세요"> 
+                                <input type="text" id="key" name="key" placeholder="회원명을 입력하세요"> 
                                 <button type="submit">검색</button>
                             </td>
                         </tr>
@@ -90,7 +90,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <button class="btn">블랙리스트 조회</button>
+            <button class="btn" onclick="location.href='blList.ad'">블랙리스트 조회</button>
             
         </div>
         <div class="btn_group" align="center">
@@ -171,13 +171,15 @@
                         memArr.push(obj);
                     }
                 }
+                /*
                 
                 $("#memS").click(function(){
-                	location.href="sMemlist.ad?grade=S";
+                	location.href="smemlist.ad?grade=S";
                 })
 				$("#memT").click(function(){
-					location.href="tMemlist.ad?grade=T"
+					location.href="tmemlist.ad?grade=T"
 				})
+				*/
 			});
         </script>
         
