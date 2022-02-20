@@ -26,4 +26,6 @@ public class CsQna {
 	private String answerContent;
 	private Date answerDate;
 	
+	private String clTitle;
+	private String proTitle;
 }
