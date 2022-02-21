@@ -62,7 +62,7 @@
                 <a href="">클래스 개설문의</a> 
                 <c:choose>
                 	<c:when test="${loginUser.memNo == 1 }">
-                		 <a href="adminMain.co">관리자 페이지</a> 
+                		 <a href="adminMain.ac">관리자 페이지</a> 
                 	</c:when>
                 	<c:otherwise>
                 	</c:otherwise>
