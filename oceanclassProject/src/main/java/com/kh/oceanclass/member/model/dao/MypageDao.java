@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
@@ -135,12 +136,24 @@ public class MypageDao {
 		return sqlSession.selectOne("myMapper.shoppingQnaCount", memNo);
 	}
 	
-	public ArrayList<StoreReview> shoppingQnaList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo){
+	public ArrayList<CsQna> shoppingQnaList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("myMapper.shoppingQnaList", memNo, rowBounds);
+	}
+	
+	public int shoppingReviewCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("myMapper.shoppingReviewCount", memNo);
+	}
+	
+	public ArrayList<StoreReview> shoppingReviewList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("myMapper.shoppingReviewList", memNo, rowBounds);
 	}
 	
 }// class

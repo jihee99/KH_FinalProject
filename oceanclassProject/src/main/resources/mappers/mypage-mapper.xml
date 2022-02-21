@@ -76,6 +76,18 @@
 	  	<result column="answer_date" property="answerDate" />
 	  	<result column="pro_title" property="proTitle" />
 	</resultMap>	
+	
+	<resultMap id="storeReviewResult" type="StoreReview">
+	  	<result column="rno" property="reviewNo"/>
+	  	<result column="mno" property="memeberNo"/>
+	  	<result column="pno" property="productNo"/>
+	  	<result column="content" property="content"/>
+	  	<result column="star_rating" property="starRating"/>
+	  	<result column="review_date" property="reviewDate" />
+	  	<result column="status" property="status"/>
+	  	<result column="title" property="title"/>
+	  	<result column="img1" property="img"/>
+	</resultMap>
 
 <!-- 정보수정용 -->
 	<update id="updateProfile">
@@ -322,8 +334,37 @@
 		  join store s on ( cs.refer_no = s.pno)
 		 where cs.mno = #{memNo}
 		   and gb_no = 2
+		   and cs.status = 'Y'
+           and s.status = 'Y'
 		 order 
 		    by cs_qno desc
+	</select>
+	
+	<select id="shoppingReviewCount" resultType="_int">
+		select count(*)
+		  from s_review
+		 where mno = #{memNo}
+	</select>
+	
+	<select id="shoppingReviewList" resultMap="storeReviewResult">
+	select
+		   rno
+       	 , title
+	     , content
+	     , img1
+	     , review_date
+	     , case when star_rating <![CDATA[<=]]> 5 and star_rating <![CDATA[>]]> 4 then '★★★★★'
+	    		when star_rating <![CDATA[<=]]> 4 and star_rating <![CDATA[>]]> 3 then '★★★★☆'
+	    		when star_rating <![CDATA[<=]]> 3 and star_rating <![CDATA[>]]> 2 then '★★★☆☆'
+	    		when star_rating <![CDATA[<=]]> 2 and star_rating <![CDATA[>]]> 1 then '★★☆☆☆'
+	    	    when star_rating <![CDATA[<=]]> 1 then '★☆☆☆☆'  end as star_rating
+	  from s_review r
+	  join store s using(pno)
+	 where r.mno = 5
+	   and r.status = 'Y'
+       and s.status = 'Y'
+	 order 
+		by review_date desc
 	</select>
 	
 </mapper>

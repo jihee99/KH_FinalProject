@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.dao.MypageDao;
@@ -111,8 +112,18 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public ArrayList<StoreReview> shoppingQnaList(PageInfo pi, int memNo) {
+	public ArrayList<CsQna> shoppingQnaList(PageInfo pi, int memNo) {
 		return myDao.shoppingQnaList(sqlSession, pi, memNo);
+	}
+
+	@Override
+	public int shoppingReviewCount(int memNo) {
+		return myDao.shoppingReviewCount(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo) {
+		return myDao.shoppingReviewList(sqlSession, pi, memNo);
 	}
 
 
