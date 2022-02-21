@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="tcmyMapper">
 
+	<resultMap id="memberResult" type="Member">
+	   <result column="mno" property="memNo" />
+	   <result column="user_id" property="userId" />
+       <result column="user_pwd" property="userPwd" />
+       <result column="user_name" property="userName" />
+       <result column="nickname" property="nickName" />
+       <result column="phone" property="phone" />
+       <result column="profile" property="profileImg" />
+       <result column="point" property="point" />
+       <result column="grade" property="grade" />
+       <result column="u_status" property="userStatus" />
+       <result column="report" property="report" />
+       <result column="enroll_date" property="enrollDate" />
+       <result column="sleep_date" property="sleepDate" />
+       <result column="escape_date" property="escapeDate" />
+	</resultMap>
+
 	<resultMap id="myQnaResult" type="Qna">
 		<result column="qno" property="qnaNo" />
 		<result column="mno" property="memNo" />
@@ -41,6 +58,34 @@
 		<result column="cl_img" property="img" />
 	</resultMap>
 	
+	<resultMap id="teacherResult" type="Teacher">
+		<result column="mno" property="memNo" />
+		<result column="user_id" property="userId" />
+		<result column="tc_history" property="tcHistory" />
+		<result column="tc_introduce" property="tcIntroduce" />
+		<result column="tc_sns" property="tcSns" />
+		<result column="history_file" property="HistoryFile" />
+		<result column="img_file" property="ImgFile" />
+	</resultMap>
+	
+	<select id="tcinforPage" resultMap="memberResult">
+		select
+			    user_name
+			  , nickname
+			  , phone
+			  , profile
+		  from member
+		 where mno = #{memNo}
+	</select>
 
+	<update id="updateInforPage">
+		update
+        	   member
+		   set user_name = #{userName}
+		   	 , nickname = #{nickName}
+		     , phone = #{phone}
+		     , profile = #{profileImg} 
+		 where mno = #{memNo}
+	</update>
 	
 </mapper>
