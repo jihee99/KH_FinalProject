@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -309,29 +310,50 @@ public class StuMypageController {
 	public String myShoppingReview(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		
-		int reviewCount = myService.shoppingQnaCount(memNo);
+		Map<String, Object> map = new HashMap();
+		int qnaCount = myService.shoppingQnaCount(memNo);
+		int reviewCount = myService.shoppingReviewCount(memNo);
 		
-		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 6);
-		ArrayList<StoreReview> list = myService.shoppingQnaList(pi, memNo);
+		PageInfo qpi = Pagination.getPageInfo(qnaCount, currentPage, 5, 6);
+		ArrayList<CsQna> qnaList = myService.shoppingQnaList(qpi, memNo);
+		
+		PageInfo rpi = Pagination.getPageInfo(qnaCount, currentPage, 5, 6);
+		ArrayList<StoreReview> reviewlist = myService.shoppingReviewList(rpi, memNo);
 		//System.out.println(list);
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
+		
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("reviewlist", reviewlist);
 		return "member/student/myShoppingReview";
 	}
 	
 	// 상품 Qna 디테일
 	@RequestMapping("myShoppingQnaDetail.me")
+	public String myShoppingQnaDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int QnaCount = myService.shoppingQnaCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(QnaCount, currentPage, 5, 10);
+		ArrayList<CsQna> list = myService.shoppingQnaList(pi, memNo);
+		//System.out.println(list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "member/student/myShoppingQnaDetail";
+	}
+	
+	// 상품 Review 디테일
+	@RequestMapping("myShoppingReviewDetail.me")
 	public String myShoppingReviewDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		
 		int reviewCount = myService.shoppingQnaCount(memNo);
 		
-		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 10);
-		ArrayList<StoreReview> list = myService.shoppingQnaList(pi, memNo);
+		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
+		ArrayList<StoreReview> list = myService.shoppingReviewList(pi, memNo);
 		//System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		return "member/student/myShoppingQnaDetail";
+		return "member/student/myShoppingReviewDetail";
 	}
 	
 }

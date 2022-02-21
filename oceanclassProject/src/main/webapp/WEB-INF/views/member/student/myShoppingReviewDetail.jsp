@@ -15,11 +15,12 @@
 <style>
 	.list{
 	    width: 90%;
-	    height: 22%;
+	    height: 200px;
 	    margin: 0 auto;
 	    margin-top: 50px;
 	    background: rgba(107, 171, 213, 0.28);
 	    padding: 10px;
+	    border: 1px  solid;
 	}
 	#img{
 		width: 30%; 
@@ -34,11 +35,10 @@
 		width: 70%; 
 		height: 100%; 
 		float: left; 
-		margin-top: 10px;
-		padding: 10px;
+		padding: 15px;
 	}
-	.explain>h3{color:rgb(107, 171, 213); font-weight: 600;}
-	.explain>p{margin-top: -10px; font-weight: bolder; }
+	.explain>h4{font-weight: 600;}
+	.explain>p{display: block; font-weight: bolder; text-overflow: ellipsis; overflow:hidden;}
 	h4{font-weight: 600; margin-bottom: 20px;}
 	#stitle{font-size: 18px; font-weight: 800p; margin-bottom: 20px;}
 </style>
@@ -56,18 +56,18 @@
 			
 				<div class="content">
 				    <div class="conhead">
-				        <h2>상품 문의</h2>
+				        <h2>상품 리뷰</h2>
 				    </div>
 				    <c:forEach var="s" items="${list}">
 						<div class="list">
 				        	<div id="img">
-				        		<a href=""><img src="" alt=""></a>
-				            	<p>별점~~~~~</p>
+				        		<a href=""><img src="${s.img}" alt=""></a>
+				            	<p>${s.starRating}</p>
 				        	</div>
 				        	<div class="explain">
-				                <h4>갤럭시Z FLIP 라벤더 색상 자급제 당일출고</h4>
-				                <p id="stitle">역시 다른건 다 필요없고 이쁜게 진리인걸 증명하는!!</p>
-				                <p>배터리 모자라도 괜찮아ㅠ 내 6s보단 배터리 많아ㅠ 카메라 후져도..</p>	
+				                <h4>${s.title}</h4>
+				                <p>${s.content}</p>
+				                <p>${s.reviewDate}</p>	
 				            </div>
 					    </div>
 				    </c:forEach>
@@ -82,13 +82,13 @@
 								</li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+								<li class="page-item"><a class="page-link" href="myShoppingReviewDetail.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
 							</c:otherwise>
 						</c:choose>
 						
 						
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ p }">${ p }</a></li>
+							<li class="page-item"><a class="page-link" href="myShoppingReviewDetail.me?cpage=${ p }">${ p }</a></li>
 						</c:forEach>
 						
 						
@@ -99,7 +99,7 @@
 								</li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="myClassReviewDetail.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+								<li class="page-item"><a class="page-link" href="myShoppingReviewDetail.me?cpage=${ pi.currentPage+1 }">Next</a></li>
 							</c:otherwise>
 						</c:choose>
 		            </ul>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
@@ -62,11 +63,11 @@ public interface MypageService {
 	// 좋아요 상품 리스트
 	ArrayList<Product> selectLikeProduct(PageInfo pi, int memNo);
 	
-	// 스토어 문의 갯수
+	// 스토어 문의 내역
 	int shoppingQnaCount(int memNo);
+	ArrayList<CsQna> shoppingQnaList(PageInfo pi, int memNo);
 	
-	// 스토어 문의 리스트 조회
-	ArrayList<StoreReview> shoppingQnaList(PageInfo pi, int memNo);
-	
-	
+	// 스토어 리뷰 내역
+	int shoppingReviewCount(int memNo);
+	ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo);
 }
