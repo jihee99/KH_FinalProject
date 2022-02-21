@@ -32,21 +32,22 @@
         </div>
         <div class="head_2">
             <div class="head_2_left">
-                <form id="searchForm">
+                <form id="searchForm" action="pcsearch.ad">
+                <input type="hidden" id="type" value="${type }">
                     <table>
                         <tr>
                             <th>분 &nbsp; &nbsp; &nbsp; 류</th>
                             <td>
-                                <input type="radio" class="searchType" name="searchType" id="point" value="point">
+                                <input type="radio" class="searchType" name="type" id="point" value="p">
                                 <label for="point">포인트</label>
-                                <input type="radio" class="searchType" name="searchType" id="coupon" value="coupon" checked="checked">
+                                <input type="radio" class="searchType" name="type" id="coupon" value="c">
                                 <label for="coupon">쿠폰</label>
                             </td>
                         </tr>
                         <tr>
                             <th>회원검색</th>
                             <td>
-                                <input type="text" id="searchKey" placeholder="아이디를 입력하세요"> 
+                                <input type="text" id="searchKey" placeholder="아이디를 입력하세요" name="key"> 
                                 <button type="submit">검색</button>
                             </td>
                         </tr>
@@ -56,127 +57,131 @@
             <div class="head_2_center"></div>
             <div class="head_2_right"></div>
         </div>
-        <div class="content_point" style="display: none;">
-        	<button class="btn" id="pointBtn" onclick="window.open('pgive.ad','포인트지급페이지','width=550, height=420, menubar=no, status=no, toolbar=no, resizable=no')">개별포인트관리</button>
+        <div class="content_point">
+        	<c:choose>
+        		<c:when test="${type eq 'p' }">
+        			<button class="btn" id="pointBtn" onclick="window.open('pgiveF.ad','포인트지급페이지','width=550, height=420, menubar=no, status=no, toolbar=no, resizable=no')">개별포인트관리</button>
+        		</c:when>
+        		<c:when test="${type eq 'c' }">
+        			<button class="btn" id="couponBtn" onclick="window.open('cenrollF.ad','쿠폰등록페이지','width=550, height=380, menubar=no, status=no, toolbar=no, resizable=no')">쿠폰등록하기</button>
+        		</c:when>
+        	</c:choose>
             <br><br>
             <table id="contentTable">
                 <thead>
-                    <tr>
-                        <th><input type="checkbox" id="checkAll"></th>
-                        <th width="120">아이디</th>
-                        <th width="120">회원명</th>
-                        <th width="200">포인트내용</th>
-                        <th width="100">지급포인트</th>
-                        <th>지급일</th>
-                        <th>만료일</th>
-                    </tr>
+                	<c:choose>
+                		<c:when test="${type eq 'p' }">
+	                		<tr>
+		                        <th><input type="checkbox" id="checkAll"></th>
+		                        <th width="120">아이디</th>
+		                        <th width="120">회원명</th>
+		                        <th width="200">포인트내용</th>
+		                        <th width="100">지급포인트</th>
+		                        <th>지급일</th>
+		                        <th>만료일</th>
+		                    </tr>
+	                    </c:when>
+	                    
+	                    <c:when test="${type eq 'c' }">
+		                    <tr>
+		                        <th width="110">쿠폰번호</th>
+		                        <th width="350">쿠폰명</th>
+		                        <th width="100">할인율(%)</th>
+		                         <th width="100">발행 수</th>
+		                         <th width="100">유효기간</th>
+		                        <th width="150"></th>
+		                    </tr>
+	                    </c:when>
+                	</c:choose> 	
                 </thead>
                 <tbody>
-                <c:forEach var="p" items="${plist }">
-                    <tr>
-                        <td><input type="checkbox" name="chBxRow" id=""></td>
-                        <td>${p.userId }</td>
-                        <td>${p.userName }</td>
-                        <td>${p.reason }</td>
-                        <td>${p.pointPrice }</td>
-                        <td>${p.pointDate }</td>
-                        <td>${p.deadLine }</td>
-                    </tr>
-				</c:forEach>
+                	<c:choose>
+                		<c:when test="${type eq 'p' }">
+	                		<c:forEach var="p" items="${list }">
+			                    <tr>
+			                        <td><input type="checkbox" name="chBxRow" id=""></td>
+			                        <td>${p.userId }</td>
+			                        <td>${p.userName }</td>
+			                        <td>${p.reason }</td>
+			                        <td>${p.pointPrice }</td>
+			                        <td>${p.pointDate }</td>
+			                        <td>${p.deadLine }</td>
+			                    </tr>
+							</c:forEach>
+                		</c:when>
+                		
+                		<c:when test="${type eq 'c' }">
+	                		<c:forEach var="c" items="${list }">
+			                    <tr>
+			                        <td>${c.couponNo }</td>
+			                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${c.couponName }</td>
+			                        <td>${c.discount }</td>
+			                        <td>${c.count }</td>
+			                        <td>${c.dedate }</td>
+			                        <td>
+			                            <button class="crow" onclick="window.open('cgiveF.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
+			                        	<button onclick="window.open('cupdateF.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=450, menubar=no, status=no, toolbar=no, resizable=no')">수정</button>
+			                        	<button onclick="location.href='cdelete.ad?cno=${c.couponNo}'">삭제</button>
+			                        </td>
+			                    </tr>
+		                    </c:forEach>
+                		</c:when>
+                	</c:choose>
+	              
                 </tbody>
             </table>
             <br>
-            <button class="btn" id="deleteBtn">선택목록삭제</button>
+            <c:if test="${type eq 'p' }">
+	            <button class="btn" id="deleteBtn">선택목록삭제</button>
+            </c:if>
             <br>
             
 			<div class="btn_group" align="center">
 				<c:choose>
-	           		<c:when test="${pPi.currentPage eq 1 }">
+	           		<c:when test="${pi.currentPage eq 1 }">
 	           			<button class="btn btn-light" disabled>&lt;</button>
 	           		</c:when>
 	           		<c:otherwise>
-	           			<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${pPi.currentPage - 1}'">&lt;</button>
+	           			<button class="btn btn-light" onclick="location.href='pcsearch.ad?cpage=${pi.currentPage - 1}&key=${key }&type=${type }'">&lt;</button>
 	           		</c:otherwise>
 	           	</c:choose>
 	                   
-	   			<c:forEach var="p" begin="${pPi.startPage }" end="${pPi.endPage }">
-	   				<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${p}'">${p }</button>
+	   			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+	   				<button class="btn btn-light" onclick="location.href='pcsearch.ad?cpage=${p}&key=${key }&type=${type }'">${p }</button>
 	   			</c:forEach>
 	   
 	   			<c:choose>
-	               	<c:when test="${pPi.currentPage eq pPi.maxPage }">
+	               	<c:when test="${pi.currentPage eq pi.maxPage }">
 	           			<button class="btn btn-light" disabled>&gt;</button>
 	               	</c:when>
 	               	<c:otherwise>
-	               		<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${pPi.currentPage + 1}'">&gt;</button>
+	               		<button class="btn btn-light" onclick="location.href='pcsearch.ad?cpage=${pi.currentPage + 1}&key=${key }&type=${type }'">&gt;</button>
 	               	</c:otherwise>
 	            </c:choose>
 	        </div>
             
         </div>
    
-<!-- 쿠폰영역 -->        
-        <div class="content_coupon">
-        	<button class="btn" id="couponBtn" onclick="window.open('cenrollF.ad','회원쿠폰지급페이지','width=550, height=380, menubar=no, status=no, toolbar=no, resizable=no')">쿠폰등록하기</button>
-            <br><br>
-            <table id="contentTable" style="table-layout:fixed;">
-                <thead>
-                    <tr>
-                        <th width="110">쿠폰번호</th>
-                        <th width="350">쿠폰명</th>
-                        <th width="100">할인율(%)</th>
-                         <th width="100">발행 수</th>
-                         <th width="100">유효기간</th>
-                        <th width="150"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                	<c:forEach var="c" items="${clist }">
-                    <tr>
-                        <td>${c.couponNo }</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${c.couponName }</td>
-                        <td>${c.discount }</td>
-                        <td>${c.count }</td>
-                        <td>${c.dedate }</td>
-                        <td>
-                            <button class="crow" onclick="window.open('cgiveF.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">발급</button>
-                        	<button onclick="window.open('cupdateF.ad?cno=${c.couponNo}','쿠폰등록페이지','width=550, height=450, menubar=no, status=no, toolbar=no, resizable=no')">수정</button>
-                        	<button onclick="location.href='cdelete.ad?cno=${c.couponNo}'">삭제</button>
-                        </td>
-                    </tr>
-                    </c:forEach>                    
-                </tbody>
-            </table>
-            <br>
-
-	        <div class="btn_group" align="center">
-				<c:choose>
-	           		<c:when test="${cPi.currentPage eq 1 }">
-	           			<button class="btn btn-light" disabled>&lt;</button>
-	           		</c:when>
-	           		<c:otherwise>
-	           			<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${cPi.currentPage - 1}'">&lt;</button>
-	           		</c:otherwise>
-	           	</c:choose>
-	                   
-	   			<c:forEach var="p" begin="${cPi.startPage }" end="${cPi.endPage }">
-	   				<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${p}'">${p }</button>
-	   			</c:forEach>
-	   
-	   			<c:choose>
-	               	<c:when test="${cPi.currentPage eq cPi.maxPage }">
-	           			<button class="btn btn-light" disabled>&gt;</button>
-	               	</c:when>
-	               	<c:otherwise>
-	               		<button class="btn btn-light" onclick="location.href='pclist.ad?cpage=${cPi.currentPage + 1}'">&gt;</button>
-	               	</c:otherwise>
-	            </c:choose>
-	        </div>
-		</div>
-
 
         <script>
-            /*라디오 버튼에 따른 동적 화면 구현*/
+        
+        $(document).ready(function() {
+			var type = $("#type").val();
+       		console.log(type);
+			if(type == 'p'){
+				$("#point").prop("checked", true);
+			} else if(type == 'c'){
+				$("#coupon").prop("checked",true);
+			}
+        })
+       /* 
+        $("input[type=radio][class=searchType]").on('click',function(){
+	        var chkValue = $('input[type=radio][name=type]:checked').val();
+	        console.log(chkValue);
+			location.href="pcsearch.ad?key=&type="+$('input[type=radio][name=type]:checked').val();
+        });
+        */
+            /*라디오 버튼에 따른 동적 화면 구현
             $("input[type=radio][name=searchType]").on('click',function(){
                 var chkValue = $('input[type=radio][name=searchType]:checked').val();
 
@@ -190,6 +195,7 @@
                     $('.content_coupon').css('display','block');
                 }
             });
+            */
         </script>
     </div>
     

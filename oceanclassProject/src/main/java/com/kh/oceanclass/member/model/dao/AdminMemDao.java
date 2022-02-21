@@ -106,6 +106,35 @@ public class AdminMemDao {
 		return sqlSession.insert("adMemMapper.insertPoint", p);
 	}
 	
+	public int selectPointSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adMemMapper.selectPointSearchCount", map);
+	}
+
+	public ArrayList<Point> selectPointSearchList(SqlSessionTemplate sqlSession, PageInfo pi,
+			HashMap<String, String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectPointSearchList", map, rowBounds);
+	}
+
+	public int selectCouponSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adMemMapper.selectCouponSearchCount", map);
+	}
+
+	public ArrayList<Coupon> selectCouponSearchList(SqlSessionTemplate sqlSession, PageInfo pi,
+			HashMap<String, String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectCouponSearchList", map, rowBounds);
+	}
+
 
 	public int selectClassOrderCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adMemMapper.selectClassOrderCount");
@@ -265,7 +294,6 @@ public class AdminMemDao {
 		
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchStoreList", map, rowBounds);
 	}
-
 
 
 
