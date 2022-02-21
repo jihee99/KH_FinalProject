@@ -39,6 +39,7 @@
 		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassReview" alias="ClassReview"/>
 		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassOrder" alias="ClassOrder"/>
 		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassRefund" alias="ClassRefund"/>
+		<typeAlias type="com.kh.oceanclass.Class.model.vo.ClassQna" alias="ClassQna"/>
 		
 		<typeAlias type="com.kh.oceanclass.common.model.vo.Reply" alias="Reply"/>
 		<typeAlias type="com.kh.oceanclass.common.model.vo.CsQna" alias="CsQna"/>
