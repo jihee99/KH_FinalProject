@@ -42,6 +42,8 @@
 		
 		<typeAlias type="com.kh.oceanclass.common.model.vo.Reply" alias="Reply"/>
 		<typeAlias type="com.kh.oceanclass.common.model.vo.CsQna" alias="CsQna"/>
+		
+		<typeAlias type="com.kh.oceanclass.common.model.vo.AdminStatistics" alias="AdminStatistics"/>
 	</typeAliases>
 	
 	<mappers>
@@ -55,6 +57,7 @@
 		<mapper resource="/mappers/tcmypage-mapper.xml" />
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/store-mapper.xml" />
+		<mapper resource="/mappers/adminStatistics-mapper.xml" />
 	</mappers>
 	
 </configuration>
