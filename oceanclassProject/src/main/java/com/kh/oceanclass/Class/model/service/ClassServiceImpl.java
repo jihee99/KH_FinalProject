@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.Class.model.dao.ClassDao;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -147,6 +148,36 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public int updateReview(ClassReview cr) {
 		return cDao.updateReview(sqlSession, cr);
+	}
+
+	@Override
+	public ArrayList<ClassQna> selectClassQnaList(int clNo) {
+		return cDao.selectClassQnaList(sqlSession, clNo);
+	}
+
+	@Override
+	public ArrayList<ClassQna> selectClassQnaMainList(int clNo) {
+		return cDao.selectClassQnaMainList(sqlSession, clNo);
+	}
+
+	@Override
+	public int insertClassQna(ClassQna cq) {
+		return cDao.insertClassQna(sqlSession, cq);
+	}
+	
+	@Override
+	public int deleteClassQna(ClassQna cq) {
+		return cDao.deleteClassQna(sqlSession, cq);
+	}
+	
+	@Override
+	public int updateClassQna(ClassQna cq) {
+		return cDao.updateClassQna(sqlSession, cq);
+	}
+
+	@Override
+	public int classQnaPwdCheck(ClassQna cq) {
+		return cDao.classQnaPwdCheck(sqlSession, cq);
 	}
 	
 }

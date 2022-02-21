@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -128,5 +129,30 @@ public class ClassDao {
 	
 	public int updateReview(SqlSessionTemplate sqlSession, ClassReview cr) {
 		return sqlSession.update("classMapper.updateReview", cr);
+	}
+	
+	public ArrayList<ClassQna> selectClassQnaList(SqlSessionTemplate sqlSession, int clNo){
+		return (ArrayList)sqlSession.selectList("classMapper.selectClassQnaList", clNo);
+	}
+	
+	public ArrayList<ClassQna> selectClassQnaMainList(SqlSessionTemplate sqlSession, int clNo){
+		RowBounds rowBounds = new RowBounds(0, 3);
+		return (ArrayList)sqlSession.selectList("classMapper.selectClassQnaList", clNo, rowBounds);
+	}
+	
+	public int insertClassQna(SqlSessionTemplate sqlSession, ClassQna cq) {
+		return sqlSession.insert("classMapper.insertClassQna", cq);
+	}
+	
+	public int deleteClassQna(SqlSessionTemplate sqlSession, ClassQna cq) {
+		return sqlSession.update("classMapper.deleteClassQna", cq);
+	}
+	
+	public int updateClassQna(SqlSessionTemplate sqlSession, ClassQna cq) {
+		return sqlSession.update("classMapper.updateClassQna", cq);
+	}
+	
+	public int classQnaPwdCheck(SqlSessionTemplate sqlSession, ClassQna cq) {
+		return sqlSession.selectOne("classMapper.classQnaPwdCheck", cq);
 	}
 }

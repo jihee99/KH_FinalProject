@@ -53,7 +53,6 @@
                     <div>
                     	<c:if test="${ loginUser.nickName == cr.memNo }">
 	               	    	<div style="float:right;">
-		                    	<!--  <button type="button" onclick="updateReview(${cr.crNo}, ${reviewClNo}, ${returnPage}, ${ loginUser.memNo })" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">수정</button>-->
 		                    	<button type="button" onclick="updateReview();" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">수정</button>
 		                    	<button type="button" onclick="deleteReview(${cr.crNo}, ${reviewClNo}, ${returnPage});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
 	                    	</div>
@@ -252,7 +251,7 @@ ${ r.replyContent }
 		                <!-- Modal content-->
 		                <div class="modal-content">
 		                    <div class="modal-header">
-		                        <h4 class="modal-title">후기 작성하기</h4>
+		                        <h4 class="modal-title">후기 수정하기</h4>
 		                        <!--  
 		                        <button type="button" class="close" data-dismiss="modal">&times;</button>
 		                    	-->
@@ -381,8 +380,7 @@ ${ r.replyContent }
     		}
     	}
     
-    	function updateReview(crNo, clNo, returnPage, memNo){
-    		//location.href = 'updateClassReviewForm.me?memNo=' + memNo + '&crNo=' + crNo + "&clNo=" + clNo + "&rpage=" + returnPage;
+    	function updateReview(){
     		$("#updateReviewModal").modal();
     	}
     	
@@ -441,13 +439,6 @@ ${ r.replyContent }
 			} else if(filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
 				alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
 				return false;
-			} else if(filetype == 'bmp'){
-				var q = confirm('BMP 파일은 웹 상에서 사용하기엔 적절한 이미지 포맷이 아닙니다.\n그래도 첨부 하시겠습니까?');
-		        if(q == true){
-		        	return true;
-		        } else {
-		        	return false;
-		        }
 			} else {
 				return true;
 			}

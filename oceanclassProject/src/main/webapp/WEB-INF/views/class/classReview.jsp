@@ -305,7 +305,7 @@
 		}
 		
 		function enrollReviewCk(classNo){
-			var memNo = document.getElementById("mNo").value;
+			var memNo = document.getElementById("memNo").value;
 			
 			if(memNo == ""){
 				alert("로그인 한 회원만 후기를 작성할 수 있습니다.");
@@ -338,18 +338,9 @@
 			if(content.replace(/ /gi, "").length < 5){
 				alert("후기 내용은 5글자 이상 입력해야 합니다.");
 				return false;
-			} else if(file == ""){
-				return true;
-			} else if(filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
+			} else if(file != "" && filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
 				alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
 				return false;
-			} else if(filetype == 'bmp'){
-				var q = confirm('BMP 파일은 웹 상에서 사용하기엔 적절한 이미지 포맷이 아닙니다.\n그래도 첨부 하시겠습니까?');
-		        if(q == true){
-		        	return true;
-		        } else {
-		        	return false;
-		        }
 			} else {
 				return true;
 			}

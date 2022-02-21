@@ -46,6 +46,22 @@
 		<result column="reply_status" property="replyStatus" />
 		<result column="nickname" property="nickName" />
 	</resultMap>
+	
+	<resultMap id="classQnaResult" type="ClassQna">
+		<result column="cs_qno" property="csQnaNo" />
+		<result column="mno" property="memNo" />
+		<result column="nickname" property="memNo" />
+		<result column="gb_no" property="gbNo" />
+		<result column="refer_no" property="referNo" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="create_date" property="createDate" />
+		<result column="pwd" property="pwd" />
+		<result column="filepath" property="filePath" />
+		<result column="status" property="status" />
+		<result column="answer_content" property="answerContent" />
+		<result column="answer_date" property="answerDate" />
+	</resultMap>
 
 	<update id="increaseCount">
 		update 
@@ -404,7 +420,7 @@
 	<select id="enrollReviewCheck" resultType="_int">
 		select count(*)
 		  from class_order
-		 where reading_check = 'Y'
+		 where reading_status = 'Y'
 		   and clNo = #{clNo}
 		   and mno = #{memNo}
 	</select>
@@ -452,5 +468,97 @@
 		   and status = 'Y'
 	</update>
 	
+	<select id="selectClassQnaList" resultMap="classQnaResult">
+		select cs_qno
+		     , nickname
+		     , gb_no
+		     , refer_no
+		     , title
+		     , content
+		     , to_char(create_date, 'YYYY-MM-DD') as create_date
+		     , pwd
+		     , filepath
+		     , status
+		     , answer_content
+		     , to_char(answer_date, 'YYYY-MM-DD') as answer_date
+		  from cs_qna
+		  join member using (mno)
+		 where status = 'Y'
+		   and gb_no = 1
+		   and refer_no = #{clNo}
+		 order
+		    by cs_qno desc
+	</select>
+	
+	<insert id="insertClassQna">
+		insert
+		  into cs_qna
+		values
+			 (
+			   SEQ_CSQNO.NEXTVAL
+			 , #{memNo}
+			 , 1
+			 , #{referNo}
+			 , #{title}
+			 , #{content}
+			 , sysdate
+			 <choose>
+			 	<when test="pwd != null">
+			 		, #{pwd}
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
+			 <choose>
+			 	<when test="filePath != null">
+			 		, #{filePath}
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
+			 , 'Y'
+			 , null
+			 , null
+			 )
+	</insert>
+	
+	<update id="deleteClassQna">
+		update cs_qna
+		   set status = 'N'
+		 where gb_no = 1
+		   and cs_qno = #{csQnaNo}
+	</update>
+	
+	<update id="updateClassQna">
+		update cs_qna
+		   set title = #{title}
+		     , content = #{content}
+		       <choose>
+				   <when test="pwd != null">
+				   , pwd = #{pwd}
+				   </when>
+				   <otherwise>
+				   , pwd = null
+				   </otherwise>
+			   </choose>
+			   <if test="filePathMessage == 'uuuuu'">
+		   	   	   , filePath = #{filePath}
+		   	   </if>
+		   	   <if test="filePathMessage == 'ddddd'">
+		   	   	   , filePath = null
+		   	   </if>
+		 where status = 'Y'
+		   and cs_qno = #{csQnaNo}    
+	</update>
+	
+	<select id="classQnaPwdCheck" resultType="_int">
+		select count(*)
+		  from cs_qna
+		 where STATUS = 'Y'
+		   and PWD = #{pwd}
+		   and cs_qno = #{csQnaNo}
+	</select>
 		
 </mapper>

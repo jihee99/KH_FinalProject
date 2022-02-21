@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.kh.oceanclass.Class.model.service.ClassServiceImpl;
 import com.kh.oceanclass.Class.model.vo.ClassLikeCk;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -67,9 +68,17 @@ public class ClassController {
 					model.addAttribute("crTopList", crTopList);
 				}
 			}
+			// 클래스 문의 리스트 (최신순)
+			ArrayList<ClassQna> cqList = cService.selectClassQnaList(li.getReferNo());
+			// 클래스 문의 최신순 3개 (문의 메인페이지용)
+			if(!cqList.isEmpty()) {
+				ArrayList<ClassQna> cqMainList = cService.selectClassQnaMainList(li.getReferNo());
+				model.addAttribute("cqMainList", cqMainList);
+			}			
 			
 			model.addAttribute("c", c);
 			model.addAttribute("crList", crList);
+			model.addAttribute("cqList", cqList);
 			return "class/classDetail";
 		} else {
 			session.setAttribute("alertMsg", "잘못 된 접근입니다.");
@@ -338,6 +347,88 @@ public class ClassController {
 		}
 		
 		return "redirect:classReviewDetail.me?crNo=" + cr.getCrNo() + "&cpage=1&clNo=" + cr.getClNo() + "&rpage=" + rpage;
+	}
+	
+	@RequestMapping(value="enrollClassQna.me")
+	public String enrollClassQna(MultipartFile upfile, ClassQna cq, HttpSession session) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			String originName = upfile.getOriginalFilename();
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/cqna/");
+			try {
+				upfile.transferTo(new File(savePath + originName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			cq.setFilePath("resources/uploadFiles/cqna/" + originName);
+		}
+		
+		int result = cService.insertClassQna(cq);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 문의가 등록되었습니다!");
+		} else {
+			session.setAttribute("alertMsg", "문의 등록에 실패하였습니다.");
+		}
+		
+		return "redirect:classDetail.me?referNo=" + cq.getReferNo();
+	}
+
+	@RequestMapping(value="deleteClassQna.me")
+	public String deleteClassQna(ClassQna cq, HttpSession session) {
+		int result = cService.deleteClassQna(cq);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "문의가 삭제되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "문의 삭제에 실패하였습니다.");
+		}
+		return "redirect:classDetail.me?referNo=" + cq.getReferNo();
+	}
+	
+	@RequestMapping(value="updateClassQna.me")
+	public String updateClassQna(MultipartFile upfile, ClassQna cq, String changeCk, HttpSession session) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			// 변경or추가
+			String originName = upfile.getOriginalFilename();
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/cqna/");
+			try {
+				upfile.transferTo(new File(savePath + originName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			cq.setFilePath("resources/uploadFiles/cqna/" + originName);
+			cq.setFilePathMessage("uuuuu");
+		} else {
+			// 첨부파일 삭제된건지, 원래 그대로 저장 된건지 확인
+			if(changeCk.equals("change")) {
+				// 삭제
+				cq.setFilePathMessage("ddddd");
+			}
+		}
+		// 제목이랑 내용은 무조건 변경, 파일과 비밀번호는 동적 sql로 처리
+		int result = cService.updateClassQna(cq);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 문의를 수정하였습니다!");
+		} else {
+			session.setAttribute("alertMsg", "문의 수정에 실패하였습니다.");
+		}
+		
+		return "redirect:classDetail.me?referNo=" + cq.getReferNo();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="classQnaPwdCheck.me")
+	public String classQnaPwdCheck(ClassQna cq) {
+		int result = cService.classQnaPwdCheck(cq);
+		if(result > 0) {
+			// 비밀번호 일치
+			return "yyyyy";
+		} else {
+			// 비밀번호 불일치
+			return "nnnnn";
+		}
 	}
 	
 	@RequestMapping(value="classPay.me")

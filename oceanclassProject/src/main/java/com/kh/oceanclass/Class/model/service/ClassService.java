@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -48,5 +49,13 @@ public interface ClassService {
 	int checkRecommend(ClassReview cr);
 	int deleteRecommend(ClassReview cr);
 	int insertRecommend(ClassReview cr);
+	
+	// 클래스 문의용
+	ArrayList<ClassQna> selectClassQnaList(int clNo);
+	ArrayList<ClassQna> selectClassQnaMainList(int clNo);
+	int insertClassQna(ClassQna cq);
+	int deleteClassQna(ClassQna cq);
+	int updateClassQna(ClassQna cq);
+	int classQnaPwdCheck(ClassQna cq);
 	
 }
