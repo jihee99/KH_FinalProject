@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,39 +24,41 @@
             <hr>
         </div>
         <div class="content">
-            <form action="">
+            <form action="soupdate.in" method="post">
+            <input type="hidden" name="orderNo" value="${so.orderNo }">
                 <div class="content_1">
                     <b>주문 정보</b>
                     <table class="table table-light table-sm">
                         <tr>
                             <th width="200">주문번호</th>
-                            <td width="250">SO2312892</td>
+                            <td width="250">${so.orderNo }</td>
                             <th width="200" rowspan="2">주소</th>
-                            <td width="250" rowspan="2">서울특별시 강남구 테헤란로14길 6</td>
+                            <td width="250" rowspan="2">${so.address }</td>
                         </tr>
                         <tr>
                             <th>주문일자</th>
-                            <td>2022-01-31 13:22:42</td>
+                            <td>${so.payDate }</td>
                         </tr>
                         <tr>
                             <th>주문자</th>
-                            <td>손지희</td>
+                            <td>${so.userName }</td>
                             <th>전화번호</th>
-                            <td>010-7286-3153</td>
+                            <td>${so.phone }</td>
                         </tr>
                         <tr>
                             <th>결제방법</th>
-                            <td>[무통장 | 카드]</td>
+                            <td>${so.payMethod }</td>
                             <th>주문상태</th>
                             <td>
-                                <select name="" id="">
-                                    <option value="">결제완료</option>
-                                    <option value="">상품준비</option>
-                                    <option value="">배송시작</option>
-                                    <option value="">배송중</option>
-                                    <option value="" style="color: green;">배송완료</option>
-                                    <option value="">주문취소</option>
-                                    <option value="" style="color: red;">취소완료</option>
+                            	<input type="hidden" id="os" value="${so.orderStatus }">
+                                <select name="orderStatus" id="orderStatus">
+                                    <option class="op1" value="1">결제완료</option>
+                                    <option class="op2" value="2">상품준비</option>
+                                    <option class="op3" value="3">배송시작</option>
+                                    <option class="op4" value="4">배송중</option>
+                                    <option class="op5" value="5" style="color: green;">배송완료</option>
+                                    <option class="op6" value="6">주문취소</option>
+                                    <option class="op7" value="7" style="color: red;">취소완료</option>
                                 </select>
                             </td>
                         </tr>
@@ -67,9 +70,9 @@
                     <table class="table table-light table-sm">
                         <tr>
                             <th width="200">포인트/쿠폰 사용금액</th>
-                            <td width="250">0</td>
+                            <td width="250">${so.usePoint }</td>
                             <th width="200">총 결제금액</th>
-                            <td width="250">50000</td>
+                            <td width="250">${so.payAmount }</td>
                         </tr>
                     </table>
                 </div>
@@ -80,37 +83,61 @@
                         <thead>
                             <tr>
                                 <th width="130">상품번호</th>
-                                <th width="80">카테고리</th>
+                                <th width="80">옵션번호</th>
                                 <th width="230">상품명</th>
                                 <th width="100">상품가격</th>
                                 <th width="80">수량</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>S1239</td>
-                                <td>DIY Kit</td>
-                                <td>펀치 니들 자수 패키지 DIY 취미세트</td>
-                                <td>32000</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>S1611</td>
-                                <td>OC 에디션</td>
-                                <td>OC 2022 하루일기 다이어리</td>
-                                <td>18000</td>
-                                <td>1</td>
-                            </tr>
+                            <c:forEach var ="buylist" items="${buylist }">
+                        	<tr>
+                            <td>${buylist.productNo }</td>
+                            <td>
+                            	<c:choose>
+                            		<c:when test="${buylist.optionNo eq 0}">--</c:when>
+                            		<c:otherwise>${buylist.optionNo }</c:otherwise>
+                            	</c:choose>
+                            </td>
+                            <td>${buylist.title }</td>
+                            <td>${buylist.price }</td>
+                            <td>${buylist.quantity }</td>
+                        </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div> 
                 <div align="center">
                     <button id="submitBtn" class="btn btn-lg" type="submit">저장하기</button>
-                    <button id="listBtn" class="btn btn-lg" type="">목록보기</button>
+                    <input type="button" id="listBtn" class="btn btn-lg" onclick="history.back();" value="목록보기">
                 </div>   
             </form>
         </div>
+		<script>
+			$(function(){
+				var orderStatus = $("#os").val();
+				console.log(orderStatus);
+				
+				$("select[name=status]").val(orderStatus).prop("selected", true);
 
+				if(orderStatus == 1){
+					$(".op1").prop("selected", true);
+				}else if(orderStatus == 2){
+					$(".op2").prop("selected", true);
+				}else if(orderStatus == 3){
+					$(".op3").prop("selected", true);
+				}else if(orderStatus == 4){
+					$(".op4").prop("selected", true);
+				}else if(orderStatus == 5){
+					$(".op5").prop("selected", true);
+				}else if(orderStatus == 6){
+					$(".op6").prop("selected", true);
+				}else if(orderStatus == 7){
+					$(".op7").prop("selected", true);
+				}
+
+			})
+		</script>
     </div>
 
 </body>

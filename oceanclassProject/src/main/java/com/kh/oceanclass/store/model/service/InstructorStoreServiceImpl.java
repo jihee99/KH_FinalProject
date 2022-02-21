@@ -12,6 +12,8 @@ import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
+import com.kh.oceanclass.store.model.vo.StoreBuyList;
+import com.kh.oceanclass.store.model.vo.StoreOrder;
 
 @Service
 public class InstructorStoreServiceImpl implements InstructorStoreService{
@@ -114,23 +116,47 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	@Override
 	public void selectStoreReview() {
 		// 9. 상품 리뷰 상세조회용 서비스
-		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public void selectStoreDeliveryList() {
+	public int selectStoreDeliveryCount() {
+		return inStoreDao.selectStoreDeliveryCount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<StoreOrder> selectStoreDeliveryList(PageInfo pi) {
 		// 10. 상품 주문내역 리스트 페이지
-		// TODO Auto-generated method stub
-		
+		return inStoreDao.selectStoreDeliveryList(sqlSession,pi);
 	}
 
 	@Override
-	public void selectStoreDelivery() {
-		// TODO Auto-generated method stub
-		
+	public StoreOrder selectStoreDelivery(String ono) {
+		return inStoreDao.selectStoreDelivery(sqlSession, ono);
 	}
 
+	@Override
+	public ArrayList<StoreBuyList> selectStoreBuyList(String ono) {
+		return inStoreDao.selectStoreBuyList(sqlSession, ono);
+	}
+
+	@Override
+	public int storeOrderUpdate(StoreOrder so) {
+		return inStoreDao.storeOrderUpdate(sqlSession, so);
+	}
+
+	@Override
+	public int searchStoreOrderCount(String orderStatus) {
+		return inStoreDao.searchStoreOrderCount(sqlSession, orderStatus);
+	}
+
+	@Override
+	public ArrayList<StoreOrder> searchStoreOrderList(String orderStatus, PageInfo pi) {
+		return inStoreDao.searchStoreOrderList(sqlSession, orderStatus, pi);
+	}
+
+	
+	
 	@Override
 	public int selectStockCount() {
 		// 12_1. 상품 재고 조회용 카운트
@@ -157,6 +183,7 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	public int insertProductOrder(InProductOrder pOrder) {
 		return inStoreDao.insertProductOrder(sqlSession, pOrder);		
 	}
+
 
 
 

@@ -7,6 +7,8 @@ import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
+import com.kh.oceanclass.store.model.vo.StoreBuyList;
+import com.kh.oceanclass.store.model.vo.StoreOrder;
 
 public interface InstructorStoreService {
 
@@ -57,10 +59,19 @@ public interface InstructorStoreService {
 	void selectStoreReview();
 	
 	// 10. 상품 주문내역 리스트 페이지
-	void selectStoreDeliveryList();
+	int selectStoreDeliveryCount();
+	ArrayList<StoreOrder> selectStoreDeliveryList(PageInfo pi);
 	
-	// 11. 상품 주문내역 상세조회용 서비스(상태변경)
-	void selectStoreDelivery();
+	// 11_1. 상품 주문내역 상세조회용 서비스(상태변경)
+	StoreOrder selectStoreDelivery(String ono);
+	ArrayList<StoreBuyList> selectStoreBuyList(String ono);
+	
+	// 11_2. 상품 주문 상태변경 서비스
+	int storeOrderUpdate(StoreOrder so);
+	
+	// 11_3. 상품주문 상태별 조회
+	int searchStoreOrderCount(String orderStatus);
+	ArrayList<StoreOrder> searchStoreOrderList(String orderStatus, PageInfo pi);
 	
 	// 12. 상품 재고 리스트 조회용 서비스
 	int selectStockCount();
@@ -72,5 +83,6 @@ public interface InstructorStoreService {
 	// 14. 상품발주요청용 서비스
 	ArrayList<Product> selectProductList();
 	int insertProductOrder(InProductOrder pOrder);
+	
 	
 }
