@@ -25,4 +25,11 @@ public class StoreReview {
 	
 	private String title;
 	private String img;
+	
+	public String nickname;
+	public int totalCount;
+	public double starAvg;
+	public String profile;
+	public int reconum;
+	
 }
