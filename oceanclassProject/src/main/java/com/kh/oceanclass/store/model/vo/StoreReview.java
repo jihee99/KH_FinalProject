@@ -19,8 +19,10 @@ public class StoreReview {
 	private int memeberNo; // 회원번호
 	private int productNo; // 상품번호
 	private String content; // 리뷰내용
-	private int starRating; // 별점
+	private String starRating; // 별점
 	private Date reviewDate; // 작성일
 	private String status; // 상태값
 	
+	private String title;
+	private String img;
 }
