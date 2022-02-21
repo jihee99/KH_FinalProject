@@ -174,12 +174,12 @@
 
 
         <script>
-            /*라디오 버튼에 따른 동적 화면 구현*/
+            /*라디오 버튼에 따른 동적 화면 구현            */
             $("input[type=radio][class=searchType]").on('click',function(){
                 var chkValue = $('input[type=radio][name=type]:checked').val();
-
-                console.log(chkValue);
-
+				location.href="pcsearch.ad?key=&type="+$('input[type=radio][name=type]:checked').val();
+                //console.log(chkValue);
+				/*
                 if(chkValue == "p"){
                     $('.content_point').css('display','block');
                     $('.content_coupon').css('display','none');
@@ -187,12 +187,9 @@
                     $('.content_point').css('display','none');
                     $('.content_coupon').css('display','block');
                 }
+				*/
             });
-            
-            $(function(){
-            	var type = $('input[type=radio][name=type]:checked').val();
-            	console.log(type);
-            })
+
         </script>
     </div>
     

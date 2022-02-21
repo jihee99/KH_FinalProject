@@ -7,10 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <style>
 .innerOuter{
     margin: auto;
+    height:auto;
     font-family:tahoma, 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
 }
 .product_info{
@@ -53,16 +55,19 @@
 .quick_menu{
     width: 350px;
     height: 400px;
-    position: fixed;
+    position: sticky;
+    overflow:auto;
     top: 53px;
     right: 350px;
     background:rgba(212, 212, 212, 0.493);
+    z-index:10;
 }
 .product_discription{
     width:200px;
     height: 70px;
     margin: 20px 20px;
 }
+
 .product_merchant_name{font-size: 15px;}
 .product_name{font-size: 20px;}
 .price_area{float: right; height: 120px; margin-right: 10px;}
@@ -79,13 +84,60 @@
 .product_title_image>img{ width:100%; height:100%; object-fit: cover;}
 .product_detail_image>img{width: 100%; object-fit: cover;}
 #productOption option{ font-size:15px;}
+
+.menu_bar input[type=radio] {
+	display: none;
+}
+.tab {
+  overflow: hidden;
+}
+.tab label {
+    font-size: 18px;
+    cursor: pointer;
+    float: left;
+    width: 20%;
+    height:100%;
+    text-align: center;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+#tab-1:checked ~ .tab label:nth-child(1),
+#tab-2:checked ~ .tab label:nth-child(2),
+#tab-3:checked ~ .tab label:nth-child(3),
+#tab-4:checked ~ .tab label:nth-child(4) {
+	background-color: #4b81c8d8;
+	color:white;
+    box-shadow: none;
+}
+.content > div {
+	display: none;
+}
+#tab-1:checked ~ .content div:nth-child(1),
+#tab-2:checked ~ .content div:nth-child(2),
+#tab-3:checked ~ .content div:nth-child(3),
+#tab-4:checked ~ .content div:nth-child(4)  {
+	display: block;
+}
+
+.content > div{
+   padding: 30px;
+   line-height: 1.5;
+   font-size: 17px;
+}
 </style>
 </head>
 <body>
-    <div class="innerOuter">
     	<jsp:include page="../common/header.jsp" />
+    	
+    <div class="innerOuter">
+    	
+    	<input type="hidden" id="memNo" value="${ loginUser.memNo }">
+    	<input type="hidden" id="pno" value="${ p.productNo }">
         
-        <hr>
         <br><br>
         <div class="product_info">
             <div class="product_title_image">
@@ -96,29 +148,43 @@
             </div>
             <br>
             <div class="menu_bar">
-                <ul> <!--클릭하면 색 바뀌게-->
-                    <li class="menu_1"><a href="">상품소개</a></li>
-                    <li><a href="">상품리뷰(30)</a></li>
-                    <li><a href="">상품문의</a></li>
-                    <li><a href="">배송일정</a></li>
-                    <li><a href="">환불정책</a></li>
-                </ul>
-            </div>
-            <hr>
-            <br><br>
-
-            <div class="product_detail_image">
-                <img src="${ p.productImg1 }">
-                
-                <p>상품소개글 상품소개글</p>
+		          <input type="radio" id="tab-1" name="show" checked/>
+				  <input type="radio" id="tab-2" name="show" />
+				  <input type="radio" id="tab-3" name="show" />
+				  <input type="radio" id="tab-4" name="show" />
+				  <div class="tab">
+					  <label for="tab-1">상품소개</label>
+					  <label for="tab-2" onclick="submit(${p.productNo});">상품리뷰</label>
+					  <label for="tab-3">상품문의</label>
+					  <label for="tab-4">배송일정</label>
+					  <label for="tab-4">환불정책</label>
+				  </div>
+	            <hr>
+	            <br><br>
+	            <div class="content">
+					<!-- 1 -->
+					<div class="content-dis">
+			            <div class="product_detail_image">
+			                <img src="${ p.productImg1 }">
+			                
+			                <p>상품소개글 상품소개글</p>
+			            </div>			
+					</div>
+					
+					<!-- 2 -->
+					<div class="content-dis">
+						<jsp:include page="productDetailReview.jsp"/>
+		            </div>
+				</div>
+            
             </div>
             
         </div>
+    </div>
     
-
         <div class="quick_menu">
             <div class="product_discription">
-                <span class="product_merchant_name">${ p.memberNo }</span> <br>
+                <span class="product_merchant_name">${ p.nickname }</span> <br>
                 <span style="display:block; width:300px" class="product_name">${ p.title }</span> <br>
                 <span class="delivery_fee">무료배송</span>
             </div>
@@ -129,33 +195,99 @@
             </div>
             <br><br>
             <select name="productOption" id="productOption" style="width: 305px; height: 40px; margin-left:22px;">
-                <option value="" selected>옵션선택</option>
+                <option value="0" selected>옵션선택</option>
             	<c:forEach var="o" items="${ list }">
 					<option value="${ o.optionNo }" >${ o.optionName }
-					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 													 ${ o.price }</option>                
                 </c:forEach>
             </select>
             <br><br>
             <div class="button_area" align="center">
-                <button type="button" class="in_cart">장바구니</button>
-                <button type="button" class="heart"><i></i>찜</button> <br>
+                <button type="button" class="in_cart" onclick="inCart(${p.productNo});">장바구니</button>
+                <button type="button" class="heart" onclick="likeCk(${p.productNo});">
+                	<div id="likeArea">
+		                <c:choose>
+                        	<c:when test="${ p.likeCk == 1 }">
+                        		<img src="resources/images/heart2.png" width="20" height="20" id="likeImg">
+							</c:when>
+							<c:otherwise>
+                        		<img src="resources/images/heart1.png" width="20" height="20" id="likeImg">
+							</c:otherwise>
+						</c:choose>   
+		                <span id="likeCount">${ p.like }</span>
+	                </div>
+                </button> <br>
                 <button type="button" class="buy_now">바로구매</button>
             </div>
         </div>
-
-    </div>
     
     <script>
-    function scroll_follow( id )
-    {
-      $(window).scroll(function( )  //스크롤이 움직일때마다 이벤트 발생
-      { 
-          var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
-          $( id ).stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
-       });
-    }
-     scroll_follow( ".quick_menu" );
+    
+	function likeCk(pno){
+		//console.log(window.event.target);
+		
+			 if(document.getElementById("memNo").value == ""){
+	                alert("로그인 후 이용 가능한 서비스 입니다.");
+	            } else{
+	                $.ajax({
+	                    url:"likeStore.st",
+	                    data:{
+	                        memNo:document.getElementById("memNo").value,
+	                        referNo:pno
+	                    }, success:function(likeResult){
+							console.log(likeResult);
+	                        if(likeResult.message == 'ss'){
+	                        	document.getElementById("likeImg").src = "resources/images/heart2.png";
+	                        	document.getElementById("likeCount").innerHTML = likeResult.likeCount;
+	                            alert("찜 목록에 추가 되었습니다!");
+	                        } else if(likeResult.message == 'dd'){
+	                        	document.getElementById("likeImg").src = "resources/images/heart1.png";
+	                        	document.getElementById("likeCount").innerHTML = likeResult.likeCount;
+	                            alert("찜 목록에서 삭제되었습니다.");
+	                        } else {
+	                            alert("비정상적인 요청입니다.");
+	                        }
+	                    	
+	                    }, error:function(){
+	                        console.log("찜하기 ajax 통신 실패");
+	                    }
+	           	    })
+	            }
+		}
+	
+	
+	function inCart(pno){
+		 
+		 if(document.getElementById("memNo").value == ""){
+             alert("로그인 후 이용 가능한 서비스 입니다.");
+         } else{
+        	 $.ajax({
+        		 url:"inCart.st",
+        		 data:{
+        			 memberNo:document.getElementById("memNo").value,
+        			 productNo:pno,
+        			 optionNo:$("#productOption option:selected").val()
+        		 }, success:function(result){
+        			 if(result == "ss"){
+        				 confirm("장바구니에 추가 되었습니다! 장바구니로 이동하시겠습니까?");
+        				 location.replace('cart.st');
+        			 }else if(result == "dd"){
+        				 alert("수량이 추가되었습니다!");
+        			 }
+        		 },error: function(){
+        			 console.log("통신실패!");
+        		 }
+        	 })
+         }
+	}
+	
+	function submit(pno){
+		document.getElementById('pno').submit;
+	}
+	
+	
+	
     </script>
 
 

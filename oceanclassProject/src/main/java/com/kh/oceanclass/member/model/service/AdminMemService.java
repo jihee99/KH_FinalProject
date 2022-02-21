@@ -123,6 +123,13 @@ public interface AdminMemService {
 
 	int adminSearchStoreCount(HashMap<String, String> map);
 	ArrayList<StoreOrder> adminSearchStoreList(HashMap<String, String> map, PageInfo pi);
+
+	int selectPointSearchCount(HashMap<String, String> map);
+
+	ArrayList<Point> selectPointSearchList(PageInfo pi, HashMap<String, String> map);
+
+	int selectCouponSearchCount(HashMap<String, String> map);
+	ArrayList<Coupon> selectCouponSearchList(PageInfo pi, HashMap<String, String> map);
 	
 	
 }

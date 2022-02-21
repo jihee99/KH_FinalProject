@@ -17,10 +17,10 @@
 	.conhead>h2{margin-bottom: 20px;}
 	.conreview{width:90%; height: 200px; margin: 0 auto; margin-bottom: 20px; margin-left: 70px;}
 	.img{width:35%; height: 100%; float:left;}
-	.review{width:65%; height: 100%; margin-left: 280px; padding: 10px; text-align: left;}
+	.review{width:65%; height: 100%; margin-left: 280px; padding: 10px; text-align: left; table-layout: fixed;}
 	.img img{width: 100%; height: 80%;}
 	.img p{font-size: 24px; text-align: center;}
-	.title{font-size: 24px; font-weight:600;}
+	.title{border: 1px solid; font-size: 24px; font-weight:600; display: block; font-weight: bolder; text-overflow: ellipsis; overflow:hidden;}
 </style>
 </head>
 <body>
@@ -43,17 +43,7 @@
 				            	<p>${c.star}</p>
 				            </div>
 				            <div class="review">
-				            	<p class="title">
-					            	<c:choose>
-					            		<c:when test="${fn:length(c.clName) gt 21}">
-					            			<c:out value="${fn:substring(c.clName, 0, 20)}"></c:out>
-					            			..
-					            		</c:when>
-					            		<c:otherwise>
-					            			<c:out value="${c.clName}"></c:out>
-					            		</c:otherwise>
-						            </c:choose>
-					            </p>
+				            	<p class="title">${c.clName}</p>
 				            	<p>
 				            		<c:choose>
 					            		<c:when test="${fn:length(c.content) gt 101}">

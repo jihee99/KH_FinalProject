@@ -127,6 +127,39 @@ public class AdminMemController {
 		return mv;
 	}
 	
+	@RequestMapping(value="pcsearch.ad")
+	public String adminCPSearchList(@RequestParam(value="cpage",defaultValue="1") int currentPage, String key, String type, Model model) {
+		HashMap<String, String> map = new HashMap<>();
+		
+		if(!type.equals("")) {
+			map.put("type", type);	
+			model.addAttribute("type", type);
+		}
+		//if(!key.equals("")) {
+			map.put("key", key);
+			model.addAttribute("key", key);
+		//}
+
+		System.out.println(map);
+		if(type.equals("p")) {
+			int listCount = adMemService.selectPointSearchCount(map);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+			ArrayList<Point> list = adMemService.selectPointSearchList(pi, map);	
+			System.out.println(list);
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+		}
+		if(type.equals("c")) {
+			int listCount = adMemService.selectCouponSearchCount(map);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+			ArrayList<Coupon> list = adMemService.selectCouponSearchList(pi, map);		
+			System.out.println(list);
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+		}
+		
+		return "member/admin/adminPointCouponSearchList";
+	}
 	
 	@RequestMapping(value="cenrollF.ad")
 	public String adminCouponEnroll(HttpSession session, Model model) {
@@ -160,16 +193,12 @@ public class AdminMemController {
 		// 관리자 쿠폰 발행 페이지 확인용 메소드
 		//System.out.println(cno);
 
-		if(session.getAttribute("loginUser") != null) {
-			Coupon c = adMemService.selectCoupon(cno);
-			ArrayList<Member> mlist = adMemService.selectAllMember();
-			model.addAttribute("c", c);
-			model.addAttribute("mlist", mlist);
-			return "member/admin/adminCouponWindow";
-		} else {
-			model.addAttribute("errorMsg","접근권한이 없습니다.");
-			return "common/errorPage";
-		}
+		Coupon c = adMemService.selectCoupon(cno);
+		ArrayList<Member> mlist = adMemService.selectAllMember();
+		model.addAttribute("c", c);
+		model.addAttribute("mlist", mlist);
+		return "member/admin/adminCouponWindow";
+
 	}
 	
 	@ResponseBody

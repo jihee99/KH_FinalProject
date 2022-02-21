@@ -11,6 +11,8 @@ import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
+import com.kh.oceanclass.store.model.vo.StoreBuyList;
+import com.kh.oceanclass.store.model.vo.StoreOrder;
 
 @Repository
 public class InstructorStoreDao {
@@ -90,5 +92,42 @@ public class InstructorStoreDao {
 		return sqlSession.insert("inStoreMapper.insertProductOrder", pOrder);
 	}
 
+	public int selectStoreDeliveryCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("inStoreMapper.selectStoreDeliveryCount");
+	}
+
+	public ArrayList<StoreOrder> selectStoreDeliveryList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreDeliveryList", null, rowBounds);
+	}
+
+	public StoreOrder selectStoreDelivery(SqlSessionTemplate sqlSession, String ono) {
+		return sqlSession.selectOne("inStoreMapper.selectStoreDelivery", ono);
+	}
+
+	public ArrayList<StoreBuyList> selectStoreBuyList(SqlSessionTemplate sqlSession, String ono) {
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreBuyList", ono);
+	}
+
+	public int storeOrderUpdate(SqlSessionTemplate sqlSession, StoreOrder so) {
+		return sqlSession.update("inStoreMapper.storeOrderUpdate", so);
+	}
+
+	public int searchStoreOrderCount(SqlSessionTemplate sqlSession, String orderStatus) {
+		return sqlSession.selectOne("inStoreMapper.searchStoreOrderCount", orderStatus);
+	}
+
+	public ArrayList<StoreOrder> searchStoreOrderList(SqlSessionTemplate sqlSession, String orderStatus, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.searchStoreOrderList", orderStatus, rowBounds);
+	}
+	
+	
 	
 }

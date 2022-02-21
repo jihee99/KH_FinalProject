@@ -47,9 +47,9 @@
 				<div class="content">
 					<div class="content1">
 						<c:choose>
-					    	<c:when test="${empty list}">
+					    	<c:when test="${empty qnaList}">
 					    		<div class="conhead">
-							        <h2>스토어 문의</h2>
+							        <h2>상품 문의</h2>
 							    </div>
 					    		<p style="font-size:18px; font-weight:800; text-align:center; margin-top: 50px;">
 					    			등록된 문의가 없습니다
@@ -57,7 +57,7 @@
 					    	</c:when>
 					    	<c:otherwise>
 					    		<div class="conhead">
-							        <h2>스토어 문의</h2>
+							        <h2>상품 문의</h2>
 							        <a href="myShoppingQnaDetail.me">더보기</a>
 							    </div>
 							    <table class="table">
@@ -69,22 +69,22 @@
 							            </tr>
 							        </thead>
 							        <tbody>
-					        			<c:forEach var="s" items="${list}" begin="0" end="4">
+					        			<c:forEach var="q" items="${qnaList}" begin="0" end="4">
 								            <tr>
-								                <td>${s.proTitle}</td>
+								                <td>${q.proTitle}</td>
 								                <td>
 									                <c:choose>
-								            		<c:when test="${fn:length(s.content) gt 25}">
-								            			<c:out value="${fn:substring(s.content, 0, 24)}"></c:out>
+								            		<c:when test="${fn:length(q.content) gt 25}">
+								            			<c:out value="${fn:substring(q.content, 0, 24)}"></c:out>
 								            			..
 								            		</c:when>
 								            		<c:otherwise>
-								            			<c:out value="${s.content}"></c:out>
+								            			<c:out value="${q.content}"></c:out>
 								            		</c:otherwise>
 									            	</c:choose>
 								                </td>
 								                <c:choose>
-							                        <c:when test="${not empty s.answerContent}">
+							                        <c:when test="${not empty q.answerContent}">
 							                        	<td>등록완료</td>
 							                        </c:when>
 							                        <c:otherwise>
@@ -100,21 +100,50 @@
 					 </div> 
 					 
 					 <div class="content1">
-					    <div class="conhead">
-					        <h2>스토어 리뷰</h2>
-					        <a href="스토어">더보기</a>
-					    </div>
-					    <table class="table">
-					        <thead>
-					            <tr>
-					                <th>상품</th>
-					                <th>리뷰</th>
-					            </tr>
-					        </thead>
-					        <tbody>
-					        
-					        </tbody>
-					    </table>
+					    <c:choose>
+					    	<c:when test="${empty reviewlist}">
+					    		<div class="conhead">
+							        <h2>상품 리뷰</h2>
+							    </div>
+					    		<p style="font-size:18px; font-weight:800; text-align:center; margin-top: 50px;">
+					    			등록된 리뷰가 없습니다
+					    		</p>
+					    	</c:when>
+					    	<c:otherwise>
+					    		<div class="conhead">
+							        <h2>상품 리뷰</h2>
+							        <a href="myShoppingReviewDetail.me">더보기</a>
+							    </div>
+							    <table class="table">
+							        <thead>
+							            <tr>
+							                <th>상품</th>
+							                <th>별점</th>
+							                <th>리뷰</th>
+							            </tr>
+							        </thead>
+							        <tbody>
+					        			<c:forEach var="r" items="${reviewlist}" begin="0" end="4">
+								            <tr>
+								                <td>${r.title}</td>
+								                <td>${r.starRating}</td>
+								                <td>
+									                <c:choose>
+								            		<c:when test="${fn:length(r.content) gt 25}">
+								            			<c:out value="${fn:substring(r.content, 0, 24)}"></c:out>
+								            			..
+								            		</c:when>
+								            		<c:otherwise>
+								            			<c:out value="${r.content}"></c:out>
+								            		</c:otherwise>
+									            	</c:choose>
+								                </td>
+								            </tr>
+							            </c:forEach>
+							        </tbody>
+						        </table>
+					        </c:otherwise>
+					 	</c:choose>	
 					</div>  
 					
 					 

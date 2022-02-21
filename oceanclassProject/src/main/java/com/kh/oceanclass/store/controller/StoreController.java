@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.oceanclass.Class.model.vo.ClassReview;
+import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.service.StoreService;
+import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.LikeItem;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StoreReview;
 
 /*사용자 스토어 관련 기능 처리하는 controller*/
 
@@ -77,11 +81,26 @@ public class StoreController {
 	
 	// 상품 상세 메인
 	@RequestMapping(value="productMain.pr")
-	public String selectProduct(int pno, Model model) {
+	public String selectProduct(int pno, Model model, HttpSession session) {
 		
-		Product p = sService.selectProduct(pno);
+		int memberNo = 0;
+		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
+			memberNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		}
+		
+		Product p = sService.selectProduct(pno, memberNo);
 		ArrayList<ProductOption> list = sService.selectProductOption(pno);
 		
+		// 클래스 리뷰 리스트
+		ArrayList<StoreReview> srList = sService.selectStoreReviewList(pno);
+		// 리뷰 메인 4개 리스트 (도움순) + 리뷰 top5 (이미지)
+		if(!srList.isEmpty()) {
+			ArrayList<StoreReview> srMainList = sService.selectStoreReviewMainList(pno);
+			model.addAttribute("srMainList", srMainList);
+		}
+		StoreReview counter = sService.selectReviewCount(pno);
+		
+		model.addAttribute("c", counter);
 		model.addAttribute("p", p);
 		model.addAttribute("list", list);
 		
@@ -91,7 +110,7 @@ public class StoreController {
 	// 카테고리, 정렬 컨트롤러
 	@ResponseBody
 	@RequestMapping(value="categorySearch.cs", produces="application/json; charset=utf-8")
-	public String categorySearch(String category, Model model, ModelAndView mv, String memberNo, String sort) {
+	public String categorySearch(String category, Model model, ModelAndView mv, int memberNo, String sort) {
 		
 		ArrayList<Product> list = sService.categorySearch(category, memberNo, sort);
 		//model.addAttribute("list", list);
@@ -116,7 +135,7 @@ public class StoreController {
 		if(result1 > 0) {
 			// 찜한적 있음 => 찜 내역 삭제 , 찜 수 조회
 			int result2 = sService.deleteLike(li);
-			Product p = sService.selectProduct(li.getReferNo());
+			Product p = sService.selectProduct(li.getReferNo(), li.getMemNo());
 			
 			if(result2 > 0 && p != null) {
 				// 삭제완료 및 request에 담기
@@ -127,7 +146,7 @@ public class StoreController {
 		}else {
 			// 찜 한 적 없음 
 			int result2 = sService.insertLike(li);
-			Product p = sService.selectProduct(li.getReferNo());
+			Product p = sService.selectProduct(li.getReferNo(), li.getMemNo());
 			
 			if(result2 > 0) {
 				lit.setMessage("ss");
@@ -139,6 +158,104 @@ public class StoreController {
 		lit.setLikeCount("0");
 		return new Gson().toJson(lit);
 		
+	}
+	
+	// 장바구니 컨트롤러
+	@ResponseBody
+	@RequestMapping(value="inCart.st", produces="application/json; charset=utf-8")
+	public String inCart(Cart ca) {
+		
+		String check = "";
+		
+		// 장바구니에 있는지 확인
+		int result1 = sService.cartCheck(ca);
+		
+		if(result1 > 0) { // 장바구니에 있음
+			// 수량 증가
+			int result2 = sService.updateCart(ca);
+			
+			if(result2 > 0 ) {
+				// 수량 업데이트 완료 및 request에 담기
+				check = "dd";
+				return new Gson().toJson(check);
+			}
+			
+		}else { // 장바구니에 없을 경우
+			// 장바구니에 insert
+			int result2 = sService.insertCart(ca);
+			
+			if(result2 > 0) {
+				check = "ss";
+				return new Gson().toJson(check);
+			}
+			
+		}
+		
+		check = "ff";
+		return new Gson().toJson(check);
+	}
+	/*
+	// 장바구니 화면 컨트롤러
+	@RequestMapping(value="cart.st")
+	public String cart() {
+		
+		return "store/cart";
+	}
+	*/
+	
+	/*
+	@RequestMapping(value="cart.st")
+	public String selectCart(Model model, HttpSession session) {
+		
+		int memberNo = 0;
+		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
+			memberNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		}
+		
+		ArrayList<Cart> list = sService.selectCart(memberNo);
+		
+		ArrayList<Product> pList = new ArrayList();
+		ArrayList<ProductOption> oList = new ArrayList();
+		
+		System.out.println(list);
+		
+		for(Cart c : list) {
+			pList = sService.selectCartProduct(c.getProductNo());
+			oList = sService.selectCartOption(c.getOptionNo());
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("plist", pList);
+		model.addAttribute("olist", oList);
+
+		// 포워딩할 뷰(/WEB-INF/views/ store/storeContent .jsp)
+		return "store/cart";
+		
+	}
+	*/
+	
+	// 리뷰 작성 컨트롤러
+	@RequestMapping(value="reviewEnroll.st")
+	public String reviewEnrollForm() {
+		
+		return "store/reviewEnrollForm";
+	}
+	
+	
+	
+	// 리뷰 조회 컨트롤러
+	@RequestMapping(value="reviewList.st")
+	public String reviewList(Model model, int pno) {
+		
+		System.out.println(pno);
+		
+		ArrayList<StoreReview> rlist = sService.selectReviewList(pno);
+		StoreReview counter = sService.selectReviewCount(pno);
+		
+		model.addAttribute("rlist", rlist);
+		model.addAttribute("c", counter);
+		
+		return "store/productDetailReview";
 	}
 	
 	

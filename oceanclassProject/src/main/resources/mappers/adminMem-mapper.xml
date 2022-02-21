@@ -268,7 +268,7 @@
 		 from point
 		 join member using (mno)
 		 where deadline > sysdate
-		 order by pno
+		 order by pno desc
 	</select>
 	
 	<!-- 쿠폰목록 카운트 -->
@@ -367,15 +367,12 @@
 	
 	<update id="updateCoupon">
 		update COUPONLIST
-		   set (
-		          CNAME = #{couponName}
-		        , discount = #{discount}
-		        , MAXCOUNT = #{maxCount}
-		        , DEDATE = #{dedate}
-		        )
+		   set CNAME = #{couponName}
+		     , discount = #{discount}
+		     , MAXCOUNT = #{maxCount}
+		     , DEDATE = #{dedate}
 		where CNO = #{couponNo}
 	</update>
-	
 	
 	<!-- 포인트 지급용  -->
 	<insert id="insertPoint">
@@ -400,6 +397,61 @@
       )
 	</insert>
 	
+	<!-- 포인트 검색목록 카운트 -->
+	<select id="selectPointSearchCount" resultType="_int">
+		select count(*)
+		 from point
+ 		 join member using (mno)
+		 where deadline > sysdate
+		 <if test="key != null">
+		  and user_id like '%' || #{key} || '%'
+		 </if>
+	</select>
+	
+	<!-- 쿠폰검색목록 카운트 -->
+	<select id="selectCouponSearchCount" resultType="_int">
+		select
+		       count(*)
+		  from couponlist
+		  <if test="key != null">
+		  where cname like '%' || #{key} || '%'
+		  </if> 
+	</select>
+	
+	<select id="selectPointSearchList" resultMap="pointResult">
+		select
+		       pno
+		     , user_id
+		     , user_name
+		     , reason
+		     , p_price
+		     , to_char(p_date, 'YYYY-MM-DD HH24:MI:SS') p_date
+		     , to_char(deadline, 'YYYY-MM-DD HH24:MI:SS') deadline
+		 from point
+		 join member using (mno)
+		 where deadline > sysdate
+		  and user_id like '%' || #{key} || '%'
+		 order by pno desc
+	</select>
+	
+	<select id="selectCouponSearchList" resultMap="couponResult">
+		select
+		       cno
+		     , cname
+		     , discount
+		     , maxcount
+		     , to_char(dedate, 'YYYY-MM-DD') as dedate
+		     , NVL((select count(*)
+		          from coupon
+		          group by cno
+		          having couponlist.cno = coupon.cno),  0) as count
+		 from couponlist
+		 <if test="key != null">
+		 where cname like '%' || #{key} || '%'
+		 </if>
+		 order
+		    by cno desc
+	</select>
 	
 	<select id="selectClassOrderCount" resultType="_int">
 		select count(*)
@@ -544,7 +596,7 @@
 		 where order_no = #{orderNo}
 	</update>
 	
-		<update id="upadteOrderStatus">
+	<update id="upadteOrderStatus">
 		update pay
 		   set order_status = #{orderStatus}
 		 where order_no = #{orderNo}

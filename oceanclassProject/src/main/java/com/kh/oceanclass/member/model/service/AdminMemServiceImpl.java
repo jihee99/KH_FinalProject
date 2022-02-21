@@ -172,6 +172,27 @@ public class AdminMemServiceImpl implements AdminMemService {
 	}
 
 	@Override
+	public int selectPointSearchCount(HashMap<String, String> map) {
+		return adMemDao.selectPointSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Point> selectPointSearchList(PageInfo pi, HashMap<String, String> map) {
+		return adMemDao.selectPointSearchList(sqlSession, pi, map);
+	}
+
+	@Override
+	public int selectCouponSearchCount(HashMap<String, String> map) {
+		return adMemDao.selectCouponSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Coupon> selectCouponSearchList(PageInfo pi, HashMap<String, String> map) {
+		return adMemDao.selectCouponSearchList(sqlSession, pi, map);
+	}
+	
+	
+	@Override
 	public int selectClassOrderCount() {
 		return adMemDao.selectClassOrderCount(sqlSession);
 	}
@@ -256,6 +277,8 @@ public class AdminMemServiceImpl implements AdminMemService {
 	public ArrayList<StoreOrder> adminSearchStoreList(HashMap<String, String> map, PageInfo pi) {
 		return adMemDao.adminSearchStoreList(sqlSession, map, pi);
 	}
+
+
 
 
 	

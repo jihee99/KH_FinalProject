@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chartMapper">
+
+	<resultMap id="chartResult" type="AdminStatistics">
+		<result column="sta_no" property="staNo" />
+		<result column="sta_date" property="staDate" />
+		<result column="new_mem" property="newMem" />
+		<result column="sleep_mem" property="sleepMem" />
+		<result column="del_mem" property="delMem" />
+		<result column="new_teacher" property="newTeacher" />
+		<result column="sleep_teacher" property="sleepTeacher" />
+		<result column="del_teacher" property="delTeacher" />
+	</resultMap>
+	
+	<select id="selectChart" resultMap="chartResult">
+		select 
+		       sta_no
+		     , to_char(sta_date, 'YYYY-MM-DD') as "sta_date"
+		     , new_mem
+		     , sleep_mem
+		     , del_mem
+		     , new_teacher
+		     , sleep_teacher
+		     , del_teacher
+		  from statis
+		 where sta_date between sysdate-7 and sysdate
+		 order
+		    by sta_no desc
+	</select>
+	
+	<select id="selectMemChart" resultMap="chartResult">
+		select 
+		       sta_no
+		     , to_char(sta_date, 'YYYY-MM-DD') as "sta_date"
+		     , new_mem
+		     , sleep_mem
+		     , del_mem
+		  from statis
+		 where sta_date between sysdate-7 and sysdate
+		 order
+		    by sta_no desc
+	</select>
+	
+	<select id="selectTeacherChart" resultMap="chartResult">
+		select 
+		       sta_no
+		     , to_char(sta_date, 'YYYY-MM-DD') as "sta_date"
+		     , new_teacher
+		     , sleep_teacher
+		     , del_teacher
+		  from statis
+		 where sta_date between sysdate-7 and sysdate
+		 order
+		    by sta_no desc
+	</select>
+	
+	
+</mapper>

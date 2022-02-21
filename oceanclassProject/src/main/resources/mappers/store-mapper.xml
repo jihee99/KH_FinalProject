@@ -17,9 +17,10 @@
 	  	<result column="img2" property="productImg1"/>
 	  	<result column="img3" property="productImg2"/>
 	 	<result column="img4" property="productImg3"/>
-	 	<result column="nickname" property="memberNo" />
+	 	<result column="nickname" property="nickname" />
 	 	<result column="like_count" property="like" />
 	 	<result column="likeck" property="likeCk" />
+	 	<result column="quantity" property="quantity"/>
 	</resultMap>
 	
 	<resultMap id="optionResult" type="ProductOption">
@@ -27,6 +28,21 @@
 		<result column="pno" property="productNo"/>
 		<result column="opname" property="optionName"/>
 		<result column="price" property="price"/>
+	</resultMap>
+	
+	<resultMap id="cartResult" type="Cart">
+		<result column="pno" property="productNo"/>
+	</resultMap>
+	
+	<resultMap id="reviewResult" type="StoreReview">
+		<result column="nickname" property="nickname"/>
+		<result column="profile" property="profile"/>
+		<result column="content" property="content"/>
+		<result column="star_rating" property="starRating"/>
+		<result column="review_date" property="reviewDate"/>
+		<result column="total" property="totalCount"/>
+		<result column="star_avg" property="starAvg"/>
+		<result column="reconum" property="reconum"/>
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
@@ -163,10 +179,17 @@
 		         where gb_no = 2
 		           and refer_no = pno
 		        ) as like_count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and mno = #{memberNo}
+		           and refer_no = pno
+		       ) as likeck
 		  from store 
 		  join member using (mno)
 		 where status = 'Y'
-		   and pno = #{ pno }
+		   and pno = #{ productNo }
 		 order
 		 	by pno desc   
 	</select>
@@ -179,4 +202,150 @@
 		  from soption
 		 where pno = #{pno}	
 	</select>
+
+
+	<select id="cartCheck" resultType="_int">
+		select
+			   count(*)
+		  from cart
+		 where mno = #{memberNo}
+		   and pno = #{productNo}
+	</select>
+	
+	<insert id="insertCart">
+		insert
+		  into cart
+		values
+			 (
+			 SEQ_CANO.NEXTVAL
+			 , #{memberNo}
+			 , #{productNo}
+			 , #{optionNo}
+			 , 1
+			 )
+	</insert>
+	
+	<delete id="deleteCart">
+		delete 
+		  from cart
+		 where mno = #{memberNo}
+		   and pno = #{productNo}
+	</delete>
+	
+	<update id="updateCart">
+		update
+			   cart
+		   set quantity = (
+		   				  select
+                                 quantity
+                            from cart
+                           where mno = #{memberNo}
+                             and pno = #{productNo}
+                           ) + 1
+		 where mno = #{memberNo}
+		   and pno = #{productNo}
+	</update>
+	
+	<select id="selectCartProduct" resultMap="storeResult">
+	   select
+			   pno
+			 , nickname
+			 , category
+			 , title
+			 , price
+			 , courier
+			 , img1
+		  from store 
+		  join member using (mno)
+		 where status = 'Y'
+		   and pno = #{ productNo }
+	</select>
+	
+	<select id="selectCart" resultMap="cartResult">
+		select
+			   pno
+			 , opno
+			 , quantity
+		  from cart
+		 where mno = #{memberNo}
+	</select>
+	
+	<select id="selectCartOption" resultMap="optionResult">
+		select
+		       pno
+		     , opname
+		     , price
+		  from soption
+		 where opno = #{optionNo}
+	</select>
+	
+		<select id="selectStoreReviewList" resultMap="reviewResult">
+		select 
+			   r.rno
+		     , r.pno
+		     , nickname
+		     , profile
+		     , r.content
+		     , r.star_rating
+		     , to_char(r.review_date, 'YYYY-MM-DD') as review_date
+		     , status
+   		     , (
+		        select count(*)
+		          from recommend
+		         where gb_no = 2
+		           and refer_no = rno
+		        ) as reconum
+		  from s_review r
+          join member using (mno)
+		 where status = 'Y'
+		   and pno = #{po}
+	     order
+   			by review_date desc
+	</select>
+
+	<select id="selectStoreReviewMainList" resultMap="reviewResult">
+		select r.rno
+		     , r.pno
+		     , nickname
+		     , profile
+		     , r.content
+		     , r.star_rating
+		     , to_char(review_date, 'YYYY-MM-DD') as review_date
+		     , r.status
+		     , (
+		        select count(*)
+		          from recommend
+		         where gb_no = 2
+		           and refer_no = rno
+		        ) as reconum
+		  from s_review r
+          join member using (mno)
+		 where status = 'Y'
+		   and pno = #{pno}
+		 order
+		    by reconum desc
+	</select>
+	
+	
+	<select id="selectReviewList" resultMap="reviewResult">
+ 		select
+			    nickname
+			  , profile
+			  , content
+			  , star_rating
+			  , review_date
+	      from s_review
+	      join member using (mno)
+	     where pno = #{pno}
+           and status = 'Y'
+	</select>
+	
+	<select id="selectReviewCount" resultMap="reviewResult">
+		    select 
+		           count(*) as total
+		         , nvl((TRUNC((avg(star_rating)-0.1)*2)/2 + 0.5),0) as star_avg
+		      from s_review 
+		     where pno = #{pno}
+	</select>
+	
 </mapper>
