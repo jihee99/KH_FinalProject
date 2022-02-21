@@ -39,6 +39,7 @@
     #content-wrap{
         margin: 0 auto;
         width: 400px;
+        margin-top: 50px;
     }
     /* 버튼들 */
     #findIdBtn {
@@ -48,7 +49,7 @@
         width: 400px;
         height: 50px;
         margin-bottom: 10px;
-        margin-top: 20px;
+        margin-top: 30px;
     }
     /* 박스 이름 */
     #top-text{
@@ -82,7 +83,7 @@
 		border: 1px solid black;
 		border-radius: 50px;
 		background-color: white;
-		font-size: 20px;/* 아이콘 크기조절ㅋㅋ */
+		font-size: 20px;
 		text-align: center;
 		padding-top: 4px;
 		color: lightgrey;
@@ -130,6 +131,18 @@
         background-color: gray;
         margin-left: 2px;
     }
+    #imgFile{
+        border-radius: 250px;
+        object-fit: cover;
+        /*
+        border: 1px solid black;
+        height: 100px;
+        border-style: none;
+        */
+    }
+    input[type="text"]:disabled {
+        background: lightgrey;
+    }
 </style>
 </head>
 <body>
@@ -142,65 +155,26 @@
             <div id="content-wrap">
                 <form action="" method="post" id="form-area">
                 <input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
-                    <div class="form-group">
-                        <div class="img-box">
-                            <img src="resources/images/user.png" style="width: 100px;">
-                            <label for="imgfile" id="edit-icon" class="material-icons icon">edit</label>
-                            <input type="file" id="imgfile" hidden>
-                        </div>
-                    </div>
+                    
 
                     <span id="top-text">이름</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="name" placeholder="김혜선" name="name" required> 
+                      <input type="text" class="form-control" id="name" value="${loginUser.userName }" name="userName" disabled> 
                     </div>
 
                     <span id="top-text">닉네임</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="nickName" placeholder="짱보미" name="nickName" required> 
+                      <input type="text" class="form-control" id="nickName" value="${loginUser.nickName }" name="nickName" disabled> 
                     </div>
 
                     <span id="top-text">휴대전화 번호</span>
                     <div class="form-group">
-                      <input type="number" class="form-control" id="phone" placeholder="01095227273" name="phone" style="width: 340px;" required> 
-                      <button id="phoneUpdate" type="button" class="rightBtn btn-sm" onclick="idCheck();" data-toggle="modal" data-target="#phoneModal">수정</button>
+                      <input type="text" class="form-control" id="phone" value="${loginUser.phone }" name="phone" disabled> 
                     </div>
-                    <!-- 번호인증 모달 -->
-                    <div class="modal fade" id="phoneModal">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content" style="width: 400px;">
-                                
-                                <div class="modal-header">
-                                    <span style="font-weight: bolder;">휴대폰 인증하기</span>
-                                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                                </div>
-                                <div style="margin-left: 15px;">
-                                    <span style="font-size: small; color: grey;">번호 수정을 위해 본인의 휴대폰 번호를 인증해 주세요</span>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="modal-body" align="center">
-                                    <div class="modalMsg-area">
-                                        <div id="confirm">
-                                            <input type="text" class="form-control" id="phone" placeholder="01095227273" name="phone" style="width: 250px;" required> 
-                                            <button id="phoneUpdate" type="button" onclick="idCheck();" style="width: 90px; height: 38px; background-color: lightgray;">인증받기</button>
-                                        </div>
-                                        <div id="check">
-                                            <input type="number" class="form-control" id="phone" placeholder="1234" name="phone" style="width: 250px;" required> 
-                                            <button id="phoneUpdate" type="button" onclick="idCheck();" style="width: 90px; height: 38px;">확인</button>
-                                        </div>
-                                    </div>
-                                    <div id="deletebtn-area">
-                                    <a type="button" class="btn" id="confirm-btn" data-toggle="modal" href="">확인</a>
-                                    <button type="button" class="btn" data-dismiss="modal" id="closebtn">닫기</button>
-                                    </div>              
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <span id="top-text">강사 이력</span>
                     <div class="form-group">
-                        <textarea name="" id="history" cols="51" rows="3" placeholder=" 강사 이력을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
+                        <textarea name="tcHistory" id="history" cols="51" rows="3" placeholder=" 강사 이력을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
                     </div>
                     <div class="form-group">
                     <input type="file" class="form-control" id="history" name="history" required> 
@@ -208,32 +182,40 @@
 
                     <span id="top-text">강사 소개</span>
                     <div class="form-group">
-                      <textarea name="" id="intro" cols="51" rows="5" placeholder=" 내용을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
+                      <textarea name="tcIntroduce" id="intro" cols="51" rows="5" placeholder=" 내용을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
                     </div>
 
                     <span id="top-text">강사 소셜 미디어</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="SNS" placeholder="유튜브 주소" name="SNS" style="width: 340px;" required> 
+                      <input type="text" class="form-control" id="SNS" placeholder="sns주소1" name="tcSns" style="width: 340px;" required> 
                       <button id="plus" type="button" class="rightBtn" onclick="idCheck();">+</button>
                     </div>
-                    <div>
+                    <div id="snsForm">
                         <!-- 플러스버튼 클릭시 sns 입력 폼이 들어올 자리 -->
                     </div>
-
-                    <button onclick="formSubmit(1)" id="findIdBtn" class="btn" style="background-color: lightgray; margin-top: 40px;">비밀번호 변경하기</button>
+                    
+                    <script>
+				      $(document).ready(function(){
+				         let Snsform = 1;
+				         let no = 2;
+				         
+				         $("#plus").click(function (){
+				            if(Snsform >= 3){
+				               alert("SNS 등록은 3개까지 가능 합니다.");
+				               return;
+				            }
+				            $("#snsForm").append
+                            ("<input type='text' placeholder=' sns주소" + no + "' name='SNS' class='mr-2' style='width: 340px; height:40px; border: solid 1px lightgrey; margin-bottom:15px;' id='SNS" + no + "'>"); 
+                            //$("input[name=opcount]").val(no);
+                            no++;
+                            Snsform++;
+				         });                  
+				      })
+				   </script>
+				   
                     <button type="submit" id="findIdBtn" class="btn" style="background-color: rgb(228, 240, 250);">수정하기</button>
-                    <button type="submit" id="findIdBtn" class="btn" style="background-color: lightgray;">탈퇴하기</button>
                 </form>
             </div>
-            <script>
-           		function formSubmit(num){
-           			if(num == 1){ // 수정하기 클릭시
-           				$("#form-area").attr("action", "findPwdForm.me").submit();
-           			}else{ // 종료하기 클릭시
-           				$("#detailForm").attr("action", "evEnd.ad").submit();
-           			}
-           		}
-           	</script>
             <br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />
