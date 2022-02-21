@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.dao.StoreDao;
+import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -33,8 +34,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	@Override
-	public Product selectProduct(int pno) {
-		return sDao.selectProduct(sqlSession, pno);
+	public Product selectProduct(int pno, int memberNo) {
+		return sDao.selectProduct(sqlSession, pno, memberNo);
 	}
 
 	@Override
@@ -43,9 +44,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public void selectStoreReviewList() {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<StoreReview> selectStoreReviewList(int pno) {
+		return sDao.selectStoreReviewList(sqlSession, pno);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	@Override
-	public ArrayList<Product> categorySearch(String category, String memberNo, String sort) {
+	public ArrayList<Product> categorySearch(String category, int memberNo, String sort) {
 		return sDao.categorySearch(sqlSession, category, memberNo, sort);
 	}
 
@@ -78,6 +78,56 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public int deleteLike(LikeVo li) {
 		return sDao.deleteLike(sqlSession, li);
+	}
+
+	@Override
+	public int cartCheck(Cart ca) {
+		return sDao.cartCheck(sqlSession, ca);
+	}
+
+	@Override
+	public int insertCart(Cart ca) {
+		return sDao.insertCart(sqlSession, ca);
+	}
+	
+	@Override
+	public int deleteCart(Cart ca) {
+		return sDao.deleteCart(sqlSession, ca);
+	}
+
+	@Override
+	public int updateCart(Cart ca) {
+		return sDao.updateCart(sqlSession, ca);
+	}
+
+	@Override
+	public ArrayList<Cart> selectCart(int memberNo) {
+		return sDao.selectCart(sqlSession, memberNo);
+	}
+
+	@Override
+	public ArrayList<Product> selectCartProduct(int productNo) {
+		return sDao.selectCartProduct(sqlSession, productNo);
+	}
+
+	@Override
+	public ArrayList<ProductOption> selectCartOption(int optionNo) {
+		return sDao.selectCartOption(sqlSession, optionNo);
+	}
+
+	@Override
+	public ArrayList<StoreReview> selectReviewList(int pno) {
+		return sDao.selectReviewList(sqlSession, pno);
+	}
+
+	@Override
+	public StoreReview selectReviewCount(int pno) {
+		return sDao.selectReviewCount(sqlSession,pno);
+	}
+
+	@Override
+	public ArrayList<StoreReview> selectStoreReviewMainList(int pno) {
+		return sDao.selectStoreReviewMainList(sqlSession, pno);
 	}
 	
 	

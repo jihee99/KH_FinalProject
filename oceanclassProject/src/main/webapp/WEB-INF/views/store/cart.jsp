@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="./resources/css/cartStyle.css"rel="stylesheet" type="text/css">
+<link href="./resources/css/store/cartStyle.css" rel="stylesheet">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 <link type="text/css" rel="stylesheet" href="https://img-shop.pstatic.net/cart/static/pc/20220119/136/css/global.css?1642573329292">
 <link rel="shortcut icon" href="https://ssl.pstatic.net/imgshopping/search/m/static/20191226163224/favicon.ico">
@@ -85,8 +85,9 @@
                         <td class="table_cell">
                             <div class="product_desc_wrap">
                                 <div class="product_description">
+                                <c:forEach var="p" items="${ plist }">
                                     <span class="product_thumb">
-                                        <img src=""  class="product_img">
+                                        <img src="${ p.productImg0 }"  class="product_img">
                                     </span>
                                     <a href="#" class="product_merchant_name" target="_blank">판매처이름</a>
                                     <span class="product_name">상품명 상품명 상품명</span>
@@ -100,6 +101,7 @@
                                             12,800
                                         </s>
                                     </span>
+                                </c:forEach>
                                 </div>
                             </div>
                             <div class="product_button_area">

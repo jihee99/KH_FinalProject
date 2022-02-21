@@ -23,4 +23,10 @@ public class StoreReview {
 	private Date reviewDate; // 작성일
 	private String status; // 상태값
 	
+	public String nickname;
+	public int totalCount;
+	public double starAvg;
+	public String profile;
+	public int reconum;
+	
 }

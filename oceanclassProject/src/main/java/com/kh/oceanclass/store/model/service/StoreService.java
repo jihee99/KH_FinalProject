@@ -2,8 +2,10 @@ package com.kh.oceanclass.store.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -15,16 +17,16 @@ public interface StoreService {
 	ArrayList<Product> selectList(PageInfo pi, int memberNo);
 	
 	// 1-2. 스토어 카테고리 검색
-	ArrayList<Product> categorySearch(String category, String memberNo, String sort);
+	ArrayList<Product> categorySearch(String category, int memberNo, String sort);
 	
 	// 2. 상품 상세조회용 서비스
-	Product selectProduct(int pno);
+	Product selectProduct(int pno, int memberNo);
 	
 	// 3. 상품 옵션 조회용 서비스
 	ArrayList<ProductOption> selectProductOption(int pno);
 	
 	// 4. 상품 리뷰 리스트 페이지 서비스
-	void selectStoreReviewList();
+	ArrayList<StoreReview> selectStoreReviewList(int pno);
 	
 	// 5. 상품 리뷰 작성 서비스
 	int insertReview(StoreReview review);
@@ -42,5 +44,31 @@ public interface StoreService {
 	
 	// 10. 상품 찜 삭제 서비스
 	int deleteLike(LikeVo li);
+	
+	// 11. 장바구니 확인 서비스
+	int cartCheck(Cart ca);
+	
+	// 12. 장바구니 담기 서비스
+	int insertCart(Cart ca);
+	
+	// 13. 장바구니 삭제 서비스
+	int deleteCart(Cart ca);
+	
+	// 14. 장바구니 수량 증가 서비스
+	int updateCart(Cart ca);
+	
+	// 15. 장바구니 조회 서비스
+	ArrayList<Cart> selectCart(int memberNo);
+	
+	ArrayList<Product> selectCartProduct(int productNo);
+	
+	ArrayList<ProductOption> selectCartOption(int optionNo);
+	
+	// 16. 리뷰 조회 서비스
+	ArrayList<StoreReview> selectReviewList(int pno);
+	
+	StoreReview selectReviewCount(int pno);
+	
+	ArrayList<StoreReview> selectStoreReviewMainList(int pno);
 	
 }

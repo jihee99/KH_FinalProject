@@ -19,4 +19,13 @@ public class Cart {
 	private int optionNo;
 	private int quantity;
 	
+	private String title;		// 상품명
+	private int price;
+	private String productImg0;		// 메인이미지 경로
+	
+	private String optionName;		// 옵션명
+	private int opPrice;
+	
+	private String nickname;
+	
 }
