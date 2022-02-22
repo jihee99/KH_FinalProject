@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,11 +24,13 @@
     }
     .items_title{
         font-size: 20px;
+        margin-bottom:30px;
     }
     .item{
-        width: 200px;
-        margin-top: 20px;
+        width: 290px;
         display: inline-block;
+        margin:20px;
+        margin-bottom: 30px;
     }
     .item>span{
         font-size: 12px;
@@ -37,7 +40,7 @@
     }
     .thumbnail{
         width: 100%;
-        height: 200px;
+        height: 180px;
     }
 </style>
 </head>
@@ -48,162 +51,12 @@
         
         <div class="items">
             <div class="items_title"><b>· HOT CLASS</b></div>
-
-            <div class="item" style="margin-right: 62px;" onclick="classPage(1);">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
+           	<div id="hotClass"></div>
         </div>
 
         <div class="items">
             <div class="items_title"><b>· NEW CLASS</b></div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item" style="margin-right: 62px;">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="" class="thumbnail">
-                <div style="font-size: 13px;"><b>강사명</b></div>
-                <div>클래스 제목이 들어가는 자리 줄바뀌는거 확인하려고 길게 씀</div>
-                <img src="resources/images/heart1.png" style="width: 15px; height: 15px;">
-                <span>12345</span>
-                <img src="resources/images/like.png" style="width: 15px; height: 15px; margin-left: 5px; margin-bottom: 2px;">
-                <span>
-                    <span>99</span>%
-                </span>
-                <div>
-                    <b>
-                        월
-                        <span>99,000</span>
-                        원 
-                    </b>
-                </div>
-            </div>
+           	<div id="newClass"></div>
         </div>
 
         <div style="height: 150px;"></div>
@@ -211,11 +64,70 @@
     </div>
 
     <script>
-
-        function classPage(clNo){
-            location.href = 'classDetail.me?referNo=' + clNo;
-        }
-
+		
+    	window.onload = function(){
+    		
+    		var hotClass = document.getElementById("hotClass");
+    		var newClass = document.getElementById("newClass");
+    		
+    		$.ajax({
+    			url:"classHotList.me",
+    			success:function(data){
+    				let value = "";
+    				for(let i in data){
+    					
+    					var price1 = data[i].clPrice;
+    					var price2 = price1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    					
+    					value += "<div class='item' onclick='classPage(" + data[i].clNo + ")'>"
+							   + "<img src='" + data[i].clImg + "' class='thumbnail'>"
+							   + "<div style='font-size: 13px; margin-top:10px;'><b>" + data[i].memNo + "</b></div>"
+							   + "<div style='height:50px;'>" + data[i].clName + "</div>"
+							   + "<div class='likeArea'>"
+							   + "<img src='resources/images/heart2.png' style='width: 20px; height: 20px;'>"
+							   + "<span> " + data[i].like + "</span>"
+							   + "</div>"
+							   + "<div><b><span class='classPrice'>" + price2 + "</span>원</b></div>"
+							   + "</div>";
+    				}
+    				
+    				hotClass.innerHTML = value;
+    				
+    			}, error:function(){
+    				console.log("메인페이지 클래스 hot ajax 통신 실패");
+    			}
+    		})
+    		
+    		$.ajax({
+    			url:"classNewList.me",
+    			success:function(data){
+    				let value = "";
+    				for(let i in data){
+    					
+    					var price1 = data[i].clPrice;
+    					var price2 = price1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    					
+    					value += "<div class='item' onclick='classPage(" + data[i].clNo + ")'>"
+							   + "<img src='" + data[i].clImg + "' class='thumbnail'>"
+							   + "<div style='font-size: 13px; margin-top:10px;'><b>" + data[i].memNo + "</b></div>"
+							   + "<div>" + data[i].clName + "</div>"
+							   + "<div class='likeArea'>"
+							   + "<img src='resources/images/heart2.png' style='width: 20px; height: 20px;'>"
+							   + "<span> " + data[i].like + "</span>"
+							   + "</div>"
+							   + "<div><b><span class='classPrice'>" + price2 + "</span>원</b></div>"
+							   + "</div>";
+    				}
+    				
+    				newClass.innerHTML = value;
+    				
+    			}, error:function(){
+    				console.log("메인페이지 클래스 hot ajax 통신 실패");
+    			}
+    		})
+    		
+    	}
+    
     </script>
 
 </body>

@@ -167,4 +167,14 @@ public class ClassDao {
 		
 		return (ArrayList)sqlSession.selectList("classMapper.selectClassQnaList", referNo, rowBounds);
 	}
+
+	public ArrayList<Class> classHotList(SqlSessionTemplate sqlSession){
+		RowBounds rowBounds = new RowBounds(0, 6);
+		return (ArrayList)sqlSession.selectList("classMapper.classHotList", null, rowBounds);
+	}
+	
+	public ArrayList<Class> classNewList(SqlSessionTemplate sqlSession){
+		RowBounds rowBounds = new RowBounds(0, 6);
+		return (ArrayList)sqlSession.selectList("classMapper.classNewList", null, rowBounds);
+	}
 }

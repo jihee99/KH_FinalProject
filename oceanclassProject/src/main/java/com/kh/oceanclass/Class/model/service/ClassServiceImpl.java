@@ -189,5 +189,15 @@ public class ClassServiceImpl implements ClassService {
 	public ArrayList<ClassQna> selectClassQnaListPaging(int referNo, PageInfo pi) {
 		return cDao.selectClassQnaListPaging(sqlSession, referNo, pi);
 	}
+
+	@Override
+	public ArrayList<Class> classHotList() {
+		return cDao.classHotList(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Class> classNewList() {
+		return cDao.classNewList(sqlSession);
+	}
 	
 }

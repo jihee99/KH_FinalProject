@@ -575,5 +575,51 @@
 		   and status = 'Y'
 		   and gb_no = 1
 	</select>
+	
+	<select id="classHotList" resultMap="classResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_content
+		     , cl_price
+		     , cl_img
+		     , count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 1
+		           and refer_no = clno
+		        ) as like_count
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'Y'
+		 order
+		    by like_count desc
+	</select>
+	
+	<select id="classNewList" resultMap="classResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_content
+		     , cl_price
+		     , cl_img
+		     , count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 1
+		           and refer_no = clno
+		        ) as like_count
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'Y'
+		 order
+		    by clno desc
+	</select>
 		
 </mapper>

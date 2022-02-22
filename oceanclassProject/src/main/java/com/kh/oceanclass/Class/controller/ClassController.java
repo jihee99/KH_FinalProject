@@ -488,7 +488,6 @@ public class ClassController {
 		return "redirect:classQnaList.me?cpage=" + cpage + "&referNo=" + cq.getReferNo();
 	}
 	
-	
 	@RequestMapping(value="classPay.me")
 	public String classPay() {
 		// 클래스 결제 페이지 이동용(뷰 확인용) 메소드
@@ -501,7 +500,17 @@ public class ClassController {
 		return "class/classPayComplate";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="classHotList.me", produces="application/json; charset=UTF-8")
+	public String ajaxClassHotList() {
+		ArrayList<Class> cHotList = cService.classHotList();
+		return new Gson().toJson(cHotList);
+	}
 	
-	
-	
+	@ResponseBody
+	@RequestMapping(value="classNewList.me", produces="application/json; charset=UTF-8")
+	public String ajaxClassNewList() {
+		ArrayList<Class> cNewList = cService.classNewList();
+		return new Gson().toJson(cNewList);
+	}
 }

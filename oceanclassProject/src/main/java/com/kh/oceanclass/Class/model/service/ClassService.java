@@ -13,6 +13,10 @@ import com.kh.oceanclass.common.model.vo.Reply;
 
 public interface ClassService {
 
+	// 클래스 메인용
+	ArrayList<Class> classHotList();
+	ArrayList<Class> classNewList();
+	
 	// 클래스 상세보기용
 	int increaseCount(int clNo);
 	ClassVo selectClass(int clNo);

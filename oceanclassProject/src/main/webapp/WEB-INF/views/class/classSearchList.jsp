@@ -27,7 +27,7 @@
         width: 290px;
         display: inline-block;
         margin:10px;
-        margin-bottom: 70px;
+        margin-bottom: 40px;
     }
     .item>span{
         font-size: 12px;
@@ -88,9 +88,9 @@
 					<c:forEach var="c" items="${ list }">
 			            <div class="item" onclick="page(${ c.clNo })">
 			                <img src="${ c.clImg }" class="thumbnail">
-			                <div style="font-size: 13px;"><b>${ c.memNo }</b></div>
-			                <div>${ c.clName }</div>
-			                <div id="likeArea">
+			                <div style="font-size: 13px; margin-top:10px;"><b>${ c.memNo }</b></div>
+			                <div style="height:50px;">${ c.clName }</div>
+			                <div class="likeArea">
 				                <img src="resources/images/heart2.png" style="width: 20px; height: 20px;">
 				                <span>${ c.like}</span>
 			                </div>
