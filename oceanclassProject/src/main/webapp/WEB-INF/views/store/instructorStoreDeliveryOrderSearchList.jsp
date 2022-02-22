@@ -75,10 +75,6 @@
                     </td>
                 </tr>
             </table>
-            <script>
-                /* 선택된 버튼 색상 변경 rgb(107, 171, 213, 0.7) */
-                /* 버튼 클릭시 해당 상태인 주문내역 불러오기 */
-            </script>
         </div>
         <div class="content">
             <div class="content_1">
@@ -86,7 +82,11 @@
                 <div class="content_1_center"></div>
                 <div class="content_1_right">
                     <form id="searchForm" align="right" action="sosearch.in">
-                        <input type="text" id="key" placeholder="회원 아이디를 입력하세요" required> 
+                    	<select name="type">
+                    		<option value="1">회원아이디</option>
+                    		<option value="2">주문번호</option>
+                    	</select>
+                        <input type="text" name="key" placeholder="검색어를 입력하세요" required> 
                         <button type="submit">검색</button>
                     </form>
                 </div>
@@ -142,18 +142,20 @@
         <div align="left">
             <button id="deleteBtn" onclick="deleteOrder();">선택삭제</button>
         </div>
+        
+        <!-- url에 키워드, 타입 추가하기 -->
         <div class="btn_group" align="center">
 			<c:choose>
            		<c:when test="${pi.currentPage eq 1 }">
            			<button class="btn btn-light" disabled>&lt;</button>
            		</c:when>
            		<c:otherwise>
-           			<button class="btn btn-light" onclick="location.href='solist.in?cpage=${pi.currentPage - 1}'">&lt;</button>
+           			<button class="btn btn-light" onclick="location.href='sosearch.in?cpage=${pi.currentPage - 1}&type=${type }&key=${key }'">&lt;</button>
            		</c:otherwise>
            	</c:choose>
                    
    			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-   				<button class="btn btn-light" onclick="location.href='solist.in?cpage=${p}'">${p }</button>
+   				<button class="btn btn-light" onclick="location.href='sosearch.in?cpage=${p}&type=${type }&key=${key }'">${p }</button>
    			</c:forEach>
    
    			<c:choose>
@@ -161,7 +163,7 @@
            			<button class="btn btn-light" disabled>&gt;</button>
                	</c:when>
                	<c:otherwise>
-               		<button class="btn btn-light" onclick="location.href='solist.in?cpage=${pi.currentPage + 1}'">&gt;</button>
+               		<button class="btn btn-light" onclick="location.href='sosearch.in?cpage=${pi.currentPage + 1}&type=${type }&key=${key }'">&gt;</button>
                	</c:otherwise>
             </c:choose>
 		</div>
@@ -169,11 +171,11 @@
 		<script>	
 
 		
-		function detailView(orderNo){
-			console.log(orderNo);
-			//location.href='sodetail.in?ono=${s.orderNo}'"
-			location.href="sodetail.in?ono="+orderNo;
-		}	
+			function detailView(orderNo){
+				console.log(orderNo);
+				//location.href='sodetail.in?ono=${s.orderNo}'"
+				location.href="sodetail.in?ono="+orderNo;
+			}	
 		
 			function typeValue(num){
 				console.log(num)
@@ -301,12 +303,11 @@
 			}
 			
 			$(document).ready(function() {
-				
                 $("#checkAll").click(function() {
                     if($("#checkAll").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
                     else $("input[name=chBxRow]").prop("checked", false);
                 });
-            });
+            })
 		</script>
     </div>
 

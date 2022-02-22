@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,16 +111,14 @@ public class InstructorStoreController {
 		}
 		//System.out.println(p);
 		*/
-		System.out.println(p);
+		//System.out.println(p);
 		
 		int result1 = inStoreService.insertProduct(p);
 		int result2 = 1;
 		for(int i=0; i<oplist.size(); i++) {
 			result2 = result2 * inStoreService.insertProductOption(oplist.get(i));
 		}
-		
-		//System.out.println("p : " + result1);
-		//System.out.println("op : " + result2);
+
 		
 		if(result1*result2>0) {
 			session.setAttribute("alertMsg", "상품 등록 요청을 완료했습니다.");
@@ -138,10 +136,6 @@ public class InstructorStoreController {
 		ArrayList<ProductOption> oplist = inStoreService.selectProductOption(pno);
 		int opIndex = oplist.size();
 		
-		//System.out.println(pno);
-		//System.out.println(p);
-		//System.out.println("디테일에서 oplist : "+oplist);
-		
 		model.addAttribute("p", p);
 		model.addAttribute("oplist", oplist);
 		model.addAttribute("opIndex", opIndex);
@@ -153,19 +147,6 @@ public class InstructorStoreController {
 	@RequestMapping(value = "stupdate.in")
 	public String updateProduct(Product p, ProductOption option, MultipartFile[] reupfile, String[] originName, HttpSession session, Model model) {
 		
-//		System.out.println(p);
-//		System.out.println(option);
-	
-		for(int i=0; i<reupfile.length; i++) {
-			System.out.println(reupfile[i]);	
-			System.out.println();
-		}
-		
-		for(int i=0; i<originName.length; i++) {
-			System.out.println(originName[i]);	
-			System.out.println();
-		}
-
 		//옵션수정파트먼저
 		int result1 = 1;			// 옵션 개수가 변하지 않거나 작을때 결과
 		int result2 = 1;			// 옵션 개수가 변했을 때 결과
@@ -174,6 +155,7 @@ public class InstructorStoreController {
 			String[] opNameArr = option.getOptionName().split(",");
 			String[] opNoArr = option.getOptionNo().split(",");
 			// 1. 옵션이 원래 있었을 때			
+			// /*--------확인용 출력문------------
 			for(int i=0; i<opNameArr.length; i++) {
 				System.out.println(i +" : " + opNameArr[i]);
 			}
@@ -181,7 +163,7 @@ public class InstructorStoreController {
 			for(int i=0; i<opNoArr.length; i++) {
 				System.out.println(i +" : " + opNoArr[i]);
 			}
-			
+			//---------확인용 출력문------------*/
 			ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
 			
 			for(int i=0; i<opNameArr.length; i++) {
@@ -200,7 +182,7 @@ public class InstructorStoreController {
 				}else {
 					result1 *= inStoreService.upinsertProductOption(oplist.get(i));
 				}
-				System.out.println(oplist.get(i));
+				//System.out.println(oplist.get(i));
 			}
 			//System.out.println("0-----------------옵션수정------------------");
 		}
@@ -223,7 +205,7 @@ public class InstructorStoreController {
 		for(int j=0; j<reupfile.length; j++) {
 			// 첨부파일이 있다면
 			if(!reupfile[j].getOriginalFilename().equals("")) {
-				System.out.println("re YYYY");
+				//System.out.println("re YYYY");
 				for(int i = 0; i<originName.length; i++) {
 					if(i==0) {
 						if(p.productImg0 != null) {
@@ -311,7 +293,7 @@ public class InstructorStoreController {
 	@ResponseBody
 	@RequestMapping(value="stockUp.in")
 	public String updateStoreStock(Stock st) {
-		System.out.println(st);
+		//System.out.println(st);
 		
 		int result = inStoreService.updateStockCount(st);
 		//System.out.println(result);
@@ -321,7 +303,7 @@ public class InstructorStoreController {
 	@RequestMapping(value="porder.in")
 	public ModelAndView productOrderF(ModelAndView mv) {
 		ArrayList<Product> plist = inStoreService.selectProductList();
-		System.out.println(plist);
+		//System.out.println(plist);
 		mv.addObject("plist", plist);
 		mv.setViewName("store/instructorStoreOrderForm");
 		return mv;
@@ -329,7 +311,7 @@ public class InstructorStoreController {
 	
 	@RequestMapping(value="porderE.in")
 	public String productOrder(InProductOrder pOrder, HttpSession session, Model model) {
-		System.out.println(pOrder);
+		//System.out.println(pOrder);
 		int result = inStoreService.insertProductOrder(pOrder);
 		if(result>0) {
 			session.setAttribute("alertMsg", "발주신청이 완료되었습니다.");
@@ -351,8 +333,8 @@ public class InstructorStoreController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		System.out.println(pi);
-		System.out.println(list);
+		//System.out.println(pi);
+		//System.out.println(list);
 		return "store/instructorStoreDeliveryOrderList";
 	}
 	
@@ -369,7 +351,7 @@ public class InstructorStoreController {
 	
 	@RequestMapping(value="soupdate.in")
 	public String storeOrderUpdate(StoreOrder so, Model model, HttpSession session) {
-		System.out.println(so);
+		//System.out.println(so);
 		int result = inStoreService.storeOrderUpdate(so);
 		if(result>0) {
 			session.setAttribute("alertMsg", "주문상태변경에 성공했습니다.");
@@ -416,11 +398,25 @@ public class InstructorStoreController {
 	}
 	
 	@RequestMapping(value="sosearch.in")
-	public String searchKeyStoreOrderList(String key, Model model) {
-		System.out.println(key);
+	public String searchKeyStoreOrderList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String type, String key, Model model) {
+		HashMap<String, String> map = new HashMap<>();
 		
+		map.put("type", type);
+		map.put("key", key);
+		model.addAttribute("type", type);
+		model.addAttribute("key", key);
+		System.out.println(map	);
+		int listCount = inStoreService.searchKeyStoreOrderCount(map);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		System.out.println(pi);
 		
-		return "";
+		ArrayList<StoreOrder> list = inStoreService.searchKeyStoreOrderList(map, pi);
+		System.out.println(list);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "store/instructorStoreDeliveryOrderSearchList";
 	}
 	
 	

@@ -421,6 +421,42 @@
 		 where order_no = #{storeNo}
 	</delete>
 	
+	<select id="searchKeyStoreOrderCount" resultType="_int">
+		select count(*)
+		  from pay
+		  join member using (mno)
+		  <choose>
+		  	<when test="type == 1">
+		  		where user_id like '%'|| #{key} ||'%'
+		  	</when>
+		  	<when test="type == 2">
+		  		where order_no like '%'|| #{key} ||'%'
+		  	</when>
+		  </choose>
+	</select>
+	
+	<select id="searchKeyStoreOrderList" resultMap="storeOrderResult">
+		select 
+		      order_no
+		    , mno
+		    , user_id
+		    , to_char(pay_date, 'YYYY-MM-DD HH24:MI:SS') pay_date
+		    , pay_method
+		    , pay_amount
+		    , order_status
+		 from pay
+		 join member using (mno)
+		 <choose>
+		  	<when test="type == 1">
+		  		where user_id like '%'|| #{key} ||'%'
+		  	</when>
+		  	<when test="type == 2">
+		  		where order_no like '%'|| #{key} ||'%'
+		  	</when>
+		  </choose>
+		  order by pay_date desc
+	</select>
+	
 	
 	
 </mapper>

@@ -1,6 +1,7 @@
 package com.kh.oceanclass.store.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -130,6 +131,18 @@ public class InstructorStoreDao {
 
 	public int deleteStoreOrder(SqlSessionTemplate sqlSession, String orderNo) {
 		return sqlSession.delete("inStoreMapper.deleteStoreOrder", orderNo);
+	}
+
+	public int searchKeyStoreOrderCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("inStoreMapper.searchKeyStoreOrderCount", map);
+	}
+
+	public ArrayList<StoreOrder> searchKeyStoreOrderList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.searchKeyStoreOrderList", map, rowBounds);
 	}
 	
 	

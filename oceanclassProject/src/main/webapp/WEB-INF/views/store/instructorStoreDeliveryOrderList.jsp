@@ -75,10 +75,6 @@
                     </td>
                 </tr>
             </table>
-            <script>
-                /* 선택된 버튼 색상 변경 rgb(107, 171, 213, 0.7) */
-                /* 버튼 클릭시 해당 상태인 주문내역 불러오기 */
-            </script>
         </div>
         <div class="content">
             <div class="content_1">
@@ -90,7 +86,7 @@
                     		<option value="1">회원아이디</option>
                     		<option value="2">주문번호</option>
                     	</select>
-                        <input type="text" id="key" placeholder="검색어를 입력하세요" required> 
+                        <input type="text" name="key" placeholder="검색어를 입력하세요" required> 
                         <button type="submit">검색</button>
                     </form>
                 </div>
