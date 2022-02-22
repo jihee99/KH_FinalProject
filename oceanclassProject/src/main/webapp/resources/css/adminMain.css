@@ -28,8 +28,9 @@
 /* 사이드바 스타일 */
 #menu div{
     float: left;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: 15px;
+    margin-bottom: 20px;
 }
 #menu li{ list-style: none; }
 #menu p{
@@ -51,6 +52,3 @@
     text-decoration: underline;
     font-weight: bolder;
 }
-
-/* 사이트바 검색창 */
-#search input{width: 100px; margin-left: 15px;}

@@ -36,6 +36,15 @@
 		<result column="like" property="like" />
 	</resultMap>
 	
+	<resultMap id="myClassOrderResult" type="ClassOrder">
+		<result column="c_oNo" property="coNo" />
+		<result column="clNo" property="clNo" />
+		<result column="mNo" property="memNo" />
+		<result column="reading_status" property="readingCheck" />
+		<result column="cl_name" property="clName" />
+		<result column="cl_img" property="clImg" />
+	</resultMap>
+	
 	<resultMap id="classReviewResult" type="ClassReview">
 		<result column="c_rno" property="crNo" />
 		<result column="clno" property="clNo" />
@@ -240,6 +249,22 @@
 	
 	
 <!-- 클래스 -->
+	<select id="selectMyClass" resultMap="myClassOrderResult">
+		select
+		       c_ono
+		     , c.clno
+		     , cl_name
+		     , cl_img
+		     , case when reading_status = 'Y' then '수강중'
+		     	    when reading_status = 'N' then '수강전'
+		     		when reading_status = 'E' then '수강종료' end as reading_status
+		  from class c   		
+		  join class_order co on (c.clno = co.clno)
+		 where co.mno = #{memNo}
+		 order
+		 	by c_ono desc
+	</select>
+	
 	<select id="likeClassCount" resultType="_int">
 		select count(*)
 		  from like_item

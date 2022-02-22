@@ -8,6 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="./resources/css/stuMypage.css?3">
 </head>
 <body>
@@ -26,7 +27,7 @@
 	    <div class="menu">
 	        <p>클래스 관리</p>
 	        <ul>
-	            <li><a href="?page=myClass.jsp">나의 클래스</a></li>
+	            <li><a href="myClass.me">나의 클래스</a></li>
 	            <li><a href="myReview.me">클래스 문의/리뷰</a></li>  <!-- myReview.me -->
 	            <li><a href="likeClass.me">찜한 클래스</a></li>
 	        </ul>

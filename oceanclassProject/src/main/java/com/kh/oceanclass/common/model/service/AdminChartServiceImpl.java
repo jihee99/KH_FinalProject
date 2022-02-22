@@ -32,5 +32,21 @@ public class AdminChartServiceImpl implements AdminChartService{
 	public ArrayList<AdminStatistics> selectTeacherStatistics() {
 		return acDao.selectTeacherStatistics(sqlSession);
 	}
+	
+	@Override
+	public int selectClassStatistics(String category) {
+		return acDao.selectClassStatistics(sqlSession, category);
+	}
 
+	@Override
+	public int selectStoreStatistics(String category) {
+		return acDao.selectStoreStatistics(sqlSession, category);
+	}
+
+	@Override
+	public int selectEtcStatistics(String category) {
+		return acDao.selectEtcStatistics(sqlSession, category);
+	}
+
+	
 }

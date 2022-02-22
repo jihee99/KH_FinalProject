@@ -125,6 +125,7 @@
 		  from qna
 		  join member using (mno)
 		 where status = 'Y'
+		   and create_date <![CDATA[<=]]> sysdate
 		 order
 		    by qno desc
 	</select>
