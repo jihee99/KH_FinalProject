@@ -34,6 +34,7 @@
     #content-wrap{
         margin: auto;
         width: 800px;
+        height: 700px;
     }
     #cl-wrap{
         /* box-sizing: border-box; border:1px solid black; */
@@ -86,7 +87,30 @@
             <div id="top-area">
                 <span id="bord-name">내클래스 목록</span>
             </div>
-            <div id="content-wrap">
+            <div id="content-wrap" style="overflow-y: scroll;">
+                <div id="cl-wrap">
+                    <div id="cl-img">
+                        <img src="../../../../resources/images/bomi7.jpg" style="width: 250px; height: 150px;">
+                    </div>
+                    <div id="cl-box">
+                        <div id="cl-category">
+                            <span>
+                                [운동] 보미 강사의 강아지 훈련 클래스
+                            </span>
+                        </div>
+                        <div id="cl-content">
+                            <textarea style="border: none ">어떤 악마견 비글견도 다 천사견으로 만들어 드립니다 세상에 나쁜 강아지는 없다! 보미 훈경 클래스면 모두모두 천사강쥐</textarea>
+                        </div>
+                        <div id="num-btn">
+                            <span id="cl-num">
+                                수강생 수 : 350 &ensp; 조회수 : 719
+                            </span>
+                            <button class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
+                            <button class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
                 <div id="cl-wrap">
                     <div id="cl-img">
                         <img src="../../../../resources/images/bomi7.jpg" style="width: 250px; height: 150px;">
@@ -156,9 +180,9 @@
                     </div>
                 </div>
                 <hr>
-                <div align="center">
-                <button type="submit" id="enrollBtn" class="btn" style="background-color: rgb(228, 240, 250);">새로운 클래스 등록하기</button>
-                </div>
+            </div>
+            <div align="center">
+            <button type="submit" id="enrollBtn" class="btn" style="background-color: rgb(228, 240, 250);">새로운 클래스 등록하기</button>
             </div>
             <br><br><br>
         </div>

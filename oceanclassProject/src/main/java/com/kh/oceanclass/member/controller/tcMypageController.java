@@ -60,13 +60,17 @@ public class tcMypageController {
 
 	// 마이페이지 강사정보 수정 이동
 	@RequestMapping("myPage.tc")
-	public String tcPage() {
+	public String tcPage(HttpSession session) {
+		Teacher t = new Teacher();
+		t.setMemNo(((Member)session.getAttribute("loginUser")).getMemNo());
+		
+		session.setAttribute("loginTc", tcmyService.loginTc(t));
 		return "member/teacher/tcMyPage";
 	}
 	
 	// 강사 강사정보 변경 
 	@RequestMapping(value="myPageUpdate.tc", produces="application/json; charset=UTF-8")
-	public String insertProduct(Teacher t, MultipartFile upfile, HttpSession session, Model model) {
+	public String insertProduct(int memNo, Teacher t, MultipartFile reupfile, HttpSession session, Model model) {
 		
 		String[] strArr = null;
 		ArrayList<Teacher> snslist = new ArrayList<Teacher>();
@@ -78,29 +82,48 @@ public class tcMypageController {
 				snslist.add(new Teacher());
 				snslist.get(i).setTcSns(strArr[i]);
 			}
-		}	
+		}
 		
-		if(!upfile.getOriginalFilename().equals("")) {
-			String changeName = saveFile(upfile, session);
+		
+		if(!reupfile.getOriginalFilename().equals("")) {
+			String changeName = saveFile(reupfile, session);
 			
 			t.setHistoryFile("resources/uploadFiles/tcmypage/" + changeName);
 		}
 		
-		System.out.println(t);
+		// 이전 정보가 없다면 insert 정보가 있다면 update => 확인용 count
+		int count = tcmyService.updateCount(memNo);
 		
-		int result1 = tcmyService.updateMyPage(t);
-		int result2 = 1;
-		for(int i=0; i<snslist.size(); i++) {
-			result2 = result2 * tcmyService.updateMyPage(snslist.get(i));
+		if(count > 0) {
+			int result1 = tcmyService.updateTcPage(t);
+			
+			
+			if(result1>0) {
+				session.setAttribute("loginTc", tcmyService.loginTc(t));
+				session.setAttribute("alertMsg", "강사정보 수정을 완료했습니다.");
+				return "redirect:myPage.tc";
+			} else {
+				model.addAttribute("errorMsg", "수정 실패");
+				return "common/errorPage";
+			}
+		}else {
+			int result2 = tcmyService.insertTcPage(t);
+			
+			if(result2>0) {
+				session.setAttribute("loginTc", tcmyService.loginTc(t));
+				session.setAttribute("alertMsg", "강사정보 수정을 완료했습니다.");
+				return "redirect:myPage.tc";
+			} else {
+				model.addAttribute("errorMsg", "수정 실패");
+				return "common/errorPage";
+			}
 		}
+
+		//int result2 = 1;
+		//for(int i=0; i<snslist.size(); i++) {
+		//	result2 = result2 * tcmyService.updateMyPage(snslist.get(i));
+		//}
 		
-		if(result1*result2>0) {
-			session.setAttribute("alertMsg", "강사정보 수정을 완료했습니다.");
-			return "redirect:myPage.tc";
-		} else {
-			model.addAttribute("errorMsg", "수정 실패");
-			return "common/errorPage";
-		}
 	}
 	
 	// 첨부파일
@@ -131,4 +154,11 @@ public class tcMypageController {
 		
 		return count > 0 ? "NNNN" : "NNNY";
 	}
+	
+	// 강사 탈퇴 폼
+	@RequestMapping("deleteForm.tc")
+	public String tcDelete() {
+		return "member/teacher/tcDelete";
+	}
+	
 }

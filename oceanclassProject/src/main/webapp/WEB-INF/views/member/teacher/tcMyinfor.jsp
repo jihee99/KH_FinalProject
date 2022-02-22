@@ -66,8 +66,9 @@
         font-size: 20px;
         font-weight: bolder;
     }
-    .form-group{
+    form .form-group{
         display: flex;
+        margin-bottom: 5px;
     }
     #phoneUpdate{
         background-color: rgb(228, 240, 250);
@@ -152,7 +153,7 @@
             <div id="content-wrap">
                 <form action="" method="post" id="form-area" enctype="multipart/form-data">
                 <input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
-				<input type="hidden" id="userId" name="userId" value="${loginUser.userId}">
+				<input type="hidden" id="userId" name="userId" value="${loginTc.userId}">
                     <div class="form-group">
                         <div class="img-box">
                         <c:if test="${ not empty loginUser.profileImg }">
@@ -182,7 +183,7 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="userName" value="${loginUser.userName }" name="userName" required> 
                     </div>
-	                    <div id="checkName" style="font-size:0.8em;"></div>
+	                    <p id="checkName" style="font-size:0.8em;"></p>
                     </div>
                     
                     <script>
@@ -299,15 +300,17 @@
 				   
                     <button onclick="formSubmit(1)" id="findIdBtn" class="btn" style="background-color: lightgray; margin-top: 40px;">비밀번호 변경하기</button>
                     <button onclick="formSubmit(2)" id="updateBtn" class="btn" style="background-color: rgb(228, 240, 250);">수정하기</button>
-                    <button type="submit" id="findIdBtn" class="btn" style="background-color: lightgray;">탈퇴하기</button>
+                    <button onclick="formSubmit(3)" id="findIdBtn" class="btn" style="background-color: lightgray;">탈퇴하기</button>
                 </form>
             </div>
             <script>
            		function formSubmit(num){
            			if(num == 1){ 
            				$("#form-area").attr("action", "findPwdForm.me").submit();
-           			}else{ 
+           			}else if(num == 2){ 
            				$("#form-area").attr("action", "updateInforPage.tc").submit();
+           			}else{
+           				$("#form-area").attr("action", "deleteForm.tc").submit();
            			}
            		}
            	</script>

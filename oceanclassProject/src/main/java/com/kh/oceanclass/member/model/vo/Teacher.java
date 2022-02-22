@@ -16,6 +16,6 @@ public class Teacher {
 	private String tcHistory;
 	private String tcIntroduce;
 	private String tcSns;
-	private String HistoryFile;
+	private String historyFile;
 	
 }
