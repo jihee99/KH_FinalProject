@@ -108,15 +108,15 @@
     					var price2 = price1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     					
     					value += "<div class='item' onclick='classPage(" + data[i].clNo + ")'>"
-							   + "<img src='" + data[i].clImg + "' class='thumbnail'>"
-							   + "<div style='font-size: 13px; margin-top:10px;'><b>" + data[i].memNo + "</b></div>"
-							   + "<div>" + data[i].clName + "</div>"
-							   + "<div class='likeArea'>"
-							   + "<img src='resources/images/heart2.png' style='width: 20px; height: 20px;'>"
-							   + "<span> " + data[i].like + "</span>"
-							   + "</div>"
-							   + "<div><b><span class='classPrice'>" + price2 + "</span>원</b></div>"
-							   + "</div>";
+						   + "<img src='" + data[i].clImg + "' class='thumbnail'>"
+						   + "<div style='font-size: 13px; margin-top:10px;'><b>" + data[i].memNo + "</b></div>"
+						   + "<div>" + data[i].clName + "</div>"
+						   + "<div class='likeArea'>"
+						   + "<img src='resources/images/heart2.png' style='width: 20px; height: 20px;'>"
+						   + "<span> " + data[i].like + "</span>"
+						   + "</div>"
+						   + "<div><b><span class='classPrice'>" + price2 + "</span>원</b></div>"
+						   + "</div>";
     				}
     				
     				newClass.innerHTML = value;
@@ -126,6 +126,10 @@
     			}
     		})
     		
+    	}
+    	
+    	function classPage(clNo){
+    		location.href = "classDetail.me?referNo=" + clNo;
     	}
     
     </script>
