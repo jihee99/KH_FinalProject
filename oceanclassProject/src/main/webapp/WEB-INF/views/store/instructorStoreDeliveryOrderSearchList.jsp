@@ -142,18 +142,20 @@
         <div align="left">
             <button id="deleteBtn" onclick="deleteOrder();">선택삭제</button>
         </div>
+        
+        <!-- url에 키워드, 타입 추가하기 -->
         <div class="btn_group" align="center">
 			<c:choose>
            		<c:when test="${pi.currentPage eq 1 }">
            			<button class="btn btn-light" disabled>&lt;</button>
            		</c:when>
            		<c:otherwise>
-           			<button class="btn btn-light" onclick="location.href='solist.in?cpage=${pi.currentPage - 1}'">&lt;</button>
+           			<button class="btn btn-light" onclick="location.href='sosearch.in?cpage=${pi.currentPage - 1}&type=${type }&key=${key }'">&lt;</button>
            		</c:otherwise>
            	</c:choose>
                    
    			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-   				<button class="btn btn-light" onclick="location.href='solist.in?cpage=${p}'">${p }</button>
+   				<button class="btn btn-light" onclick="location.href='sosearch.in?cpage=${p}&type=${type }&key=${key }'">${p }</button>
    			</c:forEach>
    
    			<c:choose>
@@ -161,7 +163,7 @@
            			<button class="btn btn-light" disabled>&gt;</button>
                	</c:when>
                	<c:otherwise>
-               		<button class="btn btn-light" onclick="location.href='solist.in?cpage=${pi.currentPage + 1}'">&gt;</button>
+               		<button class="btn btn-light" onclick="location.href='sosearch.in?cpage=${pi.currentPage + 1}&type=${type }&key=${key }'">&gt;</button>
                	</c:otherwise>
             </c:choose>
 		</div>

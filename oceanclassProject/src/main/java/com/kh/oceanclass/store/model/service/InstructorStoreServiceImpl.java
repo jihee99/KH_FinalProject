@@ -1,6 +1,7 @@
 package com.kh.oceanclass.store.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,8 +155,21 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	public ArrayList<StoreOrder> searchStoreOrderList(String orderStatus, PageInfo pi) {
 		return inStoreDao.searchStoreOrderList(sqlSession, orderStatus, pi);
 	}
-
 	
+	@Override
+	public int deleteStoreOrder(String orderNo) {
+		return inStoreDao.deleteStoreOrder(sqlSession, orderNo);
+	}
+
+	@Override
+	public int searchKeyStoreOrderCount(HashMap<String, String> map) {
+		return inStoreDao.searchKeyStoreOrderCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<StoreOrder> searchKeyStoreOrderList(HashMap<String, String> map, PageInfo pi) {
+		return inStoreDao.searchKeyStoreOrderList(sqlSession, map, pi);
+	}
 	
 	@Override
 	public int selectStockCount() {
@@ -183,6 +197,8 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	public int insertProductOrder(InProductOrder pOrder) {
 		return inStoreDao.insertProductOrder(sqlSession, pOrder);		
 	}
+
+
 
 
 

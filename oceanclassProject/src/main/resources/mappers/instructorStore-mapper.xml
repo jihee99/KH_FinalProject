@@ -397,26 +397,7 @@
 	<select id="searchStoreOrderCount" resultType="_int">
 		select count(*)
   		  from pay
-		<choose>
-  			<when test="orderStatus == '1'">
-  			 	where order_status = 1
-  			</when>
-  			<when test="orderStatus == '2'">
-  			 	where order_status = 2
-  			</when>
-  			<when test="orderStatus == '3'">
-  			 	where order_status = 3
-  			</when>
-  		  	<when test="orderStatus == '4'">
-  			 	where order_status = 4
-  			</when>
-  			<when test="orderStatus == '5'">
-  			 	where order_status = 5
-  			</when>
-  			<when test="orderStatus == '6'">
-  				where order_status in (6,7)
-  			</when>
-  		</choose>
+		 where order_status = #{orderStatus}
 	</select>
 	
 	<select id="searchStoreOrderList" resultMap="storeOrderResult">
@@ -430,30 +411,51 @@
 		    , order_status
 		 from pay
 		 join member using (mno)
-		 <choose>
-  			<when test="orderStatus == '1'">
-  			 	where order_status = 1
-  			</when>
-  			<when test="orderStatus == '2'">
-  			 	where order_status = 2
-  			</when>
-  			<when test="orderStatus == '3'">
-  			 	where order_status = 3
-  			</when>
-  		  	<when test="orderStatus == '4'">
-  			 	where order_status = 4
-  			</when>
-  			<when test="orderStatus == '5'">
-  			 	where order_status = 5
-  			</when>
-  			<when test="orderStatus == '6'">
-  				where order_status in (6,7)
-  			</when>
-  		</choose>
+		 where order_status = #{orderStatus}
 		 order by pay_date desc
 	</select>
 	
+	<delete id="deleteStoreOrder">
+		delete 
+		  from pay 
+		 where order_no = #{storeNo}
+	</delete>
 	
+	<select id="searchKeyStoreOrderCount" resultType="_int">
+		select count(*)
+		  from pay
+		  join member using (mno)
+		  <choose>
+		  	<when test="type == 1">
+		  		where user_id like '%'|| #{key} ||'%'
+		  	</when>
+		  	<when test="type == 2">
+		  		where order_no like '%'|| #{key} ||'%'
+		  	</when>
+		  </choose>
+	</select>
+	
+	<select id="searchKeyStoreOrderList" resultMap="storeOrderResult">
+		select 
+		      order_no
+		    , mno
+		    , user_id
+		    , to_char(pay_date, 'YYYY-MM-DD HH24:MI:SS') pay_date
+		    , pay_method
+		    , pay_amount
+		    , order_status
+		 from pay
+		 join member using (mno)
+		 <choose>
+		  	<when test="type == 1">
+		  		where user_id like '%'|| #{key} ||'%'
+		  	</when>
+		  	<when test="type == 2">
+		  		where order_no like '%'|| #{key} ||'%'
+		  	</when>
+		  </choose>
+		  order by pay_date desc
+	</select>
 	
 	
 	

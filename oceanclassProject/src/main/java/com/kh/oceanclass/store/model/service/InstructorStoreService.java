@@ -1,6 +1,7 @@
 package com.kh.oceanclass.store.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.vo.InProductOrder;
@@ -73,6 +74,15 @@ public interface InstructorStoreService {
 	int searchStoreOrderCount(String orderStatus);
 	ArrayList<StoreOrder> searchStoreOrderList(String orderStatus, PageInfo pi);
 	
+	// 11_4. 상품 주문내역 삭제 서비스
+	int deleteStoreOrder(String orderNo);
+	
+	// 11_5. 상품 주문 내역 키워드 검색 서비스
+	int searchKeyStoreOrderCount(HashMap<String, String> map);
+	ArrayList<StoreOrder> searchKeyStoreOrderList(HashMap<String, String> map, PageInfo pi);
+	
+	
+	
 	// 12. 상품 재고 리스트 조회용 서비스
 	int selectStockCount();
 	ArrayList<Stock> selectStockList(PageInfo pi);
@@ -83,6 +93,8 @@ public interface InstructorStoreService {
 	// 14. 상품발주요청용 서비스
 	ArrayList<Product> selectProductList();
 	int insertProductOrder(InProductOrder pOrder);
+
+
 	
 	
 }
