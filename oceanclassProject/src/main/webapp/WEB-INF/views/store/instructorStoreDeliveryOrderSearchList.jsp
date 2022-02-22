@@ -13,6 +13,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="./resources/css/store/instructorStoreDeliveryOrderList.css">
+
+<style>
+	.content_1_left>b{font-size: 17px;}
+	.content_1_center{width: 20%;}
+	.content_1_right{width: 60%; float: right;}
+	
+	.content_1_right select, option{height: 32px; margin-top: 5px;}
+	.content_1_right input{height: 32px; margin-top: 5px; width: 250px;}
+	.content_1_right button{height: 32px; margin-top: 5px; border-radius: 5px; border: none;}
+</style>
 </head>
 <body>
 

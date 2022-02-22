@@ -13,6 +13,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="./resources/css/store/instructorStoreDeliveryOrderList.css">
+
+<style>
+	.content_1_left>b{font-size: 17px;}
+	.content_1_center{width: 20%;}
+	.content_1_right{width: 60%; float: right;}
+	
+	.content_1_right select, option{height: 32px; margin-top: 5px;}
+	.content_1_right input{height: 32px; margin-top: 5px; width: 250px;}
+	.content_1_right button{height: 32px; margin-top: 5px; border-radius: 5px; border: none;}
+</style>
 </head>
 <body>
 
@@ -76,7 +86,11 @@
                 <div class="content_1_center"></div>
                 <div class="content_1_right">
                     <form id="searchForm" align="right" action="sosearch.in">
-                        <input type="text" id="key" placeholder="회원 아이디를 입력하세요" required> 
+                    	<select name="type">
+                    		<option value="1">회원아이디</option>
+                    		<option value="2">주문번호</option>
+                    	</select>
+                        <input type="text" id="key" placeholder="검색어를 입력하세요" required> 
                         <button type="submit">검색</button>
                     </form>
                 </div>
