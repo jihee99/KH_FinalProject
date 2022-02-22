@@ -30,12 +30,11 @@ public class Product {
 	public String productImg2;		// 상세이미지2 경로
 	public String productImg3;		// 상세이미지3 경로
 	
-	
 	private String nickname;
 	private String like;				// 찜 수
 	private int likeCk;
-	private String sort; // 정렬 번호
+	private String sort; 				// 정렬 번호
 	private int quantity;
 
-	
+	private String starAvg;		// 별점 평균
 }

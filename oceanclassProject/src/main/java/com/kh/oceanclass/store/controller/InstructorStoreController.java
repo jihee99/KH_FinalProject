@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
+import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.service.InstructorStoreService;
 import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
@@ -29,6 +32,7 @@ import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreReview;
 
 /*강사 스토어 관련 기능 처리하는 controller*/
 
@@ -74,51 +78,46 @@ public class InstructorStoreController {
 				oplist.get(i).setPrice(option.getPrice());
 			}
 		}	
-		for(int i=0; i<upfile.length; i++) {
-			System.out.println(upfile[i]);
-		}
-		System.out.println();
 		
 		for(int i=0; i<upfile.length; i++) {
 			System.out.println(upfile[i]);
 			if(!upfile[i].getOriginalFilename().equals("")) {
+				
 				String changeName = saveFile(upfile[i], session);
+				
 				if(i==0) {
-					p.setProductImg0("resources/uploadFiles/" + changeName);
+					p.setProductImg0("resources/uploadFiles/store/" + changeName);
 				} else if(i==1) {
-					p.setProductImg1("resources/uploadFiles/" + changeName);
+					p.setProductImg1("resources/uploadFiles/store/" + changeName);
 	 			} else if(i==2) {
-	 				p.setProductImg2("resources/uploadFiles/" + changeName);
+	 				p.setProductImg2("resources/uploadFiles/store/" + changeName);
 	 			} else {
-	 				p.setProductImg3("resources/uploadFiles/" + changeName);
+	 				p.setProductImg3("resources/uploadFiles/store/" + changeName);
 	 			}
+		
 			}
 		}
 		/*
 		ArrayList<String> changeList = saveFile(upfile, session);
-		//System.out.println(changeList);
+		System.out.println(changeList);
 		
 		for(int i=0; i<changeList.size(); i++) {
 			if(i==0) {
-				p.productImg0 = changeList.get(i);
+				p.setProductImg0("resources/uploadFiles/store/"+changeList.get(i));
 			} else if(i==1) {
-				p.productImg1 = changeList.get(i);
+				p.setProductImg1("resources/uploadFiles/store/"+changeList.get(i));
  			} else if(i==2) {
- 				p.productImg2 = changeList.get(i);
+ 				p.setProductImg2("resources/uploadFiles/store/"+changeList.get(i));
  			} else {
- 				p.productImg3 = changeList.get(i);
+ 				p.setProductImg3("resources/uploadFiles/store/"+changeList.get(i));
  			}
 		}
-		//System.out.println(p);
 		*/
-		//System.out.println(p);
-		
 		int result1 = inStoreService.insertProduct(p);
 		int result2 = 1;
 		for(int i=0; i<oplist.size(); i++) {
 			result2 = result2 * inStoreService.insertProductOption(oplist.get(i));
 		}
-
 		
 		if(result1*result2>0) {
 			session.setAttribute("alertMsg", "상품 등록 요청을 완료했습니다.");
@@ -187,17 +186,16 @@ public class InstructorStoreController {
 			//System.out.println("0-----------------옵션수정------------------");
 		}
 		
-		
 		// 받아온 originName을 p객체에 삽입
 		for(int i = 0; i<originName.length; i++) {
 			if(i==0) {
-				p.setProductImg0("resources/uploadFiles/store" + originName);
+				p.setProductImg0("resources/uploadFiles/store/" + originName);
 			} else if(i==1) {
-				p.setProductImg1("resources/uploadFiles/store" + originName);
+				p.setProductImg1("resources/uploadFiles/store/" + originName);
  			} else if(i==2) {
- 				p.setProductImg2("resources/uploadFiles/store" + originName);
+ 				p.setProductImg2("resources/uploadFiles/store/" + originName);
  			} else {
- 				p.setProductImg3("resources/uploadFiles/store" + originName);
+ 				p.setProductImg3("resources/uploadFiles/store/" + originName);
  			}
 		}
 		
@@ -237,17 +235,32 @@ public class InstructorStoreController {
 			if(!reupfile[i].getOriginalFilename().equals("")) {
 				String changeName = saveFile(reupfile[i], session);
 				if(i==0) {
-					p.setProductImg0("resources/uploadFiles/store" + changeName);
+					p.setProductImg0("resources/uploadFiles/store/" + changeName);
 				} else if(i==1) {
-					p.setProductImg1("resources/uploadFiles/store" + changeName);
+					p.setProductImg1("resources/uploadFiles/store/" + changeName);
 	 			} else if(i==2) {
-	 				p.setProductImg2("resources/uploadFiles/store" + changeName);
+	 				p.setProductImg2("resources/uploadFiles/store/" + changeName);
 	 			} else {
-	 				p.setProductImg3("resources/uploadFiles/store" + changeName);
+	 				p.setProductImg3("resources/uploadFiles/store/" + changeName);
 	 			}
 			}
 		}
-
+		/*
+		ArrayList<String> changeList = saveFile(reupfile, session);
+		for(int i=0; i<changeList.size(); i++) {
+			if(i==0) {
+				p.setProductImg0("resources/uploadFiles/store/"+changeList.get(i));
+			} else if(i==1) {
+				p.setProductImg1("resources/uploadFiles/store/"+changeList.get(i));
+ 			} else if(i==2) {
+ 				p.setProductImg2("resources/uploadFiles/store/"+changeList.get(i));
+ 			} else {
+ 				p.setProductImg3("resources/uploadFiles/store/"+changeList.get(i));
+ 			}
+		}
+		*/
+		System.out.println(p);
+		
 		result2 = inStoreService.updateProduct(p);
 		
 		System.out.println(result1);
@@ -261,7 +274,8 @@ public class InstructorStoreController {
 	@RequestMapping(value="stdelete.in")
 	public String deleteProduct(int pno, Model model, HttpSession session) {
 		int result1 = inStoreService.deleteProduct(pno);
-		int result2 = inStoreService.deleteProductOption(pno);
+		int result2 = 1;
+		result2 += inStoreService.deleteProductOption(pno);
 		
 		if(result1 * result2 > 0) {
 			session.setAttribute("alertMsg", "상품이 성공적으로 삭제되었습니다.");
@@ -366,19 +380,24 @@ public class InstructorStoreController {
 	@ResponseBody
 	@RequestMapping(value="sosearchF.in", produces="application/json; charset=UTF-8")
 	public String searchStoreOrder(@RequestParam(value="cpage", defaultValue="1") int currentPage, String orderStatus) {
+//		HashMap<String, Object> map = new HashMap<>();
 		
 		int listCount = inStoreService.searchStoreOrderCount(orderStatus);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<StoreOrder> list = inStoreService.searchStoreOrderList(orderStatus, pi);
-		System.out.println(orderStatus);
-		System.out.println(pi);
-		System.out.println(list);
+//		System.out.println(orderStatus);
+//		System.out.println(pi);
+//		System.out.println(list);
 		
-		//JSONObject jObj = new JSONObject();
-		//jObj.put("pi", pi);
-		//jObj.put("list", list);
+//		JSONArray jArr = new JSONArray();
 		
+//		JSONObject jObj = new JSONObject();
+//		jObj.put("pi", pi.toString());
+//		jObj.put("list", jArr);
+
+		//return jObj.toJSONString();
 		return new Gson().toJson(list);
+
 	}
 	
 	@ResponseBody
@@ -420,23 +439,71 @@ public class InstructorStoreController {
 	}
 	
 	
+	@RequestMapping(value="srlist.in")
+	public String storeReviceList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
+		int listCount = inStoreService.selectStoreReviewCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+
+		Member loginUser = (Member) session.getAttribute("loginUser");
+
+		if(loginUser != null) {
+			int userNo = loginUser.getMemNo();
+			
+			ArrayList<Product> plist = inStoreService.selectReviewProductList(userNo);
+			ArrayList<StoreReview> slist = inStoreService.selectStoreReviewList(pi, userNo);
+			System.out.println(pi);
+			System.out.println(plist);
+			System.out.println(loginUser.getMemNo());
+			
+			model.addAttribute("pi",pi);
+			model.addAttribute("plist", plist);
+			model.addAttribute("slist", slist);
+			System.out.println(slist);
+			return "store/instructorStoreReviewList";
+			
+		} else {
+			session.setAttribute("alertMsg", "접근 권한이 없습니다.");
+			return "redirect:/";
+		}
+		
+	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="pReviewAjax.in", produces="application/json; charset=UTF-8" )
+	public String productReviewAjax(String pno) {
+		ArrayList<StoreReview> list = inStoreService.selectStoreProductReview(pno);
+		
+		return new Gson().toJson(list);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 첨부파일
 	public String saveFile(MultipartFile upfile, HttpSession session) {
-		String originName = upfile.getOriginalFilename(); // "flower.png"
+
+		String originName = upfile.getOriginalFilename(); 
 		
-		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		
-		int ranNum = (int)(Math.random() * 90000 +10000); // 다섯자리 랜덤값
-		String ext = originName.substring(originName.lastIndexOf("."));
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); 
+		int ranNum = (int)(Math.random() * 90000 + 10000); 
+		String ext = originName.substring(originName.lastIndexOf(".")); 
 		
 		String changeName = currentTime + ranNum + ext;
-		
-		String savePath = session.getServletContext().getRealPath("resources/uploadFiles/store/");
-		
+				
+		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/store/");
+		System.out.println("savePath : " + savePath );
+		System.out.println(session.getServletContext().getRealPath("/resources/uploadFiles/event/"));
+		System.out.println(session.getServletContext().getRealPath("/resources/uploadFiles/store/"));
 		try {
 			upfile.transferTo(new File(savePath + changeName));
-		} catch (IllegalStateException | IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -444,7 +511,9 @@ public class InstructorStoreController {
 	}
 	
 	
-	/* savefile배열로
+	
+	//savefile배열로
+	/*
 	public ArrayList<String> saveFile(MultipartFile[] upfile, HttpSession session) {
 		
 		ArrayList<String> changeList = new ArrayList();
@@ -459,7 +528,7 @@ public class InstructorStoreController {
 				String changeName = currentTime + ranNum + ext;
 				
 				String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/store/");
-				
+				System.out.println(session.getServletContext().getRealPath("/resources/uploadFiles/store/"));
 				try {
 					upfile[i].transferTo(new File(savePath + changeName));
 				} catch (IllegalStateException | IOException e) {
@@ -467,12 +536,11 @@ public class InstructorStoreController {
 					e.printStackTrace();
 				}
 				
-				changeList.add("resources/uploadFiles/store/"+changeName);
+				changeList.add(changeName);
 			}
 		}
 		return changeList;
 	}
 	*/
-
 		
 }

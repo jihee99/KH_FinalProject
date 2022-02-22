@@ -10,6 +10,7 @@ import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreReview;
 
 public interface InstructorStoreService {
 
@@ -54,7 +55,13 @@ public interface InstructorStoreService {
 	void storeQnaAnswer();
 	
 	// 8. 상품 리뷰 리스트 페이지 서비스
-	void selectStoreReviewList();
+	int selectStoreReviewCount();
+	ArrayList<Product> selectReviewProductList(int userNo);
+	ArrayList<StoreReview> selectStoreReviewList(PageInfo pi, int userNo);
+	
+	// 8_2. 상품별 리뷰 모아보기 서비스
+	ArrayList<StoreReview> selectStoreProductReview(String pno);
+	
 	
 	// 9. 상품 리뷰 상세조회용 서비스
 	void selectStoreReview();
@@ -80,8 +87,6 @@ public interface InstructorStoreService {
 	// 11_5. 상품 주문 내역 키워드 검색 서비스
 	int searchKeyStoreOrderCount(HashMap<String, String> map);
 	ArrayList<StoreOrder> searchKeyStoreOrderList(HashMap<String, String> map, PageInfo pi);
-	
-	
 	
 	// 12. 상품 재고 리스트 조회용 서비스
 	int selectStockCount();
