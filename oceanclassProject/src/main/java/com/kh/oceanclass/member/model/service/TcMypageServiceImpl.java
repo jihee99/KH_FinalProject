@@ -33,9 +33,23 @@ public class TcMypageServiceImpl implements TcMypageService{
 	}
 	
 	@Override
-	public int updateMyPage(Teacher t) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Teacher loginTc(Teacher t) {
+		return tcDao.loginTc(sqlSession, t);
+	}
+	
+	@Override
+	public int updateCount(int memNo) {
+		return tcDao.updateCount(sqlSession, memNo);
+	}
+	
+	@Override
+	public int insertTcPage(Teacher t) {
+		return tcDao.insertTcPage(sqlSession, t);
+	}
+	
+	@Override
+	public int updateTcPage(Teacher t) {
+		return tcDao.updateTcPage(sqlSession, t);
 	}
 
 	@Override
@@ -43,6 +57,10 @@ public class TcMypageServiceImpl implements TcMypageService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
+
+	
 
 	
 

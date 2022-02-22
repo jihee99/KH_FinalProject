@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,10 +154,11 @@
                 <span id="bord-name">강사정보 / 수정</span>
             </div>
             <div id="content-wrap">
-                <form action="" method="post" id="form-area">
+                <form action="myPageUpdate.tc" method="post" id="form-area" enctype="multipart/form-data">
                 <input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
-                    
-
+                <input type="hidden" id="userId" name="userId" value="${loginUser.userId}">    
+				<input type="hidden" id="memNo" name="memNo" value="${loginTc.memNo}">
+				
                     <span id="top-text">이름</span>
                     <div class="form-group">
                       <input type="text" class="form-control" id="name" value="${loginUser.userName }" name="userName" disabled> 
@@ -174,23 +176,31 @@
                     
                     <span id="top-text">강사 이력</span>
                     <div class="form-group">
-                        <textarea name="tcHistory" id="history" cols="51" rows="3" placeholder=" 강사 이력을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
+                        <textarea name="tcHistory" id="history" cols="51" rows="3" placeholder=" 강사 이력을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;">${loginTc.tcHistory}</textarea>
                     </div>
                     <div class="form-group">
-                    <input type="file" class="form-control" id="history" name="history" required> 
+                    <input type="file" class="form-control" id="HistoryFile" name="reupfile" value="${loginTc.historyFile}" > 
                     </div>
-
+                    <span id="top-text">이전파일</span>
+                    <div class="form-group">
+                    <input type="text" class="form-control" id="HistoryFile" name="historyFile" value="${loginTc.historyFile}" disabled> 
+					</div>
+					
                     <span id="top-text">강사 소개</span>
                     <div class="form-group">
-                      <textarea name="tcIntroduce" id="intro" cols="51" rows="5" placeholder=" 내용을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;"></textarea>
+                      <textarea name="tcIntroduce" id="intro" cols="51" rows="5" placeholder=" 내용을 입력 하세요." style="border-color: lightgray; resize: none; border-radius: 4px;" required>${loginTc.tcIntroduce}</textarea>
                     </div>
 
                     <span id="top-text">강사 소셜 미디어</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="SNS" placeholder="sns주소1" name="tcSns" style="width: 340px;" required> 
-                      <button id="plus" type="button" class="rightBtn" onclick="idCheck();">+</button>
+	                    	<input type="text" class="form-control" id="SNS" placeholder="sns주소1" name="tcSns" style="width: 340px;" value="${sns}"> 
+                    	<button id="plus" type="button" class="rightBtn" onclick="idCheck();">+</button>                    		
+                    	
                     </div>
                     <div id="snsForm">
+                    	<c:forTokens var="sns" items="${loginTc.tcSns }" delims=",">
+	                    	<input type="text" class="form-control" id="SNS" placeholder="sns주소1" name="tcSns" style="width: 340px; margin-bottom:10px;" value="${sns}"> 
+                    	</c:forTokens>
                         <!-- 플러스버튼 클릭시 sns 입력 폼이 들어올 자리 -->
                     </div>
                     
@@ -205,7 +215,7 @@
 				               return;
 				            }
 				            $("#snsForm").append
-                            ("<input type='text' placeholder=' sns주소" + no + "' name='SNS' class='mr-2' style='width: 340px; height:40px; border: solid 1px lightgrey; margin-bottom:15px;' id='SNS" + no + "'>"); 
+                            ("<input type='text' placeholder=' sns주소" + no + "' name='tcSns' class='mr-2' style='width: 340px; height:40px; border: solid 1px lightgrey; margin-bottom:15px;' id='SNS" + no + "'>"); 
                             //$("input[name=opcount]").val(no);
                             no++;
                             Snsform++;
