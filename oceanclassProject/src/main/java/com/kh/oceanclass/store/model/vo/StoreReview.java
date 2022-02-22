@@ -16,7 +16,7 @@ import lombok.ToString;
 public class StoreReview {
 	
 	private int reviewNo; // 리뷰번호
-	private int memeberNo; // 회원번호
+	private int memberNo; // 회원번호
 	private int productNo; // 상품번호
 	private String content; // 리뷰내용
 	private String starRating; // 별점
@@ -24,7 +24,7 @@ public class StoreReview {
 	private String status; // 상태값
 	
 	private String title;
-	private String img;
+	private String img;	// 첨부파일 경로 
 	
 	public String nickname;
 	public int totalCount;

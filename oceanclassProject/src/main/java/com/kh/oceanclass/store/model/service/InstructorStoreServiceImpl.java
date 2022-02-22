@@ -15,6 +15,7 @@ import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Service
 public class InstructorStoreServiceImpl implements InstructorStoreService{
@@ -108,12 +109,30 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	}
 
 	@Override
-	public void selectStoreReviewList() {
-		// 8. 상품 리뷰 리스트 페이지 서비스
-		// TODO Auto-generated method stub
+	public int selectStoreReviewCount() {
+		// 8_1. 상품 리뷰 카운트 
+		return inStoreDao.selectStoreReivewCount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Product> selectReviewProductList(int userNo){
+		// 8_2_1. 해당 회원의 상품리스트 불러오기
+		return inStoreDao.selectReviewProductList(sqlSession, userNo);
+	}
+	
+	@Override
+	public ArrayList<StoreReview> selectStoreReviewList(PageInfo pi, int userNo) {
+		// 8_2. 상품 리뷰 리스트 페이지 서비스
+		return inStoreDao.selectStoreReviewList(sqlSession, pi, userNo);
 		
 	}
 
+	@Override
+	public ArrayList<StoreReview> selectStoreProductReview(String pno) {
+		// 8_3. 상품별 리뷰 모아보기 서비스
+		return inStoreDao.selectStoreProductReview(sqlSession, pno);
+	}
+	
 	@Override
 	public void selectStoreReview() {
 		// 9. 상품 리뷰 상세조회용 서비스
@@ -197,6 +216,9 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	public int insertProductOrder(InProductOrder pOrder) {
 		return inStoreDao.insertProductOrder(sqlSession, pOrder);		
 	}
+
+
+
 
 
 
