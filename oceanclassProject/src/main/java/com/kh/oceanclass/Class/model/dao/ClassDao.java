@@ -155,4 +155,16 @@ public class ClassDao {
 	public int classQnaPwdCheck(SqlSessionTemplate sqlSession, ClassQna cq) {
 		return sqlSession.selectOne("classMapper.classQnaPwdCheck", cq);
 	}
+	
+	public int classQnaListCount(SqlSessionTemplate sqlSession, int referNo) {
+		return sqlSession.selectOne("classMapper.classQnaListCount", referNo);
+	}
+	
+	public ArrayList<ClassQna> selectClassQnaListPaging(SqlSessionTemplate sqlSession, int referNo, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("classMapper.selectClassQnaList", referNo, rowBounds);
+	}
 }

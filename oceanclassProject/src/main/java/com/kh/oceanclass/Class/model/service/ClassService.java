@@ -57,5 +57,8 @@ public interface ClassService {
 	int deleteClassQna(ClassQna cq);
 	int updateClassQna(ClassQna cq);
 	int classQnaPwdCheck(ClassQna cq);
+	int classQnaListCount(int referNo);
+	ArrayList<ClassQna> selectClassQnaListPaging(int referNo, PageInfo pi);
+	
 	
 }

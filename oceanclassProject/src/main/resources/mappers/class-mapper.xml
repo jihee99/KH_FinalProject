@@ -61,6 +61,7 @@
 		<result column="status" property="status" />
 		<result column="answer_content" property="answerContent" />
 		<result column="answer_date" property="answerDate" />
+		<result column="teacher_nick" property="teacherNick" />
 	</resultMap>
 
 	<update id="increaseCount">
@@ -481,6 +482,12 @@
 		     , status
 		     , answer_content
 		     , to_char(answer_date, 'YYYY-MM-DD') as answer_date
+             , (
+                select nickname
+                  from member
+                  join class using (mno)
+                 where clno = refer_no
+                ) as teacher_nick
 		  from cs_qna
 		  join member using (mno)
 		 where status = 'Y'
@@ -559,6 +566,14 @@
 		 where STATUS = 'Y'
 		   and PWD = #{pwd}
 		   and cs_qno = #{csQnaNo}
+	</select>
+	
+	<select id="classQnaListCount" resultType="_int">
+		select count(*)
+		  from cs_qna
+		 where refer_no = #{referNo}
+		   and status = 'Y'
+		   and gb_no = 1
 	</select>
 		
 </mapper>

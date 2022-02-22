@@ -179,5 +179,15 @@ public class ClassServiceImpl implements ClassService {
 	public int classQnaPwdCheck(ClassQna cq) {
 		return cDao.classQnaPwdCheck(sqlSession, cq);
 	}
+
+	@Override
+	public int classQnaListCount(int referNo) {
+		return cDao.classQnaListCount(sqlSession, referNo);
+	}
+
+	@Override
+	public ArrayList<ClassQna> selectClassQnaListPaging(int referNo, PageInfo pi) {
+		return cDao.selectClassQnaListPaging(sqlSession, referNo, pi);
+	}
 	
 }
