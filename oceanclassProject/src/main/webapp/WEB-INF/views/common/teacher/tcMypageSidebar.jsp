@@ -136,7 +136,7 @@
                         <li><a href="">상품 리뷰 관리</a></li>
                         <li><a href="">상품 문의 관리</a></li>
                         <li><a href="ststock.in">재고 관리</a></li>
-                        <li><a href="">주문 배송 관리</a></li>
+                        <li><a href="solist.in">주문 배송 관리</a></li>
                     </ul>
                 </div>
                 <div id="menu4">
