@@ -127,6 +127,10 @@ public class InstructorStoreDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return (ArrayList)sqlSession.selectList("inStoreMapper.searchStoreOrderList", orderStatus, rowBounds);
 	}
+
+	public int deleteStoreOrder(SqlSessionTemplate sqlSession, String orderNo) {
+		return sqlSession.delete("inStoreMapper.deleteStoreOrder", orderNo);
+	}
 	
 	
 	

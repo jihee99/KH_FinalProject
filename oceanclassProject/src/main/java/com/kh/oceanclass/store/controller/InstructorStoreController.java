@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.store.model.service.InstructorStoreService;
@@ -381,26 +382,46 @@ public class InstructorStoreController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="sosearch.in", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="sosearchF.in", produces="application/json; charset=UTF-8")
 	public String searchStoreOrder(@RequestParam(value="cpage", defaultValue="1") int currentPage, String orderStatus) {
 		
 		int listCount = inStoreService.searchStoreOrderCount(orderStatus);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<StoreOrder> list = inStoreService.searchStoreOrderList(orderStatus, pi);
-		
+		System.out.println(orderStatus);
 		System.out.println(pi);
 		System.out.println(list);
 		
-		JSONObject jObj = new JSONObject();
-		jObj.put("pi", pi);
-		jObj.put("list", list);
+		//JSONObject jObj = new JSONObject();
+		//jObj.put("pi", pi);
+		//jObj.put("list", list);
 		
-		return jObj.toJSONString();
+		return new Gson().toJson(list);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="sodelete.in", produces="application/json; charset=UTF-8")
+	public String deleteStoreOrder(String hiddenList) {
+		//System.out.println(hiddenList);
+		String[] list = hiddenList.split(",");
+		//System.out.println(list);
+		int result = 1;
+		for(int i=0; i<list.length; i++) {
+			String orderNo = list[i];
+			//System.out.println(orderNo);
+			result *= inStoreService.deleteStoreOrder(orderNo);
+		}
+		
+		return result>0? "success" : "fail";
+	}
 	
-	
-	
+	@RequestMapping(value="sosearch.in")
+	public String searchKeyStoreOrderList(String key, Model model) {
+		System.out.println(key);
+		
+		
+		return "";
+	}
 	
 	
 	

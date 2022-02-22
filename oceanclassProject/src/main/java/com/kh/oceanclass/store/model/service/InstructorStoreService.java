@@ -73,6 +73,9 @@ public interface InstructorStoreService {
 	int searchStoreOrderCount(String orderStatus);
 	ArrayList<StoreOrder> searchStoreOrderList(String orderStatus, PageInfo pi);
 	
+	// 11_4. 상품 주문내역 삭제 서비스
+	int deleteStoreOrder(String orderNo);
+	
 	// 12. 상품 재고 리스트 조회용 서비스
 	int selectStockCount();
 	ArrayList<Stock> selectStockList(PageInfo pi);
@@ -83,6 +86,7 @@ public interface InstructorStoreService {
 	// 14. 상품발주요청용 서비스
 	ArrayList<Product> selectProductList();
 	int insertProductOrder(InProductOrder pOrder);
+
 	
 	
 }

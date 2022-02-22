@@ -154,6 +154,11 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	public ArrayList<StoreOrder> searchStoreOrderList(String orderStatus, PageInfo pi) {
 		return inStoreDao.searchStoreOrderList(sqlSession, orderStatus, pi);
 	}
+	
+	@Override
+	public int deleteStoreOrder(String orderNo) {
+		return inStoreDao.deleteStoreOrder(sqlSession, orderNo);
+	}
 
 	
 	

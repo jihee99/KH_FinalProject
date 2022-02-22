@@ -75,8 +75,8 @@
                 <div class="content_1_left"><b>전체 주문</b>(${pi.listCount })</div>
                 <div class="content_1_center"></div>
                 <div class="content_1_right">
-                    <form id="searchForm" align="right">
-                        <input type="text" id="searchKey" placeholder="주문자명을 입력하세요"> 
+                    <form id="searchForm" align="right" action="sosearch.in">
+                        <input type="text" id="key" placeholder="회원 아이디를 입력하세요" required> 
                         <button type="submit">검색</button>
                     </form>
                 </div>
@@ -87,7 +87,7 @@
                         <tr>
                             <th width="40"><input type="checkbox" id="checkAll"></th>
                             <th width="150">주문번호</th>
-                            <th width="150">주문자명</th>
+                            <th width="150">주문회원</th>
                             <th width="220">주문일</th>
                             <th width="110">주문방법</th>
                             <th width="110">주문금액</th>
@@ -99,7 +99,7 @@
                     	<c:forEach var="s" items="${list }">
                         <tr>
                             <!-- <td><input type="checkbox" class="deleteNum" name="deleteNum" value="${b.boardNo }"></td> -->
-                            <td><input type="checkbox" class="deleteNum" name="" value=""></td>
+                            <td><input type="checkbox" class="deleteNum" name="chBxRow" value="${s.orderNo }"></td>
                             <td>${s.orderNo }</td>
                             <td>${s.userId }</td>
                             <td>${s.payDate }</td> 
@@ -128,8 +128,9 @@
                 </table>
             </div>
         </div>
+        <input type="hidden" name="hiddenList" id="hiddenList">
         <div align="left">
-            <button id="deleteBtn">선택삭제</button>
+            <button id="deleteBtn" onclick="deleteOrder();">선택삭제</button>
         </div>
         <div class="btn_group" align="center">
 			<c:choose>
@@ -137,12 +138,12 @@
            			<button class="btn btn-light" disabled>&lt;</button>
            		</c:when>
            		<c:otherwise>
-           			<button class="btn btn-light" onclick="location.href='sorderF.in?cpage=${pi.currentPage - 1}'">&lt;</button>
+           			<button class="btn btn-light" onclick="location.href='solist.in?cpage=${pi.currentPage - 1}'">&lt;</button>
            		</c:otherwise>
            	</c:choose>
                    
    			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-   				<button class="btn btn-light" onclick="location.href='sorderF.in?cpage=${p}'">${p }</button>
+   				<button class="btn btn-light" onclick="location.href='solist.in?cpage=${p}'">${p }</button>
    			</c:forEach>
    
    			<c:choose>
@@ -150,25 +151,20 @@
            			<button class="btn btn-light" disabled>&gt;</button>
                	</c:when>
                	<c:otherwise>
-               		<button class="btn btn-light" onclick="location.href='sorderF.in?cpage=${pi.currentPage + 1}'">&gt;</button>
+               		<button class="btn btn-light" onclick="location.href='solist.in?cpage=${pi.currentPage + 1}'">&gt;</button>
                	</c:otherwise>
             </c:choose>
 		</div>
 		
 		<script>	
-			$(function(){
-				var status = $("input[name=orderStatus]").val();
-				//console.log(status);
-				switch(status){
-				case '1': break; 
-				case '2': break;
-				case '3': break;
-				case '4': break;
-				case '5': break;
-				case '6': break;
-				case '7': break;
-				}
-			})
+
+		
+			function detailView(orderNo){
+				console.log(orderNo);
+				//location.href='sodetail.in?ono=${s.orderNo}'"
+				location.href="sodetail.in?ono="+orderNo;
+			}	
+		
 			function typeValue(num){
 				console.log(num)
 				var box1 = $("#type1");
@@ -227,18 +223,79 @@
 					box4.css("background-color", "rgb(150, 150, 150, 0.6)");  
 					box5.css("background-color", "rgb(150, 150, 150, 0.6)");  
 				}
-				/*
+				
 				$.ajax({
-					url:"sosearch.in",
-					date:{orderStatus:num},
-					success:function(result){
+					url:"sosearchF.in",
+					data:{orderStatus:num},
+					success:function(list){
+						console.log(list);
 						
-					},error:function(result){
+						let value ="";
 						
+						for(let i in list){
+							value += "<tr>"
+									+ "<td><input type='checkbox' class='deleteNum' name='chBxRow' value='"+list[i].orderNo+"'></td>"
+									+ "<td>"+ list[i].orderNo + "</td>"
+									+ "<td>"+ list[i].userId + "</td>"
+									+ "<td>"+ list[i].payDate + "</td>"
+									+ "<td>"+ list[i].payMethod +"</td>"
+									+ "<td>"+ list[i].payAmount +"</td>"
+									+ "<td>"
+	                            	+ "<input type='hidden' name='orderStatus' value='"+list[i].orderStatus+"'>"
+										+"<select name='status' id='' value='"+list[i].orderStatus+"'>"
+											+"<option class='op1' value='1'>결제완료</option>"
+	                                    	+"<option class='op2' value='2'>상품준비</option>"
+	                                    	+"<option class='op3' value='3'>배송시작</option>"
+		                                    +"<option class='op4' value='4'>배송중</option>"
+		                                    +"<option class='op5'value='5 style='color: green;'>배송완료</option>"
+		                                   	+"<option class='op6' value='6'>주문취소</option>"
+			                                +"<option class='op7' value='7' style='color: red;'>취소완료</option>"
+		                                +"</select> </td>"
+		                            +"<td align='center'>"
+	                                +"<button id='updateBtn' type='submit'>변경</button>"
+	                                +"<button id='detailBtn' onclick='detailView("+list[i].orderNo+");'>상세</button>"
+	                               + "</td>"
+	                               + "</tr>"		  
+						}
+						
+						console.log(value);
+						$(".orderList tbody").empty();
+						$(".orderList tbody").html(value);
+						
+					},error:function(){
+						alert("주문내역 조회에 실패했습니다.");
 					}
-				})
-				*/
+				});
 			}
+			
+			function deleteOrder(){
+				var chkArr = new Array();
+				var hiddenList 
+				$('input:checkbox[name=chBxRow]:checked').each(function(){
+	            	chkArr.push(this.value);
+	            });
+				$('#hiddenList').val(chkArr);
+				
+				console.log(chkArr);
+				
+				$.ajax({
+					url:"sodelete.in",
+					data:{hiddenList:$('#hiddenList').val()},
+					success:function(){
+						alert("주문내역 삭제가 완료되었습니다.");
+						location.reload();
+					},error:function(){
+						alert("주문내역 삭제에 실패했습니다.");
+					}
+				});
+			}
+			
+			$(document).ready(function() {
+                $("#checkAll").click(function() {
+                    if($("#checkAll").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
+                    else $("input[name=chBxRow]").prop("checked", false);
+                });
+            })
 		</script>
     </div>
 
