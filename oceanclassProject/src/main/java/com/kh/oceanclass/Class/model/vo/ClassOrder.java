@@ -34,4 +34,7 @@ public class ClassOrder {
 	private String clName;
 	private String clPrice;
 	private String phone;
+	
+	// 마이페이지 내클래스내역에 필요
+	private String clImg;
 }

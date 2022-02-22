@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.CsQna;
@@ -51,6 +52,9 @@ public class MypageServiceImpl implements MypageService{
 		return myDao.selectCouponList(sqlSession, pi, memNo);
 	}
 
+	
+	
+// 문의내역
 	@Override
 	public int selectQnaCount(int memNo) {
 		return myDao.selectQnaCount(sqlSession, memNo);
@@ -75,6 +79,13 @@ public class MypageServiceImpl implements MypageService{
 	public int checkNick(String nickName) {
 		return myDao.checkNick(sqlSession, nickName);
 	}
+	
+	
+// 클래스
+	@Override
+	public ArrayList<ClassOrder> selectMyClass(int memNo) {
+		return myDao.selectMyClass(sqlSession, memNo);
+	}
 
 	@Override
 	public int likeClassCount(int memNo) {
@@ -96,6 +107,9 @@ public class MypageServiceImpl implements MypageService{
 		return myDao.classReviewList(sqlSession, pi, memNo);
 	}
 
+	
+
+// 스토어	
 	@Override
 	public int likeProductCount(int memNo) {
 		return myDao.likeProductCount(sqlSession, memNo);
@@ -125,6 +139,7 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo) {
 		return myDao.shoppingReviewList(sqlSession, pi, memNo);
 	}
+
 
 
 
