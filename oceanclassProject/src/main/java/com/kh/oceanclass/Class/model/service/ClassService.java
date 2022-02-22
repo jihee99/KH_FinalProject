@@ -15,9 +15,11 @@ import com.kh.oceanclass.event.model.vo.Event;
 public interface ClassService {
 
 	// 클래스 메인용
-	ArrayList<Class> classHotList();
-	ArrayList<Class> classNewList();
+	ArrayList<ClassVo> classHotList();
+	ArrayList<ClassVo> classNewList();
 	ArrayList<Event> mainSlideList();
+	int classCategoryListCount(String category);
+	ArrayList<ClassVo> classCategoryList(HashMap<String, String> map, PageInfo pi);
 	
 	// 클래스 상세보기용
 	int increaseCount(int clNo);

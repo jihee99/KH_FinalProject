@@ -169,16 +169,27 @@ public class ClassDao {
 		return (ArrayList)sqlSession.selectList("classMapper.selectClassQnaList", referNo, rowBounds);
 	}
 
-	public ArrayList<Class> classHotList(SqlSessionTemplate sqlSession){
+	public ArrayList<ClassVo> classHotList(SqlSessionTemplate sqlSession){
 		RowBounds rowBounds = new RowBounds(0, 6);
 		return (ArrayList)sqlSession.selectList("classMapper.classHotList", null, rowBounds);
 	}
 	
-	public ArrayList<Class> classNewList(SqlSessionTemplate sqlSession){
+	public ArrayList<ClassVo> classNewList(SqlSessionTemplate sqlSession){
 		RowBounds rowBounds = new RowBounds(0, 6);
 		return (ArrayList)sqlSession.selectList("classMapper.classNewList", null, rowBounds);
 	}
 	
+	public int classCategoryListCount(SqlSessionTemplate sqlSession, String category) {
+		return sqlSession.selectOne("classMapper.classCategoryListCount", category);
+	}
+	
+	public ArrayList<ClassVo> classCategoryList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("classMapper.classCategoryList", map, rowBounds);
+	}
 	
 	
 	

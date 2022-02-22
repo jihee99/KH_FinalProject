@@ -201,7 +201,7 @@
 		   		</when>
 		   		<when test="array == 'date'">
 					 order
-					    by cl_date desc
+					    by clno desc
 		   		</when>
 		   </choose>
 	</select>
@@ -628,7 +628,94 @@
 		    by clno desc
 	</select>
 		
-		
+	<select id="classCategoryListCount" resultType="_int">
+		select count(*)
+		  from class
+		 where CL_STATUS = 'Y'
+		 <choose>
+			<when test="category == 1">
+			   and category = 1
+			</when>
+			<when test="category == 2">
+			   and category = 2
+			</when>
+			<when test="category == 3">
+			   and category = 3
+			</when>
+			<when test="category == 4">
+			   and category = 4
+			</when>
+			<when test="category == 5">
+			   and category = 5
+			</when>
+			<when test="category == 6">
+			   and category = 6
+			</when>
+			<when test="category == 7">
+			   and category = 7
+			</when>
+			<when test="category == 8">
+			   and category = 8
+			</when>
+	   </choose>
+	</select>
+
+	<select id="classCategoryList" resultMap="classResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_date
+		     , cl_price
+		     , cl_img
+		     , count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 1
+		           and refer_no = clno
+		        ) as like_count
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'Y'
+		   <choose>
+				<when test="category == 1">
+				   and category = 1
+				</when>
+				<when test="category == 2">
+				   and category = 2
+				</when>
+				<when test="category == 3">
+				   and category = 3
+				</when>
+				<when test="category == 4">
+				   and category = 4
+				</when>
+				<when test="category == 5">
+				   and category = 5
+				</when>
+				<when test="category == 6">
+				   and category = 6
+				</when>
+				<when test="category == 7">
+				   and category = 7
+				</when>
+				<when test="category == 8">
+				   and category = 8
+				</when>
+		   </choose>
+   		   <choose>
+		   		<when test="array == 'like'">
+					 order
+					    by like_count desc
+		   		</when>
+		   		<when test="array == 'date'">
+					 order
+					    by clno desc
+		   		</when>
+		   </choose>
+	</select>
 		
 		
 		

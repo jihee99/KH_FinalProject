@@ -192,15 +192,24 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public ArrayList<Class> classHotList() {
+	public ArrayList<ClassVo> classHotList() {
 		return cDao.classHotList(sqlSession);
 	}
 	
 	@Override
-	public ArrayList<Class> classNewList() {
+	public ArrayList<ClassVo> classNewList() {
 		return cDao.classNewList(sqlSession);
 	}
+	
+	@Override
+	public int classCategoryListCount(String category) {
+		return cDao.classCategoryListCount(sqlSession, category);
+	}
 
+	@Override
+	public ArrayList<ClassVo> classCategoryList(HashMap<String, String> map, PageInfo pi) {
+		return cDao.classCategoryList(sqlSession, map, pi);
+	}
 	
 	
 	
@@ -210,5 +219,6 @@ public class ClassServiceImpl implements ClassService {
 	public ArrayList<Event> mainSlideList() {
 		return cDao.mainSlideList(sqlSession);
 	}
+
 	
 }

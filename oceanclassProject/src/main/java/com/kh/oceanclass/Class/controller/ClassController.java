@@ -504,18 +504,36 @@ public class ClassController {
 	@ResponseBody
 	@RequestMapping(value="classHotList.me", produces="application/json; charset=UTF-8")
 	public String ajaxClassHotList() {
-		ArrayList<Class> cHotList = cService.classHotList();
+		ArrayList<ClassVo> cHotList = cService.classHotList();
 		return new Gson().toJson(cHotList);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="classNewList.me", produces="application/json; charset=UTF-8")
 	public String ajaxClassNewList() {
-		ArrayList<Class> cNewList = cService.classNewList();
+		ArrayList<ClassVo> cNewList = cService.classNewList();
 		return new Gson().toJson(cNewList);
 	}
 	
-	
+	@RequestMapping(value="classCategoryList.me")
+	public String classCategoryList(int cpage, String category, String array, Model model) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", category);
+		map.put("array", array);
+		
+		int listCount = cService.classCategoryListCount(category); // 조회할 리스트 갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 6);
+		ArrayList<ClassVo> list = cService.classCategoryList(map, pi); // 조회할 리스트 목록
+		
+		System.out.println(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("category", category);
+		model.addAttribute("array", array);
+		return "class/classCategoryList"; 
+	}
 	
 	
 	
