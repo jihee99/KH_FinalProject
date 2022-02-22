@@ -32,4 +32,16 @@ public class AdminChartDao {
 		return (ArrayList)sqlSession.selectList("chartMapper.selectTeacherChart");
 	}
 	
+	public int selectClassStatistics(SqlSessionTemplate sqlSession, String category){
+		return sqlSession.selectOne("chartMapper.selectQnaChart", category);
+	}
+	
+	public int selectStoreStatistics(SqlSessionTemplate sqlSession, String category){
+		return sqlSession.selectOne("chartMapper.selectQnaChart", category);
+	}
+	
+	public int selectEtcStatistics(SqlSessionTemplate sqlSession, String category){
+		return sqlSession.selectOne("chartMapper.selectQnaChart", category);
+	}
+	
 }// class

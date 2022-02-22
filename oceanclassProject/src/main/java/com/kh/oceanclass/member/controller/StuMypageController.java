@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.CsQna;
@@ -286,6 +287,27 @@ public class StuMypageController {
 		model.addAttribute("list", list);
 		return "member/student/myClassReviewDetail";
 	}
+	
+	@RequestMapping("myClass.me")
+	public String myClass(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
+		//System.out.println(list);
+		
+		model.addAttribute("list", list);
+		return "member/student/myClass";
+	}
+	
+	@RequestMapping("myAllClass.me")
+	public String myAllClass(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
+		//System.out.println(list);
+		
+		model.addAttribute("list", list);
+		return "member/student/myClassDetail";
+	}
+	
 	
 	
 	

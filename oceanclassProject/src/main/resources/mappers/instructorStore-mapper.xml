@@ -17,6 +17,7 @@
 	  	<result column="img2" property="productImg1"/>
 	  	<result column="img3" property="productImg2"/>
 	 	<result column="img4" property="productImg3"/>
+		<result column="star_avg" property="starAvg"/>
 	</resultMap>
 	
 	<resultMap id="productOptionResult" type="ProductOption">
@@ -87,6 +88,20 @@
 		<result column="quantity" property="quantity" />
 		<result column="price" property="price" />
 		<result column="title" property="title" />
+	</resultMap>
+	
+	<resultMap id="reviewResult" type="StoreReview">
+		<result column="rno" property="reviewNo"/>
+		<result column="mno" property="memberNo"/>
+		<result column="nickname" property="nickname"/>
+		<result column="pno" property="productNo"/>
+		<result column="content" property="content"/>
+		<result column="star_rating" property="starRating"/>
+		<result column="review_date" property="reviewDate"/>
+		<result column="total" property="totalCount"/>
+		<result column="star_avg" property="starAvg"/>
+		<result column="reconum" property="reconum"/>
+		<result column="file_path" property="img"/>
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
@@ -457,6 +472,60 @@
 		  order by pay_date desc
 	</select>
 	
+	<select id="selectStoreReviewCount" resultType="_int">
+		select count(*)
+  		  from s_review
+	</select>
 	
+	<select id="selectReviewProductList" resultMap="productResult">
+		select
+		       pno
+		     , title
+		     , round(avg(star_rating),1) as star_avg
+		  from store s
+		  join s_review using (pno)
+		 where s.mno = #{userNo}
+		 group by pno, title
+	</select>
+	
+	<!-- 전체 리뷰리스트 조회 -->
+	<select id="selectStoreReviewList" resultMap="reviewResult">
+		select
+		        rno
+		      , mno
+		      , nickname
+		      , pno
+		      , content
+		      , star_rating
+		      , review_date
+		      , status 
+		      , file_path
+		  from s_review
+		  left join r_file using (rno)
+	      left join member using(mno)
+		 where status = 'Y'
+		 order by rno desc
+	</select>
+	
+	<select id="selectStoreProductReview" resultMap="reviewResult">
+		select
+		        rno
+		      , mno
+		      , nickname
+		      , pno
+		      , content
+		      , star_rating
+		      , review_date
+		      , status 
+		      , file_path
+		  from s_review
+		  left join r_file using (rno)
+	      left join member using(mno)
+		 where status = 'Y'
+		 <if test="pno != 0">
+		   and pno = #{pno}		 
+		 </if>
+		 order by rno desc
+	</select>
 	
 </mapper>

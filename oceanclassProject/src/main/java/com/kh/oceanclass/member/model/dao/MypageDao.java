@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.CsQna;
@@ -93,6 +94,10 @@ public class MypageDao {
 	
 	
 // 클래스 관련
+	public ArrayList<ClassOrder> selectMyClass(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("myMapper.selectMyClass", memNo);
+	}
+	
 	public int likeClassCount(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("myMapper.likeClassCount", memNo);
 	}

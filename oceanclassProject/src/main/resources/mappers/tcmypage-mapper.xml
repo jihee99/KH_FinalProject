@@ -64,8 +64,7 @@
 		<result column="tc_history" property="tcHistory" />
 		<result column="tc_introduce" property="tcIntroduce" />
 		<result column="tc_sns" property="tcSns" />
-		<result column="history_file" property="HistoryFile" />
-		<result column="img_file" property="ImgFile" />
+		<result column="history_file" property="historyFile" />
 	</resultMap>
 	
 	<select id="tcinforPage" resultMap="memberResult">
@@ -87,5 +86,59 @@
 		     , profile = #{profileImg} 
 		 where mno = #{memNo}
 	</update>
+	
+	<select id="loginTc" resultMap="teacherResult">
+			  select
+			  	mno
+		      , user_id
+		      , tc_history
+		      , tc_introduce
+		      , tc_sns
+		      , history_file
+		  from teacher
+		 where mno = #{memNo}
+		   
+	</select>
+	
+	<select id="updateCount" resultType="_int">
+ 		select 
+ 		       count(*)
+ 		  from teacher
+ 		 where mno = #{memNo}
+ 	</select>
+	
+	<update id="updateTcPage">
+		update
+        	   teacher
+		   set tc_history = #{tcHistory}
+		   	 , tc_introduce = #{tcIntroduce}
+		     , tc_sns = #{tcSns}
+		     , history_file = #{historyFile} 
+		 where mno = #{memNo}
+		   and user_id = #{userId}
+	</update>
+	
+	<insert id="insertTcPage">
+ 		insert 
+		  into teacher
+		     (
+		       mno
+		     , user_id
+		     , TC_HISTORY
+		     , HISTORY_FILE
+		     , TC_INTRODUCE
+		     , TC_SNS
+		     )
+		 VALUES
+		    (
+		      #{memNo}
+		    , #{userId}
+		    , #{tcHistory}
+		    , #{historyFile}
+		    , #{tcIntroduce}
+		    , #{tcSns}
+		    )
+ 		  
+ 	</insert>
 	
 </mapper>

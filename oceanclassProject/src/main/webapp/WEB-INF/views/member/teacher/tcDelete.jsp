@@ -90,8 +90,8 @@
                 <div id="leave-text" align="center">
                     <span>회원 탈퇴</span>
                 </div>
-                <form action="" method="post">
-                    
+                <form action="myDelete.me" method="post">
+                    <input type="hidden" id="userId" name="userId" value="${loginUser.userId}">
                     <div align="center" id="delete-confirm">
                         <span>
                             강사 회원의 경우<br> 
@@ -106,7 +106,7 @@
                             비밀번호 확인
                         </span>
                         <div class="form-group">
-                        <input type="text" class="form-control" id="pwd" placeholder="비밀번호 확인" name="userId" required> 
+                        <input type="password" class="form-control" id="userPwd" placeholder="비밀번호 확인" name="userPwd" required> 
                         </div>
                     </div>
 

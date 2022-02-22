@@ -14,6 +14,7 @@ import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Repository
 public class InstructorStoreDao {
@@ -144,6 +145,28 @@ public class InstructorStoreDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return (ArrayList)sqlSession.selectList("inStoreMapper.searchKeyStoreOrderList", map, rowBounds);
 	}
+
+	public int selectStoreReivewCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("inStoreMapper.selectStoreReviewCount");
+	}
+
+	public ArrayList<Product> selectReviewProductList(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectReviewProductList", userNo);
+	}
+	
+	public ArrayList<StoreReview> selectStoreReviewList(SqlSessionTemplate sqlSession, PageInfo pi, int userNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreReviewList", userNo, rowBounds);
+	}
+
+	public ArrayList<StoreReview> selectStoreProductReview(SqlSessionTemplate sqlSession, String pno) {
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreProductReview",pno);
+	}
+
+
 	
 	
 	

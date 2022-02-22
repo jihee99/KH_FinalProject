@@ -14,12 +14,16 @@
 	    height: 1200px;
 	    margin: 0 auto;
 	    padding: 10px;
-	    border: 1px solid;
 	}
-	#memTable{width: 90%; text-align: center; margin: 0 auto; margin-top: 50px;}
-	#memTable>p{font-size: 28px; font-weight: 800; color:rgb(107, 171, 213); }
+	#currentDate{font-weight: 900; font-size: 20px;}
+	.chartArea{width: 90%; margin: 0 auto; margin-top: 50px;}
+	.chartArea>p{font-size: 28px; font-weight: 800; color:rgb(107, 171, 213); }
+	.table{text-align: center;}
 	.chart{width: 45%; margin: 0 auto; margin-left: 40px; margin-top:30px; float:left; padding: 20px;}
 	.chart>p{font-size: 18px; font-weight: 600; text-align: center;}
+	.chartArea2{width: 50%; float:left; margin-top: 100px; margin-left: 70px;}
+	.chartArea2>p{font-size: 28px; font-weight: 800; color:rgb(107, 171, 213); }
+	.chart2{width: 30%; margin: 0 auto; margin-left: 40px; margin-top:80px; float:left; padding: 20px;}
 </style>
 </head>
 <body>
@@ -27,7 +31,7 @@
 		<jsp:include page="../../common/admin/adminSidebar.jsp" />
 	    <div class="contentArea">
 	        <div id="content">
-	        	<div class="table" id="memTable">
+	        	<div class="chartArea">
 	        		<p>회원 / 강사 현황</p>
 	        		<table class="table">
 	        			<thead>
@@ -43,7 +47,7 @@
 				        </thead>
 				        <tbody>
 				        	<c:forEach var="a" items="${list}">
-					        	<tr id="qna">
+					        	<tr>
 					                <td>${a.staDate}</td>
 					                <td>${a.newMem}</td>
 					                <td>${a.sleepMem}</td>
@@ -64,6 +68,33 @@
 					<p>강사 현황</p>
 					<canvas id="myChart2" width="500" height="300"></canvas>
 				</div>	
+				
+				<div class="chartArea2">
+					<p>문의내역 현황</p>
+	        		<table class="table">
+				        <tbody>
+				        	<tr>
+				        		<th colspan="2"><p id="currentDate"></p></th>
+				        	</tr>
+				        	<tr>
+				                <th>클래스문의</th>
+				                <td id="class"></td>
+				            </tr>
+				            <tr>
+				                <th>스토어문의</th>
+				                <td id="store"></td>
+				            </tr>
+				            <tr>
+				                <th>기타문의</th>
+				                <td id="etc"></td>
+				            </tr>
+				        </tbody>
+	        		</table>
+	        	</div>
+				<div class="chart2">
+					<canvas id="myChart3" width="500" height="300"></canvas>
+				</div>	
+				
 				<script>
 					
 					$(document).ready(function(){
@@ -97,11 +128,8 @@
 									sleepTeacher.push(result.teacherList[i].sleepTeacher);
 									delTeacher.push(result.teacherList[i].delTeacher);
 								}
-								//console.log(date);
-								//console.log(newMem);
-								//console.log(sleepMem);
-								//console.log(delMem);
 								
+								// 회원 그래프
 								let ctx1 = document.getElementById('myChart1').getContext('2d');
 								let myChart1 = new Chart(ctx1, {
 									type: 'bar',
@@ -155,21 +183,21 @@
 				            		}
 				        		});
 								
+								// 강사 그래프
 								let ctx2 = document.getElementById('myChart2').getContext('2d');
 								let myChart2 = new Chart(ctx2, {
 									type: 'bar',
-									// The data for our dataset
 									data: {
-										labels: date,		// x축 기준 설정
+										labels: date,		
 										datasets: [{
 											label: '신규강사',
-											type : 'bar',         // 'line' type
+											type : 'bar',         
 											backgroundColor: 'rgb(100, 100, 252)',
 											borderColor: 'rgb(255, 153, 0)',
 											data: newTeacher
 										}, {
 											label: '휴먼강사',
-											type : 'bar',         // 'line' type
+											type : 'bar',        
 											backgroundColor: 'rgb(100, 200, 100)',
 											borderColor: 'rgb(255, 153, 0)',
 											data: sleepTeacher
@@ -181,12 +209,11 @@
 											data: delTeacher
 										}]
 									},
-									// Configuration options
 									options: {
 										responsive: false,
 										legend: {
 											labels: {
-												fontColor: 'white' // label color
+												fontColor: 'white' 
 												}
 											},
 										scales: {
@@ -194,19 +221,56 @@
 											yAxes: [{
 												stacked: true,
 												ticks: {
-													fontColor:'white' // y축 폰트 color
+													fontColor:'white' 
 												}
 											}],
 											// x축
 											xAxes: [{
 												stacked: true,
 												ticks: {
-													fontColor:'white' // x축 폰트 color
+													fontColor:'white' 
 												}
 											}]
 				                		}
 				            		}
 				        		});
+								
+								const today = new Date();
+								const years = today.getFullYear();
+								const months = today.getMonth() + 1;
+								const dates = today.getDate();
+								const indexDate = years + '/' + months + '/' + dates;
+								document.getElementById("currentDate").innerHTML = indexDate;
+								document.getElementById("class").innerHTML = result.classQna;
+								document.getElementById("store").innerHTML = result.storeQna;
+								document.getElementById("etc").innerHTML = result.etcQna;
+								
+								// 문의사항 그래프
+								let ctx3 = document.getElementById('myChart3').getContext('2d');
+								let myChart3 = new Chart(ctx3, {
+								    type: 'pie',
+								    data: {
+								    	labels: ["클래스","스토어","기타"],
+										datasets: [{
+											backgroundColor: ["#3e95cd", "#3cba9f", "#c45850"],
+											data: [result.classQna, result.storeQna, result.etcQna]
+										}]
+								    },
+								    options: {
+								    	title: {
+								    		display: true,
+								    		text: '문의사항 내역'
+								    	},
+							    		responsive: true,
+							    		legend: false,
+							 			pieceLabel: {
+							 				mode:"label",
+							 				position:"default",
+							 				fontSize: 16,
+							 				fontStyle:'bold'
+							 			}
+								    }
+								});
 							},error:function(){
 								
 							}
