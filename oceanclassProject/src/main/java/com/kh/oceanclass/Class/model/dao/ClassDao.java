@@ -15,6 +15,7 @@ import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 
 @Repository
 public class ClassDao {
@@ -191,10 +192,14 @@ public class ClassDao {
 		return (ArrayList)sqlSession.selectList("classMapper.classCategoryList", map, rowBounds);
 	}
 	
+	public int classPayCk(SqlSessionTemplate sqlSession, ClassOrder co) {
+		return sqlSession.selectOne("classMapper.classPayCk", co);
+	}
 	
-	
-	
-	
+	public ArrayList<MemCoupon> memberCouponList(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("classMapper.memberCouponList", memNo);
+	}
+
 	
 	
 	

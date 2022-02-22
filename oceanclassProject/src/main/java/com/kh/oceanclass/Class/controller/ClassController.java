@@ -26,6 +26,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
 
 /*사용자 클래스 관련 기능 처리하는 controller*/
@@ -489,9 +490,25 @@ public class ClassController {
 		return "redirect:classQnaList.me?cpage=" + cpage + "&referNo=" + cq.getReferNo();
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="classPayCk.me")
+	public String classBuyCk(ClassOrder co) {
+		int result = cService.classPayCk(co);
+		if(result > 0) {
+			// 구매 불가능
+			return "nnnnn";
+		} else {
+			return "yyyyy";
+		}
+	}
+	
 	@RequestMapping(value="classPay.me")
-	public String classPay() {
-		// 클래스 결제 페이지 이동용(뷰 확인용) 메소드
+	public String classPay(int clNo, int memNo, Model model) {
+		// 클래스 결제 페이지
+		ClassVo c = cService.selectClass(clNo);
+		ArrayList<MemCoupon> couponList = cService.memberCouponList(memNo);	// 쿠폰 정보 확인
+		model.addAttribute("c", c);
+		model.addAttribute("couponList", couponList);
 		return "class/classPay";
 	}
 	
@@ -526,8 +543,6 @@ public class ClassController {
 		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 6);
 		ArrayList<ClassVo> list = cService.classCategoryList(map, pi); // 조회할 리스트 목록
 		
-		System.out.println(pi);
-		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("category", category);
@@ -535,9 +550,7 @@ public class ClassController {
 		return "class/classCategoryList"; 
 	}
 	
-	
-	
-	
+
 	
 	
 	

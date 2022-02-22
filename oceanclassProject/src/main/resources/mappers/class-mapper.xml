@@ -69,6 +69,17 @@
 		<result column="e_title" property="eventTitle" />
 		<result column="img" property="img" />
 	</resultMap>
+	
+	<resultMap id="memCouponResult2" type="memCoupon">
+		<result column="pcno" property="memCouponNo" />
+		<result column="mno" property="memNo" />
+		<result column="cno" property="couponNo" />
+		<result column="use" property="useYN" />
+		<result column="endate" property="enDate" />
+		<result column="dedate" property="deDate" />
+		<result column="cname" property="couponName" />
+		<result column="discount" property="discount" />
+	</resultMap>
 
 	<update id="increaseCount">
 		update 
@@ -716,6 +727,30 @@
 		   		</when>
 		   </choose>
 	</select>
+		
+	<select id="classPayCk" resultType="_int">
+		select count(*)
+		  from class_order
+		 where READING_STATUS != 'E'
+		   and clNo = #{clNo}
+		   and mno = #{memNo}
+	</select>
+		
+	<select id="memberCouponList" resultMap="memCouponResult2">
+		select c.pcno
+		     , c.mno
+		     , cno
+		     , c.use
+		     , c.endate
+		     , c.dedate
+		     , cname
+		     , discount
+		  from coupon c
+		  join couponlist using (cno)
+		 where c.mno = #{memNo}
+		   and c.dedate > sysdate
+		   and c.use = 'N'
+	</select>	
 		
 		
 		

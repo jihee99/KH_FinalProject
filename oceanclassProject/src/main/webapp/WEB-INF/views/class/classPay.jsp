@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,11 +63,11 @@
 
         <div class="info">
             <div style="float:left; margin-right: 10px;">
-                <img src="" width="150px" height="150px">
+                <img src="${ c.clImg }" width="280px" height="150px">
             </div>
             <div style="line-height: 10px;">
-                <div style="font-size: 15px; color: gray; line-height: 27px;">강사명</div>
-                <div>클래스명</div>
+                <div style="font-size: 15px; color: gray; line-height: 27px;">${ c.memNo }</div>
+                <div style="margin-top:10px; font-weight: bold;">${ c.clName }</div>
             </div>
         </div>
         <hr>
@@ -77,14 +79,15 @@
                 <div>쿠폰</div>
                 <input type="text" class="form-control" style="width: 300px; float: left;" placeholder="0원" readonly>
                 <button type="button" class="btn" style="background-color: #6babd5;color: white; width:120px;">쿠폰 사용</button>
-                <div style="font-size: 13px; color:grey">사용가능한 쿠폰: 0개</div>
+                <button type="button" class="btn" style="background-color: lightgray; color: white; width:120px; margin-left:-4px;">사용 해제</button>
+                <div style="font-size: 14px; color:grey; margin-top: 5px;">사용가능한 쿠폰: ${ couponList.size() }개</div>
             </div>
 
             <div style="margin-top: 20px;">
                 <div>포인트</div>
                 <input type="text" class="form-control" style="width: 300px; float: left;" placeholder="0원">
                 <button type="button" class="btn" style="background-color: #6babd5;color: white; width:120px;">포인트 사용</button>
-                <div style="font-size: 13px; color:grey">사용가능한 포인트: 0원</div>
+                <div style="font-size: 14px; color:grey; margin-top: 5px;">사용가능한 포인트: <fmt:formatNumber value="${ loginUser.point }" type="number" />원</div>
             </div>
         </div>
 
@@ -98,7 +101,7 @@
                         <td>총 할인 금액</td>
                     </tr>
                     <tr style="color: gray;">
-                        <td>99,000원</td>
+                        <td><fmt:formatNumber value="${ c.clPrice }" type="number" />원</td>
                         <td>-10,000원</td>
                     </tr>
                     <tr style="background-color: lightgray;">

@@ -139,7 +139,7 @@
                     -->
                 </div>
                 <div class="classBuy">
-                    <button type="button" class="btn" style="background-color: #6babd5; width:160px; font-weight: bold; color: white;">클래스 구매하기</button>
+                    <button type="button" class="btn" onclick="classPayCk();" style="background-color: #6babd5; width:160px; font-weight: bold; color: white;">클래스 구매하기</button>
                     <button type="button" class="btn" style="background-color: rgb(184, 184, 184); width:90px;" onclick="likeCk();">
                         <c:choose>
                         	<c:when test="${ likeCk == 'Y' }">
@@ -307,6 +307,29 @@
               
         }
         
+        function classPayCk(){
+        	
+        	var memNo = document.getElementById("memNo").value
+        	var clNo = document.getElementById("clNo").value;
+        	
+        	if(memNo == ""){
+        		alert("로그인 한 유저만 클래스 구매가 가능합니다.");
+        	} else{
+        		$.ajax({
+        			url:"classPayCk.me",
+        			data:{memNo:memNo, clNo:clNo},
+        			success:function(result){
+        				if(result == 'nnnnn'){
+        					alert("이미 구매한 클래스입니다.");
+        				} else{
+        					location.href = "classPay.me?clNo=" + clNo + "&memNo=" + memNo;
+        				}
+        			}, error:function(){
+        				console.log("구매하기 체크용 ajax 통신 실패");
+        			}
+        		})
+        	}
+        }
     </script>
 
     <jsp:include page="../common/footerBar.jsp" />

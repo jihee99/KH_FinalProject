@@ -16,6 +16,7 @@ import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -211,6 +212,15 @@ public class ClassServiceImpl implements ClassService {
 		return cDao.classCategoryList(sqlSession, map, pi);
 	}
 	
+	@Override
+	public int classPayCk(ClassOrder co) {
+		return cDao.classPayCk(sqlSession, co);
+	}
+	
+	@Override
+	public ArrayList<MemCoupon> memberCouponList(int memNo) {
+		return cDao.memberCouponList(sqlSession, memNo);
+	}
 	
 	
 	
@@ -220,5 +230,5 @@ public class ClassServiceImpl implements ClassService {
 		return cDao.mainSlideList(sqlSession);
 	}
 
-	
+
 }
