@@ -10,17 +10,12 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./resources/css/adminMain.css">
+    <link rel="stylesheet" href="./resources/css/adminMain.css?2">
     
 </head>
 <body>
-	<!-- 
-		메인페이지랑 사이드바 분리해서 나중에 if(loginUser ne null) 조건구문 추가하기
-		-> loginUser ne null adminMainPage보여지게
-		-> loginUser eq null alert 접근권한이 없습니다. 하고 사용자 메인페이지로 이동
-		
-	 -->
-	 <c:if test="${not empty alertMsg }">
+
+	<c:if test="${not empty alertMsg }">
 		<script>
 			alert("${alertMsg}");
 		</script>
@@ -31,10 +26,6 @@
         <div class="side">
             <div id="logo">
                 <img src="resources/images/logo.png" width="100%">
-            </div>
-            <div id="search">
-                <input type="text" style="width:60%">
-                <button class="btn-xs">검색</button>
             </div>
             <div id="menu">
                 <div id="menu1">
@@ -63,14 +54,6 @@
                     </ul>
                 </div>
                 <div id="menu4">
-                    <p>통계 관리</p>
-                    <ul>
-                        <li><a href="">회원 통계</a></li>
-                        <li><a href="">클래스 통계</a></li>
-                        <li><a href="">상품 통계</a></li>
-                    </ul>
-                </div>
-                <div id="menu5">
                     <p>고객센터</p>
                     <ul>
                         <li><a href="noticeList.ad">공지사항 관리</a></li>

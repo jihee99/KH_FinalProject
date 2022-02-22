@@ -21,4 +21,8 @@ public interface AdminChartService {
 	
 	ArrayList<AdminStatistics> selectTeacherStatistics();
 	
+	int selectClassStatistics(String category);
+	int selectStoreStatistics(String category);
+	int selectEtcStatistics(String category);
+	
 }

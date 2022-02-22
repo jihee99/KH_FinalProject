@@ -45,7 +45,7 @@
 	<select id="selectTeacherChart" resultMap="chartResult">
 		select 
 		       sta_no
-		     , to_char(sta_date, 'YYYY-MM-DD') as "sta_date"
+		     , to_char(sta_date, 'MM-DD') as "sta_date"
 		     , new_teacher
 		     , sleep_teacher
 		     , del_teacher
@@ -55,5 +55,11 @@
 		    by sta_no desc
 	</select>
 	
+	<select id="selectQnaChart" resultType="_int">
+		select count(*) as count
+		  from qna
+		 where category = #{category}
+		   and TO_CHAR(create_date,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
 	
 </mapper>
