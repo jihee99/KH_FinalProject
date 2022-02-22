@@ -15,6 +15,7 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
+import com.kh.oceanclass.event.model.vo.Event;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -198,6 +199,16 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public ArrayList<Class> classNewList() {
 		return cDao.classNewList(sqlSession);
+	}
+
+	
+	
+	
+	
+	
+	@Override
+	public ArrayList<Event> mainSlideList() {
+		return cDao.mainSlideList(sqlSession);
 	}
 	
 }

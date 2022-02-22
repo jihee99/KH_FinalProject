@@ -14,6 +14,7 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
+import com.kh.oceanclass.event.model.vo.Event;
 
 @Repository
 public class ClassDao {
@@ -176,5 +177,18 @@ public class ClassDao {
 	public ArrayList<Class> classNewList(SqlSessionTemplate sqlSession){
 		RowBounds rowBounds = new RowBounds(0, 6);
 		return (ArrayList)sqlSession.selectList("classMapper.classNewList", null, rowBounds);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public ArrayList<Event> mainSlideList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("classMapper.mainSlideList");
 	}
 }

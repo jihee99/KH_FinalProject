@@ -25,6 +25,7 @@ import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.common.template.Pagination;
+import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.Member;
 
 /*사용자 클래스 관련 기능 처리하는 controller*/
@@ -512,5 +513,20 @@ public class ClassController {
 	public String ajaxClassNewList() {
 		ArrayList<Class> cNewList = cService.classNewList();
 		return new Gson().toJson(cNewList);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="mainSlide.me", produces="application/json; charset=UTF-8")
+	public String ajaxMainSlideList() {
+		ArrayList<Event> slideList = cService.mainSlideList();
+		return new Gson().toJson(slideList);
 	}
 }

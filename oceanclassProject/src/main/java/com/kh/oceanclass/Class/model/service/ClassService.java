@@ -10,12 +10,14 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
+import com.kh.oceanclass.event.model.vo.Event;
 
 public interface ClassService {
 
 	// 클래스 메인용
 	ArrayList<Class> classHotList();
 	ArrayList<Class> classNewList();
+	ArrayList<Event> mainSlideList();
 	
 	// 클래스 상세보기용
 	int increaseCount(int clNo);

@@ -63,6 +63,12 @@
 		<result column="answer_date" property="answerDate" />
 		<result column="teacher_nick" property="teacherNick" />
 	</resultMap>
+	
+	<resultMap id="eventResult2" type="Event">
+		<result column="eno" property="eventNo" />
+		<result column="e_title" property="eventTitle" />
+		<result column="img" property="img" />
+	</resultMap>
 
 	<update id="increaseCount">
 		update 
@@ -622,4 +628,18 @@
 		    by clno desc
 	</select>
 		
+		
+		
+		
+		
+		
+		
+	<select id="mainSlideList" resultMap="eventResult2">
+		select 
+		       eno
+		     , e_title
+		     , img
+		  from event
+		 where status = 'Y'
+	</select>
 </mapper>
