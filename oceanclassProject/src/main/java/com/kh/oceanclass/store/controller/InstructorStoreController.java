@@ -186,19 +186,6 @@ public class InstructorStoreController {
 			//System.out.println("0-----------------옵션수정------------------");
 		}
 		
-		// 받아온 originName을 p객체에 삽입
-		for(int i = 0; i<originName.length; i++) {
-			if(i==0) {
-				p.setProductImg0("resources/uploadFiles/store/" + originName);
-			} else if(i==1) {
-				p.setProductImg1("resources/uploadFiles/store/" + originName);
- 			} else if(i==2) {
- 				p.setProductImg2("resources/uploadFiles/store/" + originName);
- 			} else {
- 				p.setProductImg3("resources/uploadFiles/store/" + originName);
- 			}
-		}
-		
 		// 첨부파일 수정 섹션
 		for(int j=0; j<reupfile.length; j++) {
 			// 첨부파일이 있다면
@@ -498,9 +485,7 @@ public class InstructorStoreController {
 				
 		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
 		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/store/");
-		System.out.println("savePath : " + savePath );
-		System.out.println(session.getServletContext().getRealPath("/resources/uploadFiles/event/"));
-		System.out.println(session.getServletContext().getRealPath("/resources/uploadFiles/store/"));
+
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IOException e) {
