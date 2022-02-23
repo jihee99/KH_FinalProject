@@ -41,7 +41,7 @@
             <button type="button" class="btn btn1" id="S" value="S">스토어</button>
             <button type="button" class="btn btn1" id="P" value="P">포인트</button>
             <button type="button" class="btn btn1" id="R" value="R">댓글</button>
-            <button type="button" class="btn btn1" id="E" value="E">기타</button>
+            <button type="button" class="btn btn1" id="E" value="CP">쿠폰</button>
         </div>
         
         <div class="content" id="result">
@@ -90,7 +90,7 @@
     <script>
     	$(".img>#img").click(function(){
 	    	let eventNo = $(this).prev().val();
-	    	//console.log(eventNo);
+	    	console.log(eventNo);
 	    	location.href = 'detailEvent.ev?eno=' + eventNo;
     	})
     
@@ -119,7 +119,12 @@
         				}
         				
         				$("#result").html(value);
-        				console.log(value);
+        				//console.log(value);
+        				$(".img>#img").click(function(){
+					    	let eventNo = $(this).prev().val();
+					    	console.log(eventNo);
+					    	location.href = 'detailEvent.ev?eno=' + eventNo;
+				    	})
         			},error:function(){
         				//console.log("에러");
         				alert("에러발생");

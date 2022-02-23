@@ -172,6 +172,11 @@ public class StuMypageController {
 		PageInfo pi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
 		ArrayList<Coupon> list = myService.selectCouponList(pi, memNo);
 		//System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getDedate() == null) {
+				list.get(i).setDedate("무제한");
+			}
+		}
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("couponCount", couponCount);

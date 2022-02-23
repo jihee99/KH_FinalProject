@@ -20,8 +20,8 @@ public class Event {
 	private String status;
 	private String tag;
 	private String img;
-
-	private String couponImg;
+	
+	private int couponNo;
 	private int maxCount;
 
 }

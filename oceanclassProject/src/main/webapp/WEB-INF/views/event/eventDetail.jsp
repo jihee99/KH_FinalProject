@@ -34,6 +34,8 @@
 		margin-left: 30px;
 	}
 	.tags button:hover{color: rgb(107, 171, 213, 0.7)}
+	#img{width: 60%; height: 35%; margin: 0 auto; margin-top: 100px;  overflow: hidden; }
+	.content button{display: block; width: 50%; margin: 0 auto; margin-top: 50px;}
 </style>
 </head>
 <body>
@@ -49,7 +51,7 @@
 	        	<c:set var="tagArr" value="${fn:split(e.tag, ' ')}"></c:set>
 	        	<c:forEach var="t" items="${tagArr}">
 	        		<form id="tagSelect" method="post" action="tagSelect.ev">
-       				<input type="hidden" id="hashtag" name="hashtag" value="${t}">
+       					<input type="hidden" id="hashtag" name="hashtag" value="${t}">
 	        			<button type="submit" >${t}</button>
 	        		</form>
 	        	</c:forEach>
@@ -57,9 +59,10 @@
         </div>
         <div class="content">
         	<c:choose>
-        		<c:when test="${category eq 'CP'}">
-        			<img src="${e.img}" style="width: 50%; height: 50%;">
-        			<button type="button" class="btn btn-lg">다운로드</button>
+        		<c:when test="${e.couponNo ne 0}">
+        			<div id="img"><img src="${e.img}"></div>
+        			<input type="hidden" id="couponNo" name="couponNo" value="${e.couponNo}">
+        			<button type="button" class="btn btn-lg btn-light" onclick="getCoupon();">쿠폰받기</button>
         		</c:when>
         		<c:otherwise>
         			<img src="${e.img}" style="width: 100%; height: 90%;">
@@ -67,6 +70,90 @@
         	</c:choose>
         </div>
         
+        <script>
+        	function getCoupon(){
+        		let couponNo = $(".content").children("#couponNo").val();
+        		let memNo = '<c:out value="${loginUser.memNo}"/>';
+        		let login = "";
+        		console.log(couponNo);
+        		if(memNo == login){
+        			alert("로그인 후 이용 가능합니다");
+        		}else{
+        			$.ajax({
+        				url: "getCoupon.ev",
+        				data:{memNo: memNo,
+        					  couponNo: couponNo},
+        				success:function(result){
+        					//console.log(result);
+        					if(result>0){
+        						$(".modalSuccess").modal();
+        					}else if(result == 0){
+        						$(".modalAlready").modal();
+        					}else if(result == -1){
+        						$(".modalEnd").modal();	
+        					}else{
+        						$(".modalFail").modal();
+        					}
+        				},error:function(){
+        					console.log("쿠폰발급실패");
+        				}
+        			});
+        		}
+        	}
+        </script>
+        
+       	<div class="modal modalSuccess" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<p style="text-align:center;">쿠폰이 발급되었습니다!</p>
+					</div>
+				<div class="modal-footer">
+			        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+			    </div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal modalAlready" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<p style="text-align:center;">이미 발급받은 쿠폰입니다.</p>
+					</div>
+				<div class="modal-footer">
+			        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+			    </div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal modalEnd" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<p style="text-align:center;">쿠폰이 모두 소진되었습니다.</p>
+					</div>
+				<div class="modal-footer">
+			        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+			    </div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal modalFail" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<p style="text-align:center;">쿠폰 발급에 실패하였습니다. 다시 시도해주세요.</p>
+					</div>
+				<div class="modal-footer">
+			        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+			    </div>
+				</div>
+			</div>
+		</div>
+		
         <table class="table" id="replyTable">
         	<thead>
         		<tr></tr>

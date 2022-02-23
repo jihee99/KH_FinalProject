@@ -10,6 +10,7 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.Coupon;
 
 @Repository
 public class EventDao {
@@ -58,6 +59,23 @@ public class EventDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("eventMapper.tagSelectList", hashtag, rowBounds);
+	}
+	
+	
+	public int insertCoupon(SqlSessionTemplate sqlSession, Coupon c) {
+		return sqlSession.insert("eventMapper.insertCoupon", c);
+	}
+
+	public int countCoupon(SqlSessionTemplate sqlSession, int couponNo) {
+		return sqlSession.update("eventMapper.countCoupon", couponNo);
+	}
+	
+	public Coupon selectCoupon(SqlSessionTemplate sqlSession, int couponNo) {
+		return sqlSession.selectOne("eventMapper.selectCoupon", couponNo);
+	}
+	
+	public int couponHistoryMem(SqlSessionTemplate sqlSession, Coupon c) {
+		return sqlSession.selectOne("eventMapper.couponHistoryMem", c);
 	}
 	
 }

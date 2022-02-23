@@ -13,8 +13,8 @@
 		<result column="status" property="status" />
 		<result column="tag" property="tag" />
 		<result column="img" property="img" />
-		<result column="img" property="couponImg" />
 		<result column="maxCount" property="maxCount" />
+		<result column="cno" property="couponNo" />
 	</resultMap>
 	
 	<resultMap id="replyResult" type="Reply">
@@ -38,6 +38,15 @@
 		<result column="like_count" property="like" />
 	</resultMap>
 	
+	<resultMap type="Coupon" id="couponResult">
+		<result column="cno" property="couponNo" />
+		<result column="mno" property="memNo" />
+	    <result column="cname" property="couponName" />
+        <result column="discount" property="discount" />
+        <result column="dedate" property="dedate" />
+        <result column="nowcount" property="count" />
+        <result column="maxcount" property="maxCount"/>
+	</resultMap>
 
 	<!-- 공지사항 -->
 
@@ -72,6 +81,7 @@
 		     , E_CONTENT
 		     , TAG
 		     , IMG
+		     , cno
 		  from EVENT
 		 where ENO = #{eventNo}
 	</select>
@@ -245,7 +255,7 @@
 	</update>
 	
 	
-	<!-- 태그  -->
+<!-- 태그  -->
 	<select id="tagSelecetCount" resultType="_int">
 		select
 		       count(*)
@@ -271,7 +281,46 @@
 	<select id="tagLickClass" resultType="_int">
 		select count(*)
 		  from like_item
-		 where refer_no = '#{clno}'
+		 where refer_no = #{clno}
+	</select>
+
+<!-- 쿠폰 -->	
+	<select id="insertCoupon" resultType="_int">
+		insert
+		  into coupon
+		       (
+		       PCNO
+		     , CNO
+		     , MNO
+		     )
+		values
+		     (
+		       SEQ_CPNO.nextval
+		     , #{couponNo}
+		     , #{memNo}
+		     )
+	</select>
+	
+	<update id="countCoupon">
+		update couponList
+		   set nowcount = nowcount + 1
+		 where cno = #{couponNo}
+	</update>
+	
+	<select id="selectCoupon" resultMap="couponResult">
+		select 
+			   cno
+			 , maxcount
+			 , nowcount
+		  from couponlist
+		 where cno = #{couponNo}	 
+	</select>
+	
+	<select id="couponHistoryMem" resultType="_int">
+		select count(*)
+		  from coupon
+		 where mno = #{memNo}
+		   and cno = #{couponNo}
 	</select>
 	
 </mapper>

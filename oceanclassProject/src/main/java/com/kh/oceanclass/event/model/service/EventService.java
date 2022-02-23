@@ -6,6 +6,7 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.Coupon;
 
 public interface EventService {
 	
@@ -28,5 +29,17 @@ public interface EventService {
 	// 6. 태그 리스트
 	int tagSelectCount(String tag);
 	ArrayList<ClassVo> tagSelectList(PageInfo pi, String hashtag);
+	
+	// 7. 쿠폰발급
+	int insertCoupon(Coupon c);
+	
+	// 8. 발급쿠폰 카운트
+	int countCoupon(int couponNo);
+	
+	// 9. 쿠폰 발급가능 여부 판단
+	Coupon selectCoupon(int couponNo);
+	
+	// 10. 해당 계정이 해당 쿠폰 발급 받았는지 여부
+	int couponHistoryMem(Coupon c);
 	
 }
