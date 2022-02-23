@@ -464,7 +464,14 @@ public class InstructorStoreController {
 		return new Gson().toJson(list);
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="pReviewCountAjax.in", produces="application/json; charset=UTF-8" )
+	public String productReviewCountAjax(String pno) {
+		StoreReview sr = inStoreService.selectStoreProductReviewCount(pno);
+		
+		System.out.println(sr);
+		return new Gson().toJson(sr);
+	}
 	
 	
 	

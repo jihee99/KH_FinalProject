@@ -64,12 +64,19 @@
                             <td>${st.stockCount }</td>
                             <td>${st.availCount }</td>
                             <td><input type="number" name="inValue" class="inValue"></td>
-                     		<td>
-                     			<input type="checkbox" name="soldYN" class="soldYN" id="soldY" value="1"></td>
-                     		<td><input type="checkbox" name="soldYN" class="soldYN" id="soldN" value="0"></td> 
+                     		<c:choose>
+                            		<c:when test="${st.soldout eq 'Y '}">
+                            		    <td><input type="checkbox" name="soldYN" class="soldYN" id="soldY" value="1"></td>
+                   						<td><input type="checkbox" name="soldYN" class="soldYN" id="soldN" value="0" checked></td> 
+                            		</c:when>
+                            		<c:when test="${st.soldout eq 'N '}">
+                            		    <td><input type="checkbox" name="soldYN" class="soldYN" id="soldY" value="1" checked></td>
+                   						<td><input type="checkbox" name="soldYN" class="soldYN" id="soldN" value="0"></td> 
+                            		</c:when>
+                            </c:choose>
                             <td><button class="btn stockBtn"  style="height:35px;">저장</button></td>
                         </tr>
-                    </c:forEach>
+                	</c:forEach>
                 </tbody>
             </table>
        	</div>
@@ -98,6 +105,7 @@
         </div>
         
         <script>
+        /*
         	$(function(){
         		var soldValue = $("input[name=soldValue]").val();
 		        //console.log(soldValue)
@@ -107,6 +115,7 @@
 					$("input[value=0]").attr('checked', true);
 				}
         	})
+        */
         	$(".stockBtn").on('click' , function(){
         		var thisRow = $(this).closest('tr'); 
 
@@ -114,7 +123,6 @@
         		var inValue = thisRow.find('td:eq(5)').find('input').val();
         		if(inValue==""){
         			inValue = 0;
-        			console.log(inValue);
         		}
         		var soldY = thisRow.find('td:eq(6)').find('input:checked').val();
         		var soldN = thisRow.find('td:eq(7)').find('input:checked').val();
@@ -124,6 +132,9 @@
         		} else if(soldY == null || soldN == 0) {	// 품절일때 
         			soldYN = "Y";
         		}
+        		console.log(productNo);
+        		console.log(inValue);
+        		console.log(soldYN);
         		
         		$.ajax({
         			url:"stockUp.in",
@@ -139,6 +150,7 @@
         			}
         		})
 				location.reload();
+        	*/
         	})
         </script>
         </c:when>
