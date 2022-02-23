@@ -64,8 +64,8 @@ public class EventServiceImpl implements EventService{
 	}
 
 	@Override
-	public int insertCoupon(int memNo) {
-		return eDao.insertCoupon(sqlSession, memNo);
+	public int insertCoupon(Coupon c) {
+		return eDao.insertCoupon(sqlSession, c);
 	}
 
 	@Override
@@ -76,6 +76,11 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public Coupon selectCoupon(int couponNo) {
 		return eDao.selectCoupon(sqlSession, couponNo);
+	}
+
+	@Override
+	public int couponHistoryMem(Coupon c) {
+		return eDao.couponHistoryMem(sqlSession, c);
 	}
 
 	

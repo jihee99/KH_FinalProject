@@ -62,8 +62,8 @@ public class EventDao {
 	}
 	
 	
-	public int insertCoupon(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.insert("eventMapper.insertCoupon", memNo);
+	public int insertCoupon(SqlSessionTemplate sqlSession, Coupon c) {
+		return sqlSession.insert("eventMapper.insertCoupon", c);
 	}
 
 	public int countCoupon(SqlSessionTemplate sqlSession, int couponNo) {
@@ -72,6 +72,10 @@ public class EventDao {
 	
 	public Coupon selectCoupon(SqlSessionTemplate sqlSession, int couponNo) {
 		return sqlSession.selectOne("eventMapper.selectCoupon", couponNo);
+	}
+	
+	public int couponHistoryMem(SqlSessionTemplate sqlSession, Coupon c) {
+		return sqlSession.selectOne("eventMapper.couponHistoryMem", c);
 	}
 	
 }

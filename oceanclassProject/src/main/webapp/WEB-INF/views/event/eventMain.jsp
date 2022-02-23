@@ -90,7 +90,7 @@
     <script>
     	$(".img>#img").click(function(){
 	    	let eventNo = $(this).prev().val();
-	    	//console.log(eventNo);
+	    	console.log(eventNo);
 	    	location.href = 'detailEvent.ev?eno=' + eventNo;
     	})
     
@@ -119,7 +119,12 @@
         				}
         				
         				$("#result").html(value);
-        				console.log(value);
+        				//console.log(value);
+        				$(".img>#img").click(function(){
+					    	let eventNo = $(this).prev().val();
+					    	console.log(eventNo);
+					    	location.href = 'detailEvent.ev?eno=' + eventNo;
+				    	})
         			},error:function(){
         				//console.log("에러");
         				alert("에러발생");

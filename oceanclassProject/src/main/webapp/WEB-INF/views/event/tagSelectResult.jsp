@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,19 +15,20 @@
     <link rel="stylesheet" href="./resources/css/eventMain.css?4">
     
 <style>
-	.img{}
+	.img{margin:0 auto; margin-top: 50px;}
 	#img{
-		width: 100%; 
-		height: 80%;
-		border: 1px solid;
+		width: 80%; 
+		height: 200px;
+		object-fit:cover;
 	}
 	.pagination{
 		width: 25%;
 		margin: 0 auto;
+		padding-top: 80px;
+		border: 1px solid white;
 	}
-	#img:hover{border: 3px solid rgb(107, 171, 213); cursor:pointer;}
-	.head{width: 100%; height: 10%; }
-	.head>p{height: 100%; font-size: 40px;}
+	#move{width: 90%; height: 40%; overflow: hidden; border:none; margin: 0 auto; margin-left: 20px;}
+	.img>p{text-align: center;}
 </style>
 </head>
 <body>
@@ -46,9 +48,19 @@
 	            	<input type="hidden" id="clno" value="${c.clNo}">
 	            	<form id="classDetail" method="post" action="classDetail.me">
 	            		<input type="hidden" id="referNo" name="referNo" value="${c.clNo}">
-		                <img src="${c.clImg}" id="img">
-		            </form>    
-		            <p>${c.clName}</p> 
+		                <button id="move" type="submit"><img src="${c.clImg}" id="img"></button>
+		            </form>   
+		            <p>
+			            <c:choose>
+		            		<c:when test="${fn:length(c.clName) gt 22}">
+		            			<c:out value="${fn:substring(c.clName, 0, 21)}"></c:out>
+		            			..
+		            		</c:when>
+		            		<c:otherwise>
+		            			<c:out value="${c.clName}"></c:out>
+		            		</c:otherwise>
+			            </c:choose>
+		            </p> 
 	            </div>
 	            
 	 		</c:forEach> 
@@ -81,13 +93,13 @@
 						</li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="myQna.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+						<li class="page-item"><a class="page-link" href="tagSelect.ev?cpage=${ pi.currentPage-1 }">Previous</a></li>
 					</c:otherwise>
 				</c:choose>
 				
 				
 				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-					<li class="page-item"><a class="page-link" href="myQna.me?cpage=${ p }">${ p }</a></li>
+					<li class="page-item"><a class="page-link" href="tagSelect.ev?cpage=${ p }">${ p }</a></li>
 				</c:forEach>
 				
 				
@@ -98,7 +110,7 @@
 						</li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="myQna.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+						<li class="page-item"><a class="page-link" href="tagSelect.ev?cpage=${ pi.currentPage+1 }">Next</a></li>
 					</c:otherwise>
 				</c:choose>
 	           </ul>

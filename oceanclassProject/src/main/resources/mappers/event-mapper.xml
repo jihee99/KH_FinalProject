@@ -281,7 +281,7 @@
 	<select id="tagLickClass" resultType="_int">
 		select count(*)
 		  from like_item
-		 where refer_no = '#{clno}'
+		 where refer_no = #{clno}
 	</select>
 
 <!-- 쿠폰 -->	
@@ -296,7 +296,7 @@
 		values
 		     (
 		       SEQ_CPNO.nextval
-		     , #{cno}
+		     , #{couponNo}
 		     , #{memNo}
 		     )
 	</select>
@@ -313,7 +313,14 @@
 			 , maxcount
 			 , nowcount
 		  from couponlist
-		 where cno = ${couponNo}	 
+		 where cno = #{couponNo}	 
+	</select>
+	
+	<select id="couponHistoryMem" resultType="_int">
+		select count(*)
+		  from coupon
+		 where mno = #{memNo}
+		   and cno = #{couponNo}
 	</select>
 	
 </mapper>

@@ -59,19 +59,26 @@ public class EventController {
 	
 	@ResponseBody
 	@RequestMapping("getCoupon.ev")
-	public int ajaxCouponInsert(int memNo, int couponNo, HttpSession sessoion) {
+	public int ajaxCouponInsert(int memNo, int couponNo) {
 		Coupon c = eService.selectCoupon(couponNo);
 		//System.out.println(c);
 		if(c.getCount() == c.getMaxCount()) {
-			return 0;
+			return -1;			// 쿠폰 소진일 경우
 		}else {
-			int result = eService.insertCoupon(memNo);
-			if(result>0) {
-				int countCouponResult = eService.countCoupon(couponNo);
-				System.out.println(countCouponResult);
-				return countCouponResult;
-			} else {
-				return -1;
+			c.setMemNo(memNo);
+			//System.out.println(c);
+			int couponHistoryMem = eService.couponHistoryMem(c);
+			//System.out.println("쿠폰발급여부: "+couponHistoryMem);
+			if(couponHistoryMem > 0) {
+				return 0;		// 이미 발급받은 쿠폰일 경우
+			}else {
+				int result = eService.insertCoupon(c);
+				if(result>0) {
+					int countCouponResult = eService.countCoupon(couponNo);
+					return 1;	// 쿠폰 발급된 경우
+				} else {
+					return -2;	// 쿠폰 발급 실패한 경우
+				}
 			}
 		}
 		

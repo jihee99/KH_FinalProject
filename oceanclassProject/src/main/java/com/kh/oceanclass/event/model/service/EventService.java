@@ -31,12 +31,15 @@ public interface EventService {
 	ArrayList<ClassVo> tagSelectList(PageInfo pi, String hashtag);
 	
 	// 7. 쿠폰발급
-	int insertCoupon(int memNo);
+	int insertCoupon(Coupon c);
 	
 	// 8. 발급쿠폰 카운트
 	int countCoupon(int couponNo);
 	
 	// 9. 쿠폰 발급가능 여부 판단
 	Coupon selectCoupon(int couponNo);
+	
+	// 10. 해당 계정이 해당 쿠폰 발급 받았는지 여부
+	int couponHistoryMem(Coupon c);
 	
 }
