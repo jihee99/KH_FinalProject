@@ -10,8 +10,6 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +30,7 @@ import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 /*강사 스토어 관련 기능 처리하는 controller*/
@@ -474,9 +473,62 @@ public class InstructorStoreController {
 	}
 	
 	
+	@RequestMapping(value="sqlist.in")
+	public String selectStoreQnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
+		int listCount = inStoreService.selectStoreQnaCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		Member loginUser = (Member) session.getAttribute("loginUser");
+
+		if(loginUser != null) {
+			int userNo = loginUser.getMemNo();
+			
+			ArrayList<Product> plist = inStoreService.selectReviewProductList(userNo);
+			ArrayList<StoreQna> list = inStoreService.selectStoreQnaList(pi);
+			
+			System.out.println(pi);
+			System.out.println(list);
+			
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+			model.addAttribute("plist", plist);
+			return "store/instructorStoreQnaList";
+		}else {
+			session.setAttribute("alertMsg", "접근 권한이 없습니다.");
+			return "redirect:/";
+		}
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="pQnaCountAjax.in", produces="application/json; charset=UTF-8" )
+	public String productQnaCountAjax(@RequestParam(value="cpage", defaultValue="1") int currentPage, String pno) {
+		int listCount = inStoreService.selectStoreProductQnaCount(pno);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+//		StoreQna sq = inStoreService.selectStoreProductQnaCount(pno);
+		
+//		System.out.println(sq);
+		return new Gson().toJson(pi);
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="pQnaListAjax.in", produces="application/json; charset=UTF-8" )
+	public String productQnaListAjax(@RequestParam(value="cpage", defaultValue="1") int currentPage, String pno) {
+		int listCount = inStoreService.selectStoreProductQnaCount(pno);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<StoreQna> list = inStoreService.selectStoreProductQnaList(pi, pno);
+//		StoreQna sq = inStoreService.selectStoreProductQnaCount(pno);
+		
+//		System.out.println(sq);
+		return new Gson().toJson(list);
+	}
 	
+	@RequestMapping(value="sqdetail.in")
+	public String productQnaDetailF(String qno, Model model) {
+		
+		StoreQna sq = inStoreService.selectStoreQnaDetail(qno);
+		System.out.println(sq);
+		model.addAttribute("sq", sq);
+		return "store/instructorStoreQnaDetail";
+	}
 	
 	
 	// 첨부파일

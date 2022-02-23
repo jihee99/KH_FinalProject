@@ -24,7 +24,9 @@ public class StoreQna {
 	private String filePath;
 	private String status;
 	private String answerContent;
-	private Date answerDate;
+	private String answerDate;
 	
+	private String userId;
+	private String productName;
 	
 }
