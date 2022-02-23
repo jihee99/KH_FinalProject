@@ -10,6 +10,7 @@ import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 public interface InstructorStoreService {
@@ -48,11 +49,19 @@ public interface InstructorStoreService {
 	int deleteProductOption(int pno);
 	
 	
-	// 6. 상품 문의 리스트 페이지 서비스
-	void selectStoreQnaList();
+	// 6_1. 상품 문의 리스트 페이지 서비스
+	int selectStoreQnaCount();
+	ArrayList<StoreQna> selectStoreQnaList(PageInfo pi);
 	
-	// 7. 상품 문의 답변 서비스
-	void storeQnaAnswer();
+	//6_2. 상품별 문의 모아보기 서비스
+	int selectStoreProductQnaCount(String pno);
+	ArrayList<StoreQna> selectStoreProductQnaList(PageInfo pi, String pno);
+	
+	// 7_1. 상품 문의 상세보기 서비스
+	StoreQna selectStoreQnaDetail(String qno);
+	
+	// 7_2. 상품 문의 답변 서비스
+	int storeQnaAnswer();
 	
 	// 8. 상품 리뷰 리스트 페이지 서비스
 	int selectStoreReviewCount();
@@ -98,6 +107,7 @@ public interface InstructorStoreService {
 	// 14. 상품발주요청용 서비스
 	ArrayList<Product> selectProductList();
 	int insertProductOrder(InProductOrder pOrder);
+
 
 
 

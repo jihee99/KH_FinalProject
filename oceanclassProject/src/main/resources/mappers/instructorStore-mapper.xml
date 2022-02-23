@@ -103,6 +103,24 @@
 		<result column="file_path" property="img"/>
 	</resultMap>
 	
+	<resultMap id="qnaResult" type="StoreQna">
+		<result column="cs_qno" property="csQno"/>
+		<result column="mno" property="memNo"/>
+		<result column="gb_no" property="gbNo"/>
+		<result column="refer_no" property="referNo"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="create_date" property="createDate"/>
+		<result column="pwd" property="pwd"/>
+		<result column="filepath" property="filePath"/>
+		<result column="status" property="status"/>
+		<result column="answer_content" property="answerContent"/>
+		<result column="answer_date" property="answerDate"/>
+		
+		<result column="user_id" property="userId"/>
+		<result column="p_title" property="productName"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		select
 		       count(*)
@@ -547,5 +565,88 @@
 			</when>
 		</choose>
 	</select>
+	
+	<select id="selectStoreQnaCount" resultType="_int">
+		select 
+		       count(*)
+		  from cs_qna
+		 where gb_no = 2
+	</select>
+	
+	<select id="selectStoreQnaList" resultMap="qnaResult">
+		select 
+		       cs_qno
+		     , mno
+		     , user_id
+		     , refer_no
+		     , title
+		     , content
+		     , to_char(create_date, 'YYYY/MM/DD HH24:MM:SS') create_date
+		     , pwd
+		     , filepath
+		     , user_id
+		     , answer_date
+		  from cs_qna
+		  join member using (mno)
+		 where gb_no = 2
+		 order by cs_qno desc
+	</select>
+	
+	<select id="selectStoreProductQnaCount" resultType="_int">
+		select 
+		       count(*)
+		  from cs_qna	
+		 where gb_no = 2
+		 <if test="pno != 0">
+		  	and refer_no = #{pno}
+		 </if>		
+	</select>
+	
+	<select id="selectStoreProductQnaList" resultMap="qnaResult">
+		select 
+		       cs_qno
+		     , mno
+		     , user_id
+		     , refer_no
+		     , title
+		     , content
+		     , to_char(create_date, 'YYYY/MM/DD HH24:MM:SS') create_date
+		     , pwd
+		     , filepath
+		     , user_id
+		     , answer_date
+		  from cs_qna
+		  join member using (mno)
+		 where gb_no = 2
+		 <if test="pno != 0">
+		  	and refer_no = #{pno}
+		 </if>
+		 order by cs_qno desc
+	</select>
+	
+	<select id="selectStoreQnaDetail" resultMap="qnaResult">
+		select 
+		       cs_qno
+		     , c.mno
+		     , user_id
+		     , refer_no
+		     , store.title as p_title
+		     , c.title
+		     , c.content
+		     , to_char(create_date, 'YYYY/MM/DD HH24:MM:SS') create_date
+		     , pwd
+		     , filepath
+		     , user_id
+		     , answer_content
+		     , to_char(answer_date, 'YYYY/MM/DD HH24:MM:SS') answer_date
+		  from cs_qna c
+		  join member on member.mno = c.mno
+		  join store on store.pno = c.refer_no
+		 where gb_no = 2
+		   and cs_qno = #{qno}
+	</select>
+	
+	
+	
 	
 </mapper>

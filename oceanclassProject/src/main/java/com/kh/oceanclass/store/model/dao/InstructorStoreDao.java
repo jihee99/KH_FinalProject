@@ -14,6 +14,7 @@ import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Repository
@@ -170,7 +171,35 @@ public class InstructorStoreDao {
 		return sqlSession.selectOne("inStoreMapper.selectStoreProductReviewCount", pno);
 	}
 
+	public int selectStoreQnaCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("inStoreMapper.selectStoreQnaCount");
+	}
 
+	public ArrayList<StoreQna> selectStoreQnaList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreQnaList", null, rowBounds);
+	}
+
+	public int selectStoreProductQnaCount(SqlSessionTemplate sqlSession, String pno) {
+		return sqlSession.selectOne("inStoreMapper.selectStoreProductQnaCount");
+	}
+
+	public ArrayList<StoreQna> selectStoreProductQnaList(SqlSessionTemplate sqlSession, PageInfo pi, String pno) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreProductQnaList", pno, rowBounds);
+	}
+
+	public StoreQna selectStoreQnaDetail(SqlSessionTemplate sqlSession, String qno) {
+		return sqlSession.selectOne("inStoreMapper.selectStoreQnaDetail", qno);
+	}
+
+	
 	
 	
 	

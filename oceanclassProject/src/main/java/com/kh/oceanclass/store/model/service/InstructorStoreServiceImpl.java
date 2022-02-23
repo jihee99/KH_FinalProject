@@ -15,6 +15,7 @@ import com.kh.oceanclass.store.model.vo.ProductOption;
 import com.kh.oceanclass.store.model.vo.Stock;
 import com.kh.oceanclass.store.model.vo.StoreBuyList;
 import com.kh.oceanclass.store.model.vo.StoreOrder;
+import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Service
@@ -93,19 +94,45 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		return inStoreDao.deleteProductOption(sqlSession, pno);
 	}
 
-
+	// 6_1. 상품 문의 리스트 페이지 서비스--------------------------
 	@Override
-	public void selectStoreQnaList() {
-		// 6. 상품 문의 리스트 페이지 서비스
-		// TODO Auto-generated method stub
-		
+	public int selectStoreQnaCount() {
+		return inStoreDao.selectStoreQnaCount(sqlSession);
 	}
 
 	@Override
-	public void storeQnaAnswer() {
-		// 7. 상품 문의 답변 서비스
-		// TODO Auto-generated method stub
+	public ArrayList<StoreQna> selectStoreQnaList(PageInfo pi) {
+		return inStoreDao.selectStoreQnaList(sqlSession, pi);
 		
+	}
+	// -----------------------------------------------------*/
+	
+	// 6_2. 상품별 문의 모아보기--------------------------
+	
+	@Override
+	public int selectStoreProductQnaCount(String pno) {
+		return inStoreDao.selectStoreProductQnaCount(sqlSession, pno);
+	}
+
+	@Override
+	public ArrayList<StoreQna> selectStoreProductQnaList(PageInfo pi, String pno) {
+		return inStoreDao.selectStoreProductQnaList(sqlSession, pi, pno);
+	}
+
+	//---------------------------------------------*/
+	
+	@Override
+	public StoreQna selectStoreQnaDetail(String qno) {
+		// 7_1. 상품 상세보기 서비스
+		return inStoreDao.selectStoreQnaDetail(sqlSession, qno);
+	}
+
+
+	
+	@Override
+	public int storeQnaAnswer() {
+		// 7_2. 상품 문의 답변 서비스
+		return 0;
 	}
 
 	@Override
@@ -224,7 +251,6 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	public int insertProductOrder(InProductOrder pOrder) {
 		return inStoreDao.insertProductOrder(sqlSession, pOrder);		
 	}
-
 
 
 
