@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <style>
     .review_detail{width: 800px; height: auto;}
     .mini_header>img{ margin: auto; display: block;}
@@ -27,7 +29,39 @@
     .content{font-family: 본고딕; font-size: 15px; display:inline-block; width:650px; height: auto; margin-bottom: 10px;}
     .recommend{width: 200px; height: 30px; margin-right: 10px; cursor: pointer; background:rgb(211, 212, 212); border: none; border-radius: 5px;}
     .thumbnail_image{width:150px; height:120px; border: 1px solid; margin-bottom: 10px;}
-    
+    #pagingArea{
+		width:fit-content;
+		margin:auto;
+		margin-top: 50px;
+	}
+	    .star-ratings {
+        color: #aaa9a9; 
+        position: relative;
+        unicode-bidi: bidi-override;
+        width: max-content;
+        -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 1.3px;
+        -webkit-text-stroke-color: #000000;
+        display:inline-block;
+    }
+ 
+    .star-ratings-fill {
+        color: #fff58c;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        -webkit-text-fill-color: gold;
+    }
+ 
+    .star-ratings-base {
+        z-index: 0;
+        padding: 0;
+    }
+    .star-ratings>div>span {font-size:30px;}
 </style>
 </head>
 <body>
@@ -35,98 +69,88 @@
 
 
         <div class="mini_header">
-            <img src="logo.png" width="150px"><br>
+            <img src="./resources/images/logo.png" width="150px"><br>
             <p align="center">리뷰상세</p>
         </div>
 
         <div class="product_info">
-            <img src="" class="product_title_img">
-            <span class="merchant_name">브랜드명</span> <br>
-            <span class="product_name">상품명상품명</span><br>
-            <span class="product_option">선택합옵션(색상:흰색)</span>
+            <img src="${ p.productImg0 }" class="product_title_img">
+            <span class="merchant_name">${ p.nickname }</span> <br>
+            <span class="product_name">${ p.title }</span><br>
+            <c:choose>
+            	<c:when test="${!empty olist}">
+            		<c:forEach var="o" items="${olist}">
+            			<span class="product_option">${o.optionName}</span>
+            		</c:forEach>
+            	</c:when>
+            	<c:otherwise>
+            		<span class="product_option"></span>
+            	</c:otherwise>
+            </c:choose>
             <br>
         </div>
         <div class="star_rating_area" align="center">
-            <i class="fas fa-star fa-2x" style="color: rgb(255, 217, 0);"></i>
-            <i class="fas fa-star fa-2x" style="color: rgb(255, 217, 0);"></i>
-            <i class="fas fa-star fa-2x" style="color: rgb(255, 217, 0);"></i>
-            <i class="fas fa-star fa-2x" style="color: rgb(255, 217, 0);"></i>
-            <i class="fas fa-star fa-2x" style="color: rgb(255, 217, 0);"></i>
-            <span class="star_rating">4.9</span>
-            <span class="total">총 40개</span>     
+			<div class="star-ratings">
+				<div class="star-ratings-fill space-x-2 text-lg" style="width:${c.starAvg*20}%">
+					<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+				</div>
+				<div class="star-ratings-base space-x-2 text-lg">
+					<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+				</div>
+			</div>
+            <span class="star_rating">(${c.starAvg})</span>
+            <span class="total">총 ${c.totalCount}개</span>     
         </div>
-        
-            <div class="review_list">
-                <div class="review">
-                    <div class="user_detail">
-                        <div class="user_image">
-                            <img src="" alt="">
-                        </div>
-                        <span>
-                            <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-                        </span><br>
-                        <span class="user_name">user01</span>
-                        <span class="enroll_date">2022.01.31</span>
-                        <button type="button">신고</button>
-                    </div>
-                    <div class="review_content">
-                        <span class="product_name_small">상품명상품명상품명</span> <br>
-                        <span class="content">이상이 있음으로써 용감하고 굳세게 살 수 있는 것이다 석가는 무엇을 위하여 설산에서 고행을 하였으며 예수는 무엇을 위하여 광야에서 방황하였으며 공자는 무엇을 위하여 천하를 철환하였는가? 밥을 위하여서 옷을 위하여서 미인을 구하기 위하여서 그리하였는가?</span>
-                        <div class="thumbnail_image">
-                            <img src="" class="thumb">
-                        </div>
-                    </div>
-                    <div class="recommend_area">
-                        <button type="button" class="recommend"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
-                        <span>n명에게 도움이 되었어요.</span>
-                    </div>
-                </div>
-            </div>
+        	<c:choose>
+        		<c:when test="${!empty rlist}">
+        			<c:forEach var="r" items="${rlist}">
+	        			<div class="review_list">
+			                <div class="review">
+			                    <div class="user_detail">
+			                        <div class="user_image">
+			                            <img src="${r.profile}" alt="">
+			                        </div>
+			                        <span>
+			                            <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
+			                        </span><br>
+			                        <span class="user_name">${r.nickname }</span>
+			                        <span class="enroll_date">${r.reviewDate }</span>
+			                        <button type="button">신고</button>
+			                    </div>
+			                    <div class="review_content">
+			                        <span class="product_name_small">${p.title }</span> <br>
+			                        <span class="content">${ r.content }</span>
+			                        <div class="thumbnail_image">
+			                            <img src="" class="thumb">
+			                        </div>
+			                    </div>
+			                    <div class="recommend_area">
+			                        <button type="button" class="recommend"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
+			                        <span style="font-weight:bold;">${ r.reconum }</span>명에게 도움이 되었어요.
+			                    </div>
+			                </div>
+	           			</div>
+           			</c:forEach>
+		            <div id="pagingArea">
+		                <ul class="pagination">
+		                	<c:if test="${ pi.currentPage > 1 }">
+									<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ pi.currentPage - 1 }&pno=${ reviewPno }">Previous</a></li>
+							</c:if>
+							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ p }&pno=${ reviewPno }">${ p }</a></li>
+							</c:forEach>
+							<c:if test="${ pi.currentPage != pi.maxPage }">
+									<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ pi.currentPage + 1 }&pno=${ reviewPno }">Next</a></li>
+							</c:if>
+		                </ul>
+		            </div>
+        		</c:when>
+        		<c:otherwise>
+        			<h2 align="center">아직 리뷰가 없어요... <br>
+        			   첫번째 리뷰를 작성해주세요! </h2>
+        		</c:otherwise>
+        	</c:choose>
 
-            <div class="review_list">
-                <div class="review">
-                    <div class="user_detail">
-                        <div class="user_image">
-                            <img src="" alt="">
-                        </div>
-                        <span>
-                            <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-                        </span><br>
-                        <span class="user_name">user01</span>
-                        <span class="enroll_date">2022.01.31</span>
-                        <a data-toggle="modal" data-target="#report">신고</a>
-                    </div>
-                    <div class="review_content">
-                        <span class="product_name_small">상품명상품명상품명</span> <br>
-                        <span class="content">이상이 있음으로써 용감하고 굳세게 살 수 있는 것이다 석가는 무엇을 위하여 설산에서 고행을 하였으며 예수는 무엇을 위하여 광야에서 방황하였으며 공자는 무엇을 위하여 천하를 철환하였는가? 밥을 위하여서 옷을 위하여서 미인을 구하기 위하여서 그리하였는가?</span>
-                        <div class="thumbnail_image">
-                            <img src="" class="thumb">
-                        </div>
-                    </div>
-                    <div class="recommend_area">
-                        <button type="button" class="recommend"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
-                        <span>n명에게 도움이 되었어요.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="page">
-                <nav aria-label="...">
-                    <ul class="pagination .pagination-sm justify-content-center">
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                      </li>
-                    </ul>
-                  </nav>
-            </div>
     </div>
     
     	<!-- 신고 모달 -->
@@ -156,5 +180,9 @@
 		    </div>
 		  </div>
 		</div>
+		
+	<script>
+		
+	</script>
 </body>
 </html>

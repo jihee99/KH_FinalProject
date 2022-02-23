@@ -1,6 +1,7 @@
 package com.kh.oceanclass.store.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -90,9 +91,15 @@ public class StoreDao {
 		return (ArrayList)sqlSession.selectList("storeMapper.selectCartOption", optionNo);
 	}
 	
-	public ArrayList<StoreReview> selectReviewList(SqlSessionTemplate sqlSession, int pno){
-		System.out.println(pno);
-		return (ArrayList)sqlSession.selectList("storeMapper.selectReviewList", pno);
+	public ArrayList<StoreReview> selectReviewList(SqlSessionTemplate sqlSession, int pno, PageInfo pi, int memberNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		StoreReview sr = new StoreReview();
+		sr.setProductNo(pno);
+		sr.setMemberNo(memberNo);
+		return (ArrayList)sqlSession.selectList("storeMapper.selectReviewList", sr, rowBounds);
 	}
 	
 	public StoreReview selectReviewCount(SqlSessionTemplate sqlSession, int pno) {
@@ -106,5 +113,27 @@ public class StoreDao {
 	public ArrayList<StoreReview> selectStoreReviewMainList(SqlSessionTemplate sqlSession, int pno){
 		return (ArrayList)sqlSession.selectList("storeMapper.selectStoreReviewMainList", pno);
 	}
+	
+	public int storeReviewListCount(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.selectOne("storeMapper.selectReviewListCount", pno);
+	}
+	
+	public int insertReview(SqlSessionTemplate sqlSession, StoreReview review) {
+		return sqlSession.insert("storeMapper.insertReview", review);
+	}
+	
+	public int insertRecommend(SqlSessionTemplate sqlSession, StoreReview review) {
+		return sqlSession.insert("storeMapper.insertRecommend", review);
+	}
+	
+	public int deleteRecommend(SqlSessionTemplate sqlSession, StoreReview review) {
+		return sqlSession.delete("storeMapper.deleteRecommend", review);
+	}
+	
+	public int checkRecommend(SqlSessionTemplate sqlSession, StoreReview review) {
+		return sqlSession.selectOne("storeMapper.checkRecommend", review);
+	}
+	
+	
 
 }

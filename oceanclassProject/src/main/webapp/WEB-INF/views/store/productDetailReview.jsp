@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,29 +25,64 @@
 .recommend{width: 200px; height: 30px; margin-right: 10px; cursor: pointer; background:rgb(211, 212, 212); border: none; border-radius: 5px;}
 .thumbnail_image{width:150px; height:120px; border: 1px solid; margin-bottom: 10px;}
 .more_review{width:700px; height: 50px; background:rgb(211, 229, 236); border: none; border-radius: 5px; cursor: pointer;}
+    
+    .star-ratings {
+        color: #aaa9a9; 
+        position: relative;
+        unicode-bidi: bidi-override;
+        width: max-content;
+        -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 1.3px;
+        -webkit-text-stroke-color: #000000;
+    }
+ 
+    .star-ratings-fill {
+        color: #fff58c;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        -webkit-text-fill-color: gold;
+    }
+ 
+    .star-ratings-base {
+        z-index: 0;
+        padding: 0;
+    }
+    .star-ratings>div>span {font-size:30px;}
 </style>
 </head>
 <body>
 		
 		<div class="innerOuter">
 				
-			    <form action="reviewList.st" method="post">
-                <input type="hidden" name="pno" value="${ p.productNo }">
+			    <form action="reviewUpdate.st" method="post">
+	                <input type="hidden" name="pno" value="${ p.productNo }">
+	                <input type="hidden" name="memNo" value="${ loginUser.memNo }">
                 </form>
                 
             <div class="reviewOuter">
 	            <div class="small_header">
 	                <span>리뷰(${ c.totalCount }) </span>
-	                <span class="star_rating">
-	                    <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-	                    <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-	                    <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-	                    <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-	                    <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-	                    (${ c.starAvg })
-	                </span>
-	                <button type="button" class="input_review">리뷰작성</button>
-	            </div>
+	                <c:choose>
+	                	<!-- 구매내역있는 사용자만 조건 걸기 -->
+	                	<c:when test="${ !empty loginUser }">
+			                <button type="button" class="input_review" onclick="reviewEnrollForm(${p.productNo});">리뷰작성</button>	                		
+	                	</c:when>
+	                </c:choose>
+	                
+					<div class="star-ratings">
+						<div class="star-ratings-fill space-x-2 text-lg" style="width:${c.starAvg*20}%">
+							<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+						</div>
+						<div class="star-ratings-base space-x-2 text-lg">
+							<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+						</div>
+					</div>
+	            </div> <br><br>
 				
 	            <div class="review_list">
 	            	<c:forEach var="srm" items="${srMainList}" end="4">
@@ -77,14 +113,21 @@
 		                        </div>
 		                    </div>
 		                    <div class="recommend_area">
-		                        <button type="button" class="recommend"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
-		                        <span>${srm.reconum}명에게 도움이 되었어요.</span>
+		                     <c:choose>
+		                    	<c:when test="${ srm.recoCk == 0 && !empty loginUser}">
+		                        <button type="button" class="recommend" onclick="recommendCk(${srm.reviewNo});"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
+		                        </c:when>
+		                        <c:otherwise>
+		                        <button type="button" class="recommend" onclick="recommendCk();" disabled><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
+		                        </c:otherwise>
+		                     </c:choose>
+		                        <span style="font-weight:bold;" id="dd">${srm.reconum}</span>명에게 도움이 되었어요.
 		                    </div>
 		                </div>
 	                </c:forEach>
 	            </div>
 	            <div class="bottom_area">
-	                <button type="button" class="more_review">더 많은 리뷰 보러가기</button>
+	                <button type="button" class="more_review" onclick="allReview(${p.productNo});">더 많은 리뷰 보러가기</button>
 	            </div>
             </div>
 		</div>
@@ -93,8 +136,67 @@
 
 		
 		function allReview(pno){
-            window.open("storeReviewList.st?cpage=1&&pno=" + pno, "스토어리뷰목록", "width=650, height=800, resizeable=no, location=no");
+            window.open("reviewList.st?cpage=1&&pno=" + pno, "스토어리뷰목록", "width=800, height=800, resizeable=no, location=no");
         }
+		
+		function reviewEnrollForm(pno){
+            window.open("reviewEnrollForm.st?pno=" + pno, "스토어리뷰작성", "width=650, height=800, resizeable=no, location=no");
+        }
+		
+		function enrollReviewCk(pno){
+			var memNo = document.getElementById("memNo").value;
+			
+			if(memNo == ""){
+				alert("로그인 한 회원만 리뷰를 작성할 수 있습니다.");
+			} else {
+				//ajax로 주문내역 있는지 확인
+				$.ajax({
+					url:"enrollStoreReviewCheck.me",
+					data:{memNo:memNo,pno:pno},
+					success:function(result){
+						if(result == 'yyyyy'){
+							 $("#reviewModal").modal();
+						} else {
+							alert("상품을 구매한 회원만 리뷰를 작성할 수 있습니다.");
+						}
+					}, error:function(){
+						console.log("후기 작성용 ajax 통신 실패");
+					}
+				})
+			}
+		}
+		
+    	function recommendCk(rno){
+    		if(document.getElementById("memNo").value == ""){
+                alert("로그인 후 이용 가능한 서비스 입니다.");
+            } else if('${loginUser.memNo}' == '${ srm.memberNo }'){
+            	alert("본인의 후기는 추천할 수 없습니다.");
+            } else {
+            	$.ajax({
+            		url:"recommendStore.st",
+            		data:{reviewNo:rno,
+            		     memberNo:document.getElementById("memNo").value},
+            		success:function(result){
+            			if(result == "dd"){
+            				alert("해당 리뷰의 추천을 제거하였습니다.");
+            			}else if(result == "ss"){
+            				alert("추천 제거 실패되었습니다.")
+            			}else if(result == "gg"){
+            				alert("추천완!");
+            			}else{
+            				alert("추천실패");
+            			}
+            			
+                    	// $('#dd').html('${srm.reconum}' + 1); 숫자 올라가는거 낼
+             			// 추천완밖에 안되는 문제ㅜ
+            		}
+            	})
+                    
+                    
+            }
+    	}
+
+		
 		</script>
 
 </body>

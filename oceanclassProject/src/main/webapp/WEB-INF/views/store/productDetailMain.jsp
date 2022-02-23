@@ -154,13 +154,13 @@
 				  <input type="radio" id="tab-4" name="show" />
 				  <div class="tab">
 					  <label for="tab-1">상품소개</label>
-					  <label for="tab-2" onclick="submit(${p.productNo});">상품리뷰</label>
+					  <label for="tab-2">상품리뷰</label>
 					  <label for="tab-3">상품문의</label>
 					  <label for="tab-4">배송일정</label>
 					  <label for="tab-4">환불정책</label>
 				  </div>
 	            <hr>
-	            <br><br>
+	            <br>
 	            <div class="content">
 					<!-- 1 -->
 					<div class="content-dis">
@@ -282,9 +282,6 @@
          }
 	}
 	
-	function submit(pno){
-		document.getElementById('pno').submit;
-	}
 	
 	
 	

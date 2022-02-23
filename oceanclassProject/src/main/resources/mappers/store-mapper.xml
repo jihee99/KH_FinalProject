@@ -35,14 +35,18 @@
 	</resultMap>
 	
 	<resultMap id="reviewResult" type="StoreReview">
+		<result column="rno" property="reviewNo"/>
+		<result column="pno" property="productNo"/>
 		<result column="nickname" property="nickname"/>
 		<result column="profile" property="profile"/>
 		<result column="content" property="content"/>
-		<result column="star_rating" property="starRating"/>
+		<result column="star_rating" property="rating"/>
 		<result column="review_date" property="reviewDate"/>
 		<result column="total" property="totalCount"/>
 		<result column="star_avg" property="starAvg"/>
 		<result column="reconum" property="reconum"/>
+		<result column="recoCk" property="recoCk"/>
+		
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
@@ -298,7 +302,7 @@
 		  from s_review r
           join member using (mno)
 		 where status = 'Y'
-		   and pno = #{po}
+		   and pno = #{pno}
 	     order
    			by review_date desc
 	</select>
@@ -329,14 +333,22 @@
 	
 	<select id="selectReviewList" resultMap="reviewResult">
  		select
-			    nickname
+ 				rno
+			  , nickname
 			  , profile
 			  , content
 			  , star_rating
 			  , review_date
+			  , (
+		         select count(*)
+		           from recommend
+		          where gb_no = 2
+		            and mno = #{memberNo}
+		            and refer_no = rno
+		         ) as recoCk
 	      from s_review
 	      join member using (mno)
-	     where pno = #{pno}
+	     where pno = #{productNo}
            and status = 'Y'
 	</select>
 	
@@ -347,5 +359,56 @@
 		      from s_review 
 		     where pno = #{pno}
 	</select>
+	
+	<select id="selectReviewListCount" resultType="_int">
+		select
+			   count(*)
+		  from s_review
+		 where status = 'Y'
+		   and pno = #{pno}
+	</select>
+	
+	<insert id="insertReview">
+		insert
+		  into s_review
+		values
+			 (
+			   SEQ_SRNO.NEXTVAL
+			 , #{memberNo}
+			 , #{productNo}
+			 , #{content}
+			 , #{rating}
+			 , SYSDATE
+			 , 'Y'
+			 )
+	</insert>
+	
+	<select id="checkRecommend" resultType="_int">
+		select count(*)
+		  from recommend
+		 where gb_no = 1
+		   and refer_no = #{reviewNo}
+		   and mno = #{memberNo}
+	</select>
+	
+	<delete id="deleteRecommend">
+		delete 
+		  from recommend
+		 where mno = #{memberNo}
+		   and refer_no = #{reviewNo}
+	</delete>
+	
+	<insert id="insertRecommend">
+		insert
+		  into recommend
+		values
+			 (
+			   #{memberNo}
+			 , 2
+			 , #{reviewNo}
+			 )
+	</insert>
+	
+	
 	
 </mapper>

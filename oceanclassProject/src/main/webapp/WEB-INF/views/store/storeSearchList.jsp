@@ -135,13 +135,12 @@
     	$(function(){
     		$("#sel1").change(function(){
         		let value = $(this).val();
-        		let value2 = $("#memNo").val();
         		let value3 = $(this).next().val();
         		
         		$.ajax({
         			url:"categorySearch.cs",
         			data:{category:value,
-        				  memberNo:value2,
+        				  memberNo:document.getElementById("memNo").value,
         				  sort:value3},
         			success:function(list){
         				let value = "";
@@ -175,43 +174,7 @@
         		})
         	})
     	  })
-    	
-    	  /*
-    	function likeCk(){
-    		
-			console.log(window.event.target);
-			
-			
-            if(document.getElementById("memNo").value == ""){
-                alert("로그인 후 이용 가능한 서비스 입니다.");
-            } else{
-                $.ajax({
-                    url:"likeStore.st",
-                    data:{
-                        memNo:document.getElementById("memNo").value,
-                        referNo:document.getElementById("pno").value
-                    }, success:function(likeResult){
-						
-                        if(likeResult.message == 'ss'){
-                        	window.event.target.src = "resources/images/heart2.png";
-                            document.getElementById("likeCount").innerHTML = likeResult.likeCount;
-                            alert("찜 목록에 추가 되었습니다!");
-                        } else if(likeResult.message == 'dd'){
-                        	window.event.target.src = "resources/images/heart1.png";
-                            document.getElementById("likeCount").innerHTML = likeResult.likeCount;
-                            alert("찜 목록에서 삭제되었습니다.");
-                        } else {
-                            alert("비정상적인 요청입니다.");
-                        }
-                    	
-                    }, error:function(){
-                        console.log("찜하기 ajax 통신 실패");
-                    }
-           	    })
-            }
-              
-        }
-    	*/
+
 		
 		function goDetail(no) {
 			   location.href = "productMain.pr?pno=" + no;

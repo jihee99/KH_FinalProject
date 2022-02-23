@@ -1,5 +1,7 @@
 package com.kh.oceanclass.store.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -7,12 +9,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -234,29 +239,113 @@ public class StoreController {
 	}
 	*/
 	
-	// 리뷰 작성 컨트롤러
-	@RequestMapping(value="reviewEnroll.st")
-	public String reviewEnrollForm() {
-		
-		return "store/reviewEnrollForm";
-	}
 	
 	
 	
 	// 리뷰 조회 컨트롤러
 	@RequestMapping(value="reviewList.st")
-	public String reviewList(Model model, int pno) {
+	public String reviewList(Model model, int pno, int cpage, HttpSession session) {
 		
-		System.out.println(pno);
+		int memberNo = 0;
+		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
+			memberNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		}
 		
-		ArrayList<StoreReview> rlist = sService.selectReviewList(pno);
+		int listCount = sService.storeReviewListCount(pno);
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 3);
+		ArrayList<StoreReview> rlist = sService.selectReviewList(pno, pi, memberNo);
 		StoreReview counter = sService.selectReviewCount(pno);
+		Product p = sService.selectProduct(pno, memberNo);
+		ArrayList<ProductOption> olist = sService.selectProductOption(pno);
 		
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("reviewPno", pno);
 		model.addAttribute("rlist", rlist);
+		model.addAttribute("p", p);
+		model.addAttribute("olist", olist);
 		model.addAttribute("c", counter);
 		
-		return "store/productDetailReview";
+		return "store/reviewDetail";
 	}
+	
+	@RequestMapping(value="reviewEnrollForm.st")
+	public String reviewEnrollForm(int pno,/*StoreReview review, MultipartFile upfile, */HttpSession session, Model model) {
+		
+		/*
+		if(!upfile.getOriginalFilename().equals("")) {
+			String originName = upfile.getOriginalFilename();
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/sreview/");
+			try {
+				upfile.transferTo(new File(savePath + originName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			review.setImg("resources/uploadFiles/sreview/" + originName);
+		}
+
+		int result = sService.insertReview(review);
+		*/
+		model.addAttribute("pno", pno);
+		
+		return "store/reviewEnrollForm";
+			
+	}
+	
+	// 리뷰 작성 컨트롤러
+	@ResponseBody
+	@RequestMapping(value="review.pr")
+	public String reviewEnrollForm(StoreReview review, MultipartFile upfile, HttpSession session) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			String originName = upfile.getOriginalFilename();
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/sreview/");
+			try {
+				upfile.transferTo(new File(savePath + originName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			review.setImg("resources/uploadFiles/sreview/" + originName);
+		}
+
+		int result = sService.insertReview(review);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 후기가 등록되었습니다!");
+		} else {
+			session.setAttribute("alertMsg", "후기 등록에 실패하였습니다.");
+		}
+		
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="recommendStore.st", produces="application/json; charset=utf-8")
+	public String recommendStore(StoreReview review, HttpSession session) {
+			
+			int result1 = sService.checkRecommend(review);
+			if(result1 > 0) {
+				// 추천 한 적 있음
+				int result2 = sService.deleteRecommend(review);
+				if(result2 > 0) {
+					//session.setAttribute("alertMsg", "해당 리뷰 추천을 제거하였습니다.");
+					return new Gson().toJson("dd");
+				} else {
+					return new Gson().toJson("ss");
+					
+				}
+			} else {
+				// 추천 한 적 없음
+				int result2 = sService.insertRecommend(review);
+				if(result2 > 0) {
+					//session.setAttribute("alertMsg", "해당 리뷰를 추천하였습니다!");
+					return new Gson().toJson("gg");
+				} else {
+					//session.setAttribute("alertMsg", "리뷰 추천에 실패하였습니다.");
+					return new Gson().toJson("ll");
+				}
+			}
+	}
+	
 	
 	
 }

@@ -65,10 +65,17 @@ public interface StoreService {
 	ArrayList<ProductOption> selectCartOption(int optionNo);
 	
 	// 16. 리뷰 조회 서비스
-	ArrayList<StoreReview> selectReviewList(int pno);
+	ArrayList<StoreReview> selectReviewList(int pno, PageInfo pi, int memberNo);
 	
 	StoreReview selectReviewCount(int pno);
 	
 	ArrayList<StoreReview> selectStoreReviewMainList(int pno);
+	
+	int storeReviewListCount(int pno);
+	
+	int checkRecommend(StoreReview review);
+	int deleteRecommend(StoreReview review);
+	int insertRecommend(StoreReview review);
+	
 	
 }

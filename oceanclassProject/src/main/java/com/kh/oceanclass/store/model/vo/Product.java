@@ -13,8 +13,8 @@ import lombok.ToString;
 @ToString
 public class Product {
 	
-	public int productNo;			// 상품번호
-	private String memberNo;			// 등록한회원번호(강사)
+	private int productNo;			// 상품번호
+	private int memberNo;			// 등록한회원번호(강사)
 	
 	private String category;	// 상품카테고리
 	private String title;		// 상품명

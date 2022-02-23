@@ -16,10 +16,10 @@ import lombok.ToString;
 public class StoreReview {
 	
 	private int reviewNo; // 리뷰번호
-	private int memeberNo; // 회원번호
+	private int memberNo; // 회원번호
 	private int productNo; // 상품번호
 	private String content; // 리뷰내용
-	private String starRating; // 별점
+	private String rating; // 별점
 	private Date reviewDate; // 작성일
 	private String status; // 상태값
 	
@@ -32,4 +32,7 @@ public class StoreReview {
 	public String profile;
 	public int reconum;
 	
+	
+	
+	private int recoCk;
 }

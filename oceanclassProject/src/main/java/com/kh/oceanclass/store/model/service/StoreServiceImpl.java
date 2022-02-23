@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.store.model.dao.StoreDao;
@@ -56,8 +57,7 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public int insertReview(StoreReview review) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sDao.insertReview(sqlSession, review);
 	}
 	
 	@Override
@@ -116,8 +116,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public ArrayList<StoreReview> selectReviewList(int pno) {
-		return sDao.selectReviewList(sqlSession, pno);
+	public ArrayList<StoreReview> selectReviewList(int pno, PageInfo pi, int memberNo) {
+		return sDao.selectReviewList(sqlSession, pno, pi, memberNo);
 	}
 
 	@Override
@@ -130,6 +130,24 @@ public class StoreServiceImpl implements StoreService {
 		return sDao.selectStoreReviewMainList(sqlSession, pno);
 	}
 	
+	@Override
+	public int storeReviewListCount(int pno) {
+		return sDao.storeReviewListCount(sqlSession, pno);
+	}
 	
+	@Override
+	public int checkRecommend(StoreReview review) {
+		return sDao.checkRecommend(sqlSession, review);
+	}
+
+	@Override
+	public int deleteRecommend(StoreReview review) {
+		return sDao.deleteRecommend(sqlSession, review);
+	}
+
+	@Override
+	public int insertRecommend(StoreReview review) {
+		return sDao.insertRecommend(sqlSession, review);
+	}
 	
 }
