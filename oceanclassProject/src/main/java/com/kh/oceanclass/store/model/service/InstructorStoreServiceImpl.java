@@ -134,6 +134,14 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	}
 	
 	@Override
+	public StoreReview selectStoreProductReviewCount(String pno) {
+		// 8_3. 상품별 리뷰 모아보기 개수 카운트
+		return inStoreDao.selectStoreProductReviewCount(sqlSession, pno);
+	}
+
+
+	
+	@Override
 	public void selectStoreReview() {
 		// 9. 상품 리뷰 상세조회용 서비스
 		
@@ -216,7 +224,6 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	public int insertProductOrder(InProductOrder pOrder) {
 		return inStoreDao.insertProductOrder(sqlSession, pOrder);		
 	}
-
 
 
 

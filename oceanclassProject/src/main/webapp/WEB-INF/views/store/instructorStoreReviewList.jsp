@@ -173,6 +173,23 @@
 			
 			$(".productList").change(function(){
 				console.log($(this).val());
+
+				$.ajax({
+					url:"pReviewCountAjax.in",
+					data:{pno:$(this).val()},
+					success:function(sr){
+						console.log(sr);
+						let value =" <span id='allReview'>총 후기 <span id='number'>"+ sr.totalCount +"</span>건 /</span>"
+						         	+ "<span id='starAverage'>별점평균 <span id='number'>"+ sr.starAvg + "</span>점</span>";
+						console.log(value);
+						$("#review").empty();
+						$("#review").html(value);
+					},error:function(){
+						alert("리뷰 조회에 실패했습니다.");
+					}
+					
+				});
+				
 				$.ajax({
 					url:'pReviewAjax.in',
 					data:{pno:$(this).val()},
@@ -226,10 +243,10 @@
 						$("#content-wrap").html(value);
 						
 					},error:function(){
-						
+						alert("리뷰 조회에 실패했습니다.");
 					}
-					
 				})
+			
 			})
 		</script>
     </div>

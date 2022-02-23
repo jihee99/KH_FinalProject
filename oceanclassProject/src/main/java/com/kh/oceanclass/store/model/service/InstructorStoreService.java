@@ -61,7 +61,7 @@ public interface InstructorStoreService {
 	
 	// 8_2. 상품별 리뷰 모아보기 서비스
 	ArrayList<StoreReview> selectStoreProductReview(String pno);
-	
+	StoreReview selectStoreProductReviewCount(String pno);
 	
 	// 9. 상품 리뷰 상세조회용 서비스
 	void selectStoreReview();
@@ -98,6 +98,7 @@ public interface InstructorStoreService {
 	// 14. 상품발주요청용 서비스
 	ArrayList<Product> selectProductList();
 	int insertProductOrder(InProductOrder pOrder);
+
 
 
 	

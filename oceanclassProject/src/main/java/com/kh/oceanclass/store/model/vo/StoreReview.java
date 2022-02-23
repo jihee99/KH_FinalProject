@@ -23,7 +23,7 @@ public class StoreReview {
 	private Date reviewDate; // 작성일
 	private String status; // 상태값
 	
-	private String title;
+	private String title;//상품명
 	private String img;	// 첨부파일 경로 
 	
 	public String nickname;

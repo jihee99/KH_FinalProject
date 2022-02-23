@@ -166,6 +166,10 @@ public class InstructorStoreDao {
 		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreProductReview",pno);
 	}
 
+	public StoreReview selectStoreProductReviewCount(SqlSessionTemplate sqlSession, String pno) {
+		return sqlSession.selectOne("inStoreMapper.selectStoreProductReviewCount", pno);
+	}
+
 
 	
 	

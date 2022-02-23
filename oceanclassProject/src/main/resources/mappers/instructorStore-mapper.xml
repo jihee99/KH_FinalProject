@@ -100,7 +100,6 @@
 		<result column="review_date" property="reviewDate"/>
 		<result column="total" property="totalCount"/>
 		<result column="star_avg" property="starAvg"/>
-		<result column="reconum" property="reconum"/>
 		<result column="file_path" property="img"/>
 	</resultMap>
 	
@@ -526,6 +525,27 @@
 		   and pno = #{pno}		 
 		 </if>
 		 order by rno desc
+	</select>
+	
+	<select id="selectStoreProductReviewCount" resultMap="reviewResult">
+		<choose>
+			<when test="pno != 0">
+			select
+			       pno
+			     , count(*) as total
+			     , round(avg(star_rating),1) as star_avg
+			  from s_review
+			  group by pno
+		     having pno = #{pno}	
+			</when>
+			<when test="pno == 0">
+				select
+				       
+				      count(*) as total
+				     , round(avg(star_rating),1) as star_avg
+				  from s_review				
+			</when>
+		</choose>
 	</select>
 	
 </mapper>
