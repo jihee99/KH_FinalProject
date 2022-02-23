@@ -54,6 +54,7 @@
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/adminMem-mapper.xml" />
 		<mapper resource="/mappers/class-mapper.xml" />
+		<mapper resource="/mappers/tcclass-mapper.xml" />
 		<mapper resource="/mappers/mypage-mapper.xml" />
 		<mapper resource="/mappers/tcmypage-mapper.xml" />
 		<mapper resource="/mappers/event-mapper.xml" />

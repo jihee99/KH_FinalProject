@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//E" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tcclassMapper">
+
+	<resultMap id="classResult" type="Class">
+		<result column="clno" property="clNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="cl_name" property="clName" />
+		<result column="cl_content" property="clContent" />
+		<result column="cl_date" property="clDate" />
+		<result column="cl_price" property="clPrice" />
+		<result column="kit" property="kit" />
+		<result column="cl_img" property="clImg" />
+		<result column="cl_img2" property="clImg2" />
+		<result column="cl_img3" property="clImg3" />
+		<result column="cl_kitimg" property="clKitImg" />
+		<result column="hashtag" property="hashtag" />
+		<result column="count" property="count" />
+		<result column="nickname" property="memNo" />
+		<result column="like_count" property="like" />
+	</resultMap>
+	
+	<resultMap id="classReviewResult" type="ClassReview">
+		<result column="c_rno" property="crNo" />
+		<result column="clno" property="clNo" />
+		<result column="mno" property="memNo" />
+		<result column="user_name" property="memNo" />
+		<result column="nickname" property="memNo" />
+		<result column="content" property="content" />
+		<result column="star" property="star" />
+		<result column="filepath" property="filePath" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="reconum" property="recommend" />
+		<result column="replynum" property="replyNum" />
+	</resultMap>
+	
+	<resultMap id="classReviewReplyResult" type="Reply">
+		<result column="reply_no" property="replyNo" />
+		<result column="mno" property="memNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="content_no" property="contentNo" />
+		<result column="reply_content" property="replyContent" />
+		<result column="reply_date" property="replyDate" />
+		<result column="reply_status" property="replyStatus" />
+		<result column="nickname" property="nickName" />
+	</resultMap>
+	
+	<resultMap id="classQnaResult" type="ClassQna">
+		<result column="cs_qno" property="csQnaNo" />
+		<result column="mno" property="memNo" />
+		<result column="nickname" property="memNo" />
+		<result column="gb_no" property="gbNo" />
+		<result column="refer_no" property="referNo" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="create_date" property="createDate" />
+		<result column="pwd" property="pwd" />
+		<result column="filepath" property="filePath" />
+		<result column="status" property="status" />
+		<result column="answer_content" property="answerContent" />
+		<result column="answer_date" property="answerDate" />
+	</resultMap>
+
+	<select id="myClassList" resultMap="classResult">
+		select
+		       clno
+		     , category
+		     , cl_name
+		     , cl_content
+		     , cl_img
+		     , count
+		     , cl_status
+		  from class
+		 where mno = #{memNo}
+	</select>
+		
+</mapper>
