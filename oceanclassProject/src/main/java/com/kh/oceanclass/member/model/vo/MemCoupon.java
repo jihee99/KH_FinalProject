@@ -20,4 +20,7 @@ public class MemCoupon {
 	private String enDate;
 	private String deDate;		//만료일
 	
+	private String couponName;	//쿠폰 이름
+	private int discount;		//할인율
+	
 }

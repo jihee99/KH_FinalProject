@@ -10,9 +10,18 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
+import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 
 public interface ClassService {
 
+	// 클래스 메인용
+	ArrayList<ClassVo> classHotList();
+	ArrayList<ClassVo> classNewList();
+	ArrayList<Event> mainSlideList();
+	int classCategoryListCount(String category);
+	ArrayList<ClassVo> classCategoryList(HashMap<String, String> map, PageInfo pi);
+	
 	// 클래스 상세보기용
 	int increaseCount(int clNo);
 	ClassVo selectClass(int clNo);
@@ -57,5 +66,10 @@ public interface ClassService {
 	int deleteClassQna(ClassQna cq);
 	int updateClassQna(ClassQna cq);
 	int classQnaPwdCheck(ClassQna cq);
+	int classQnaListCount(int referNo);
+	ArrayList<ClassQna> selectClassQnaListPaging(int referNo, PageInfo pi);
 	
+	// 클래스 구매용
+	int classPayCk(ClassOrder co);
+	ArrayList<MemCoupon> memberCouponList(int memNo);
 }

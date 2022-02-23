@@ -25,6 +25,8 @@ import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.common.template.Pagination;
+import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
 
 /*사용자 클래스 관련 기능 처리하는 controller*/
@@ -84,9 +86,8 @@ public class ClassController {
 			session.setAttribute("alertMsg", "잘못 된 접근입니다.");
 			return "redirect:/";
 		}
-		
 	}
-
+	
 	@RequestMapping(value="classSearchList.me")
 	public String classSearchList(int cpage, String keyword, String category, String array, Model model, HttpSession session) {
 		// 클래스 검색 리스트
@@ -431,9 +432,83 @@ public class ClassController {
 		}
 	}
 	
+	@RequestMapping(value="classQnaList.me")
+	public String classQnaList(int cpage, int referNo, Model model) {
+		
+		int listCount = cService.classQnaListCount(referNo); // 조회할 문의 갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 3);
+		ArrayList<ClassQna> cqList = cService.selectClassQnaListPaging(referNo, pi); // 클래스 문의 리스트 (페이징 처리)
+		
+		model.addAttribute("cqList", cqList);
+		model.addAttribute("pi", pi);
+		model.addAttribute("referNo", referNo);
+		
+		return "class/classQnaList";
+	}
+	
+	@RequestMapping(value="deleteClassQnaList.me")
+	public String deleteClassQnaList(ClassQna cq, int cpage, HttpSession session) {
+		int result = cService.deleteClassQna(cq);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "문의가 삭제되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "문의 삭제에 실패하였습니다.");
+		}
+		return "redirect:classQnaList.me?cpage=" + cpage + "&referNo=" + cq.getReferNo();
+	}
+	
+	@RequestMapping(value="updateClassQnaList.me")
+	public String updateClassQnaList(MultipartFile upfile, ClassQna cq, String changeCk, int cpage, HttpSession session) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			// 변경or추가
+			String originName = upfile.getOriginalFilename();
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/cqna/");
+			try {
+				upfile.transferTo(new File(savePath + originName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			cq.setFilePath("resources/uploadFiles/cqna/" + originName);
+			cq.setFilePathMessage("uuuuu");
+		} else {
+			// 첨부파일 삭제된건지, 원래 그대로 저장 된건지 확인
+			if(changeCk.equals("change")) {
+				// 삭제
+				cq.setFilePathMessage("ddddd");
+			}
+		}
+		// 제목이랑 내용은 무조건 변경, 파일과 비밀번호는 동적 sql로 처리
+		int result = cService.updateClassQna(cq);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 문의를 수정하였습니다!");
+		} else {
+			session.setAttribute("alertMsg", "문의 수정에 실패하였습니다.");
+		}
+		
+		return "redirect:classQnaList.me?cpage=" + cpage + "&referNo=" + cq.getReferNo();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="classPayCk.me")
+	public String classBuyCk(ClassOrder co) {
+		int result = cService.classPayCk(co);
+		if(result > 0) {
+			// 구매 불가능
+			return "nnnnn";
+		} else {
+			return "yyyyy";
+		}
+	}
+	
 	@RequestMapping(value="classPay.me")
-	public String classPay() {
-		// 클래스 결제 페이지 이동용(뷰 확인용) 메소드
+	public String classPay(int clNo, int memNo, Model model) {
+		// 클래스 결제 페이지
+		ClassVo c = cService.selectClass(clNo);
+		ArrayList<MemCoupon> couponList = cService.memberCouponList(memNo);	// 쿠폰 정보 확인
+		model.addAttribute("c", c);
+		model.addAttribute("couponList", couponList);
 		return "class/classPay";
 	}
 	
@@ -443,7 +518,46 @@ public class ClassController {
 		return "class/classPayComplate";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="classHotList.me", produces="application/json; charset=UTF-8")
+	public String ajaxClassHotList() {
+		ArrayList<ClassVo> cHotList = cService.classHotList();
+		return new Gson().toJson(cHotList);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="classNewList.me", produces="application/json; charset=UTF-8")
+	public String ajaxClassNewList() {
+		ArrayList<ClassVo> cNewList = cService.classNewList();
+		return new Gson().toJson(cNewList);
+	}
+	
+	@RequestMapping(value="classCategoryList.me")
+	public String classCategoryList(int cpage, String category, String array, Model model) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", category);
+		map.put("array", array);
+		
+		int listCount = cService.classCategoryListCount(category); // 조회할 리스트 갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 6);
+		ArrayList<ClassVo> list = cService.classCategoryList(map, pi); // 조회할 리스트 목록
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("category", category);
+		model.addAttribute("array", array);
+		return "class/classCategoryList"; 
+	}
+	
+
 	
 	
 	
+	@ResponseBody
+	@RequestMapping(value="mainSlide.me", produces="application/json; charset=UTF-8")
+	public String ajaxMainSlideList() {
+		ArrayList<Event> slideList = cService.mainSlideList();
+		return new Gson().toJson(slideList);
+	}
 }

@@ -55,11 +55,17 @@ public interface MypageService {
 	// 내 클래스
 	ArrayList<ClassOrder> selectMyClass(int memNo);
 	
-	// 클래스 review 갯수
+	// 클래스 후기 갯수
 	int classReviewCount(int memNo);
 	
-	// 클래스 review 리스트 조회
+	// 클래스 후기 리스트 조회
 	ArrayList<ClassReview> classReviewList(PageInfo pi, int memNo);
+	
+	// 클래스 문의 갯수
+	int classQnaCount(int memNo);
+	
+	// 클래스 문의 리스트
+	ArrayList<CsQna> classQnaList(PageInfo pi, int memNo);
 	
 	// 좋아요 상품 갯수
 	int likeProductCount(int memNo);

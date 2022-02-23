@@ -46,6 +46,14 @@ div{box-sizing: border-box;}
     cursor: pointer;
 }
 
+#classCategory>li{
+	cursor:pointer;
+}
+#classCategory>li:hover{
+	color:#6babd5;
+	font-weight:bold;
+}
+
 </style>
 </head>
 <body>
@@ -116,15 +124,15 @@ div{box-sizing: border-box;}
             <ul class="header_2_box">
                 <li class="header_2_menu">
                     <a href="">CLASS</a>
-                    <ul class="header_2_detail">
-                        <li><a href="">개발&데이터</a></li>
-                        <li><a href="">드로잉</a></li>
-                        <li><a href="">사진&영상</a></li>
-                        <li><a href="">요리</a></li>
-                        <li><a href="">음악</a></li>
-                        <li><a href="">운동</a></li>
-                        <li><a href="">자기계발</a></li>
-                        <li><a href="">재태크</a></li>
+                    <ul id="classCategory" class="header_2_detail">
+                        <li onclick="classCatePage(1)">드로잉</a></li>
+                        <li onclick="classCatePage(2)">요리</a></li>
+                        <li onclick="classCatePage(3)">음악</a></li>
+                        <li onclick="classCatePage(4)">운동</a></li>
+                        <li onclick="classCatePage(5)">사진&영상</a></li>
+                        <li onclick="classCatePage(6)">재태크</a></li>
+                        <li onclick="classCatePage(7)">개발&데이터</a></li>
+                        <li onclick="classCatePage(8)">자기계발</a></li>
                     </ul>
                 </li>
 
@@ -170,6 +178,10 @@ div{box-sizing: border-box;}
                 alert("검색어는 두 글자 이상이여야 합니다.");
             }
 
+        }
+        
+        function classCatePage(cateNum){
+        	location.href = "classCategoryList.me?cpage=1&category=" + cateNum + "&array=like";
         }
     </script>
 

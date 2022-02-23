@@ -14,6 +14,8 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
+import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 
 @Repository
 public class ClassDao {
@@ -154,5 +156,55 @@ public class ClassDao {
 	
 	public int classQnaPwdCheck(SqlSessionTemplate sqlSession, ClassQna cq) {
 		return sqlSession.selectOne("classMapper.classQnaPwdCheck", cq);
+	}
+	
+	public int classQnaListCount(SqlSessionTemplate sqlSession, int referNo) {
+		return sqlSession.selectOne("classMapper.classQnaListCount", referNo);
+	}
+	
+	public ArrayList<ClassQna> selectClassQnaListPaging(SqlSessionTemplate sqlSession, int referNo, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("classMapper.selectClassQnaList", referNo, rowBounds);
+	}
+
+	public ArrayList<ClassVo> classHotList(SqlSessionTemplate sqlSession){
+		RowBounds rowBounds = new RowBounds(0, 6);
+		return (ArrayList)sqlSession.selectList("classMapper.classHotList", null, rowBounds);
+	}
+	
+	public ArrayList<ClassVo> classNewList(SqlSessionTemplate sqlSession){
+		RowBounds rowBounds = new RowBounds(0, 6);
+		return (ArrayList)sqlSession.selectList("classMapper.classNewList", null, rowBounds);
+	}
+	
+	public int classCategoryListCount(SqlSessionTemplate sqlSession, String category) {
+		return sqlSession.selectOne("classMapper.classCategoryListCount", category);
+	}
+	
+	public ArrayList<ClassVo> classCategoryList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("classMapper.classCategoryList", map, rowBounds);
+	}
+	
+	public int classPayCk(SqlSessionTemplate sqlSession, ClassOrder co) {
+		return sqlSession.selectOne("classMapper.classPayCk", co);
+	}
+	
+	public ArrayList<MemCoupon> memberCouponList(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("classMapper.memberCouponList", memNo);
+	}
+
+	
+	
+	
+	
+	public ArrayList<Event> mainSlideList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("classMapper.mainSlideList");
 	}
 }

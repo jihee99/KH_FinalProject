@@ -53,7 +53,6 @@
 
 	<div id="outer">
 		<input type="hidden" id="currentPateDate" value="${ pi.currentPage }">
-		<input type="hidden" id="keywordData" value="${ keyword }">
 		<input type="hidden" id="categoryData" value="${ category }">
 		<input type="hidden" id="arrayData" value="${ array }">
 		
@@ -112,13 +111,13 @@
 				<div id="pagingArea">
 					<ul class="pagination">
 						<c:if test="${ pi.currentPage > 1 }">
-							<li class="page-item"><a class="page-link" href="classSearchList.me?cpage=${ pi.currentPage - 1 }&keyword=${ keyword }&category=${ category }&array=${ array }">Previous</a></li>
+							<li class="page-item"><a class="page-link" href="classCategoryList.me?cpage=${ pi.currentPage - 1 }&category=${ category }&array=${ array }">Previous</a></li>
 						</c:if>
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="classSearchList.me?cpage=${ p }&keyword=${ keyword }&category=${ category }&array=${ array }">${ p }</a></li>
+							<li class="page-item"><a class="page-link" href="classCategoryList.me?cpage=${ p }&category=${ category }&array=${ array }">${ p }</a></li>
 						</c:forEach>
 						<c:if test="${ pi.currentPage != pi.maxPage }">
-							<li class="page-item"><a class="page-link" href="classSearchList.me?cpage=${ pi.currentPage + 1 }&keyword=${ keyword }&category=${ category }&array=${ array }">Next</a></li>
+							<li class="page-item"><a class="page-link" href="classCategoryList.me?cpage=${ pi.currentPage + 1 }&category=${ category }&array=${ array }">Next</a></li>
 						</c:if>
 					</ul>
 				</div>
@@ -149,7 +148,6 @@
             }
             
             var cpageD = document.getElementById("currentPateDate");
-			var keywordD = document.getElementById("keywordData");
 			var categoryD = document.getElementById("categoryData");
 			var arrayD = document.getElementById("arrayData");
 			
@@ -188,25 +186,23 @@
 		function conditionCate(){
 			// 방금 조회 해 올때의 기록
 			var cpageD = document.getElementById("currentPateDate");
-			var keywordD = document.getElementById("keywordData");
 			var arrayD = document.getElementById("arrayData");
 
 			// 새로운 기록
 			var category = document.getElementById("categoryList");
 			
-			location.href = "classSearchList.me?cpage=" + cpageD.value + "&keyword=" + keywordD.value + "&category=" + category.value + "&array=" + arrayD.value;
+			location.href = "classCategoryList.me?cpage=" + cpageD.value + "&category=" + category.value + "&array=" + arrayD.value;
 		}
 		
 		function conditionArray(){
 			// 방금 조회 해 올때의 기록
 			var cpageD = document.getElementById("currentPateDate");
-			var keywordD = document.getElementById("keywordData");
 			var categoryD = document.getElementById("categoryData");
 
 			// 새로운 기록
 			var array = document.getElementById("order");
 
-			location.href = "classSearchList.me?cpage=" + cpageD.value + "&keyword=" + keywordD.value + "&category=" + categoryD.value + "&array=" + array.value;
+			location.href = "classCategoryList.me?cpage=" + cpageD.value + "&category=" + categoryD.value + "&array=" + array.value;
 			
 		}
 

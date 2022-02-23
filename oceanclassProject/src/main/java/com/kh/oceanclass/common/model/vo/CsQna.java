@@ -19,13 +19,13 @@ public class CsQna {
 	private int referNo;
 	private String title;
 	private String content;
-	private Date createDate;
+	private String createDate;
 	private int pwd;
 	private String filePath;
 	private String status;
 	private String answerContent;
 	private Date answerDate;
 	
-	private String clTitle;
+	private String clName;
 	private String proTitle;
 }

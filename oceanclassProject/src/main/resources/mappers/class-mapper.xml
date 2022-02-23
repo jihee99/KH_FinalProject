@@ -61,6 +61,24 @@
 		<result column="status" property="status" />
 		<result column="answer_content" property="answerContent" />
 		<result column="answer_date" property="answerDate" />
+		<result column="teacher_nick" property="teacherNick" />
+	</resultMap>
+	
+	<resultMap id="eventResult2" type="Event">
+		<result column="eno" property="eventNo" />
+		<result column="e_title" property="eventTitle" />
+		<result column="img" property="img" />
+	</resultMap>
+	
+	<resultMap id="memCouponResult2" type="memCoupon">
+		<result column="pcno" property="memCouponNo" />
+		<result column="mno" property="memNo" />
+		<result column="cno" property="couponNo" />
+		<result column="use" property="useYN" />
+		<result column="endate" property="enDate" />
+		<result column="dedate" property="deDate" />
+		<result column="cname" property="couponName" />
+		<result column="discount" property="discount" />
 	</resultMap>
 
 	<update id="increaseCount">
@@ -194,7 +212,7 @@
 		   		</when>
 		   		<when test="array == 'date'">
 					 order
-					    by cl_date desc
+					    by clno desc
 		   		</when>
 		   </choose>
 	</select>
@@ -481,6 +499,12 @@
 		     , status
 		     , answer_content
 		     , to_char(answer_date, 'YYYY-MM-DD') as answer_date
+             , (
+                select nickname
+                  from member
+                  join class using (mno)
+                 where clno = refer_no
+                ) as teacher_nick
 		  from cs_qna
 		  join member using (mno)
 		 where status = 'Y'
@@ -560,5 +584,184 @@
 		   and PWD = #{pwd}
 		   and cs_qno = #{csQnaNo}
 	</select>
+	
+	<select id="classQnaListCount" resultType="_int">
+		select count(*)
+		  from cs_qna
+		 where refer_no = #{referNo}
+		   and status = 'Y'
+		   and gb_no = 1
+	</select>
+	
+	<select id="classHotList" resultMap="classResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_content
+		     , cl_price
+		     , cl_img
+		     , count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 1
+		           and refer_no = clno
+		        ) as like_count
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'Y'
+		 order
+		    by like_count desc
+	</select>
+	
+	<select id="classNewList" resultMap="classResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_content
+		     , cl_price
+		     , cl_img
+		     , count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 1
+		           and refer_no = clno
+		        ) as like_count
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'Y'
+		 order
+		    by clno desc
+	</select>
 		
+	<select id="classCategoryListCount" resultType="_int">
+		select count(*)
+		  from class
+		 where CL_STATUS = 'Y'
+		 <choose>
+			<when test="category == 1">
+			   and category = 1
+			</when>
+			<when test="category == 2">
+			   and category = 2
+			</when>
+			<when test="category == 3">
+			   and category = 3
+			</when>
+			<when test="category == 4">
+			   and category = 4
+			</when>
+			<when test="category == 5">
+			   and category = 5
+			</when>
+			<when test="category == 6">
+			   and category = 6
+			</when>
+			<when test="category == 7">
+			   and category = 7
+			</when>
+			<when test="category == 8">
+			   and category = 8
+			</when>
+	   </choose>
+	</select>
+
+	<select id="classCategoryList" resultMap="classResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_date
+		     , cl_price
+		     , cl_img
+		     , count
+		     , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 1
+		           and refer_no = clno
+		        ) as like_count
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'Y'
+		   <choose>
+				<when test="category == 1">
+				   and category = 1
+				</when>
+				<when test="category == 2">
+				   and category = 2
+				</when>
+				<when test="category == 3">
+				   and category = 3
+				</when>
+				<when test="category == 4">
+				   and category = 4
+				</when>
+				<when test="category == 5">
+				   and category = 5
+				</when>
+				<when test="category == 6">
+				   and category = 6
+				</when>
+				<when test="category == 7">
+				   and category = 7
+				</when>
+				<when test="category == 8">
+				   and category = 8
+				</when>
+		   </choose>
+   		   <choose>
+		   		<when test="array == 'like'">
+					 order
+					    by like_count desc
+		   		</when>
+		   		<when test="array == 'date'">
+					 order
+					    by clno desc
+		   		</when>
+		   </choose>
+	</select>
+		
+	<select id="classPayCk" resultType="_int">
+		select count(*)
+		  from class_order
+		 where READING_STATUS != 'E'
+		   and clNo = #{clNo}
+		   and mno = #{memNo}
+	</select>
+		
+	<select id="memberCouponList" resultMap="memCouponResult2">
+		select c.pcno
+		     , c.mno
+		     , cno
+		     , c.use
+		     , c.endate
+		     , c.dedate
+		     , cname
+		     , discount
+		  from coupon c
+		  join couponlist using (cno)
+		 where c.mno = #{memNo}
+		   and c.dedate > sysdate
+		   and c.use = 'N'
+	</select>	
+		
+		
+		
+		
+		
+	<select id="mainSlideList" resultMap="eventResult2">
+		select 
+		       eno
+		     , e_title
+		     , img
+		  from event
+		 where status = 'Y'
+	</select>
 </mapper>

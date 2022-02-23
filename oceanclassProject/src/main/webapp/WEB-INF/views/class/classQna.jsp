@@ -91,7 +91,7 @@
 								                    </div>
 							                	</div>
 							                	
-							                	<div class="qnaAnswer" style="margin-top:10px;">
+							                	<div class="qnaAnswer" style="margin-top:20px;">
 													<pre style="width:100%; white-space: pre-wrap;">${ q.answerContent }</pre>
 							                	</div>
 							                </div>
@@ -144,7 +144,7 @@
 								                        <textarea name="content" id="updateQnaContent${ q.csQnaNo }" style="width: 100%; height: 500px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요.">${ q.content }</textarea>
 								                    </div>
 								                    <div class="modal-footer">
-								                        <button type="submit" class="btn" style="background-color: #6babd5;">작성</button>
+								                        <button type="submit" class="btn" style="background-color: #6babd5;">수정</button>
 								                        <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>
 								                    </div>
 								                </div>
@@ -188,7 +188,7 @@
 								                    </div>
 							                	</div>
 							                	
-							                	<div class="qnaAnswer" style="margin-top:10px;">
+							                	<div class="qnaAnswer" style="margin-top:20px;">
 													<pre style="width:100%; white-space: pre-wrap;">${ q.answerContent }</pre>
 							                	</div>
 							                </div>
@@ -241,7 +241,7 @@
 								                        <textarea name="content" id="updateQnaContent${ q.csQnaNo }" style="width: 100%; height: 500px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요.">${ q.content }</textarea>
 								                    </div>
 								                    <div class="modal-footer">
-								                        <button type="submit" class="btn" style="background-color: #6babd5;">작성</button>
+								                        <button type="submit" class="btn" style="background-color: #6babd5;">수정</button>
 								                        <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>
 								                    </div>
 								                </div>
@@ -258,7 +258,7 @@
 	            </div>
 		        
 		        <div class="allQna">
-		            <button type="button" class="btn" style="background-color: #6babd5; width: 100%; color: white; margin-top:30px;">모든 문의 보기</button>
+		            <button type="button" class="btn" style="background-color: #6babd5; width: 100%; color: white; margin-top:30px;" onclick="allQna(${c.clNo});">모든 문의 보기</button>
 		            <!-- 버튼 누르면 새창 띄워지게 -->
 		        </div>
 	        </c:when>
@@ -296,7 +296,7 @@
                         <textarea name="content" id="enrollQnaContent" style="width: 100%; height: 500px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요."></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn" style="background-color: #6babd5;">수정</button>
+                        <button type="submit" class="btn" style="background-color: #6babd5;">작성</button>
                         <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>
                     </div>
                 </div>
@@ -466,6 +466,10 @@
 					console.log("클래스 문의 비밀번호 확인용 ajax 통신 실패");    				
     			}
     		})
+    	}
+    	
+    	function allQna(clNo){
+            window.open("classQnaList.me?cpage=1&&referNo=" + clNo, "클래스문의목록", "width=650, height=800, resizeable=no, location=no");
     	}
     </script>
 

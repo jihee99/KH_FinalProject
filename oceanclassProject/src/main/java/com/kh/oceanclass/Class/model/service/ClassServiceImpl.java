@@ -15,6 +15,8 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
+import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.MemCoupon;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -179,5 +181,54 @@ public class ClassServiceImpl implements ClassService {
 	public int classQnaPwdCheck(ClassQna cq) {
 		return cDao.classQnaPwdCheck(sqlSession, cq);
 	}
+
+	@Override
+	public int classQnaListCount(int referNo) {
+		return cDao.classQnaListCount(sqlSession, referNo);
+	}
+
+	@Override
+	public ArrayList<ClassQna> selectClassQnaListPaging(int referNo, PageInfo pi) {
+		return cDao.selectClassQnaListPaging(sqlSession, referNo, pi);
+	}
+
+	@Override
+	public ArrayList<ClassVo> classHotList() {
+		return cDao.classHotList(sqlSession);
+	}
 	
+	@Override
+	public ArrayList<ClassVo> classNewList() {
+		return cDao.classNewList(sqlSession);
+	}
+	
+	@Override
+	public int classCategoryListCount(String category) {
+		return cDao.classCategoryListCount(sqlSession, category);
+	}
+
+	@Override
+	public ArrayList<ClassVo> classCategoryList(HashMap<String, String> map, PageInfo pi) {
+		return cDao.classCategoryList(sqlSession, map, pi);
+	}
+	
+	@Override
+	public int classPayCk(ClassOrder co) {
+		return cDao.classPayCk(sqlSession, co);
+	}
+	
+	@Override
+	public ArrayList<MemCoupon> memberCouponList(int memNo) {
+		return cDao.memberCouponList(sqlSession, memNo);
+	}
+	
+	
+	
+	
+	@Override
+	public ArrayList<Event> mainSlideList() {
+		return cDao.mainSlideList(sqlSession);
+	}
+
+
 }

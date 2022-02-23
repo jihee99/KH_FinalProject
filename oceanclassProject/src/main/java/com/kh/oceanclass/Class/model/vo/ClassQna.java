@@ -25,5 +25,6 @@ public class ClassQna {
 	private String answerDate;
 	
 	private String filePathMessage;
+	private String teacherNick;
 	
 }

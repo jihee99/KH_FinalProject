@@ -103,7 +103,7 @@
                         </div>
                         <div id="num-btn">
                             <span id="cl-num">
-                                수강생 수 : 350 &ensp; 조회수 : 719
+                                수강상태 : 진행중 &ensp; 조회수 : 719
                             </span>
                             <button class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
                             <button class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
@@ -126,7 +126,7 @@
                         </div>
                         <div id="num-btn">
                             <span id="cl-num">
-                                수강생 수 : 350 &ensp; 조회수 : 719
+                                수강상태 : 종료 &ensp; 조회수 : 719
                             </span>
                             <button class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
                             <button class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
@@ -149,7 +149,7 @@
                         </div>
                         <div id="num-btn">
                             <span id="cl-num">
-                                수강생 수 : 350 &ensp; 조회수 : 719
+                                수강상태 : 진행중 &ensp; 조회수 : 719
                             </span>
                             <button class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
                             <button class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
@@ -172,7 +172,7 @@
                         </div>
                         <div id="num-btn">
                             <span id="cl-num">
-                                수강생 수 : 350 &ensp; 조회수 : 719
+                                수강상태 : 진행중 &ensp; 조회수 : 719
                             </span>
                             <button class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
                             <button class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>

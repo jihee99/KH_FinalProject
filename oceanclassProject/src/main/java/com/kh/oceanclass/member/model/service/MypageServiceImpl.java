@@ -106,6 +106,17 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<ClassReview> classReviewList(PageInfo pi, int memNo) {
 		return myDao.classReviewList(sqlSession, pi, memNo);
 	}
+	
+	@Override
+	public int classQnaCount(int memNo) {
+		return myDao.classQnaCount(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<CsQna> classQnaList(PageInfo pi, int memNo) {
+		return myDao.classQnaList(sqlSession, pi, memNo);
+	}
+
 
 	
 
@@ -139,7 +150,6 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo) {
 		return myDao.shoppingReviewList(sqlSession, pi, memNo);
 	}
-
 
 
 
