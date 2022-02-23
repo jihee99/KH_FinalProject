@@ -11,7 +11,11 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./resources/css/adminMain.css?2">
-    
+<style>
+	#logo img:hover{
+		backgroundColor: black;
+	}
+</style>
 </head>
 <body>
 
@@ -25,7 +29,7 @@
     <div class="wrapper">
         <div class="side">
             <div id="logo">
-                <img src="resources/images/logo.png" width="100%">
+                <img src="resources/images/logo.png" width="100%" onclick="location.href='${pageContext.request.contextPath}'">
             </div>
             <div id="menu">
                 <div id="menu1">

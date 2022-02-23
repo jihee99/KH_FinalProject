@@ -34,6 +34,8 @@
 		margin-left: 30px;
 	}
 	.tags button:hover{color: rgb(107, 171, 213, 0.7)}
+	.content img{margin: 0 auto;}
+	.content button{display: block; width: 50%; margin: 0 auto;}
 </style>
 </head>
 <body>
@@ -57,9 +59,10 @@
         </div>
         <div class="content">
         	<c:choose>
-        		<c:when test="${category eq 'CP'}">
-        			<img src="${e.img}" style="width: 50%; height: 50%;">
-        			<button type="button" class="btn btn-lg">다운로드</button>
+        		<c:when test="${e.couponNo ne 0}">
+        			<img src="${e.img}" style="width: 50%; height: 25%;">
+        			<input type="hidden" id="couponNo" name="couponNo" value="${e.couponNo}">
+        			<button type="button" class="btn btn-lg" onclick="getCoupon();">쿠폰받기</button>
         		</c:when>
         		<c:otherwise>
         			<img src="${e.img}" style="width: 100%; height: 90%;">
@@ -67,6 +70,49 @@
         	</c:choose>
         </div>
         
+        <script>
+        	function getCoupon(){
+        		let couponNo = $(".content").children("#couponNo").val();
+        		let memNo = '<c:out value="${loginUser.memNo}"/>';
+        		let login = "";
+        		console.log(memNo);
+        		if(memNo == login){
+        			alert("로그인 후 이용 가능합니다");
+        		}else{
+        			$.ajax({
+        				url: "getCoupon.ev",
+        				data:{
+        					memNo: memNo,
+        					couponNo: couponNo		
+        				},
+        				success:function(result){
+        					console.log(result);
+        					if(result>0){
+        						$(".modalSuccess").modal();
+        					}else if(result == 0){
+        						$(".modalFail").modal();
+        					}
+        				},error:function(){
+        					console.log("쿠폰발급실패");
+        				}
+        			});
+        		}
+        	}
+        </script>
+        
+       	<div class="modal modalSuccess" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<p style="text-align:center;">쿠폰이 발급되었습니다!</p>
+					</div>
+				<div class="modal-footer">
+			        <button id="modalClose" type="button" class="btn" data-dismiss="modal">닫기</button>
+			    </div>
+				</div>
+			</div>
+		</div>
+		
         <table class="table" id="replyTable">
         	<thead>
         		<tr></tr>

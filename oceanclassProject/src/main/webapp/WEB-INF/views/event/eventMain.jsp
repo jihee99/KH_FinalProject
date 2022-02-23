@@ -41,7 +41,7 @@
             <button type="button" class="btn btn1" id="S" value="S">스토어</button>
             <button type="button" class="btn btn1" id="P" value="P">포인트</button>
             <button type="button" class="btn btn1" id="R" value="R">댓글</button>
-            <button type="button" class="btn btn1" id="E" value="E">기타</button>
+            <button type="button" class="btn btn1" id="E" value="CP">쿠폰</button>
         </div>
         
         <div class="content" id="result">

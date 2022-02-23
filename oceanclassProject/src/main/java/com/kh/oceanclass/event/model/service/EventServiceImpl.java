@@ -11,6 +11,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.dao.EventDao;
 import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.Coupon;
 
 @Service
 public class EventServiceImpl implements EventService{
@@ -60,6 +61,21 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public ArrayList<ClassVo> tagSelectList(PageInfo pi, String hashtag) {
 		return eDao.tagSelectList(sqlSession, pi, hashtag);
+	}
+
+	@Override
+	public int insertCoupon(int memNo) {
+		return eDao.insertCoupon(sqlSession, memNo);
+	}
+
+	@Override
+	public int countCoupon(int couponNo) {
+		return eDao.countCoupon(sqlSession, couponNo);
+	}
+
+	@Override
+	public Coupon selectCoupon(int couponNo) {
+		return eDao.selectCoupon(sqlSession, couponNo);
 	}
 
 	

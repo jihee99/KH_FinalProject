@@ -1,8 +1,8 @@
 package com.kh.oceanclass.event.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +18,7 @@ import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.event.model.service.EventService;
 import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.member.model.vo.Coupon;
 
 @Controller
 public class EventController {
@@ -50,14 +51,31 @@ public class EventController {
 	
 	@RequestMapping("detailEvent.ev")
 	public String selectEvent(int eno, Model model) {
-		//System.out.println(eno);
 		Event e = eService.selectEvent(eno);
 		//System.out.println(e);
-		//System.out.println(list);
 		model.addAttribute("e", e);
 		return "event/eventDetail";
 	}
 	
+	@ResponseBody
+	@RequestMapping("getCoupon.ev")
+	public int ajaxCouponInsert(int memNo, int couponNo, HttpSession sessoion) {
+		Coupon c = eService.selectCoupon(couponNo);
+		//System.out.println(c);
+		if(c.getCount() == c.getMaxCount()) {
+			return 0;
+		}else {
+			int result = eService.insertCoupon(memNo);
+			if(result>0) {
+				int countCouponResult = eService.countCoupon(couponNo);
+				System.out.println(countCouponResult);
+				return countCouponResult;
+			} else {
+				return -1;
+			}
+		}
+		
+	}	
 	
 	@ResponseBody
 	@RequestMapping(value="replyList.ev", produces="application/json; charset=utf-8")
