@@ -84,6 +84,7 @@
 	  	<result column="answer_content" property="answerContent"/>
 	  	<result column="answer_date" property="answerDate" />
 	  	<result column="pro_title" property="proTitle" />
+	  	<result column="cl_name" property="clName" />
 	</resultMap>	
 	
 	<resultMap id="storeReviewResult" type="StoreReview">
@@ -312,6 +313,37 @@
 		     by c_rno desc
 	</select>
 	
+	<select id="classQnaCount" resultType="_int">
+		select count(*)
+		  from cs_qna
+		 where mno = #{memNo} 
+		   and gb_no = 1
+	</select>
+	
+	<select id="classQnaList" resultMap="csResult">
+		select 
+		       cs_qno
+		     , cs.mno
+		     , gb_no
+		     , refer_no
+		     , cs.title
+		     , content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , filepath
+		     , cs.status
+		     , answer_content
+		     , answer_date
+		     , cl_name as "cl_name"
+		  from cs_qna cs
+		  join class c on ( cs.refer_no = c.clno)
+		 where cs.mno = #{memNo}
+		   and gb_no = 1
+		   and cs.status = 'Y'
+		   and cl_status = 'Y'
+		 order 
+		    by cs_qno desc
+	</select>
+	
 	
 	
 <!-- 스토어 -->
@@ -339,6 +371,7 @@
 		select count(*)
 		  from cs_qna
 		 where mno = #{memNo} 
+		   and gb_no = 2
 	</select>
 	 
 	<select id="shoppingQnaList" resultMap="csResult">				  

@@ -263,12 +263,16 @@ public class StuMypageController {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		
 		int reviewCount = myService.classReviewCount(memNo);
+		int qnaCount = myService.classQnaCount(memNo);
 		
-		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 6);
-		ArrayList<ClassReview> list = myService.classReviewList(pi, memNo);
-		//System.out.println(list);
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
+		PageInfo rpi = Pagination.getPageInfo(reviewCount, currentPage, 5, 6);
+		ArrayList<ClassReview> reviewList = myService.classReviewList(rpi, memNo);
+		
+		PageInfo qpi = Pagination.getPageInfo(reviewCount, currentPage, 5, 6);
+		ArrayList<CsQna> qnaList = myService.classQnaList(qpi, memNo);
+
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("qnaList", qnaList);
 		return "member/student/myClassReview";
 	}
 	
@@ -287,7 +291,25 @@ public class StuMypageController {
 		model.addAttribute("list", list);
 		return "member/student/myClassReviewDetail";
 	}
+
+	// 클래스 문의 디테일
+	@RequestMapping("myClassQnaDetail.me")
+	public String myClassQnaDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int reviewCount = myService.classReviewCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
+		ArrayList<CsQna> list = myService.classQnaList(pi, memNo);
+		//System.out.println(list);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "member/student/myClassQnaDetail";
+	}
 	
+	
+	// 내 클래스 메인
 	@RequestMapping("myClass.me")
 	public String myClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -298,6 +320,7 @@ public class StuMypageController {
 		return "member/student/myClass";
 	}
 	
+	// 내 클래스 전체
 	@RequestMapping("myAllClass.me")
 	public String myAllClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
