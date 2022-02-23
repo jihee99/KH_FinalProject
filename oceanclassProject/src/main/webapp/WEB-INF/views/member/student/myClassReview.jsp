@@ -20,6 +20,7 @@
 	.content1{
 	    width: 100%;
 	    height: 50%;
+	    margin-bottom: 20px;
 	}
 	.conhead>h2{width: 30%;}
 	.conhead>a{
@@ -46,66 +47,103 @@
 			<td id="mainContent">
 				<div class="content">
 					<div class="content1">
-					    <div class="conhead">
-					        <h2>클래스 문의</h2>
-					        <a href="?page=myClassQnaDetail.jsp">더보기</a>
-					    </div>
-					    <table class="table">
-					        <thead>
-					            <tr>
-					                <th>클래스</th>
-					                <th>문의날짜</th>
-					                <th>답변상태</th>
-					            </tr>
-					        </thead>
-					        <tbody>
-					            <tr>
-					                <td>여자의 힘은 여자가 기른다! 샤크코치의 근력 운동!</td>
-					                <td>2022-01-02</td>
-					                <td>답변완료</td>
-					            </tr>
-					        </tbody>
-					    </table>
+						<c:choose>
+							<c:when test="${empty qnaList}">
+								<div class="conhead">
+							        <h2>클래스 문의</h2>
+							        <p>등록된 문의가 없습니다</p>
+							    </div>
+							</c:when>
+							<c:otherwise>
+								<div class="conhead">
+							        <h2>클래스 문의</h2>
+							        <a href="myClassQnaDetail.me">더보기</a>
+							    </div>
+							    <table class="table">
+							        <thead>
+							            <tr>
+							                <th>클래스</th>
+							                <th>문의제목</th>
+							                <th>문의날짜</th>
+							                <th>답변상태</th>
+							            </tr>
+							        </thead>
+							        <tbody>
+							        	<c:forEach var="q" items="${qnaList}" begin="0" end="4">
+								            <tr>
+								                <td>
+									                <c:choose>
+									            		<c:when test="${fn:length(q.clName) gt 11}">
+									            			<c:out value="${fn:substring(q.clName, 0, 10)}"></c:out>
+									            			..
+									            		</c:when>
+									            		<c:otherwise>
+									            			<c:out value="${q.clName}"></c:out>
+									            		</c:otherwise>
+										            </c:choose>
+									            </td>
+								                <td>
+									                <c:choose>
+									            		<c:when test="${fn:length(q.title) gt 20}">
+									            			<c:out value="${fn:substring(q.title, 0, 19)}"></c:out>
+									            			..
+									            		</c:when>
+									            		<c:otherwise>
+									            			<c:out value="${q.title}"></c:out>
+									            		</c:otherwise>
+										            </c:choose>
+									            </td>
+								                <td>${q.createDate}</td>
+								                <td>${q.status}</td>
+								            </tr>
+							            </c:forEach>
+							        </tbody>
+							    </table>
+							</c:otherwise>
+						</c:choose>
 					</div>  
+					
 					<div class="content1">
-					    <div class="conhead">
-					        <h2>클래스 리뷰</h2>
-					        <a href="myClassReviewDetail.me">더보기</a>
-					    </div>
-					    <table class="table">
-					        <thead>
-					            <tr>
-					                <th>클래스</th>
-					                <th>리뷰</th>
-					            </tr>
-					        </thead>
-					        <tbody>
-					        	<c:choose>
-					        		<c:when test="${empty list}">
-					        			<p>등록된 리뷰가 없습니다</p>
-					        		</c:when>
-					        		<c:otherwise>
-					        			<c:forEach var="c" items="${list}" begin="0" end="4">
+						<c:choose>
+					        <c:when test="${empty reviewList}">
+							    <div class="conhead">
+							        <h2>클래스 리뷰</h2>
+							        <p>등록된 리뷰가 없습니다</p>
+							    </div>
+						    </c:when>
+						    <c:otherwise>
+						    	<div class="conhead">
+							        <h2>클래스 리뷰</h2>
+							        <a href="myClassReviewDetail.me">더보기</a>
+							    </div>
+							    <table class="table">
+							        <thead>
+							            <tr>
+							                <th>클래스</th>
+							                <th>리뷰</th>
+							            </tr>
+							        </thead>
+							        <tbody>
+					        			<c:forEach var="c" items="${reviewList}" begin="0" end="4">
 								            <tr>
 								                <td>${c.clName}</td>
 								                <td>
 									                <c:choose>
-								            		<c:when test="${fn:length(c.content) gt 25}">
-								            			<c:out value="${fn:substring(c.content, 0, 24)}"></c:out>
-								            			..
-								            		</c:when>
-								            		<c:otherwise>
-								            			<c:out value="${c.content}"></c:out>
-								            		</c:otherwise>
-									            	</c:choose>
+									            		<c:when test="${fn:length(c.content) gt 25}">
+									            			<c:out value="${fn:substring(c.content, 0, 24)}"></c:out>
+									            			..
+									            		</c:when>
+									            		<c:otherwise>
+									            			<c:out value="${c.content}"></c:out>
+									            		</c:otherwise>
+									 				</c:choose>
 								                </td>
 								            </tr>
 							            </c:forEach>
-					        		</c:otherwise>
-					        	</c:choose>
-					        </tbody>
-					    </table>
-					    
+							        </tbody>
+							    </table>
+						    </c:otherwise>
+					    </c:choose>
 					 </div> 
 			  	</div>
 			</td>

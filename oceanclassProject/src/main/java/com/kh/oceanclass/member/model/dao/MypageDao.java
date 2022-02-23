@@ -122,6 +122,18 @@ public class MypageDao {
 		return (ArrayList)sqlSession.selectList("myMapper.classReviewList", memNo, rowBounds);
 	}
 	
+	public int classQnaCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("myMapper.classQnaCount", memNo);
+	}
+	
+	public ArrayList<CsQna> classQnaList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("myMapper.classQnaList", memNo, rowBounds);
+	}
+	
 	
 	
 // 상품관련
