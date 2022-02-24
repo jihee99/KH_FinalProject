@@ -23,6 +23,7 @@
 		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreRefund" alias="StoreRefund"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.StorePay" alias="StorePay"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.Cart" alias="Cart"/>
+		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreQna" alias="StoreQna"/>
 
 		<typeAlias type="com.kh.oceanclass.store.model.vo.InProductOrder" alias="InProductOrder"/>
 		<typeAlias type="com.kh.oceanclass.store.model.vo.StoreOrder" alias="StoreOrder"/>

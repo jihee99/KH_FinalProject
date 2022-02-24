@@ -6,13 +6,14 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.dao.StoreDao;
 import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Service
@@ -50,9 +51,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public void selectStoreQnaList() {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<StoreQna> selectStoreQnaList(int pno) {
+		return sDao.selectStoreQnaList(sqlSession, pno);
 	}
 
 	@Override
@@ -61,8 +61,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	@Override
-	public ArrayList<Product> categorySearch(String category, int memberNo, String sort) {
-		return sDao.categorySearch(sqlSession, category, memberNo, sort);
+	public ArrayList<Product> categorySearch(Product p) {
+		return sDao.categorySearch(sqlSession, p);
 	}
 
 	@Override
@@ -148,6 +148,26 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public int insertRecommend(StoreReview review) {
 		return sDao.insertRecommend(sqlSession, review);
+	}
+
+	@Override
+	public int insertReport(Report r) {
+		return sDao.insertReport(sqlSession, r);
+	}
+
+	@Override
+	public int storeQnaListCount(int pno) {
+		return sDao.storeQnaListCount(sqlSession, pno);
+	}
+
+	@Override
+	public ArrayList<StoreQna> selectPagingQnaList(int pno, PageInfo pi) {
+		return sDao.selectPagingQnaList(sqlSession, pno, pi);
+	}
+
+	@Override
+	public int insertQna(StoreQna qna) {
+		return sDao.insertQna(sqlSession, qna);
 	}
 	
 }

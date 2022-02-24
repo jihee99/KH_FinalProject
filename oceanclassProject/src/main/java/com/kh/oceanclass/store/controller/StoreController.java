@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,18 +16,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.kh.oceanclass.Class.model.vo.ClassOrder;
-import com.kh.oceanclass.Class.model.vo.ClassReview;
-import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.service.StoreService;
 import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.LikeItem;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 /*사용자 스토어 관련 기능 처리하는 controller*/
@@ -96,18 +94,23 @@ public class StoreController {
 		Product p = sService.selectProduct(pno, memberNo);
 		ArrayList<ProductOption> list = sService.selectProductOption(pno);
 		
-		// 클래스 리뷰 리스트
+		// 리뷰 리스트
 		ArrayList<StoreReview> srList = sService.selectStoreReviewList(pno);
-		// 리뷰 메인 4개 리스트 (도움순) + 리뷰 top5 (이미지)
+		// 리뷰 메인 4개 리스트 (도움순)
 		if(!srList.isEmpty()) {
 			ArrayList<StoreReview> srMainList = sService.selectStoreReviewMainList(pno);
 			model.addAttribute("srMainList", srMainList);
 		}
 		StoreReview counter = sService.selectReviewCount(pno);
 		
+		// 문의 리스트
+		ArrayList<StoreQna> sqList = sService.selectStoreQnaList(pno);
+		
+		
 		model.addAttribute("c", counter);
 		model.addAttribute("p", p);
 		model.addAttribute("list", list);
+		model.addAttribute("sqList", sqList);
 		
 		return "store/productDetailMain";
 	}
@@ -117,7 +120,12 @@ public class StoreController {
 	@RequestMapping(value="categorySearch.cs", produces="application/json; charset=utf-8")
 	public String categorySearch(String category, Model model, ModelAndView mv, int memberNo, String sort) {
 		
-		ArrayList<Product> list = sService.categorySearch(category, memberNo, sort);
+		Product p = new Product();
+		p.setCategory(category);
+		p.setSort(sort);
+		p.setMemberNo(memberNo);
+		
+		ArrayList<Product> list = sService.categorySearch(p);
 		//model.addAttribute("list", list);
 		
 		//mv.addObject("list", list)
@@ -272,20 +280,6 @@ public class StoreController {
 	@RequestMapping(value="reviewEnrollForm.st")
 	public String reviewEnrollForm(int pno,/*StoreReview review, MultipartFile upfile, */HttpSession session, Model model) {
 		
-		/*
-		if(!upfile.getOriginalFilename().equals("")) {
-			String originName = upfile.getOriginalFilename();
-			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/sreview/");
-			try {
-				upfile.transferTo(new File(savePath + originName));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-			review.setImg("resources/uploadFiles/sreview/" + originName);
-		}
-
-		int result = sService.insertReview(review);
-		*/
 		model.addAttribute("pno", pno);
 		
 		return "store/reviewEnrollForm";
@@ -310,12 +304,11 @@ public class StoreController {
 
 		int result = sService.insertReview(review);
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 후기가 등록되었습니다!");
+			//session.setAttribute("alertMsg", "성공적으로 후기가 등록되었습니다!");
 		} else {
-			session.setAttribute("alertMsg", "후기 등록에 실패하였습니다.");
+			//session.setAttribute("alertMsg", "후기 등록에 실패하였습니다.");
 		}
-		
-		return "";
+		return "<script>window.close();</script>";
 	}
 	
 	@ResponseBody
@@ -346,6 +339,69 @@ public class StoreController {
 			}
 	}
 	
+	// 신고 insert
+	@ResponseBody
+	@RequestMapping(value="sreviewReport.st", produces="application/json; charset=utf-8")
+	public String insertReport(Report r) {
+		
+		int result = sService.insertReport(r);
+		
+		if(result > 0) { // 성공시
+			return new Gson().toJson("gg");
+		} else { // 실패시
+			return new Gson().toJson("ll");
+		}
+	}
 	
+	@RequestMapping(value="qnaList.st")
+	public String reviewEnrollForm(int pno, int cpage, Model model, HttpSession session) {
+		
+		int memberNo = 0;
+		int listCount = sService.storeQnaListCount(pno);
+		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 3);
+		ArrayList<StoreQna> qlist = sService.selectPagingQnaList(pno, pi);
+		Product p = sService.selectProduct(pno, memberNo);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("qlist", qlist);
+		model.addAttribute("p", p);
+		model.addAttribute("qnaPno", pno);
+		
+		return "store/qnaDetail";
+			
+	}
+	
+	@RequestMapping(value="qnaEnrollForm.st")
+	public String qnaEnrollForm(int pno, HttpSession session, Model model) {
+		
+		model.addAttribute("pno", pno);
+		
+		return "store/qnaEnrollForm";
+			
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="qna.pr")
+	public String qnaEnrollForm(StoreQna qna, HttpSession session) {
+		
+		System.out.println(qna);
+		
+		int result = sService.insertQna(qna);
+		if(result > 0) {
+			//session.setAttribute("alertMsg", "성공적으로 문의가 등록되었습니다!");
+		} else {
+			//session.setAttribute("alertMsg", "문의 등록에 실패하였습니다.");
+		}
+		return "<script>window.close();</script>";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="passCheck.pr", produces="application/json; charset=utf-8")
+	public String passCheck(StoreQna qna) {
+		
+		
+		
+		return new Gson().toJson("gg"); 
+	}
 	
 }

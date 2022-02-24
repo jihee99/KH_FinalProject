@@ -19,7 +19,7 @@ public class StoreReview {
 	private int memberNo; // 회원번호
 	private int productNo; // 상품번호
 	private String content; // 리뷰내용
-	private String rating; // 별점
+	private int rating; // 별점
 	private Date reviewDate; // 작성일
 	private String status; // 상태값
 	
