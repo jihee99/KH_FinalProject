@@ -408,16 +408,16 @@
   	</select>
   	
   	<select id="selectStoreBuyList" resultMap="buyListResult">
-		select 
+		 select 
 		       order_no
 		     , pno
-		     , title
 		     , opno
+		     , title
 		     , quantity
-		     , s.price
-		 from s_buylist s 
-		 join store using (pno)
-		 where order_no = ${ono}
+		     , s_buylist.price
+		 from s_buylist
+		 left join store using (pno)
+		 where order_no = #{ono}
 	</select>
 	
 	<update id="storeOrderUpdate">

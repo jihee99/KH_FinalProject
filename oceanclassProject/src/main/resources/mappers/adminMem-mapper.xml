@@ -127,7 +127,7 @@
 		<result column="payment_option" property="paymentOption"/>
 		<result column="deposit" property="deposit"/>
 		<result column="point_save" property="pointSave"/>
-		<result column="reading_check" property="readingCheck"/>
+		<result column="reading_status" property="readingCheck"/>
 		
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
@@ -470,7 +470,7 @@
 		     , payment_date
 		     , payment_option
 		     , request_date
-	         , reading_check
+	         , reading_status
 		 from class_order
 		left join class_refund using (c_ono)
 		join member using(mno)
@@ -528,7 +528,7 @@
 		 from pay
 		left join s_refund using (order_no)
 		join member using(mno)
-		where order_no = #{sOrderNo}
+		where order_no = #{ono}
 	</select>
 	
 	<select id="selectClassOrder" resultMap="classOrderResult">
@@ -545,7 +545,7 @@
 		     , payment_option
 		     , deposit
 		     , point_save
-		     , reading_check
+		     , reading_status
 		     , c_refundno
 		     , to_char(request_date, 'YYYY-MM-DD HH24:MI:SS') request_date
 		     , cl_name
@@ -559,16 +559,16 @@
 	</select>
 	
 	<select id="selectStoreBuyList" resultMap="buyListResult">
-		select 
+		 select 
 		       order_no
 		     , pno
-		     , title
 		     , opno
+		     , title
 		     , quantity
-		     , s.price
-		 from s_buylist s 
-		 join store using (pno)
-		 where order_no = ${sOrderNo}
+		     , s_buylist.price
+		 from s_buylist
+		 left join store using (pno)
+		 where order_no = #{ono}
 	</select>
 	
 	<insert id="insertStoreRefund">    
