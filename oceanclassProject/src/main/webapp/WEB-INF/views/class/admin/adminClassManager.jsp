@@ -32,7 +32,7 @@
 	<div class="outer">
 
 		<div align="left">
-	    	<jsp:include page="../../common/admin/adminMainPage.jsp" />
+	    	<jsp:include page="../../common/admin/adminSidebar.jsp" />
 		</div>
 
         <div class="inner">

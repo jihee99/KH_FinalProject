@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,18 +33,21 @@
 	<div class="outer">
 
 		<div align="left">
-	    	<jsp:include page="../../common/admin/adminMainPage.jsp" />
+	    	<jsp:include page="../../common/admin/adminSidebar.jsp" />
 		</div>
 
         <div class="inner">
             <div class="title">
                 <p style="color: gray; font-size: 30px; font-weight:bold;">클래스 등록 관리</p>
                 <br><br>
-
-                <p>신청일 구간 조회</p>
-                <input type="date" value="before"> ~ <input type="date" value="after">
-                <img src="resources/images/search.png" style="width: 23px; height: 23px;">
-
+				
+				<!-- 
+				<form id="dateForm" action="dateClassEnrollList.ad">
+	                <p>신청일 구간 조회</p>
+	                <input type="date" id="before" name="before"> ~ <input type="date" id="after" name="after">
+	                <img src="resources/images/search.png" style="width: 23px; height: 23px;" onclick="dateFormSubmit();">
+				</form>
+				 -->
                 <div style="float: right;">
                     <select style="width:100px; height: 30px;">
                         <option selected>클래스명</option>
@@ -79,15 +83,16 @@
                 $(".content2").css("display", "block");
             })
         })
-        /*
-        $(function(){
-            $("#listPage").click(function(){
-                console.log("Gggggg");
-                $(".content2").css("display", "none");
-                $(".content1").css("display", "block");
-            })
-        })
-        */
+        
+        function dateFormSubmit(){
+        	
+        	if(document.getElementById("before").value == null || document.getElementById("after").value == null){
+				alert("검색할 날짜를 모두 선택해주세요.");        		
+        	} else{
+	        	document.getElementById("dateForm").submit();
+        	}
+        	
+        }
     </script>
 </body>
 </html>
