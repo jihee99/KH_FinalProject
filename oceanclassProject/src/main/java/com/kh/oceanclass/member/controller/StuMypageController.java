@@ -74,8 +74,10 @@ public class StuMypageController {
 		
 		//System.out.println(m);
 		int result = myService.updateProfile(m);
+		Member loginUser = myService.selectUser(m);
 		//System.out.println(result);
 		if(result>0) {
+			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", "정보 수정 완료");
 			//return "member/student/myProfile";
 			return "redirect:myProfile.me";

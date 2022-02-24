@@ -25,6 +25,10 @@ public class MypageDao {
 		return sqlSession.update("myMapper.updateProfile", m);
 	}
 	
+	public Member selectUser(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("myMapper.selectUser", m);
+	}
+	
 	public int updatePwd(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("myMapper.updatePwd", m);
 	}

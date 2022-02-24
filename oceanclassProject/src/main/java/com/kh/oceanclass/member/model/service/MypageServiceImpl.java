@@ -26,10 +26,16 @@ public class MypageServiceImpl implements MypageService{
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
 		
 	@Override
 	public int updateProfile(Member m) {
 		return myDao.updateProfile(sqlSession, m);
+	}
+	
+	@Override
+	public Member selectUser(Member m) {
+		return myDao.selectUser(sqlSession, m);
 	}
 
 	@Override
@@ -51,7 +57,7 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<Coupon> selectCouponList(PageInfo pi, int memNo) {
 		return myDao.selectCouponList(sqlSession, pi, memNo);
 	}
-
+	
 	
 	
 // 문의내역
@@ -150,8 +156,5 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo) {
 		return myDao.shoppingReviewList(sqlSession, pi, memNo);
 	}
-
-
-
 
 }

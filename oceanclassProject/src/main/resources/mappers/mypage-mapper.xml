@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="myMapper">
 
+	<resultMap id="memberResult" type="Member">
+	   <result column="mno" property="memNo" />
+	   <result column="user_id" property="userId" />
+       <result column="user_pwd" property="userPwd" />
+       <result column="user_name" property="userName" />
+       <result column="nickname" property="nickName" />
+       <result column="phone" property="phone" />
+       <result column="profile" property="profileImg" />
+       <result column="point" property="point" />
+       <result column="grade" property="grade" />
+       <result column="u_status" property="userStatus" />
+       <result column="report" property="report" />
+       <result column="enroll_date" property="enrollDate" />
+       <result column="sleep_date" property="sleepDate" />
+       <result column="escape_date" property="escapeDate" />
+	</resultMap>
+
 	<resultMap id="myCouponResult" type="coupon">
 		<result column="cno" property="couponNo" />
 		<result column="mno" property="memNo" />
@@ -108,6 +125,20 @@
 		   	 , profile = #{profileImg}
 		 where mno = #{memNo}
 	</update>
+	
+	<select id="selectUser" resultMap="memberResult">
+	 select
+		  	mno
+	      , user_id
+	      , user_pwd
+	      , user_name
+	      , nickname
+	      , phone
+	      , profile
+	  from member
+	 where u_status = 'Y'
+	   and mno = #{memNo}
+	</select>
 	
 	<update id="updatePwd">
 		update

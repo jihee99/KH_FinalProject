@@ -15,9 +15,10 @@ import com.kh.oceanclass.store.model.vo.StoreReview;
 
 public interface MypageService {
 
-	// 학생 마이페이지 기능
+// 학생 마이페이지 기능
 	// 프로필수정
 	int updateProfile(Member m);
+	Member selectUser(Member m);
 	
 	// 비밀번호 변경
 	int  updatePwd(Member m);
