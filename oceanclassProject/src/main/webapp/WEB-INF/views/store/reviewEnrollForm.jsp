@@ -117,7 +117,7 @@
 	
 	        <div class="content_area">
 	            <span class="question2">상품은 어떠셨나요?</span><br>
-	            <textarea name="content" id="reviewContent" cols="60" rows="10" class="review_content" onchange="counter();" placeholder="상품에 대한 솔직한 평가를 작성해주세요. (최소10자)" maxlength="500"></textarea>
+	            <textarea name="content" id="reviewContent" cols="60" rows="10" class="review_content" placeholder="상품에 대한 솔직한 평가를 작성해주세요. (최소10자)" maxlength="500"></textarea>
 	            <span id="counter">0/1000</span>
 	        </div>
 	        <br><br>
@@ -158,13 +158,11 @@
 		
 		if(content.length < 5 ){
 			alert("후기 내용은 5글자 이상 입력해야 합니다.");
-			console.log(star == null);
 		} else if(star.length == 0){
 			alert("별점을 입력해주세요!");
 		} else if(file == ""){
 			document.getElementById("form-area").submit();
-			alert("후기 작성 완료!")
-			window.close();
+			alert("후기 작성 완료!");
 		} else if(filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
 			alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
 		} else if(filetype == 'bmp'){
@@ -176,16 +174,13 @@
 	        }
 		}  else {
 			document.getElementById("form-area").submit();
-			alert("후기 작성 완료!")
-			window.close();
+			alert("후기 작성 완료!");
 		}
-		
-		
 		
 	}
     
     function counter(){
-    	document.getElementById("reviewContent").keyup(function (){
+    	    document.getElementById("reviewContent").keyup(function (){
 		    var content = document.getElementById("reviewContent").value;
 		    document.getElementById("counter").html("("+content.length+" / 최대 200자)");
 	

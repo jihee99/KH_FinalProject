@@ -175,6 +175,12 @@
 					<div class="content-dis">
 						<jsp:include page="productDetailReview.jsp"/>
 		            </div>
+		            
+		            <!-- 3 -->
+		            
+		            <div class="content-dis">
+		            	<jsp:include page="productDetailQna.jsp"/>
+		            </div>
 				</div>
             
             </div>

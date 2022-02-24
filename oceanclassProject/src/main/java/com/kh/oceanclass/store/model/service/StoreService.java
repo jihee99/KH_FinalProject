@@ -2,12 +2,13 @@ package com.kh.oceanclass.store.model.service;
 
 import java.util.ArrayList;
 
-import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 public interface StoreService {
@@ -17,7 +18,7 @@ public interface StoreService {
 	ArrayList<Product> selectList(PageInfo pi, int memberNo);
 	
 	// 1-2. 스토어 카테고리 검색
-	ArrayList<Product> categorySearch(String category, int memberNo, String sort);
+	ArrayList<Product> categorySearch(Product p);
 	
 	// 2. 상품 상세조회용 서비스
 	Product selectProduct(int pno, int memberNo);
@@ -32,7 +33,7 @@ public interface StoreService {
 	int insertReview(StoreReview review);
 	
 	// 6. 상품 문의 리스트 페이지 서비스
-	void selectStoreQnaList();
+	ArrayList<StoreQna> selectStoreQnaList(int pno);
 	
 	// 7. 상품 문의 작성용 서비스
 	
@@ -77,5 +78,11 @@ public interface StoreService {
 	int deleteRecommend(StoreReview review);
 	int insertRecommend(StoreReview review);
 	
+	int insertReport(Report r);
 	
+	int storeQnaListCount(int pno);
+	
+	ArrayList<StoreQna> selectPagingQnaList(int pno, PageInfo pi);
+	
+	int insertQna(StoreQna qna);
 }
