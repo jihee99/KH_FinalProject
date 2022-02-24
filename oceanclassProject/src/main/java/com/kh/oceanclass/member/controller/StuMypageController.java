@@ -31,6 +31,7 @@ import com.kh.oceanclass.member.model.service.MypageService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Controller
@@ -75,11 +76,9 @@ public class StuMypageController {
 		//System.out.println(m);
 		int result = myService.updateProfile(m);
 		Member loginUser = myService.selectUser(m);
-		//System.out.println(result);
 		if(result>0) {
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", "정보 수정 완료");
-			//return "member/student/myProfile";
 			return "redirect:myProfile.me";
 		}else {
 			model.addAttribute("errorMsg", "정보수정실패");
@@ -91,7 +90,6 @@ public class StuMypageController {
 	@ResponseBody
 	@RequestMapping(value="changePwd.me", produces="application/json; charset=UTF-8")
 	public String ajaxChangePwd(Member m, HttpSession session, Model model) {
-		//System.out.println(newPwd); 
 		String newEncPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
 		m.setUserPwd(newEncPwd);
 		int result = myService.updatePwd(m);
@@ -108,8 +106,6 @@ public class StuMypageController {
 	// 회원 탈퇴
 	@RequestMapping("myDelete.me")
 	public String deleteMem(String userPwd, String userId, HttpSession session, Model model) {
-		//System.out.println(userPwd);
-		//System.out.println(userId);
 		// db 비밀번호 암호문
 		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
 		
@@ -134,7 +130,6 @@ public class StuMypageController {
 	@ResponseBody
 	@RequestMapping("checkNick.me")
 	public int checkNick(String nickName) {
-		//System.out.println(nickName);
 		int result = myService.checkNick(nickName);
 		return result;
 	}
@@ -168,12 +163,10 @@ public class StuMypageController {
 	@RequestMapping("pointCoupon.me")
 	public String couponList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
 		int couponCount = myService.selectCouponCount(memNo);
 		
 		PageInfo pi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
 		ArrayList<Coupon> list = myService.selectCouponList(pi, memNo);
-		//System.out.println(list);
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).getDedate() == null) {
 				list.get(i).setDedate("무제한");
@@ -193,9 +186,7 @@ public class StuMypageController {
 	@RequestMapping("myQna.me")
 	public String myQnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
 		int qnaCount = myService.selectQnaCount(memNo);
-		//System.out.println(qnaCount);
 		
 		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 10, 10);
 		ArrayList<Qna> list = myService.selectQnaList(pi, memNo);
@@ -219,16 +210,12 @@ public class StuMypageController {
 	@ResponseBody
 	@RequestMapping(value="ajaxMyQna.me", produces="application/json; charset=UTF-8")
 	public Map<String, Object> ajaxMyQna(@RequestParam(value="cpage", defaultValue="1") int currentPage, Qna q, Model model) {
-		//System.out.println(q);
+
 		Map<String, Object> map = new HashMap();
 		
 		int qnaCount = myService.myQnaCount(q);
 		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 5, 5);
 		ArrayList<Qna> list = myService.selectMyQnaList(pi, q);
-		
-		System.out.println(qnaCount);
-		//System.out.println(currentPage);
-		//System.out.println(list);
 	
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).getCategory().equals("C")) {
@@ -242,7 +229,6 @@ public class StuMypageController {
 		
 		map.put("pi", pi);
 		map.put("list", list);
-		//System.out.println(map);
 		return map;
 	}
 	
@@ -292,7 +278,6 @@ public class StuMypageController {
 		
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
 		ArrayList<ClassReview> list = myService.classReviewList(pi, memNo);
-		//System.out.println(list);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -308,7 +293,6 @@ public class StuMypageController {
 		
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
 		ArrayList<CsQna> list = myService.classQnaList(pi, memNo);
-		//System.out.println(list);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -321,7 +305,6 @@ public class StuMypageController {
 	public String myClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
-		//System.out.println(list);
 		
 		model.addAttribute("list", list);
 		return "member/student/myClass";
@@ -332,7 +315,6 @@ public class StuMypageController {
 	public String myAllClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
-		//System.out.println(list);
 		
 		model.addAttribute("list", list);
 		return "member/student/myClassDetail";
@@ -346,12 +328,11 @@ public class StuMypageController {
 	@RequestMapping("likeProduct.me")
 	public String likeProduct(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
 		int likeProductCount = myService.likeProductCount(memNo);
 		
 		PageInfo pi = Pagination.getPageInfo(likeProductCount, currentPage, 5, 6);
 		ArrayList<Product> list = myService.selectLikeProduct(pi, memNo);
-		//System.out.println(list);
+
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShoppingLike";
@@ -369,10 +350,9 @@ public class StuMypageController {
 		PageInfo qpi = Pagination.getPageInfo(qnaCount, currentPage, 5, 6);
 		ArrayList<CsQna> qnaList = myService.shoppingQnaList(qpi, memNo);
 		
-		PageInfo rpi = Pagination.getPageInfo(qnaCount, currentPage, 5, 6);
+		PageInfo rpi = Pagination.getPageInfo(reviewCount, currentPage, 5, 6);
 		ArrayList<StoreReview> reviewlist = myService.shoppingReviewList(rpi, memNo);
-		//System.out.println(list);
-		
+
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("reviewlist", reviewlist);
 		return "member/student/myShoppingReview";
@@ -382,12 +362,11 @@ public class StuMypageController {
 	@RequestMapping("myShoppingQnaDetail.me")
 	public String myShoppingQnaDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
 		int QnaCount = myService.shoppingQnaCount(memNo);
 		
 		PageInfo pi = Pagination.getPageInfo(QnaCount, currentPage, 5, 10);
 		ArrayList<CsQna> list = myService.shoppingQnaList(pi, memNo);
-		//System.out.println(list);
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShoppingQnaDetail";
@@ -397,15 +376,53 @@ public class StuMypageController {
 	@RequestMapping("myShoppingReviewDetail.me")
 	public String myShoppingReviewDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
 		int reviewCount = myService.shoppingQnaCount(memNo);
 		
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
 		ArrayList<StoreReview> list = myService.shoppingReviewList(pi, memNo);
-		//System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShoppingReviewDetail";
+	}
+	
+	// 상품 주문조회 리스트
+	@RequestMapping("myShopping.me")
+	public String myShopping(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		int shoppingCount = myService.shoppingCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(shoppingCount, currentPage, 5, 5);
+		ArrayList<StorePay> list = myService.shoppingList(pi, memNo);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getOrderStatus().equals("1")) {
+				list.get(i).setOrderStatus("주문접수");
+			}else if(list.get(i).getOrderStatus().equals("2")){
+				list.get(i).setOrderStatus("결제완료");
+			}else if(list.get(i).getOrderStatus().equals("3")){
+				list.get(i).setOrderStatus("상품준비");
+			}else if(list.get(i).getOrderStatus().equals("4")){
+				list.get(i).setOrderStatus("배송시작");
+			}else if(list.get(i).getOrderStatus().equals("5")){
+				list.get(i).setOrderStatus("배송중");
+			}else if(list.get(i).getOrderStatus().equals("6")){
+				list.get(i).setOrderStatus("배송완료");
+			}else if(list.get(i).getOrderStatus().equals("7")){
+				list.get(i).setOrderStatus("취소접수");
+			}
+		}
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		return "member/student/myShopping";
+	}
+	
+	// 상품 주문조회
+	@ResponseBody
+	@RequestMapping(value="detailShopping.me", produces="application/json; charset=UTF-8")
+	public String myShoppingDetail(String orderNo) {
+		StorePay pay = myService.selectShopping(orderNo);
+		return new Gson().toJson(pay);
 	}
 	
 }

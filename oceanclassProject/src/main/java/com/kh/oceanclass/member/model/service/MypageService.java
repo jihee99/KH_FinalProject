@@ -11,6 +11,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 public interface MypageService {
@@ -81,4 +82,11 @@ public interface MypageService {
 	// 스토어 리뷰 내역
 	int shoppingReviewCount(int memNo);
 	ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo);
+	
+	// 스토어 주문 내역 리스트
+	int shoppingCount(int memNo);
+	ArrayList<StorePay> shoppingList(PageInfo pi, int memNo);
+	
+	// 스토어 주문 내역 상세
+	StorePay selectShopping(String orderNo);
 }

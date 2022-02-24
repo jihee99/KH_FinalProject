@@ -16,6 +16,7 @@ import com.kh.oceanclass.member.model.dao.MypageDao;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Service
@@ -155,6 +156,21 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo) {
 		return myDao.shoppingReviewList(sqlSession, pi, memNo);
+	}
+
+	@Override
+	public int shoppingCount(int memNo) {
+		return myDao.shoppingCount(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<StorePay> shoppingList(PageInfo pi, int memNo) {
+		return myDao.shoppingList(sqlSession, pi, memNo);
+	}
+
+	@Override
+	public StorePay selectShopping(String orderNo) {
+		return myDao.selectShopping(sqlSession, orderNo);
 	}
 
 }
