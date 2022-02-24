@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.service.InstructorStoreService;
 import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
@@ -543,6 +544,23 @@ public class InstructorStoreController {
 		return "redirect:sqlist.in";
 	}
 	
+	@RequestMapping(value="sqreport.in")
+	public String reportForm(String qno, Model model, HttpSession session) {
+		StoreQna sq = inStoreService.selectStoreQnaDetail(qno);
+		System.out.println(sq);
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		Report rp = new Report();
+		
+		rp.setReportMemNo(Integer.toString(sq.getMemNo()));
+		rp.setRefCategory("SQ");
+		rp.setRefBNo(Integer.toString(sq.getCsQno()));
+		rp.setRpContent(sq.getContent());
+
+		model.addAttribute("rp",rp);
+		
+		return "member/common/reportWindow";
+	}
 	
 	// 첨부파일
 	public String saveFile(MultipartFile upfile, HttpSession session) {

@@ -52,7 +52,7 @@
 		    <div id="ptitle-area">
 		        <div id="p-title">${sq.productName }</div>
 		        <input type="button" class="btn" id="backBtn" value="목록보기" onclick="history.back();">
-		        <input type="button" class="btn" id="reportBtn" value="신고하기">
+		        <input type="button" class="btn" id="reportBtn" value="신고하기" onclick="window.open('sqreport.in?qno=${sq.csQno}','신고하기','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">
 			</div>		    
 			
 			<hr style="border: solid 1px rgb(179, 178, 178); width: 970px; margin-left:10px;">
@@ -88,6 +88,7 @@
 		</div>
 		<br>
 	</div>
+
 
 </body>
 

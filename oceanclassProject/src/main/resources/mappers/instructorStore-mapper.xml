@@ -651,6 +651,7 @@
 		   set  answer_content = #{answerContent}
 		      , answer_date = sysdate
 		 where cs_qno = ${csQno}
+		   and status = 'Y'
 	</update>
 	
 	
