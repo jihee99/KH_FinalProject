@@ -198,11 +198,11 @@
 									$('#checkName').text("한글로 두글자 이상 입력해 주십시오.");
 									$('#checkName').css('color', 'red');
 									$('#userName').css('border', '2px solid red');
-									$("##updateBtn").attr("disabled", true)
+									$("#updateBtn").attr("disabled", true)
 								} else {
 									$('#checkName').text('');
 									$('#userName').css('border', '1px solid black');
-									$("##updateBtn").removeAttr("disabled");
+									$("#updateBtn").removeAttr("disabled");
 								}
 							});
 	                	})
