@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="myMapper">
 
+	<resultMap id="memberResult" type="Member">
+	   <result column="mno" property="memNo" />
+	   <result column="user_id" property="userId" />
+       <result column="user_pwd" property="userPwd" />
+       <result column="user_name" property="userName" />
+       <result column="nickname" property="nickName" />
+       <result column="phone" property="phone" />
+       <result column="profile" property="profileImg" />
+       <result column="point" property="point" />
+       <result column="grade" property="grade" />
+       <result column="u_status" property="userStatus" />
+       <result column="report" property="report" />
+       <result column="enroll_date" property="enrollDate" />
+       <result column="sleep_date" property="sleepDate" />
+       <result column="escape_date" property="escapeDate" />
+	</resultMap>
+
 	<resultMap id="myCouponResult" type="coupon">
 		<result column="cno" property="couponNo" />
 		<result column="mno" property="memNo" />
@@ -98,6 +115,27 @@
 	  	<result column="title" property="title"/>
 	  	<result column="img1" property="img"/>
 	</resultMap>
+	
+	<resultMap id="storePayResult" type="StorePay">
+	  	<result column="order_no" property="orderNo"/>
+	  	<result column="mno" property="memberNo"/>
+	  	<result column="address" property="address"/>
+	  	<result column="pay_amount" property="payAmount"/>
+	  	<result column="pay_date" property="payDate"/>
+	  	<result column="pay_method" property="payMethod"/>
+	  	<result column="order_status" property="orderStatus"/>
+	  	<result column="pay_status" property="payStatus"/>
+	  	<result column="deposit_ck" property="depositCK"/>
+	  	<result column="use_point" property="usePoint"/>
+	  	<result column="use_coupon" property="useCoupon"/>
+	  	<result column="point" property="point"/>
+	  	<result column="d_fee" property="deleveryFee"/>
+	  	<result column="d_fee" property="deleveryFee"/>
+	  	<result column="title" property="title"/>
+	  	<result column="img1" property="img"/>
+	  	<result column="user_name" property="userName"/>
+	  	<result column="phone" property="phone"/>
+	</resultMap>
 
 <!-- 정보수정용 -->
 	<update id="updateProfile">
@@ -108,6 +146,20 @@
 		   	 , profile = #{profileImg}
 		 where mno = #{memNo}
 	</update>
+	
+	<select id="selectUser" resultMap="memberResult">
+	 select
+		  	mno
+	      , user_id
+	      , user_pwd
+	      , user_name
+	      , nickname
+	      , phone
+	      , profile
+	  from member
+	 where u_status = 'Y'
+	   and mno = #{memNo}
+	</select>
 	
 	<update id="updatePwd">
 		update
@@ -405,24 +457,69 @@
 	</select>
 	
 	<select id="shoppingReviewList" resultMap="storeReviewResult">
-	select
-		   rno
-       	 , title
-	     , content
-	     , img1
-	     , review_date
-	     , case when star_rating <![CDATA[<=]]> 5 and star_rating <![CDATA[>]]> 4 then '★★★★★'
-	    		when star_rating <![CDATA[<=]]> 4 and star_rating <![CDATA[>]]> 3 then '★★★★☆'
-	    		when star_rating <![CDATA[<=]]> 3 and star_rating <![CDATA[>]]> 2 then '★★★☆☆'
-	    		when star_rating <![CDATA[<=]]> 2 and star_rating <![CDATA[>]]> 1 then '★★☆☆☆'
-	    	    when star_rating <![CDATA[<=]]> 1 then '★☆☆☆☆'  end as star_rating
-	  from s_review r
-	  join store s using(pno)
-	 where r.mno = 5
-	   and r.status = 'Y'
-       and s.status = 'Y'
-	 order 
-		by review_date desc
+		select
+			   rno
+	       	 , title
+		     , content
+		     , img1
+		     , review_date
+		     , case when star_rating <![CDATA[<=]]> 5 and star_rating <![CDATA[>]]> 4 then '★★★★★'
+		    		when star_rating <![CDATA[<=]]> 4 and star_rating <![CDATA[>]]> 3 then '★★★★☆'
+		    		when star_rating <![CDATA[<=]]> 3 and star_rating <![CDATA[>]]> 2 then '★★★☆☆'
+		    		when star_rating <![CDATA[<=]]> 2 and star_rating <![CDATA[>]]> 1 then '★★☆☆☆'
+		    	    when star_rating <![CDATA[<=]]> 1 then '★☆☆☆☆'  end as star_rating
+		  from s_review r
+		  join store s using(pno)
+		 where r.mno = 5
+		   and r.status = 'Y'
+	       and s.status = 'Y'
+		 order 
+			by review_date desc
+	</select>
+	
+	<select id="shoppingCount" resultType="_int">
+		select count(*)
+		  from pay
+		 where mno = #{memNo}
+	</select>
+	
+	<select id="shoppingList" resultMap="storePayResult">
+		select
+		       order_no
+		     , p.mno
+		     , address
+		     , pay_amount
+		     , pay_date
+		     , pay_method
+		     , order_status
+		     , pay_status
+		     , p.pno
+		     , title
+		     , img1
+		  from pay p 
+		  join store s on (p.pno = s.pno)
+		 where p.mno = #{memNo}
+	</select>
+	
+	<select id="selectShopping" resultMap="storePayResult">
+		select
+		       order_no
+		     , p.mno
+		     , address
+		     , pay_amount
+		     , pay_date
+		     , pay_method
+		     , order_status
+		     , pay_status
+		     , p.pno
+		     , title
+		     , img1
+		  	 , user_name
+		  	 , phone
+		  from pay p 
+		  join store s on (p.pno = s.pno)
+          join member m on (p.mno = m.mno)
+		 where order_no = #{orderNo}
 	</select>
 	
 </mapper>

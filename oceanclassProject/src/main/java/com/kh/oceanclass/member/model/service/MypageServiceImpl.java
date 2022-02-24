@@ -16,6 +16,7 @@ import com.kh.oceanclass.member.model.dao.MypageDao;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Service
@@ -26,10 +27,16 @@ public class MypageServiceImpl implements MypageService{
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
 		
 	@Override
 	public int updateProfile(Member m) {
 		return myDao.updateProfile(sqlSession, m);
+	}
+	
+	@Override
+	public Member selectUser(Member m) {
+		return myDao.selectUser(sqlSession, m);
 	}
 
 	@Override
@@ -51,7 +58,7 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<Coupon> selectCouponList(PageInfo pi, int memNo) {
 		return myDao.selectCouponList(sqlSession, pi, memNo);
 	}
-
+	
 	
 	
 // 문의내역
@@ -151,7 +158,19 @@ public class MypageServiceImpl implements MypageService{
 		return myDao.shoppingReviewList(sqlSession, pi, memNo);
 	}
 
+	@Override
+	public int shoppingCount(int memNo) {
+		return myDao.shoppingCount(sqlSession, memNo);
+	}
 
+	@Override
+	public ArrayList<StorePay> shoppingList(PageInfo pi, int memNo) {
+		return myDao.shoppingList(sqlSession, pi, memNo);
+	}
 
+	@Override
+	public StorePay selectShopping(String orderNo) {
+		return myDao.selectShopping(sqlSession, orderNo);
+	}
 
 }

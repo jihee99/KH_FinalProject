@@ -63,7 +63,7 @@
 				        <c:choose>
 			        		<c:when test="${empty list}">
 			        			<p>찜한 상품이 없습니다</p>
-			        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
+			        			<button type="button" class="btn btn-lg" onclick="moveStore();">지금 찜하러 가기!</button>
 			        		</c:when>
 				        	<c:otherwise>
 				        		<c:forEach var="s" items="${list}">
@@ -85,40 +85,45 @@
 						   		</c:forEach>	
 						   		
 						   		<div id="paging">
-										<ul class="pagination">
-											<c:choose>
-												<c:when test="${ pi.currentPage eq 1 }">
-													<li class="page-item disabled">
-														<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-													</li>
-												</c:when>
-												<c:otherwise>
-													<li class="page-item"><a class="page-link" href="likeProduct.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
-												</c:otherwise>
-											</c:choose>
-											
-											<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-												<li class="page-item"><a class="page-link" href="likeProduct.me?cpage=${ p }">${ p }</a></li>
-											</c:forEach>
-											
-											<c:choose>
-												<c:when test="${ pi.currentPage eq pi.maxPage }">
-													<li class="page-item disabled">
-														<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-													</li>
-												</c:when>
-												<c:otherwise>
-													<li class="page-item"><a class="page-link" href="likeProduct.me?cpage=${ pi.currentPage+1 }">Next</a></li>
-												</c:otherwise>
-											</c:choose>
-							            </ul>
-									</div>
+									<ul class="pagination">
+										<c:choose>
+											<c:when test="${ pi.currentPage eq 1 }">
+												<li class="page-item disabled">
+													<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item"><a class="page-link" href="likeProduct.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+											</c:otherwise>
+										</c:choose>
+										
+										<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+											<li class="page-item"><a class="page-link" href="likeProduct.me?cpage=${ p }">${ p }</a></li>
+										</c:forEach>
+										
+										<c:choose>
+											<c:when test="${ pi.currentPage eq pi.maxPage }">
+												<li class="page-item disabled">
+													<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item"><a class="page-link" href="likeProduct.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+											</c:otherwise>
+										</c:choose>
+						            </ul>
+								</div>
 							</c:otherwise>			        
 				        </c:choose>
 				    </div> 
 				</div>
 				
 				<script>
+		   			function moveStore(){
+		   				location.href="storeList.st"
+		   			}
+		   		
+				
 					$("a").click(function(){
 						console.log($(this).next().val());
 						$.ajax({
