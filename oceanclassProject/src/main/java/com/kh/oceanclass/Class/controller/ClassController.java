@@ -521,24 +521,35 @@ public class ClassController {
 	}
 	
 	@RequestMapping(value="classPay.me")
-	public String classPay(ClassOrder co) {
-		// 클래스 결제
-		System.out.println(co);
-		
-		int result = cService.insertClassOrder(co);
-		
-		if(result > 0) {
-			System.out.println("구매 성공");
+	public String classPay(ClassOrder co, Model model) {
+		/*
+		if(co.getPaymentOption() == 1) {
+			
+		} else if(co.getPaymentOption() == 2) {
+			
 		} else {
-			System.out.println("구매 실패");
+			
+		}
+		*/
+		
+		int result = cService.insertClassOrder(co);					// 주문 내역 insert
+		ClassOrder coInfo = cService.selectClassOrder(co);			// 클래스 주문 정보
+		if(coInfo.getPointUse() != null) {
+			int pointResult1 = cService.insertUsePoint(coInfo);		// 포인트 차감 (포인트 테이블에 차감 데이터 insert)
+			int pointResult2 = cService.downMemberPoint(coInfo);	// 포인트 차감 (멤버 데이터 update)
+		}
+		if(coInfo.getPcNo() != null) {
+			int couponResult = cService.deleteCoupon(coInfo);		// 쿠폰 사용처리
 		}
 		
-		return "gg";
-	}
-	
-	@RequestMapping(value="classPayComplate.me")
-	public String classPayComplate() {
-		// 클래스 결제 완료 페이지 이동용(뷰 확인용) 메소드
+		/* 무통장 입금이 아닐 경우(즉시 결제) 실행되는 과정 - 무통장 입금일 경우는 후에 확인 후 진행 
+		if(co.getAmount() > 0) {
+			int pointResult3 = cService.insertSavingPoint(coInfo);	// 포인트 적립 (포인트 테이블에 적립 데이터 insert)
+			int pointResult4 = cService.upMemberPoint(coInfo);		// 포인트 적립 (멤버 데이터 update)
+		}
+		*/
+		
+		model.addAttribute("co", coInfo);
 		return "class/classPayComplate";
 	}
 	

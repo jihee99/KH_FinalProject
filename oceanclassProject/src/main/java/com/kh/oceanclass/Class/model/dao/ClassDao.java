@@ -212,6 +212,28 @@ public class ClassDao {
 		return sqlSession.insert("classMapper.insertClassOrder", co);
 	}
 	
+	public ClassOrder selectClassOrder(SqlSessionTemplate sqlSession, ClassOrder co) {
+		return sqlSession.selectOne("classMapper.selectClassOrder", co);
+	}
 	
+	public int insertUsePoint(SqlSessionTemplate sqlSession, ClassOrder coInfo) {
+		return sqlSession.insert("classMapper.insertUsePoint", coInfo);
+	}
+	
+	public int deleteCoupon(SqlSessionTemplate sqlSession, ClassOrder coInfo) {
+		return sqlSession.update("classMapper.deleteCoupon", coInfo);
+	}
+	
+	public int downMemberPoint(SqlSessionTemplate sqlSession, ClassOrder coInfo) {
+		return sqlSession.update("classMapper.downMemberPoint", coInfo);
+	}
+	
+	public int insertSavingPoint(SqlSessionTemplate sqlSession, ClassOrder coInfo) {
+		return sqlSession.insert("classMapper.insertSavingPoint", coInfo);
+	}
+	
+	public int upMemberPoint(SqlSessionTemplate sqlSession, ClassOrder coInfo) {
+		return sqlSession.update("classMapper.upMemberPoint", coInfo);
+	}
 	
 }

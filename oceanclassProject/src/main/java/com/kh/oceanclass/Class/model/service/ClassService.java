@@ -74,4 +74,11 @@ public interface ClassService {
 	ArrayList<MemCoupon> memberCouponList(int memNo);
 	MemCoupon useCouponData(int useCouponNo);
 	int insertClassOrder(ClassOrder co);
+	ClassOrder selectClassOrder(ClassOrder co);
+	int insertUsePoint(ClassOrder coInfo);
+	int deleteCoupon(ClassOrder coInfo);
+	int downMemberPoint(ClassOrder coInfo);
+	int insertSavingPoint(ClassOrder coInfo);
+	int upMemberPoint(ClassOrder coInfo);
+	
 }

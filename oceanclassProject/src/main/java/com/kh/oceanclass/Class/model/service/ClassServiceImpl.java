@@ -236,4 +236,34 @@ public class ClassServiceImpl implements ClassService {
 	public int insertClassOrder(ClassOrder co) {
 		return cDao.insertClassOrder(sqlSession, co);
 	}
+
+	@Override
+	public ClassOrder selectClassOrder(ClassOrder co) {
+		return cDao.selectClassOrder(sqlSession, co);
+	}
+
+	@Override
+	public int insertUsePoint(ClassOrder coInfo) {
+		return cDao.insertUsePoint(sqlSession, coInfo);
+	}
+
+	@Override
+	public int deleteCoupon(ClassOrder coInfo) {
+		return cDao.deleteCoupon(sqlSession, coInfo);
+	}
+
+	@Override
+	public int downMemberPoint(ClassOrder coInfo) {
+		return cDao.downMemberPoint(sqlSession, coInfo);
+	}
+
+	@Override
+	public int insertSavingPoint(ClassOrder coInfo) {
+		return cDao.insertSavingPoint(sqlSession, coInfo);
+	}
+
+	@Override
+	public int upMemberPoint(ClassOrder coInfo) {
+		return cDao.upMemberPoint(sqlSession, coInfo);
+	}
 }
