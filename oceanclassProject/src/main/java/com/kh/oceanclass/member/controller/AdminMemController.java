@@ -446,10 +446,13 @@ public class AdminMemController {
 	
 	
 	@RequestMapping(value="rpdelete.ad")
-	public String adminReportDelete(String rpno, HttpSession session) {
+	public String adminReportDelete(String rpno, String mno, HttpSession session) {
 		
 		int result = adMemService.adminReportDelete(rpno);
-		if(result>0) {
+		Member m = adMemService.selectReportMem(mno);
+		int result2 = adMemService.reportCountUp(m);
+		
+		if(result*result2>0) {
 			session.setAttribute("alertMsg", "신고 게시글 삭제가 완료되었습니다.");
 		} else {
 			session.setAttribute("alertMsg", "신고 게시글 삭제가 실패했습니다.");
@@ -458,10 +461,13 @@ public class AdminMemController {
 	}
 	
 	@RequestMapping(value="rpback.ad")
-	public String adminReportRollback(String rpno, HttpSession session) {
+	public String adminReportRollback(String rpno, String mno, HttpSession session) {
 		
 		int result = adMemService.adminReportRollback(rpno);
-		if(result>0) {
+		Member m = adMemService.selectReportMem(mno);
+		int result2 = adMemService.reportCountDown(m);
+		
+		if(result*result2>0) {
 			session.setAttribute("alertMsg", "신고 게시글 복구가 완료되었습니다.");
 		} else {
 			session.setAttribute("alertMsg", "신고 게시글 복구에 실패했습니다.");

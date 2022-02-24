@@ -81,10 +81,10 @@
                         <td class="category">${report.refCategory }</td>
 						<td>
                         	<c:choose>
-                        		<c:when test="${report.refCategory eq 'SR'}">
-                        			스토어 리뷰
-                        		</c:when>
+                        		<c:when test="${report.refCategory eq 'SR'}">스토어 리뷰</c:when>
+                        		<c:when test="${report.refCategory eq 'SQ'}">스토어 문의</c:when>
                         		<c:when test="${report.refCategory eq 'CR'}">클래스 리뷰</c:when>
+                        		<c:when test="${report.refCategory eq 'CQ'}">클래스 문의</c:when>
                         		<c:otherwise>댓글</c:otherwise>
                         	</c:choose>
                         </td>

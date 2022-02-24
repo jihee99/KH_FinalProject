@@ -60,6 +60,7 @@
 		<result column="content" property="content"/>
 		<result column="status" property="status"/>
 		<result column="user_id" property="userId"/>
+		<result column="rpcontent" property="rpContent"/>
 	</resultMap>
 	
 	<resultMap type="StoreOrder" id="storeOrderResult">
@@ -676,10 +677,7 @@
 		  and order_no like '%' || #{key} || '%'
 		order by pay_date desc		  
 	</select>
-	
-	
 
-	
 	<select id="selectReportCount" resultType="_int">
 		select count(*)
   		  from report
@@ -732,6 +730,40 @@
 		  where report_no = #{reportNo}
 	</select>
 	
+	<select id="selectReportStoreQna" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+		      , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , cs.content as rpcontent
+		  from report rp
+		  join cs_qna cs on cs.cs_qno = rp.rep_bno
+		  join member on rp.reported_mno = member.mno
+		  where report_no = #{reportNo}
+		    and gb_no = 2
+	</select>
+	
+	<select id="selectReportClassQna" resultMap="reportResult">
+		select
+		        report_no
+		      , reported_mno
+		      , user_id
+		      , bcategory
+		      , rep_bno
+		      , rp.content
+		      , rp.status
+		      , cs.content as rpcontent
+		  from report rp
+		  join cs_qna cs on cs.cs_qno = rp.rep_bno
+		  join member on rp.reported_mno = member.mno
+		  where report_no = #{reportNo}
+		    and gb_no = 1
+	</select>
+	
 	<select id="selectReportReply" resultMap="reportResult">
 		select
 		        report_no
@@ -747,6 +779,31 @@
 		  join member using (mno) 
 		  where report_no = #{reportNo}
 	</select>
+	
+	<select id="selectReportMem" resultMap="memberResult">
+		select mno, report
+		  from member
+		 where mno = #{memNo}
+	</select>
+	
+	<update id="reportCountUp">
+		update member
+		   set report = report + 1
+		 where mno = #{memNo}
+	</update>
+	
+	<update id="reportCountDown">
+		update member
+		<choose>
+			<when test="report>0">
+			set report = report -1
+			</when>
+			<otherwise>
+			set report = 0
+			</otherwise>
+		</choose>
+		where mno = #{mno}
+	</update>
 	
 	<update id="adminReportDelete">
 		update report
@@ -765,7 +822,7 @@
 		  from member
 		 where report > 2
 	</select>
-		
+	
 	<select id="selectReportMemList" resultMap="memberResult">
 		select mno
 		     , user_id
@@ -784,8 +841,6 @@
 		      ,report = 0
 		 where mno = #{mno}
 	</update>
-	
-	
 	
 	<update id="updateBlackMemOut">
 		update member

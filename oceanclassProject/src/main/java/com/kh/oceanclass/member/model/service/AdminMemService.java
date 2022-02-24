@@ -41,9 +41,14 @@ public interface AdminMemService {
 	
 	//관리자 신고내역 복구 기능
 	int adminReportRollback(String reportNo);
+	int reportCountDown(Member m);
 	
 	//관리자 신고내역 삭제 기능(블랙리스트로 등록)
 	int adminReportDelete(String reportNo);
+	int reportCountUp(Member m);
+	
+	//신고횟수 변경을 위한 회원 조회
+	Member selectReportMem(String mno);
 	
 	//관리자 회원별 신고횟수 조회 기능(신고횟수가 3회 이상인 회원은 자동 블랙리스트 처리)
 	int adminBlackListCount();
