@@ -19,6 +19,8 @@
 		<result column="count" property="count" />
 		<result column="nickname" property="memNo" />
 		<result column="like_count" property="like" />
+		<result column="cl_status" property="clStatus" />
+		<result column="reason" property="reason" />
 	</resultMap>
 	
 	<resultMap id="classReviewResult" type="ClassReview">
@@ -74,6 +76,88 @@
 		     , cl_status
 		  from class
 		 where mno = #{memNo}
+		 order
+		    by decode(cl_status,'Y', 1) asc
 	</select>
+	
+	<update id="endClass">
+		update class
+		   set cl_status = 'D'
+		 where clno = #{clNo}
+	</update>
+	
+	<insert id="insertClass">
+  		insert 
+		  into class
+		     (
+		       clno
+		     , mno
+		     , category
+		     , cl_name
+		     , cl_content
+		     , cl_date
+		     , cl_price
+		     , kit
+		     , cl_status
+		     , cl_img
+		     , cl_img2
+		     , cl_img3
+		     , cl_kitimg
+		     , hashtag
+             , count
+             , reason
+		     )
+		 VALUES
+		    (
+		      SEQ_CLNO.NEXTVAL
+		    , #{memNo}
+		    , #{category}
+		    , #{clName}
+		    , #{clContent}
+		    , sysdate
+            , #{clPrice}
+		    , #{kit}
+		    , 'N'
+		    , #{clImg}
+		    , #{clImg2}
+		    , #{clImg3}
+		    , #{clKitImg}
+            , #{hashtag}
+		    , 0
+		    , #{reason}
+		    ) 
+  	</insert>
+  	
+  	<select id="updateClassForm" resultMap="classResult">
+		select
+		       clno
+		     , category
+		     , cl_name
+		     , cl_content
+             , cl_date
+             , cl_price
+             , kit
+		     , cl_img
+             , cl_img2
+             , cl_img3
+             , cl_kitimg
+             , hashtag
+		  from class
+		 where clno = #{clNo}
+	</select>
+  	
+  	<update id="updateClass">
+  		update class
+		   set  category = #{category}
+		      , cl_content = #{clContent}
+		      , cl_date = sysdate
+              , kit = #{kit}
+		      , cl_img = #{clImg}
+		      , cl_img2 = #{clImg2}
+		      , cl_img3 = #{clImg3}
+		      , cl_kitimg = #{clKitImg}
+              , hashtag = #{hashtag}
+		 where clno = #{clNo}
+  	</update>
 		
 </mapper>

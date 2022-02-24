@@ -124,7 +124,7 @@
                 <div id="menu2">
                     <p>클래스 관리</p>
                     <ul>
-                        <li><a href="myClass.tc">내 클래스</a></li>
+                        <li><a href="myClassList.tc">내 클래스</a></li>
                         <li><a href="">클래스 리뷰 관리</a></li>
                         <li><a href="">클래스 문의 관리</a></li>
                     </ul>
