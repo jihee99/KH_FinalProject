@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//E" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminClassMapper">
+
+	<resultMap id="adminClassResult" type="Class">
+		<result column="clno" property="clNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="cl_name" property="clName" />
+		<result column="cl_content" property="clContent" />
+		<result column="cl_date" property="clDate" />
+		<result column="cl_price" property="clPrice" />
+		<result column="kit" property="kit" />
+		<result column="cl_img" property="clImg" />
+		<result column="cl_img2" property="clImg2" />
+		<result column="cl_img3" property="clImg3" />
+		<result column="cl_kitimg" property="clKitImg" />
+		<result column="hashtag" property="hashtag" />
+		<result column="count" property="count" />
+		<result column="nickname" property="memNo" />
+		<result column="like_count" property="like" />
+		<result column="cl_status" property="clStatus" />
+	</resultMap>
+
+	<select id="enrollClassListCount" resultType="_int">
+		select count(*)
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'N'
+	</select>
+	
+	<select id="selectEnrollClassList" resultMap="adminClassResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_content
+		     , to_char(cl_date, 'YYYY-MM-DD') as cl_date
+		     , cl_price
+		     , kit
+		     , cl_status
+		     , cl_img
+		     , cl_img2
+		     , cl_img3
+		     , cl_kitimg
+		     , hashtag
+		     , count
+		     , reason
+		  from class
+		  JOIN member USING (MNO)
+		 where cl_status = 'N'
+		 <choose>
+		 	<when test="array == 1">
+		 		order by clno
+		 	</when>
+		 	<otherwise>
+		 		order by clno desc
+		 	</otherwise>
+		 </choose>
+	</select>
+	
+
+</mapper>

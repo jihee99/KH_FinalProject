@@ -61,6 +61,7 @@
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/store-mapper.xml" />
 		<mapper resource="/mappers/adminStatistics-mapper.xml" />
+		<mapper resource="/mappers/adminClass-mapper.xml" />
 	</mappers>
 	
 </configuration>
