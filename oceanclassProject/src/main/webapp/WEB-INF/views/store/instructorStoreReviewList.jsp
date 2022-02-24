@@ -140,12 +140,12 @@
 	                    	</c:choose>
 	                        <div class="star" align="center">
 	                            <c:choose>
-	                            	<c:when test="${r.starRating eq '0.5'}">☆☆☆☆☆</c:when>
-	                            	<c:when test="${r.starRating eq '1' or r.starRating eq '1.5'}">★☆☆☆☆</c:when>
-	                           		<c:when test="${r.starRating eq '2' or r.starRating eq '2.5'}">★★☆☆☆</c:when>
-	                            	<c:when test="${r.starRating eq '3' or r.starRating eq '3.5'}">★★★☆☆</c:when>
-	                            	<c:when test="${r.starRating eq '4' or r.starRating eq '4.5'}">★★★★☆</c:when>
-	                            	<c:when test="${r.starRating eq '5'}">★★★★★</c:when>
+	                            	<c:when test="${r.starAvg eq '0.5'}">☆☆☆☆☆</c:when>
+	                            	<c:when test="${r.starAvg eq '1' or r.starAvg eq '1.5'}">★☆☆☆☆</c:when>
+	                           		<c:when test="${r.starAvg eq '2' or r.starAvg eq '2.5'}">★★☆☆☆</c:when>
+	                            	<c:when test="${r.starAvg eq '3' or r.starAvg eq '3.5'}">★★★☆☆</c:when>
+	                            	<c:when test="${r.starAvg eq '4' or r.starAvg eq '4.5'}">★★★★☆</c:when>
+	                            	<c:when test="${r.starAvg eq '5'}">★★★★★</c:when>
 	                            </c:choose>
 	                        </div>
 	                    </div>
@@ -202,7 +202,7 @@
 						for(let i in list){
 
 							var star = "";
-							var letStar = list[i].starRating
+							var letStar = list[i].starAvg
 
 							if(letStar == '0.5'){
 								star="☆☆☆☆☆";
