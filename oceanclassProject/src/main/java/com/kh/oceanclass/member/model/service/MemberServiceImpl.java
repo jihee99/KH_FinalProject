@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.member.model.dao.MemberDao;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -53,6 +54,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int updatePwd(Member m) {
 		return mDao.updatePwd(sqlSession, m);
+	}
+
+	@Override
+	public int postReport(Report r) {
+		return mDao.postReport(sqlSession, r);
 	}
 
 	
