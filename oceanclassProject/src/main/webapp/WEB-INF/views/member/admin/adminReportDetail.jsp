@@ -44,21 +44,21 @@
             <b>신고정보</b>
             <hr>
             
-	            <button id="reBtn" class="btn btn-sm" onclick="location.href='rpback.ad?rpno=${rp.reportNo }'">복구하기</button>
-	            <button id="deBtn" class="btn btn-sm" onclick="location.href='rpdelete.ad?rpno=${rp.reportNo}'">삭제하기</button>
+	            <button id="reBtn" class="btn btn-sm" onclick="location.href='rpback.ad?rpno=${rp.reportNo }&mno=${rp.reportMemNo }'">복구하기</button>
+	            <button id="deBtn" class="btn btn-sm" onclick="location.href='rpdelete.ad?rpno=${rp.reportNo}&mno=${rp.reportMemNo }'">삭제하기</button>
 	            <table>
 	                <tr>
 	                    <th width="180">신고번호</th>
 	                    <td width="300" class="">${rp.reportNo }</td>
 	                    <th width="180">게시글분류</th>
 	                    <td width="300">
-	                       	<c:choose>
-	                       		<c:when test="${rp.refCategory eq 'SR'}">
-	                       			스토어 리뷰
-	                       		</c:when>
-	                       		<c:when test="${rp.refCategory eq 'CR'}">클래스 리뷰</c:when>
-	                       		<c:otherwise>댓글</c:otherwise>
-	                       	</c:choose>
+	                       <c:choose>
+                        		<c:when test="${rp.refCategory eq 'SR'}">스토어 리뷰</c:when>
+                        		<c:when test="${rp.refCategory eq 'SQ'}">스토어 문의</c:when>
+                        		<c:when test="${rp.refCategory eq 'CR'}">클래스 리뷰</c:when>
+                        		<c:when test="${rp.refCategory eq 'CQ'}">클래스 문의</c:when>
+                        		<c:when test="${rp.refCategory eq 'R' }">댓글</c:when>
+                        	</c:choose>
 	                    </td>
 	                </tr>
 	                <tr>

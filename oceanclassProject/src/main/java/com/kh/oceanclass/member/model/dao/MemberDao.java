@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 
 @Repository
 public class MemberDao {
@@ -28,5 +29,8 @@ public class MemberDao {
 	}
 	public int updatePwd(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.updatePwd", m);
+	}
+	public int postReport(SqlSessionTemplate sqlSession, Report r) {
+		return sqlSession.insert("memberMapper.postReport", r);
 	}
 }

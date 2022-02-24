@@ -14,10 +14,10 @@ import lombok.ToString;
 public class StoreBuyList {
 	
 	private String orderNo;
-	private int productNo;
-	private int optionNo;
-	private int quantity;
-	private int price;
+	private String productNo;
+	private String optionNo;
+	private String quantity;
+	private String price;
 	
 	private String title;
 

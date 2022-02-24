@@ -219,6 +219,10 @@ public class AdminMemDao {
 			return sqlSession.selectOne("adMemMapper.selectReportStoreReview", rp);
 		} else if(rp.getRefCategory().equals("CR")) {
 			return sqlSession.selectOne("adMemMapper.selectReportClassReview", rp);
+		} else if(rp.getRefCategory().equals("SQ")) {
+			return sqlSession.selectOne("adMemMapper.selectReportStoreQna", rp);
+		} else if(rp.getRefCategory().equals("CQ")) {
+			return sqlSession.selectOne("adMemMapper.selectReportClassQna", rp);
 		} else {
 			return sqlSession.selectOne("adMemMapper.selectReportReply", rp);
 		}
@@ -293,6 +297,18 @@ public class AdminMemDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("adMemMapper.selectSearchStoreList", map, rowBounds);
+	}
+
+	public Member selectReportMem(SqlSessionTemplate sqlSession, String mno) {
+		return sqlSession.selectOne("adMemMapper.selectReportMem", mno);
+	}
+
+	public int reportCountUp(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("adMemMapper.reportCountUp", m);
+	}
+
+	public int reportCountDown(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("adMemMapper.reportCountDown", m);
 	}
 
 
