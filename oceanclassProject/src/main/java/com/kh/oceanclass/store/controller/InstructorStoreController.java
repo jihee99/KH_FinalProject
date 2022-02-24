@@ -166,7 +166,7 @@ public class InstructorStoreController {
 			
 			for(int i=0; i<opNameArr.length; i++) {
 				oplist.add(new ProductOption());
-				oplist.get(i).setProductNo(p.productNo);
+				oplist.get(i).setProductNo(p.getProductNo());
 				oplist.get(i).setOptionName(opNameArr[i]);
 				oplist.get(i).setPrice(option.getPrice());
 			}
@@ -528,6 +528,19 @@ public class InstructorStoreController {
 		System.out.println(sq);
 		model.addAttribute("sq", sq);
 		return "store/instructorStoreQnaDetail";
+	}
+	
+	
+	@RequestMapping(value="sqanswer.in")
+	public String productQnaAnswer(StoreQna sq, HttpSession session) {
+		System.out.println(sq);
+		int result = inStoreService.storeQnaAnswer(sq);
+		if(result>0) {
+			session.setAttribute("alertMsg", "답변 등록이 완료되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "답변 등록에 실패하였습니다.");
+		}
+		return "redirect:sqlist.in";
 	}
 	
 	

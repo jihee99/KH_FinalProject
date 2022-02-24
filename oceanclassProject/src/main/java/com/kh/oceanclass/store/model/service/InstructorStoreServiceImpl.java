@@ -126,13 +126,11 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		// 7_1. 상품 상세보기 서비스
 		return inStoreDao.selectStoreQnaDetail(sqlSession, qno);
 	}
-
-
 	
 	@Override
-	public int storeQnaAnswer() {
-		// 7_2. 상품 문의 답변 서비스
-		return 0;
+	public int storeQnaAnswer(StoreQna sq) {
+		// 7_2. 상품 문의 답변/수정 서비스
+		return inStoreDao.storeQnaAnswer(sqlSession, sq);
 	}
 
 	@Override
