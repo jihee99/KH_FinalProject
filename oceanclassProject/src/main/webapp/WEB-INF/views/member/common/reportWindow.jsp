@@ -1,33 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 <title>Insert title here</title>
 <style>
-    .outer{padding: 5px; text-align: center; width: 500px; height: 400px; margin: auto; box-sizing: border-box;}
+.outer{padding: 5px; text-align: center; width: 500px; height: 400px; margin: auto; box-sizing: border-box;}
     
-    .reportTable{margin-left: 10px; text-align: left; width: 100%; margin-top: 30px; font-size: 14px; border-collapse: separate; line-height: 30px;}
-    .outer h4{font-weight: 550; color: rgb(90, 90, 90);}
-    .reportTable>tbody>th{text-align: left; padding-left: 20px;}
-    #cName, #deadDate{width: 80%;}
-    button[type="submit"]{
-        width: 120px; height: 40px; 
-        border-radius: 10px; border: none; 
-        background: rgb(107, 171, 213); color: white;
-        font-size: 16px; font-weight: 550;    
-    }
-    .reportTable{width: 100%; text-align: center; line-height: 20px;}
-    .reportTable>thead{background: lightgray;}
+.reportTable{margin-left: 10px; text-align: left; width: 100%; margin-top: 30px; font-size: 14px; border-collapse: separate; line-height: 30px;}
+.reportTable h4{font-weight: 550; color: rgb(90, 90, 90);}
+.reportTable tbody th{text-align: left; padding-left: 20px;}
+#cName, #deadDate{width: 80%;}
+button[type="submit"]{
+    width: 120px; height: 40px; 
+    border-radius: 10px; border: none; 
+    background: rgb(107, 171, 213); color: white;
+    font-size: 16px; font-weight: 550;    
+}
 
 </style>
 </head>
 <body>
 
-	<!--
-	 <b class="crow" onclick="window.open('reportF.me?bno=${해당글번호}','쿠폰등록페이지','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no')">신고하기</a>	 
-	 -->
     <div class="outer">
         <table class="reportTable">
             <thead>
