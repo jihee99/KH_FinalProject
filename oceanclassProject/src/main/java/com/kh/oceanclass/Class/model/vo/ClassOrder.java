@@ -15,8 +15,8 @@ public class ClassOrder {
 	private int clNo;
 	private String memNo;
 	private int price;
-	private int pointUse;
-	private int pcNo;
+	private Integer pointUse;
+	private Integer pcNo;
 	private int amount;
 	private String paymentDate;
 	private int paymentOption;

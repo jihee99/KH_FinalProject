@@ -502,14 +502,38 @@ public class ClassController {
 		}
 	}
 	
-	@RequestMapping(value="classPay.me")
-	public String classPay(int clNo, int memNo, Model model) {
-		// 클래스 결제 페이지
+	@RequestMapping(value="classPayForm.me")
+	public String classPayForm(int clNo, int memNo, Model model) {
 		ClassVo c = cService.selectClass(clNo);
 		ArrayList<MemCoupon> couponList = cService.memberCouponList(memNo);	// 쿠폰 정보 확인
 		model.addAttribute("c", c);
 		model.addAttribute("couponList", couponList);
 		return "class/classPay";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="useCoupon.me", produces="application/json; charset=UTF-8")
+	public String ajaxUseCoupon(int useCouponNo) {
+		//ClassVo c = cService.selectClass(clNo);
+		//ArrayList<MemCoupon> couponList = cService.memberCouponList(memNo);	// 쿠폰 정보 확인
+		MemCoupon useCouponData = cService.useCouponData(useCouponNo);
+		return new Gson().toJson(useCouponData);
+	}
+	
+	@RequestMapping(value="classPay.me")
+	public String classPay(ClassOrder co) {
+		// 클래스 결제
+		System.out.println(co);
+		
+		int result = cService.insertClassOrder(co);
+		
+		if(result > 0) {
+			System.out.println("구매 성공");
+		} else {
+			System.out.println("구매 실패");
+		}
+		
+		return "gg";
 	}
 	
 	@RequestMapping(value="classPayComplate.me")
@@ -547,12 +571,8 @@ public class ClassController {
 		model.addAttribute("list", list);
 		model.addAttribute("category", category);
 		model.addAttribute("array", array);
-		return "class/classCategoryList"; 
+		return "class/classCategoryList";
 	}
-	
-
-	
-	
 	
 	@ResponseBody
 	@RequestMapping(value="mainSlide.me", produces="application/json; charset=UTF-8")

@@ -213,6 +213,11 @@ public class ClassServiceImpl implements ClassService {
 	}
 	
 	@Override
+	public ArrayList<Event> mainSlideList() {
+		return cDao.mainSlideList(sqlSession);
+	}
+
+	@Override
 	public int classPayCk(ClassOrder co) {
 		return cDao.classPayCk(sqlSession, co);
 	}
@@ -221,14 +226,14 @@ public class ClassServiceImpl implements ClassService {
 	public ArrayList<MemCoupon> memberCouponList(int memNo) {
 		return cDao.memberCouponList(sqlSession, memNo);
 	}
-	
-	
-	
-	
+
 	@Override
-	public ArrayList<Event> mainSlideList() {
-		return cDao.mainSlideList(sqlSession);
+	public MemCoupon useCouponData(int useCouponNo) {
+		return cDao.useCouponData(sqlSession, useCouponNo);
 	}
 
-
+	@Override
+	public int insertClassOrder(ClassOrder co) {
+		return cDao.insertClassOrder(sqlSession, co);
+	}
 }

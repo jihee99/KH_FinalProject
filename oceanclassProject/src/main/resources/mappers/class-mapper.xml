@@ -728,6 +728,15 @@
 		   </choose>
 	</select>
 		
+	<select id="mainSlideList" resultMap="eventResult2">
+		select 
+		       eno
+		     , e_title
+		     , img
+		  from event
+		 where status = 'Y'
+	</select>
+	
 	<select id="classPayCk" resultType="_int">
 		select count(*)
 		  from class_order
@@ -750,18 +759,57 @@
 		 where c.mno = #{memNo}
 		   and c.dedate > sysdate
 		   and c.use = 'N'
-	</select>	
-		
-		
-		
-		
-		
-	<select id="mainSlideList" resultMap="eventResult2">
-		select 
-		       eno
-		     , e_title
-		     , img
-		  from event
-		 where status = 'Y'
 	</select>
+	
+	<select id="useCouponData" resultMap="memCouponResult2">
+		select c.pcno
+		     , c.mno
+		     , cno
+		     , c.use
+		     , c.endate
+		     , c.dedate
+		     , cname
+		     , discount
+		  from coupon c
+		  join couponlist using (cno)
+		 where c.pcno = #{useCouponNo}
+	</select>
+	
+	<insert id="insertClassOrder">
+		insert 
+		  into class_order
+		values
+			 (
+			   'C' || to_char(sysdate, 'YYYYMMDD') || SEQ_CONO.NEXTVAL
+			 , #{clNo}
+			 , #{memNo}
+			 , #{price}
+			 , #{pointUse}
+			 , #{pcNo}
+			 , #{amount}
+			 , sysdate
+			 , #{paymentOption}
+			 <choose>
+			 	<when test="paymentOption == 1">
+			 		, 'N'
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
+			 <choose>
+			 	<when test="amount != 0">
+			 		, #{amount} * 0.01
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
+			 , 'N'
+			 )
+	</insert>
+		
+		
+		
+		
 </mapper>

@@ -322,7 +322,7 @@
         				if(result == 'nnnnn'){
         					alert("이미 구매한 클래스입니다.");
         				} else{
-        					location.href = "classPay.me?clNo=" + clNo + "&memNo=" + memNo;
+        					location.href = "classPayForm.me?clNo=" + clNo + "&memNo=" + memNo;
         				}
         			}, error:function(){
         				console.log("구매하기 체크용 ajax 통신 실패");

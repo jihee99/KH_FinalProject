@@ -192,6 +192,10 @@ public class ClassDao {
 		return (ArrayList)sqlSession.selectList("classMapper.classCategoryList", map, rowBounds);
 	}
 	
+	public ArrayList<Event> mainSlideList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("classMapper.mainSlideList");
+	}
+	
 	public int classPayCk(SqlSessionTemplate sqlSession, ClassOrder co) {
 		return sqlSession.selectOne("classMapper.classPayCk", co);
 	}
@@ -200,11 +204,14 @@ public class ClassDao {
 		return (ArrayList)sqlSession.selectList("classMapper.memberCouponList", memNo);
 	}
 
-	
-	
-	
-	
-	public ArrayList<Event> mainSlideList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("classMapper.mainSlideList");
+	public MemCoupon useCouponData(SqlSessionTemplate sqlSession, int useCouponNo) {
+		return sqlSession.selectOne("classMapper.useCouponData", useCouponNo);
 	}
+	
+	public int insertClassOrder(SqlSessionTemplate sqlSession, ClassOrder co) {
+		return sqlSession.insert("classMapper.insertClassOrder", co);
+	}
+	
+	
+	
 }
