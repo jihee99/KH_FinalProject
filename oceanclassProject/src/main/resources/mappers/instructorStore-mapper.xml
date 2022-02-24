@@ -513,7 +513,7 @@
 		      , nickname
 		      , pno
 		      , content
-		      , star_rating
+		      , star_rating as star_avg
 		      , review_date
 		      , status 
 		      , file_path
@@ -531,7 +531,7 @@
 		      , nickname
 		      , pno
 		      , content
-		      , star_rating
+		      , star_rating as star_avg
 		      , review_date
 		      , status 
 		      , file_path
@@ -646,7 +646,12 @@
 		   and cs_qno = #{qno}
 	</select>
 	
-	
+	<update id="updateStoreQnaAnswer">
+		update cs_qna
+		   set  answer_content = #{answerContent}
+		      , answer_date = sysdate
+		 where cs_qno = ${csQno}
+	</update>
 	
 	
 </mapper>

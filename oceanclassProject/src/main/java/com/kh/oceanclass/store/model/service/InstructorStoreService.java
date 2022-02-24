@@ -61,7 +61,7 @@ public interface InstructorStoreService {
 	StoreQna selectStoreQnaDetail(String qno);
 	
 	// 7_2. 상품 문의 답변 서비스
-	int storeQnaAnswer();
+	int storeQnaAnswer(StoreQna sq);
 	
 	// 8. 상품 리뷰 리스트 페이지 서비스
 	int selectStoreReviewCount();

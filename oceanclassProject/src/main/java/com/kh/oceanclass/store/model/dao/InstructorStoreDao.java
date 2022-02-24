@@ -199,6 +199,10 @@ public class InstructorStoreDao {
 		return sqlSession.selectOne("inStoreMapper.selectStoreQnaDetail", qno);
 	}
 
+	public int storeQnaAnswer(SqlSessionTemplate sqlSession, StoreQna sq) {
+		return sqlSession.update("inStoreMapper.updateStoreQnaAnswer", sq);
+	}
+
 	
 	
 	

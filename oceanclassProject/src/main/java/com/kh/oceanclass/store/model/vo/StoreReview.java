@@ -33,6 +33,5 @@ public class StoreReview {
 	public int reconum;
 	
 	
-	
 	private int recoCk;
 }
