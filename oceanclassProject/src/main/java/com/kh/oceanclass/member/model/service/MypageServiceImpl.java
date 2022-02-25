@@ -173,4 +173,9 @@ public class MypageServiceImpl implements MypageService{
 		return myDao.selectShopping(sqlSession, orderNo);
 	}
 
+	@Override
+	public ArrayList<StorePay> searchShoppingList(StorePay pay) {
+		return myDao.searchShoppingList(sqlSession, pay);
+	}
+
 }
