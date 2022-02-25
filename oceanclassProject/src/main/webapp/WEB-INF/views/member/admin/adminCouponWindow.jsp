@@ -108,7 +108,7 @@
 	       			url:"cgive.ad",
 	       			data:{
 	       				couponNo:$("#couponNo").val(),
-	       				deDate:$("#dedate").val(),
+	       				deDate:$("#deadDate").val(),
 	       				hiddenList:$('#hiddenList').val()
 	       			},success:function(result){
 	       				alert("쿠폰 발행에 성공했습니다.");
