@@ -297,9 +297,9 @@ public class ClassController {
 		
 		int result = cService.insertClassReview(cr);
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 후기가 등록되었습니다!");
+			session.setAttribute("alertMsg", "성공적으로 리뷰가 등록되었습니다!");
 		} else {
-			session.setAttribute("alertMsg", "후기 등록에 실패하였습니다.");
+			session.setAttribute("alertMsg", "리뷰 등록에 실패하였습니다.");
 		}
 		
 		return "redirect:classDetail.me?referNo=" + cr.getClNo();
@@ -309,10 +309,10 @@ public class ClassController {
 	public String deleteReview(int crNo, int clNo, int rpage, HttpSession session) {
 		int result = cService.deleteReview(crNo);
 		if(result > 0) {
-			session.setAttribute("alertMsg", "후기가 삭제되었습니다.");
+			session.setAttribute("alertMsg", "리뷰가 삭제되었습니다.");
 			return "redirect:classReviewList.me?cpage=1&clNo=" + clNo;
 		} else {
-			session.setAttribute("alertMsg", "후기 삭제에 실패하였습니다.");
+			session.setAttribute("alertMsg", "리뷰 삭제에 실패하였습니다.");
 			return "redirect:classReviewDetail.me?crNo=" + crNo + "&cpage=1&clNo=" + clNo + "&rpage=" + rpage;
 		}
 	}
@@ -342,9 +342,9 @@ public class ClassController {
 		int result = cService.updateReview(cr);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 후기를 수정하였습니다!");
+			session.setAttribute("alertMsg", "성공적으로 리뷰를 수정하였습니다!");
 		} else {
-			session.setAttribute("alertMsg", "후기 수정에 실패하였습니다.");
+			session.setAttribute("alertMsg", "리뷰 수정에 실패하였습니다.");
 		}
 		
 		return "redirect:classReviewDetail.me?crNo=" + cr.getCrNo() + "&cpage=1&clNo=" + cr.getClNo() + "&rpage=" + rpage;

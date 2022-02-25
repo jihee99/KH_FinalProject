@@ -35,7 +35,7 @@
     <div class="reviewOuter">
         <input type="hidden" id="mNo" value="${ loginUser.memNo }">		
 
-        <p style="color: #6babd5; font-weight: bold;">실제 수강생 후기</p>
+        <p style="color: #6babd5; font-weight: bold;">실제 수강생 리뷰</p>
         <br>
         
         <c:choose>
@@ -113,7 +113,7 @@
 		            
 		            <span style="color: gray; font-size: 15px;">총 ${ crList.size() }개</span>
 		            
-		            <button type="button" id="enrollBtn" onclick="enrollReviewCk(${c.clNo});" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px; margin-left: 10px; font-weight: bold;">후기 작성하기</button>
+		            <button type="button" id="enrollBtn" onclick="enrollReviewCk(${c.clNo});" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px; margin-left: 10px; font-weight: bold;">리뷰 작성하기</button>
 		        </div>
 			
 				<c:if test="${ !empty crTopList }">	
@@ -225,10 +225,10 @@
         	</c:when>
         	<c:otherwise>
             	<div>
-            		아직 해당 클래스에 후기가 존재하지 않습니다.<br>
-            		후기를 작성해보세요!
+            		아직 해당 클래스에 리뷰가 존재하지 않습니다.<br>
+            		리뷰를 작성해보세요!
             	</div><br>
-	            <button type="button" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px;" data-toggle="modal" data-target="#reviewModal">후기 작성하기</button>
+	            <button type="button" class="btn" style="background-color: lightgray; width: 120px; font-size: 13px; height: 30px; line-height: 10px;" data-toggle="modal" data-target="#reviewModal">리뷰 작성하기</button>
         	</c:otherwise>
         </c:choose>
     </div>
@@ -242,7 +242,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">후기 작성하기</h4>
+                        <h4 class="modal-title">리뷰 작성하기</h4>
                         <!--  
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     	-->
@@ -308,7 +308,7 @@
 			var memNo = document.getElementById("memNo").value;
 			
 			if(memNo == ""){
-				alert("로그인 한 회원만 후기를 작성할 수 있습니다.");
+				alert("로그인 한 회원만 리뷰를 작성할 수 있습니다.");
 			} else {
 				//ajax로 주문내역 있는지 확인
 				$.ajax({
@@ -318,10 +318,10 @@
 						if(result == 'yyyyy'){
 							 $("#reviewModal").modal();
 						} else {
-							alert("클래스 구매 후 강의를 열람한 회원만 후기를 작성할 수 있습니다.");
+							alert("클래스 구매 후 강의를 열람한 회원만 리뷰를 작성할 수 있습니다.");
 						}
 					}, error:function(){
-						console.log("후기 작성용 ajax 통신 실패");
+						console.log("리뷰 작성용 ajax 통신 실패");
 					}
 				})
 			}
@@ -336,10 +336,10 @@
 			var filetype = filepoint.toLowerCase();
 			
 			if(content.replace(/ /gi, "").length < 5){
-				alert("후기 내용은 5글자 이상 입력해야 합니다.");
+				alert("리뷰 내용은 5글자 이상 입력해야 합니다.");
 				return false;
 			} else if(file != "" && filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
-				alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
+				alert("리뷰 내용에는 사진 파일만 첨부할 수 있습니다.");
 				return false;
 			} else {
 				return true;
