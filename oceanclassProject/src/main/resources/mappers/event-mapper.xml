@@ -81,7 +81,6 @@
 		     , E_CONTENT
 		     , TAG
 		     , IMG
-		     , cno
 		  from EVENT
 		 where ENO = #{eventNo}
 	</select>

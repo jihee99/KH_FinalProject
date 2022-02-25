@@ -45,7 +45,6 @@
         	<c:forEach var="c" items="${list}">
         		
 	            <div class="img">
-	            	<input type="hidden" id="clno" value="${c.clNo}">
 	            	<form id="classDetail" method="post" action="classDetail.me">
 	            		<input type="hidden" id="referNo" name="referNo" value="${c.clNo}">
 		                <button id="move" type="submit"><img src="${c.clImg}" id="img"></button>
@@ -64,25 +63,7 @@
 	            </div>
 	            
 	 		</c:forEach> 
-		</div>       
-		
-		<!--
-		<script>
-			$("#classDetail>img").click(function(){
-				let referNo = $(this).prev().val();
-				console.log(referNo);
-				$.ajax({
-					url:"classDetail.me",
-					data:{referNo:referNo},
-					success:function(){
-						console.log("^^");
-					},error:function(){
-						console.log("ㅠㅠ");
-					}
-				})
-			})
-		</script>
-		 -->
+		</div>   
 		
 		<div id="paging">
 			<ul class="pagination">
