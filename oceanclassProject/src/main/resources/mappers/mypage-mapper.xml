@@ -366,9 +366,12 @@
 	
 	<select id="classQnaCount" resultType="_int">
 		select count(*)
-		  from cs_qna
-		 where mno = #{memNo} 
-		   and gb_no = 1
+		  from cs_qna cs
+		  join class c on ( cs.refer_no = c.clno)
+		 where cs.mno = #{memNo} 
+		   and cs.gb_no = 1
+		   and cs.status = 'Y'
+		   and cl_status = 'Y'
 	</select>
 	
 	<select id="classQnaList" resultMap="csResult">

@@ -291,10 +291,9 @@ public class StuMypageController {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		
 		int reviewCount = myService.classReviewCount(memNo);
-		
-		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
+		//System.out.println(reviewCount);
+		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 10);
 		ArrayList<CsQna> list = myService.classQnaList(pi, memNo);
-		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassQnaDetail";

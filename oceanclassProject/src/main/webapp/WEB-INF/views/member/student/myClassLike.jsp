@@ -44,7 +44,7 @@
     	font-weight: 800;
     	width: 300px;
     }
-    
+    #move{width: 90%; height: 40%; overflow: hidden; border:none; margin: 0 auto; margin-left: 20px;}
 </style>
 </head>
 <body>
@@ -69,8 +69,10 @@
 				        	<c:otherwise>
 						        <c:forEach var="c" items="${list}">
 						            <div class="item">
-						            	<a><img src="${c.clImg}"></a>
-						            	<input type="hidden" value="${c.clNo}">
+						            	<form id="classDetail" method="post" action="classDetail.me">
+						            		<input type="hidden" id="referNo" name="referNo" value="${c.clNo}">
+							                <button id="move" type="submit"><img src="${c.clImg}" id="img"></button>
+							            </form> 
 						            	<p id="ctitle">
 							            	<c:choose>
 							            		<c:when test="${fn:length(c.clName) gt 18}">
@@ -120,22 +122,6 @@
 				        </c:choose>      
 				    </div> 
 				</div>
-				
-				<script>
-					$("a").click(function(){
-						console.log($(this).next().val());
-						$.ajax({
-							url:"classDetail.me",
-							data:{clNo:$(this).next().val(), 
-								  referNo:$(this).next().val()},
-							success:function(result){
-								console.log(result);
-								console.log("성공");
-							}
-						})
-					})
-				</script>
-				
 			</td>
 		</tr>
 	</table>

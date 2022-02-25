@@ -94,7 +94,14 @@
 										            </c:choose>
 									            </td>
 								                <td>${q.createDate}</td>
-								                <td>${q.status}</td>
+								                <c:choose>
+							                        <c:when test="${not empty q.answerContent}">
+							                        	<td>등록완료</td>
+							                        </c:when>
+							                        <c:otherwise>
+							                        	<td>대기중</td>
+							                        </c:otherwise>
+						                        </c:choose>
 								            </tr>
 							            </c:forEach>
 							        </tbody>
