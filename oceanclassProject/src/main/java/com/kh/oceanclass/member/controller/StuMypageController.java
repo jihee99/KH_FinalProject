@@ -2,6 +2,7 @@ package com.kh.oceanclass.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -430,7 +431,62 @@ public class StuMypageController {
 	@RequestMapping(value="ajaxMyShopping.me", produces="application/json; charset=UTF-8")
 	public String ajaxMyShopping(StorePay pay, Model model) {
 		ArrayList<StorePay> list = myService.searchShoppingList(pay);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getOrderStatus().equals("1")) {
+				list.get(i).setOrderStatus("주문접수");
+			}else if(list.get(i).getOrderStatus().equals("2")){
+				list.get(i).setOrderStatus("결제완료");
+			}else if(list.get(i).getOrderStatus().equals("3")){
+				list.get(i).setOrderStatus("상품준비");
+			}else if(list.get(i).getOrderStatus().equals("4")){
+				list.get(i).setOrderStatus("배송시작");
+			}else if(list.get(i).getOrderStatus().equals("5")){
+				list.get(i).setOrderStatus("배송중");
+			}else if(list.get(i).getOrderStatus().equals("6")){
+				list.get(i).setOrderStatus("배송완료");
+			}else if(list.get(i).getOrderStatus().equals("7")){
+				list.get(i).setOrderStatus("취소접수");
+			}
+		}
+		
 		return new Gson().toJson(list);
 	}
+	
+	// 상품 주문조회 기간검색
+	@ResponseBody
+	@RequestMapping(value="ajaxSearchDate.me", produces="application/json; charset=UTF-8")
+	public String ajaxSearchDate(String sDate, String eDate, StorePay pay, Model model, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		pay.setMemberNo(memNo);
+		pay.setStartDate(sDate);
+		pay.setEndDate(eDate);
+		
+		ArrayList<StorePay> list = myService.ajaxSearchDate(pay);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getOrderStatus().equals("1")) {
+				list.get(i).setOrderStatus("주문접수");
+			}else if(list.get(i).getOrderStatus().equals("2")){
+				list.get(i).setOrderStatus("결제완료");
+			}else if(list.get(i).getOrderStatus().equals("3")){
+				list.get(i).setOrderStatus("상품준비");
+			}else if(list.get(i).getOrderStatus().equals("4")){
+				list.get(i).setOrderStatus("배송시작");
+			}else if(list.get(i).getOrderStatus().equals("5")){
+				list.get(i).setOrderStatus("배송중");
+			}else if(list.get(i).getOrderStatus().equals("6")){
+				list.get(i).setOrderStatus("배송완료");
+			}else if(list.get(i).getOrderStatus().equals("7")){
+				list.get(i).setOrderStatus("취소접수");
+			}
+		}
+	
+		return new Gson().toJson(list);
+		
+	}
+	
 	
 }

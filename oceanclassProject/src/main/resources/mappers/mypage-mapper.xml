@@ -130,7 +130,6 @@
 	  	<result column="use_coupon" property="useCoupon"/>
 	  	<result column="point" property="point"/>
 	  	<result column="d_fee" property="deleveryFee"/>
-	  	<result column="d_fee" property="deleveryFee"/>
 	  	<result column="title" property="title"/>
 	  	<result column="img1" property="img"/>
 	  	<result column="user_name" property="userName"/>
@@ -539,6 +538,25 @@
 		  join store s on (p.pno = s.pno)
 		 where p.mno = #{memberNo}
 		   and pay_date between sysdate - #{payDate} and sysdate
+	</select>
+	
+	<select id="ajaxSearchDate" resultMap="storePayResult">
+		select
+		       order_no
+		     , p.mno
+		     , address
+		     , pay_amount
+		     , pay_date
+		     , pay_method
+		     , order_status
+		     , pay_status
+		     , p.pno
+		     , title
+		     , img1
+		  from pay p 
+		  join store s on (p.pno = s.pno)
+		 where p.mno = #{memberNo}
+		   and pay_date between #{startDate} and #{endDate}
 	</select>
 	
 </mapper>

@@ -198,4 +198,8 @@ public class MypageDao {
 		return (ArrayList)sqlSession.selectList("myMapper.searchShoppingList", pay);
 	}
 	
+	public ArrayList<StorePay> ajaxSearchDate(SqlSessionTemplate sqlSession, StorePay pay){
+		return (ArrayList)sqlSession.selectList("myMapper.ajaxSearchDate", pay);
+	}
+	
 }// class

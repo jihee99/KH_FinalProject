@@ -92,4 +92,7 @@ public interface MypageService {
 	
 	// 스토어 주문내역 검색
 	ArrayList<StorePay> searchShoppingList(StorePay pay);
+	
+	// 스토어 주문 날짜검색
+	ArrayList<StorePay> ajaxSearchDate(StorePay pay);
 }

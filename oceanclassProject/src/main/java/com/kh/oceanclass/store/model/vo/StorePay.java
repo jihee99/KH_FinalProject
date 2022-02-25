@@ -1,7 +1,5 @@
 package com.kh.oceanclass.store.model.vo;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +31,7 @@ public class StorePay {
 	private String img;
 	private String userName;
 	private String phone;
+	
+	private String startDate;
+	private String endDate;
 }
