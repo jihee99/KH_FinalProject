@@ -163,7 +163,6 @@ public class AdminMemController {
 	
 	@RequestMapping(value="cenrollF.ad")
 	public String adminCouponEnroll(HttpSession session, Model model) {
-		// 관리자 쿠폰 지급 페이지 확인용 메소드
 		return "member/admin/adminCouponEnrollWindow";
 	}
 
@@ -234,6 +233,16 @@ public class AdminMemController {
 		return result>0? "success" : "fail";
 	}
 
+	@RequestMapping(value="callgive.ad")
+	public String allMemberCouponGive(Model model) {
+		ArrayList<Coupon> list = adMemService.selectAllCouponList();
+		ArrayList<Member> mlist = adMemService.selectAllMember();
+		System.out.println(list);
+		model.addAttribute("list", list);
+		model.addAttribute("mlist", mlist);
+		return "member/admin/adminEntireMemCoupon";
+	}
+	
 	@RequestMapping(value="pgiveF.ad")
 	public String adminPointManager(Model model) {
 		ArrayList<Member> mlist = adMemService.selectAllMember();
@@ -434,12 +443,12 @@ public class AdminMemController {
 	
 	@RequestMapping(value="blacklist.ad")
 	public String adminSelectBlackList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
-//		int listCount = adMemService.adminReportCount();
-//		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
-//		ArrayList<Report> reportList = adMemService.adminReportList(pi);
+		int listCount = adMemService.adminReportCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		ArrayList<Report> reportList = adMemService.adminReportList(pi);
 		
-//		model.addAttribute("pi", pi);
-//		model.addAttribute("rpList", reportList);
+		model.addAttribute("pi", pi);
+		model.addAttribute("rpList", reportList);
 		
 		return "member/admin/adminBlackList";
 	}

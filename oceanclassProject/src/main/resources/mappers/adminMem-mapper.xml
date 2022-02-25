@@ -454,6 +454,22 @@
 		    by cno desc
 	</select>
 	
+	<select id="selectAllCouponList" resultMap="couponResult">
+		select
+		   cno
+		 , cname
+		 , discount
+		 , maxcount
+		 , to_char(dedate, 'YYYY-MM-DD') as dedate
+		 , NVL((select count(*)
+		      from coupon
+		      group by cno
+		      having couponlist.cno = coupon.cno),  0) as count
+		from couponlist
+		order by cno desc
+	</select>
+	
+	
 	<select id="selectClassOrderCount" resultType="_int">
 		select count(*)
   		  from class_order

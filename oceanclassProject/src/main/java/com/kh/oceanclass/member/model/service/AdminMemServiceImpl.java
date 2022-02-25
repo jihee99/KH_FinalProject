@@ -196,6 +196,10 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return adMemDao.selectCouponSearchList(sqlSession, pi, map);
 	}
 	
+	@Override
+	public ArrayList<Coupon> selectAllCouponList(){
+		return adMemDao.selectAllCouponList(sqlSession);
+	}
 	
 	@Override
 	public int selectClassOrderCount() {

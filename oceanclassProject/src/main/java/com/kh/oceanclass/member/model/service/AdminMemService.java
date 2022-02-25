@@ -92,6 +92,8 @@ public interface AdminMemService {
 	//쿠폰정보 수정하기
 	int updateCoupon(Coupon c);
 	
+	ArrayList<Coupon> selectAllCouponList();
+	
 	//------------주문------------
 	//관리자 클래스 주문목록조회기능
 	int selectClassOrderCount();

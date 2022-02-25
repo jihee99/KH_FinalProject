@@ -47,7 +47,7 @@
             </div>
             <div class="head_2_center"></div>
             <div class="head_2_right" align="right">
-                <button id="couponBtn" class="btn">쿠폰 일괄 지급</button>
+                <button id="couponBtn" class="btn" onclick="window.open('callgive.ad','쿠폰등록페이지','width=550, height=400, menubar=no, status=no, toolbar=no, resizable=no')">쿠폰 일괄 지급</button>
             </div>
         </div>
         <div class="content">

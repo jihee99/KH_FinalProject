@@ -311,6 +311,10 @@ public class AdminMemDao {
 		return sqlSession.update("adMemMapper.reportCountDown", m);
 	}
 
+	public ArrayList<Coupon> selectAllCouponList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adMemMapper.selectAllCouponList");
+	}
+
 
 
 
