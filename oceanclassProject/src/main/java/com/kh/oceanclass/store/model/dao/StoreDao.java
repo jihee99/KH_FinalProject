@@ -1,7 +1,6 @@
 package com.kh.oceanclass.store.model.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,9 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Repository
@@ -30,11 +31,8 @@ public class StoreDao {
 		
 	}
 	
-	public ArrayList<Product> categorySearch(SqlSessionTemplate sqlSession, String category, int memberNo, String sort){
-		Product p = new Product();
-		p.setCategory(category);
-		p.setMemberNo(memberNo);
-		p.setSort(sort);
+	public ArrayList<Product> categorySearch(SqlSessionTemplate sqlSession, Product p){
+		
 		return (ArrayList)sqlSession.selectList("storeMapper.categorySearch", p);
 	}
 	
@@ -134,6 +132,27 @@ public class StoreDao {
 		return sqlSession.selectOne("storeMapper.checkRecommend", review);
 	}
 	
+	public int insertReport(SqlSessionTemplate sqlSession, Report r) {
+		return sqlSession.insert("storeMapper.insertReport", r);
+	}
 	
+	public ArrayList<StoreQna> selectStoreQnaList(SqlSessionTemplate sqlSession, int pno){
+		return (ArrayList)sqlSession.selectList("storeMapper.selectStoreQnaList", pno);
+	}
+	
+	public int storeQnaListCount(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.selectOne("storeMapper.selectQnaListCount", pno);
+	}
+	
+	public ArrayList<StoreQna> selectPagingQnaList(SqlSessionTemplate sqlSession, int pno, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("storeMapper.selectStoreQnaList", pno, rowBounds);
+	}
+	
+	public int insertQna (SqlSessionTemplate sqlSession, StoreQna qna) {
+		return sqlSession.insert("storeMapper.insertQna", qna);
+	}
 
 }

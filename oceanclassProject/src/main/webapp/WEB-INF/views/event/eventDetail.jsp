@@ -154,29 +154,31 @@
 			</div>
 		</div>
 		
-        <table class="table" id="replyTable">
-        	<thead>
-        		<tr></tr>
-	        	<c:choose>
-	        		<c:when test="${not empty loginUser}">
-	        			<th style="vertical-align: middle; text-align: middle;">${loginUser.nickName}</th>
-	        			<th>
-	        				<input id="reply" class="form-control" style="width:100%">
-	        			</th>
-	        			<th style="vertical-align: middle"><button class="btn btn-light" onclick="addReply();">등록</button></th>
-	        		</c:when>
-	        		<c:otherwise>
-	        			<th></th>
-	        			<th>
-	        				<textarea class="form-control" cols="30" rows="1" style="resize:none; width:100%" readonly>로그인 후 이용바랍니다.</textarea>
-	        			</th>
-	        			<th style="vertical-align: middle"><button class="btn btn-light" disabled>등록</button></th>
-	        		</c:otherwise>
-	        	</c:choose>
-        	</thead>
-       		<tbody style="text-align:center;">
-       		</tbody>
-        </table>
+		<c:if test="${e.category eq 'R'}">
+	        <table class="table" id="replyTable">
+	        	<thead>
+	        		<tr></tr>
+		        	<c:choose>
+		        		<c:when test="${not empty loginUser}">
+		        			<th style="vertical-align: middle; text-align: middle;">${loginUser.nickName}</th>
+		        			<th>
+		        				<input id="reply" class="form-control" style="width:100%">
+		        			</th>
+		        			<th style="vertical-align: middle"><button class="btn btn-light" onclick="addReply();">등록</button></th>
+		        		</c:when>
+		        		<c:otherwise>
+		        			<th></th>
+		        			<th>
+		        				<textarea class="form-control" cols="30" rows="1" style="resize:none; width:100%" readonly>로그인 후 이용바랍니다.</textarea>
+		        			</th>
+		        			<th style="vertical-align: middle"><button class="btn btn-light" disabled>등록</button></th>
+		        		</c:otherwise>
+		        	</c:choose>
+	        	</thead>
+	       		<tbody style="text-align:center;">
+	       		</tbody>
+	        </table>
+        </c:if>
        	<button type="button" class="btn" onclick="history.back()">목록으로</button>
     </div>    
     

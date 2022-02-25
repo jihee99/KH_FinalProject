@@ -408,16 +408,16 @@
   	</select>
   	
   	<select id="selectStoreBuyList" resultMap="buyListResult">
-		select 
+		 select 
 		       order_no
 		     , pno
-		     , title
 		     , opno
+		     , title
 		     , quantity
-		     , s.price
-		 from s_buylist s 
-		 join store using (pno)
-		 where order_no = ${ono}
+		     , s_buylist.price
+		 from s_buylist
+		 left join store using (pno)
+		 where order_no = #{ono}
 	</select>
 	
 	<update id="storeOrderUpdate">
@@ -513,7 +513,7 @@
 		      , nickname
 		      , pno
 		      , content
-		      , star_rating
+		      , star_rating as star_avg
 		      , review_date
 		      , status 
 		      , file_path
@@ -531,7 +531,7 @@
 		      , nickname
 		      , pno
 		      , content
-		      , star_rating
+		      , star_rating as star_avg
 		      , review_date
 		      , status 
 		      , file_path
@@ -646,7 +646,18 @@
 		   and cs_qno = #{qno}
 	</select>
 	
+	<update id="updateStoreQnaAnswer">
+		update cs_qna
+		   set  answer_content = #{answerContent}
+		      , answer_date = sysdate
+		 where cs_qno = ${csQno}
+		   and status = 'Y'
+	</update>
 	
-	
+	<update id="storeOrderStatusUpdate">
+		update pay
+		   set order_status = #{orderStatus}
+		 where order_no = #{orderNo}
+	</update>
 	
 </mapper>

@@ -14,13 +14,13 @@ import lombok.ToString;
 public class StoreQna {
 
 	private int csQno;
-	private int memNo;
+	private String memNo;
 	private int gbNo;
 	private int referNo;
 	private String title;
 	private String content;
 	private String createDate;
-	private int pwd;
+	private String pwd;
 	private String filePath;
 	private String status;
 	private String answerContent;
@@ -28,5 +28,7 @@ public class StoreQna {
 	
 	private String userId;
 	private String productName;
+	private String profile;
+	private String category;
 	
 }

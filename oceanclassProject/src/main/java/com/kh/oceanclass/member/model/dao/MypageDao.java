@@ -15,6 +15,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Repository
@@ -23,6 +24,10 @@ public class MypageDao {
 // 프로필 관련
 	public int updateProfile(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("myMapper.updateProfile", m);
+	}
+	
+	public Member selectUser(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("myMapper.selectUser", m);
 	}
 	
 	public int updatePwd(SqlSessionTemplate sqlSession, Member m) {
@@ -171,6 +176,22 @@ public class MypageDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("myMapper.shoppingReviewList", memNo, rowBounds);
+	}
+	
+	public int shoppingCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("myMapper.shoppingCount", memNo);
+	}
+	
+	public ArrayList<StorePay> shoppingList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("myMapper.shoppingList", memNo, rowBounds);
+	}
+	
+	public StorePay selectShopping(SqlSessionTemplate sqlSession, String orderNo) {
+		return sqlSession.selectOne("myMapper.selectShopping", orderNo);
 	}
 	
 }// class

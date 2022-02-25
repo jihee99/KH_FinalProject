@@ -1,14 +1,11 @@
 package com.kh.oceanclass.member.controller;
 
-import java.util.Random;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.oceanclass.member.model.service.MemberService;
 import com.kh.oceanclass.member.model.service.SmsService;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 
 /*마이페이지 관련 기능*/
 
@@ -167,5 +165,17 @@ public class MemberController {
 			return "common/errorPage";
 		}
 	}
+	
+	//신고하기 관련 메소드
+	@ResponseBody
+	@RequestMapping(value="report.me")
+	public String postReport(Report rp) {
+		
+		System.out.println("memController : " +  rp);
+		int result = mService.postReport(rp);
+		return result>0? "success" : "fail";
+	}
+	
+	
 	
 }

@@ -11,13 +11,15 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.store.model.vo.Product;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
 public interface MypageService {
 
-	// 학생 마이페이지 기능
+// 학생 마이페이지 기능
 	// 프로필수정
 	int updateProfile(Member m);
+	Member selectUser(Member m);
 	
 	// 비밀번호 변경
 	int  updatePwd(Member m);
@@ -80,4 +82,11 @@ public interface MypageService {
 	// 스토어 리뷰 내역
 	int shoppingReviewCount(int memNo);
 	ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo);
+	
+	// 스토어 주문 내역 리스트
+	int shoppingCount(int memNo);
+	ArrayList<StorePay> shoppingList(PageInfo pi, int memNo);
+	
+	// 스토어 주문 내역 상세
+	StorePay selectShopping(String orderNo);
 }

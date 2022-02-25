@@ -18,7 +18,7 @@ public class StorePay {
 	private String orderNo;
 	private int memberNo;
 	private String payAmount;
-	private Date payDate;
+	private String payDate;
 	private String payMethod;
 	private String orderStatus;
 	private String payStatus;
@@ -28,4 +28,9 @@ public class StorePay {
 	private String point;
 	private String deliveryFee;
 	
+	private String address;
+	private String title;
+	private String img;
+	private String userName;
+	private String phone;
 }

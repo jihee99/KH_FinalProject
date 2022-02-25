@@ -61,7 +61,7 @@ public interface InstructorStoreService {
 	StoreQna selectStoreQnaDetail(String qno);
 	
 	// 7_2. 상품 문의 답변 서비스
-	int storeQnaAnswer();
+	int storeQnaAnswer(StoreQna sq);
 	
 	// 8. 상품 리뷰 리스트 페이지 서비스
 	int selectStoreReviewCount();
@@ -96,6 +96,8 @@ public interface InstructorStoreService {
 	// 11_5. 상품 주문 내역 키워드 검색 서비스
 	int searchKeyStoreOrderCount(HashMap<String, String> map);
 	ArrayList<StoreOrder> searchKeyStoreOrderList(HashMap<String, String> map, PageInfo pi);
+	
+	int storeOrderStatusUpdate(StoreOrder so);
 	
 	// 12. 상품 재고 리스트 조회용 서비스
 	int selectStockCount();
