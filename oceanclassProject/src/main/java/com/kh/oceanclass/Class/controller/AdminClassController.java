@@ -1,7 +1,11 @@
 package com.kh.oceanclass.Class.controller;
 
-import java.sql.Date;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,26 +26,80 @@ public class AdminClassController {
 	private AdminClassServiceImpl acService;
 	
 	@RequestMapping(value="classEnrollManager.ad")
-	public String adminClassEnrollManager(int cpage, int array, String category, String keyword, Model model) {
+	public String adminClassEnrollManager(int cpage, String array, String category, String keyword, String clNo, Model model) {
 		// 관리자 클래스 등록 관리 페이지
 		
-		// 키워드랑 카테 생기면서 array String으로 바꿔야하는지?
+		HashMap<String, String> map = new HashMap();
+		map.put("category", category);
+		map.put("array", array);
+		map.put("keyword", keyword);
+		map.put("classNo", clNo);
 		
-		int listCount = acService.enrollClassListCount(); 				// 조회할 리스트 갯수
+		int listCount = acService.enrollClassListCount(map); 					// 조회할 리스트 갯수
 		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 5);
-		ArrayList<ClassVo> cList = acService.selectEnrollClassList(array, pi);	// 조회할 리스트 목록
+		ArrayList<ClassVo> cList = acService.selectEnrollClassList(map, pi);	// 조회할 리스트 목록
+		if(clNo != "" ) {
+			ClassVo cl = acService.selectClassDetail(clNo);
+			model.addAttribute("cl", cl);
+		}
+		
+		System.out.println("먼데?");
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("cList", cList);
-		model.addAttribute("array", array);
+		model.addAttribute("map", map);
 		return "class/admin/adminClassEnrollManager";
 	}
 	
+	/*
 	@RequestMapping(value="dateClassEnrollList.ad")
 	public String dateClassEnrollList(Date before, Date after) {
 		System.out.println(before);
 		System.out.println(after);
 		return "gg";
+	}
+	*/
+	
+	@RequestMapping(value="classApproval.ad")
+	public String adminClassApproval(int clNo, int cpage, String array, String category, String keyword, HttpSession session) throws IOException {
+		int result = acService.classApproval(clNo);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "승인 되었습니다!");
+		} else {
+			session.setAttribute("alertMsg", "승인에 실패하였습니다.");
+		}
+		return "redirect:classEnrollManager.ad?cpage=" + cpage + "&array=" + array + "&category=" + category + "&keyword=" + URLEncoder.encode(keyword, "UTF-8") + "&clNo=";
+	}
+	
+	@RequestMapping(value="classListApproval.ad")
+	public String adminClassListApproval(int[] checkList, int cpage, String array, String category, String keyword, HttpSession session) throws IOException {
+		
+		int result1 = 0;
+		for(int clNo : checkList) {
+			int result2 = acService.classApproval(clNo);
+			if(result2 < 1) {
+				result1 += 1;
+			} 
+		}
+		
+		if(result1 < 1) {
+			session.setAttribute("alertMsg", "승인 되었습니다!");
+		} else {
+			session.setAttribute("alertMsg", "승인에 실패하였습니다.");
+		}
+		
+		return "redirect:classEnrollManager.ad?cpage=" + cpage + "&array=" + array + "&category=" + category + "&keyword=" + URLEncoder.encode(keyword, "UTF-8") + "&clNo=";
+	}
+	
+	@RequestMapping(value="classReturn.ad")
+	public String classReturn(ClassVo c, int cpage, String array, String category, String keyword, HttpSession session) throws IOException {
+		int result = acService.classReturn(c);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "클래스가 반려되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "반려에 실패했습니다.");
+		}
+		return "redirect:classEnrollManager.ad?cpage=" + cpage + "&array=" + array + "&category=" + category + "&keyword=" + URLEncoder.encode(keyword, "UTF-8") + "&clNo=";
 	}
 	
 	@RequestMapping(value="classManager.ad")

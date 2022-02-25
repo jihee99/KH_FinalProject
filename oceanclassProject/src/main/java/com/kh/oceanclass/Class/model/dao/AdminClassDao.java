@@ -20,15 +20,27 @@ import com.kh.oceanclass.member.model.vo.MemCoupon;
 @Repository
 public class AdminClassDao {
 
-	public int enrollClassListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("adminClassMapper.enrollClassListCount");
+	public int enrollClassListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("adminClassMapper.enrollClassListCount", map);
 	}
 	
-	public ArrayList<ClassVo> selectEnrollClassList(SqlSessionTemplate sqlSession, int array, PageInfo pi){
+	public ArrayList<ClassVo> selectEnrollClassList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return (ArrayList)sqlSession.selectList("adminClassMapper.selectEnrollClassList", array, rowBounds);
+		return (ArrayList)sqlSession.selectList("adminClassMapper.selectEnrollClassList", map, rowBounds);
+	}
+	
+	public ClassVo selectClassDetail(SqlSessionTemplate sqlSession, String clNo) {
+		return sqlSession.selectOne("adminClassMapper.selectClassDetail", clNo);
+	}
+	
+	public int classApproval(SqlSessionTemplate sqlSession, int clNo) {
+		return sqlSession.update("adminClassMapper.classApproval", clNo);
+	}
+	
+	public int classReturn(SqlSessionTemplate sqlSession, ClassVo c) {
+		return sqlSession.update("adminClassMapper.classReturn", c);
 	}
 	
 }

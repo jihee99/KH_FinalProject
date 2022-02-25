@@ -15,7 +15,9 @@ import com.kh.oceanclass.member.model.vo.MemCoupon;
 
 public interface AdminClassService {
 
-	int enrollClassListCount();
-	ArrayList<ClassVo> selectEnrollClassList(int array, PageInfo pi);
-	
+	int enrollClassListCount(HashMap<String, String> map);
+	ArrayList<ClassVo> selectEnrollClassList(HashMap<String, String> map, PageInfo pi);
+	ClassVo selectClassDetail(String clNo);
+	int classApproval(int clNo);
+	int classReturn(ClassVo c);
 }

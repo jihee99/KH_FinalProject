@@ -27,6 +27,16 @@
 		  from class
 		  JOIN member USING (MNO)
 		 where cl_status = 'N'
+		  <if test="keyword != null">
+			 <choose>
+			 	<when test="category == 1">
+					and cl_name like '%' || #{keyword} || '%'
+			 	</when>
+			 	<otherwise>
+					and nickname like '%' || #{keyword} || '%'
+			 	</otherwise>
+			 </choose>
+		 </if>
 	</select>
 	
 	<select id="selectEnrollClassList" resultMap="adminClassResult">
@@ -50,6 +60,16 @@
 		  from class
 		  JOIN member USING (MNO)
 		 where cl_status = 'N'
+		 <if test="keyword != null">
+			 <choose>
+			 	<when test="category == 1">
+					and cl_name like '%' || #{keyword} || '%'
+			 	</when>
+			 	<otherwise>
+					and nickname like '%' || #{keyword} || '%'
+			 	</otherwise>
+			 </choose>
+		 </if>
 		 <choose>
 		 	<when test="array == 1">
 		 		order by clno
@@ -59,6 +79,42 @@
 		 	</otherwise>
 		 </choose>
 	</select>
+	
+	<select id="selectClassDetail" resultMap="adminClassResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_content
+		     , to_char(cl_date, 'YYYY-MM-DD') as cl_date
+		     , cl_price
+		     , kit
+		     , cl_status
+		     , cl_img
+		     , cl_img2
+		     , cl_img3
+		     , cl_kitimg
+		     , hashtag
+		     , count
+		     , reason
+		  from class
+		  JOIN member USING (MNO)
+		 where clno = #{clNo}
+	</select>
+	
+	<update id="classApproval">
+		update class
+		   set CL_STATUS = 'Y'
+		 where clno = #{clNo}
+	</update>
+	
+	<update id="classReturn">
+		update class
+		   set CL_STATUS = 'R',
+		   	   REASON = #{reason}
+		 where clno = #{clNo}
+	</update>
 	
 
 </mapper>

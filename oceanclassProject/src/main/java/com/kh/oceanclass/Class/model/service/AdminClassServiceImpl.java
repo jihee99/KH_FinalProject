@@ -1,6 +1,7 @@
 package com.kh.oceanclass.Class.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,28 @@ public class AdminClassServiceImpl implements AdminClassService {
 	public SqlSessionTemplate sqlSession;
 
 	@Override
-	public int enrollClassListCount() {
-		return acDao.enrollClassListCount(sqlSession);
+	public int enrollClassListCount(HashMap<String, String> map) {
+		return acDao.enrollClassListCount(sqlSession, map);
 	}
 	
 	@Override
-	public ArrayList<ClassVo> selectEnrollClassList(int array, PageInfo pi) {
-		return acDao.selectEnrollClassList(sqlSession, array, pi);
+	public ArrayList<ClassVo> selectEnrollClassList(HashMap<String, String> map, PageInfo pi) {
+		return acDao.selectEnrollClassList(sqlSession, map, pi);
+	}
+
+	@Override
+	public ClassVo selectClassDetail(String clNo) {
+		return acDao.selectClassDetail(sqlSession, clNo);
+	}
+
+	@Override
+	public int classApproval(int clNo) {
+		return acDao.classApproval(sqlSession, clNo);
+	}
+
+	@Override
+	public int classReturn(ClassVo c) {
+		return acDao.classReturn(sqlSession, c);
 	}
 
 	
