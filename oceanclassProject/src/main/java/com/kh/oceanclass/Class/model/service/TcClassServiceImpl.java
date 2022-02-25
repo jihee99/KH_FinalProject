@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.Class.model.dao.TcClassDao;
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 
 @Service
@@ -41,6 +42,16 @@ public class TcClassServiceImpl implements TcClassService {
 	@Override
 	public int updateClass(ClassVo c) {
 		return tcDao.updateClass(sqlSession, c);
+	}
+	/*
+	@Override
+	public ArrayList<ClassReview> myClassNameList(int clNo) {
+		return tcDao.myClassNameList(sqlSession, clNo);
+	}
+	*/
+	@Override
+	public ArrayList<ClassReview> myClassReviewList(int memNo) {
+		return tcDao.myClassReviewList(sqlSession, memNo);
 	}
 
 	

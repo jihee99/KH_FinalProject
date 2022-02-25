@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.store.model.vo.Product;
 
@@ -30,6 +31,13 @@ public class TcClassDao {
 	public int updateClass(SqlSessionTemplate sqlSession, ClassVo c) {	
 		return sqlSession.update("tcclassMapper.updateClass", c);
 	}
-	
+	/*
+	public ArrayList<ClassReview> myClassNameList(SqlSessionTemplate sqlSession, int clNo){
+		return (ArrayList)sqlSession.selectList("tcclassMapper.myClassNameList", clNo);
+	}
+	*/
+	public ArrayList<ClassReview> myClassReviewList(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("tcclassMapper.myClassReviewList", memNo);
+	}
 	
 }
