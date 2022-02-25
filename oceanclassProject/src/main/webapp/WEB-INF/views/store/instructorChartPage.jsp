@@ -49,12 +49,14 @@
 	
 	<script>
     	$(function(){
+    		
     		$.ajax({
-    			url : "storeChartAjax.in",
+    			url : "starChartAjax.in",
     			data : {
     				pno :"상품번호 입력란"
     			}
     		});
+    		
     		//상품 만족도
     		let ctx1 = document.getElementById('myChart1').getContext('2d');
     		let myChart1 = new Chart(ctx1, {
@@ -104,13 +106,17 @@
                   },
                   options: {
                       scales: {
-                          yAxes: [
+                      	title: {
+				    		display: true,
+				    		text: '스토어만족도'
+				  		},
+                        yAxes: [
                               {
                                   ticks: {
                                       beginAtZero: true
                                   }
                               }
-                          ]
+                        ]
                       }
                   }
               });
