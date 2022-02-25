@@ -658,7 +658,7 @@
 		     , payment_date
 		     , payment_option
 		     , request_date
-		     , reading_check
+		     , reading_status
 		 from class_order
 		 left join class_refund using (c_ono)
 		 join member using(mno)
