@@ -49,8 +49,8 @@ public class InstructorStoreController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 3);
 		ArrayList<Product> list = inStoreService.selectList(pi);
 		
-		//System.out.println("pi = "+pi);
-		//System.out.println("list = "+list);
+		System.out.println("pi = "+pi);
+		System.out.println("list = "+list);
 		
 		model.addAttribute("pi",pi);
 		model.addAttribute("list", list);
@@ -576,6 +576,15 @@ public class InstructorStoreController {
 		return "member/common/reportWindow";
 	}
 	
+	//-------------------chart
+	@RequestMapping(value="schart.in")
+	public String storeChartForm() {
+		return "store/instructorChartPage";
+	}
+	
+	
+	
+	
 	// 첨부파일
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 
@@ -598,6 +607,10 @@ public class InstructorStoreController {
 		
 		return changeName;
 	}
+	
+	
+	
+	
 	
 	
 	
