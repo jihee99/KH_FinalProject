@@ -135,6 +135,45 @@
 	  	<result column="user_name" property="userName"/>
 	  	<result column="phone" property="phone"/>
 	</resultMap>
+	
+<!-- 마이페이지 메인 -->
+	<select id="selectMainMyClass" resultMap="myClassOrderResult">
+		select
+		       c_ono
+		     , c.clno
+		     , cl_name
+		     , cl_img
+		  from class c   		
+		  join class_order co on (c.clno = co.clno)
+		 where co.mno = #{memNo}
+		 order
+		 	by c_ono desc
+	</select>
+	
+	<select id="selectMainLikeClass" resultMap="myClassResult">
+		select 
+		       clno
+		     , l.mno as "mno"
+		     , cl_name
+		     , cl_img
+		  from class c
+		  join like_item l on (c.clno = l.refer_no)
+		 where l.mno = #{mno}
+		   and cl_status = 'Y'
+	</select>
+	
+	<select id="selectMainLikeProduct" resultMap="storeResult">
+		select 
+		       pno
+		     , s.mno as "mno"
+		     , title
+		     , img1
+		  from store s
+		  join like_item l on (s.pno = l.refer_no)
+		  where l.mno = #{memNo} 
+		    and status = 'Y'
+	</select>
+
 
 <!-- 정보수정용 -->
 	<update id="updateProfile">

@@ -52,7 +52,18 @@ public class StuMypageController {
 //프로필 관련	
 	// 마이페이지 이동
 	@RequestMapping("myPage.me")
-	public String myPage() {return "member/student/mypageMain";}
+	public String myPage(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		ArrayList<ClassOrder> list = myService.selectMainMyClass(memNo);
+		ArrayList<ClassVo> classLikeList = myService.selectMainLikeClass(memNo);
+		ArrayList<Product> storeLikeList = myService.selectMainLikeProduct(memNo);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("classLikeList", classLikeList);
+		model.addAttribute("storeLikeList", storeLikeList);
+		return "member/student/mypageMain";
+	}
 	
 	// 프로필 확인
 	@RequestMapping("myProfile.me")
@@ -298,7 +309,6 @@ public class StuMypageController {
 		model.addAttribute("list", list);
 		return "member/student/myClassQnaDetail";
 	}
-	
 	
 	// 내 클래스 메인
 	@RequestMapping("myClass.me")
