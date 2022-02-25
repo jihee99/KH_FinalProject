@@ -72,6 +72,11 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return adMemDao.selectReportDetail(sqlSession, rp);
 	}
 
+	@Override 
+	public Member selectReportMem(String mno) {
+		return adMemDao.selectReportMem(sqlSession, mno);
+	}
+	
 	@Override
 	public int adminReportRollback(String reportNo) {
 		return adMemDao.adminReportRollback(sqlSession, reportNo);
@@ -191,6 +196,10 @@ public class AdminMemServiceImpl implements AdminMemService {
 		return adMemDao.selectCouponSearchList(sqlSession, pi, map);
 	}
 	
+	@Override
+	public ArrayList<Coupon> selectAllCouponList(){
+		return adMemDao.selectAllCouponList(sqlSession);
+	}
 	
 	@Override
 	public int selectClassOrderCount() {
@@ -276,6 +285,16 @@ public class AdminMemServiceImpl implements AdminMemService {
 	@Override
 	public ArrayList<StoreOrder> adminSearchStoreList(HashMap<String, String> map, PageInfo pi) {
 		return adMemDao.adminSearchStoreList(sqlSession, map, pi);
+	}
+
+	@Override
+	public int reportCountDown(Member m) {
+		return adMemDao.reportCountDown(sqlSession, m);
+	}
+
+	@Override
+	public int reportCountUp(Member m) {
+		return adMemDao.reportCountUp(sqlSession, m);
 	}
 
 

@@ -72,4 +72,13 @@ public interface ClassService {
 	// 클래스 구매용
 	int classPayCk(ClassOrder co);
 	ArrayList<MemCoupon> memberCouponList(int memNo);
+	MemCoupon useCouponData(int useCouponNo);
+	int insertClassOrder(ClassOrder co);
+	ClassOrder selectClassOrder(ClassOrder co);
+	int insertUsePoint(ClassOrder coInfo);
+	int deleteCoupon(ClassOrder coInfo);
+	int downMemberPoint(ClassOrder coInfo);
+	int insertSavingPoint(ClassOrder coInfo);
+	int upMemberPoint(ClassOrder coInfo);
+	
 }

@@ -297,9 +297,9 @@ public class ClassController {
 		
 		int result = cService.insertClassReview(cr);
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 후기가 등록되었습니다!");
+			session.setAttribute("alertMsg", "성공적으로 리뷰가 등록되었습니다!");
 		} else {
-			session.setAttribute("alertMsg", "후기 등록에 실패하였습니다.");
+			session.setAttribute("alertMsg", "리뷰 등록에 실패하였습니다.");
 		}
 		
 		return "redirect:classDetail.me?referNo=" + cr.getClNo();
@@ -309,10 +309,10 @@ public class ClassController {
 	public String deleteReview(int crNo, int clNo, int rpage, HttpSession session) {
 		int result = cService.deleteReview(crNo);
 		if(result > 0) {
-			session.setAttribute("alertMsg", "후기가 삭제되었습니다.");
+			session.setAttribute("alertMsg", "리뷰가 삭제되었습니다.");
 			return "redirect:classReviewList.me?cpage=1&clNo=" + clNo;
 		} else {
-			session.setAttribute("alertMsg", "후기 삭제에 실패하였습니다.");
+			session.setAttribute("alertMsg", "리뷰 삭제에 실패하였습니다.");
 			return "redirect:classReviewDetail.me?crNo=" + crNo + "&cpage=1&clNo=" + clNo + "&rpage=" + rpage;
 		}
 	}
@@ -342,9 +342,9 @@ public class ClassController {
 		int result = cService.updateReview(cr);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 후기를 수정하였습니다!");
+			session.setAttribute("alertMsg", "성공적으로 리뷰를 수정하였습니다!");
 		} else {
-			session.setAttribute("alertMsg", "후기 수정에 실패하였습니다.");
+			session.setAttribute("alertMsg", "리뷰 수정에 실패하였습니다.");
 		}
 		
 		return "redirect:classReviewDetail.me?crNo=" + cr.getCrNo() + "&cpage=1&clNo=" + cr.getClNo() + "&rpage=" + rpage;
@@ -502,9 +502,8 @@ public class ClassController {
 		}
 	}
 	
-	@RequestMapping(value="classPay.me")
-	public String classPay(int clNo, int memNo, Model model) {
-		// 클래스 결제 페이지
+	@RequestMapping(value="classPayForm.me")
+	public String classPayForm(int clNo, int memNo, Model model) {
 		ClassVo c = cService.selectClass(clNo);
 		ArrayList<MemCoupon> couponList = cService.memberCouponList(memNo);	// 쿠폰 정보 확인
 		model.addAttribute("c", c);
@@ -512,9 +511,45 @@ public class ClassController {
 		return "class/classPay";
 	}
 	
-	@RequestMapping(value="classPayComplate.me")
-	public String classPayComplate() {
-		// 클래스 결제 완료 페이지 이동용(뷰 확인용) 메소드
+	@ResponseBody
+	@RequestMapping(value="useCoupon.me", produces="application/json; charset=UTF-8")
+	public String ajaxUseCoupon(int useCouponNo) {
+		//ClassVo c = cService.selectClass(clNo);
+		//ArrayList<MemCoupon> couponList = cService.memberCouponList(memNo);	// 쿠폰 정보 확인
+		MemCoupon useCouponData = cService.useCouponData(useCouponNo);
+		return new Gson().toJson(useCouponData);
+	}
+	
+	@RequestMapping(value="classPay.me")
+	public String classPay(ClassOrder co, Model model) {
+		/*
+		if(co.getPaymentOption() == 1) {
+			
+		} else if(co.getPaymentOption() == 2) {
+			
+		} else {
+			
+		}
+		*/
+		
+		int result = cService.insertClassOrder(co);					// 주문 내역 insert
+		ClassOrder coInfo = cService.selectClassOrder(co);			// 클래스 주문 정보
+		if(coInfo.getPointUse() != null) {
+			int pointResult1 = cService.insertUsePoint(coInfo);		// 포인트 차감 (포인트 테이블에 차감 데이터 insert)
+			int pointResult2 = cService.downMemberPoint(coInfo);	// 포인트 차감 (멤버 데이터 update)
+		}
+		if(coInfo.getPcNo() != null) {
+			int couponResult = cService.deleteCoupon(coInfo);		// 쿠폰 사용처리
+		}
+		
+		/* 무통장 입금이 아닐 경우(즉시 결제) 실행되는 과정 - 무통장 입금일 경우는 후에 확인 후 진행 
+		if(co.getAmount() > 0) {
+			int pointResult3 = cService.insertSavingPoint(coInfo);	// 포인트 적립 (포인트 테이블에 적립 데이터 insert)
+			int pointResult4 = cService.upMemberPoint(coInfo);		// 포인트 적립 (멤버 데이터 update)
+		}
+		*/
+		
+		model.addAttribute("co", coInfo);
 		return "class/classPayComplate";
 	}
 	
@@ -547,12 +582,8 @@ public class ClassController {
 		model.addAttribute("list", list);
 		model.addAttribute("category", category);
 		model.addAttribute("array", array);
-		return "class/classCategoryList"; 
+		return "class/classCategoryList";
 	}
-	
-
-	
-	
 	
 	@ResponseBody
 	@RequestMapping(value="mainSlide.me", produces="application/json; charset=UTF-8")

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,28 +25,21 @@
 		margin-top: 150px;
 		margin-bottom: 50px;
 	}
+	.classList>tbody>tr:hover{
+		cursor:pointer;
+	}
 </style>
 </head>
 <body>
     <div>
-        <div align="right">
-            <select style="width:150px; height: 30px;">
-                <option selected>오래된 신청순</option>
-                <option>최신 신청순</option>
-            </select>
-        </div>
-        <br>
-
+		<input type="hidden" id="arrayData" value="${array}">
+		
         <div>
-            <!-- 
-                생각해보니까 여러개를 반려하면 반려 이유를 쓸 수가 없기 때문에
-                클래스 목록이 보여지는 상태에서는 반려는 못하게 하는게 맞는듯?
-                승인만 할 수 있게 하기!
-            -->
             <button type="button" class="btn" style="background-color: #6babd5; width: 80px; color: white;">승인</button>
             <!--
             <button type="button" class="btn" style="background-color: lightgray; width: 80px;">반려</button>
             -->
+            <!--
             <div style="float: right;">
                 <input type="checkbox" id="rClass">
                 <label for="rClass"> 반려된 클래스</label>
@@ -54,6 +48,13 @@
                 <input type="checkbox" id="nClass" checked>
                 <label for="nClass"> 미처리 클래스</label>
             </div>
+            -->
+	        <div style="float:right;"> <!-- align="right" -->
+	            <select style="width:150px; height: 30px;" onchange="listArray(this);">
+	                <option id="op1" value="1">오래된 신청순</option>
+	                <option id="op2" value="2">최신 신청순</option>
+	            </select>
+	        </div>
         </div>
         <br>
     </div>
@@ -62,57 +63,86 @@
         <table id="classList" class="table table-hover classList">
             <thead>
                 <tr style="background-color: #6babd5;">
-                    <th><input type="checkbox"></th>
+                    <th width="50"><input type="checkbox"></th>
                     <th width="120">카테고리</th>
-                    <th width="380">클래스명</th>
-                    <th width="200">강사명</th>
+                    <th>클래스명</th>
+                    <th width="100">강사명</th>
                     <th width="100">가격</th>
-                    <th width="100">신청일</th>
+                    <th width="150">신청일</th>
                     <th width="100">처리상태</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>드로잉</td>
-                    <td>클래스명1</td>
-                    <td>강사명1</td>
-                    <td>12,000</td>
-                    <td>22-01-05</td>
-                    <td>N</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>드로잉</td>
-                    <td>클래스명1</td>
-                    <td>강사명1</td>
-                    <td>12,000</td>
-                    <td>22-01-05</td>
-                    <td>N</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>드로잉</td>
-                    <td>클래스명1</td>
-                    <td>강사명1</td>
-                    <td>12,000</td>
-                    <td>22-01-05</td>
-                    <td>N</td>
-                </tr>
+            	<c:forEach var="c" items="${ cList }">
+	                <tr>
+	                    <td><input type="checkbox" value="${ c.clNo }"></td>
+	                    <td>
+	                    	<c:choose>
+	                    		<c:when test="${ c.category == 1 }">
+	                    			드로잉
+	                    		</c:when>
+	                    		<c:when test="${ c.category == 2 }">
+	                    			요리
+	                    		</c:when>
+	                    		<c:when test="${ c.category == 3 }">
+	                    			음악
+	                    		</c:when>
+	                    		<c:when test="${ c.category == 4 }">
+	                    			운동
+	                    		</c:when>
+	                    		<c:when test="${ c.category == 5 }">
+	                    			사진/영상
+	                    		</c:when>
+	                    		<c:when test="${ c.category == 6 }">
+	                    			재테크
+	                    		</c:when>
+	                    		<c:when test="${ c.category == 7 }">
+	                    			개발/데이터
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			자기계발
+	                    		</c:otherwise>
+	                    	</c:choose>
+	                    </td>
+	                    <td>${ c.clName }</td>
+	                    <td>${ c.memNo }</td>
+	                    <td><fmt:formatNumber value="${ c.clPrice }" type="number"/>원</td>
+	                    <td>${ c.clDate }</td>
+	                    <td>${ c.clStatus }</td>
+	                </tr>
+                </c:forEach>
             </tbody>
         </table>
     </div>
 
-    <div id="pagingArea">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="">Previous</a></li>
-    
-            <li class="page-item"><a class="page-link" href="">1</a></li>
-            <li class="page-item"><a class="page-link" href="">2</a></li>
-            <li class="page-item"><a class="page-link" href="">3</a></li>
+	<div id="pagingArea">
+		<ul class="pagination">
+			<c:if test="${ pi.currentPage > 1 }">
+				<li class="page-item"><a class="page-link" href="classEnrollManager.ad?cpage=${ pi.currentPage - 1 }&array=${array}">Previous</a></li>
+			</c:if>
+			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				<li class="page-item"><a class="page-link" href="classEnrollManager.ad?cpage=${ p }&array=${array}">${ p }</a></li>
+			</c:forEach>
+			<c:if test="${ pi.currentPage != pi.maxPage }">
+				<li class="page-item"><a class="page-link" href="classEnrollManager.ad?cpage=${ pi.currentPage + 1 }&array=${array}">Next</a></li>
+			</c:if>
+		</ul>
+	</div>
+	
+	<script>
+		window.onload = function(){
+			var array = ${array};
 
-            <li class="page-item"><a class="page-link" href="">Next</a></li>
-        </ul>
-    </div>
+			switch(array){
+				case 1 : document.getElementById("op1").selected = true; break;
+				case 2 : document.getElementById("op2").selected = true; break;
+			}
+		}
+	
+		function listArray(arrayNo){
+			location.href = "classEnrollManager.ad?cpage=${ pi.currentPage }&array=" + arrayNo.value;
+		}
+	</script>
+
 </body>
 </html>

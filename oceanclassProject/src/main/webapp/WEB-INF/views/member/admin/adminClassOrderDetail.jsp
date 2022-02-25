@@ -138,7 +138,7 @@
             	<c:if  test="${co.readingCheck eq 'N' }">
             	<button id="reBtn" class="btn btn-lg" type="submit" onclick="window.open('corcancleF.ad?ono=${co.coNo }','클래스주문취소페이지','width=550, height=380, menubar=no, status=no, toolbar=no, resizable=no')">주문취소</button>
             	</c:if>
-                <input id="listBtn" class="btn btn-lg" type="button" onclick="location.href='orlist.ad'" value="목록보기">
+                <input id="listBtn" class="btn btn-lg" type="button" onclick="history.back();" value="목록보기">
             </div>   
         </div>
 

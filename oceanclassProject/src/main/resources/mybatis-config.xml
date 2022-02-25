@@ -46,6 +46,8 @@
 		<typeAlias type="com.kh.oceanclass.common.model.vo.CsQna" alias="CsQna"/>
 		
 		<typeAlias type="com.kh.oceanclass.common.model.vo.AdminStatistics" alias="AdminStatistics"/>
+		<typeAlias type="com.kh.oceanclass.common.model.vo.InstructorStarChart" alias="InStarChart"/>
+		<typeAlias type="com.kh.oceanclass.common.model.vo.InstructorQnaChart" alias="InQnaChart"/>
 	</typeAliases>
 	
 	<mappers>
@@ -61,6 +63,11 @@
 		<mapper resource="/mappers/event-mapper.xml" />
 		<mapper resource="/mappers/store-mapper.xml" />
 		<mapper resource="/mappers/adminStatistics-mapper.xml" />
+		<mapper resource="/mappers/instructorChart-mapper.xml" />
+		<mapper resource="/mappers/adminClass-mapper.xml" />
+
+		
+
 	</mappers>
 	
 </configuration>

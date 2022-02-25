@@ -15,8 +15,8 @@ import lombok.ToString;
 @ToString
 public class StoreRefund {
 	
-	private int refundNo;
-	private int orderNo;
+	private String refundNo;
+	private String orderNo;
 	private String refund;
 	private Date refundDate;
 	private String refundStatus;

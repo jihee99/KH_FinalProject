@@ -116,8 +116,7 @@
                             <td>${s.payMethod }</td>
                             <td>${s.payAmount }</td>
                             <td>
-                            	<input type="hidden" name="orderStatus" value="${s.orderStatus }"> 
-                                <select name="status" id="" value="${s.orderStatus }">
+                                <select name="status" class="orderNo${s.orderNo }">
                                 	<option class="op1" value="1">결제완료</option>
                                     <option class="op2" value="2">상품준비</option>
                                     <option class="op3" value="3">배송시작</option>
@@ -126,12 +125,19 @@
                                     <option class="op6" value="6">주문취소</option>
                                     <option class="op7" value="7" style="color: red;">취소완료</option>
                                 </select>
-                            	
+
                             </td>
                             <td align="center">
-                                <button id="updateBtn" type="submit">변경</button>
+                                <button id="updateBtn" type="submit" onclick="statusUp('${s.orderNo}');">변경</button>
                                 <button id="detailBtn" onclick="location.href='sodetail.in?ono=${s.orderNo}'">상세</button>
                             </td>
+                            	<script>
+                                	$(".orderNo${ s.orderNo } option").each(function(){
+                                		if($(this).val() == ${s.orderStatus }){
+                                			$(this).attr("selected", true);
+                                		}
+                                	})
+                                </script>
                         </tr>
                         </c:forEach>
                     </tbody>
@@ -168,13 +174,18 @@
 		
 		<script>	
 
-		
 			function detailView(orderNo){
 				console.log(orderNo);
 				//location.href='sodetail.in?ono=${s.orderNo}'"
 				location.href="sodetail.in?ono="+orderNo;
 			}	
 		
+			function statusUp(orderNo){
+				console.log(orderNo);
+				status = $(".orderNo"+orderNo+" option:selected").val();
+				console.log($(".orderNo"+orderNo+" option:selected").val());
+				location.href="sostatusUp.in?ono="+orderNo+"&status="+status;
+			}
 			function typeValue(num){
 				console.log(num)
 				var box1 = $("#type1");
@@ -238,7 +249,7 @@
 					url:"sosearchF.in",
 					data:{orderStatus:num},
 					success:function(list){
-						console.log(list);
+						//console.log(list);
 						
 						let value ="";
 						
@@ -263,12 +274,12 @@
 		                                +"</select> </td>"
 		                            +"<td align='center'>"
 	                                +"<button id='updateBtn' type='submit'>변경</button>"
-	                                +"<button id='detailBtn' onclick='detailView("+list[i].orderNo+");'>상세</button>"
+	                                +"<button id='detailBtn' onclick='detailView(\"" +list[i].orderNo+ "\");'>상세</button>"
 	                               + "</td>"
 	                               + "</tr>"		  
 						}
 						
-						console.log(value);
+						//console.log(value);
 						$(".orderList tbody").empty();
 						$(".orderList tbody").html(value);
 						

@@ -69,7 +69,7 @@
                         <td id="nevi1" style="color: #6babd5;" onclick="changeView('main');">클래스 소개</td>
                         <td id="nevi2" onclick="changeView('curriculum');">커리큘럼</td>
                         <td id="nevi3" onclick="changeView('kit');">키트 소개</td>
-                        <td id="nevi4" onclick="changeView('review');">클래스 후기</td>
+                        <td id="nevi4" onclick="changeView('review');">클래스 리뷰</td>
                         <td id="nevi5" onclick="changeView('qna');">문의</td>
                         <td id="nevi6" onclick="changeView('refund');">환불정책</td>
                     </tr>
@@ -322,7 +322,7 @@
         				if(result == 'nnnnn'){
         					alert("이미 구매한 클래스입니다.");
         				} else{
-        					location.href = "classPay.me?clNo=" + clNo + "&memNo=" + memNo;
+        					location.href = "classPayForm.me?clNo=" + clNo + "&memNo=" + memNo;
         				}
         			}, error:function(){
         				console.log("구매하기 체크용 ajax 통신 실패");

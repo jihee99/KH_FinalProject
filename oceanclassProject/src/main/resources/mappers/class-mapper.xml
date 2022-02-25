@@ -80,6 +80,21 @@
 		<result column="cname" property="couponName" />
 		<result column="discount" property="discount" />
 	</resultMap>
+	
+	<resultMap id="classOrderResult" type="ClassOrder">
+		<result column="c_ono" property="coNo" />
+		<result column="clno" property="clNo" />
+		<result column="mno" property="memNo" />
+		<result column="price" property="price" />
+		<result column="point_use" property="pointUse" />
+		<result column="pcno" property="pcNo" />
+		<result column="amount" property="amount" />
+		<result column="payment_date" property="paymentDate" />
+		<result column="payment_option" property="paymentOption" />
+		<result column="deposit" property="deposit" />
+		<result column="point_save" property="pointSave" />
+		<result column="reading_status" property="readingCheck" />
+	</resultMap>
 
 	<update id="increaseCount">
 		update 
@@ -728,6 +743,15 @@
 		   </choose>
 	</select>
 		
+	<select id="mainSlideList" resultMap="eventResult2">
+		select 
+		       eno
+		     , e_title
+		     , img
+		  from event
+		 where status = 'Y'
+	</select>
+	
 	<select id="classPayCk" resultType="_int">
 		select count(*)
 		  from class_order
@@ -750,18 +774,130 @@
 		 where c.mno = #{memNo}
 		   and c.dedate > sysdate
 		   and c.use = 'N'
-	</select>	
-		
-		
-		
-		
-		
-	<select id="mainSlideList" resultMap="eventResult2">
-		select 
-		       eno
-		     , e_title
-		     , img
-		  from event
-		 where status = 'Y'
 	</select>
+	
+	<select id="useCouponData" resultMap="memCouponResult2">
+		select c.pcno
+		     , c.mno
+		     , cno
+		     , c.use
+		     , c.endate
+		     , c.dedate
+		     , cname
+		     , discount
+		  from coupon c
+		  join couponlist using (cno)
+		 where c.pcno = #{useCouponNo}
+	</select>
+	
+	<insert id="insertClassOrder">
+		insert 
+		  into class_order
+		values
+			 (
+			   'C' || to_char(sysdate, 'YYYYMMDD') || SEQ_CONO.NEXTVAL
+			 , #{clNo}
+			 , #{memNo}
+			 , #{price}
+			 <choose>
+			 	<when test="pointUse == 0">
+					, null 		 	
+			 	</when>
+			 	<otherwise>
+					, #{pointUse}
+			 	</otherwise>
+			 </choose>
+			 , #{pcNo}
+			 , #{amount}
+			 , sysdate
+			 , #{paymentOption}
+			 <choose>
+			 	<when test="paymentOption == 1">
+			 		, 'N'
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
+			 <choose>
+			 	<when test="amount != 0">
+			 		, #{amount} * 0.01
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
+			 , 'N'
+			 )
+	</insert>
+	
+	<select id="selectClassOrder" resultMap="classOrderResult">
+		select c_ono
+		     , clno
+		     , mno
+		     , price
+		     , point_use
+		     , pcno
+		     , amount
+		     , payment_date
+		     , payment_option
+		     , deposit
+		     , point_save
+		     , reading_status
+		  from class_order
+		 where mno = #{memNo}
+		   and clno = #{clNo}
+		   and READING_STATUS in ('N', 'Y')
+	</select>
+		
+	<insert id="insertUsePoint">
+		insert
+		  into point
+		values
+			 (
+			   seq_pno.nextval
+			 , #{memNo}
+			 , '2'
+			 , #{coNo}
+			 , sysdate
+			 , 0 - #{pointUse}
+			 , '클래스 구매 차감'
+			 , sysdate
+			 )
+	</insert>
+	
+	<update id="deleteCoupon">
+		update coupon
+		   set use = 'Y'
+		 where pcno = #{pcNo}
+	</update>
+	
+	<update id="downMemberPoint">
+		update member
+		   set point = point - #{pointUse}
+		 where mno = #{memNo}
+	</update>
+	
+	<insert id="insertSavingPoint">
+		insert
+		  into point
+		values
+			 (
+			   seq_pno.nextval
+			 , #{memNo}
+			 , '2'
+			 , #{coNo}
+			 , sysdate
+			 , #{pointSave}
+			 , '클래스 구매 적립'
+			 , sysdate + 365
+			 )
+	</insert>
+	
+	<update id="upMemberPoint">
+		update member
+		   set point = point + #{pointSave}
+		 where mno = #{memNo}
+	</update>
+		
 </mapper>

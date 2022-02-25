@@ -173,6 +173,7 @@
                         <td>${store.payAmount }</td>
                         <td>
 						<c:choose>
+							<c:when test="${store.orderStatus eq null }">결제승인대기</c:when>
 							<c:when test="${store.orderStatus eq 1 }">주문접수</c:when>
 							<c:when test="${store.orderStatus eq 2 }">상품준비중</c:when>
 							<c:when test="${store.orderStatus eq 3 }">배송시작</c:when>

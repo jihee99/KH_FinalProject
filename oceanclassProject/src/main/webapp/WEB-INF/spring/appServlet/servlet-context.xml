@@ -26,6 +26,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/classPay.me" />
+			<mapping path="/classPayForm.me" />
 			<beans:bean class="com.kh.oceanclass.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 		</interceptor>
 	</interceptors>

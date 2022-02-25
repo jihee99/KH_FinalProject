@@ -37,6 +37,7 @@
 	<resultMap id="reviewResult" type="StoreReview">
 		<result column="rno" property="reviewNo"/>
 		<result column="pno" property="productNo"/>
+		<result column="mno" property="memberNo"/>
 		<result column="nickname" property="nickname"/>
 		<result column="profile" property="profile"/>
 		<result column="content" property="content"/>
@@ -46,7 +47,25 @@
 		<result column="star_avg" property="starAvg"/>
 		<result column="reconum" property="reconum"/>
 		<result column="recoCk" property="recoCk"/>
-		
+		<result column="filepath" property="img"/>
+	</resultMap>
+	
+	<resultMap id="qnaResult" type="StoreQna">
+		<result column="cs_qno" property="csQno"/>
+		<result column="mno" property="memNo"/>
+		<result column="gb_no" property="gbNo"/>
+		<result column="refer_no" property="referNo"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="create_date" property="createDate"/>
+		<result column="pwd" property="pwd"/>
+		<result column="filepath" property="filePath"/>
+		<result column="status" property="status"/>
+		<result column="answer_content" property="answerContent"/>
+		<result column="answer_date" property="answerDate"/>
+		<result column="profile" property="profile"/>
+		<result column="user_id" property="userId"/>
+		<result column="category" property="category"/>
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
@@ -287,6 +306,7 @@
 		select 
 			   r.rno
 		     , r.pno
+		     , filepath
 		     , nickname
 		     , profile
 		     , r.content
@@ -310,6 +330,7 @@
 	<select id="selectStoreReviewMainList" resultMap="reviewResult">
 		select r.rno
 		     , r.pno
+		     , filepath
 		     , nickname
 		     , profile
 		     , r.content
@@ -333,12 +354,14 @@
 	
 	<select id="selectReviewList" resultMap="reviewResult">
  		select
- 				rno
-			  , nickname
-			  , profile
-			  , content
-			  , star_rating
-			  , review_date
+ 				r.rno
+              , r.mno
+			  , m.nickname
+			  , r.filepath
+			  , m.profile
+			  , r.content
+			  , r.star_rating
+			  , r.review_date
 			  , (
 		         select count(*)
 		           from recommend
@@ -346,8 +369,14 @@
 		            and mno = #{memberNo}
 		            and refer_no = rno
 		         ) as recoCk
-	      from s_review
-	      join member using (mno)
+		      ,  (
+		         select count(*)
+		           from recommend
+		          where gb_no = 2
+		            and refer_no = rno
+		          ) as reconum
+	      from s_review r
+	      join member m on (m.mno = r.mno)
 	     where pno = #{productNo}
            and status = 'Y'
 	</select>
@@ -380,13 +409,21 @@
 			 , #{rating}
 			 , SYSDATE
 			 , 'Y'
+			 <choose>
+			 	<when test="img != null">
+			 		, #{img}
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
 			 )
 	</insert>
 	
 	<select id="checkRecommend" resultType="_int">
 		select count(*)
 		  from recommend
-		 where gb_no = 1
+		 where gb_no = 2
 		   and refer_no = #{reviewNo}
 		   and mno = #{memberNo}
 	</select>
@@ -408,6 +445,79 @@
 			 , #{reviewNo}
 			 )
 	</insert>
+	
+	<insert id="insertReport">
+		insert
+		  into report
+		values
+			 (
+			   seq_rpno.nextval
+			 , #{reportMemNo}
+		     , 'SR'
+			 , #{refBNo}
+			 , #{content}
+			 , 'y'
+			 , SYSDATE
+			 )
+	</insert>
+	
+	<select id="selectStoreQnaList" resultMap="qnaResult">
+		select
+		       CS_QNO
+		     , MNO
+		     , user_id
+     		 , profile
+		     , GB_NO
+		     , REFER_NO
+		     , TITLE
+		     , CONTENT
+		     , to_char(create_date, 'YYYY-MM-DD') as create_date
+		     , PWD
+		     , FILEPATH
+		     , STATUS
+		     , ANSWER_CONTENT
+		     , ANSWER_DATE
+		  from cs_qna
+		  join member using (mno)
+		 where refer_no = #{pno}
+	</select>
+	
+	<select id="selectQnaListCount" resultType="_int">
+		select
+			   count(*)
+		  from cs_qna
+		 where status = 'Y'
+		   and gb_no = 2
+		   and refer_no = #{pno}
+	</select>
+	
+	<insert id="insertQna">
+		insert
+		  into cs_qna
+		values
+			 (
+			   SEQ_CSQNO.NEXTVAL
+			 , #{memNo}
+			 , 2
+			 , #{referNo}
+			 , '(' || #{category} || ')' || #{title}
+			 , #{content}
+			 , sysdate
+			 <choose>
+			 	<when test="pwd != null">
+			 		, #{pwd}
+			 	</when>
+			 	<otherwise>
+			 		, null
+			 	</otherwise>
+			 </choose>
+			 , null
+			 , 'Y'
+			 , null
+			 , null
+			 )
+	</insert>
+	
 	
 	
 	

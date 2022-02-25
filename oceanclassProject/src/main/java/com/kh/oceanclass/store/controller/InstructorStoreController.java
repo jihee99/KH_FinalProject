@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.service.InstructorStoreService;
 import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
@@ -48,8 +49,8 @@ public class InstructorStoreController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 3);
 		ArrayList<Product> list = inStoreService.selectList(pi);
 		
-		//System.out.println("pi = "+pi);
-		//System.out.println("list = "+list);
+		System.out.println("pi = "+pi);
+		System.out.println("list = "+list);
 		
 		model.addAttribute("pi",pi);
 		model.addAttribute("list", list);
@@ -424,6 +425,21 @@ public class InstructorStoreController {
 		return "store/instructorStoreDeliveryOrderSearchList";
 	}
 	
+	@RequestMapping(value="sostatusUp.in")
+	public String storeOrderStatusUpdate(String ono, String status, HttpSession session) {
+		StoreOrder so = new StoreOrder();
+		so.setOrderNo(ono);
+		so.setOrderStatus(Integer.parseInt(status));
+		System.out.println(so);
+		int result = inStoreService.storeOrderStatusUpdate(so);
+		if (result>0) {
+			session.setAttribute("alertMsg", "배송상태 수정이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "배송상태 수정에 실패했습니다.");
+		}
+		return "redirect:solist.in";
+		
+	}
 	
 	@RequestMapping(value="srlist.in")
 	public String storeReviceList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
@@ -543,6 +559,31 @@ public class InstructorStoreController {
 		return "redirect:sqlist.in";
 	}
 	
+	@RequestMapping(value="sqreport.in")
+	public String reportForm(String qno, Model model) {
+		StoreQna sq = inStoreService.selectStoreQnaDetail(qno);
+		System.out.println(sq);
+		
+		Report rp = new Report();
+		
+		rp.setReportMemNo(sq.getMemNo());
+		rp.setRefCategory("SQ");
+		rp.setRefBNo(Integer.toString(sq.getCsQno()));
+		rp.setRpContent(sq.getContent());
+
+		model.addAttribute("rp",rp);
+		
+		return "member/common/reportWindow";
+	}
+	
+	//-------------------chart
+	@RequestMapping(value="schart.in")
+	public String storeChartForm() {
+		return "store/instructorChartPage";
+	}
+	
+	
+	
 	
 	// 첨부파일
 	public String saveFile(MultipartFile upfile, HttpSession session) {
@@ -566,6 +607,10 @@ public class InstructorStoreController {
 		
 		return changeName;
 	}
+	
+	
+	
+	
 	
 	
 	

@@ -54,7 +54,7 @@
                 <table class="table table-light table-sm">
                     <tr>
                         <th width="200">주문번호</th>
-                        <td width="250">${sOrder.orderNo }</td>
+                        <td width="250" id="orderNo">${sOrder.orderNo }</td>
                         <th width="200" rowspan="2">주소</th>
                         <td width="250" rowspan="2">${sOrder.address }</td>
                     </tr>
@@ -74,6 +74,12 @@
                         <th>주문상태</th>
                         <td>
                         	<c:choose>
+                        		<c:when test="${sOrder.orderStatus eq null }">
+                        			<select class="orderStatus">
+                        				<option value="1">주문접수</option>
+                        				<option value="2">상품준비중</option>
+                        			</select>
+                        		</c:when>
                         		<c:when test="${sOrder.orderStatus eq 1 }">
 		                        	<select class="orderStatus">
 		                        		<option value="1">주문접수</option>
@@ -160,14 +166,14 @@
             <div align="center">
                 <button id="reBtn" class="btn btn-lg" type="submit" onclick="window.open('orcancleF.ad?ono=${sOrder.orderNo }','회원쿠폰지급페이지','width=550, height=380, menubar=no, status=no, toolbar=no, resizable=no')">주문취소</button>
             	<input id="saveBtn" class="btn btn-lg" onclick="orderSave();" type="button" value="저장하기">
-                <input id="listBtn" class="btn btn-lg" type="button" onclick="location.href='orlist.ad'" value="목록보기">
+                <input id="listBtn" class="btn btn-lg" type="button" onclick="history.back();" value="목록보기">
             </div>   
         </div>
         
         <script>
         	function orderSave(){
         		console.log($(".orderStatus option:selected").val());	
-				var orderNo = ${sOrder.orderNo}    
+				var orderNo = $("#orderNo").text();    
 				console.log(orderNo);
 
 				$.ajax({

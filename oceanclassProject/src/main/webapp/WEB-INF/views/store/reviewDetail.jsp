@@ -9,6 +9,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <style>
     .review_detail{width: 800px; height: auto;}
     .mini_header>img{ margin: auto; display: block;}
@@ -108,25 +110,41 @@
 			                <div class="review">
 			                    <div class="user_detail">
 			                        <div class="user_image">
-			                            <img src="${r.profile}" alt="">
+				                        <c:choose>
+			                        		<c:when test="${r.profile eq null }">
+			                        			<img src="">
+			                        		</c:when>
+			                        		<c:otherwise>
+			                        			<img src="${r.profile}">
+			                        		</c:otherwise>
+			                        	</c:choose>
 			                        </div>
 			                        <span>
 			                            <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
 			                        </span><br>
 			                        <span class="user_name">${r.nickname }</span>
 			                        <span class="enroll_date">${r.reviewDate }</span>
-			                        <button type="button">신고</button>
+			            			<input type="hidden" id="refBNo" neme="refBNo" value="${r.reviewNo}">
+                        			<input type="hidden" id="reportMemNo" name="reportMemNo" value="${r.memberNo}">
+			                        <button type="button" data-toggle="modal" data-target="#report">신고</button>
 			                    </div>
 			                    <div class="review_content">
 			                        <span class="product_name_small">${p.title }</span> <br>
 			                        <span class="content">${ r.content }</span>
-			                        <div class="thumbnail_image">
-			                            <img src="" class="thumb">
-			                        </div>
+			                        
+			                        <c:choose>
+		                        		<c:when test="${r.img eq null }">
+		                        		</c:when>
+		                        		<c:otherwise>
+					                        <div class="thumbnail_image">
+					                            <img src="${r.img}" class="thumb" style="width:150px; height: 120px;">
+					                        </div>
+		                        		</c:otherwise>
+		                        	</c:choose>
 			                    </div>
 			                    <div class="recommend_area">
 			                        <button type="button" class="recommend"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
-			                        <span style="font-weight:bold;">${ r.reconum }</span>명에게 도움이 되었어요.
+			                        <span style="font-weight:bold;">${r.reconum }</span>명에게 도움이 되었어요.
 			                    </div>
 			                </div>
 	           			</div>
@@ -159,29 +177,87 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLabel">리뷰 신고</h5>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body">
-		        <form>
+		        <form action="sreviewReport.st" method="post">
+
 		          <div class="mb-3">
-		            <label for="recipient-name" class="col-form-label">신고사유를 선택해주세요.</label>
-		            <input type="radio" class="form-control" id="recipient-name">
+		            <label for="recipient-name" class="col-form-label">신고사유를 선택해주세요.</label><br>
+                        <input name="radio" id="radio1" value="욕설 또는 음란성 내용" type="radio">
+                        <label for="radio1">욕설 또는 음란성 내용</label> <br>
+                        
+                        <input name="radio" id="radio2" value="부적절한 홍보성 댓글" type="radio">
+                        <label for="radio2">부적절한 홍보성 댓글</label> <br>
+                        
+                        <input name="radio" id="radio3" value="사생활 침해 및 불법 촬영물" type="radio">
+                        <label for="radio3">사생활 침해 및 불법 촬영물</label> <br>
+                        
+                        <input name="radio" id="radio4" value="명예훼손 및 저작권침해" type="radio">
+                        <label for="radio4">명예훼손 및 저작권침해</label> <br>
+                        
+                        <input name="radio" id="radio5" value="25" type="radio">
+                        <label for="radio5">기타</label><br>
+                        
+                        <textarea name="" cols="60" rows="" id="input-area2" disabled></textarea>
 		          </div>
-		          <div class="mb-3">
-		            <label for="message-text" class="col-form-label">Message:</label>
-		            <textarea class="form-control" id="message-text"></textarea>
+		          <div class="mb-4" style="display:none;">
+		            <label for="radio5" class="col-form-label">기타:</label>
+		            <textarea class="form-control" id="reason" maxlength="100"></textarea>
 		          </div>
 		        </form>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Send message</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary" onclick="rpdata();">신고하기</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
 		
 	<script>
+	
+    function rpdata(){
+        var rpValue = $('input[name=radio]:checked').val();
+        if(rpValue == 25){
+            rpValue = $("#input-area2").val();
+        }
+        
+        $.ajax({
+            url:"sreviewReport.st",
+            type:"post",
+            data:{
+                reportMemNo:$("#reportMemNo").val(),
+                refBNo:$("#refBNo").val(),
+                content:rpValue
+            },success:function(result){
+            	if(result == "gg"){
+            		alert("해당 글의 신고가 완료되었습니다.");
+	                opener.parent.location.reload();
+	                window.close();
+            	}else{
+	                alert("해당 글의 신고가 실패했습니다.");
+	                opener.parent.location.reload();
+	                window.close();
+            	}
+                
+            },error:function(){
+            	alert("통신실패!");
+            }
+        })
+        
+    }
+	
+	
+    $("input:radio[name=radio]").click(function(){
+        // value값이 5인 라디오버튼 체크시에만 text-area 활성화
+        if($("input[name=radio]:checked").val() == "25"){
+            $("#input-area2").attr("disabled",false);
+        } else{
+            $("#input-area2").attr("disabled",true);
+        }
+
+    })
 		
 	</script>
 </body>

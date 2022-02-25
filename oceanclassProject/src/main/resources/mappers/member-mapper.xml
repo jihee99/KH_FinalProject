@@ -22,6 +22,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        <result column="escape_date" property="escapeDate" />
 	</resultMap>
 	
+	<resultMap type="Report" id="reportResult">
+		<result column="report_no" property="reportNo"/>
+		<result column="reported_mno" property="reportMemNo"/>
+		<result column="bcategory" property="refCategory"/>
+		<result column="rep_bno" property="refBNo"/>
+		<result column="content" property="content"/>
+		<result column="status" property="status"/>
+		<result column="user_id" property="userId"/>
+	</resultMap>
+	
 	<select id="loginMember" resultMap="memberResult">
 			  select
 			  	mno
@@ -133,5 +143,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   set user_pwd = #{userPwd}
 		 where user_id = #{userId} 
 	</update>
+	
+	<insert id="postReport">
+		insert
+		  into report
+		     (
+		       report_no
+		     , reported_mno
+		     , bcategory
+		     , rep_bno
+		     , content
+		     )
+		values
+		     (
+		       SEQ_RPNO.nextval
+		     , #{reportMemNo}
+		     , #{refCategory}
+		     , #{refBNo}
+		     , #{content}
+		     )
+	</insert>
 	
 </mapper>

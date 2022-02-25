@@ -97,6 +97,8 @@ public interface InstructorStoreService {
 	int searchKeyStoreOrderCount(HashMap<String, String> map);
 	ArrayList<StoreOrder> searchKeyStoreOrderList(HashMap<String, String> map, PageInfo pi);
 	
+	int storeOrderStatusUpdate(StoreOrder so);
+	
 	// 12. 상품 재고 리스트 조회용 서비스
 	int selectStockCount();
 	ArrayList<Stock> selectStockList(PageInfo pi);

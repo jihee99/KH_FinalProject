@@ -1,6 +1,7 @@
 package com.kh.oceanclass.member.model.service;
 
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 
 public interface MemberService {
 
@@ -25,5 +26,7 @@ public interface MemberService {
 	// 비밀번호 재설정 (update)
 	int updatePwd(Member m);
 	
+	//신고하기
+	int postReport(Report r);
 	
 }

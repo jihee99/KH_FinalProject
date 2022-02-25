@@ -1,212 +1,163 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="style.css" rel="stylesheet" type="text/css">
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <style>
-/* 찜하기 어떻게 할지 고민중
-.checkbox .input:checked {
-    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_checkbox_20x20_green-5ea29ba9c7d082e58dab31430cd738ae.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
+.qnaOuter {
+	width: 700px;
 }
-.checkbox .input {
-    background-image: url(https://img-shop.pstatic.net/cart/static/pc/20220118/136/image/icon_checkbox_20x20_white-7458b93102d0e841a2fc3dd7fbd4f61c.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: inline-block;
-    border: 0;
-    width: 20px;
-    height: 20px;
-    vertical-align: top;
-    -webkit-appearance: none;
-    cursor: pointer;
-    outline: none;
-}
-*/
-.inner_outer{
-    margin: auto;
-    font-family:tahoma, 나눔고딕, "Nanum Gothic", 맑은고딕, "Malgun Gothic", 돋움, dotum, helvetica, "Apple SD Gothic Neo", sans-serif;
-}
-.product_info{
-    float: left;
-    margin-left: 400px;
-}
-.product_title_image{
-    width: 700px;
-    height: 400px;
-}
-.menu_bar{
-    width: 100%;
-    height: 50px;
-}
-.menu_bar>ul{
-    width:100%; 
-    height:100%; 
-    list-style-type: none;
-    margin: auto; 
-    padding:0;
-}
-.menu_bar>ul>li{
-    float:left; 
-    width:20%; 
-    height:100%; 
-    line-height: 50px; 
-    text-align:center;
-}
-.menu_bar>ul>li a{
-    text-decoration: none;
-    color: rgb(98, 97, 97);
-    font-size: 16px;
-    font-weight: bold;
-    font-family: 본고딕;
-}
-.quick_menu{
-    width: 350px;
-    height: 400px;
-    position: absolute; /*stickey*/
-    top: 53px;
-    right: 400px;
-    background:rgba(212, 212, 212, 0.493);
-}
-.product_discription{
-    width:200px;
-    height: 70px;
-    margin: 20px 20px;
-}
-.product_merchant_name{font-size: 15px;}
-.product_name{font-size: 20px;}
-.price_area{float: right; height: 120px; margin-right: 10px;}
-.discount_persent{font-size: 23px; font-family: sans-serif; font-weight: bold; color: steelblue;}
-.price {font-size: 20px;}
-.price_area>s{font-size:15px; color: rgb(146, 144, 144);position: absolute; right: 15px;}
-.in_cart, .heart {
-    width: 150px;
-    height: 40px;
-    margin-bottom: 5px;
-}
-.buy_now{width:305px; height: 40px; background: #4b81c8d8; color: white; border: none; border-radius: 5px;}
-.button_area{position: absolute; left: 22px;}
-.product_title_image>img{ width:100%; height:100%; object-fit: cover;}
 
-.qna{margin-bottom: 40px;}
-.qna_list{ height: auto;}
-.small_header{width: 100%; height: 90px;}
-.small_header>span{font-weight: bold; font-family: 본고딕; font-size: 20px;}
-.small_header>button{float: right; width: 100px; height: 30px; background:steelblue; color: white; border: none; border-radius: 5px;}
-.user_detail>button{background:none; border: none; font-weight: bold; font-size: 13px; cursor: pointer;}
-.user_detail{width: 400px; height: 80px;}
-.user_detail>span{ display:inline-block; margin-top: 12px;}
-.user_image{width: 50px; height: 50px; border: 1px solid; position:inline-block; float:left; margin-right: 10px;}
-.qna_title{font-size: small; color: rgb(88, 88, 88);}
-.content{font-family: 본고딕; font-size: 15px; display:inline-block; width:650px; height: auto; margin-bottom: 10px;}
-.more_qna{width:600px; height: 50px; background:rgb(211, 229, 236); border: none; border-radius: 5px; cursor: pointer;}
-.answer_area{font-weight: bold; font-family: 본고딕; }
+.qna {
+	margin-bottom: 40px;
+}
+
+.qna_list {
+	height: auto;
+}
+
+.small_header {
+	width: 100%;
+	height: 90px;
+}
+
+.small_header>span {
+	font-weight: bold;
+	font-family: 본고딕;
+	font-size: 20px;
+}
+
+.small_header>button {
+	float: right;
+	width: 100px;
+	height: 30px;
+	background: steelblue;
+	color: white;
+	border: none;
+	border-radius: 5px;
+}
+
+.user_detail>button {
+	background: none;
+	border: none;
+	font-weight: bold;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.user_detail {
+	width: 400px;
+	height: 80px;
+}
+
+.user_detail>span {
+	display: inline-block;
+	margin-top: 12px;
+}
+
+.user_image {
+	width: 50px;
+	height: 50px;
+	border: 1px solid;
+	position: inline-block;
+	float: left;
+	margin-right: 10px;
+}
+
+.qna_title {
+	font-size: small;
+	color: rgb(88, 88, 88);
+}
+
+.content {
+	font-family: 본고딕;
+	font-size: 15px;
+	display: inline-block;
+	width: 650px;
+	height: auto;
+	margin-bottom: 10px;
+}
+
+.more_qna {
+	width: 600px;
+	height: 50px;
+	background: rgb(211, 229, 236);
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.answer_area {
+	font-weight: bold;
+	font-family: 본고딕;
+}
+.more_qna{width:700px; height: 50px; background:rgb(211, 229, 236); border: none; border-radius: 5px; cursor: pointer;}
 </style>
 </head>
 <body>
-<div class="inner_outer">
-        
-        <hr>
-        <br><br>
-        <div class="product_info">
-            <div class="product_title_image">
-                <img src="https://cdn.class101.net/images/3d2d0e04-fee3-47f8-b5bc-e4d001a7c6e9/2048xauto.webp">
-            </div>
-            <br>
-            <div class="menu_bar">
-                <ul> <!--클릭하면 색 바뀌게-->
-                    <li class="menu_1"><a href="">상품소개</a></li>
-                    <li><a href="">상품리뷰(30)</a></li>
-                    <li><a href=""style="color: steelblue;">상품문의</a></li>
-                    <li><a href="">배송일정</a></li>
-                    <li><a href="">환불정책</a></li>
-                </ul>
-            </div>
-            <hr>
-            <br><br>
+	<div class="inner_outer">
+		<div class="qnaOuter">
+			<div class="small_header">
+				<span>상품문의</span>
+				<c:if test="${ loginUser != null }">
+					<button type="button" class="input_qna" onclick="qnaEnrollForm(${p.productNo});">문의하기</button>
+				</c:if>
+			</div>
 
-            <div class="small_header">
-                <span>상품문의</span>
-                <button type="button" class="input_qna">문의하기</button>
-            </div>
-
-            <div class="qna_list">
-                <div class="qna">
-                    <div class="user_detail">
-                        <div class="user_image">
-                            <img src="" alt="">
-                        </div>
-                        <span class="user_name">user01</span>
-                        <span class="enroll_date">2022.01.31</span>
-                        <button type="button">신고</button>
-                    </div>
-                    <div class="qna_content">
-                        <span class="qna_title">제목</span> <br>
-                        <span class="content">이상이 있음으로써 용감하고 굳세게 살 수 있는 것이다 석가는 무엇을 위하여 설산에서 고행을 하였으며 예수는 무엇을 위하여 광야에서 방황하였으며 공자는 무엇을 위하여 천하를 철환하였는가? 밥을 위하여서 옷을 위하여서 미인을 구하기 위하여서 그리하였는가?</span>
-                        <hr>
-                    </div>
-                    <div class="answer_area">
-                        <span>답변완료</span>
-                    </div>
-                </div>
-
-                <div class="qna">
-                    <div class="user_detail">
-                        <div class="user_image">
-                            <img src="" alt="">
-                        </div>
-                        <span class="user_name">user01</span>
-                        <span class="enroll_date">2022.01.31</span>
-                        <button type="button">신고</button>
-                    </div>
-                    <div class="qna_content">
-                        <span class="qna_title"><i class="fas fa-lock"></i> 비밀글입니다.</span> <br>
-                        <hr>
-                    </div>
-                    <div class="answer_area">
-                        <span>답변완료</span>
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="bottom_area">
-                <button type="button" class="more_qna">문의 더보기</button>
-            </div>
-            
-        </div>
-    
-
-        <div class="quick_menu">
-            <div class="product_discription">
-                <span class="product_merchant_name">브랜드명</span> <br>
-                <span class="product_name">상품명상품명</span> <br>
-                <span class="delivery_fee">무료배송</span>
-            </div>
-            <div class="price_area">
-                <s>50,000원</s> <br>
-                <span class="discount_persent">30% </span>
-                <span class="price">35,000원</span>
-            </div>
-            <br><br>
-            <select name="" id="" style="width: 305px; height: 40px; margin-left:22px;">
-                <option value="">옵션선택</option>
-            </select>
-            <br><br>
-            <div class="button_area" align="center">
-                <button type="button" class="in_cart">장바구니</button>
-                <button type="button" class="heart"><i></i>찜</button> <br>
-                <button type="button" class="buy_now">바로구매</button>
-            </div>
-        </div>
-
-    </div>
+			<div class="qna_list">
+				<c:forEach var="q" items="${sqList}">
+					<div class="qna">
+						<div class="user_detail">
+							<div class="user_image">
+								<img src="" alt="">
+							</div>
+							<span class="user_name">${q.userId }</span> <span
+								class="enroll_date">${q.createDate }</span>
+							<button type="button">신고</button>
+						</div>
+						<div class="qna_content">
+							<span class="qna_title">${q.title }</span> <br> <span
+								class="content">${q.content }</span>
+							<hr>
+						</div>
+						<div class="answer_area">
+							<c:choose>
+								<c:when test="${q.answerContent eq null}">
+									<span>미답변</span>
+								</c:when>
+								<c:otherwise>
+									<span>답변완료</span>								
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
+				</c:forEach>
+				<div class="bottom_area">
+					<button type="button" class="more_qna" onclick="allQna(${p.productNo});">문의 더보기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	
+	function allQna(pno){
+        window.open("qnaList.st?cpage=1&&pno=" + pno, "스토어문의목록", "width=800, height=800, resizeable=no, location=no");
+    }
+	
+	function qnaEnrollForm(pno){
+        window.open("qnaEnrollForm.st?pno=" + pno, "스토어문의작성", "width=650, height=800, resizeable=no, location=no");
+    }
+	
+	
+	
+	</script>
 </body>
 </html>

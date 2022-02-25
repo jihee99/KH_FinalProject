@@ -41,7 +41,7 @@
 
     <div class="outer">
         <div>
-            <div style="font-weight: bold; font-size: 17px; color: #6babd5;">실제 수강생 후기 전체 보기</div>
+            <div style="font-weight: bold; font-size: 17px; color: #6babd5;">실제 수강생 리뷰 전체 보기</div>
             <hr><br>
 
             <div id="reviewZone">

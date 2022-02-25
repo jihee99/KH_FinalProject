@@ -40,7 +40,7 @@
 
     <div class="outer">
         <div>
-            <div style="font-weight: bold; font-size: 17px; color: #6babd5;">실제 수강생 후기 전체 보기</div>
+            <div style="font-weight: bold; font-size: 17px; color: #6babd5;">실제 수강생 리뷰 전체 보기</div>
             <hr>
             <img src="resources/images/back.png" width="20" height="20" onclick="location.href='classReviewList.me?cpage=${ returnPage }&clNo=${ reviewClNo }'" style="cursor:pointer;">
 			<br><br>
@@ -251,7 +251,7 @@ ${ r.replyContent }
 		                <!-- Modal content-->
 		                <div class="modal-content">
 		                    <div class="modal-header">
-		                        <h4 class="modal-title">후기 수정하기</h4>
+		                        <h4 class="modal-title">리뷰 수정하기</h4>
 		                        <!--  
 		                        <button type="button" class="close" data-dismiss="modal">&times;</button>
 		                    	-->
@@ -322,7 +322,7 @@ ${ r.replyContent }
     		if(document.getElementById("memNo").value == ""){
                 alert("로그인 후 이용 가능한 서비스 입니다.");
             } else if('${loginUser.nickName}' == '${ cr.memNo }'){
-            	alert("본인의 후기는 추천할 수 없습니다.");
+            	alert("본인의 리뷰는 추천할 수 없습니다.");
             } else {
 				location.href = 
 					'recommendClass.me?grade=' + document.getElementById("grade").value 
@@ -432,12 +432,12 @@ ${ r.replyContent }
 			var filetype = filepoint.toLowerCase();
 			
 			if(content.replace(/ /gi, "").length < 5){
-				alert("후기 내용은 5글자 이상 입력해야 합니다.");
+				alert("리뷰 내용은 5글자 이상 입력해야 합니다.");
 				return false;
 			} else if(file == ""){
 				return true;
 			} else if(filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
-				alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
+				alert("리뷰 내용에는 사진 파일만 첨부할 수 있습니다.");
 				return false;
 			} else {
 				return true;
