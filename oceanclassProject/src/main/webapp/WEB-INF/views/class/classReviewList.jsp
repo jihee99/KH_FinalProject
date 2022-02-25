@@ -141,13 +141,13 @@ ${ ri.content }
             <div id="pagingArea">
                 <ul class="pagination">
                 	<c:if test="${ pi.currentPage > 1 }">
-							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage - 1 }&clNo=${ reviewPno }">Previous</a></li>
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage - 1 }&clNo=${ reviewClNo }">Previous</a></li>
 					</c:if>
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ p }&clNo=${ reviewPno }">${ p }</a></li>
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ p }&clNo=${ reviewClNo }">${ p }</a></li>
 					</c:forEach>
 					<c:if test="${ pi.currentPage != pi.maxPage }">
-							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage + 1 }&clNo=${ reviewPno }">Next</a></li>
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage + 1 }&clNo=${ reviewClNo }">Next</a></li>
 					</c:if>
                 </ul>
             </div>
