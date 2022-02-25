@@ -425,4 +425,12 @@ public class StuMypageController {
 		return new Gson().toJson(pay);
 	}
 	
+	// 상품 주문조회 기간검색
+	@ResponseBody
+	@RequestMapping(value="ajaxMyShopping.me", produces="application/json; charset=UTF-8")
+	public String ajaxMyShopping(StorePay pay, Model model) {
+		ArrayList<StorePay> list = myService.searchShoppingList(pay);
+		return new Gson().toJson(list);
+	}
+	
 }

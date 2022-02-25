@@ -89,4 +89,7 @@ public interface MypageService {
 	
 	// 스토어 주문 내역 상세
 	StorePay selectShopping(String orderNo);
+	
+	// 스토어 주문내역 검색
+	ArrayList<StorePay> searchShoppingList(StorePay pay);
 }

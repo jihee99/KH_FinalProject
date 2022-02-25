@@ -194,4 +194,8 @@ public class MypageDao {
 		return sqlSession.selectOne("myMapper.selectShopping", orderNo);
 	}
 	
+	public ArrayList<StorePay> searchShoppingList(SqlSessionTemplate sqlSession, StorePay pay){		
+		return (ArrayList)sqlSession.selectList("myMapper.searchShoppingList", pay);
+	}
+	
 }// class

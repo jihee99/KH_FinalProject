@@ -60,9 +60,10 @@
 				    <h2>주문 조회</h2>
 				    <div class="searchBar">
 				        <p>기간검색</p>
-				        <button class="btn btn-info">1주일</button>
-				        <button class="btn btn-info">15일</button>
-				        <button class="btn btn-info">1개월</button>
+				        <input type="hidden" id="memNo" value="${loginUser.memNo}">
+				        <button type="button" class="btn btn-info" id="week" value="7">1주일</button>
+				        <button type="button" class="btn btn-info" id="week" value="14">15일</button>
+				        <button type="button" class="btn btn-info" id="week" value="31">1개월</button>
 				        <div id="search">
 				            <input type="date"> ~ <input type="date">
 				            <button>검색</button>
@@ -91,6 +92,29 @@
 					    </div>
 				    </c:forEach>
 				</div>
+				
+				<script>
+					$(function(){
+						$(document).on("click", ".btn", function(){
+							let value = $(this).val();
+							let memNo = $("#memNo").val();
+							console.log(value);
+							console.log(memNo);
+							$.ajax({
+								url:"ajaxMyShopping.me",
+								data:{memberNo: memNo,
+									  payDate: value},
+							    success:function(result){
+							    	let result = '';
+							    	for(let i in result){
+							    	}
+							    },error:function(){
+							    	consoel.log("주문 기간조회 실패");
+							    }
+							})
+						})
+					})
+				</script>
 				
 				<div class="modal" tabindex="-1">
 					<div class="modal-dialog">

@@ -498,7 +498,7 @@
 		     , img1
 		  from pay p 
 		  join store s on (p.pno = s.pno)
-		 where p.mno = #{memNo}
+		 where p.mno = #{memberNo}
 	</select>
 	
 	<select id="selectShopping" resultMap="storePayResult">
@@ -520,6 +520,25 @@
 		  join store s on (p.pno = s.pno)
           join member m on (p.mno = m.mno)
 		 where order_no = #{orderNo}
+	</select>
+	
+	<select id="searchShoppingList" resultMap="storePayResult">
+		select
+		       order_no
+		     , p.mno
+		     , address
+		     , pay_amount
+		     , pay_date
+		     , pay_method
+		     , order_status
+		     , pay_status
+		     , p.pno
+		     , title
+		     , img1
+		  from pay p 
+		  join store s on (p.pno = s.pno)
+		 where p.mno = #{memberNo}
+		   and pay_date between sysdate - #{payDate} and sysdate
 	</select>
 	
 </mapper>
