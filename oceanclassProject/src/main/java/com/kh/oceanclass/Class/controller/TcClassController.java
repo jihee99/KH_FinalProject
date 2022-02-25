@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.oceanclass.Class.model.service.TcClassServiceImpl;
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.member.model.vo.Member;
 
@@ -210,7 +211,21 @@ public class TcClassController {
 			model.addAttribute("errorMsg", "수정 실패");
 			return "common/errorPage";
 		}
-		
 	}
 	
+	// 강사 내 클래스 리뷰 조회
+	@RequestMapping("myClassReviewList.tc")
+	public String myClassReviewList(Model model, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		//ArrayList<ClassReview> tcClassName = tcService.myClassNameList(clNo);
+		ArrayList<ClassReview> tcReviewList = tcService.myClassReviewList(memNo); // 클래스 리스트
+		
+		//model.addAttribute("clNo", clNo);
+		//model.addAttribute("tcClassName", tcClassName);
+		model.addAttribute("tcReviewList", tcReviewList);
+		return "member/teacher/classReviewList";
+	}
+
 }

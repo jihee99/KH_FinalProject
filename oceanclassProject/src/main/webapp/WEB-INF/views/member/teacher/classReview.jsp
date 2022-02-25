@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,7 +76,7 @@
     }
     #cl-content textarea{
         width: 450px;
-        height: 100px;
+        height: 130px;
         resize: none;
     }
     /* 클래스 등록버튼 */
@@ -112,13 +113,16 @@
             <div id="top-area">
                 <span id="bord-name">클래스 리뷰 관리</span>
             </div>
+            <c:forEach var="tcn" items="${ tcClassName }">
+            <input type="hidden" name="clNo" value="${ tcn.clNo }">
             <div id="classCategory">
-                <select name="" id="">
-                    <option value="">보미 강사의 강아지 훈련 클래스</option>
-                    <option value="">올바른 강아지 산책 클래스</option>
-                    <option value="">무의미하게 시간 보내는 클래스</option>
+                <select name="clName" id="">
+                    <option value="">${tcn.clName }</option>
                 </select>
             </div>
+            </c:forEach>
+            <c:forEach var="tr" items="${ tcReviewList }">
+            <input type="hidden" name="clNo" value="${ tr.clNo }">            
             <div id="review">
                 <span id="allReview">총 후기 <span id="number">5</span>건 /</span>
                 <span id="starAverage">별점평균 <span id="number">4.8</span>점</span>
@@ -132,55 +136,13 @@
                         </div>
                     </div>
                     <div id="cl-box">
-                        <div id="cl-category">
-                            <span>
-                                모든 강아지한테 통하는 훈련 클래스에요!!
-                            </span>
-                        </div>
                         <div id="cl-content">
-                            <textarea style="border: none ">강아지들이 다 좋아해요 제가 강아지를 101마리 키우고 있기때문에 확실히 압니다. 종류는 모두 같아요 요즘 검은옷을 즐겨입고 강아지로 모피를 만들기를 원하는 친구가 제 강아지</textarea>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="cl-wrap">
-                    <div id="cl-img">
-                        <img src="resources/images/bomi7.jpg" style="width: 140px;">
-                        <div class="star" align="center">
-                            <span>★★★★★</span>
-                        </div>
-                    </div>
-                    <div id="cl-box">
-                        <div id="cl-category">
-                            <span>
-                                [운동] 보미 강사의 강아지 훈련 클래스
-                            </span>
-                        </div>
-                        <div id="cl-content">
-                            <textarea style="border: none ">어떤 악마견 비글견도 다 천사견으로 만들어 드립니다 세상에 나쁜 강아지는 없다! 보미 훈경 클래스면 모두모두 천사강쥐</textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="cl-wrap">
-                    <div id="cl-img">
-                        <img src="resources/images/bomi7.jpg" style="width: 140px;">
-                        <div class="star" align="center">
-                            <span>★★★★★</span>
-                        </div>
-                    </div>
-                    <div id="cl-box">
-                        <div id="cl-category">
-                            <span>
-                                [운동] 보미 강사의 강아지 훈련 클래스
-                            </span>
-                        </div>
-                        <div id="cl-content">
-                            <textarea style="border: none ">어떤 악마견 비글견도 다 천사견으로 만들어 드립니다 세상에 나쁜 강아지는 없다! 보미 훈경 클래스면 모두모두 천사강쥐</textarea>
+                            <textarea style="border: none ">${tr.content }</textarea>
                         </div>
                     </div>
                 </div>
             </div>
+            </c:forEach>
             <br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />
