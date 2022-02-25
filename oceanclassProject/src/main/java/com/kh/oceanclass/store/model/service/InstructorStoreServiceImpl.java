@@ -250,6 +250,11 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		return inStoreDao.insertProductOrder(sqlSession, pOrder);		
 	}
 
+	@Override
+	public int storeOrderStatusUpdate(StoreOrder so) {
+		return inStoreDao.storeOrderStatusUpdate(sqlSession, so);
+	}
+
 
 
 

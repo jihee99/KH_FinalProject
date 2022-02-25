@@ -425,6 +425,21 @@ public class InstructorStoreController {
 		return "store/instructorStoreDeliveryOrderSearchList";
 	}
 	
+	@RequestMapping(value="sostatusUp.in")
+	public String storeOrderStatusUpdate(String ono, String status, HttpSession session) {
+		StoreOrder so = new StoreOrder();
+		so.setOrderNo(ono);
+		so.setOrderStatus(Integer.parseInt(status));
+		System.out.println(so);
+		int result = inStoreService.storeOrderStatusUpdate(so);
+		if (result>0) {
+			session.setAttribute("alertMsg", "배송상태 수정이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "배송상태 수정에 실패했습니다.");
+		}
+		return "redirect:solist.in";
+		
+	}
 	
 	@RequestMapping(value="srlist.in")
 	public String storeReviceList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
@@ -545,14 +560,13 @@ public class InstructorStoreController {
 	}
 	
 	@RequestMapping(value="sqreport.in")
-	public String reportForm(String qno, Model model, HttpSession session) {
+	public String reportForm(String qno, Model model) {
 		StoreQna sq = inStoreService.selectStoreQnaDetail(qno);
 		System.out.println(sq);
-		Member loginUser = (Member) session.getAttribute("loginUser");
 		
 		Report rp = new Report();
 		
-		rp.setReportMemNo(Integer.toString(sq.getMemNo()));
+		rp.setReportMemNo(sq.getMemNo());
 		rp.setRefCategory("SQ");
 		rp.setRefBNo(Integer.toString(sq.getCsQno()));
 		rp.setRpContent(sq.getContent());

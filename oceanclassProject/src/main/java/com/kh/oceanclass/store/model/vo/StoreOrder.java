@@ -21,7 +21,7 @@ public class StoreOrder {
 	private String payAmount;	// (주문별구매내역의 총가격 - 할인금액)
 	private String payDate;
 	private String payMethod;	// 무통장 | 카드
-	private String orderStatus;	// 1 결제완료 | 2 상품준비중 | 3 배송시작 | 4 배송중  | 5 배송완료  | 6 주문취소 | 7 취소완료
+	private int orderStatus;	// 1 결제완료 | 2 상품준비중 | 3 배송시작 | 4 배송중  | 5 배송완료  | 6 주문취소 | 7 취소완료
 	private String payStatus;	//
 	private String depositCK;
 	private String usePoint;
