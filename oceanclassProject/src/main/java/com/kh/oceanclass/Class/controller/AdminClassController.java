@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.oceanclass.Class.model.service.AdminClassServiceImpl;
 import com.kh.oceanclass.Class.model.vo.ClassManager;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
@@ -121,7 +122,8 @@ public class AdminClassController {
 	}
 	
 	@RequestMapping(value="classManagerReview.ad")
-	public String adminClassManagerDetail(ClassManager cm, String rarray, String rcategory, String rkeyword, Model model) {
+	public String adminClassManagerReview(ClassManager cm, String rarray, String rcategory, String rkeyword, Model model) {
+		// 관리자 클래스 리뷰 디테일 페이지
 		ClassVo c = acService.selectClassDetail(cm.getClNo());
 		int listCount = acService.reviewListCount(cm); 							// 조회할 리스트 갯수
 		PageInfo pi = Pagination.getPageInfo(listCount, cm.getCpage(), 5, 5);
@@ -162,11 +164,6 @@ public class AdminClassController {
 	@ResponseBody
 	@RequestMapping(value="classShows.ad")
 	public String classShows(@RequestParam(value="checkList[]") List<Integer> checkList) {
-		/*
-		for(int clNo : checkList) {
-			System.out.println(clNo);
-		}
-		*/
 		int result1 = 0;
 		for(int clNo : checkList) {
 			int result2 = acService.classShow(clNo);
@@ -200,4 +197,60 @@ public class AdminClassController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="reviewShows.ad")
+	public String reviewShows(@RequestParam(value="checkList[]") List<Integer> checkList) {
+		int result1 = 0;
+		for(int crNo : checkList) {
+			int result2 = acService.reviewShow(crNo);
+			if(result2 < 1) {
+				result1 += 1;
+			} 
+		}
+		
+		if(result1 < 1) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="reviewHides.ad")
+	public String reviewHides(@RequestParam(value="checkList[]") List<Integer> checkList) {
+		int result1 = 0;
+		for(int crNo : checkList) {
+			int result2 = acService.reviewHide(crNo);
+			if(result2 < 1) {
+				result1 += 1;
+			} 
+		}
+		
+		if(result1 < 1) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
+	}
+	
+	@RequestMapping(value="classManagerQna.ad")
+	public String adminClassManagerQna(ClassManager cm, String rarray, String rcategory, String rkeyword, Model model) {
+		// 관리자 클래스 문의 디테일 페이지
+		ClassVo c = acService.selectClassDetail(cm.getClNo());
+		int listCount = acService.qnaListCount(cm); 							// 조회할 리스트 갯수
+		PageInfo pi = Pagination.getPageInfo(listCount, cm.getCpage(), 5, 5);
+		ArrayList<ClassQna> cqList = acService.selectQnaList(cm, pi);			// 조회할 리스트 목록
+		
+		System.out.println(c);
+		
+		model.addAttribute("c", c);
+		model.addAttribute("pi", pi);
+		model.addAttribute("cqList", cqList);
+		model.addAttribute("cm", cm);
+		model.addAttribute("rarray", rarray);
+		model.addAttribute("rcategory", rcategory);
+		model.addAttribute("rkeyword", rkeyword);
+
+		return "class/admin/classManagerQna";
+	}
 }

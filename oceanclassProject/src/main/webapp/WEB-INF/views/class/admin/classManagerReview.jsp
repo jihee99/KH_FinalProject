@@ -72,9 +72,9 @@
 			    <div>
 	                <div id="pagingArea" align="left">
 				        <ul class="pagination">
-				            <li class="page-item" style="margin-right:10px;"><a class="page-link" onclick="listPage();">목록으로 이동</a></li>
-				            <li class="page-item"><a class="page-link" href=""><b>리뷰 관리</b></a></li>
-				            <li class="page-item"><a class="page-link" href="">문의 관리</a></li>
+				            <li class="page-item" style="margin-right:10px; cursor:pointer;"><a class="page-link" onclick="listPage();">목록으로 이동</a></li>
+				            <li class="page-item"><a class="page-link"><b>리뷰 관리</b></a></li>
+				            <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="qnaPage(${c.clNo});">문의 관리</a></li>
 				        </ul>
 				    </div>
 			        <button type="button" class="btn" style="background-color: #6babd5; width: 130px; color: white;" onclick="statusCon(1);">클래스 노출</button>
@@ -143,23 +143,23 @@
 			        <div>
 			        
 			            <div>
-					        <button type="button" class="btn" style="background-color: #6babd5; width: 130px; color: white;">리뷰 노출</button>
-					        <button type="button" class="btn" style="background-color: lightgray; width: 130px;">리뷰 미노출</button>
+					        <button type="button" class="btn" style="background-color: #6babd5; width: 130px; color: white;" onclick="reviewCon(1);">리뷰 노출</button>
+					        <button type="button" class="btn" style="background-color: lightgray; width: 130px;" onclick="reviewCon(2);">리뷰 미노출</button>
 					
 					        <div style="float: right;">
-					            <select style="width:100px; height: 30px;">
-					                <option selected>리뷰번호</option>
-					                <option>작성자</option>
-					                <option>내용</option>
+					            <select id="searchCategory" style="width:100px; height: 30px;">
+					                <option id="cate1" value="1">리뷰번호</option>
+					                <option id="cate2" value="2">작성자</option>
+					                <option id="cate3" value="3">내용</option>
 					            </select>
-					            <input type="text" style="width: 200px" placeholder="검색어 입력">
-					            <img src="resources/images/search.png" style="width: 23px; height: 23px;">
+					            <input id="searchText" type="text" style="width: 200px" placeholder="검색어 입력">
+					            <img src="resources/images/search.png" style="width: 23px; height: 23px; cursor:pointer;" onclick="searchKeyword();">
 					        </div>
 					
 					        <span style="float: right; margin-right: 20px;">
-					            <select style="width:150px; height: 30px;">
-					                <option selected>등록일 빠른순</option>
-					                <option>등록일 느린순</option>
+					            <select id="arraySelect" style="width:150px; height: 30px;" onchange="arrayChange(this);">
+					                <option id="arraynew" value="new">등록일 빠른순</option>
+					                <option id="arrayold" value="old">등록일 느린순</option>
 					            </select>
 					        </span>
 					    </div>
@@ -169,7 +169,7 @@
 					        <table id="classList" class="table table-hover classList">
 					            <thead>
 					                <tr style="background-color: #6babd5;">
-					                    <th width="30"><input type="checkbox"></th>
+					                    <th width="30"><input type="checkbox" onchange="allCheck(this);"></th>
 					                    <th width="100">리뷰번호</th>
 					                    <th width="150">작성자</th>
 					                    <th width="520">내용</thw>
@@ -180,7 +180,7 @@
 					            <tbody>
 				                	<c:forEach var="cr" items="${ crList }">
 						                <tr>
-						                    <td><input type="checkbox" value="${ cr.crNo }"></td>
+						                    <td><input type="checkbox" class="checkboxs" value="${ cr.crNo }"></td>
 						                    <td>${ cr.crNo }</td>
 						                    <td>${ cr.memNo }</td>
 						                    <td>${ cr.content }</td>
@@ -228,6 +228,33 @@
     </div>
 
 	<script>
+		window.onload = function(){
+			var clNo = "${c.clNo}";
+			var array = "${cm.array}";
+			var category = "${cm.category}";
+			var keyword = "${cm.keyword}";
+			
+			if(array == 'new'){ 
+    			document.getElementById("arraynew").selected = true; 
+   			} else{
+    			document.getElementById("arrayold").selected = true; 
+   			}
+			
+			if(category == ""){
+				document.getElementById("cate1").selected = true;
+			} else if(category == "1"){
+				document.getElementById("cate1").selected = true;
+				document.getElementById("searchText").value = keyword;
+			} else if(category == "2"){
+				document.getElementById("cate2").selected = true;
+				document.getElementById("searchText").value = keyword;
+			} else if(category == "3"){
+				document.getElementById("cate3").selected = true;
+				document.getElementById("searchText").value = keyword;
+			}
+			
+		}
+	
 		function listPage(){
 			var rpage = "${cm.rpage}";
     		var yy = "${cm.yclass}"; 
@@ -281,6 +308,138 @@
 					})
 				}			
 			} 
+		}
+		
+		function arrayChange(el){
+			var cpage = "${pi.currentPage}";
+			var clNo = "${c.clNo}";
+			var category = "${cm.category}";
+			var keyword = "${cm.keyword}";
+			
+			var yy = "${cm.yclass}";
+			var nn = "${cm.nclass}";
+    		var rarray = "${rarray}";
+    		var rcategory = "${rcategory}";
+    		var rkeyword = "${rkeyword}";
+    		var before = "${cm.before}";
+    		var after = "${cm.after}";
+    		var rpage = "${cm.rpage}";
+			
+			location.href = "classManagerReview.ad?cpage=" + cpage + "&clNo=" + clNo + "&array=" + el.value + "&category=" + category
+					+ "&keyword=" + keyword + "&yclass=" + yy +"&nclass=" + nn + "&rarray=" + rarray + "&rcategory=" + rcategory 
+					+ "&rkeyword=" + rkeyword + "&before=" + before + "&after=" + after + "&rpage=" + rpage;
+		}
+		
+		function searchKeyword(){
+			var cpage = "${pi.currentPage}";
+			var clNo = "${c.clNo}";
+			var array = "${cm.array}";
+			
+			var yy = "${cm.yclass}";
+			var nn = "${cm.nclass}";
+    		var rarray = "${rarray}";
+    		var rcategory = "${rcategory}";
+    		var rkeyword = "${rkeyword}";
+    		var before = "${cm.before}";
+    		var after = "${cm.after}";
+    		var rpage = "${cm.rpage}";
+			
+			var searchText = document.getElementById("searchText").value;
+			var searchCategory = document.getElementById("searchCategory").value;
+			
+			if(searchCategory == '1' && searchText.replace(/ /gi, "").length < 1){
+				alert("검색어는 한 글자 이상 입력해야 합니다.");
+			} else{
+				location.href = "classManagerReview.ad?cpage=" + cpage + "&clNo=" + clNo + "&array=" + array + "&category=" + searchCategory
+								+ "&keyword=" + searchText + "&yclass=" + yy +"&nclass=" + nn + "&rarray=" + rarray + "&rcategory=" + rcategory 
+								+ "&rkeyword=" + rkeyword + "&before=" + before + "&after=" + after + "&rpage=" + rpage;
+			}
+			
+		}
+		
+	 	function allCheck(el){
+	 		var checkboxs = document.getElementsByClassName("checkboxs");
+	 		
+ 			for(var i=0; i<checkboxs.length; i++){
+ 				checkboxs[i].checked = el.checked;
+ 			}
+	 	}
+		
+		function reviewCon(num){
+			var checkboxs = document.getElementsByClassName("checkboxs");
+			var ckNum = 0;
+			var checkboxNo = new Array();
+			
+ 			for(var i=0; i<checkboxs.length; i++){
+ 				if(checkboxs[i].checked == true){
+ 					ckNum += 1;
+ 				}
+ 			}
+ 			
+ 			if(ckNum < 1){
+ 				alert("한 개 이상의 클래스를 선택해주세요.");
+ 			} else {
+ 				
+				for(var i=0; i<checkboxs.length; i++){
+	 				if(checkboxs[i].checked == true){
+	 					checkboxNo.push(checkboxs[i].value);
+	 				}
+				}
+				
+				if(num == 1){
+					if(confirm("리뷰를 노출처리 하시겠습니까?") == true){
+						$.ajax({
+							url:"reviewShows.ad",
+							type : "post",
+							data:{checkList:checkboxNo},
+							success:function(result){
+								if(result == 'yyyyy'){
+									alert("리뷰가 노출처리 되었습니다.");
+									window.location.reload();
+								} else{
+									alert("리뷰 노출처리에 실패하였습니다.");
+								}
+							}, error:function(){
+								console.log("리뷰 노출 ajax 통신 실패");
+							}
+						})
+					}
+				}else{
+					if(confirm("리뷰를 미노출처리 하시겠습니까?") == true){
+						$.ajax({
+							url:"reviewHides.ad",
+							type : "post",
+							data:{checkList:checkboxNo},
+							success:function(result){
+								if(result == 'yyyyy'){
+									alert("리뷰가 미노출처리 되었습니다.");
+									window.location.reload();
+								} else{
+									alert("리뷰 미노출처리에 실패하였습니다.");
+								}
+							}, error:function(){
+								console.log("리뷰 미노출 ajax 통신 실패");
+							}
+						})
+					}
+				}
+				
+ 			}
+		}
+		
+		function qnaPage(clNo){
+			var yy = "${cm.yclass}";
+			var nn = "${cm.nclass}";
+    		var rarray = "${rarray}";
+    		var rcategory = "${rcategory}";
+    		var rkeyword = "${rkeyword}";
+    		var before = "${cm.before}";
+    		var after = "${cm.after}";
+    		var rpage = "${cm.rpage}";
+    		
+			location.href = "classManagerQna.ad?cpage=1&clNo=" + clNo + "&array=new&category=&keyword=" 
+							+ "&yclass=" + yy +"&nclass=" + nn + "&rarray=" + rarray + "&rcategory=" + rcategory 
+							+ "&rkeyword=" + rkeyword + "&before=" + before + "&after=" + after + "&rpage=" + rpage;
 		}
 	</script>
 </body>

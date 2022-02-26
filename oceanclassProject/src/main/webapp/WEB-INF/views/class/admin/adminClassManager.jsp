@@ -312,10 +312,9 @@
 		}
 		
 		function statusCons(num){
-			var classShowForm = document.getElementById("classShowForm");
+			//var classShowForm = document.getElementById("classShowForm");
 			var checkboxs = document.getElementsByClassName("checkboxs");
 			var ckNum = 0;
-			//var checkboxNo = [];
 			var checkboxNo = new Array();
 			
  			for(var i=0; i<checkboxs.length; i++){
@@ -323,14 +322,6 @@
  					ckNum += 1;
  				}
  			}
- 			
- 			/*
-			for(var i=0; i<checkboxs.length; i++){
-				checkboxNo.push(checkboxs[i].value);
-			}
-			
-			console.log(checkboxNo);
- 			*/
  			
  			if(ckNum < 1){
  				alert("한 개 이상의 클래스를 선택해주세요.");

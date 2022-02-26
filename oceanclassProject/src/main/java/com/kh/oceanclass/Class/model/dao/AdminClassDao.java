@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.Class.model.vo.ClassManager;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
@@ -68,6 +69,26 @@ public class AdminClassDao {
 	
 	public int classHide(SqlSessionTemplate sqlSession, int clNo) {
 		return sqlSession.update("adminClassMapper.classHide", clNo);
+	}
+	
+	public int reviewShow(SqlSessionTemplate sqlSession, int crNo) {
+		return sqlSession.update("adminClassMapper.reviewShow", crNo);
+	}
+	
+	public int reviewHide(SqlSessionTemplate sqlSession, int crNo) {
+		return sqlSession.update("adminClassMapper.reviewHide", crNo);
+	}
+	
+	public int qnaListCount(SqlSessionTemplate sqlSession, ClassManager cm) {
+		return sqlSession.selectOne("adminClassMapper.qnaListCount", cm);
+	}
+	
+	public ArrayList<ClassQna> selectQnaList(SqlSessionTemplate sqlSession, ClassManager cm, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("adminClassMapper.selectQnaList", cm, rowBounds);
 	}
 	
 }

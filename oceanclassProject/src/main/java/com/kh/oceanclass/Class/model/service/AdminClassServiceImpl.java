@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.Class.model.dao.AdminClassDao;
 import com.kh.oceanclass.Class.model.vo.ClassManager;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
@@ -75,5 +76,25 @@ public class AdminClassServiceImpl implements AdminClassService {
 	@Override
 	public int classHide(int clNo) {
 		return acDao.classHide(sqlSession, clNo);
+	}
+
+	@Override
+	public int reviewShow(int crNo) {
+		return acDao.reviewShow(sqlSession, crNo);
+	}
+
+	@Override
+	public int reviewHide(int crNo) {
+		return acDao.reviewHide(sqlSession, crNo);
+	}
+
+	@Override
+	public int qnaListCount(ClassManager cm) {
+		return acDao.qnaListCount(sqlSession, cm);
+	}
+
+	@Override
+	public ArrayList<ClassQna> selectQnaList(ClassManager cm, PageInfo pi) {
+		return acDao.selectQnaList(sqlSession, cm, pi);
 	}
 }

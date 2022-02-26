@@ -36,6 +36,23 @@
 		<result column="reconum" property="recommend" />
 		<result column="replynum" property="replyNum" />
 	</resultMap>
+	
+	<resultMap id="adminClassQnaResult" type="ClassQna">
+		<result column="cs_qno" property="csQnaNo" />
+		<result column="mno" property="memNo" />
+		<result column="nickname" property="memNo" />
+		<result column="gb_no" property="gbNo" />
+		<result column="refer_no" property="referNo" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="create_date" property="createDate" />
+		<result column="pwd" property="pwd" />
+		<result column="filepath" property="filePath" />
+		<result column="status" property="status" />
+		<result column="answer_content" property="answerContent" />
+		<result column="answer_date" property="answerDate" />
+		<result column="teacher_nick" property="teacherNick" />
+	</resultMap>
 
 	<select id="enrollClassListCount" resultType="_int">
 		select count(*)
@@ -284,5 +301,76 @@
 		   set CL_STATUS = 'D'
 		 where clno = #{clNo}
 	</update>
+	
+	<update id="reviewShow">
+		update class_review
+		   set STATUS = 'Y'
+		 where C_RNO = #{crNo}
+	</update>
+	
+	<update id="reviewHide">
+		update class_review
+		   set STATUS = 'N'
+		 where C_RNO = #{crNo}
+	</update>
+	
+	<select id="qnaListCount" resultType="_int">
+		select count(*)
+		  from cs_qna
+		  JOIN member USING (MNO)
+		  where GB_NO = 1
+		    and REFER_NO = #{clNo}
+		 <choose>
+		 	<when test="category == 1">
+		 		and CS_QNO = #{keyword}
+		 	</when>
+			<when test="category == 2">
+				and nickname like '%' || #{keyword} || '%'	
+			</when>
+			<when test="category == 3">
+				and TITLE like '%' || #{keyword} || '%'
+			</when>
+			<when test="category == 4">
+				and CONTENT like '%' || #{keyword} || '%'
+			</when>
+		</choose>
+	</select>
+	
+	<select id="selectQnaList" resultMap="adminClassQnaResult">
+		select cs_qno
+		     , nickname
+		     , gb_no
+		     , refer_no
+		     , title
+		     , content
+		     , to_char(create_date, 'YYYY-MM-DD') as create_date
+		     , status
+		  from cs_qna
+		  join member using (mno)
+		  where GB_NO = 1
+		    and REFER_NO = #{clNo}
+		 <choose>
+		 	<when test="category == 1">
+		 		and CS_QNO = #{keyword}
+		 	</when>
+			<when test="category == 2">
+				and nickname like '%' || #{keyword} || '%'	
+			</when>
+			<when test="category == 3">
+				and TITLE like '%' || #{keyword} || '%'
+			</when>
+			<when test="category == 4">
+				and CONTENT like '%' || #{keyword} || '%'
+			</when>
+		</choose>
+ 		<choose>
+ 			<when test="array == 'new'">
+ 				order by CREATE_DATE desc
+ 			</when>
+ 			<when test="array == 'old'">
+ 				order by CREATE_DATE
+ 			</when>
+ 		</choose>
+	</select>
 
 </mapper>
