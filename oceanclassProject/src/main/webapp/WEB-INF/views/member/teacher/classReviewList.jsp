@@ -21,7 +21,7 @@
     }
     #review{
         margin: auto;
-        width: 700px;
+        width: 800px;
         margin-bottom: 10px;
     }
     #classCategory{
@@ -49,7 +49,7 @@
     }
     #content-wrap{
         margin: auto;
-        width: 750px;
+        width: 800px;
         height: 680px;
         border: 1px solid gray;
     }
@@ -76,9 +76,10 @@
         padding-top: 10px;
     }
     #cl-content textarea{
-        width: 550px;
+        width: 600px;
         height: 90px;
         resize: none;
+        background-color: white;
     }
     /* 클래스 등록버튼 */
     #enrollBtn {
@@ -114,31 +115,107 @@
             <div id="top-area">
                 <span id="bord-name">클래스 리뷰 관리</span>
             </div>
+            <c:set var="starSum" value="0" />
+				<c:forEach var="tcr" items="${ tcReviewList }">
+		    		<c:set var="starSum" value="${ starSum + tcr.star }" />
+				</c:forEach>
+            <c:set var="starAverage" value="${ starSum / tcReviewList.size() }" />
             <div id="review">
-                <span id="allReview">총 후기 <span id="number">5</span>건 /</span>
-                <span id="starAverage">별점평균 <span id="number">4.8</span>점</span>
+                <span id="allReview">총 후기 <span id="number">${ tcReviewList.size() }</span>건 /</span>
+                <span id="starAverage">별점평균 <span id="number">${ starAverage }</span>점</span>
             </div>
             <div id="content-wrap" style="overflow-y: scroll;">
                 <c:forEach var="tr" items="${ tcReviewList }">
                 <div id="cl-wrap">
-                <input type="hidden" name="clNo" value="${ tr.clNo }">
                     <div id="cl-img">
-                        <img src="${tr.filePath }" style="width: 140px;" name="">
+                    	<c:choose>
+                    		<c:when test="${not empty tr.filePath }">
+                        		<img src="${tr.filePath }" style="width: 150px;" name="">
+                        	</c:when>
+                        	<c:otherwise>
+                        		<img src="resources/images/logoOnlyImg.png" style="width: 140px;" name="">
+                        	</c:otherwise>
+                        </c:choose>
                         <div class="star" align="center">
-                            <span>★★★★★</span>
+                            <span>
+                            <img src="resources/images/star.png" width="15px" height="15px">
+                                <c:choose>
+                                	<c:when test="${ 1.0 <= tr.star && tr.star < 1.5 }">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+									</c:when>
+									<c:when test="${ 1.5 <= tr.star && tr.star < 2.0  }">
+										<img src="resources/images/star3.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+									</c:when>
+									<c:when test="${ 2.0 <= tr.star && tr.star < 2.5 }">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+									</c:when>
+									<c:when test="${ 2.5 <= tr.star && tr.star < 3.0 }">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star3.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+									</c:when>
+									<c:when test="${ 3.0 <= tr.star && tr.star < 3.5 }">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+									</c:when>
+									<c:when test="${ 3.5 <= tr.star && tr.star < 4.0 }">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star3.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+									</c:when>
+									<c:when test="${ 4.0 <= tr.star && tr.star < 4.5 }">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star2.png" width="15px" height="15px">
+									</c:when>
+									<c:when test="${ 4.5 <= tr.star && tr.star < 5.0 }">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star3.png" width="15px" height="15px">
+									</c:when>
+									<c:otherwise>
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+										<img src="resources/images/star.png" width="15px" height="15px">
+									</c:otherwise>
+                                </c:choose>
+                            
+                            </span>
                         </div>
                     </div>
-                    <div id="cl-box">
+                    <div id="cl-box" style="cursor:pointer;" onclick="detailPage(${tr.crNo})">
+                    <input type="hidden" name="clNo" value="${ tr.clNo }">
                         <div id="cl-category">
                             <span>
                                 	${tr.clName }
                             </span>
                         </div>
                         <div id="cl-content">
-                            <textarea style="border: none ">${tr.content }</textarea>
+                            <textarea style="border: none" readonly disabled >${tr.content }</textarea>
                         </div>
                     </div>
                 </div>
+            <script>
+	            function detailPage(crNo){
+	    			window.open('classReviewDetail.me?crNo=' + crNo + '&cpage=1&clNo=${tr.clNo}&rpage=1', "클래스리뷰목록", "width=650, height=800, resizeable=no, location=no");
+	    		}
+            </script>
             </c:forEach>
             </div>
             <br><br><br>
