@@ -62,6 +62,9 @@ public interface MypageService {
 	// 내 클래스
 	ArrayList<ClassOrder> selectMyClass(int memNo);
 	
+	// 내 클래스 전체
+	ArrayList<ClassOrder> selectMyAllClass(int memNo);
+	
 	// 클래스 후기 갯수
 	int classReviewCount(int memNo);
 	
@@ -73,6 +76,9 @@ public interface MypageService {
 	
 	// 클래스 문의 리스트
 	ArrayList<CsQna> classQnaList(PageInfo pi, int memNo);
+	
+	// 클래스 문의 상세
+	CsQna ajaxClassQna(int csQno);
 	
 	// 좋아요 상품 갯수
 	int likeProductCount(int memNo);

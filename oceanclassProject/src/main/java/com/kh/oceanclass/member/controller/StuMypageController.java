@@ -2,7 +2,6 @@ package com.kh.oceanclass.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,7 +57,7 @@ public class StuMypageController {
 		ArrayList<ClassOrder> list = myService.selectMainMyClass(memNo);
 		ArrayList<ClassVo> classLikeList = myService.selectMainLikeClass(memNo);
 		ArrayList<Product> storeLikeList = myService.selectMainLikeProduct(memNo);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("classLikeList", classLikeList);
 		model.addAttribute("storeLikeList", storeLikeList);
@@ -211,7 +210,7 @@ public class StuMypageController {
 		Map<String, Object> map = new HashMap();		
 		int qnaCount = myService.myQnaCount(q);
 		
-		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 5, 5);
+		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 10, 10);
 		ArrayList<Qna> list = myService.selectMyQnaList(pi, q);
 	
 		for(int i=0; i<list.size(); i++) {
@@ -285,10 +284,18 @@ public class StuMypageController {
 
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 10);
 		ArrayList<CsQna> list = myService.classQnaList(pi, memNo);
-		
+
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassQnaDetail";
+	}
+	
+	// 클래스 문의 모달 내역
+	@ResponseBody
+	@RequestMapping(value="ajaxClassQna.me", produces="application/json; charset=UTF-8")
+	public String ajaxClassQna(int csQno) {
+		CsQna cs = myService.ajaxClassQna(csQno);
+		return new Gson().toJson(cs);
 	}
 	
 	// 내 클래스 메인
@@ -296,19 +303,31 @@ public class StuMypageController {
 	public String myClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
-		
+		ArrayList<ClassOrder> allList = myService.selectMyAllClass(memNo);
+
 		model.addAttribute("list", list);
+		model.addAttribute("allList", allList);
 		return "member/student/myClass";
+	}
+	
+	// 수 클래스 전체
+	@RequestMapping("myIngClass.me")
+	public String myIngClass(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
+
+		model.addAttribute("list", list);
+		return "member/student/myClassDetail";
 	}
 	
 	// 내 클래스 전체
 	@RequestMapping("myAllClass.me")
 	public String myAllClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
-		
+		ArrayList<ClassOrder> list = myService.selectMyAllClass(memNo);
+		System.out.println(list);
 		model.addAttribute("list", list);
-		return "member/student/myClassDetail";
+		return "member/student/myAllClassDetail";
 	}
 	
 	

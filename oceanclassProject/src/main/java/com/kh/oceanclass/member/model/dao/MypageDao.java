@@ -118,6 +118,10 @@ public class MypageDao {
 		return (ArrayList)sqlSession.selectList("myMapper.selectMyClass", memNo);
 	}
 	
+	public ArrayList<ClassOrder> selectMyAllClass(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("myMapper.selectMyAllClass", memNo);
+	}
+	
 	public int likeClassCount(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("myMapper.likeClassCount", memNo);
 	}
@@ -152,6 +156,10 @@ public class MypageDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("myMapper.classQnaList", memNo, rowBounds);
+	}
+	
+	public CsQna ajaxClassQna(SqlSessionTemplate sqlSession, int csQno) {
+		return sqlSession.selectOne("myMapper.ajaxClassQna", csQno);
 	}
 	
 	

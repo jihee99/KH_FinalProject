@@ -93,6 +93,11 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<ClassOrder> selectMyClass(int memNo) {
 		return myDao.selectMyClass(sqlSession, memNo);
 	}
+	
+	@Override
+	public ArrayList<ClassOrder> selectMyAllClass(int memNo) {
+		return myDao.selectMyAllClass(sqlSession, memNo);
+	}
 
 	@Override
 	public int likeClassCount(int memNo) {
@@ -122,6 +127,11 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<CsQna> classQnaList(PageInfo pi, int memNo) {
 		return myDao.classQnaList(sqlSession, pi, memNo);
+	}
+
+	@Override
+	public CsQna ajaxClassQna(int csQno) {
+		return myDao.ajaxClassQna(sqlSession, csQno);
 	}
 
 
