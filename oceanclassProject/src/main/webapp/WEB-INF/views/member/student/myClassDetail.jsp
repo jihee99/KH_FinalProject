@@ -40,31 +40,24 @@
 				        <div class="conhead">
 				            <h2>나의 클래스</h2>
 				        </div>
-				        <c:choose>
-			        		<c:when test="${empty list}">
-			        			<p>찜한 클래스가 없습니다</p>
-			        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
-			        		</c:when>
-				        	<c:otherwise>
-						        <c:forEach var="c" items="${list}">
-						            <div class="item">
-						            	<a><img src="${c.clImg}"></a>
-						            	<input type="hidden" value="${c.clNo}">
-						            	<p id="ctitle">
-							            	<c:choose>
-							            		<c:when test="${fn:length(c.clName) gt 30}">
-							            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
-							            			..
-							            		</c:when>
-							            		<c:otherwise>
-							            			<c:out value="${c.clName}"></c:out>
-							            		</c:otherwise>
-							            	</c:choose>
-						            	</p>
-						            </div>
-					            </c:forEach>
-					    	</c:otherwise>			        
-				        </c:choose>    
+					        <c:forEach var="c" items="${list}">
+					            <div class="item">
+					            	<a><img src="${c.clImg}"></a>
+					            	<input type="hidden" value="${c.clNo}">
+					            	<p id="ctitle">
+						            	<c:choose>
+						            		<c:when test="${fn:length(c.clName) gt 30}">
+						            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
+						            			..
+						            		</c:when>
+						            		<c:otherwise>
+						            			<c:out value="${c.clName}" />
+						            		</c:otherwise>
+						            	</c:choose>
+						            	<c:out value="${c.readingCheck}"/> 
+					            	</p>
+					            </div>
+				            </c:forEach>
 				    </div>
 				</div>
 			</td>

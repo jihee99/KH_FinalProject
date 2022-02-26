@@ -50,8 +50,8 @@
 			            	<input type="hidden" value="${c.clNo}">
 			            	<p id="ctitle">
 				            	<c:choose>
-				            		<c:when test="${fn:length(c.clName) gt 30}">
-				            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
+				            		<c:when test="${fn:length(c.clName) gt 12}">
+				            			<c:out value="${fn:substring(c.clName, 0, 11)}"></c:out>
 				            			..
 				            		</c:when>
 				            		<c:otherwise>
@@ -83,8 +83,8 @@
 				            </form>
 			            	<p id="ctitle">
 				            	<c:choose>
-				            		<c:when test="${fn:length(c.clName) gt 30}">
-				            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
+				            		<c:when test="${fn:length(c.clName) gt 12}">
+				            			<c:out value="${fn:substring(c.clName, 0, 11)}"></c:out>
 				            			..
 				            		</c:when>
 				            		<c:otherwise>
