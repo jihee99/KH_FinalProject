@@ -76,16 +76,12 @@ public class StuMypageController {
 	// 프로필 변경
 	@RequestMapping("changeProfile.me")
 	public String changeProfile(Member m, MultipartFile upfile, HttpSession session, Model model) {
-		
-		System.out.println(upfile);
 		if(!upfile.getOriginalFilename().equals("")) {		
 			String changeName = saveFile(upfile, session);
 			m.setProfileImg("resources/uploadFiles/" + changeName);
 		}else {				// 프로필 사진 없을 경우
 			m.setProfileImg("");
 		}
-		
-		//System.out.println(m);
 		int result = myService.updateProfile(m);
 		Member loginUser = myService.selectUser(m);
 		if(result>0) {
@@ -118,12 +114,10 @@ public class StuMypageController {
 	// 회원 탈퇴
 	@RequestMapping("myDelete.me")
 	public String deleteMem(String userPwd, String userId, HttpSession session, Model model) {
-		// db 비밀번호 암호문
-		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
+		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd(); // db 비밀번호 암호문
 		
 		if(bcryptPasswordEncoder.matches(userPwd, encPwd)) { 
-			int result = myService.deleteMem(userId);
-			
+			int result = myService.deleteMem(userId);			
 			if(result>0) {
 				session.removeAttribute("loginUser");
 				session.setAttribute("alertMsg", "그동안 오션클래스를 이용해주셔서 감사합니다");
@@ -148,24 +142,18 @@ public class StuMypageController {
 	
 	// 넘어온 첨부파일 그자체를 서버 폴더에 저장
 	public String saveFile(MultipartFile upfile, HttpSession session) {
-
-		String originName = upfile.getOriginalFilename(); // "flower.png"
-		
+		String originName = upfile.getOriginalFilename(); // "flower.png"		
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // 년월일시분초
 		int ranNum = (int)(Math.random() * 90000 + 10000); // 5자리 랜덤값
-		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"
-		
+		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"		
 		String changeName = currentTime + ranNum + ext;
-				
 		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
-		
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");		
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return changeName;
 	}
 	
@@ -183,8 +171,7 @@ public class StuMypageController {
 			if(list.get(i).getDedate() == null) {
 				list.get(i).setDedate("무제한");
 			}
-		}
-		
+		}		
 		model.addAttribute("pi", pi);
 		model.addAttribute("couponCount", couponCount);
 		model.addAttribute("list", list);
@@ -211,8 +198,7 @@ public class StuMypageController {
 			}else {
 				list.get(i).setCategory("기타");
 			}
-		}
-		
+		}		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myQna";
@@ -222,10 +208,9 @@ public class StuMypageController {
 	@ResponseBody
 	@RequestMapping(value="ajaxMyQna.me", produces="application/json; charset=UTF-8")
 	public Map<String, Object> ajaxMyQna(@RequestParam(value="cpage", defaultValue="1") int currentPage, Qna q, Model model) {
-
-		Map<String, Object> map = new HashMap();
-		
+		Map<String, Object> map = new HashMap();		
 		int qnaCount = myService.myQnaCount(q);
+		
 		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 5, 5);
 		ArrayList<Qna> list = myService.selectMyQnaList(pi, q);
 	
@@ -238,7 +223,6 @@ public class StuMypageController {
 				list.get(i).setCategory("기타");
 			}
 		}
-		
 		map.put("pi", pi);
 		map.put("list", list);
 		return map;
@@ -251,12 +235,11 @@ public class StuMypageController {
 	@RequestMapping("likeClass.me")
 	public String likeClass(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
 		int likeClassCount = myService.likeClassCount(memNo);
-		
+
 		PageInfo pi = Pagination.getPageInfo(likeClassCount, currentPage, 5, 6);
 		ArrayList<ClassVo> list = myService.selectLikeClass(pi, memNo);
-		
+
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassLike";
@@ -265,8 +248,7 @@ public class StuMypageController {
 	// 클래스 후기(리뷰)
 	@RequestMapping("myReview.me")
 	public String myReview(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 		int reviewCount = myService.classReviewCount(memNo);
 		int qnaCount = myService.classQnaCount(memNo);
 		
@@ -284,8 +266,7 @@ public class StuMypageController {
 	// 클래스 리뷰 디테일
 	@RequestMapping("myClassReviewDetail.me")
 	public String myClassReviewDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 		int reviewCount = myService.classReviewCount(memNo);
 		
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
@@ -299,12 +280,12 @@ public class StuMypageController {
 	// 클래스 문의 디테일
 	@RequestMapping("myClassQnaDetail.me")
 	public String myClassQnaDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 		int reviewCount = myService.classReviewCount(memNo);
-		//System.out.println(reviewCount);
+
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 10);
 		ArrayList<CsQna> list = myService.classQnaList(pi, memNo);
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassQnaDetail";
