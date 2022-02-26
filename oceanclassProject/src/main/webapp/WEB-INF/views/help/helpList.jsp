@@ -37,7 +37,7 @@
 	        <div class="label">
 	        	<ul>
 	        		<li>
-	        			<input type="radio" class="form-check-input" id="C" name="category" value="C">
+	        			<input type="radio" class="form-check-input" id="C" name="category" value="C" checked>
 	        			<label for="C">클래스</label>
 	        		</li>
 	        		<li>
