@@ -93,6 +93,7 @@
 			        </table>
 			        
 			        <script>
+						$("#list>tbody>tr").click(function(){
 							let csQno = $($(this)[0]).children().first().val();
 							console.log(csQno);
 							let empty = "";
