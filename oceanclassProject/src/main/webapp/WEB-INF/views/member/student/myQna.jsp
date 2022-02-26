@@ -109,8 +109,8 @@
 								$("#myQna>tbody>#qna").not(this).removeClass("selected");
 								var targetQ = $(this).next();
 								var targetA = $(this).next().next();
-								targetQ.fadeToggle(200);
-								targetA.fadeToggle(200);
+								targetQ.fadeToggle(400);
+								targetA.fadeToggle(400);
 							});
 						});
 					</script>
@@ -168,8 +168,8 @@
 												$("#myQna>tbody>#qna").not(this).removeClass("selected");
 												var targetQ = $(this).next();
 												var targetA = $(this).next().next();
-												targetQ.fadeToggle(200);
-												targetA.fadeToggle(200);
+												targetQ.fadeToggle(400);
+												targetA.fadeToggle(400);
 											});
 						    				
 					    					let page = '<ul class="pagination">';

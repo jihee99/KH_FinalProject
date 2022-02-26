@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?1">
 <style>
-	.searchBar>div{float:left; width: 35%; margin:0 auto; padding: 10px; margin-top: 15px;}
+	.searchBar>div{float:left; width: 35%; margin:0 auto; padding: 10px;}
 	.searchBar .bi{float: left; width: 20px; margin-top: -10px;}
 	.searchBar p{
 		float: left;
