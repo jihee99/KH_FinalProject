@@ -26,9 +26,6 @@
     #move{width: 90%; height: 40%; overflow: hidden; border:none; margin: 0 auto; margin-left: 20px;}
     #move>#img{display:block; width: 100%; height: 200px; vertical-align: middle}
     .item>#stitle{text-align: center; font-size: 20px; font-weight: 600; }
-    #paging{
-    	display: table;
-    }
     .content1>p{
     	text-align: center;
     	font-size : 24px;
