@@ -21,6 +21,21 @@
 		<result column="like_count" property="like" />
 		<result column="cl_status" property="clStatus" />
 	</resultMap>
+	
+	<resultMap id="adminClassReviewResult" type="ClassReview">
+		<result column="c_rno" property="crNo" />
+		<result column="clno" property="clNo" />
+		<result column="mno" property="memNo" />
+		<result column="user_name" property="memNo" />
+		<result column="nickname" property="memNo" />
+		<result column="content" property="content" />
+		<result column="star" property="star" />
+		<result column="filepath" property="filePath" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="reconum" property="recommend" />
+		<result column="replynum" property="replyNum" />
+	</resultMap>
 
 	<select id="enrollClassListCount" resultType="_int">
 		select count(*)
@@ -116,5 +131,158 @@
 		 where clno = #{clNo}
 	</update>
 	
+	<select id="classManagerListCount" resultType="_int">
+		select count(*)
+ 		  from class
+ 		  JOIN member USING (MNO)
+ 		  where clno > 0 
+ 		  <choose>
+ 			<when test="yclass == 1">
+				<if test="nclass == 1">
+					and CL_STATUS != 'N'
+				</if>
+				<if test="nclass == null">
+					and CL_STATUS = 'Y'
+				</if>
+ 			</when>
+ 			<when test="yclass == null">
+				<if test="nclass == 1">
+					and CL_STATUS in ('R','D')
+				</if>
+ 			</when>
+ 		</choose>
+		<choose>
+			<when test="category == 1">
+				and cl_name like '%' || #{keyword} || '%'	
+			</when>
+			<when test="category == 2">
+				and nickname like '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		<if test='before != ""'>
+			and CL_DATE >= #{before} and #{after} >= CL_DATE
+		</if>
+	</select>
+	
+	<select id="selectClassManagerList" resultMap="adminClassResult">
+		select
+		       clno
+		     , nickname
+		     , category
+		     , cl_name
+		     , cl_content
+		     , to_char(cl_date, 'YYYY-MM-DD') as cl_date
+		     , cl_price
+		     , kit
+		     , cl_status
+		     , cl_img
+		     , cl_img2
+		     , cl_img3
+		     , cl_kitimg
+		     , hashtag
+		     , count
+		     , reason
+		  from class
+		  JOIN member USING (MNO)
+		 where clno > 0 
+		<choose>
+ 			<when test="yclass == 1">
+				<if test="nclass == 1">
+					and CL_STATUS != 'N'
+				</if>
+				<if test="nclass == null">
+					and CL_STATUS = 'Y'
+				</if>
+ 			</when>
+ 			<when test="yclass == null">
+				<if test="nclass == 1">
+					and CL_STATUS in ('R','D')
+				</if>
+ 			</when>
+ 		</choose>
+		<choose>
+			<when test="category == 1">
+				and cl_name like '%' || #{keyword} || '%'	
+			</when>
+			<when test="category == 2">
+				and nickname like '%' || #{keyword} || '%'
+			</when>
+		</choose>
+		<if test='before != ""'>
+			and CL_DATE >= #{before} and #{after} >= CL_DATE
+		</if>	
+ 		<choose>
+ 			<when test="array == 'new'">
+ 				order by cl_date desc
+ 			</when>
+ 			<when test="array == 'old'">
+ 				order by cl_date
+ 			</when>
+ 		</choose>
+	</select>
+	
+	<select id="reviewListCount" resultType="_int">
+		select count(*)
+		  from class_review
+		  join member using (mno)
+		 where clno = #{clNo}
+		 <choose>
+		 	<when test="category == 1">
+		 		and C_RNO = #{keyword}
+		 	</when>
+			<when test="category == 2">
+				and nickname like '%' || #{keyword} || '%'	
+			</when>
+			<when test="category == 3">
+				and CONTENT like '%' || #{keyword} || '%'
+			</when>
+		</choose>
+	</select>
+	
+	<select id="selectReviewList" resultMap="adminClassReviewResult">
+		select c_rno
+		     , clno
+		     , nickname
+		     , content
+		     , FILEPATH
+		     , to_char(create_date, 'YYYY-MM-DD') as create_date
+		     , status
+		  from class_review
+		  join member using (mno)
+		 where clno = #{clNo}
+ 		 <choose>
+		 	<when test="category == 1">
+		 		and C_RNO = #{keyword}
+		 	</when>
+			<when test="category == 2">
+				and nickname like '%' || #{keyword} || '%'	
+			</when>
+			<when test="category == 3">
+				and CONTENT like '%' || #{keyword} || '%'
+			</when>
+		</choose>
+ 		<choose>
+ 			<when test="array == 'new'">
+ 				order by CREATE_DATE desc
+ 			</when>
+ 			<when test="array == 'old'">
+ 				order by CREATE_DATE
+ 			</when>
+ 		</choose>
+	</select>
+	
+	<update id="classShow">
+		update class
+		   set CL_STATUS = 'Y'
+		 where clno = #{clNo}
+	</update>
+	
+	<update id="classHide">
+		update class
+		   set CL_STATUS = 'D'
+		 where clno = #{clNo}
+	</update>
 
 </mapper>
