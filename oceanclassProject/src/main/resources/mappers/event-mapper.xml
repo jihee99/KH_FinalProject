@@ -13,7 +13,6 @@
 		<result column="status" property="status" />
 		<result column="tag" property="tag" />
 		<result column="img" property="img" />
-		<result column="maxCount" property="maxCount" />
 		<result column="cno" property="couponNo" />
 	</resultMap>
 	
@@ -36,6 +35,7 @@
 		<result column="cl_price" property="clPrice" />
 		<result column="cl_img" property="clImg" />
 		<result column="like_count" property="like" />
+		<result column="hashtag" property="hashtag" />
 	</resultMap>
 	
 	<resultMap type="Coupon" id="couponResult">
@@ -44,7 +44,7 @@
 	    <result column="cname" property="couponName" />
         <result column="discount" property="discount" />
         <result column="dedate" property="dedate" />
-        <result column="nowcount" property="count" />
+        <result column="now_count" property="count" />
         <result column="maxcount" property="maxCount"/>
 	</resultMap>
 
@@ -81,6 +81,7 @@
 		     , E_CONTENT
 		     , TAG
 		     , IMG
+		     , CNO
 		  from EVENT
 		 where ENO = #{eventNo}
 	</select>
@@ -95,6 +96,7 @@
 		  from REPLY
 		  JOIN MEMBER USING (MNO)
          WHERE CONTENT_NO = #{contentNo}
+           and board_no = 1
         order
            by reply_no desc
 	</select>	 
@@ -260,7 +262,7 @@
 		       count(*)
 		  from class
 		 where cl_status = 'Y'
-		   and hashtag like '%'||#{tag}||'%'
+		   and hashtag like '%'||#{hashtag}||'%'
 	</select>
 	
 	<select id="tagSelectList" resultMap="classResult">
@@ -273,6 +275,7 @@
 		     , hashtag
 		  from class
 		 where hashtag like '%'||#{hashtag}||'%'
+		   and cl_status = 'Y'
 		 order
 		    by clno desc
 	</select>
@@ -302,7 +305,7 @@
 	
 	<update id="countCoupon">
 		update couponList
-		   set nowcount = nowcount + 1
+		   set now_count = now_count + 1
 		 where cno = #{couponNo}
 	</update>
 	
@@ -310,7 +313,7 @@
 		select 
 			   cno
 			 , maxcount
-			 , nowcount
+			 , now_count
 		  from couponlist
 		 where cno = #{couponNo}	 
 	</select>

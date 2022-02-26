@@ -365,7 +365,7 @@
 	
 	<select id="selectLikeClass" resultMap="myClassResult">
 		select 
-		       clno
+		       distinct clno
 		     , l.mno as "mno"
 		     , cl_name
 		     , cl_price
@@ -374,6 +374,8 @@
 		  from class c
 		  join like_item l on (c.clno = l.refer_no)
 		  where l.mno = #{mno}
+		  order 
+		     by clno
 	</select>
 	
 	<select id="classReviewCount" resultType="_int">
