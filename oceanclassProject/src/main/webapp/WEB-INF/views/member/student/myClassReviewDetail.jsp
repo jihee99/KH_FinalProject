@@ -21,6 +21,7 @@
 	.img img{width: 100%; height: 80%;}
 	.img p{font-size: 24px; text-align: center;}
 	.title{font-size: 24px; font-weight:600; display: block; font-weight: bolder; text-overflow: ellipsis; overflow:hidden;}
+	#move{width: 90%; height: 40%; overflow: hidden; border:none; margin: 0 auto; margin-left: 20px;}
 </style>
 </head>
 <body>
@@ -39,7 +40,10 @@
 				    <c:forEach var="c" items="${list}">
 					    <div class="conreview">
 				            <div class="img">
-				            	<a><img src="${c.img}"></a>
+				            	<form id="classDetail" method="post" action="classDetail.me">
+				            		<input type="hidden" id="referNo" name="referNo" value="${c.clNo}">
+					                <button id="move" type="submit"><img src="${c.img}" id="img"></button>
+					            </form> 
 				            	<p>${c.star}</p>
 				            </div>
 				            <div class="review">
