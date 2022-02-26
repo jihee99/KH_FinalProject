@@ -23,14 +23,9 @@
 	    border: 1px  solid;
 	}
 	#img{
-		width: 30%; 
-		height: 100%;
-		float: left;
+		width: 150px; 
 	}
-	#img img{
-		width: 100%;
-		height: 80%;
-	}
+	#img img{width: 100%;}
 	.explain{
 		width: 70%; 
 		height: 100%; 
@@ -61,7 +56,7 @@
 				    <c:forEach var="s" items="${list}">
 						<div class="list">
 				        	<div id="img">
-				        		<a href=""><img src="${s.img}" alt=""></a>
+				        		<img src="${s.img}" alt="">
 				            	<p>${s.starRating}</p>
 				        	</div>
 				        	<div class="explain">
