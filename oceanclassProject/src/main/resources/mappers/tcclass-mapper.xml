@@ -37,6 +37,7 @@
 		<result column="reconum" property="recommend" />
 		<result column="replynum" property="replyNum" />
 		<result column="cl_name" property="clName" />
+		<result column="reviewsum" property="reviewsum" />
 	</resultMap>
 	
 	<resultMap id="classReviewReplyResult" type="Reply">
@@ -162,13 +163,22 @@
   	</update>
   	
   	<select id="myClassReviewList" resultMap="classReviewResult">
-		select        
-               cl_name
+		select 
+			   c.clno       
+             , cl_name
              , c_rno
 		     , content
 		     , star
 		     , filepath
 		     , status
+             , (
+		        select count(*)
+		          from class_review cr
+                  join class c on (c.clno = cr.clno)
+                 where status = 'Y'
+                   and CL_STATUS = 'Y'
+                   and c.mno = #{memNo}
+		        ) as reviewsum
 		  from class_review cr
           join class c on (c.clno = cr.clno)
 		 where status = 'Y'
