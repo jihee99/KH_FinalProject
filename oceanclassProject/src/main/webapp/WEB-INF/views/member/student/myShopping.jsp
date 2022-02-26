@@ -222,6 +222,7 @@
 					</div>
 				</div>
 				
+				<!-- 상세보기 버튼 클릭 -->
 				<script>
 					function detailShopping(){
 						
@@ -233,38 +234,39 @@
 							data:{orderNo: orderNo},
 							success:function(result){
 								pay += '<tr>'
-									 + '<th> 주문번호 : </th>'
-									 + '<td>' + result.orderNo + '</td>'
+									 + 	  '<th> 주문번호 : </th>'
+									 + 	  '<td>' + result.orderNo + '</td>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<th> 주문날짜 : </th>'
-									 + '<td>' + result.payDate + '</td>'
-									 + '</tr>'
-									 + '<th> 주문금액 : </th>'
-									 + '<td>' + result.payAmount + '원</td>'
-									 + '</tr>'
-									 + '<th> 주문방식 : </th>'
-									 + '<td>' + result.payMethod + '</td>'
+									 +    '<th> 주문날짜 : </th>'
+									 +    '<td>' + result.payDate + '</td>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<th> 주문자 정보 </th>'
+									 +    '<th> 주문금액 : </th>'
+									 +    '<td>' + result.payAmount + '원</td>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<td colspan="2"> 이름  : ' + result.userName + '</td>'
+									 +    '<th> 주문방식 : </th>'
+									 +    '<td>' + result.payMethod + '</td>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<td> 전화번호 : ' + result.phone + '</td>'
+									 +    '<th> 주문자 정보 </th>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<td> 주소 : ' + result.address + '</td>'
+									 +    '<td colspan="2"> 이름  : ' + result.userName + '</td>'
+									 + '</tr>'
+									 + '<tr>'
+									 +    '<td> 전화번호 : ' + result.phone + '</td>'
+									 + '</tr>'
+									 + '<tr>'
+									 +    '<td> 주소 : ' + result.address + '</td>'
 									 + '</tr>'
 								console.log(pay);
-								$(".modal-body").html(pay);	 
+								$(".modal-body").html(pay);	
 							},error:function(){
 								console.log("주문 상세보기 실패")
 							}
 						})
-						
 						$(".modal").modal();
 					}
 				</script>
