@@ -12,13 +12,17 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
+	.searchBar{height: 80px;}
 	.searchBar p{float: left; margin-right: 30px; font-weight: 800;}
-	.button{ width: 45%; float: left; margin-left: 50px;}
-	.search{ width:45%; float: left;}
+	.button{width: 45%; float: left; margin-left: 20px; border: 1px solid;}
+	.search{width:45%; height: 50px; float: left}
+	.label{display: inline-block; height: 50px; padding-left: 30px;  margin-right: 10px; vertical-align: top; border: 1px solid;}
+	#searchArea{float:right; margin-top: 30px;}
+    .label>ul>li{margin:0 auto; float:left; margin-left: 30px;}
 	#myQna{
 		width:100%;
 		margin: 0 auto;
-		margin-top: 30px;
+		margin-top: 50px;
 		text-align: center;
 		margin-bottom: 50px; 
 	}
@@ -53,12 +57,23 @@
 					        <button class="btn btn-info" id="month" value="month">1개월</button>
 					    </div>    
 				        <div class="search">
-				            <select name="option" id="option">
-				                <option value="t">제목</option>
-				                <option value="c">분류</option>
-				            </select>
-				            <input type="text" id="text">
-				            <button>검색</button>
+				            <div class="label">
+				            	카테고리 검색
+					        	<ul>
+					        		<li>
+					        			<input type="radio" class="form-check-input" id="C" name="category" value="C">
+					        			<label for="C">클래스</label>
+					        		</li>
+					        		<li>
+					        			<input type="radio" class="form-check-input" id="S" name="category" value="S">
+					        			<label for="S">스토어</label>
+					        		</li>
+					        		<li>
+					        			<input type="radio" class="form-check-input" id="E" name="category" value="E">
+					        			<label for="E">기타</label>
+					        		</li>
+					        	</ul>
+					        </div>
 				        </div>
 				    </div>
 				    
@@ -101,6 +116,7 @@
 				            </c:forEach>
 				        </tbody>
 				    </table>
+				    
 				    <!-- 목록 상세보기 -->
 				    <script>
 						$(function(){
@@ -109,8 +125,8 @@
 								$("#myQna>tbody>#qna").not(this).removeClass("selected");
 								var targetQ = $(this).next();
 								var targetA = $(this).next().next();
-								targetQ.fadeToggle(200);
-								targetA.fadeToggle(200);
+								targetQ.fadeToggle(400);
+								targetA.fadeToggle(400);
 							});
 						});
 					</script>
@@ -168,8 +184,8 @@
 												$("#myQna>tbody>#qna").not(this).removeClass("selected");
 												var targetQ = $(this).next();
 												var targetA = $(this).next().next();
-												targetQ.fadeToggle(200);
-												targetA.fadeToggle(200);
+												targetQ.fadeToggle(400);
+												targetA.fadeToggle(400);
 											});
 						    				
 					    					let page = '<ul class="pagination">';
@@ -199,7 +215,60 @@
 					    	})
 				    	})
 				    </script>
-			    
+			    	
+			    	<script>
+			    	 <script>
+			        	$(".label label").click(function(){
+			        		let category = $(this).prev().val();
+			        		$.ajax({
+			        			url: "searchHelpList.he",
+			        			data: {category:category},
+			        			dataType: 'json',
+			        			success:function(result){
+			        				let help = '';
+			        				for(let i in result.list){
+			        					help += '<tr>'
+				                        	  + '<td id="nno">' + result.list[i].noNo + '</td>'
+				                        	  + '<td>' + result.list[i].category + '</td>'
+				                              + '<td>' + result.list[i].noTitle + '</td>'
+				                        	  + '<td>' + result.list[i].createDate + '</td>'
+				                        	  + '<td>' + result.list[i].count + '</td>'
+				                    		  + '</tr>'
+			        				}
+			        				$("#result").html(help);
+			        				
+			        				let page = '<ul class="pagination">';
+				    					if(result.pi.currentPage == 1 ){
+				    						page += '<li class="page-item disabled"> <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+				    					}else{
+				    						page += '<li class="page-item"><a class="page-link btn">Previous</a></li>'
+				    					}
+										for(let j=result.pi.startPage; j<=result.pi.endPage; j++){
+											page += '<li class="page-item"><a class="page-link btn">'
+												  + j 
+												  + '</a></li>'
+										}
+										if(result.pi.currentPage == result.pi.maxPage){
+											page += '<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' 
+										}else{
+											page += '<li class="page-item"><a class="page-link btn">Next</a></li>'
+										}
+									page += '</ul>'
+			    					$("#paging").html(page);
+									
+									$(function(){
+			        	        		$("#noticeList>tbody>tr").click(function(){
+			        	        			location.href = 'detail.he?nno=' + $(this).children("#nno").text();
+			        	        		});
+			        	        	})
+								
+			        			},error:function(){
+			        				console.log("여기오지마ㅠㅠ");
+			        			}
+			        		})
+			        	});
+			        </script>
+			    	</script>
 			    	<div id="paging">
 						<ul class="pagination">
 							<c:choose>
@@ -231,7 +300,6 @@
 							</c:choose>
 			            </ul>
 			        </div>
-					
 					
 				</div>	
 			</td>

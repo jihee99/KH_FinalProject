@@ -12,6 +12,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
+    
 <style>
 	.table{
 		width: 90%;
@@ -41,7 +42,7 @@
 				    <div class="conhead">
 				        <h2>클래스 문의</h2>
 				    </div>
-					<table class="table">
+					<table class="table table-hover" id="list">
 			            <thead>
 			                <tr>
 			                    <th>클래스</th> 
@@ -52,8 +53,8 @@
 			            </thead>
 			            <tbody>
 			            	<c:forEach var="q" items="${list}">
-			            		<input type="hidden" id="csQno" name="csQno" value="${c.csQno}">
 					            <tr>
+					            	<input type="hidden" id="csQno" name="csQno" value="${q.csQno}">
 					                <td>
 						                <c:choose>
 						            		<c:when test="${fn:length(q.clName) gt 11}">
@@ -84,11 +85,78 @@
 				                        <c:otherwise>
 				                        	<td>대기중</td>
 				                        </c:otherwise>
+				                       
 			                        </c:choose>
 					            </tr>
 				            </c:forEach>
 			            </tbody>
 			        </table>
+			        
+			        <script>
+						$("#list>tbody>tr").click(function(){
+							let csQno = $($(this)[0]).children().first().val();
+							console.log(csQno);
+							let empty = "";
+							$.ajax({
+								url:"ajaxClassQna.me",
+								data:{csQno: csQno},
+								success:function(result){
+									let list = '<table class="table">';
+									list += '<tr>'
+										  + 	  '<th> 클래스  </th>'
+										  + 	  '<td>' + result.clName + '</td>'
+										  + '</tr>'
+										  + '<tr>'
+										  +    '<th> 문의 제목  </th>'
+										  +    '<td>' + result.title + '</td>'
+										  + '</tr>'
+										  + '<tr>'
+										  +    '<th> 문의 날짜   </th>'
+										  +    '<td>' + result.createDate + '</td>'
+										  + '</tr>'
+										  + '<tr>'
+										  +    '<th> 문의 내용   </th>'
+										  +    '<td>' + result.content + '</td>'
+										  + '</tr>'
+									if(!(result.answerContent == "" || result.answerContent == null || result.answerContent == "undefined" || result.answerContent == undefined)){
+								 		list += '<tr>'
+											  +    '<th> 답변 내용   </th>'
+											  +    '<td width=600>' + result.answerContent + '</td>'
+											  + '</tr>'
+											  + '<tr>'
+											  +    '<th> 답변 날짜   </th>'
+											  +    '<td>' + result.answerDate + '</td>'
+											  + '</tr>' 
+									}else{
+										list += '<tr>'
+											  +    '<th colspan="2"> 답변 등록 전입니다.  </th>'
+											  + '</tr>'
+									}
+									$(".modal-body").html(list);
+									console.log(list);
+								},error:function(){
+									console.log("주문 상세보기 실패")
+								}
+							})
+							$(".modal").modal();
+						})
+					</script>
+					
+					<div class="modal" tabindex="-1">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+						       		<div class="modal-title">문의 상세 보기</div>
+						        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				         				<span aria-hidden="true">&times;</span>
+				        			</button>
+					      		</div>
+								<div class="modal-body">
+									
+								</div>
+							</div>
+						</div>
+					</div>
 			        
 			        
 				 	<div id="paging">

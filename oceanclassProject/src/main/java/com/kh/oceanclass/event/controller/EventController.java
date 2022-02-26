@@ -46,6 +46,7 @@ public class EventController {
 	@RequestMapping("detailEvent.ev")
 	public String selectEvent(int eno, Model model) {
 		Event e = eService.selectEvent(eno);
+		model.addAttribute("e", e);
 		return "event/eventDetail";
 	}
 	

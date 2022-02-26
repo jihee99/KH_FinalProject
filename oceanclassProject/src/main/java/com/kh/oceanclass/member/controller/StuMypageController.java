@@ -2,7 +2,6 @@ package com.kh.oceanclass.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +30,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.service.MypageService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -58,7 +58,7 @@ public class StuMypageController {
 		ArrayList<ClassOrder> list = myService.selectMainMyClass(memNo);
 		ArrayList<ClassVo> classLikeList = myService.selectMainLikeClass(memNo);
 		ArrayList<Product> storeLikeList = myService.selectMainLikeProduct(memNo);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("classLikeList", classLikeList);
 		model.addAttribute("storeLikeList", storeLikeList);
@@ -164,20 +164,42 @@ public class StuMypageController {
 	public String couponList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		int couponCount = myService.selectCouponCount(memNo);
+		int pointCount = myService.selectPointCount(memNo);
+		int pointSum = myService.pointSum(memNo);
 		
-		PageInfo pi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
-		ArrayList<Coupon> list = myService.selectCouponList(pi, memNo);
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getDedate() == null) {
-				list.get(i).setDedate("무제한");
+		PageInfo cpi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
+		ArrayList<Coupon> couponList = myService.selectCouponList(cpi, memNo);
+		for(int i=0; i<couponList.size(); i++) {
+			if(couponList.get(i).getDedate() == null) {
+				couponList.get(i).setDedate("무제한");
 			}
-		}		
-		model.addAttribute("pi", pi);
-		model.addAttribute("couponCount", couponCount);
-		model.addAttribute("list", list);
-		return "member/student/myPoint";
+		}
 		
+		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+		ArrayList<Point> pointPlusList = myService.selectPointList(ppi, memNo);
+		
+		ArrayList<Point> pointMinusList = myService.PointMinusList(memNo);
+		
+		model.addAttribute("couponCount", couponCount);
+		model.addAttribute("couponList", couponList);
+		model.addAttribute("pointPlusList", pointPlusList);
+		model.addAttribute("pointSum", pointSum);
+		model.addAttribute("pointMinusList", pointMinusList);
+		return "member/student/myPoint";		
 	}
+	
+//	@RequestMapping("pointSaveList.me")
+//	public String pointSaveList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+//		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+//		int pointCount = myService.selectPointCount(memNo);
+//		
+//		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+//		ArrayList<Point> pointList = myService.selectPointList(ppi, memNo);
+//		
+//		model.addAttribute("pi", ppi);
+//		model.addAttribute("pointList", pointList);
+//		return "member/student/myPoint";		
+//	}
 	
 	
 	
@@ -211,7 +233,7 @@ public class StuMypageController {
 		Map<String, Object> map = new HashMap();		
 		int qnaCount = myService.myQnaCount(q);
 		
-		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 5, 5);
+		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 10, 10);
 		ArrayList<Qna> list = myService.selectMyQnaList(pi, q);
 	
 		for(int i=0; i<list.size(); i++) {
@@ -285,10 +307,18 @@ public class StuMypageController {
 
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 10);
 		ArrayList<CsQna> list = myService.classQnaList(pi, memNo);
-		
+
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassQnaDetail";
+	}
+	
+	// 클래스 문의 모달 내역
+	@ResponseBody
+	@RequestMapping(value="ajaxClassQna.me", produces="application/json; charset=UTF-8")
+	public String ajaxClassQna(int csQno) {
+		CsQna cs = myService.ajaxClassQna(csQno);
+		return new Gson().toJson(cs);
 	}
 	
 	// 내 클래스 메인
@@ -296,19 +326,31 @@ public class StuMypageController {
 	public String myClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
-		
+		ArrayList<ClassOrder> allList = myService.selectMyAllClass(memNo);
+
 		model.addAttribute("list", list);
+		model.addAttribute("allList", allList);
 		return "member/student/myClass";
+	}
+	
+	// 수강 클래스 전체
+	@RequestMapping("myIngClass.me")
+	public String myIngClass(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
+
+		model.addAttribute("list", list);
+		return "member/student/myClassDetail";
 	}
 	
 	// 내 클래스 전체
 	@RequestMapping("myAllClass.me")
 	public String myAllClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
-		
+		ArrayList<ClassOrder> list = myService.selectMyAllClass(memNo);
+		System.out.println(list);
 		model.addAttribute("list", list);
-		return "member/student/myClassDetail";
+		return "member/student/myAllClassDetail";
 	}
 	
 	

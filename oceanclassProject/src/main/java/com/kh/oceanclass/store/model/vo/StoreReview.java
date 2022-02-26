@@ -32,6 +32,6 @@ public class StoreReview {
 	public String profile;
 	public int reconum;
 	
-	
+	private String starRating;
 	private int recoCk;
 }

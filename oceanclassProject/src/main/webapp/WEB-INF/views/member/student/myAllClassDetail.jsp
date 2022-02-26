@@ -40,24 +40,24 @@
 				        <div class="conhead">
 				            <h2>나의 클래스</h2>
 				        </div>
-					        <c:forEach var="c" items="${list}">
-					            <div class="item">
-					            	<a><img src="${c.clImg}"></a>
-					            	<input type="hidden" value="${c.clNo}">
-					            	<p id="ctitle">
-						            	<c:choose>
-						            		<c:when test="${fn:length(c.clName) gt 30}">
-						            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
-						            			..
-						            		</c:when>
-						            		<c:otherwise>
-						            			<c:out value="${c.clName}" />
-						            		</c:otherwise>
-						            	</c:choose>
-						            	<c:out value="${c.readingCheck}"/> 
-					            	</p>
-					            </div>
-				            </c:forEach>
+				        <c:forEach var="c" items="${list}">
+				            <div class="item">
+				            	<a><img src="${c.clImg}"></a>
+				            	<input type="hidden" value="${c.clNo}">
+				            	<p id="ctitle">
+					            	<c:choose>
+					            		<c:when test="${fn:length(c.clName) gt 30}">
+					            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
+					            			..
+					            		</c:when>
+					            		<c:otherwise>
+					            			<c:out value="${c.clName}" />
+					            		</c:otherwise>
+					            	</c:choose>
+					            	<c:out value="${c.readingCheck}"/> 
+				            	</p>
+				            </div>
+			            </c:forEach>
 				    </div>
 				</div>
 			</td>
