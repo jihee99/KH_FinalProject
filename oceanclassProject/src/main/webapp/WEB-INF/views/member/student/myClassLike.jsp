@@ -25,9 +25,6 @@
     .item{width:40%; height: 80%; float:left; margin: 35px; overflow: hidden;}
     .item img{display:block; width: 100%; height: 200px; vertical-align: middle}
     .item>#ctitle{text-align: center; font-size: 20px; font-weight: 600; }
-    #paging{
-    	display: table;
-    }
     .content1>p{
     	text-align: center;
     	font-size : 24px;

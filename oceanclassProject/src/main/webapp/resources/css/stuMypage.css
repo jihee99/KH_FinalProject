@@ -121,4 +121,8 @@ div {box-sizing: border-box;}
 	
 	
 	/* 콘텐츠 내 페이징바 스타일 */
-	#paging{width:fit-content; margin:auto;}
+	.pagination{
+		width: 100%;
+		justify-content: center;
+		padding-top: 50px;
+	}
