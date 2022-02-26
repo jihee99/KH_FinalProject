@@ -30,6 +30,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.service.MypageService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -163,20 +164,42 @@ public class StuMypageController {
 	public String couponList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		int couponCount = myService.selectCouponCount(memNo);
+		int pointCount = myService.selectPointCount(memNo);
+		int pointSum = myService.pointSum(memNo);
 		
-		PageInfo pi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
-		ArrayList<Coupon> list = myService.selectCouponList(pi, memNo);
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getDedate() == null) {
-				list.get(i).setDedate("무제한");
+		PageInfo cpi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
+		ArrayList<Coupon> couponList = myService.selectCouponList(cpi, memNo);
+		for(int i=0; i<couponList.size(); i++) {
+			if(couponList.get(i).getDedate() == null) {
+				couponList.get(i).setDedate("무제한");
 			}
-		}		
-		model.addAttribute("pi", pi);
-		model.addAttribute("couponCount", couponCount);
-		model.addAttribute("list", list);
-		return "member/student/myPoint";
+		}
 		
+		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+		ArrayList<Point> pointPlusList = myService.selectPointList(ppi, memNo);
+		
+		ArrayList<Point> pointMinusList = myService.PointMinusList(memNo);
+		
+		model.addAttribute("couponCount", couponCount);
+		model.addAttribute("couponList", couponList);
+		model.addAttribute("pointPlusList", pointPlusList);
+		model.addAttribute("pointSum", pointSum);
+		model.addAttribute("pointMinusList", pointMinusList);
+		return "member/student/myPoint";		
 	}
+	
+//	@RequestMapping("pointSaveList.me")
+//	public String pointSaveList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+//		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+//		int pointCount = myService.selectPointCount(memNo);
+//		
+//		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+//		ArrayList<Point> pointList = myService.selectPointList(ppi, memNo);
+//		
+//		model.addAttribute("pi", ppi);
+//		model.addAttribute("pointList", pointList);
+//		return "member/student/myPoint";		
+//	}
 	
 	
 	
@@ -310,7 +333,7 @@ public class StuMypageController {
 		return "member/student/myClass";
 	}
 	
-	// 수 클래스 전체
+	// 수강 클래스 전체
 	@RequestMapping("myIngClass.me")
 	public String myIngClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();

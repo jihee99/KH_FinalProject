@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +41,7 @@
 	}
 	.table{
 		width:100%;
-		margin-top: 30px;
+		margin-top: 10px;
 		text-align: center;
 	}
 	.content1>p{
@@ -65,85 +66,134 @@
 				<div class="content">
 				    <h2>나의 포인트/쿠폰</h2>
 				 
-					    <div class="searchBar">
-					    	<div id="point">
-					        	<i class="bi bi-coin" style="font-size: 2.5rem;"></i> 
-					        	<p style="width: 200px;">포인트 100p</p>
-					        </div>
-					        <div id="content">
-						        <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 
-						        <p>
-						        	쿠폰 <a href="#" onclick="openModal();">${couponCount}</a>장
-						        </p>
-					        </div>
-					    </div>
-					    <div class="content1">
-					    	<div class="conhead">
-						    	<h3> 적립내역 </h3>
-							    <a href="?page=myPointPlusDetail.jsp">더보기</a>
+				    <div class="searchBar">
+				    	<div id="point">
+				        	<i class="bi bi-coin" style="font-size: 2.5rem;"></i> 
+				        	<p style="width: 200px;">${pointSum}원</p>
+				        </div>
+				        <div id="content">
+					        <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 
+					        <p>
+					        	쿠폰 <a href="#" onclick="openModal();">${couponCount}</a>장
+					        </p>
+				        </div>
+				    </div>
+				    <c:choose>
+						<c:when test="${empty pointPlusList}">
+							<div class="conhead">
+						        <h3>적립 내역</h3>
+						        <p>적립 내역이 없습니다</p>
 						    </div>
-						    <table class="table">
-						        <thead>
-						            <tr>
-						                <th>날짜</th>
-						                <th>내역</th>
-						                <th>사유</th>
-						                <th>금액</th>
-						                <th>유효기간</th>
-						            </tr>
-						        </thead>
-								   <tbody>
-								          
-								   </tbody>
-						    </table>
-					    </div>
-				    <!-- 사용내역 없을 경우 -->
-				    <div class="content1">
-					    <h3> 사용내역 </h3>
-					    <p> 사용내역이 없습니다 </p>
-			    	</div>
+						</c:when>
+						<c:otherwise>
+							<div class="content1">
+							    <div class="conhead">
+							    	<h3> 적립내역 </h3>
+								    <a href="pointSaveList.me">더보기</a>
+								</div>
+							    <table class="table">
+							        <thead>
+							            <tr>
+							                <th>날짜</th>
+							                <th>내역</th>
+							                <th>금액</th>
+							                <th>유효기간</th>
+							            </tr>
+							        </thead>
+									<tbody>
+						        		<c:forEach var="p" items="${pointPlusList}" begin="0" end="4">
+								            <tr>
+								                <td>${p.pointDate}</td>
+								                <td>${p.pointPrice}원</td>
+								                <td>${p.reason}</td>
+								                <td>${p.deadLine}</td>
+								            </tr>
+							            </c:forEach>
+						        	</tbody>
+						    	</table>
+							</div>
+						</c:otherwise>
+					</c:choose>
+					
+					<c:choose>
+						<c:when test="${empty pointMinusList}">
+							<div class="conhead">
+						        <h3>사용 내역</h3>
+						        <p>사용 내역이 없습니다</p>
+						    </div>
+						</c:when>
+						<c:otherwise>
+							<div class="content1">
+							    <div class="conhead">
+							    	<h3> 사용내역 </h3>
+								    <a href="pointMinusList.me">더보기</a>
+								</div>
+							    <table class="table">
+							        <thead>
+							            <tr>
+							                <th>날짜</th>
+							                <th>내역</th>
+							                <th>금액</th>
+							                <th>유효기간</th>
+							            </tr>
+							        </thead>
+									<tbody>
+						        		<c:forEach var="pm" items="${pointMinusList}" begin="0" end="4">
+								            <tr>
+								                <td>${pm.pointDate}</td>
+								                <td>${pm.pointPrice}원</td>
+								                <td>${pm.reason}</td>
+								                <td>${pm.deadLine}</td>
+								            </tr>
+							            </c:forEach>
+						        	</tbody>
+						    	</table>
+							</div>
+						</c:otherwise>
+					</c:choose>
+						
+					<div class="modal" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+							 	<div class="modal-header">
+							     	<h5 class="modal-title">쿠폰 내역</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				         				<span aria-hidden="true">&times;</span>
+				        			</button>
+						     	</div>
+								<div class="modal-body">
+									<table class="table">
+								        <thead>
+								            <tr>
+								                <th>날짜</th>
+								                <th>내역</th>
+								                <th>사유</th>
+								                <th>금액</th>
+								                <th>유효기간</th>
+								            </tr>
+								        </thead>
+										   <tbody>
+										        <c:forEach var="c" items="${couponList}" >
+										            <tr>
+										                <td>${c.endate}</td>
+										                <td>쿠폰지급</td>
+										                <td>이벤트</td>
+										                <td>${c.discount}% 할인</td>
+										                <td>${c.dedate}</td>
+										            </tr>
+										        </c:forEach>    
+										   </tbody>
+									</table>
+								</div>
+							 </div>
+						</div>
+					</div>
 				</div>
-
 			</td>
 		</tr>
 	</table>
 	
-	<div class="modal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-			 	<div class="modal-header">
-			     	<h5 class="modal-title">쿠폰 내역</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         				<span aria-hidden="true">&times;</span>
-        			</button>
-		     	</div>
-				<div class="modal-body">
-					<table class="table">
-				        <thead>
-				            <tr>
-				                <th>날짜</th>
-				                <th>내역</th>
-				                <th>사유</th>
-				                <th>금액</th>
-				                <th>유효기간</th>
-				            </tr>
-				        </thead>
-						   <tbody>
-						        <c:forEach var="c" items="${ list }" >
-						            <tr>
-						                <td>${c.endate}</td>
-						                <td>쿠폰지급</td>
-						                <td>이벤트</td>
-						                <td>${c.discount}% 할인</td>
-						                <td>${c.dedate}</td>
-						            </tr>
-						        </c:forEach>    
-						   </tbody>
-					</table>
-				</div>
-			 </div>
-		</div>
-	</div>
+	
 	
 	<script>
 		function openModal(){

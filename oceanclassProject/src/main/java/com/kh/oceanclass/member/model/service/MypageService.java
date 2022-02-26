@@ -10,6 +10,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -37,6 +38,18 @@ public interface MypageService {
 	
 	// 쿠폰 리스트 조회
 	ArrayList<Coupon> selectCouponList(PageInfo pi, int memNo);
+	
+	// 포인트 갯수 조회
+	int selectPointCount(int memNo);
+	
+	// 포인트 합계 조회
+	int pointSum(int memNo);
+	
+	// 포인트 적립 조회
+	ArrayList<Point> selectPointList(PageInfo pi, int memNo);
+	
+	// 포인트 사용 조회
+	ArrayList<Point> PointMinusList(int memNo);
 	
 	// qna 갯수 조회
 	int selectQnaCount(int memNo);

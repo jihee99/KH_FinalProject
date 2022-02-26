@@ -14,6 +14,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -70,6 +71,26 @@ public class MypageDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("myMapper.selectCouponList", memNo, rowBounds);
+	}
+	
+	public int selectPointCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("myMapper.selectPointCount", memNo);
+	}
+	
+	public int pointSum(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("myMapper.selectPointSum", memNo);
+	}
+
+	public ArrayList<Point> selectPointList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("myMapper.selectPointList", memNo, rowBounds);
+	}
+	
+	public ArrayList<Point> PointMinusList(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("myMapper.PointMinusList", memNo);
 	}
 
 	

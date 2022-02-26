@@ -15,6 +15,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.dao.MypageDao;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -48,7 +49,10 @@ public class MypageServiceImpl implements MypageService{
 	public int deleteMem(String userId) {
 		return myDao.deleteMem(sqlSession, userId);
 	}
+
+
 	
+// 적립금
 	@Override
 	public int selectCouponCount(int memNo) {
 		return myDao.selectCouponCount(sqlSession, memNo);
@@ -57,6 +61,26 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<Coupon> selectCouponList(PageInfo pi, int memNo) {
 		return myDao.selectCouponList(sqlSession, pi, memNo);
+	}
+	
+	@Override
+	public int selectPointCount(int memNo) {
+		return myDao.selectPointCount(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<Point> selectPointList(PageInfo pi, int memNo) {
+		return myDao.selectPointList(sqlSession, pi, memNo);
+	}
+	
+	@Override
+	public ArrayList<Point> PointMinusList(int memNo) {
+		return myDao.PointMinusList(sqlSession, memNo);
+	}
+	
+	@Override
+	public int pointSum(int memNo) {
+		return myDao.pointSum(sqlSession, memNo);
 	}
 	
 	
