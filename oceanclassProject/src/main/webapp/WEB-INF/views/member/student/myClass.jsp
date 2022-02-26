@@ -15,20 +15,16 @@
 <style>
 	.content1{
 	    width: 100%;
-	    border: 1px solid;
-	    margin-bottom: 40px;
+	    margin-bottom: 80px;
 	}
-	.conhead{
-        width: 100%;
-	    height: 15%;
-	    margin-bottom: 25px;
-	}
+	.conhead{width: 100%; height: 15%;  margin-bottom: 25px;}
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
 	.table{width: 90%; margin: auto; text-align: center;}
-	.item{width: 80%; margin: 0 auto; border: 1px solid;}
-	.item img{width: 30%;}
-	.item>p{width: 50%; float: right; padding-right: 30px; margin-right: 80px; text-align: left; font-size: 20px; font-weight: 800;}
+	.item{width: 80%; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
+	.item img{width: 25%; height: 100px;}
+	.item>p{width: 70%; float: right; margin-right: 30px; margin-top: 30px; text-align: left; font-size: 20px; font-weight: 800;}
+	.content1>button{display: block; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;}
 </style>
 </head>
 <body>
@@ -52,14 +48,14 @@
 			        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
 			        		</c:when>
 				        	<c:otherwise>
-						        <c:forEach var="c" items="${list}" begin="0" end="3">
+						        <c:forEach var="c" items="${list}" begin="0" end="2">
 						            <div class="item">
 						            	<a><img src="${c.clImg}"></a>
 						            	<input type="hidden" value="${c.clNo}">
 						            	<p id="ctitle">
 							            	<c:choose>
-							            		<c:when test="${fn:length(c.clName) gt 25}">
-							            			<c:out value="${fn:substring(c.clName, 0, 24)}"></c:out>
+							            		<c:when test="${fn:length(c.clName) gt 30}">
+							            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
 							            			..
 							            		</c:when>
 							            		<c:otherwise>

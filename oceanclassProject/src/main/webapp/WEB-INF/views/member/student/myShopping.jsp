@@ -11,17 +11,17 @@
 <title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
+    <link rel="stylesheet" href="./resources/css/stuMypage.css?3">
 <style>
-	.searchBar{height: 200px;}
+	.searchBar{height: 250px; margin-bottom: 100px; background-color: red;}
 	.list{
 	    width: 90%;
 	    height: 150px;
 	    margin: 0 auto;
-	    margin-top: 50px;
+	    margin-top: 30px;
 	    border: 1px solid lightgray;
 	}
-	.list img{
+	.listArea img{
 		width: 30%; 
 		height: 145px;
 		float: left;
@@ -44,7 +44,8 @@
 		margin-left: 50px;
 		font-weight: 600;
 	}
-	
+	#paging{width: 100%; margin-top: 40px;}
+	.pagination{margin: 0 auto;}
 </style>
 </head>
 <body>
@@ -65,34 +66,66 @@
 				        <button type="button" class="btn btn-info" id="week" value="14">15일</button>
 				        <button type="button" class="btn btn-info" id="week" value="31">1개월</button>
 				        <div id="search">
-				            <input type="date"> ~ <input type="date">
-				            <button>검색</button>
+				            <input type="date" id="startDate"> ~ <input type="date" id="endDate">
+				            <button type="button" id="searchDate" onclick="search()">검색</button>
 				        </div>
 				    </div>
-				    <c:forEach var="s" items="${list}">
-					    <div class="list">
-					    	<a href=""><img src="${s.img}"></a>
-					    	<input type="hidden" id="orderNo" name="orderNo" value="${s.orderNo}">
-				            <div id="explain">
-				                <h4>
-				                	<c:choose>
-					            		<c:when test="${fn:length(s.title) gt 21}">
-					            			<c:out value="${fn:substring(s.title, 0, 20)}"></c:out>
-					            			..
-					            		</c:when>
-					            		<c:otherwise>
-					            			<c:out value="${s.title}"></c:out>
-					            		</c:otherwise>
-						            </c:choose>
-						        </h4>
-				                <p>주문날짜 : ${s.payDate}</p>
-				                <h3 id="state">${s.orderStatus}</h3>
-				            </div>
-				            <button type="button" class="btn btn-info" onclick="detailShopping();">상세보기</button>
-					    </div>
-				    </c:forEach>
-				</div>
+				    <div class="listArea">
+					    <c:forEach var="s" items="${list}">
+						    <div class="list">
+						    	<a href=""><img src="${s.img}"></a>
+						    	<input type="hidden" id="orderNo" name="orderNo" value="${s.orderNo}">
+					            <div id="explain">
+					                <h4>
+					                	<c:choose>
+						            		<c:when test="${fn:length(s.title) gt 21}">
+						            			<c:out value="${fn:substring(s.title, 0, 20)}"></c:out>
+						            			..
+						            		</c:when>
+						            		<c:otherwise>
+						            			<c:out value="${s.title}"></c:out>
+						            		</c:otherwise>
+							            </c:choose>
+							        </h4>
+					                <p>주문날짜 : ${s.payDate}</p>
+					                <h3 id="state">${s.orderStatus}</h3>
+					            </div>
+					            <button type="button" class="btn btn-info" onclick="detailShopping();">상세보기</button>
+						    </div>
+					    </c:forEach>
+					    <div id="paging">
+							<ul class="pagination">
+								<c:choose>
+									<c:when test="${ pi.currentPage eq 1 }">
+										<li class="page-item disabled">
+											<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link" href="myShopping.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+									</c:otherwise>
+								</c:choose>
+								
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<li class="page-item"><a class="page-link" href="myShopping.me?cpage=${ p }">${ p }</a></li>
+								</c:forEach>
+								
+								<c:choose>
+									<c:when test="${ pi.currentPage eq pi.maxPage }">
+										<li class="page-item disabled">
+											<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link" href="myShopping.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+									</c:otherwise>
+								</c:choose>
+				            </ul>
+						</div>
+				 	</div>
+				</div>    
 				
+				<!-- 날짜버튼검색 -->
 				<script>
 					$(function(){
 						$(document).on("click", ".btn", function(){
@@ -105,15 +138,72 @@
 								data:{memberNo: memNo,
 									  payDate: value},
 							    success:function(result){
-							    	let result = '';
+							    	let list = '';
 							    	for(let i in result){
+							    		list += '<div class="list">'
+							    			  + '<a href=""><img src="'+ result[i].img + '"></a>'
+								    		  + '<input type="hidden" id="orderNo" name="orderNo" value="' + result[i].orderNo + '">'
+							            	  + '<div id="explain">'
+							                  + '<h4>'
+							            if(result[i].title.length >= 21){
+							            	list += result[i].title.substr(0,20) + '...'
+							            }else{
+							            	list += result[i].title
+							            }
+					                	list += '</h4>'
+											  + '<p>주문날짜 : ' + result[i].payDate + '</p>'
+							                  + '<h3 id="state">' + result[i].orderStatus + '</h3>'
+							            	  + '</div>'
+							            	  + '<button type="button" class="btn btn-info" onclick="detailShopping();">상세보기</button>'
+							            	  + '</div>'
 							    	}
+							    	console.log(list);
+							    	$(".listArea").html(list);
+							    	$('#startDate').val('');
+							    	$('#endDate').val('');
 							    },error:function(){
 							    	consoel.log("주문 기간조회 실패");
 							    }
 							})
 						})
 					})
+				</script>
+				
+				<!-- 달력검색 -->
+				<script>
+					function search(){
+						let startDate = $("#startDate").val();
+						let endDate = $("#endDate").val();
+						$.ajax({
+							url:"ajaxSearchDate.me",
+							data:{sDate : startDate,
+								  eDate : endDate},
+						    success:function(result){
+						    	let list = '';
+						    	for(let i in result){
+						    		list += '<div class="list">'
+						    			  + '<a href=""><img src="'+ result[i].img + '"></a>'
+							    		  + '<input type="hidden" id="orderNo" name="orderNo" value="' + result[i].orderNo + '">'
+						            	  + '<div id="explain">'
+						                  + '<h4>'
+						            if(result[i].title.length >= 21){
+						            	list += result[i].title.substr(0,20) + '...'
+						            }else{
+						            	list += result[i].title
+						            }
+				                	list += '</h4>'
+										  + '<p>주문날짜 : ' + result[i].payDate + '</p>'
+						                  + '<h3 id="state">' + result[i].orderStatus + '</h3>'
+						            	  + '</div>'
+						            	  + '<button type="button" class="btn btn-info" onclick="detailShopping();">상세보기</button>'
+						            	  + '</div>'
+						    	}
+						    	$(".listArea").html(list);
+						    },error:function(){
+						    	
+						    }
+						})
+					}
 				</script>
 				
 				<div class="modal" tabindex="-1">
@@ -132,6 +222,7 @@
 					</div>
 				</div>
 				
+				<!-- 상세보기 버튼 클릭 -->
 				<script>
 					function detailShopping(){
 						
@@ -143,72 +234,43 @@
 							data:{orderNo: orderNo},
 							success:function(result){
 								pay += '<tr>'
-									 + '<th> 주문번호 : </th>'
-									 + '<td>' + result.orderNo + '</td>'
+									 + 	  '<th> 주문번호 : </th>'
+									 + 	  '<td>' + result.orderNo + '</td>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<th> 주문날짜 : </th>'
-									 + '<td>' + result.payDate + '</td>'
-									 + '</tr>'
-									 + '<th> 주문금액 : </th>'
-									 + '<td>' + result.payAmount + '원</td>'
-									 + '</tr>'
-									 + '<th> 주문방식 : </th>'
-									 + '<td>' + result.payMethod + '</td>'
+									 +    '<th> 주문날짜 : </th>'
+									 +    '<td>' + result.payDate + '</td>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<th> 주문자 정보 </th>'
+									 +    '<th> 주문금액 : </th>'
+									 +    '<td>' + result.payAmount + '원</td>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<td colspan="2"> 이름  : ' + result.userName + '</td>'
+									 +    '<th> 주문방식 : </th>'
+									 +    '<td>' + result.payMethod + '</td>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<td> 전화번호 : ' + result.phone + '</td>'
+									 +    '<th> 주문자 정보 </th>'
 									 + '</tr>'
 									 + '<tr>'
-									 + '<td> 주소 : ' + result.address + '</td>'
+									 +    '<td colspan="2"> 이름  : ' + result.userName + '</td>'
+									 + '</tr>'
+									 + '<tr>'
+									 +    '<td> 전화번호 : ' + result.phone + '</td>'
+									 + '</tr>'
+									 + '<tr>'
+									 +    '<td> 주소 : ' + result.address + '</td>'
 									 + '</tr>'
 								console.log(pay);
-								$(".modal-body").html(pay);	 
+								$(".modal-body").html(pay);	
 							},error:function(){
 								console.log("주문 상세보기 실패")
 							}
 						})
-						
 						$(".modal").modal();
 					}
 				</script>
 				
-				<div id="paging">
-					<ul class="pagination">
-						<c:choose>
-							<c:when test="${ pi.currentPage eq 1 }">
-								<li class="page-item disabled">
-									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="myShopping.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
-							</c:otherwise>
-						</c:choose>
-						
-						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="myShopping.me?cpage=${ p }">${ p }</a></li>
-						</c:forEach>
-						
-						<c:choose>
-							<c:when test="${ pi.currentPage eq pi.maxPage }">
-								<li class="page-item disabled">
-									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="myShopping.me?cpage=${ pi.currentPage+1 }">Next</a></li>
-							</c:otherwise>
-						</c:choose>
-		            </ul>
-		        </div>
-		        
 			</td>
 		</tr>
 	</table>

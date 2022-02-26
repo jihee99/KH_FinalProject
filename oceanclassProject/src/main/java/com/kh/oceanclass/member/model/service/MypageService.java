@@ -17,6 +17,11 @@ import com.kh.oceanclass.store.model.vo.StoreReview;
 public interface MypageService {
 
 // 학생 마이페이지 기능
+	// 마이페이지 메인
+	ArrayList<ClassVo> selectMainLikeClass(int memNo);
+	ArrayList<Product> selectMainLikeProduct(int memNo);
+	ArrayList<ClassOrder> selectMainMyClass(int memNo);
+	
 	// 프로필수정
 	int updateProfile(Member m);
 	Member selectUser(Member m);
@@ -92,4 +97,7 @@ public interface MypageService {
 	
 	// 스토어 주문내역 검색
 	ArrayList<StorePay> searchShoppingList(StorePay pay);
+	
+	// 스토어 주문 날짜검색
+	ArrayList<StorePay> ajaxSearchDate(StorePay pay);
 }

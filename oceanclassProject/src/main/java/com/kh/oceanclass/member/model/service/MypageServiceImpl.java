@@ -178,4 +178,24 @@ public class MypageServiceImpl implements MypageService{
 		return myDao.searchShoppingList(sqlSession, pay);
 	}
 
+	@Override
+	public ArrayList<StorePay> ajaxSearchDate(StorePay pay) {
+		return myDao.ajaxSearchDate(sqlSession, pay);
+	}
+
+	@Override
+	public ArrayList<ClassVo> selectMainLikeClass(int memNo) {
+		return myDao.selectMainLikeClass(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<Product> selectMainLikeProduct(int memNo) {
+		return myDao.selectMainLikeProduct(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<ClassOrder> selectMainMyClass(int memNo) {
+		return myDao.selectMainMyClass(sqlSession, memNo);
+	}
+
 }

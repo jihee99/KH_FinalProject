@@ -3,7 +3,7 @@
 <mapper namespace="inChartMapper">
 
 	
-	
+	<!--  
 	<select id="selectChart" resultMap="chartResult">
 		select 
 		       sta_no
@@ -52,5 +52,7 @@
 		 where category = #{category}
 		   and TO_CHAR(create_date,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
 	</select>
+	
+	-->
 	
 </mapper>

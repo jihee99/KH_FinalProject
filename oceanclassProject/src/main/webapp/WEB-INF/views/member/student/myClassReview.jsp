@@ -94,7 +94,14 @@
 										            </c:choose>
 									            </td>
 								                <td>${q.createDate}</td>
-								                <td>${q.status}</td>
+								                <c:choose>
+							                        <c:when test="${not empty q.answerContent}">
+							                        	<td>등록완료</td>
+							                        </c:when>
+							                        <c:otherwise>
+							                        	<td>대기중</td>
+							                        </c:otherwise>
+						                        </c:choose>
 								            </tr>
 							            </c:forEach>
 							        </tbody>
@@ -120,6 +127,7 @@
 							        <thead>
 							            <tr>
 							                <th>클래스</th>
+							                <th>별점</th>
 							                <th>리뷰</th>
 							            </tr>
 							        </thead>
@@ -127,10 +135,11 @@
 					        			<c:forEach var="c" items="${reviewList}" begin="0" end="4">
 								            <tr>
 								                <td>${c.clName}</td>
+								                <td>${c.star}</td>
 								                <td>
 									                <c:choose>
-									            		<c:when test="${fn:length(c.content) gt 25}">
-									            			<c:out value="${fn:substring(c.content, 0, 24)}"></c:out>
+									            		<c:when test="${fn:length(c.content) gt 21}">
+									            			<c:out value="${fn:substring(c.content, 0, 20)}"></c:out>
 									            			..
 									            		</c:when>
 									            		<c:otherwise>

@@ -20,6 +20,21 @@ import com.kh.oceanclass.store.model.vo.StoreReview;
 
 @Repository
 public class MypageDao {
+	
+// 마이페이지 메인	
+	public ArrayList<ClassVo> selectMainLikeClass(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("myMapper.selectMainLikeClass", memNo);
+	}
+	
+	public ArrayList<Product> selectMainLikeProduct(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("myMapper.selectMainLikeProduct", memNo);
+	}
+	
+	public ArrayList<ClassOrder> selectMainMyClass(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("myMapper.selectMainMyClass", memNo);
+	}
+	
+	
 
 // 프로필 관련
 	public int updateProfile(SqlSessionTemplate sqlSession, Member m) {
@@ -196,6 +211,10 @@ public class MypageDao {
 	
 	public ArrayList<StorePay> searchShoppingList(SqlSessionTemplate sqlSession, StorePay pay){		
 		return (ArrayList)sqlSession.selectList("myMapper.searchShoppingList", pay);
+	}
+	
+	public ArrayList<StorePay> ajaxSearchDate(SqlSessionTemplate sqlSession, StorePay pay){
+		return (ArrayList)sqlSession.selectList("myMapper.ajaxSearchDate", pay);
 	}
 	
 }// class

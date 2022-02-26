@@ -77,7 +77,14 @@
 							            </c:choose>
 						            </td>
 					                <td>${q.createDate}</td>
-					                <td>${q.status}</td>
+					                <c:choose>
+				                        <c:when test="${not empty q.answerContent}">
+				                        	<td>등록완료</td>
+				                        </c:when>
+				                        <c:otherwise>
+				                        	<td>대기중</td>
+				                        </c:otherwise>
+			                        </c:choose>
 					            </tr>
 				            </c:forEach>
 			            </tbody>
@@ -93,13 +100,13 @@
 									</li>
 								</c:when>
 								<c:otherwise>
-									<li class="page-item"><a class="page-link" href="myShoppingQnaDetail.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+									<li class="page-item"><a class="page-link" href="myClassQnaDetail.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
 								</c:otherwise>
 							</c:choose>
 							
 							
 							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-								<li class="page-item"><a class="page-link" href="myShoppingQnaDetail.me?cpage=${ p }">${ p }</a></li>
+								<li class="page-item"><a class="page-link" href="myClassQnaDetail.me?cpage=${ p }">${ p }</a></li>
 							</c:forEach>
 							
 							
@@ -110,7 +117,7 @@
 									</li>
 								</c:when>
 								<c:otherwise>
-									<li class="page-item"><a class="page-link" href="myShoppingQnaDetail.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+									<li class="page-item"><a class="page-link" href="myClassQnaDetail.me?cpage=${ pi.currentPage+1 }">Next</a></li>
 								</c:otherwise>
 							</c:choose>
 			            </ul>
