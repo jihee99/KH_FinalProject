@@ -148,10 +148,10 @@
 	                <div>
 	                	<input type="radio" id="payment1" name="paymentOption" onclick="btnStyle(1);" value="1" style="display:none;">
 	                	<label id="payment1_btn" class="btn" for="payment1" style="border:2px solid #6babd5; width:200px;">무통장 입금</label>
-	                	
+	                	<!-- 
 	                	<input type="radio" id="payment2" name="paymentOption" onclick="btnStyle(2);" value="2" style="display:none;">
 	                	<label id="payment2_btn" class="btn" for="payment2" style="border:2px solid #6babd5; width:200px;">네이버 페이</label>
-	                	
+	                	 -->
 	                	<input type="radio" id="payment3" name="paymentOption" onclick="btnStyle(3);" value="3" style="display:none;">
 	                	<label id="payment3_btn" class="btn" for="payment3" style="border:2px solid #6babd5; width:200px;">카카오 페이</label>
 	                </div>
