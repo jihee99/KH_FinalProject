@@ -34,6 +34,7 @@
 		<result column="status" property="status" />
 		<result column="reconum" property="recommend" />
 		<result column="replynum" property="replyNum" />
+		<result column="profile" property="profile" />
 	</resultMap>
 	
 	<resultMap id="classReviewReplyResult" type="Reply">
@@ -45,6 +46,7 @@
 		<result column="reply_date" property="replyDate" />
 		<result column="reply_status" property="replyStatus" />
 		<result column="nickname" property="nickName" />
+		<result column="profile" property="profile" />
 	</resultMap>
 	
 	<resultMap id="classQnaResult" type="ClassQna">
@@ -62,6 +64,7 @@
 		<result column="answer_content" property="answerContent" />
 		<result column="answer_date" property="answerDate" />
 		<result column="teacher_nick" property="teacherNick" />
+		<result column="profile" property="profile" />
 	</resultMap>
 	
 	<resultMap id="eventResult2" type="Event">
@@ -279,6 +282,7 @@
                and board_no = 2
                and content_no = c_rno
               ) as replynum
+            , profile
 		  from class_review c
           join member using (mno)
 		 where status = 'Y'
@@ -329,6 +333,7 @@
                    and reply_status = 'Y'
                    and content_no = c_rno
                 ) as replynum
+             , PROFILE
 		  from class_review c
           join member using (mno)
 		 where status = 'Y'
@@ -366,6 +371,7 @@
                    and board_no = 2
                    and content_no = c_rno
               ) as replynum
+            , profile
 		  from class_review r
           join member using (mno)
 		 where status = 'Y'
@@ -388,6 +394,7 @@
 		     , reply_content
 		     , to_char(reply_date, 'YYYY-MM-DD') as reply_date
 		     , reply_status
+		     , profile
 		  from reply
 		  join member using (mno)
 		 where reply_status = 'Y'
@@ -520,6 +527,7 @@
                   join class using (mno)
                  where clno = refer_no
                 ) as teacher_nick
+             , profile
 		  from cs_qna
 		  join member using (mno)
 		 where status = 'Y'

@@ -29,4 +29,6 @@ public class ClassQna {
 	
 	private String nickname;
 	
+	private String profile;
+	
 }
