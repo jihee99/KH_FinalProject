@@ -22,4 +22,6 @@ public class Report {
 	
 	private String userId;
 	private String rpContent;	//신고된 게시글의 내용
+	
+	private String reason;	//신고이유 기타일시 내용
 }

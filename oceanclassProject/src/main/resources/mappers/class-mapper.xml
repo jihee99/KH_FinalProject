@@ -909,5 +909,85 @@
 		   set point = point + #{pointSave}
 		 where mno = #{memNo}
 	</update>
+	
+	<select id="selectReview" resultMap="classReviewResult">
+		select 
+		       c_rno
+		     , clno
+		     , mno
+		     , status
+		  from class_review
+		 where c_rno = #{refBNo}
+	</select>
+	
+	<insert id="reportReview">
+		insert
+		  into report
+		values
+			 (
+			   SEQ_RPNO.NEXTVAL
+			 , #{reportMemNo}
+			 , 'CR'
+			 , #{refBNo}
+			 <choose>
+			 	<when test="content == 1">
+			 		, '욕설 또는 음란성 내용'
+			 	</when>
+			 	<when test="content == 2">
+			 		, '부적절한 홍보성 댓글'
+			 	</when>
+			 	<when test="content == 3">
+			 		, '사생활 침해 및 불법 촬영물'
+			 	</when>
+			 	<when test="content == 4">
+			 		, '명예훼손 및 저작권침해'
+			 	</when>
+			 	<when test="content == 5">
+			 		, #{reason}
+			 	</when>
+			 </choose>
+			 , 'N'
+			 , sysdate
+			 )
+	</insert>
+	
+	<select id="selectReply" resultMap="classReviewReplyResult">
+		select 
+		       REPLY_NO
+		     , MNO
+		  from reply
+		 where REPLY_NO = #{refBNo}
+	</select>
+	
+	<insert id="reportReviewReply">
+		insert
+		  into report
+		values
+			 (
+			   SEQ_RPNO.NEXTVAL
+			 , #{reportMemNo}
+			 , 'R'
+			 , #{refBNo}
+			 <choose>
+			 	<when test="content == 1">
+			 		, '욕설 또는 음란성 내용'
+			 	</when>
+			 	<when test="content == 2">
+			 		, '부적절한 홍보성 댓글'
+			 	</when>
+			 	<when test="content == 3">
+			 		, '사생활 침해 및 불법 촬영물'
+			 	</when>
+			 	<when test="content == 4">
+			 		, '명예훼손 및 저작권침해'
+			 	</when>
+			 	<when test="content == 5">
+			 		, #{reason}
+			 	</when>
+			 </choose>
+			 , 'N'
+			 , sysdate
+			 )
+	</insert>
 		
 </mapper>

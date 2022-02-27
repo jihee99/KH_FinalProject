@@ -159,8 +159,36 @@ ${ cr.content }
                     <span>
                     	댓글 ${ cr.replyNum }
                     </span>
-                    <span style="float:right">신고하기</span>
+                    <span style="float:right; cursor:pointer;" onclick="reportReviewForm(${cr.crNo});">신고하기</span>
                 </div>
+                
+                <!-- 리뷰 신고하기시 보여질 modal -->
+			    <div id="reportReviewModal" class="modal fade" role="dialog">
+			    	<div class="modal-dialog">
+
+		                <!-- Modal content-->
+		                <div class="modal-content">
+		                    <div class="modal-header">
+		                        <h4 class="modal-title">신고하기</h4>
+		                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		                    </div>
+		                    <div class="modal-body">
+		                    	<div style="font-size:17px; font-weight:bold; margin-bottom:15px;"><b>·</b> 신고 사유</div>
+								<input type="radio" id="reportReviewR1" name="reportReviewReason" value="1"> <label for="reportReviewR1"> 욕설 또는 음란성 내용</label><br>
+								<input type="radio" id="reportReviewR2" name="reportReviewReason" value="2"> <label for="reportReviewR2"> 부적절한 홍보성 댓글</label><br>
+								<input type="radio" id="reportReviewR3" name="reportReviewReason" value="3"> <label for="reportReviewR3"> 사생활 침해 및 불법 촬영물</label><br>
+								<input type="radio" id="reportReviewR4" name="reportReviewReason" value="4"> <label for="reportReviewR4"> 명예훼손 및 저작권침해</label><br>
+								<input type="radio" id="reportReviewR5" name="reportReviewReason" value="5"> <label for="reportReviewR5"> 기타</label>
+	                        	<textarea name="reportReviewContent" id="reportReviewContent" style="width: 100%; height: 150px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요."></textarea>
+		                    </div>
+		                    <div class="modal-footer">
+		                        <button type="submit" class="btn" style="background-color: #6babd5; margin-right:190px;" onclick="reportReview(${cr.crNo});">신고하기</button>
+		                        <!--  <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>-->
+		                    </div>
+		                </div>
+			        </div>
+			    </div>
+                
             </div>
             <br>
 
@@ -207,7 +235,7 @@ ${ cr.content }
 		                            		<span id="${ r.replyNo }update2" style="margin-right:5px; display:none;" onclick="updateReply2(${r.replyNo})">수정취소</span>
 		                            		<span style="margin-right:5px;" onclick="deleteReply('${r.replyNo}');">삭제</span>
 	    	                        	</c:if>
-   	                        			<span>신고하기</span>
+   	                        			<span onclick="reportReviewReplyForm(${r.replyNo});">신고하기</span>
 		                            	</span>
 			                        </div>
 			                    </div>
@@ -230,6 +258,33 @@ ${ r.replyContent }
 				                   	</form>
 				                </div>
 			                </div>
+			                
+			                <!-- 댓글 신고하기시 보여질 modal -->
+						    <div id="reportReviewReplyModal${ r.replyNo }" class="modal fade" role="dialog">
+						    	<div class="modal-dialog">
+			
+					                <!-- Modal content-->
+					                <div class="modal-content">
+					                    <div class="modal-header">
+					                        <h4 class="modal-title">신고하기</h4>
+					                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					                    </div>
+					                    <div class="modal-body">
+					                    	<div style="font-size:17px; font-weight:bold; margin-bottom:15px;"><b>·</b> 신고 사유</div>
+											<input type="radio" id="reportReviewR1${ r.replyNo }" name="reportReviewReason" value="1"> <label for="reportReviewR1${ r.replyNo }"> 욕설 또는 음란성 내용</label><br>
+											<input type="radio" id="reportReviewR2${ r.replyNo }" name="reportReviewReason" value="2"> <label for="reportReviewR2${ r.replyNo }"> 부적절한 홍보성 댓글</label><br>
+											<input type="radio" id="reportReviewR3${ r.replyNo }" name="reportReviewReason" value="3"> <label for="reportReviewR3${ r.replyNo }"> 사생활 침해 및 불법 촬영물</label><br>
+											<input type="radio" id="reportReviewR4${ r.replyNo }" name="reportReviewReason" value="4"> <label for="reportReviewR4${ r.replyNo }"> 명예훼손 및 저작권침해</label><br>
+											<input type="radio" id="reportReviewR5${ r.replyNo }" name="reportReviewReason" value="5"> <label for="reportReviewR5${ r.replyNo }"> 기타</label>
+				                        	<textarea name="reportReviewContent" id="reportReviewContent${ r.replyNo }" style="width: 100%; height: 150px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요."></textarea>
+					                    </div>
+					                    <div class="modal-footer">
+					                        <button type="submit" class="btn" style="background-color: #6babd5; margin-right:190px;" onclick="reportReviewReply(${ r.replyNo });">신고하기</button>
+					                        <!--  <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>-->
+					                    </div>
+					                </div>
+						        </div>
+						    </div>
 		                </c:forEach>
 					</c:otherwise>
 				</c:choose>
@@ -457,6 +512,193 @@ ${ r.replyContent }
 				return true;
 			}
     	}
+    	
+    	function reportReviewForm(crNo){
+    		//window.open("reportReviewForm.me?crNo=" + crNo, "리뷰신고페이지", "width=600, height=600");
+    		$("#reportReviewModal").modal();
+    	}
+    	
+    	function reportReview(crNo){
+    		// 신고 사유
+    		var reportReviewR1 = document.getElementById("reportReviewR1");
+    		var reportReviewR2 = document.getElementById("reportReviewR2");
+    		var reportReviewR3 = document.getElementById("reportReviewR3");
+    		var reportReviewR4 = document.getElementById("reportReviewR4");
+    		var reportReviewR5 = document.getElementById("reportReviewR5");
+    		// 신고 사유 '기타'일 시 이유
+    		var reportReviewContent = document.getElementById("reportReviewContent").value;
+    		
+    		if(reportReviewR1.checked == true){
+    			$.ajax({
+					url:"reportReview.me",
+					data:{refBNo:crNo, content:reportReviewR1.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewModal").modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportReviewR2.checked == true){
+    			$.ajax({
+					url:"reportReview.me",
+					data:{refBNo:crNo, content:reportReviewR2.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewModal").modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportReviewR3.checked == true){
+    			$.ajax({
+					url:"reportReview.me",
+					data:{refBNo:crNo, content:reportReviewR3.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewModal").modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportReviewR4.checked == true){
+    			$.ajax({
+					url:"reportReview.me",
+					data:{refBNo:crNo, content:reportReviewR4.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewModal").modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportReviewR5.checked == true){
+    			$.ajax({
+					url:"reportReview.me",
+					data:{refBNo:crNo, content:reportReviewR5.value, reason:reportReviewContent},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewModal").modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		}
+    		
+    	}
+    	
+    	function reportReviewReplyForm(replyNo){
+    		$("#reportReviewReplyModal" + replyNo).modal();
+    	}
+    	
+    	function reportReviewReply(replyNo){
+    		// 신고 사유
+    		var reportReviewR1 = document.getElementById("reportReviewR1" + replyNo);
+    		var reportReviewR2 = document.getElementById("reportReviewR2" + replyNo);
+    		var reportReviewR3 = document.getElementById("reportReviewR3" + replyNo);
+    		var reportReviewR4 = document.getElementById("reportReviewR4" + replyNo);
+    		var reportReviewR5 = document.getElementById("reportReviewR5" + replyNo);
+    		// 신고 사유 '기타'일 시 이유
+    		var reportReviewContent = document.getElementById("reportReviewContent" + replyNo).value;
+    		
+    		if(reportReviewR1.checked == true){
+    			$.ajax({
+					url:"reportReviewReply.me",
+					data:{refBNo:replyNo, content:reportReviewR1.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewReplyModal" + replyNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 댓글 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportReviewR2.checked == true){
+    			$.ajax({
+					url:"reportReviewReply.me",
+					data:{refBNo:replyNo, content:reportReviewR2.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewReplyModal" + replyNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 댓글 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportReviewR3.checked == true){
+      			$.ajax({
+					url:"reportReviewReply.me",
+					data:{refBNo:replyNo, content:reportReviewR3.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewReplyModal" + replyNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 댓글 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportReviewR4.checked == true){
+      			$.ajax({
+					url:"reportReviewReply.me",
+					data:{refBNo:replyNo, content:reportReviewR4.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewReplyModal" + replyNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 댓글 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportReviewR5.checked == true){
+      			$.ajax({
+					url:"reportReviewReply.me",
+					data:{refBNo:replyNo, content:reportReviewR5.value, reason:reportReviewContent},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportReviewReplyModal" + replyNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 댓글 신고용 ajax 통신 실패");
+					}
+    			})
+    		}
+    	}
+    	
     </script>
 
 </body>

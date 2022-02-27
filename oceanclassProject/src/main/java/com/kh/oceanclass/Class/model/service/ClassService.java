@@ -12,6 +12,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
+import com.kh.oceanclass.member.model.vo.Report;
 
 public interface ClassService {
 
@@ -80,5 +81,11 @@ public interface ClassService {
 	int downMemberPoint(ClassOrder coInfo);
 	int insertSavingPoint(ClassOrder coInfo);
 	int upMemberPoint(ClassOrder coInfo);
+	
+	// 클래스 신고하기
+	ClassReview selectReview(String refBNo);
+	int reportReview(Report rp);
+	Reply selectReply(String refBNo);
+	int reportReviewReply(Report rp);
 	
 }
