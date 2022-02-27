@@ -13,10 +13,7 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.content1{
-	    width: 100%;
-	    margin-bottom: 40px;
-	}
+	.content1{width: 100%; margin-bottom: 40px;}
 	.conhead{width: 100%; height: 15%;  margin-bottom: 25px;}
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
@@ -54,7 +51,6 @@
 						            			<c:out value="${c.clName}" />
 						            		</c:otherwise>
 						            	</c:choose>
-						            	<c:out value="${c.readingCheck}"/> 
 					            	</p>
 					            </div>
 				            </c:forEach>
