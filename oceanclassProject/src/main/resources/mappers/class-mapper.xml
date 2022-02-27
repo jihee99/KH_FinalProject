@@ -873,6 +873,7 @@
 			 , 0 - #{pointUse}
 			 , '클래스 구매 차감'
 			 , sysdate
+			 , 2
 			 )
 	</insert>
 	
@@ -901,6 +902,7 @@
 			 , #{pointSave}
 			 , '클래스 구매 적립'
 			 , sysdate + 365
+			 , 1
 			 )
 	</insert>
 	
