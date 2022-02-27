@@ -241,8 +241,6 @@ public class AdminClassController {
 		PageInfo pi = Pagination.getPageInfo(listCount, cm.getCpage(), 5, 5);
 		ArrayList<ClassQna> cqList = acService.selectQnaList(cm, pi);			// 조회할 리스트 목록
 		
-		System.out.println(c);
-		
 		model.addAttribute("c", c);
 		model.addAttribute("pi", pi);
 		model.addAttribute("cqList", cqList);
@@ -252,5 +250,41 @@ public class AdminClassController {
 		model.addAttribute("rkeyword", rkeyword);
 
 		return "class/admin/classManagerQna";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="qnaShows.ad")
+	public String qnaShows(@RequestParam(value="checkList[]") List<Integer> checkList) {
+		int result1 = 0;
+		for(int cqNo : checkList) {
+			int result2 = acService.qnaShow(cqNo);
+			if(result2 < 1) {
+				result1 += 1;
+			} 
+		}
+		
+		if(result1 < 1) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="qnaHides.ad")
+	public String qnaHides(@RequestParam(value="checkList[]") List<Integer> checkList) {
+		int result1 = 0;
+		for(int cqNo : checkList) {
+			int result2 = acService.qnaHide(cqNo);
+			if(result2 < 1) {
+				result1 += 1;
+			} 
+		}
+		
+		if(result1 < 1) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
 	}
 }

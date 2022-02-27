@@ -91,4 +91,11 @@ public class AdminClassDao {
 		return (ArrayList)sqlSession.selectList("adminClassMapper.selectQnaList", cm, rowBounds);
 	}
 	
+	public int qnaShow(SqlSessionTemplate sqlSession, int cqNo) {
+		return sqlSession.update("adminClassMapper.qnaShow", cqNo);
+	}
+	
+	public int qnaHide(SqlSessionTemplate sqlSession, int cqNo) {
+		return sqlSession.update("adminClassMapper.qnaHide", cqNo);
+	}
 }

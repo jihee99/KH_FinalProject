@@ -143,8 +143,8 @@
 			        <div>
 			        
 			            <div>
-					        <button type="button" class="btn" style="background-color: #6babd5; width: 130px; color: white;" onclick="reviewCon(1);">문의 노출</button>
-					        <button type="button" class="btn" style="background-color: lightgray; width: 130px;" onclick="reviewCon(2);">문의 미노출</button>
+					        <button type="button" class="btn" style="background-color: #6babd5; width: 130px; color: white;" onclick="qnaCon(1);">문의 노출</button>
+					        <button type="button" class="btn" style="background-color: lightgray; width: 130px;" onclick="qnaCon(2);">문의 미노출</button>
 					
 					        <div style="float: right;">
 					            <select id="searchCategory" style="width:100px; height: 30px;">
@@ -234,7 +234,6 @@
 
 	<script>
 		window.onload = function(){
-			/*
 			var clNo = "${c.clNo}";
 			var array = "${cm.array}";
 			var category = "${cm.category}";
@@ -257,8 +256,10 @@
 			} else if(category == "3"){
 				document.getElementById("cate3").selected = true;
 				document.getElementById("searchText").value = keyword;
+			} else{
+				document.getElementById("cate4").selected = true;
+				document.getElementById("searchText").value = keyword;
 			}
-			*/
 		}
 	
 		function listPage(){
@@ -270,16 +271,15 @@
     		var keyword = "${rkeyword}";
     		var before = "${cm.before}";
     		var after = "${cm.after}";
-			
+    		
 			location.href = "classManager.ad?cpage=" + rpage + "&yclass=" + yy + "&nclass=" + nn 
-							+ "&array=" + array + "&category=" + category + "&keyword=" + keyword
-							+ "&before=" + before + "&after=" + after;
+						+ "&array=" + array + "&category=" + category + "&keyword=" + keyword
+						+ "&before=" + before + "&after=" + after;
 		}
 		
 		function statusController(num){
 			var clNo = "${c.clNo}";
-			console.log(clNo);
-			/*
+			
 			if(num == 1){
 				if(confirm("클래스를 노출하시겠습니까?") == true){
 					$.ajax({
@@ -315,11 +315,9 @@
 					})
 				}			
 			} 
-			*/
 		}
 		
 		function arrayChange(el){
-			/*
 			var cpage = "${pi.currentPage}";
 			var clNo = "${c.clNo}";
 			var category = "${cm.category}";
@@ -334,14 +332,12 @@
     		var after = "${cm.after}";
     		var rpage = "${cm.rpage}";
 			
-			location.href = "classManagerReview.ad?cpage=" + cpage + "&clNo=" + clNo + "&array=" + el.value + "&category=" + category
+			location.href = "classManagerQna.ad?cpage=" + cpage + "&clNo=" + clNo + "&array=" + el.value + "&category=" + category
 					+ "&keyword=" + keyword + "&yclass=" + yy +"&nclass=" + nn + "&rarray=" + rarray + "&rcategory=" + rcategory 
 					+ "&rkeyword=" + rkeyword + "&before=" + before + "&after=" + after + "&rpage=" + rpage;
-			*/
 		}
 		
 		function searchKeyword(){
-			/*
 			var cpage = "${pi.currentPage}";
 			var clNo = "${c.clNo}";
 			var array = "${cm.array}";
@@ -361,11 +357,10 @@
 			if(searchCategory == '1' && searchText.replace(/ /gi, "").length < 1){
 				alert("검색어는 한 글자 이상 입력해야 합니다.");
 			} else{
-				location.href = "classManagerReview.ad?cpage=" + cpage + "&clNo=" + clNo + "&array=" + array + "&category=" + searchCategory
+				location.href = "classManagerQna.ad?cpage=" + cpage + "&clNo=" + clNo + "&array=" + array + "&category=" + searchCategory
 								+ "&keyword=" + searchText + "&yclass=" + yy +"&nclass=" + nn + "&rarray=" + rarray + "&rcategory=" + rcategory 
 								+ "&rkeyword=" + rkeyword + "&before=" + before + "&after=" + after + "&rpage=" + rpage;
 			}
-			*/
 		}
 		
 	 	function allCheck(el){
@@ -376,8 +371,7 @@
  			}
 	 	}
 		
-		function reviewCon(num){
-			/*
+		function qnaCon(num){
 			var checkboxs = document.getElementsByClassName("checkboxs");
 			var ckNum = 0;
 			var checkboxNo = new Array();
@@ -399,38 +393,38 @@
 				}
 				
 				if(num == 1){
-					if(confirm("리뷰를 노출처리 하시겠습니까?") == true){
+					if(confirm("문의를 노출처리 하시겠습니까?") == true){
 						$.ajax({
-							url:"reviewShows.ad",
+							url:"qnaShows.ad",
 							type : "post",
 							data:{checkList:checkboxNo},
 							success:function(result){
 								if(result == 'yyyyy'){
-									alert("리뷰가 노출처리 되었습니다.");
+									alert("문의가 노출처리 되었습니다.");
 									window.location.reload();
 								} else{
-									alert("리뷰 노출처리에 실패하였습니다.");
+									alert("문의 노출처리에 실패하였습니다.");
 								}
 							}, error:function(){
-								console.log("리뷰 노출 ajax 통신 실패");
+								console.log("문의 노출 ajax 통신 실패");
 							}
 						})
 					}
 				}else{
-					if(confirm("리뷰를 미노출처리 하시겠습니까?") == true){
+					if(confirm("문의를 미노출처리 하시겠습니까?") == true){
 						$.ajax({
-							url:"reviewHides.ad",
+							url:"qnaHides.ad",
 							type : "post",
 							data:{checkList:checkboxNo},
 							success:function(result){
 								if(result == 'yyyyy'){
-									alert("리뷰가 미노출처리 되었습니다.");
+									alert("문의가 미노출처리 되었습니다.");
 									window.location.reload();
 								} else{
-									alert("리뷰 미노출처리에 실패하였습니다.");
+									alert("문의 미노출처리에 실패하였습니다.");
 								}
 							}, error:function(){
-								console.log("리뷰 미노출 ajax 통신 실패");
+								console.log("문의 미노출 ajax 통신 실패");
 							}
 						})
 					}
@@ -439,7 +433,22 @@
  			}
  			
 		}
-		*/
+		
+		function reviewPage(){
+			var clNo = "${cm.clNo}";
+			var yy = "${cm.yclass}";
+			var nn = "${cm.nclass}";
+    		var rarray = "${rarray}";
+    		var rcategory = "${rcategory}";
+    		var rkeyword = "${rkeyword}";
+    		var before = "${cm.before}";
+    		var after = "${cm.after}";
+    		var rpage = "${cm.rpage}";
+    		
+			location.href = "classManagerReview.ad?cpage=1&clNo=" + clNo + "&array=new&category=&keyword=" 
+			+ "&yclass=" + yy +"&nclass=" + nn + "&rarray=" + rarray + "&rcategory=" + rcategory + "&rkeyword=" + rkeyword
+			+ "&before=" + before + "&after=" + after + "&rpage=" + rpage;
+		}
 	</script>
 </body>
 </html>

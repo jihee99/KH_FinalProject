@@ -27,4 +27,6 @@ public interface AdminClassService {
 	int reviewHide(int crNo);
 	int qnaListCount(ClassManager cm);
 	ArrayList<ClassQna> selectQnaList(ClassManager cm, PageInfo pi);
+	int qnaShow(int cqNo);
+	int qnaHide(int cqNo);
 }

@@ -97,4 +97,14 @@ public class AdminClassServiceImpl implements AdminClassService {
 	public ArrayList<ClassQna> selectQnaList(ClassManager cm, PageInfo pi) {
 		return acDao.selectQnaList(sqlSession, cm, pi);
 	}
+
+	@Override
+	public int qnaShow(int cqNo) {
+		return acDao.qnaShow(sqlSession, cqNo);
+	}
+
+	@Override
+	public int qnaHide(int cqNo) {
+		return acDao.qnaHide(sqlSession, cqNo);
+	}
 }

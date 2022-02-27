@@ -372,5 +372,19 @@
  			</when>
  		</choose>
 	</select>
+	
+	<update id="qnaShow">
+		update cs_qna
+		   set STATUS = 'Y'
+		 where GB_NO = 1 
+		   and CS_QNO = #{cqNo}
+	</update>
+	
+	<update id="qnaHide">
+		update cs_qna
+		   set STATUS = 'N'
+		 where GB_NO = 1
+		   and CS_QNO = #{cqNo}
+	</update>
 
 </mapper>
