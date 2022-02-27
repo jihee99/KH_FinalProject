@@ -85,9 +85,11 @@
         </div>
         <hr>
         
-		<form action="review.pr" class="form-area" id="form-area" method="post" enctype="multipart/form-data" >
+		<form action="reviewUpdatePage.st" class="form-area" id="form-area" method="post" enctype="multipart/form-data" >
 	        <div class="star_rating_area">
 	                <input type="hidden" name="memberNo" value="${ loginUser.memNo }">
+	                <input type="hidden" name="productNo" value="${ sr.productNo }">
+	                <input type="hidden" name="reviewNo" value="${sr.reviewNo }">
 	            <span class="question1">상품은 만족하셨나요?</span>
 	            <div class="star_area" align="center">
                      <div class="star-rating">
@@ -169,7 +171,7 @@
 			
 	        <div class="file_registration">
 	            <label for="input_file" class="input_file_btn"><i class="fas fa-camera"></i> 사진/동영상 첨부하기</label>
-	            <input type="file" id="input_file" name="upfile" style="display: none;" onchange="insertThumbnail(this);" >
+	            <input type="file" id="input_file" name="reupfile" style="display: none;" onchange="insertThumbnail(this);" >
 	            
 	        </div>
 	        
@@ -208,6 +210,7 @@
 			alert("별점을 입력해주세요!");
 		} else if(file == ""){
 			document.getElementById("form-area").submit();
+			
 		} else if(filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
 			alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
 		} else if(filetype == 'bmp'){
@@ -255,11 +258,6 @@
 		}
 	}
 	
-
-	
-	
-
-
 
     </script>
 </body>
