@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -524,27 +526,30 @@ public class ClassController {
 		return new Gson().toJson(useCouponData);
 	}
 	
-	@RequestMapping(value="classPay.me")
+	@RequestMapping(value="classPay.me", method=RequestMethod.POST)
 	public String classPay(ClassOrder co, Model model) {
-		/*
-		if(co.getPaymentOption() == 1) {
-			
-		} else if(co.getPaymentOption() == 2) {
-			
-		} else {
-			
-		}
-		*/
 		
-		int result = cService.insertClassOrder(co);					// 주문 내역 insert
-		ClassOrder coInfo = cService.selectClassOrder(co);			// 클래스 주문 정보
-		if(coInfo.getPointUse() != null) {
-			int pointResult1 = cService.insertUsePoint(coInfo);		// 포인트 차감 (포인트 테이블에 차감 데이터 insert)
-			int pointResult2 = cService.downMemberPoint(coInfo);	// 포인트 차감 (멤버 데이터 update)
+		System.out.println(co);
+		
+		if(co.getPaymentOption() == 1) {
+			// 무통장 입금
+			cService.insertClassOrder(co);						// 주문 내역 insert
+			ClassOrder coInfo = cService.selectClassOrder(co);	// 클래스 주문 정보
+			if(coInfo.getPointUse() != null) {
+				cService.insertUsePoint(coInfo);				// 포인트 차감 (포인트 테이블에 차감 데이터 insert)
+				cService.downMemberPoint(coInfo);				// 포인트 차감 (멤버 데이터 update)
+			}
+			if(coInfo.getPcNo() != null) {
+				cService.deleteCoupon(coInfo);					// 쿠폰 사용처리
+			}
+			
+			model.addAttribute("co", coInfo);
+			return "class/classPayComplate";
+		} else {
+			// 카카오 페이
+			return "redirect:" + cService.kakaoPayReady(co);
 		}
-		if(coInfo.getPcNo() != null) {
-			int couponResult = cService.deleteCoupon(coInfo);		// 쿠폰 사용처리
-		}
+		
 		
 		/* 무통장 입금이 아닐 경우(즉시 결제) 실행되는 과정 - 무통장 입금일 경우는 후에 확인 후 진행 
 		if(co.getAmount() > 0) {
@@ -553,8 +558,30 @@ public class ClassController {
 		}
 		*/
 		
-		model.addAttribute("co", coInfo);
-		return "class/classPayComplate";
+	}
+	
+	@RequestMapping(value="classPayComplete.me")
+	public String classPayComplete(@RequestParam("pg_token") String pg_token, Model model, ClassOrder co) {
+		
+		model.addAttribute("info", cService.kakaoPayInfo(pg_token, co.getAmount()));
+		ClassOrder co2 = cService.selectClassOrder(co);
+		model.addAttribute("coNo", co2.getCoNo());
+		return "class/kakaoPayComplete";
+	}
+	
+	@RequestMapping(value="classPayCancel.me")
+	public String classPayCancel() {
+		return "class/kakaoPayCancel";
+	}
+	
+	@RequestMapping(value="classPayFail.me")
+	public String classPayFail() {
+		return "class/kakaoPayFail";
+	}
+	
+	@RequestMapping(value="classPayIng.me")
+	public String classPayIng() {
+		return "class/kakaoPayIng";
 	}
 	
 	@ResponseBody
@@ -637,4 +664,6 @@ public class ClassController {
 			return "nnnnn";
 		}
 	}
+	
+	
 }

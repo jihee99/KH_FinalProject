@@ -89,4 +89,7 @@ public interface ClassService {
 	int reportReviewReply(Report rp);
 	ClassQna selectQna(String refBNo);
 	int reportQna(Report rp);
+	
+	// 카카오페이 
+	String kakaoPayReady(ClassOrder co);
 }

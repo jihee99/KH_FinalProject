@@ -1,17 +1,29 @@
 package com.kh.oceanclass.Class.model.service;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import com.kh.oceanclass.Class.model.dao.ClassDao;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.Class.model.vo.KakaoPayApprovalVO;
+import com.kh.oceanclass.Class.model.vo.KakaoPayReadyVO;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
@@ -28,6 +40,11 @@ public class ClassServiceImpl implements ClassService {
 	@Autowired
 	public SqlSessionTemplate sqlSession;
 	
+    private static final String HOST = "https://kapi.kakao.com";
+    
+    private KakaoPayReadyVO kakaoPayReadyVO;
+    private KakaoPayApprovalVO kakaoPayApprovalVO;
+    
 	@Override
 	public int increaseCount(int clNo) {
 		return cDao.increaseCount(sqlSession, clNo);
@@ -297,4 +314,101 @@ public class ClassServiceImpl implements ClassService {
 	public int reportQna(Report rp) {
 		return cDao.reportQna(sqlSession, rp);
 	}
+
+	@Override
+	public String kakaoPayReady(ClassOrder co) {
+		
+		ClassVo c = cDao.selectClass(sqlSession, co.getClNo());	// 클래스 정보
+		
+		RestTemplate restTemplate = new RestTemplate();
+		 
+        // 서버로 요청할 Header
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "KakaoAK " + "def46eafe7d8c2602c7f3ccf9c5cc074");
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+        
+        // 서버로 요청할 Body
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("cid", "TC0ONETIME");
+        params.add("partner_order_id", "1001");
+        params.add("partner_user_id", "sumin");
+        params.add("item_name", c.getClName());
+        params.add("quantity", "1");
+        params.add("total_amount", co.getAmount() + ""); //co.getAmount() + ""
+        params.add("tax_free_amount", "100");
+        params.add("approval_url", "http://localhost:8008/oceanclass/classPayComplete.me?amount=" + co.getAmount() + "&clNo=" + co.getClNo() + "&memNo=" + co.getMemNo());
+        params.add("cancel_url", "http://localhost:8008/oceanclass/classPayCancel.me");
+        params.add("fail_url", "http://localhost:8008/oceanclass/classPayFail.me");
+ 
+         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+ 
+        try {
+            kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
+            //System.out.println(kakaoPayReadyVO.toString());
+            
+            insertClassOrder(co);						// 주문 내역 insert
+            ClassOrder coInfo = selectClassOrder(co);	// 클래스 주문 정보
+            if(coInfo.getPointUse() != null) {
+    			insertUsePoint(coInfo);					// 포인트 차감 (포인트 테이블에 차감 데이터 insert)
+    			downMemberPoint(coInfo);				// 포인트 차감 (멤버 데이터 update)
+    		}
+            if(coInfo.getPcNo() != null) {
+    			deleteCoupon(coInfo);					// 쿠폰 사용처리
+    		}
+    		if(co.getAmount() > 0) {
+    			insertSavingPoint(coInfo);				// 포인트 적립 (포인트 테이블에 적립 데이터 insert)
+    			upMemberPoint(coInfo);					// 포인트 적립 (멤버 데이터 update)
+    		}
+    		
+            return kakaoPayReadyVO.getNext_redirect_pc_url();
+ 
+        } catch (RestClientException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        return "/classPayIng.me";
+	}
+	
+	 public KakaoPayApprovalVO kakaoPayInfo(String pg_token, int amount) {
+	        
+	        RestTemplate restTemplate = new RestTemplate();
+	        System.out.println(pg_token);
+	        
+	        // 서버로 요청할 Header
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.add("Authorization", "KakaoAK " + "def46eafe7d8c2602c7f3ccf9c5cc074");
+	        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+	        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+	 
+	        // 서버로 요청할 Body
+	        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+	        params.add("cid", "TC0ONETIME");
+	        params.add("tid", kakaoPayReadyVO.getTid());
+	        params.add("partner_order_id", "1001");
+	        params.add("partner_user_id", "sumin");
+	        params.add("pg_token", pg_token);
+	        params.add("total_amount", amount + "");
+	        
+	        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+	        
+	        try {
+	            kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
+	          
+	            return kakaoPayApprovalVO;
+	        
+	        } catch (RestClientException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } catch (URISyntaxException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	        
+	        return null;
+	    }
 }

@@ -41,6 +41,8 @@
 	        <div>입니다.</div>
         </div>
         <br><br>
+        
+        <!--  
         <c:choose>
         	<c:when test="${ co.paymentOption == 1 }">
         		<div>
@@ -57,6 +59,14 @@
 		        </div>
         	</c:otherwise>
         </c:choose>
+        -->
+        <div>
+	    	입금하실 계좌번호는 <b>국민은행 123456-00-9876543 이수민</b> 입니다.<br>
+	    	입금 확인까지는 약간의 시간이 소요될 수 있으며, 확인 된 후 클래스 수강이 가능합니다.<br>
+	    	즐거운 Ocean Class 되세요! <img src="resources/images/order.png" width="25" height="25">
+    	</div>
+        
+        
         <br><br>
 
         <button type="button" onclick="myPage();" class="btn" style="background-color: #6babd5;color: white;">마이페이지로 이동</button>

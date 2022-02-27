@@ -75,7 +75,7 @@
 
         <div class="cate">주문 정보</div>
 		
-		<form action="classPay.me" onsubmit="return paySubmitCheck();">
+		<form action="classPay.me" method="post" onsubmit="return paySubmitCheck();">
 			<!-- 주문을 위한 정보  -->
 	    	<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
 	    	<input type="hidden" id="clNo" name="clNo" value="${c.clNo}">
@@ -253,12 +253,14 @@
     		var pointPrice = document.getElementById("pointPrice");
     		var price = ${ c.clPrice }; //원래 금액
     		
+    		var point = "${loginUser.point}";
+    		
     		if(usePoint == ""){
     			alert("사용할 포인트 금액을 입력해주세요.");
     		} else if(regExp.test(usePoint) == true){
     			if(usePoint.toString().substring(0,1) == "0" && usePoint != 0){
     				alert("포인트 사용 금액의 첫 자리는 0이 될 수 없습니다.");
-    			} else if(${loginUser.point} < usePoint){
+    			} else if(point < usePoint){
     				alert("사용 가능한 포인트 금액을 확인해주세요.");
     			} else if(usePoint < 1000 && usePoint > 0){
     				alert("포인트는 1,000원 이상부터 사용 가능합니다.");
