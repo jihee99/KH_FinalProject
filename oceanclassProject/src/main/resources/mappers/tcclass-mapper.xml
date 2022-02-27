@@ -65,6 +65,9 @@
 		<result column="status" property="status" />
 		<result column="answer_content" property="answerContent" />
 		<result column="answer_date" property="answerDate" />
+		<result column="cl_name" property="clName" />
+		<result column="profile" property="profile" />
+		<result column="teacher_nick" property="teacherNick" />
 	</resultMap>
 
 	<select id="myClassList" resultMap="classResult">
@@ -231,6 +234,13 @@
              , status
              , answer_content
              , filepath
+             , profile
+             , (
+                select nickname
+                  from member
+                  join class using (mno)
+                 where clno = refer_no
+                ) as teacher_nick
 		  from cs_qna qr
           join class c on (c.clno = qr.refer_no)
           join member m on (m.mno = qr.mno)
