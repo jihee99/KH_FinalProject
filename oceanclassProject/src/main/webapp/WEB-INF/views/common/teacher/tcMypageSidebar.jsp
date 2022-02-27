@@ -126,7 +126,7 @@
                     <ul>
                         <li><a href="myClassList.tc">내 클래스</a></li>
                         <li><a href="myClassReviewList.tc">클래스 리뷰 관리</a></li>
-                        <li><a href="">클래스 문의 관리</a></li>
+                        <li><a href="myClassQnaList.tc">클래스 문의 관리</a></li>
                     </ul>
                 </div>
                 <div id="menu3">

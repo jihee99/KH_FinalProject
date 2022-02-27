@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.Class.model.dao.TcClassDao;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.common.model.vo.PageInfo;
 
 @Service
 public class TcClassServiceImpl implements TcClassService {
@@ -53,9 +55,21 @@ public class TcClassServiceImpl implements TcClassService {
 	public ArrayList<ClassReview> myClassReviewList(int memNo) {
 		return tcDao.myClassReviewList(sqlSession, memNo);
 	}
-
 	
+	@Override
+	public int tcQnaListCount(int memNo) {
+		return tcDao.tcQnaListCount(sqlSession, memNo);
+	}
 
-	
+	@Override
+	public ArrayList<ClassQna> myClassQnaList(int memNo, PageInfo pi) {
+		return tcDao.myClassQnaList(sqlSession, memNo, pi);
+	}
+
+	@Override
+	public ClassQna selectTcQnaDetail(int csQnaNo) {
+		return tcDao.selectTcQnaDetail(sqlSession, csQnaNo);
+	}
+
 	
 }

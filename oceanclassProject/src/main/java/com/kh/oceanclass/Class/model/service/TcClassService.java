@@ -2,8 +2,10 @@ package com.kh.oceanclass.Class.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.common.model.vo.PageInfo;
 
 public interface TcClassService {
 
@@ -27,5 +29,12 @@ public interface TcClassService {
 	
 	// 클래스 리뷰 조회
 	ArrayList<ClassReview> myClassReviewList(int memNo);
+	
+	// 클래스 문의 조회
+	int tcQnaListCount(int memNo);
+	ArrayList<ClassQna> myClassQnaList(int memNo, PageInfo pi);
+	
+	// 클래스 문의 상세보기
+	ClassQna selectTcQnaDetail(int csQnaNo);
 	
 }

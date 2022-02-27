@@ -54,7 +54,7 @@
 	<resultMap id="classQnaResult" type="ClassQna">
 		<result column="cs_qno" property="csQnaNo" />
 		<result column="mno" property="memNo" />
-		<result column="nickname" property="memNo" />
+		<result column="nickname" property="nickname" />
 		<result column="gb_no" property="gbNo" />
 		<result column="refer_no" property="referNo" />
 		<result column="title" property="title" />
@@ -186,6 +186,59 @@
 		   and c.mno = #{memNo}
 	     order
    			by c_rno desc
+	</select>
+	
+	<select id="tcQnaListCount" resultType="_int">
+		select count(*)
+		  from cs_qna q
+          join class c on (c.clno = q.refer_no)
+          join member m on (m.mno = q.mno)
+		 where status = 'Y'
+           and gb_no = 1
+           and c.mno = #{memNo}
+	</select>
+	
+	<select id="myClassQnaList" resultMap="classQnaResult">
+		select        
+               cs_qno
+             , cl_name
+             , nickname
+		     , content
+		     , refer_no
+		     , title
+		     , to_char(create_date, 'YYYY-MM-DD') as create_date
+             , status
+             , answer_content
+		  from cs_qna qr
+          join class c on (c.clno = qr.refer_no)
+          join member m on (m.mno = qr.mno)
+		 where status = 'Y'
+           and gb_no = 1
+		   and c.mno = #{memNo}
+	     order
+   			by cs_qno desc
+	</select>
+	
+	<select id="selectTcQnaDetail" resultMap="classQnaResult">
+		select        
+               cs_qno
+             , cl_name
+             , nickname
+		     , content
+		     , refer_no
+		     , title
+		     , to_char(create_date, 'YYYY-MM-DD') as create_date
+             , status
+             , answer_content
+             , filepath
+		  from cs_qna qr
+          join class c on (c.clno = qr.refer_no)
+          join member m on (m.mno = qr.mno)
+		 where status = 'Y'
+           and gb_no = 1
+		   and cs_qno = #{csQnaNo}
+	     order
+   			by cs_qno desc
 	</select>
 		
 </mapper>
