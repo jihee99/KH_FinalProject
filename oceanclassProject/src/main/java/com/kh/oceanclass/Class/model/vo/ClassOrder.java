@@ -37,4 +37,5 @@ public class ClassOrder {
 	
 	// 마이페이지 내클래스내역에 필요
 	private String clImg;
+	private String category;
 }
