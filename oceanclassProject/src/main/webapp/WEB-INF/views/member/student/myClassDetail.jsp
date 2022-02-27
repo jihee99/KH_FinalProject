@@ -15,16 +15,15 @@
 <style>
 	.content1{
 	    width: 100%;
-	    border: 1px solid;
 	    margin-bottom: 40px;
 	}
 	.conhead{width: 100%; height: 15%;  margin-bottom: 25px;}
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
 	.table{width: 90%; margin: auto; text-align: center;}
-	.item{width: 80%; margin: 0 auto; border: 1px solid;}
-	.item img{width: 30%;}
-	.item>p{width: 50%; float: right; padding-right: 30px; margin-right: 80px; text-align: left; font-size: 20px; font-weight: 800;}
+	.item{width: 80%; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
+	.item img{width: 25%; height: 100px;}
+	.item>p{width: 70%; float: right; margin-right: 30px; margin-top: 30px; text-align: left; font-size: 20px; font-weight: 800;}
 </style>
 </head>
 <body>
@@ -41,31 +40,24 @@
 				        <div class="conhead">
 				            <h2>나의 클래스</h2>
 				        </div>
-				        <c:choose>
-			        		<c:when test="${empty list}">
-			        			<p>찜한 클래스가 없습니다</p>
-			        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
-			        		</c:when>
-				        	<c:otherwise>
-						        <c:forEach var="c" items="${list}">
-						            <div class="item">
-						            	<a><img src="${c.clImg}"></a>
-						            	<input type="hidden" value="${c.clNo}">
-						            	<p id="ctitle">
-							            	<c:choose>
-							            		<c:when test="${fn:length(c.clName) gt 25}">
-							            			<c:out value="${fn:substring(c.clName, 0, 24)}"></c:out>
-							            			..
-							            		</c:when>
-							            		<c:otherwise>
-							            			<c:out value="${c.clName}"></c:out>
-							            		</c:otherwise>
-							            	</c:choose>
-						            	</p>
-						            </div>
-					            </c:forEach>
-					    	</c:otherwise>			        
-				        </c:choose>    
+					        <c:forEach var="c" items="${list}">
+					            <div class="item">
+					            	<a><img src="${c.clImg}"></a>
+					            	<input type="hidden" value="${c.clNo}">
+					            	<p id="ctitle">
+						            	<c:choose>
+						            		<c:when test="${fn:length(c.clName) gt 30}">
+						            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
+						            			..
+						            		</c:when>
+						            		<c:otherwise>
+						            			<c:out value="${c.clName}" />
+						            		</c:otherwise>
+						            	</c:choose>
+						            	<c:out value="${c.readingCheck}"/> 
+					            	</p>
+					            </div>
+				            </c:forEach>
 				    </div>
 				</div>
 			</td>

@@ -12,10 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.oceanclass.Class.model.service.TcClassServiceImpl;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.common.template.Pagination;
+import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.Member;
 
 @Controller
@@ -210,7 +217,46 @@ public class TcClassController {
 			model.addAttribute("errorMsg", "수정 실패");
 			return "common/errorPage";
 		}
-		
 	}
 	
+	// 강사 내 클래스 리뷰 조회
+	@RequestMapping("myClassReviewList.tc")
+	public String myClassReviewList(Model model, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		//ArrayList<ClassReview> tcClassName = tcService.myClassNameList(clNo);
+		ArrayList<ClassReview> tcReviewList = tcService.myClassReviewList(memNo); // 클래스 리스트
+		
+		//model.addAttribute("clNo", clNo);
+		//model.addAttribute("tcClassName", tcClassName);
+		model.addAttribute("tcReviewList", tcReviewList);
+		return "member/teacher/classReviewList";
+	}
+	
+	// 강사 내 문의 리뷰 조회
+	@RequestMapping("myClassQnaList.tc")
+	public ModelAndView myClassQnaList(@RequestParam(value="cpage", defaultValue="1")int currentPage, ModelAndView mv, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int tcQnaListCount = tcService.tcQnaListCount(memNo);
+		//System.out.println(tcQnaListCount);
+		PageInfo pi = Pagination.getPageInfo(tcQnaListCount, currentPage, 5, 10);
+		
+		ArrayList<ClassQna> tcQnaList = tcService.myClassQnaList(memNo, pi); // 문의 리스트
+		
+		mv.addObject("pi", pi).addObject("tcQnaList", tcQnaList).setViewName("member/teacher/classQnAList");
+		return mv;
+	}
+	
+	@RequestMapping("tcQnaDetail.tc")
+	public String selectTcQnaDetail(int csQnaNo, Model model) {
+		
+			ClassQna cq = tcService.selectTcQnaDetail(csQnaNo);
+			model.addAttribute("cq", cq);
+			return "member/teacher/classQnaDetailForm";
+		
+	}
+
 }

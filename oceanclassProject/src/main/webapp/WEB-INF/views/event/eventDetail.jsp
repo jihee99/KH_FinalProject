@@ -59,7 +59,7 @@
         </div>
         <div class="content">
         	<c:choose>
-        		<c:when test="${e.couponNo ne 0}">
+        		<c:when test="${e.couponNo != 0}">
         			<div id="img"><img src="${e.img}"></div>
         			<input type="hidden" id="couponNo" name="couponNo" value="${e.couponNo}">
         			<button type="button" class="btn btn-lg btn-light" onclick="getCoupon();">쿠폰받기</button>
@@ -74,9 +74,9 @@
         	function getCoupon(){
         		let couponNo = $(".content").children("#couponNo").val();
         		let memNo = '<c:out value="${loginUser.memNo}"/>';
-        		let login = "";
+        		let noLogin = "";
         		console.log(couponNo);
-        		if(memNo == login){
+        		if(memNo == noLogin){
         			alert("로그인 후 이용 가능합니다");
         		}else{
         			$.ajax({

@@ -15,6 +15,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.dao.MypageDao;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -48,7 +49,10 @@ public class MypageServiceImpl implements MypageService{
 	public int deleteMem(String userId) {
 		return myDao.deleteMem(sqlSession, userId);
 	}
+
+
 	
+// 적립금
 	@Override
 	public int selectCouponCount(int memNo) {
 		return myDao.selectCouponCount(sqlSession, memNo);
@@ -57,6 +61,26 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<Coupon> selectCouponList(PageInfo pi, int memNo) {
 		return myDao.selectCouponList(sqlSession, pi, memNo);
+	}
+	
+	@Override
+	public int selectPointCount(int memNo) {
+		return myDao.selectPointCount(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<Point> selectPointList(PageInfo pi, int memNo) {
+		return myDao.selectPointList(sqlSession, pi, memNo);
+	}
+	
+	@Override
+	public ArrayList<Point> PointMinusList(int memNo) {
+		return myDao.PointMinusList(sqlSession, memNo);
+	}
+	
+	@Override
+	public int pointSum(int memNo) {
+		return myDao.pointSum(sqlSession, memNo);
 	}
 	
 	
@@ -93,6 +117,11 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<ClassOrder> selectMyClass(int memNo) {
 		return myDao.selectMyClass(sqlSession, memNo);
 	}
+	
+	@Override
+	public ArrayList<ClassOrder> selectMyAllClass(int memNo) {
+		return myDao.selectMyAllClass(sqlSession, memNo);
+	}
 
 	@Override
 	public int likeClassCount(int memNo) {
@@ -122,6 +151,11 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<CsQna> classQnaList(PageInfo pi, int memNo) {
 		return myDao.classQnaList(sqlSession, pi, memNo);
+	}
+
+	@Override
+	public CsQna ajaxClassQna(int csQno) {
+		return myDao.ajaxClassQna(sqlSession, csQno);
 	}
 
 
@@ -176,6 +210,26 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<StorePay> searchShoppingList(StorePay pay) {
 		return myDao.searchShoppingList(sqlSession, pay);
+	}
+
+	@Override
+	public ArrayList<StorePay> ajaxSearchDate(StorePay pay) {
+		return myDao.ajaxSearchDate(sqlSession, pay);
+	}
+
+	@Override
+	public ArrayList<ClassVo> selectMainLikeClass(int memNo) {
+		return myDao.selectMainLikeClass(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<Product> selectMainLikeProduct(int memNo) {
+		return myDao.selectMainLikeProduct(sqlSession, memNo);
+	}
+
+	@Override
+	public ArrayList<ClassOrder> selectMainMyClass(int memNo) {
+		return myDao.selectMainMyClass(sqlSession, memNo);
 	}
 
 }

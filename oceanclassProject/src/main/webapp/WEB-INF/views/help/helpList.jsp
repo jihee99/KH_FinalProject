@@ -37,7 +37,7 @@
 	        <div class="label">
 	        	<ul>
 	        		<li>
-	        			<input type="radio" class="form-check-input" id="C" name="category" value="C">
+	        			<input type="radio" class="form-check-input" id="C" name="category" value="C" checked>
 	        			<label for="C">클래스</label>
 	        		</li>
 	        		<li>
@@ -55,17 +55,13 @@
         <script>
         	$(".label label").click(function(){
         		let category = $(this).prev().val();
-        		console.log(category);
         		$.ajax({
         			url: "searchHelpList.he",
         			data: {category:category},
         			dataType: 'json',
         			success:function(result){
-        				
-        				console.log(result);
         				let help = '';
         				for(let i in result.list){
-        					console.log(result.list[i].noNo);
         					help += '<tr>'
 	                        	  + '<td id="nno">' + result.list[i].noNo + '</td>'
 	                        	  + '<td>' + result.list[i].category + '</td>'
@@ -74,7 +70,6 @@
 	                        	  + '<td>' + result.list[i].count + '</td>'
 	                    		  + '</tr>'
         				}
-        				console.log(help);
         				$("#result").html(help);
         				
         				let page = '<ul class="pagination">';
@@ -83,20 +78,18 @@
 	    					}else{
 	    						page += '<li class="page-item"><a class="page-link btn">Previous</a></li>'
 	    					}
-	    					
 							for(let j=result.pi.startPage; j<=result.pi.endPage; j++){
 								page += '<li class="page-item"><a class="page-link btn">'
 									  + j 
 									  + '</a></li>'
 							}
-							
 							if(result.pi.currentPage == result.pi.maxPage){
 								page += '<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' 
 							}else{
 								page += '<li class="page-item"><a class="page-link btn">Next</a></li>'
 							}
 						page += '</ul>'
-						$("#paging").html(page);
+    					$("#paging").html(page);
 						
 						$(function(){
         	        		$("#noticeList>tbody>tr").click(function(){

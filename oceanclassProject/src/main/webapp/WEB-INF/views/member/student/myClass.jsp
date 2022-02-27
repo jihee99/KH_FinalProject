@@ -15,20 +15,17 @@
 <style>
 	.content1{
 	    width: 100%;
-	    border: 1px solid;
-	    margin-bottom: 40px;
+	    margin-bottom: 80px;
 	}
-	.conhead{
-        width: 100%;
-	    height: 15%;
-	    margin-bottom: 25px;
-	}
+	.conhead{width: 100%; height: 15%;  margin-bottom: 25px;}
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
 	.table{width: 90%; margin: auto; text-align: center;}
-	.item{width: 80%; margin: 0 auto; border: 1px solid;}
-	.item img{width: 30%;}
-	.item>p{width: 50%; float: right; padding-right: 30px; margin-right: 80px; text-align: left; font-size: 20px; font-weight: 800;}
+	.item{width: 80%; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
+	.item img{width: 25%; height: 100px;}
+	.item>p{width: 70%; float: right; margin-right: 30px; margin-top: 30px; text-align: left; font-size: 20px; font-weight: 800;}
+	.content1>button{display: block; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;}
+	a{text-decoration: none; color: black;}
 </style>
 </head>
 <body>
@@ -48,18 +45,18 @@
 				        </div>
 				        <c:choose>
 			        		<c:when test="${empty list}">
-			        			<p>찜한 클래스가 없습니다</p>
-			        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
+			        			<p>수강중인 클래스가 없습니다</p>
+			        			<button type="button" class="btn btn-lg">클래스 구경가기!</button>
 			        		</c:when>
 				        	<c:otherwise>
-						        <c:forEach var="c" items="${list}" begin="0" end="3">
+						        <c:forEach var="c" items="${list}" begin="0" end="2">
 						            <div class="item">
 						            	<a><img src="${c.clImg}"></a>
 						            	<input type="hidden" value="${c.clNo}">
 						            	<p id="ctitle">
 							            	<c:choose>
-							            		<c:when test="${fn:length(c.clName) gt 25}">
-							            			<c:out value="${fn:substring(c.clName, 0, 24)}"></c:out>
+							            		<c:when test="${fn:length(c.clName) gt 30}">
+							            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
 							            			..
 							            		</c:when>
 							            		<c:otherwise>
@@ -76,7 +73,7 @@
 				    
 				    <script>
 				    	function myAllClass(){
-				    		location.href='myAllClass.me';
+				    		location.href='myIngClass.me';
 				    	}
 				    </script>
 				    
@@ -91,7 +88,7 @@
 					        <c:otherwise>
 					        	<div class="conhead">
 						            <h2>나의 클래스 내역</h2>
-						            <a>더보기</a>
+						            <a href="myAllClass.me">더보기</a>
 						        </div>
 						        <table class="table">
 						            <thead>
@@ -101,12 +98,12 @@
 						                </tr>
 						            </thead>
 						            <tbody>
-					        			<c:forEach var="co" items="${list}" begin="0" end="3">
+					        			<c:forEach var="co" items="${allList}" begin="0" end="3">
 							                <tr>
 							                    <td>
 							                    	<c:choose>
-									            		<c:when test="${fn:length(co.clName) gt 25}">
-									            			<c:out value="${fn:substring(co.clName, 0, 24)}"></c:out>
+									            		<c:when test="${fn:length(co.clName) gt 21}">
+									            			<c:out value="${fn:substring(co.clName, 0, 20)}"></c:out>
 									            			..
 									            		</c:when>
 									            		<c:otherwise>

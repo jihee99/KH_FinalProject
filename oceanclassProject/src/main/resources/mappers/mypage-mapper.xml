@@ -28,6 +28,20 @@
 		<result column="endate" property="endate" />
 	</resultMap>
 	
+	<resultMap id="pointResult" type="Point" >
+		<result column="pno" property="pointNo" />
+	    <result column="mno" property="memNo" />
+        <result column="type" property="type" />
+        <result column="p_order_no" property="orderNo" />
+        <result column="p_date" property="pointDate" />		
+		<result column="p_price" property="pointPrice" />	
+		<result column="reason" property="reason" />	
+		<result column="deadline" property="deadLine" />	
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	
 	<resultMap id="myQnaResult" type="Qna">
 		<result column="qno" property="qnaNo" />
 		<result column="mno" property="memNo" />
@@ -106,7 +120,7 @@
 	
 	<resultMap id="storeReviewResult" type="StoreReview">
 	  	<result column="rno" property="reviewNo"/>
-	  	<result column="mno" property="memeberNo"/>
+	  	<result column="mno" property="memberNo"/>
 	  	<result column="pno" property="productNo"/>
 	  	<result column="content" property="content"/>
 	  	<result column="star_rating" property="starRating"/>
@@ -130,12 +144,50 @@
 	  	<result column="use_coupon" property="useCoupon"/>
 	  	<result column="point" property="point"/>
 	  	<result column="d_fee" property="deleveryFee"/>
-	  	<result column="d_fee" property="deleveryFee"/>
 	  	<result column="title" property="title"/>
 	  	<result column="img1" property="img"/>
 	  	<result column="user_name" property="userName"/>
 	  	<result column="phone" property="phone"/>
 	</resultMap>
+	
+<!-- 마이페이지 메인 -->
+	<select id="selectMainMyClass" resultMap="myClassOrderResult">
+		select
+		       distinct c_ono
+		     , c.clno
+		     , cl_name
+		     , cl_img
+		  from class c   		
+		  join class_order co on (c.clno = co.clno)
+		 where co.mno = #{memNo}
+		 order
+		 	by c_ono desc
+	</select>
+	
+	<select id="selectMainLikeClass" resultMap="myClassResult">
+		select 
+		       distinct clno
+		     , l.mno as "mno"
+		     , cl_name
+		     , cl_img
+		  from class c
+		  join like_item l on (c.clno = l.refer_no)
+		 where l.mno = #{mno}
+		   and cl_status = 'Y'
+	</select>
+	
+	<select id="selectMainLikeProduct" resultMap="storeResult">
+		select 
+		       distinct pno
+		     , s.mno as "mno"
+		     , title
+		     , img1
+		  from store s
+		  join like_item l on (s.pno = l.refer_no)
+		  where l.mno = #{memNo} 
+		    and status = 'Y'
+	</select>
+
 
 <!-- 정보수정용 -->
 	<update id="updateProfile">
@@ -202,6 +254,49 @@
 		  FROM COUPONLIST
 		  JOIN COUPON ON (COUPON.CNO = COUPONLIST.CNO)
 		 WHERE MNO = #{memNo}
+	</select>
+	
+	<select id="selectPointCount" resultType="_int">
+		select count(*)
+		  from point
+		 where mno = #{memNo}
+	</select>
+	
+	<select id="selectPointSum" resultType="_int">
+		select round(sum(p_price)*0.05) 
+		  from point
+		 where mno = #{memNo}
+		   and status = 1
+	</select>
+	
+	<select id="selectPointList" resultMap="pointResult">
+		select 
+		       pno
+		     , mno
+		     , type
+		     , to_char(p_date, 'YYYY-MM-DD') as "p_date"
+		     , p_price
+		     , reason
+		     , to_char(deadline, 'YYYY-MM-DD') as "deadline"
+		     , status
+		  from point
+		 where mno = #{memNo}
+		   and status = 1
+	</select>
+	
+	<select id="PointMinusList" resultMap="pointResult">
+		select 
+		       pno
+		     , mno
+		     , type
+		     , to_char(p_date, 'YYYY-MM-DD') as "p_date"
+		     , p_price
+		     , reason
+		     , to_char(deadline, 'YYYY-MM-DD') as "deadline"
+		     , status
+		  from point
+		 where mno = #{memNo}
+		   and status = 2
 	</select>
 	
 	
@@ -308,6 +403,20 @@
 		     , c.clno
 		     , cl_name
 		     , cl_img
+		  from class c   		
+		  join class_order co on (c.clno = co.clno)
+		 where co.mno = #{memNo}
+		   and reading_status = 'Y'
+		 order
+		 	by c_ono desc
+	</select>
+	
+	<select id="selectMyAllClass" resultMap="myClassOrderResult">
+		select
+		       c_ono
+		     , c.clno
+		     , cl_name
+		     , cl_img
 		     , case when reading_status = 'Y' then '수강중'
 		     	    when reading_status = 'N' then '수강전'
 		     		when reading_status = 'E' then '수강종료' end as reading_status
@@ -327,7 +436,7 @@
 	
 	<select id="selectLikeClass" resultMap="myClassResult">
 		select 
-		       clno
+		       distinct clno
 		     , l.mno as "mno"
 		     , cl_name
 		     , cl_price
@@ -336,6 +445,8 @@
 		  from class c
 		  join like_item l on (c.clno = l.refer_no)
 		  where l.mno = #{mno}
+		  order 
+		     by clno
 	</select>
 	
 	<select id="classReviewCount" resultType="_int">
@@ -367,9 +478,12 @@
 	
 	<select id="classQnaCount" resultType="_int">
 		select count(*)
-		  from cs_qna
-		 where mno = #{memNo} 
-		   and gb_no = 1
+		  from cs_qna cs
+		  join class c on ( cs.refer_no = c.clno)
+		 where cs.mno = #{memNo} 
+		   and cs.gb_no = 1
+		   and cs.status = 'Y'
+		   and cl_status = 'Y'
 	</select>
 	
 	<select id="classQnaList" resultMap="csResult">
@@ -389,6 +503,30 @@
 		  from cs_qna cs
 		  join class c on ( cs.refer_no = c.clno)
 		 where cs.mno = #{memNo}
+		   and gb_no = 1
+		   and cs.status = 'Y'
+		   and cl_status = 'Y'
+		 order 
+		    by cs_qno desc
+	</select>
+	
+	<select id="ajaxClassQna" resultMap="csResult">
+		select 
+		       cs_qno
+		     , cs.mno
+		     , gb_no
+		     , refer_no
+		     , cs.title
+		     , content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , filepath
+		     , cs.status
+		     , answer_content
+		     , answer_date
+		     , cl_name as "cl_name"
+		  from cs_qna cs
+		  join class c on ( cs.refer_no = c.clno)
+		 where cs.cs_qno = #{csQno}
 		   and gb_no = 1
 		   and cs.status = 'Y'
 		   and cl_status = 'Y'
@@ -539,6 +677,25 @@
 		  join store s on (p.pno = s.pno)
 		 where p.mno = #{memberNo}
 		   and pay_date between sysdate - #{payDate} and sysdate
+	</select>
+	
+	<select id="ajaxSearchDate" resultMap="storePayResult">
+		select
+		       order_no
+		     , p.mno
+		     , address
+		     , pay_amount
+		     , pay_date
+		     , pay_method
+		     , order_status
+		     , pay_status
+		     , p.pno
+		     , title
+		     , img1
+		  from pay p 
+		  join store s on (p.pno = s.pno)
+		 where p.mno = #{memberNo}
+		   and pay_date between #{startDate} and #{endDate}
 	</select>
 	
 </mapper>

@@ -10,6 +10,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -17,6 +18,11 @@ import com.kh.oceanclass.store.model.vo.StoreReview;
 public interface MypageService {
 
 // 학생 마이페이지 기능
+	// 마이페이지 메인
+	ArrayList<ClassVo> selectMainLikeClass(int memNo);
+	ArrayList<Product> selectMainLikeProduct(int memNo);
+	ArrayList<ClassOrder> selectMainMyClass(int memNo);
+	
 	// 프로필수정
 	int updateProfile(Member m);
 	Member selectUser(Member m);
@@ -32,6 +38,18 @@ public interface MypageService {
 	
 	// 쿠폰 리스트 조회
 	ArrayList<Coupon> selectCouponList(PageInfo pi, int memNo);
+	
+	// 포인트 갯수 조회
+	int selectPointCount(int memNo);
+	
+	// 포인트 합계 조회
+	int pointSum(int memNo);
+	
+	// 포인트 적립 조회
+	ArrayList<Point> selectPointList(PageInfo pi, int memNo);
+	
+	// 포인트 사용 조회
+	ArrayList<Point> PointMinusList(int memNo);
 	
 	// qna 갯수 조회
 	int selectQnaCount(int memNo);
@@ -57,6 +75,9 @@ public interface MypageService {
 	// 내 클래스
 	ArrayList<ClassOrder> selectMyClass(int memNo);
 	
+	// 내 클래스 전체
+	ArrayList<ClassOrder> selectMyAllClass(int memNo);
+	
 	// 클래스 후기 갯수
 	int classReviewCount(int memNo);
 	
@@ -68,6 +89,9 @@ public interface MypageService {
 	
 	// 클래스 문의 리스트
 	ArrayList<CsQna> classQnaList(PageInfo pi, int memNo);
+	
+	// 클래스 문의 상세
+	CsQna ajaxClassQna(int csQno);
 	
 	// 좋아요 상품 갯수
 	int likeProductCount(int memNo);
@@ -92,4 +116,7 @@ public interface MypageService {
 	
 	// 스토어 주문내역 검색
 	ArrayList<StorePay> searchShoppingList(StorePay pay);
+	
+	// 스토어 주문 날짜검색
+	ArrayList<StorePay> ajaxSearchDate(StorePay pay);
 }

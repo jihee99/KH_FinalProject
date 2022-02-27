@@ -15,17 +15,17 @@
     <link rel="stylesheet" href="./resources/css/eventMain.css?4">
     
 <style>
+	.innerOuter{height: 1300px;}
 	.img{margin:0 auto; margin-top: 50px;}
 	#img{
-		width: 80%; 
+		width: 100%; 
 		height: 200px;
 		object-fit:cover;
 	}
 	.pagination{
-		width: 25%;
-		margin: 0 auto;
-		padding-top: 80px;
-		border: 1px solid white;
+		width: 100%;
+		justify-content: center;
+		padding-top: 50px;
 	}
 	#move{width: 90%; height: 40%; overflow: hidden; border:none; margin: 0 auto; margin-left: 20px;}
 	.img>p{text-align: center;}
@@ -45,7 +45,6 @@
         	<c:forEach var="c" items="${list}">
         		
 	            <div class="img">
-	            	<input type="hidden" id="clno" value="${c.clNo}">
 	            	<form id="classDetail" method="post" action="classDetail.me">
 	            		<input type="hidden" id="referNo" name="referNo" value="${c.clNo}">
 		                <button id="move" type="submit"><img src="${c.clImg}" id="img"></button>
@@ -64,25 +63,7 @@
 	            </div>
 	            
 	 		</c:forEach> 
-		</div>       
-		
-		<!--
-		<script>
-			$("#classDetail>img").click(function(){
-				let referNo = $(this).prev().val();
-				console.log(referNo);
-				$.ajax({
-					url:"classDetail.me",
-					data:{referNo:referNo},
-					success:function(){
-						console.log("^^");
-					},error:function(){
-						console.log("ㅠㅠ");
-					}
-				})
-			})
-		</script>
-		 -->
+		</div>   
 		
 		<div id="paging">
 			<ul class="pagination">

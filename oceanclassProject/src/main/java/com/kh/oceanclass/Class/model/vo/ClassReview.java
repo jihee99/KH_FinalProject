@@ -25,5 +25,6 @@ public class ClassReview {
 	
 	private String clName;
 	private String img;
+	private String reviewsum;
 	
 }

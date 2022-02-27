@@ -21,4 +21,5 @@ public class Coupon {
 	private String endate;
 	private int count;		//현재발급된 쿠폰수
 	private int maxCount;	//최대발급 쿠폰수
+	private int status;
 }	
