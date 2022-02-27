@@ -624,5 +624,17 @@ public class ClassController {
 		}
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="reportQna.me")
+	public String ajaxReportQna(Report rp) {
+		ClassQna cq = cService.selectQna(rp.getRefBNo());
+		rp.setReportMemNo(cq.getMemNo() + "");
+		int result = cService.reportQna(rp);
+		
+		if(result > 0) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
+	}
 }

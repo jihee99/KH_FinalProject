@@ -58,11 +58,13 @@
 		                      		</c:otherwise>
 		                      	</c:choose>
 		                    </div>
+	                    	<span style="float:right; font-size:13px; cursor:pointer; margin-top:3px;" onclick="reportQnaForm(${q.csQnaNo});">신고하기</span>
 		                    
 		                    <div>
 		                        <div style="font-weight: bold;">${ q.memNo }</div>
 		                        <div style="font-size: 13px; color: gray; line-height: 27px;">${ q.createDate }</div>
 		                    </div>
+		                    
 		                </div>
 		                
 		                <c:choose>
@@ -286,6 +288,33 @@
 		                
 		                <hr>
 	                </div>
+	                
+	                 <!-- 문의 신고하기시 보여질 modal -->
+				    <div id="reportQnaModal${ q.csQnaNo }" class="modal fade" role="dialog">
+				    	<div class="modal-dialog">
+	
+			                <!-- Modal content-->
+			                <div class="modal-content">
+			                    <div class="modal-header">
+			                        <h4 class="modal-title">신고하기</h4>
+			                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			                    </div>
+			                    <div class="modal-body">
+			                    	<div style="font-size:17px; font-weight:bold; margin-bottom:15px;"><b>·</b> 신고 사유</div>
+									<input type="radio" id="reportQnaR1${ q.csQnaNo }" name="reportQnaReason" value="1"> <label for="reportQnaR1${ q.csQnaNo }"> 욕설 또는 음란성 내용</label><br>
+									<input type="radio" id="reportQnaR2${ q.csQnaNo }" name="reportQnaReason" value="2"> <label for="reportQnaR2${ q.csQnaNo }"> 부적절한 홍보성 댓글</label><br>
+									<input type="radio" id="reportQnaR3${ q.csQnaNo }" name="reportQnaReason" value="3"> <label for="reportQnaR3${ q.csQnaNo }"> 사생활 침해 및 불법 촬영물</label><br>
+									<input type="radio" id="reportQnaR4${ q.csQnaNo }" name="reportQnaReason" value="4"> <label for="reportQnaR4${ q.csQnaNo }"> 명예훼손 및 저작권침해</label><br>
+									<input type="radio" id="reportQnaR5${ q.csQnaNo }" name="reportQnaReason" value="5"> <label for="reportQnaR5${ q.csQnaNo }"> 기타</label>
+		                        	<textarea name="reportQnaContent" id="reportQnaContent${ q.csQnaNo }" style="width: 100%; height: 150px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요."></textarea>
+			                    </div>
+			                    <div class="modal-footer">
+			                        <button type="submit" class="btn" style="background-color: #6babd5; margin-right:190px;" onclick="reportQna(${ q.csQnaNo });">신고하기</button>
+			                        <!--  <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>-->
+			                    </div>
+			                </div>
+				        </div>
+				    </div>
 	            </c:forEach>
             </div>
 	            
@@ -402,6 +431,99 @@
 				}
 			})
 		}
+		
+		function reportQnaForm(cqNo){
+			$("#reportQnaModal" + cqNo).modal();
+		}
+		
+		function reportQna(cqNo){
+    		// 신고 사유
+    		var reportQnaR1 = document.getElementById("reportQnaR1" + cqNo);
+    		var reportQnaR2 = document.getElementById("reportQnaR2" + cqNo);
+    		var reportQnaR3 = document.getElementById("reportQnaR3" + cqNo);
+    		var reportQnaR4 = document.getElementById("reportQnaR4" + cqNo);
+    		var reportQnaR5 = document.getElementById("reportQnaR5" + cqNo);
+    		// 신고 사유 '기타'일 시 이유
+    		var reportQnaContent = document.getElementById("reportQnaContent" + cqNo).value;
+    		
+    		if(reportQnaR1.checked == true){
+    			$.ajax({
+					url:"reportQna.me",
+					data:{refBNo:cqNo, content:reportQnaR1.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportQnaModal" + cqNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportQnaR2.checked == true){
+    			$.ajax({
+					url:"reportQna.me",
+					data:{refBNo:cqNo, content:reportQnaR2.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportQnaModal" + cqNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportQnaR3.checked == true){
+    			$.ajax({
+					url:"reportQna.me",
+					data:{refBNo:cqNo, content:reportQnaR3.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportQnaModal" + cqNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportQnaR4.checked == true){
+    			$.ajax({
+					url:"reportQna.me",
+					data:{refBNo:cqNo, content:reportQnaR4.value},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportQnaModal" + cqNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		} else if(reportQnaR5.checked == true){
+    			$.ajax({
+					url:"reportQna.me",
+					data:{refBNo:cqNo, content:reportQnaR5.value, reason:reportQnaContent},
+					success:function(result){
+						if(result == 'yyyyy'){
+							alert("신고가 접수되었습니다.");
+							$("#reportQnaModal" + cqNo).modal('hide');
+						} else{
+							alert("신고처리에 실패했습니다.");
+						}
+					}, error:function(){
+						console.log("리뷰 신고용 ajax 통신 실패");
+					}
+    			})
+    		}
+    		
+    	}
     </script>
 
 </body>

@@ -87,5 +87,6 @@ public interface ClassService {
 	int reportReview(Report rp);
 	Reply selectReply(String refBNo);
 	int reportReviewReply(Report rp);
-	
+	ClassQna selectQna(String refBNo);
+	int reportQna(Report rp);
 }

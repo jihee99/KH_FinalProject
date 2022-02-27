@@ -287,4 +287,14 @@ public class ClassServiceImpl implements ClassService {
 	public int reportReviewReply(Report rp) {
 		return cDao.reportReviewReply(sqlSession, rp);
 	}
+
+	@Override
+	public ClassQna selectQna(String refBNo) {
+		return cDao.selectQna(sqlSession, refBNo);
+	}
+
+	@Override
+	public int reportQna(Report rp) {
+		return cDao.reportQna(sqlSession, rp);
+	}
 }

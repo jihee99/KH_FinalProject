@@ -252,4 +252,12 @@ public class ClassDao {
 	public int reportReviewReply(SqlSessionTemplate sqlSession, Report rp) {
 		return sqlSession.insert("classMapper.reportReviewReply", rp);
 	}
+	
+	public ClassQna selectQna(SqlSessionTemplate sqlSession, String refBNo) {
+		return sqlSession.selectOne("classMapper.selectQna", refBNo);
+	}
+	
+	public int reportQna(SqlSessionTemplate sqlSession, Report rp) {
+		return sqlSession.insert("classMapper.reportQna", rp);
+	}
 }
