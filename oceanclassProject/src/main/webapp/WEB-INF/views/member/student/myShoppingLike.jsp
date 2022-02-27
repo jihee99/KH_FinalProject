@@ -127,7 +127,7 @@
 				
 				<script>
 		   			function moveStore(){
-		   				location.href="storeList.st"
+		   				location.href="storeList.st";
 		   			}
 		   		
 				
