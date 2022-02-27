@@ -48,7 +48,14 @@
             <div class="reviewContent">
                 <div class="profile">
                     <div style="float:left; margin-right: 10px;">
-                        <img src="" width="50px" height="50px">
+                		<c:choose>
+                      		<c:when test="${ !empty cr.profile }">
+                           		<img src="${ cr.profile }" width="40px" height="40px">
+                      		</c:when>
+                      		<c:otherwise>
+                           		<img src="resources/images/user.png" width="40px" height="40px">
+                      		</c:otherwise>
+                      	</c:choose>
                     </div>
                     <div>
                     	<c:if test="${ loginUser.nickName == cr.memNo }">
@@ -182,7 +189,14 @@ ${ cr.content }
 			                <div class="viewArea" style="margin-top: 10px;">
 			                    <div class="profile">
 			                        <div style="float:left; margin-right: 10px;">
-			                            <img src="" width="30px" height="30px">
+			                        	<c:choose>
+				                      		<c:when test="${ !empty r.profile }">
+				                           		<img src="${ r.profile }" width="30px" height="30px">
+				                      		</c:when>
+				                      		<c:otherwise>
+				                           		<img src="resources/images/user.png" width="30px" height="30px">
+				                      		</c:otherwise>
+				                      	</c:choose>
 			                        </div>
 			                        <div style="line-height: 30px;">
 			                            <span style="font-size: 15px;">${ r.nickName }</span>

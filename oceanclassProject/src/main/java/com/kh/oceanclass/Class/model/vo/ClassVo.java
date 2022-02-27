@@ -29,4 +29,5 @@ public class ClassVo {
 	private String reason;
 	private String like;
 	
+	private String profile;
 }

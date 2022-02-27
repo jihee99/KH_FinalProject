@@ -435,10 +435,13 @@ public class ClassController {
 	@RequestMapping(value="classQnaList.me")
 	public String classQnaList(int cpage, int referNo, Model model) {
 		
+		ClassVo c = cService.selectClass(referNo);
+		
 		int listCount = cService.classQnaListCount(referNo); // 조회할 문의 갯수
 		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 3);
 		ArrayList<ClassQna> cqList = cService.selectClassQnaListPaging(referNo, pi); // 클래스 문의 리스트 (페이징 처리)
 		
+		model.addAttribute("c", c);
 		model.addAttribute("cqList", cqList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("referNo", referNo);

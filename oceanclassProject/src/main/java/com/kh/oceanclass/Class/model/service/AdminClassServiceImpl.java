@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.Class.model.dao.AdminClassDao;
+import com.kh.oceanclass.Class.model.vo.ClassManager;
+import com.kh.oceanclass.Class.model.vo.ClassQna;
+import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 
@@ -45,5 +48,63 @@ public class AdminClassServiceImpl implements AdminClassService {
 		return acDao.classReturn(sqlSession, c);
 	}
 
+	@Override
+	public int classManagerListCount(ClassManager cm) {
+		return acDao.classManagerListCount(sqlSession, cm);
+	}
+
+	@Override
+	public ArrayList<ClassVo> selectClassManagerList(ClassManager cm, PageInfo pi) {
+		return acDao.selectClassManagerList(sqlSession, cm, pi);
+	}
+
+	@Override
+	public int reviewListCount(ClassManager cm) {
+		return acDao.reviewListCount(sqlSession, cm);
+	}
 	
+	@Override
+	public ArrayList<ClassReview> selectReviewList(ClassManager cm, PageInfo pi) {
+		return acDao.selectReviewList(sqlSession, cm, pi);
+	}
+
+	@Override
+	public int classShow(int clNo) {
+		return acDao.classShow(sqlSession, clNo);
+	}
+	
+	@Override
+	public int classHide(int clNo) {
+		return acDao.classHide(sqlSession, clNo);
+	}
+
+	@Override
+	public int reviewShow(int crNo) {
+		return acDao.reviewShow(sqlSession, crNo);
+	}
+
+	@Override
+	public int reviewHide(int crNo) {
+		return acDao.reviewHide(sqlSession, crNo);
+	}
+
+	@Override
+	public int qnaListCount(ClassManager cm) {
+		return acDao.qnaListCount(sqlSession, cm);
+	}
+
+	@Override
+	public ArrayList<ClassQna> selectQnaList(ClassManager cm, PageInfo pi) {
+		return acDao.selectQnaList(sqlSession, cm, pi);
+	}
+
+	@Override
+	public int qnaShow(int cqNo) {
+		return acDao.qnaShow(sqlSession, cqNo);
+	}
+
+	@Override
+	public int qnaHide(int cqNo) {
+		return acDao.qnaHide(sqlSession, cqNo);
+	}
 }

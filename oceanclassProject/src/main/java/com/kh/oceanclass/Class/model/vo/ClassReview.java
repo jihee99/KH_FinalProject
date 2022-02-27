@@ -27,4 +27,6 @@ public class ClassReview {
 	private String img;
 	private String reviewsum;
 	
+	private String profile;
+	
 }

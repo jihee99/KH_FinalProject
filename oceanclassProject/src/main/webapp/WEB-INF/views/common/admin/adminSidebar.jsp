@@ -45,7 +45,7 @@
                     <p>클래스 관리</p>
                     <ul>
                         <li><a href="classEnrollManager.ad?cpage=1&array=1&category=&keyword=&clNo=" id="classEnrollManager">클래스 등록 관리</a></li>
-                        <li><a href="classManager.ad" id="classManager">클래스 관리</a></li>
+                        <li><a href="classManager.ad?cpage=1&yclass=1&nclass=&array=new&category=&keyword=&before=&after=" id="classManager">클래스 관리</a></li>
                     </ul>
                 </div>
                 <div id="menu3">

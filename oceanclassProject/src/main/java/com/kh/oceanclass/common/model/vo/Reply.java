@@ -19,4 +19,6 @@ public class Reply{
 	public String replyContent;	
 	public String replyDate;
 	public String replyStatus;
+	
+	private String profile;
 }

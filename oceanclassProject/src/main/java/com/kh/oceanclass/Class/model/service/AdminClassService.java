@@ -3,15 +3,11 @@ package com.kh.oceanclass.Class.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.kh.oceanclass.Class.model.vo.ClassOrder;
+import com.kh.oceanclass.Class.model.vo.ClassManager;
 import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
-import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
-import com.kh.oceanclass.common.model.vo.Reply;
-import com.kh.oceanclass.event.model.vo.Event;
-import com.kh.oceanclass.member.model.vo.MemCoupon;
 
 public interface AdminClassService {
 
@@ -20,4 +16,17 @@ public interface AdminClassService {
 	ClassVo selectClassDetail(String clNo);
 	int classApproval(int clNo);
 	int classReturn(ClassVo c);
+	int classManagerListCount(ClassManager cm);
+	ArrayList<ClassVo> selectClassManagerList(ClassManager cm, PageInfo pi);
+	
+	int reviewListCount(ClassManager cm);
+	ArrayList<ClassReview> selectReviewList(ClassManager cm, PageInfo pi);
+	int classShow(int clNo);
+	int classHide(int clNo);
+	int reviewShow(int crNo);
+	int reviewHide(int crNo);
+	int qnaListCount(ClassManager cm);
+	ArrayList<ClassQna> selectQnaList(ClassManager cm, PageInfo pi);
+	int qnaShow(int cqNo);
+	int qnaHide(int cqNo);
 }
