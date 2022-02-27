@@ -120,14 +120,13 @@ table {
 		</div>
 
 		<div class="product_info">
-			<img src="" class="product_title_img"> <span
-				class="merchant_name">브랜드명</span> <br> <span
-				class="product_name">상품명상품명</span><br> <span
-				class="product_option">선택합옵션(색상:흰색)</span> <br>
+			<img src="${p.productImg0 }" class="product_title_img"> <span
+				class="merchant_name">${p.nickname }</span> <br> <span
+				class="product_name">${p.title }</span><br>
 		</div>
 
 		<form action="qna.pr" class="form-area" id="form-area" method="post">
-			<input type="hidden" name="memNo" value="${loginUser.memNo}"> 
+			<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}"> 
 			<input type="hidden" name="referNo" value="${pno}">
 			<table class="qna" align="center">
 				<tr class="title">
@@ -156,6 +155,7 @@ table {
 			<div class="secret" align="center">
 				<input type="checkbox" id="pwdCk" name="pwdCk" value="1">
 				비밀글로 문의하기 <input type="password" maxlength="4" id="pwd" name="pwd" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" disabled>
+				<br><span style="font-size:12px;">비밀번호는 숫자만 입력가능합니다.(4자리)</span>
 			</div>
 			<br>
 		</form>
@@ -173,6 +173,7 @@ table {
 			var category = o.options[o.selectedIndex].text;
 			var title = document.getElementById("title").value;
 			var content = document.getElementById("content").value;
+			var pwd = document.getElementById("pwd").value;
 
 			if (category.length > 2) {
 				alert("문의유형을 다시 선택해주세요.");

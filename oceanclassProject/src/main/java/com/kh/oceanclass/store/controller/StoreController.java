@@ -3,6 +3,7 @@ package com.kh.oceanclass.store.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.LikeVo;
@@ -39,32 +39,28 @@ public class StoreController {
 	
 	// 상품 리스트 조회 ( 스토어 메인 )
 	@RequestMapping(value="storeList.st")
-	public String selectList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model, HttpSession session) {
-		 
-		//System.out.println(currentPage);
-		int listCount = sService.selectListCount();
+	public String selectList(Model model, HttpSession session) {
 		
-		int memberNo = 0;
-		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
-			memberNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		}
+		ArrayList<Product> hlist = sService.storeHotList();
+		ArrayList<Product> nlist = sService.storeNewList();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 8);
-		ArrayList<Product> list = sService.selectList(pi, memberNo);
+		model.addAttribute("hlist", hlist);
+		model.addAttribute("nlist", nlist);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		// 포워딩할 뷰(/WEB-INF/views/ store/storeContent .jsp)
 		return "store/storeContent";
-		
 	}
 	
 	// 스토어 검색
 	@RequestMapping(value="storeSearchList.st")
-	public String selectSearchList(@RequestParam(value="cpage",defaultValue="1")int currentPage, Model model, HttpSession session) {
+	public String selectSearchList(@RequestParam(value="cpage",defaultValue="1")int currentPage, String keyword, String category, String array, Model model, HttpSession session) {
 		 
+		HashMap<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("category", category);
+		map.put("array", array);
+		
 		//System.out.println(currentPage);
-		int listCount = sService.selectListCount();
+		int listCount = sService.selectListCount(map);
 		
 		int memberNo = 0;
 		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
@@ -72,10 +68,13 @@ public class StoreController {
 		}
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 8);
-		ArrayList<Product> list = sService.selectList(pi, memberNo);
+		ArrayList<Product> list = sService.selectList(pi, map);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("category", category);
+		model.addAttribute("array", array);
 		
 		// 포워딩할 뷰(/WEB-INF/views/ store/storeContent .jsp)
 		return "store/storeSearchList";
@@ -106,33 +105,12 @@ public class StoreController {
 		// 문의 리스트
 		ArrayList<StoreQna> sqList = sService.selectStoreQnaList(pno);
 		
-		
 		model.addAttribute("c", counter);
 		model.addAttribute("p", p);
 		model.addAttribute("list", list);
 		model.addAttribute("sqList", sqList);
 		
 		return "store/productDetailMain";
-	}
-	
-	// 카테고리, 정렬 컨트롤러
-	@ResponseBody
-	@RequestMapping(value="categorySearch.cs", produces="application/json; charset=utf-8")
-	public String categorySearch(String category, Model model, ModelAndView mv, int memberNo, String sort) {
-		
-		Product p = new Product();
-		p.setCategory(category);
-		p.setSort(sort);
-		p.setMemberNo(memberNo);
-		
-		ArrayList<Product> list = sService.categorySearch(p);
-		//model.addAttribute("list", list);
-		
-		//mv.addObject("list", list)
-		  //.setViewName("store/storeSearchList");
-		
-		
-		return new Gson().toJson(list);
 	}
 	
 	// 찜 컨트롤러
@@ -311,6 +289,7 @@ public class StoreController {
 		return "<script>window.close();</script>";
 	}
 	
+	// 리뷰 추천
 	@ResponseBody
 	@RequestMapping(value="recommendStore.st", produces="application/json; charset=utf-8")
 	public String recommendStore(StoreReview review, HttpSession session) {
@@ -353,8 +332,9 @@ public class StoreController {
 		}
 	}
 	
+	// 문의상세 페이지
 	@RequestMapping(value="qnaList.st")
-	public String reviewEnrollForm(int pno, int cpage, Model model, HttpSession session) {
+	public String selectQnaList(int pno, int cpage, Model model, HttpSession session) {
 		
 		int memberNo = 0;
 		int listCount = sService.storeQnaListCount(pno);
@@ -371,20 +351,24 @@ public class StoreController {
 			
 	}
 	
+	// 문의등록 페이지 포워딩
 	@RequestMapping(value="qnaEnrollForm.st")
 	public String qnaEnrollForm(int pno, HttpSession session, Model model) {
 		
+		int memberNo = 0;
+		Product p = sService.selectProduct(pno, memberNo);
+		model.addAttribute("p", p);
 		model.addAttribute("pno", pno);
 		
-		return "store/qnaEnrollForm";
-			
+		return "store/qnaEnrollForm";	
 	}
 	
+	// 문의 insert
 	@ResponseBody
 	@RequestMapping(value="qna.pr")
 	public String qnaEnrollForm(StoreQna qna, HttpSession session) {
 		
-		System.out.println(qna);
+		//System.out.println(qna);
 		
 		int result = sService.insertQna(qna);
 		if(result > 0) {
@@ -396,12 +380,100 @@ public class StoreController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="passCheck.pr", produces="application/json; charset=utf-8")
-	public String passCheck(StoreQna qna) {
-		
-		
-		
-		return new Gson().toJson("gg"); 
+	@RequestMapping(value="storeQnaPwdCheck.me")
+	public String StoreQnaPwdCheck(StoreQna sq) {
+		//System.out.println(sq);
+		int result = sService.storeQnaPwdCheck(sq);
+		if(result > 0) {
+			// 비밀번호 일치
+			return "yyyyy";
+		} else {
+			// 비밀번호 불일치
+			return "nnnnn";
+		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="storeHotList.me", produces="application/json; charset=UTF-8")
+	public String storeHotList() {
+		ArrayList<Product> sHotList = sService.storeHotList();
+		return new Gson().toJson(sHotList);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="storeNewList.me", produces="application/json; charset=UTF-8")
+	public String storeNewList() {
+		ArrayList<Product> sNewList = sService.storeNewList();
+		return new Gson().toJson(sNewList);
+	}
+	
+	@RequestMapping(value="storeCourier.st")
+	public String selectCourier(int pno) {
+		
+		return "store/productDetailDelivery";
+	}
+	
+	@RequestMapping(value="payEnrollForm.st")
+	public String payEnrollForm(int pno, Model model, HttpSession session) {
+		
+		int memberNo = 0;
+		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
+			memberNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		}
+		// 상품정보, 회원정보, 옵션정보, 쿠폰정보, 포인트정보
+		Product p = sService.selectProduct(pno, memberNo);
+		Member m = sService.selectMember(memberNo);
+		ProductOption po = sService.selectPo(pno);
+		
+		model.addAttribute("p", p);
+		model.addAttribute("m", m);
+		
+		return "store/payEnrollForm";
+	}
+	
+	// 리뷰 업데이트 페이지 포워딩
+	@RequestMapping(value="reviewUpdatePage.st")
+	public String reviewUpdatePage(int rno, HttpSession session, Model model) {
+		
+		StoreReview sr = sService.selectReview(rno);
+		model.addAttribute("sr", sr);
+		
+		return "store/reviewUpdateForm";	
+	}
+	
+	// ajax리뷰 업데이트
+	@ResponseBody
+	@RequestMapping(value="reviewUpdateForm.st", produces="application/json; charset=UTF-8")
+	public String reviewUpdateForm(StoreReview sr, MultipartFile reupfile, HttpSession session, Model model) {
+
+		if(!reupfile.getOriginalFilename().equals("")) {
+			
+			// 기존에 첨부파일 있을 경우 지움
+			if(sr.getImg() != null) {
+				new File(session.getServletContext().getRealPath(sr.getImg())).delete();
+			}
+			
+			String originName = reupfile.getOriginalFilename();
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/sreview/");
+			try {
+				reupfile.transferTo(new File(savePath + originName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			sr.setImg("resources/uploadFiles/sreview/" + originName);
+		}
+		
+		int result = sService.reviewUpdate(sr);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 리뷰가 수정되었습니다.");
+			return "<script>window.close();</script>";
+			
+		}else { // 수정 실패 => 에러페이지
+			model.addAttribute("errorMsg", "게시글 수정 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	
 	
 }

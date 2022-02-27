@@ -34,6 +34,18 @@
 		<result column="pno" property="productNo"/>
 	</resultMap>
 	
+	<resultMap id="sMemberResult" type="Member">
+		<result column="mno" property="memNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_pwd" property="userPwd"/>
+		<result column="user_name" property="userName"/>
+		<result column="nickname" property="nickName"/>
+		<result column="phone" property="phone"/>
+		<result column="profile" property="profileImg"/>
+		<result column="point" property="point"/>
+		<result column="grade" property="grade"/>
+	</resultMap>
+	
 	<resultMap id="reviewResult" type="StoreReview">
 		<result column="rno" property="reviewNo"/>
 		<result column="pno" property="productNo"/>
@@ -45,6 +57,7 @@
 		<result column="review_date" property="reviewDate"/>
 		<result column="total" property="totalCount"/>
 		<result column="star_avg" property="starAvg"/>
+		<result column="status" property="status"/>
 		<result column="reconum" property="reconum"/>
 		<result column="recoCk" property="recoCk"/>
 		<result column="filepath" property="img"/>
@@ -69,10 +82,23 @@
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
-		select
-			   count(*)
+		select count(*)
 		  from store
 		 where status = 'Y'
+		   and title like '%' || #{keyword} || '%'
+		   <choose>
+		 		<when test="category == '1'">
+		 			and category = 1
+		 		</when>
+		 		<when test="category == '2'">
+		 			and category = 2
+		 		</when>
+		 		<when test="category == '3'">
+		 			and category = 3
+		 		</when>
+		 		<otherwise>
+		 		</otherwise>
+		   </choose>
 	</select>
 	
 	<select id="selectList" resultMap="storeResult">
@@ -105,11 +131,37 @@
 		  from store 
 		  join member using (mno)
 		 where status = 'Y'
-		 order
-		 	by pno desc
+		   and title like '%' || #{keyword} || '%'
+		 		   <choose>
+				<when test="category == 1">
+				   and category = 1
+				</when>
+				<when test="category == 2">
+				   and category = 2
+				</when>
+				<when test="category == 3">
+				   and category = 3
+				</when>
+				<otherwise>
+				</otherwise>
+		   </choose>
+   		   <choose>
+		   		<when test="array == 'like'">
+					 order
+					    by like_count desc
+		   		</when>
+		   		<when test="array == 'date'">
+					 order
+					    by pno desc
+		   		</when>
+		   		<when test="array == 'rev'">
+					 order
+					    by pno desc
+		   		</when>
+		   </choose>
 	</select>
 	
-	<select id="categorySearch" resultMap="storeResult">
+	<select id="storeNewList" resultMap="storeResult">
 		select
 			   pno
 			 , nickname
@@ -129,30 +181,38 @@
 		         where gb_no = 2
 		           and refer_no = pno
 		        ) as like_count
-		     , 	(
-		        select count(*)
-		          from like_item
-		         where gb_no = 2
-		           and mno = #{memberNo} 
-		           and refer_no = pno
-		       ) as likeck
 		  from store 
 		  join member using (mno)
 		 where status = 'Y'
-		   and category = #{category}
 		 order
 		 	by pno desc
-		 	<!-- 
-		 	   <c:if test=" sort == 4 ">
-	   		        주문많은순
-		 	   </c:if>
-		 	   <c:if test=" sort == 5">
-		 	   		찜 많은순
-		 	   </c:if>
-		 	   <c:if test=" sort == 6">
-		 	   		찜 많은순
-		 	   </c:if>
-			 --> 
+	</select>
+	
+		<select id="storeHotList" resultMap="storeResult">
+		select
+			   pno
+			 , nickname
+			 , category
+			 , title
+			 , price
+			 , courier
+			 , soldout_yn
+			 , status
+			 , img1
+			 , img2
+			 , img3
+			 , img4
+			 , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and refer_no = pno
+		        ) as like_count
+		  from store 
+		  join member using (mno)
+		 where status = 'Y'
+		 order
+		 	by like_count desc
 	</select>
 	
 	<select id="likeCheck" resultType="_int">
@@ -518,7 +578,85 @@
 			 )
 	</insert>
 	
+	<select id="storeQnaPwdCheck" resultType="_int">
+		select count(*)
+		  from cs_qna
+		 where STATUS = 'Y'
+		   and PWD = #{pwd}
+		   and cs_qno = #{csQno}
+	</select>
 	
+	<select id="selectMember" resultMap="sMemberResult">
+		SELECT
+			  MNO
+			, USER_ID
+			, USER_PWD
+			, USER_NAME
+			, NICKNAME
+			, PHONE
+			, PROFILE
+			, POINT
+			, GRADE
+			, U_STATUS
+		 FROM MEMBER
+		WHERE U_STATUS = 'Y'
+		  AND MNO = #{memberNo}
+	</select>
+	
+	<select id="selectPo" resultMap="optionResult">
+	       select
+                  OPNO
+                , PNO
+                , OPNAME
+                , PRICE
+             from soption
+            where pno = #{pno}
+	</select>
+	
+	<update id="reviewUpdate">
+		update 
+	           s_review 
+	       set content=#{content}, star_rating=#{rating}, filepath=#{img} 
+	     where rno = #{reviewNo}
+	</update>
+	
+	<delete id="reviewDelete">
+		DELETE 
+		  FROM s_review
+		 WHERE rno = #{rno}
+	</delete>
+	
+	<select id="selectReview" resultMap="reviewResult">
+		select
+		       RNO
+			 , MNO
+			 , PNO
+			 , CONTENT
+			 , STAR_RATING
+			 , REVIEW_DATE
+			 , STATUS
+			 , FILEPATH
+		  from s_review
+		 where rno = #{rno}
+	</select>
+	
+	<select id="selectQna" resultMap="qnaResult">
+		select
+			   CS_QNO
+			 , MNO
+			 , GB_NO
+			 , REFER_NO
+			 , TITLE
+			 , CONTENT
+			 , CREATE_DATE
+			 , PWD
+			 , FILEPATH
+			 , STATUS
+			 , ANSWER_CONTENT
+			 , ANSWER_DATE
+		  from cs_qna
+		 where cs_qno = #{csQno}
+	</select>
 	
 	
 </mapper>
