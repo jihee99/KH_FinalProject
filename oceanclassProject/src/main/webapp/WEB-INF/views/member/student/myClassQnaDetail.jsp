@@ -95,7 +95,6 @@
 			        <script>
 						$("#list>tbody>tr").click(function(){
 							let csQno = $($(this)[0]).children().first().val();
-							console.log(csQno);
 							let empty = "";
 							$.ajax({
 								url:"ajaxClassQna.me",
@@ -133,7 +132,6 @@
 											  + '</tr>'
 									}
 									$(".modal-body").html(list);
-									console.log(list);
 								},error:function(){
 									console.log("주문 상세보기 실패")
 								}
