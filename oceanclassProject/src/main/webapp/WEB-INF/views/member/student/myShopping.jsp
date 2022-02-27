@@ -92,6 +92,7 @@
 					            <button type="button" class="btn btn-info" onclick="detailShopping();">상세보기</button>
 						    </div>
 					    </c:forEach>
+					    
 					    <div id="paging">
 							<ul class="pagination">
 								<c:choose>
@@ -130,8 +131,6 @@
 						$(document).on("click", ".btn", function(){
 							let value = $(this).val();
 							let memNo = $("#memNo").val();
-							console.log(value);
-							console.log(memNo);
 							$.ajax({
 								url:"ajaxMyShopping.me",
 								data:{memberNo: memNo,
@@ -161,7 +160,7 @@
 							    	$('#startDate').val('');
 							    	$('#endDate').val('');
 							    },error:function(){
-							    	consoel.log("주문 기간조회 실패");
+							    	console.log("주문 기간조회 실패");
 							    }
 							})
 						})
@@ -198,6 +197,8 @@
 						            	  + '</div>'
 						    	}
 						    	$(".listArea").html(list);
+						    	$('#startDate').val('');
+						    	$('#endDate').val('');
 						    },error:function(){
 						    	
 						    }
@@ -224,9 +225,7 @@
 				<!-- 상세보기 버튼 클릭 -->
 				<script>
 					function detailShopping(){
-						
 						let orderNo = $("#orderNo").val();
-						console.log(orderNo);
 						let pay = "";
 						$.ajax({
 							url:"detailShopping.me",
@@ -260,7 +259,6 @@
 									 + '<tr>'
 									 +    '<td> 주소 : ' + result.address + '</td>'
 									 + '</tr>'
-								console.log(pay);
 								$(".modal-body").html(pay);	
 							},error:function(){
 								console.log("주문 상세보기 실패")

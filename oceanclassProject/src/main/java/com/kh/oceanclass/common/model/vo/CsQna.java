@@ -1,7 +1,5 @@
 package com.kh.oceanclass.common.model.vo;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +22,7 @@ public class CsQna {
 	private String filePath;
 	private String status;
 	private String answerContent;
-	private Date answerDate;
+	private String answerDate;
 	
 	private String clName;
 	private String proTitle;

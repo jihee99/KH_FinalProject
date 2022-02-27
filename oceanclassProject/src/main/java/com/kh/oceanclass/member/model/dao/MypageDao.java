@@ -1,6 +1,7 @@
 package com.kh.oceanclass.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -132,6 +133,10 @@ public class MypageDao {
 		}
 	}
 	
+	public ArrayList<Qna> ajaxSearchQnaDate(SqlSessionTemplate sqlSession, Map<String, Object> option) {
+		return (ArrayList)sqlSession.selectList("myMapper.ajaxSearchQnaDate", option);
+	}
+	
 	
 	
 // 클래스 관련
@@ -210,6 +215,10 @@ public class MypageDao {
 		return (ArrayList)sqlSession.selectList("myMapper.shoppingQnaList", memNo, rowBounds);
 	}
 	
+	public CsQna ajaxShoppingQna(SqlSessionTemplate sqlSession, int csQno) {
+		return sqlSession.selectOne("myMapper.ajaxShoppingQna", csQno);
+	}
+	
 	public int shoppingReviewCount(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("myMapper.shoppingReviewCount", memNo);
 	}
@@ -245,5 +254,6 @@ public class MypageDao {
 	public ArrayList<StorePay> ajaxSearchDate(SqlSessionTemplate sqlSession, StorePay pay){
 		return (ArrayList)sqlSession.selectList("myMapper.ajaxSearchDate", pay);
 	}
-	
-}// class
+
+
+}

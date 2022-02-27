@@ -23,6 +23,7 @@
 		margin: 0 auto;
 		margin-top: 50px;
 	}
+	.table{text-align: center;}
 </style>
 </head>
 <body>
@@ -40,10 +41,10 @@
 				    <div class="conhead">
 				        <h2>상품 문의</h2>
 				    </div>
-					<table class="table">
+					<table class="table" id="list">
 			            <thead>
 			                <tr>
-			                    <th>상품</th> 
+			                    <th>상품명</th> 
 				                <th>문의제목</th>
 				                <th>문의내용</th>
 				                <th>답변유무</th>
@@ -51,8 +52,8 @@
 			            </thead>
 			            <tbody>
 			            	<c:forEach var="s" items="${list}">
-			            		<input type="hidden" id="referNo" name="referNo" value="${s.referNo}">
 					            <tr>
+					            	<input type="hidden" id="csQno" name="csQno" value="${s.csQno}">
 					                <td>${s.proTitle}</td>
 					                 <td>${s.title}</td>
 					                <td>
@@ -80,13 +81,69 @@
 			        </table>
 			        
 			        <script>
-			        	$(function(){
-			        		$("#qnaList>tbody>tr").click(function(){
-			        			var pno = $($(this)[0]).children().first().val();
-			        			location.href='productMain.pr?pno=' + pno;
-			        		});
-			        	});
-			        </script>
+						$("#list>tbody>tr").click(function(){
+							let csQno = $($(this)[0]).children().first().val();
+							let empty = "";
+							$.ajax({
+								url:"ajaxShoppingQna.me",
+								data:{csQno: csQno},
+								success:function(result){
+									console.log(result);
+									let list = '<table class="table">';
+									list += '<tr>'
+										  + 	  '<th> 상품명  </th>'
+										  + 	  '<td>' + result.proTitle + '</td>'
+										  + '</tr>'
+										  + '<tr>'
+										  +    '<th> 문의 제목  </th>'
+										  +    '<td>' + result.title + '</td>'
+										  + '</tr>'
+										  + '<tr>'
+										  +    '<th> 문의 날짜   </th>'
+										  +    '<td>' + result.createDate + '</td>'
+										  + '</tr>'
+										  + '<tr>'
+										  +    '<th> 문의 내용   </th>'
+										  +    '<td>' + result.content + '</td>'
+										  + '</tr>'
+									if(!(result.answerContent == "" || result.answerContent == null || result.answerContent == "undefined" || result.answerContent == undefined)){
+								 		list += '<tr>'
+											  +    '<th> 답변 내용   </th>'
+											  +    '<td width=600>' + result.answerContent + '</td>'
+											  + '</tr>'
+											  + '<tr>'
+											  +    '<th> 답변 날짜   </th>'
+											  +    '<td>' + result.answerDate + '</td>'
+											  + '</tr>' 
+									}else{
+										list += '<tr>'
+											  +    '<th colspan="2"> 답변 등록 전입니다.  </th>'
+											  + '</tr>'
+									}
+									$(".modal-body").html(list);
+								},error:function(){
+									console.log("주문 상세보기 실패")
+								}
+							})
+							$(".modal").modal();
+						})
+					</script>
+					
+					<div class="modal" tabindex="-1">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+						       		<div class="modal-title">문의 상세 보기</div>
+						        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				         				<span aria-hidden="true">&times;</span>
+				        			</button>
+					      		</div>
+								<div class="modal-body">
+									
+								</div>
+							</div>
+						</div>
+					</div>
 			        
 				 	<div id="paging">
 						<ul class="pagination">

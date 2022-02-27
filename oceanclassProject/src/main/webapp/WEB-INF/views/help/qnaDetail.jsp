@@ -13,24 +13,12 @@
     <link rel="stylesheet" href="./resources/css/helpMain.css">
     
 <style>
- 	.content>table{
-		width: 80%; 
-		min-height: 300px;
-		margin:auto;
-		background-color: rgba(107, 171, 213, 0.3);
-		margin-bottom: 50px;
-	}
-	table th{ 
-		width: 20%; 
-		padding:15px; 
-		padding-bottom: 10px;
-		text-align: center;
-	}
-	table td{
-		text-align: left;
-	}
+ 	.content>table{width: 80%; min-height: 300px; margin:auto; background-color: rgba(107, 171, 213, 0.3); margin-bottom: 50px;}
+	table th{width: 20%; padding:15px; padding-bottom: 10px; text-align: center;}
+	table td{text-align: left;}
 	#question{min-height: 200px; padding: 20px;}
 	.content>button{display: block; margin: auto;}
+	table td, table th{border: 2px solid white;}
 </style>
 
 </head>
@@ -41,7 +29,7 @@
             <p>1:1문의</p>
         </div>
         <div class="content my-5">
-            <table class="table table-bordered border-white">
+            <table class="table">
 				<tr>
                     <th>제목</th>
                     <td colspan="3">

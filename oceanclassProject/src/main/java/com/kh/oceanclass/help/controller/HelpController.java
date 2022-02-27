@@ -128,11 +128,6 @@ public class HelpController {
 	/*
 	 * 	1:1 문의 관련 메소드
 	 */
-	@RequestMapping(value="qnaMain.he")
-	public String qnaMain() {
-		return "help/qnaChoose";
-	}
-	
 	@RequestMapping("qnaList.he")
 	public String qnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
 		
