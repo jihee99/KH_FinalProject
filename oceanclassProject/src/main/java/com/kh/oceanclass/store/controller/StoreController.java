@@ -468,11 +468,35 @@ public class StoreController {
 		int result = sService.reviewUpdate(sr);
 		if(result > 0) {
 			session.setAttribute("alert", "리뷰수정이 완료되었습니다!");
-			return "<script>alert('리뷰수정 완료!'); window.close();</script>";
+			return "<script>window.close();</script>";
 			
 		}else { // 수정 실패 => 에러페이지
 			session.setAttribute("errorMsg", "리뷰 수정 실패");
 			return "common/errorPage";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="reviewDelete.st", produces="application/json; charset=UTF-8")
+	public String reviewDelete(int rno) {
+		
+		int result = sService.reviewDelete(rno);
+		if(result > 0) { //성공
+			return new Gson().toJson("ss");
+		}else { // 실패
+			return new Gson().toJson("ff");
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="qnaDelete.st", produces="application/json; charset=UTF-8")
+	public String qnaDelete(StoreQna q) {
+		
+		int result = sService.qnaDelete(q);
+		if(result > 0) { //성공
+			return new Gson().toJson("ss");
+		}else { // 실패
+			return new Gson().toJson("ff");
 		}
 	}
 	

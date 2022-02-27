@@ -210,7 +210,7 @@
 			alert("별점을 입력해주세요!");
 		} else if(file == ""){
 			document.getElementById("form-area").submit();
-			
+			alert("리뷰 수정 완료!");
 		} else if(filetype != 'jpg' && filetype != 'gif' && filetype != 'png' && filetype != 'jpeg' && filetype != 'bmp'){
 			alert("후기 내용에는 사진 파일만 첨부할 수 있습니다.");
 		} else if(filetype == 'bmp'){
@@ -222,6 +222,7 @@
 	        }
 		}  else {
 			document.getElementById("form-area").submit();
+			alert("리뷰 수정 완료!");
 			
 		}
 		

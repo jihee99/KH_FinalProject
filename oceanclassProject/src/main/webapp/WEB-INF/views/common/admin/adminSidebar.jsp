@@ -51,11 +51,11 @@
                 <div id="menu3">
                     <p>스토어 관리</p>
                     <ul>
-                        <li><a href="">상품 관리</a></li>
-                        <li><a href="">리뷰 관리</a></li>
-                        <li><a href="">문의 관리</a></li>
-                        <li><a href="">발주 관리</a></li>
-                    </ul>
+                        <li><a href="productManager.st">상품 관리</a></li>
+                        <li><a href="reviewManager.st">리뷰 관리</a></li>
+                        <li><a href="qnaManager.st">문의 관리</a></li>
+                        <li><a href="orderManager.st">발주 관리</a></li>
+                    </ul>r
                 </div>
                 <div id="menu4">
                     <p>고객센터</p>

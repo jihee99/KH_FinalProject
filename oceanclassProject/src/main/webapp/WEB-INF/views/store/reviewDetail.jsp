@@ -288,42 +288,59 @@
     })
     
     // 추천 ajax
-       	function recommendCk(rno){
-   		if(document.getElementById("memNo").value == ""){
-               alert("로그인 후 이용 가능한 서비스 입니다.");
-           } else if('${loginUser.memNo}' == '${ srm.memberNo }'){
-           	alert("본인의 후기는 추천할 수 없습니다.");
-           } else {
-           	$.ajax({
-           		url:"recommendStore.st",
-           		data:{reviewNo:rno,
-           		     memberNo:document.getElementById("memNo").value},
-           		success:function(result){
-           			if(result == "dd"){
-           				alert("해당 리뷰의 추천을 제거하였습니다.");
-           			}else if(result == "ss"){
-           				alert("추천 제거 실패되었습니다.")
-           			}else if(result == "gg"){
-           				alert("추천완!");
-           			}else{
-           				alert("추천실패");
-           			}
-           			
-           		}
-           	})
-           }
-   	}
+    	function recommendCk(rno){
+    		if(document.getElementById("memNo").value == ""){
+                alert("로그인 후 이용 가능한 서비스 입니다.");
+            } else if('${loginUser.memNo}' == '${ r.memberNo }'){
+            	alert("본인의 후기는 추천할 수 없습니다.");
+            } else {
+            	$.ajax({
+            		url:"recommendStore.st",
+            		data:{reviewNo:rno,
+            		     memberNo:document.getElementById("memNo").value},
+            		success:function(result){
+            			if(result == "dd"){
+            				alert("해당 리뷰의 추천을 제거하였습니다.");
+            			}else if(result == "ss"){
+            				alert("추천 제거 실패되었습니다.")
+            			}else if(result == "gg"){
+            				alert("추천완!");
+            			}else{
+            				alert("추천실패");
+            			}
+            			
+            		}
+            	})
+            }
+    	}
     
-	function reviewUpdate(reviewNo){
+	function reviewUpdate(rno){
        window.open("reviewUpdateForm.st?rno=" + reviewNo, "스토어리뷰수정", "width=650, height=800, resizeable=no, location=no");
     }
 	
-	function reviewDelete(reviewNo){
-        confirm("정말로 삭제하시겠습니까?");
-        
-        $.ajax({
-        	
-        })
+	function reviewDelete(rno){
+        if(confirm("정말로 삭제하시겠습니까?") == true){
+            $.ajax({
+                url:"reviewDelete.st",
+                type:"post",
+                data:{rno:rno
+                },success:function(result){
+                	if(result == "ss"){
+                		alert("해당 글의 삭제가 완료되었습니다.");
+    	                window.close();
+                	}else{
+    	                alert("해당 글의 삭제가 실패했습니다.");
+    	                window.close();
+                	}
+                    
+                },error:function(){
+                	alert("통신실패!");
+                }
+            })
+        }else{
+        	alert("삭제 취소");
+        	window.close();
+        }
     }
 	
 		

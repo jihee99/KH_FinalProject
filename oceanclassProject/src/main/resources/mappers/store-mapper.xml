@@ -540,6 +540,7 @@
 		  from cs_qna
 		  join member using (mno)
 		 where refer_no = #{pno}
+		   and gb_no = 2
 	</select>
 	
 	<select id="selectQnaListCount" resultType="_int">
@@ -635,6 +636,13 @@
 		 WHERE rno = #{rno}
 	</delete>
 	
+	<delete id="qnaDelete">
+		DELETE 
+		  FROM cs_qna
+		 WHERE cs_qno = #{csQno}
+		   and refer_no = #{referNo}
+	</delete>
+	
 	<select id="selectReview" resultMap="reviewResult">
 		select
 		       RNO
@@ -666,6 +674,8 @@
 		  from cs_qna
 		 where cs_qno = #{csQno}
 	</select>
+	
+	
 	
 	
 </mapper>
