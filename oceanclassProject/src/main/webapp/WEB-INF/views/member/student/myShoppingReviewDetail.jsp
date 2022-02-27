@@ -21,8 +21,7 @@
 	    background: rgba(107, 171, 213, 0.28);
 	    padding: 10px;
 	}
-	.list.img{float: left;}
-	.list.explain{float: left;}
+	.list.img, .list.explain{float: left;}
 	.img{width: 30%; float: left;}
 	.list img{width: 100%; height: 150px;}
 	.list>.img>p{width: 100%; text-align: center;}

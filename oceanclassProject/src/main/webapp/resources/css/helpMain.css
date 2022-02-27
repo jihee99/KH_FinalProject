@@ -24,6 +24,7 @@
 	    width: 90%;
 	    text-align: center;
 	}
+	table td, table th{border: 2px solid white;}
 	#paging{width:fit-content; margin:auto;}
 	.content button{background: rgb(107, 171, 213); color: whitesmoke;}
 	button:hover{background: rgb(107, 171, 213, 0.2)}

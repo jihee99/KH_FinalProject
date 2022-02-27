@@ -33,6 +33,7 @@
 		height: 400px;
 	}
 	.content>button{display: block; margin: auto;}
+	table>tr>td, table>tr>th{border: 2px solid white;}
 </style>
     
 </head>
