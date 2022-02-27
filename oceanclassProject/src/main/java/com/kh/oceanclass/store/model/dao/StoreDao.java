@@ -171,6 +171,7 @@ public class StoreDao {
 	}
 	
 	public int reviewUpdate(SqlSessionTemplate sqlSession, StoreReview sr) {
+		System.out.println(sr);
 		return sqlSession.update("storeMapper.reviewUpdate", sr);
 	}
 	

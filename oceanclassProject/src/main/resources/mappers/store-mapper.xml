@@ -616,7 +616,16 @@
 	<update id="reviewUpdate">
 		update 
 	           s_review 
-	       set content=#{content}, star_rating=#{rating}, filepath=#{img} 
+	       set content=#{content}, 
+	       	   star_rating=#{rating}, 
+	       	 <choose>
+			 	<when test="img != null">
+			 		filepath=#{img}
+			 	</when>
+			 	<otherwise>
+			 		filepath=null
+			 	</otherwise>
+			 </choose>
 	     where rno = #{reviewNo}
 	</update>
 	

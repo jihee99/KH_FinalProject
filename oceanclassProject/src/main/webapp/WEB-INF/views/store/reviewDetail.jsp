@@ -315,7 +315,7 @@
    	}
     
 	function reviewUpdate(reviewNo){
-       location.href = "reviewUpdatePage.st?rno=" + reviewNo;
+       window.open("reviewUpdateForm.st?rno=" + reviewNo, "스토어리뷰수정", "width=650, height=800, resizeable=no, location=no");
     }
 	
 	function reviewDelete(reviewNo){
