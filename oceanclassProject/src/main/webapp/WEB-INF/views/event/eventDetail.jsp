@@ -180,62 +180,65 @@
 	        </table>
         </c:if>
        	<button type="button" class="btn" onclick="history.back()">목록으로</button>
+       	
+       	<script>
+    
+			$(function(){
+				replyList();
+			})    
+			
+			function replyList(){
+				$.ajax({
+					url:"replyList.ev",
+					data:{contentNo: ${e.eventNo}},
+					success:function(list){
+						//console.log(list);
+						
+						let value = "";
+	    				for(let i in list){
+	    					value += "<tr>"
+			                       +    "<th>" + list[i].nickName + "</th>"
+			                       +    "<td>" + list[i].replyContent + "</td>"
+			                       +    "<td>" + list[i].replyDate + "</td>"
+			                       + "</tr>";
+	    				}
+	    				
+	    				$("#replyTable tbody").html(value);
+	    				
+					},error:function(){
+						console.log("댓글조회실패여기오지마ㅠㅠ");
+					}
+				})
+			}
+	    
+	    	function addReply(){
+	    		reply = $("#reply").val();
+	    		console.log(reply);
+	    		if(reply.trim().length != 0){
+	    			$.ajax({
+	    				url: "replyInsert.ev",
+	    				data:{
+	    					memNo: '${loginUser.memNo}',
+	    					contentNo: ${e.eventNo},
+	    					replyContent: reply
+	    				},success:function(result){
+	    					if(result == "1"){
+	    						replyList();
+	    						$("#reply").val("");
+	    					}
+	    				},error:function(){
+	    					console.log("댓글추가실패오지마ㅠㅠ");
+	    				}
+	    			})
+	    		}else{
+	    			alert("댓글 작성 후 등록해주세요!");
+	    		}
+	    	}
+	    </script>
+       	
     </div>    
     
-    <script>
     
-		$(function(){
-			replyList();
-		})    
-		
-		function replyList(){
-			$.ajax({
-				url:"replyList.ev",
-				data:{contentNo: ${e.eventNo}},
-				success:function(list){
-					//console.log(list);
-					
-					let value = "";
-    				for(let i in list){
-    					value += "<tr>"
-		                       +    "<th>" + list[i].nickName + "</th>"
-		                       +    "<td>" + list[i].replyContent + "</td>"
-		                       +    "<td>" + list[i].replyDate + "</td>"
-		                       + "</tr>";
-    				}
-    				
-    				$("#replyTable tbody").html(value);
-    				
-				},error:function(){
-					console.log("댓글조회실패여기오지마ㅠㅠ");
-				}
-			})
-		}
-    
-    	function addReply(){
-    		reply = $("#reply").val();
-    		//console.log(reply);
-    		if(reply.trim().length != 0){
-    			$.ajax({
-    				url: "replyInsert.ev",
-    				data:{
-    					memNo: '${loginUser.memNo}',
-    					contentNo: ${e.eventNo},
-    					replyContent: reply
-    				},success:function(result){
-    					if(result == "1"){
-    						replyList();
-    						$("#reply").val("");
-    					}
-    				},error:function(){
-    					console.log("댓글추가실패오지마ㅠㅠ");
-    				}
-    			})
-    		}else{
-    			alert("댓글 작성 후 등록해주세요!");
-    		}
-    	}
-    </script>
 	
 	 <jsp:include page="../common/footerBar.jsp" />
 	
