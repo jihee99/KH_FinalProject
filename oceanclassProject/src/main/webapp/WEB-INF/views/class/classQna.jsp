@@ -40,7 +40,14 @@
 			            
 			                <div class="profile">
 			                    <div style="float:left; margin-right: 10px;">
-			                        <img src="" width="50px" height="50px">
+				                    <c:choose>
+			                      		<c:when test="${ !empty q.profile }">
+			                           		<img src="${ q.profile }" width="40px" height="40px">
+			                      		</c:when>
+			                      		<c:otherwise>
+			                           		<img src="resources/images/user.png" width="40px" height="40px">
+			                      		</c:otherwise>
+			                      	</c:choose>
 			                    </div>
 			                    
 			                    <div>
@@ -83,7 +90,14 @@
 							                <div class="qnaAnswerArea" style="margin-left: 50px;">
 												<div class="profile">
 								                    <div style="float:left; margin-right: 10px;">
-								                        <img src="" width="50px" height="50px">
+								                        <c:choose>
+								                      		<c:when test="${ !empty c.profile }">
+								                           		<img src="${ c.profile }" width="40px" height="40px">
+								                      		</c:when>
+								                      		<c:otherwise>
+								                           		<img src="resources/images/user.png" width="40px" height="40px">
+								                      		</c:otherwise>
+								                      	</c:choose>
 								                    </div>
 								                    <div>
 								                        <div style="font-weight: bold;">${ c.memNo }</div>
@@ -180,7 +194,14 @@
 							                <div class="qnaAnswerArea" style="margin-left: 50px;">
 												<div class="profile">
 								                    <div style="float:left; margin-right: 10px;">
-								                        <img src="" width="50px" height="50px">
+								                    	<c:choose>
+								                      		<c:when test="${ !empty c.profile }">
+								                           		<img src="${ c.profile }" width="40px" height="40px">
+								                      		</c:when>
+								                      		<c:otherwise>
+								                           		<img src="resources/images/user.png" width="40px" height="40px">
+								                      		</c:otherwise>
+								                      	</c:choose>
 								                    </div>
 								                    <div>
 								                        <div style="font-weight: bold;">${ c.memNo }</div>

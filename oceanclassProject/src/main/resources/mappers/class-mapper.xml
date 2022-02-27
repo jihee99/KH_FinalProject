@@ -19,6 +19,7 @@
 		<result column="count" property="count" />
 		<result column="nickname" property="memNo" />
 		<result column="like_count" property="like" />
+		<result column="profile" property="profile" />
 	</resultMap>
 	
 	<resultMap id="classReviewResult" type="ClassReview">
@@ -129,6 +130,7 @@
 		         where gb_no = 1
 		           and refer_no = clno
 		        ) as like_count
+		     , profile
 		  from class
           JOIN member USING (MNO)
 		 where cl_status = 'Y'
