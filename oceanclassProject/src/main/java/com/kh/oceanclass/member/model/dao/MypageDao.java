@@ -210,6 +210,10 @@ public class MypageDao {
 		return (ArrayList)sqlSession.selectList("myMapper.shoppingQnaList", memNo, rowBounds);
 	}
 	
+	public CsQna ajaxShoppingQna(SqlSessionTemplate sqlSession, int csQno) {
+		return sqlSession.selectOne("myMapper.ajaxShoppingQna", csQno);
+	}
+	
 	public int shoppingReviewCount(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("myMapper.shoppingReviewCount", memNo);
 	}
@@ -245,5 +249,5 @@ public class MypageDao {
 	public ArrayList<StorePay> ajaxSearchDate(SqlSessionTemplate sqlSession, StorePay pay){
 		return (ArrayList)sqlSession.selectList("myMapper.ajaxSearchDate", pay);
 	}
-	
+
 }// class

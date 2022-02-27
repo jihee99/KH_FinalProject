@@ -181,6 +181,11 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<CsQna> shoppingQnaList(PageInfo pi, int memNo) {
 		return myDao.shoppingQnaList(sqlSession, pi, memNo);
 	}
+	
+	@Override
+	public CsQna ajaxShoppingQna(int csQno) {
+		return myDao.ajaxShoppingQna(sqlSession, csQno);
+	}
 
 	@Override
 	public int shoppingReviewCount(int memNo) {

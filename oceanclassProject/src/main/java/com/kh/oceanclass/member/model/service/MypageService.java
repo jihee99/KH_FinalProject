@@ -103,6 +103,9 @@ public interface MypageService {
 	int shoppingQnaCount(int memNo);
 	ArrayList<CsQna> shoppingQnaList(PageInfo pi, int memNo);
 	
+	// 스토어 문의 상세
+	CsQna ajaxShoppingQna(int csQno);
+	
 	// 스토어 리뷰 내역
 	int shoppingReviewCount(int memNo);
 	ArrayList<StoreReview> shoppingReviewList(PageInfo pi, int memNo);
