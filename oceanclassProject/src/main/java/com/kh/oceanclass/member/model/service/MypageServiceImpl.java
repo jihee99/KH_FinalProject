@@ -1,6 +1,7 @@
 package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +110,11 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int checkNick(String nickName) {
 		return myDao.checkNick(sqlSession, nickName);
+	}
+	
+	@Override
+	public ArrayList<Qna> ajaxSearchQnaDate(Map<String, Object> option) {
+		return myDao.ajaxSearchQnaDate(sqlSession, option);
 	}
 	
 	

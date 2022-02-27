@@ -250,6 +250,34 @@ public class StuMypageController {
 		return map;
 	}
 	
+	// 1:1 문의 달력검색
+	@ResponseBody
+	@RequestMapping(value="ajaxSearchQnaDate.me", produces="application/json; charset=UTF-8")
+	public String ajaxSearchQnaDate(String sDate, String eDate, Model model, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		Map<String, Object> option = new HashMap();
+		option.put("memNo", memNo);
+		option.put("sDate", sDate);
+		option.put("eDate", eDate);
+		
+		ArrayList<Qna> list = myService.ajaxSearchQnaDate(option);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+	
+		return new Gson().toJson(list);
+		
+	}
+	
 	
 	
 //클래스	

@@ -402,6 +402,22 @@
 		    by qno desc
 	</select>
 	
+	<select id="ajaxSearchQnaDate" resultMap="myQnaResult">
+		select
+		       qno
+		     , category
+		     , q_title
+		     , q_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , a_content
+		     , a_date
+		  from qna
+		 where mno = #{memNo}
+		   and create_date between #{sDate} and #{eDate}
+		 order
+		    by qno desc
+	</select>
+	
 	
 <!-- 클래스 -->
 	<select id="selectMyClass" resultMap="myClassOrderResult">
@@ -670,6 +686,8 @@
 		  from pay p 
 		  join store s on (p.pno = s.pno)
 		 where p.mno = #{memberNo}
+		 order
+		    by order_no desc
 	</select>
 	
 	<select id="selectShopping" resultMap="storePayResult">
@@ -691,6 +709,8 @@
 		  join store s on (p.pno = s.pno)
           join member m on (p.mno = m.mno)
 		 where order_no = #{orderNo}
+		 order
+		    by order_no desc
 	</select>
 	
 	<select id="searchShoppingList" resultMap="storePayResult">
@@ -710,6 +730,8 @@
 		  join store s on (p.pno = s.pno)
 		 where p.mno = #{memberNo}
 		   and pay_date between sysdate - #{payDate} and sysdate
+		 order
+		    by order_no desc	
 	</select>
 	
 	<select id="ajaxSearchDate" resultMap="storePayResult">
@@ -729,6 +751,8 @@
 		  join store s on (p.pno = s.pno)
 		 where p.mno = #{memberNo}
 		   and pay_date between #{startDate} and #{endDate}
+		 order
+		    by order_no desc
 	</select>
 	
 </mapper>
