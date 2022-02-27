@@ -29,7 +29,7 @@
 	}
 	.content1{
 	    width: 100%;
-	    height: 40%;
+	    height: 30%;
 	    margin-top: 50px;
 	}
 	.conhead>h2{width: 30%;}
@@ -86,17 +86,16 @@
 						    </div>
 						</c:when>
 						<c:otherwise>
-							<div class="content1">
+							<div class="content1" id="content-wrap" style="overflow-y: scroll;">
 							    <div class="conhead">
 							    	<h3> 적립내역 </h3>
-								    <a href="pointSaveList.me">더보기</a>
 								</div>
 							    <table class="table">
 							        <thead>
 							            <tr>
 							                <th>날짜</th>
 							                <th>내역</th>
-							                <th>금액</th>
+							                <th>적립금액</th>
 							                <th>유효기간</th>
 							            </tr>
 							        </thead>
@@ -104,8 +103,8 @@
 						        		<c:forEach var="p" items="${pointPlusList}" begin="0" end="4">
 								            <tr>
 								                <td>${p.pointDate}</td>
-								                <td>${p.pointPrice}원</td>
 								                <td>${p.reason}</td>
+								                <td>${p.pointPrice}원</td>
 								                <td>${p.deadLine}</td>
 								            </tr>
 							            </c:forEach>
@@ -119,11 +118,10 @@
 						<c:when test="${empty pointMinusList}">
 							<div class="conhead">
 						        <h3>사용 내역</h3>
-						        <p>사용 내역이 없습니다</p>
 						    </div>
 						</c:when>
 						<c:otherwise>
-							<div class="content1">
+							<div class="content1" id="content-wrap" style="overflow-y: scroll;">
 							    <div class="conhead">
 							    	<h3> 사용내역 </h3>
 								    <a href="pointMinusList.me">더보기</a>
@@ -134,16 +132,14 @@
 							                <th>날짜</th>
 							                <th>내역</th>
 							                <th>금액</th>
-							                <th>유효기간</th>
 							            </tr>
 							        </thead>
 									<tbody>
 						        		<c:forEach var="pm" items="${pointMinusList}" begin="0" end="4">
 								            <tr>
 								                <td>${pm.pointDate}</td>
-								                <td>${pm.pointPrice}원</td>
 								                <td>${pm.reason}</td>
-								                <td>${pm.deadLine}</td>
+								                <td>${pm.pointPrice}원</td>
 								            </tr>
 							            </c:forEach>
 						        	</tbody>
@@ -151,48 +147,47 @@
 							</div>
 						</c:otherwise>
 					</c:choose>
-						
-					<div class="modal" tabindex="-1">
-						<div class="modal-dialog">
-							<div class="modal-content">
-							 	<div class="modal-header">
-							     	<h5 class="modal-title">쿠폰 내역</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				         				<span aria-hidden="true">&times;</span>
-				        			</button>
-						     	</div>
-								<div class="modal-body">
-									<table class="table">
-								        <thead>
-								            <tr>
-								                <th>날짜</th>
-								                <th>내역</th>
-								                <th>사유</th>
-								                <th>금액</th>
-								                <th>유효기간</th>
-								            </tr>
-								        </thead>
-										   <tbody>
-										        <c:forEach var="c" items="${couponList}" >
-										            <tr>
-										                <td>${c.endate}</td>
-										                <td>쿠폰지급</td>
-										                <td>이벤트</td>
-										                <td>${c.discount}% 할인</td>
-										                <td>${c.dedate}</td>
-										            </tr>
-										        </c:forEach>    
-										   </tbody>
-									</table>
-								</div>
-							 </div>
-						</div>
-					</div>
 				</div>
 			</td>
 		</tr>
 	</table>
 	
+	<div class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			 	<div class="modal-header">
+			     	<h5 class="modal-title">쿠폰 내역</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         				<span aria-hidden="true">&times;</span>
+        			</button>
+		     	</div>
+				<div class="modal-body">
+					<table class="table">
+				        <thead>
+				            <tr>
+				                <th>날짜</th>
+				                <th>내역</th>
+				                <th>사유</th>
+				                <th>금액</th>
+				                <th>유효기간</th>
+				            </tr>
+				        </thead>
+						   <tbody>
+						        <c:forEach var="c" items="${couponList}" >
+						            <tr>
+						                <td>${c.endate}</td>
+						                <td>쿠폰지급</td>
+						                <td>이벤트</td>
+						                <td>${c.discount}% 할인</td>
+						                <td>${c.dedate}</td>
+						            </tr>
+						        </c:forEach>    
+						   </tbody>
+					</table>
+				</div>
+			 </div>
+		</div>
+	</div>
 	
 	
 	<script>

@@ -12,13 +12,12 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.searchBar{height: 80px;}
 	.searchBar p{float: left; margin-right: 30px; font-weight: 800;}
-	.button{width: 45%; float: left; margin-left: 20px; border: 1px solid;}
-	.search{width:45%; height: 50px; float: left}
-	.label{display: inline-block; height: 50px; padding-left: 30px;  margin-right: 10px; vertical-align: top; border: 1px solid;}
-	#searchArea{float:right; margin-top: 30px;}
-    .label>ul>li{margin:0 auto; float:left; margin-left: 30px;}
+	.button{width: 45%; float: left; border: 1px solid;}
+	.search{width:50%; height: 50px; float: left}
+	.label{width: 100%; height: 30px; padding-left: 30px;  margin-right: 10px; vertical-align: top; border: 1px solid;}
+	#search{margin-top: 30px;}
+    .label>ul>li{margin:0 auto; float:left; margin-left: 30px}
 	#myQna{
 		width:100%;
 		margin: 0 auto;
@@ -47,33 +46,15 @@
 			<td id="mainContent">
 				<div class="content">
 				    <h2>1:1 문의 내역</h2>
-				    
 				    <div class="searchBar">
-				        <div class="button">
-				        	<p>기간검색</p>
-					        <input type="hidden" id="memNo" value="${loginUser.memNo}">
-					        <button class="btn btn-info" id="week" value="week">1주일</button>
-					        <button class="btn btn-info" id="2week" value="2week">15일</button>
-					        <button class="btn btn-info" id="month" value="month">1개월</button>
-					    </div>    
-				        <div class="search">
-				            <div class="label">
-				            	카테고리 검색
-					        	<ul>
-					        		<li>
-					        			<input type="radio" class="form-check-input" id="C" name="category" value="C">
-					        			<label for="C">클래스</label>
-					        		</li>
-					        		<li>
-					        			<input type="radio" class="form-check-input" id="S" name="category" value="S">
-					        			<label for="S">스토어</label>
-					        		</li>
-					        		<li>
-					        			<input type="radio" class="form-check-input" id="E" name="category" value="E">
-					        			<label for="E">기타</label>
-					        		</li>
-					        	</ul>
-					        </div>
+				        <p>기간검색</p>
+				        <input type="hidden" id="memNo" value="${loginUser.memNo}">
+				        <button type="button" class="btn btn-info" id="week" value="7">1주일</button>
+				        <button type="button" class="btn btn-info" id="week" value="14">15일</button>
+				        <button type="button" class="btn btn-info" id="week" value="31">1개월</button>
+				        <div id="search">
+				            <input type="date" id="startDate"> ~ <input type="date" id="endDate">
+				            <button type="button" id="searchDate" onclick="search()">검색</button>
 				        </div>
 				    </div>
 				    
@@ -217,7 +198,6 @@
 				    </script>
 			    	
 			    	<script>
-			    	 <script>
 			        	$(".label label").click(function(){
 			        		let category = $(this).prev().val();
 			        		$.ajax({
@@ -268,7 +248,65 @@
 			        		})
 			        	});
 			        </script>
-			    	</script>
+			        
+			        <!-- 달력검색 -->
+					<script>
+						function search(){
+							let startDate = $("#startDate").val();
+							let endDate = $("#endDate").val();
+							$.ajax({
+								url:"ajaxSearchQnaDate.me",
+								data:{sDate : startDate,
+									  eDate : endDate},
+							    success:function(result){
+							    	console.log(result);
+							    	let qna = '';
+			    					for(let i in result){
+			    						let answer = result[i].ansContent;
+			    						qna += '<tr id="qna">'
+			    							 + '<td>' + result[i].createDate + '</td>'
+			    						 	 + '<td>' + result[i].category + '</td>'
+			    						 	 + '<td>' + result[i].qnaTitle + '</td>'
+			    						if(!(answer == "" || answer == null || answer == "undefined" || answer == undefined)){
+			    							qna += '<td>답변완료</td>'
+			    						}else{
+			    							qna += '<td>답변대기</td>'
+			    						}
+			    						qna += '</tr>' 
+			    							 + '<tr id="question">'
+			    						 	 + '<td></td>'
+			    						 	 + '<td>내용</td>'
+			    						 	 + '<td colspan="2" style="text-align: left; padding-left: 100px;">' + result[i].qnaContent + '</td>'
+			    						 	 + '</tr>'
+		    						 	if(!(answer == "" || answer == null || answer == "undefined" || answer == undefined)){
+			    							 qna += '<tr id="answer"> <td></td> <td>답변</td> <td colspan="2" style="text-align: left; padding-left: 100px;">'
+			    								  + result[i].ansContent
+			    								  + '<p>'
+			    								  + result[i].ansDate
+			    								  + '</p></td></tr>'
+			    						}else{
+			    							qna += ''
+			    						}	 	 
+			    					}
+				    				$("#result").html(qna);
+				    				$('#startDate').val('');
+							    	$('#endDate').val('');
+				    				// ajax 결과 클릭 시 내용답변 뿌려주는 
+									$("#myQna>tbody>#qna").click(function(){
+										$(this).toggleClass("selected");
+										$("#myQna>tbody>#qna").not(this).removeClass("selected");
+										var targetQ = $(this).next();
+										var targetA = $(this).next().next();
+										targetQ.fadeToggle(400);
+										targetA.fadeToggle(400);
+									});
+							    },error:function(){
+							    	
+							    }
+							})
+						}
+					</script>
+			        
 			    	<div id="paging">
 						<ul class="pagination">
 							<c:choose>

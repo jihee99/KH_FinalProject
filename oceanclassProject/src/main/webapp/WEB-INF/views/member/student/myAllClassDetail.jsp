@@ -21,9 +21,11 @@
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
 	.table{width: 90%; margin: auto; text-align: center;}
-	.item{width: 80%; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
-	.item img{width: 25%; height: 100px;}
-	.item>p{width: 70%; float: right; margin-right: 30px; margin-top: 30px; text-align: left; font-size: 20px; font-weight: 800;}
+	.item{width: 80%; height: 100px; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
+	.item img{width: 22%; height: 100px;}
+	#ctitle{width: 74%; height: 30px; float: right; margin-right: 25px; margin-top: 10px; text-align: left; font-size: 20px; font-weight: 800; overflow: hidden; text-overflow: ellipsis;}
+	#status{width: 70%; height: 30px; float: right; margin-right: 50px; margin-top: -50px;}
+	#status>span{font-size: 18px; margin-left: 10px;}
 </style>
 </head>
 <body>
@@ -45,16 +47,21 @@
 				            	<a><img src="${c.clImg}"></a>
 				            	<input type="hidden" value="${c.clNo}">
 				            	<p id="ctitle">
-					            	<c:choose>
-					            		<c:when test="${fn:length(c.clName) gt 30}">
-					            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
-					            			..
-					            		</c:when>
-					            		<c:otherwise>
-					            			<c:out value="${c.clName}" />
-					            		</c:otherwise>
-					            	</c:choose>
-					            	<c:out value="${c.readingCheck}"/> 
+				            		[${c.category}]
+					            	${c.clName}
+				            	</p>
+				            	<p id="status">
+				            		<c:choose>
+				            			<c:when test="${c.readingCheck eq '수강중'}">
+				            				<span class="badge bg-primary"><c:out value="${c.readingCheck}"/> </span>
+				            			</c:when>
+				            			<c:when test="${c.readingCheck eq '수강전'}">
+				            				<span class="badge bg-warning"><c:out value="${c.readingCheck}"/> </span>
+				            			</c:when>
+				            			<c:otherwise>
+				            				<span class="badge bg-secondary"><c:out value="${c.readingCheck}"/> </span>
+				            			</c:otherwise>
+				            		</c:choose>
 				            	</p>
 				            </div>
 			            </c:forEach>

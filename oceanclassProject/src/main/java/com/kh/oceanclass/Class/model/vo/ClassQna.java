@@ -29,6 +29,8 @@ public class ClassQna {
 	
 	private String nickname;
 	
+	private String clName;
+
 	private String profile;
 	
 }

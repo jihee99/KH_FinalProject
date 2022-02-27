@@ -1,6 +1,7 @@
 package com.kh.oceanclass.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
@@ -63,6 +64,9 @@ public interface MypageService {
 	// qna 기간검색 리스트
 	ArrayList<Qna> selectMyQnaList(PageInfo pi, Qna q);
 	
+	// qna 달력 검색 리스트
+	ArrayList<Qna> ajaxSearchQnaDate(Map<String, Object> option);
+	
 	// 닉네임 중복
 	int checkNick(String nickName);
 	
@@ -102,6 +106,9 @@ public interface MypageService {
 	// 스토어 문의 내역
 	int shoppingQnaCount(int memNo);
 	ArrayList<CsQna> shoppingQnaList(PageInfo pi, int memNo);
+	
+	// 스토어 문의 상세
+	CsQna ajaxShoppingQna(int csQno);
 	
 	// 스토어 리뷰 내역
 	int shoppingReviewCount(int memNo);

@@ -16,15 +16,15 @@
 .review{margin-bottom: 50px; height: auto;}
 .small_header{width: 100%; height: 90px;}
 .small_header>span{font-weight: bold; font-family: 본고딕; font-size: 20px;}
-.small_header>button{float: right; width: 100px; height: 30px; background:steelblue; color: white; border: none; border-radius: 5px;}
+.small_header>button{float: right; width: 100px; height: 30px; background:#6babd5; color: white; border: none; border-radius: 5px;}
 .user_detail>button{background:none; border: none; font-weight: bold; font-size: 13px; cursor: pointer;}
 .user_detail{width: 400px; height: 80px;}
-.user_image{width: 50px; height: 50px; border: 1px solid; position:inline-block; float:left; margin-right: 10px;}
+.user_image{width: 50px; height: 50px; position:inline-block; float:left; margin-right: 10px;}
 .product_name_small{font-size: small; color: rgb(88, 88, 88);}
 .content{font-family: 본고딕; font-size: 15px; display:inline-block; width:650px; margin-bottom: 10px;}
-.recommend{width: 200px; height: 30px; margin-right: 10px; cursor: pointer; background:rgb(211, 212, 212); border: none; border-radius: 5px;}
+.recommend{width: 200px; height: 30px; margin-right: 10px; cursor: pointer; background:#6babd5; border: none; border-radius: 5px;}
 .thumbnail_image{width:150px; height:120px; margin-bottom: 10px; }
-.more_review{width:700px; height: 50px; background:rgb(211, 229, 236); border: none; border-radius: 5px; cursor: pointer;}
+.more_review{width:700px; height: 50px; background:#6babd5; border: none; border-radius: 5px; cursor: pointer;}
 .star-ratings {
     color: #aaa9a9; 
     position: relative;
@@ -77,62 +77,70 @@
 						</div>
 					</div>
 	            </div> <br><br>
-				
-	            <div class="review_list">
-	            	<c:forEach var="srm" items="${srMainList}" end="4">
-		                <div class="review">
-		                    <div class="user_detail">
-		                        <div class="user_image">
-		                        	<c:choose>
-		                        		<c:when test="${srm.profile eq null }">
-		                        			<img src="">
-		                        		</c:when>
-		                        		<c:otherwise>
-		                        			<img src="${srm.profile}">
-		                        		</c:otherwise>
-		                        	</c:choose>
-		                        </div>
-		                        <span>
-		                            <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-		                        </span><br>
-		                        <span class="user_name">${srm.nickname}</span>
-		                        <span class="enroll_date">${srm.reviewDate}</span>
-		                        <button type="button" data-toggle="modal" data-target="#report">신고</button>
-		                    </div>
-		                    <div class="review_content">
-		                        <span class="product_name_small">${p.title }</span> <br>
-		                        <span class="content">${srm.content}</span>
-		                        	<c:choose>
-		                        		<c:when test="${srm.img eq null }">
-		                        		</c:when>
-		                        		<c:otherwise>
-					                        <div class="thumbnail_image">
-					                            <img src="${srm.img}" class="thumb" style="width:150px; height: 120px;">
-					                        </div>
-		                        		</c:otherwise>
-		                        	</c:choose>
-		                    </div>
-		                    <div class="recommend_area">
-		                     <c:choose>
-		                    	<c:when test="${ srm.recoCk == 0 && !empty loginUser}">
-		                        <button type="button" class="recommend" onclick="recommendCk(${srm.reviewNo});"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
-		                        </c:when>
-		                        <c:otherwise>
-		                        <button type="button" class="recommend" onclick="recommendCk();" disabled><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
-		                        </c:otherwise>
-		                     </c:choose>
-		                        <span style="font-weight:bold;" id="dd">${srm.reconum}</span>명에게 도움이 되었어요.
-		                    </div>
-		                </div>
-	                </c:forEach>
-	            </div>
-	            <div class="bottom_area">
-	                <button type="button" class="more_review" onclick="allReview(${p.productNo});">더 많은 리뷰 보러가기</button>
-	            </div>
+				<c:choose>
+					<c:when test="${!empty srMainList}">
+			            <div class="review_list">
+			            	<c:forEach var="srm" items="${srMainList}" end="4">
+				                <div class="review">
+				                    <div class="user_detail">
+				                        <div class="user_image">
+				                        	<c:choose>
+				                        		<c:when test="${srm.profile eq null }">
+				                        			<img src="">
+				                        		</c:when>
+				                        		<c:otherwise>
+				                        			<img src="${srm.profile}" width="50px" height="50px">
+				                        		</c:otherwise>
+				                        	</c:choose>
+				                        </div>
+										<div class="star-ratings" style="display:inline-block;">
+											<div class="star-ratings-fill space-x-2 text-sm" style="width:${srm.rating*20}%; font-size:20px;">
+												<span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span>
+											</div>
+											<div class="star-ratings-base space-x-2 text-sm">
+												<span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span>
+											</div>
+										</div>
+				                        <br>
+				                        <span class="user_name">${srm.nickname}</span>
+				                        <span class="enroll_date">${srm.reviewDate}</span>
+				                        <button type="button" data-toggle="modal" data-target="#report">신고</button>
+				                    </div>
+				                    <div class="review_content">
+				                        <span class="product_name_small">${p.title }</span> <br>
+				                        <span class="content">${srm.content}</span>
+				                        	<c:choose>
+				                        		<c:when test="${srm.img eq null }">
+				                        		</c:when>
+				                        		<c:otherwise>
+							                        <div class="thumbnail_image">
+							                            <img src="${srm.img}" class="thumb" style="width:150px; height: 120px;">
+							                        </div>
+				                        		</c:otherwise>
+				                        	</c:choose>
+				                    </div>
+				                    <div class="recommend_area">
+				                     	<button type="button" class="recommend" onclick="recommendCk(${srm.reviewNo});"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
+				                        <span style="font-weight:bold;" id="dd">${srm.reconum}</span>명에게 도움이 되었어요.
+				                    </div>
+				                </div>
+			                </c:forEach>
+			            </div>
+			            <div class="bottom_area">
+			                <button type="button" class="more_review" onclick="allReview(${p.productNo});">더 많은 리뷰 보러가기</button>
+			            </div>
+	            	</c:when>
+	            	<c:otherwise>
+	            		<div class="review_list">
+	            			<h4>아직 리뷰가 없어요...첫번째 리뷰를 작성해주세요!</h4>
+	            			<br><br>
+	            		</div>
+	            	</c:otherwise>
+				</c:choose>
             </div>
 		</div>
 		
-		    	<!-- 신고 모달 -->
+		<!-- 신고 모달 -->
     	<div class="modal fade" id="report" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">

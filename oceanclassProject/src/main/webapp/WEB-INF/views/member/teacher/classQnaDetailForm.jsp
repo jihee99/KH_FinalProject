@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +50,10 @@
         font-weight:bolder;
         font-size: 30px;
     }
-    /* 카테고리,버튼 전체영역 */
+    #category{
+		width:750px;    
+    }
+    /* 클래스 제목,버튼 전체영역 */
     #category-area{
         display: flex;
         font-size: 19px;
@@ -58,10 +62,10 @@
         color: gray;
         line-height: 47px;
         padding-left: 15px;
+        width: 1000px;
     }
-    /* 카테고리 버튼 전체*/
+    /* 클래스 제목 버튼 전체*/
     #category-btn{
-        margin-left: 480px;
         margin-top: -3px;
     }
     /* 제목,날짜,아이디 전체영역 */
@@ -70,6 +74,11 @@
         margin-bottom: 25px;
         margin-top: -5px;
         padding-left: 15px;
+        width: 980px;
+        justify-content: space-between;
+    }
+    #titleDate{
+        display: flex;
     }
     /* 제목 */
     #title{
@@ -82,10 +91,6 @@
         padding-top: 10px;
         padding-left: 10px;
     }
-    /* 닉네임전체 */
-    #writer{
-        margin-left: 220px;
-    }
     /* 닉네임 */
     #writer-nick{
         padding-top: 11px;
@@ -94,6 +99,10 @@
         margin-left: 5px;
         line-height: 35px;
         color: black;
+    }
+    #writerImg{
+    	border-radius: 250px;
+        object-fit: cover;
     }
     /* 내용 전체 영역 */
     #content-area{
@@ -106,6 +115,7 @@
     #content-text{
         border: none;
         resize: none;
+        background-color: white;
     }
     /* 신고하기 */
     #content-report{
@@ -154,6 +164,7 @@
         vertical-align: top;
         font-weight: bolder;
         color: black;
+        width: 130px;
     }
     /* 댓글창 내용들 */
     #reply-content-area{
@@ -183,32 +194,35 @@
     <div style="width: 1600px; height: auto; margin: auto;">
     	<jsp:include page="../../common/teacher/tcMypageSidebar.jsp" />
         <div class="wrap">
+        <input type="hidden" id="cs_qno" name="csQnaNo" value="${cq.csQnaNo}">
             <div id="top-area">
                 <span id="bord-name">클래스 문의 관리</span>
             </div>
             <div id="content-wrap">
                 <div id="category-area">
-                    <div id="category">[보미강사의 강아지 훈련 클래스]</div>
+                    <div id="category">${cq.clName }</div>
                     <div id="category-btn">
                         <button class="btn" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; height: 32px; padding-top:3px;">이전글</button>
-                        <button class="btn" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; height: 32px; padding-top:3px;">목록</button>
+                        <button onclick="history.back()" class="btn" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; height: 32px; padding-top:3px;">목록</button>
                         <button class="btn" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; height: 32px; padding-top:3px;">다음글</button>
                     </div>
                 </div>
                 <hr style="border: solid 1px rgb(179, 178, 178); width: 980px;">
                 <div id="title-area">
-                    <div id="title">강사님 궁금해요 산책코스에서 아령은 필수인가요?</div>
-                    <div id="sysdate">2022년 1월 17일</div>
+                    <div id="titleDate">
+                        <div id="title">${cq.title }</div>
+                        <span id="sysdate">${cq.createDate }</span>
+                    </div>
                     <div id="writer">
-                        <img src="resources/images/user.png" style="width: 30px;">
-                        <a href="" id="writer-nick">보미사랑</a>
+                        <img id="writerImg" src="${cq.profile }" style="width: 30px;">
+                        <a href="" id="writer-nick">${cq.nickname }</a>
                     </div>
                 </div>
                 
                 <div id="content-area" align="center">
-                    <img src="resources/images/bomi7.jpg" style="width: 350px;">
+                    <img src="${cq.filePath }" style="width: 350px;">
                     <br><br>
-                    <textarea id="content-text" cols="123" rows="10">내용을 입력 하세요.</textarea>
+                    <textarea id="content-text" cols="123" rows="5" readonly disabled>${cq.content }</textarea>
                     <div id="content-report">
                     <a href="" style="color: gray;">신고하기</a>
                     </div>
@@ -225,39 +239,25 @@
                             <button class="btn btn-md" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; width: 95px;">답변</button>
                         </div>
                     </div>
-                    <div id="reply-writer">
-                        <img id="reply-img" src="resources/images/user.png" style="width: 30px; height: 30px;">
-                        <a href="" id="reply-nick"  style="color: rgb(107, 171, 253);">보미 강사</a>
-                        <div id="reply-content-area">
-                            <p id="reply-content" cols="100">학생 문의주셔서 감사합니다^^ 아령은 필수입니다. 궁금증은 해결 되셨을까요? </p>
-                            <div id="btn-box">
-                                <a href="">수정</a>
-                                <a href="">삭제</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="reply-writer">
-                        <img id="reply-img" src="resources/images/user.png" style="width: 30px; height: 30px;">
-                        <a href="" id="reply-nick">보미 사랑</a>
-                        <div id="reply-content-area">
-                            <p id="reply-content" cols="100">어 도움 됐어 고마워~</p>
-                            <div id="btn-box">
-                                <a href="">수정</a>
-                                <a href="">삭제</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="reply-writer">
-                        <img id="reply-img" src="resources/images/user.png" style="width: 30px; height: 30px;">
-                        <a href="" id="reply-nick">보미 최고</a>
-                        <div id="reply-content-area">
-                            <p id="reply-content" cols="100">위에분 너무 건방지시네요.. </p>
-                            <div id="btn-box">
-                                <a href="">수정</a>
-                                <a href="">삭제</a>
-                            </div>
-                        </div>
-                    </div>
+                    <c:choose>
+	                    <c:when test="${not empty cq.answerContent }">
+	                    <div id="reply-writer">
+	                        <img id="reply-img" src="resources/images/user.png" style="width: 30px; height: 30px;">
+	                        <a href="" id="reply-nick"  style="color: rgb(107, 171, 253);">${cq.teacherNick }</a>
+	                        <div id="reply-content-area">
+	                            <p id="reply-content" cols="100">${cq.answerContent } </p>
+	                            <div id="btn-box">
+	                                <a href="">수정</a>
+	                                <a href="">삭제</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    </c:when>
+	                    
+	                    <c:otherwise>
+	                    	<span style="color:lightgrey; margin-left: 15%; font-size: 25px;">해당 문의글에 답변이 달리지 않았습니다. 답변을 달아주세요!</span>
+	                    </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
             <br><br><br><br><br><br>

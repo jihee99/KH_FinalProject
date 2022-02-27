@@ -21,11 +21,11 @@
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
 	.table{width: 90%; margin: auto; text-align: center;}
-	.item{width: 80%; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
-	.item img{width: 25%; height: 100px;}
-	.item>p{width: 70%; float: right; margin-right: 30px; margin-top: 30px; text-align: left; font-size: 20px; font-weight: 800;}
+	.item{width: 85%; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
+	.item img{width: 20%; height: 100px;}
+	.item>p{width: 73%; float: right; margin-right: 40px; margin-top: 30px; text-align: left; font-size: 20px; font-weight: 600;}
 	.content1>button{display: block; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;}
-	a{text-decoration: none; color: black;}
+	.content1 a{text-decoration: none; color: black;}
 </style>
 </head>
 <body>
@@ -54,9 +54,10 @@
 						            	<a><img src="${c.clImg}"></a>
 						            	<input type="hidden" value="${c.clNo}">
 						            	<p id="ctitle">
+						            		[${c.category}]
 							            	<c:choose>
-							            		<c:when test="${fn:length(c.clName) gt 30}">
-							            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
+							            		<c:when test="${fn:length(c.clName) gt 22}">
+							            			<c:out value="${fn:substring(c.clName, 0, 21)}"></c:out>
 							            			..
 							            		</c:when>
 							            		<c:otherwise>
@@ -92,7 +93,8 @@
 						        </div>
 						        <table class="table">
 						            <thead>
-						                <tr>
+						                <tr>	
+						                	<th>카테고리</th>
 						                    <th>클래스</th>
 						                    <th>상태</th>
 						                </tr>
@@ -100,6 +102,7 @@
 						            <tbody>
 					        			<c:forEach var="co" items="${allList}" begin="0" end="3">
 							                <tr>
+							                	<td>${co.category}</td>
 							                    <td>
 							                    	<c:choose>
 									            		<c:when test="${fn:length(co.clName) gt 21}">

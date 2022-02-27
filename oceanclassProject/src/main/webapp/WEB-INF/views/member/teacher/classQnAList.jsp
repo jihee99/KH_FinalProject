@@ -130,7 +130,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th width="550px">제목</th>
+                                <th width="100px">글번호</th>
+                                <th width="450px">제목</th>
                                 <th width="150px">작성자</th>
                                 <th width="150px">작성일</th>
                                 <th width="150px">답변상태</th>
@@ -139,9 +140,10 @@
                         <tbody>
 	                        <c:forEach var="tq" items="${ tcQnaList }">
 	                            <tr>
-	                                <td>${ tq.title }</td>
-	                                <td>${ tq.nickname }</td>
-	                                <td>${ tq.createDate }</td>
+                                    <td class="td tcqno">${ tq.csQnaNo }</td>
+	                                <td class="td">${ tq.title }</td>
+	                                <td class="td">${ tq.nickname }</td>
+	                                <td class="td">${ tq.createDate }</td>
 	                                <c:choose>
 				                        <c:when test="${not empty tq.answerContent}">
 				                        	<td>답변완료<td>
@@ -155,6 +157,13 @@
                         </tbody>
                     </table>
                 </div>
+                <script>
+                $(function(){
+	        		$(".td").click(function(){
+	        			location.href = 'tcQnaDetail.tc?csQnaNo=' + $(this).siblings(".tcqno").text();
+	        		});
+	        	})
+                </script>
                 <div id="paging" align="center">
 					<ul class="pagination">
 						<c:choose>

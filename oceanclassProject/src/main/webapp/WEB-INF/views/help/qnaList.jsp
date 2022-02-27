@@ -48,7 +48,7 @@
         <div class="button my-3">
             <button type="button" class="btn" onclick="location.href='helpList.he';">공지사항</button>
             <button type="button" class="btn" onclick="location.href='faqMain.he';">FAQ</button>
-            <button type="button" class="btn" onclick="location.href='qnaMain.he';">1:1문의</button>
+            <button type="button" class="btn" onclick="location.href='qnaList.he';">1:1문의</button>
         </div>
         <div class="middle">
         	<div id="search">

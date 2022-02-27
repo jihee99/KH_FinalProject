@@ -60,7 +60,9 @@
 	<jsp:include page="../common/header.jsp" />
 
 	<div id="outer">
-		<div id="silde">나중에 silde들어갈자리</div>
+		<div id="silde">
+			
+		</div>
 
 		<input type="hidden" id="memNo" value="${ loginUser.memNo }">
 
@@ -71,35 +73,37 @@
 				<a href="storeSearchList.st" class="more_btn">+more</a>
 			</div>
 
-			<c:forEach var="p" items="${ list }" end="3">
+			<c:forEach var="h" items="${ hlist }" end="3">
 				<div class="item" >
-					<img src="${ p.productImg0 }" class="thumbnail"
-						onclick="goDetail(${p.productNo});">
+					<img src="${ h.productImg0 }" class="thumbnail"
+						onclick="goDetail(${h.productNo});">
 					<div style="font-size: 13px;">
-						<b>${ p.nickname }</b>
+						<b>${ h.nickname }</b>
 					</div>
-					<div class="title" style="height:50px;" onclick="goDetail(${p.productNo});">${ p.title }</div>
+					<div class="title" style="height:50px;" onclick="goDetail(${h.productNo});">${ h.title }</div>
 					<div id="likeArea">
 						<c:choose>
-							<c:when test="${ p.likeCk == 1 }">
+							<c:when test="${ h.likeCk == 1 }">
 								<img src="resources/images/heart2.png" width="20" height="20"
-									id="likeImg" onclick="likeCk(${p.productNo}, this);">
+									id="likeImg" onclick="likeCk(${h.productNo}, this);">
 							</c:when>
 							<c:otherwise>
 								<img src="resources/images/heart1.png" width="20" height="20"
-									id="likeImg" onclick="likeCk(${p.productNo}, this);">
+									id="likeImg" onclick="likeCk(${h.productNo}, this);">
 							</c:otherwise>
 						</c:choose>
-						<span id="likeCount">${ p.like}</span>
+						<span id="likeCount">${ h.like}</span>
 					</div>
 					<div>
-						<b> <span>${ p.price }</span>원
+						<b> <span>${ h.price }</span>원
 						</b>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
 		<script>
+				
+		
 				function goDetail(no) {
 				   location.href = "productMain.pr?pno=" + no;
 				}
@@ -145,29 +149,29 @@
 				<a href="storeSearchList.st" class="more_btn">+more</a>
 			</div>
 
-			<c:forEach var="p" items="${ list }" end="3">
+			<c:forEach var="n" items="${ nlist }" end="3">
 				<div class="item">
-					<img src="${ p.productImg0 }" class="thumbnail"
-						onclick="goDetail(${p.productNo});">
+					<img src="${ n.productImg0 }" class="thumbnail"
+						onclick="goDetail(${n.productNo});">
 					<div style="font-size: 13px;">
-						<b>${ p.memberNo }</b>
+						<b>${ n.memberNo }</b>
 					</div>
-					<div class="title" style="height:50px;" onclick="goDetail(${p.productNo});">${ p.title }</div>
+					<div class="title" style="height:50px;" onclick="goDetail(${n.productNo});">${ n.title }</div>
 					<div id="likeArea">
 						<c:choose>
-							<c:when test="${ p.likeCk == 1 }">
+							<c:when test="${ n.likeCk == 1 }">
 								<img src="resources/images/heart2.png" width="20" height="20"
-									id="likeImg" onclick="likeCk(${p.productNo}, this);">
+									id="likeImg" onclick="likeCk(${n.productNo}, this);">
 							</c:when>
 							<c:otherwise>
 								<img src="resources/images/heart1.png" width="20" height="20"
-									id="likeImg" onclick="likeCk(${p.productNo}, this);">
+									id="likeImg" onclick="likeCk(${n.productNo}, this);">
 							</c:otherwise>
 						</c:choose>
-						<span id="likeCount">${ p.like}</span>
+						<span id="likeCount">${ n.like}</span>
 					</div>
 					<div>
-						<b> <span>${ p.price }</span>원
+						<b> <span>${ n.price }</span>원
 						</b>
 					</div>
 				</div>

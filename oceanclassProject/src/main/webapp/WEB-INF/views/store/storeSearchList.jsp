@@ -6,26 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
 #outer {
 	width: 1200px;
 	margin: auto;
 	margin-top: 50px;
 }
-
 .items {
 	width: 100%;
 	margin-top: 50px;
 }
-
 .items_title {
 	font-size: 20px;
 }
@@ -70,52 +64,56 @@
 
 		<div id="selectBar" class="form-group">
 			<form action="storeSearchList.st" method="post">
-				<select class="form-control" name="sel1" id="sel1"
-					style="width: 15%; float: left; margin-right: 10px;">
-					<option value="1">CLASS PRODUCT</option>
-					<option value="2">OC EDITION</option>
-					<option value="3">DIY KIT</option>
-					<option selected style="display: none;">카테고리</option>
-				</select> <select id="order" class="form-control" name="sel2" id="sel2"
-					style="width: 15%;">
-					<option selected value="4">인기순</option>
-					<!-- 구매수 높은 순 -->
-					<option value="5">추천순</option>
+				<select class="form-control" name="sel1" id="categoryList" style="width: 15%; float: left; margin-right: 10px;" onchange="conditionCate();">
+					<option value="0" id="cate0">카테고리</option>
+					<option value="1" id="cate1">CLASS PRODUCT</option>
+					<option value="2" id="cate2">OC EDITION</option>
+					<option value="3" id="cate3">DIY KIT</option>
+				</select> 
+				<select id="order" class="form-control" name="sel2" style="width: 15%;" onchange="conditionArray();">
+					<option value="like" id="arrayLike">인기순</option>
 					<!-- 찜수 높은 순 -->
-					<option value="6">리뷰순</option>
+					<option value="date" id="arrayDate">최신순</option>
+					<option value="rev" id="arrayrev">리뷰많은순</option>
 				</select>
 			</form>
 		</div>
-		<div class="items">
-			<c:forEach var="p" items="${ list }">
-				<div class="item">
-					<img src="${ p.productImg0 }" class="thumbnail"
-						onclick="goDetail(${p.productNo});">
-					<div style="font-size: 13px;">
-						<b>${ p.nickname }</b>
-					</div>
-					<div class="title" style="height: 50px;"
-						onclick="goDetail(${p.productNo});">${ p.title }</div>
-					<div id="likeArea">
-						<c:choose>
-							<c:when test="${ p.likeCk == 1 }">
-								<img src="resources/images/heart2.png" width="20" height="20"
-									id="likeImg" onclick="likeCk(${p.productNo}, this);">
-							</c:when>
-							<c:otherwise>
-								<img src="resources/images/heart1.png" width="20" height="20"
-									id="likeImg" onclick="likeCk(${p.productNo}, this);">
-							</c:otherwise>
-						</c:choose>
-						<span id="likeCount">${ p.like}</span>
-					</div>
-					<div>
-						<b> <span>${ p.price }</span>원
-						</b>
-					</div>
+			
+		<c:choose>
+			<c:when test="${ empty list }">
+				<div style="margin-top:50px; width:100%; height:500px;">
+					검색 결과가 없습니다.
 				</div>
-			</c:forEach>
-		</div>
+			</c:when>
+			<c:otherwise>
+			<div class="items">
+				<c:forEach var="p" items="${ list }">
+					<div class="item">
+						<img src="${ p.productImg0 }" class="thumbnail" onclick="goDetail(${p.productNo});">
+						<div style="font-size: 13px;">
+							<b>${ p.nickname }</b>
+						</div>
+						<div class="title" style="height: 50px;" onclick="goDetail(${p.productNo});">${ p.title }</div>
+						<div id="likeArea">
+							<c:choose>
+								<c:when test="${ p.likeCk == 1 }">
+									<img src="resources/images/heart2.png" width="20" height="20" id="likeImg" onclick="likeCk(${p.productNo}, this);">
+								</c:when>
+								<c:otherwise>
+									<img src="resources/images/heart1.png" width="20" height="20" id="likeImg" onclick="likeCk(${p.productNo}, this);">
+								</c:otherwise>
+							</c:choose>
+							<span id="likeCount">${ p.like}</span>
+						</div>
+						<div>
+							<b> <span>${ p.price }</span>원
+							</b>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</c:otherwise>
+	</c:choose>
 
 		<div id="pagingArea">
 			<ul class="pagination">
@@ -125,29 +123,30 @@
 						<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link"
-							href="storeSearchList.st?cpage=${ pi.currentPage-1 }">Previous</a></li>
+						<li class="page-item"><a class="page-link" href="storeSearchList.st?cpage=${ pi.currentPage - 1 }&keyword=${ keyword }&category=${ category }&array=${ array }">Previous</a></li>
 					</c:otherwise>
 				</c:choose>
 
 				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-					<li class="page-item"><a class="page-link"
-						href="storeSearchList.st?cpage=${ p }">${ p }</a></li>
+					<li class="page-item"><a class="page-link" href="storeSearchList.st?cpage=${ p }&keyword=${ keyword }&category=${ category }&array=${ array }">${ p }</a></li>
 				</c:forEach>
-
+				
 				<c:choose>
 					<c:when test="${ pi.currentPage eq pi.maxPage }">
 						<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link"
-							href="storeSearchList.st?cpage=${ pi.currentPage+1 }">Next</a></li>
+						<li class="page-item"><a class="page-link" href="storeSearchList.st?cpage=${ pi.currentPage + 1 }&keyword=${ keyword }&category=${ category }&array=${ array }">Next</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
 		</div>
 
-	</div>
+	</div>	
+		<input type="hidden" id="currentPateDate" value="${ pi.currentPage }">
+		<input type="hidden" id="keywordData" value="${ keyword }">
+		<input type="hidden" id="categoryData" value="${ category }">
+		<input type="hidden" id="arrayData" value="${ array }">
 
 
 
@@ -234,6 +233,62 @@
     	           	    })
     	            }
     		}
+		
+        window.onload = function(){
+            
+            var cpageD = document.getElementById("currentPateDate");
+			var keywordD = document.getElementById("keywordData");
+			var categoryD = document.getElementById("categoryData");
+			var arrayD = document.getElementById("arrayData");
+			
+			var cate0 = document.getElementById("cate0");
+			var cate1 = document.getElementById("cate1");
+			var cate2 = document.getElementById("cate2");
+			var cate3 = document.getElementById("cate3");
+			
+			var arrayLike = document.getElementById("arrayLike");
+			var arrayDate = document.getElementById("arrayDate");
+			// 리뷰많은순
+			
+			switch(categoryD.value){
+				case '0' : cate0.selected = true; break;
+				case '1' : cate1.selected = true; break;
+				case '2' : cate2.selected = true; break;
+				case '3' : cate3.selected = true; break;
+			}
+			
+			switch(arrayD.value){
+				case 'like' : arrayLike.selected = true; break;
+				case 'date' : arrayDate.selected = true; break;
+				case 'rev' : arrayRev.selected = true; break;
+			}
+
+        }
+        
+		function conditionCate(){
+			// 방금 조회 해 올때의 기록
+			var cpageD = document.getElementById("currentPateDate");
+			var keywordD = document.getElementById("keywordData");
+			var arrayD = document.getElementById("arrayData");
+
+			// 새로운 기록
+			var category = document.getElementById("categoryList");
+			
+			location.href = "storeSearchList.st?cpage=" + cpageD.value + "&keyword=" + keywordD.value + "&category=" + category.value + "&array=" + arrayD.value;
+		}
+		
+		function conditionArray(){
+			// 방금 조회 해 올때의 기록
+			var cpageD = document.getElementById("currentPateDate");
+			var keywordD = document.getElementById("keywordData");
+			var categoryD = document.getElementById("categoryData");
+
+			// 새로운 기록
+			var array = document.getElementById("order");
+
+			location.href = "storeSearchList.st?cpage=" + cpageD.value + "&keyword=" + keywordD.value + "&category=" + categoryD.value + "&array=" + array.value;
+			
+		}
 		
 	</script>
 

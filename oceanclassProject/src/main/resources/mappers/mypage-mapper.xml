@@ -74,6 +74,7 @@
 		<result column="reading_status" property="readingCheck" />
 		<result column="cl_name" property="clName" />
 		<result column="cl_img" property="clImg" />
+		<result column="category" property="category" />
 	</resultMap>
 	
 	<resultMap id="classReviewResult" type="ClassReview">
@@ -254,6 +255,8 @@
 		  FROM COUPONLIST
 		  JOIN COUPON ON (COUPON.CNO = COUPONLIST.CNO)
 		 WHERE MNO = #{memNo}
+		 ORDER
+		    BY coupon.dedate DESC
 	</select>
 	
 	<select id="selectPointCount" resultType="_int">
@@ -275,13 +278,15 @@
 		     , mno
 		     , type
 		     , to_char(p_date, 'YYYY-MM-DD') as "p_date"
-		     , p_price
+		     , (p_price)*0.05 as "p_price"
 		     , reason
 		     , to_char(deadline, 'YYYY-MM-DD') as "deadline"
 		     , status
 		  from point
 		 where mno = #{memNo}
 		   and status = 1
+		 order
+		 	by pno desc
 	</select>
 	
 	<select id="PointMinusList" resultMap="pointResult">
@@ -297,6 +302,8 @@
 		  from point
 		 where mno = #{memNo}
 		   and status = 2
+		 order
+		 	by pno desc
 	</select>
 	
 	
@@ -395,6 +402,22 @@
 		    by qno desc
 	</select>
 	
+	<select id="ajaxSearchQnaDate" resultMap="myQnaResult">
+		select
+		       qno
+		     , category
+		     , q_title
+		     , q_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , a_content
+		     , a_date
+		  from qna
+		 where mno = #{memNo}
+		   and create_date between #{sDate} and #{eDate}
+		 order
+		    by qno desc
+	</select>
+	
 	
 <!-- 클래스 -->
 	<select id="selectMyClass" resultMap="myClassOrderResult">
@@ -403,6 +426,7 @@
 		     , c.clno
 		     , cl_name
 		     , cl_img
+		     , category
 		  from class c   		
 		  join class_order co on (c.clno = co.clno)
 		 where co.mno = #{memNo}
@@ -417,6 +441,7 @@
 		     , c.clno
 		     , cl_name
 		     , cl_img
+		     , category
 		     , case when reading_status = 'Y' then '수강중'
 		     	    when reading_status = 'N' then '수강전'
 		     		when reading_status = 'E' then '수강종료' end as reading_status
@@ -522,7 +547,7 @@
 		     , filepath
 		     , cs.status
 		     , answer_content
-		     , answer_date
+		     , to_char(answer_date, 'YYYY-MM-DD') as "answer_date" 
 		     , cl_name as "cl_name"
 		  from cs_qna cs
 		  join class c on ( cs.refer_no = c.clno)
@@ -588,6 +613,30 @@
 		    by cs_qno desc
 	</select>
 	
+	<select id="ajaxShoppingQna" resultMap="csResult">
+		select 
+		       cs_qno
+		     , cs.mno
+		     , gb_no
+		     , refer_no
+		     , cs.title
+		     , content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , filepath
+		     , cs.status
+		     , answer_content
+		     , to_char(answer_date, 'YYYY-MM-DD') as "answer_date" 
+		     , s.title as "pro_title"
+		  from cs_qna cs
+		  join store s on ( cs.refer_no = s.pno)
+		 where cs.cs_qno = 20
+		   and gb_no = 2
+		   and cs.status = 'Y'
+		   and s.status = 'Y'
+		 order 
+		    by cs_qno desc
+	</select>
+	
 	<select id="shoppingReviewCount" resultType="_int">
 		select count(*)
 		  from s_review
@@ -637,6 +686,8 @@
 		  from pay p 
 		  join store s on (p.pno = s.pno)
 		 where p.mno = #{memberNo}
+		 order
+		    by order_no desc
 	</select>
 	
 	<select id="selectShopping" resultMap="storePayResult">
@@ -658,6 +709,8 @@
 		  join store s on (p.pno = s.pno)
           join member m on (p.mno = m.mno)
 		 where order_no = #{orderNo}
+		 order
+		    by order_no desc
 	</select>
 	
 	<select id="searchShoppingList" resultMap="storePayResult">
@@ -677,6 +730,8 @@
 		  join store s on (p.pno = s.pno)
 		 where p.mno = #{memberNo}
 		   and pay_date between sysdate - #{payDate} and sysdate
+		 order
+		    by order_no desc	
 	</select>
 	
 	<select id="ajaxSearchDate" resultMap="storePayResult">
@@ -696,6 +751,8 @@
 		  join store s on (p.pno = s.pno)
 		 where p.mno = #{memberNo}
 		   and pay_date between #{startDate} and #{endDate}
+		 order
+		    by order_no desc
 	</select>
 	
 </mapper>
