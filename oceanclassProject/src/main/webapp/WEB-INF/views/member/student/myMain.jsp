@@ -13,22 +13,16 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.conhead{
-        width: 100%;
-	    height: 15%;
-	}
-	.content1{
-	    width: 100%;
-	    height: 30%;
-	}
+	.conhead{width: 100%; height: 15%;}
+	.content1{width: 100%; height: 30%; margin-top: 20px;}
 	.conhead>h2{width: 30%; font-weight: 900;}
 	.conhead>a{float: right; margin-top: -30px;}
     .item{width:25%; float:left; margin: 30px; margin-top: 40px; overflow: hidden;}
     .item img{display:block; width: 100%; height: 130px;}
-    .item>p{text-align: center; font-size: 20px; font-weight: 600;}
+    .item>p{text-align: center; font-size: 16px; font-weight: 600;}
     a{text-decoration: none; color: black; font-weight: 600;}
-	#move{width: 100%; height: 120px; border:none;}
-    #move>#img{display:block; width: 100%; height: 100%;}
+    #classImg:hover{cursor: pointer;}
+    #proImg:hover{cursor: pointer;}
 </style>
 </head>
 <body>
@@ -50,8 +44,8 @@
 			            	<input type="hidden" value="${c.clNo}">
 			            	<p id="ctitle">
 				            	<c:choose>
-				            		<c:when test="${fn:length(c.clName) gt 12}">
-				            			<c:out value="${fn:substring(c.clName, 0, 11)}"></c:out>
+				            		<c:when test="${fn:length(c.clName) gt 15}">
+				            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
 				            			..
 				            		</c:when>
 				            		<c:otherwise>
@@ -77,14 +71,14 @@
 	        	<c:otherwise>
 			        <c:forEach var="c" items="${classLikeList}" begin="0" end="2">
 			            <div class="item">
-			            	<form id="classDetail" method="post" action="classDetail.me">
-			            		<input type="hidden" id="referNo" name="referNo" value="${c.clNo}">
-				                <button id="move" type="submit"><img src="${c.clImg}" id="img"></button>
-				            </form>
+			            	<div class="img">
+			            		<input type="hidden" value="${c.clNo}">
+			            		<img src="${c.clImg}" id="classImg">
+				            </div>
 			            	<p id="ctitle">
 				            	<c:choose>
-				            		<c:when test="${fn:length(c.clName) gt 12}">
-				            			<c:out value="${fn:substring(c.clName, 0, 11)}"></c:out>
+				            		<c:when test="${fn:length(c.clName) gt 15}">
+				            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
 				            			..
 				            		</c:when>
 				            		<c:otherwise>
@@ -110,10 +104,10 @@
 	        	<c:otherwise>
 			        <c:forEach var="s" items="${storeLikeList}" begin="0" end="2">
 			            <div class="item">
-			            	<form id="productMain" method="post" action="productMain.pr">
-			            		<input type="hidden" id="pno" name="pno" value="${s.productNo}">
-				                <button id="move" type="submit"><img src="${s.productImg0}" id="img"></button>
-				            </form>
+			            	<div class="img">
+			            		<input type="hidden" value="${s.productNo}">
+			            		<img src="${s.productImg0}" id="proImg">
+				            </div>
 			            	<p id="ctitle">
 				            	<c:choose>
 				            		<c:when test="${fn:length(s.title) gt 30}">
@@ -130,6 +124,19 @@
 		    	</c:otherwise>			        
 	        </c:choose>
 	    </div>  
+	    
+	    <script>
+		    $(".item #classImg").click(function(){
+		   		let clNo = $(this).prev().val();
+		   		location.href = "classDetail.me?referNo=" + clNo;
+		   	})
+	    
+        	$(".item #proImg").click(function(){
+        		let pno = $(this).prev().val();
+        		location.href = "productMain.pr?pno=" + pno;
+        	})
+        </script>
+	    
 	</div>
 </body>
 </html>
