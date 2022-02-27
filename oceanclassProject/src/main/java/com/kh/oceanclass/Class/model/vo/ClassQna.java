@@ -27,4 +27,6 @@ public class ClassQna {
 	private String filePathMessage;
 	private String teacherNick;
 	
+	private String nickname;
+	
 }

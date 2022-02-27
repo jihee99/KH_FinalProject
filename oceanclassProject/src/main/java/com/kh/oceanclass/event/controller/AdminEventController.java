@@ -121,9 +121,9 @@ public class AdminEventController {
 		
 	}
 	@RequestMapping("evEnd.ad")
-	public String endEvent(int eno, String filePath, Model model, HttpSession session) {
+	public String endEvent(int eventNo, String filePath, Model model, HttpSession session) {
 		
-		int result = aeService.endEvent(eno);
+		int result = aeService.endEvent(eventNo);
 		
 		if(result > 0) {
 			
