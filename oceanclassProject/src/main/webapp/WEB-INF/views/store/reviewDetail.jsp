@@ -26,7 +26,7 @@
     .review_list{margin-bottom: 60px; height: auto; margin-left: 30px;}
     .user_detail>button{background:none; border: none; font-weight: bold; font-size: 13px; cursor: pointer;}
     .user_detail{width: 400px; height: 80px;}
-    .user_image{width: 50px; height: 50px; border: 1px solid; position:inline-block; float:left; margin-right: 10px;}
+    .user_image{width: 50px; height: 50px;position:inline-block; float:left; margin-right: 10px;}
     .product_name_small{font-size: small; color: rgb(88, 88, 88);}
     .content{font-family: 본고딕; font-size: 15px; display:inline-block; width:650px; height: auto; margin-bottom: 10px;}
     .recommend{width: 200px; height: 30px; margin-right: 10px; cursor: pointer; background:rgb(211, 212, 212); border: none; border-radius: 5px;}
@@ -115,19 +115,32 @@
 			                        			<img src="">
 			                        		</c:when>
 			                        		<c:otherwise>
-			                        			<img src="${r.profile}">
+			                        			<img src="${r.profile}" width="50px" height="50px">
 			                        		</c:otherwise>
 			                        	</c:choose>
 			                        </div>
-			                        <span>
-			                            <i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i><i class="fas fa-star" style="color: rgb(255, 217, 0);"></i>
-			                        </span><br>
+									<div class="star-ratings" style="display:inline-block;">
+										<div class="star-ratings-fill space-x-2 text-sm" style="width:${r.rating*20}%; font-size:20px;">
+											<span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span>
+										</div>
+										<div class="star-ratings-base space-x-2 text-sm">
+											<span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span><span style="font-size:20px;">★</span>
+										</div>
+									</div>
+			                        <br>
 			                        <span class="user_name">${r.nickname }</span>
 			                        <span class="enroll_date">${r.reviewDate }</span>
 			            			<input type="hidden" id="refBNo" neme="refBNo" value="${r.reviewNo}">
                         			<input type="hidden" id="reportMemNo" name="reportMemNo" value="${r.memberNo}">
+                        			<input type="hidden" id="memNo" value="${r.memberNo}">
 			                        <button type="button" data-toggle="modal" data-target="#report">신고</button>
 			                    </div>
+			                    <c:if test="${ loginUser.memNo == r.memberNo }">
+			               	    	<div style="float:right; margin-top:5px;">
+				                    	<button type="button" onclick="reviewUpdate(${r.reviewNo});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">수정</button>
+				                    	<button type="button" onclick="reviewDelete(${r.reviewNo});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
+			                    	</div>
+                    			</c:if>
 			                    <div class="review_content">
 			                        <span class="product_name_small">${p.title }</span> <br>
 			                        <span class="content">${ r.content }</span>
@@ -143,29 +156,44 @@
 		                        	</c:choose>
 			                    </div>
 			                    <div class="recommend_area">
-			                        <button type="button" class="recommend"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
+			                    	<button type="button" class="recommend" onclick="recommendCk(${r.reviewNo});"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
+				                        
 			                        <span style="font-weight:bold;">${r.reconum }</span>명에게 도움이 되었어요.
 			                    </div>
 			                </div>
 	           			</div>
            			</c:forEach>
-		            <div id="pagingArea">
-		                <ul class="pagination">
-		                	<c:if test="${ pi.currentPage > 1 }">
-									<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ pi.currentPage - 1 }&pno=${ reviewPno }">Previous</a></li>
-							</c:if>
-							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-									<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ p }&pno=${ reviewPno }">${ p }</a></li>
-							</c:forEach>
-							<c:if test="${ pi.currentPage != pi.maxPage }">
-									<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ pi.currentPage + 1 }&pno=${ reviewPno }">Next</a></li>
-							</c:if>
-		                </ul>
-		            </div>
+
+		  <div id="pagingArea">
+			<ul class="pagination">
+
+				<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ pi.currentPage - 1 }&pno=${ reviewPno }">Previous</a></li>
+					</c:otherwise>
+				</c:choose>
+
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ p }&pno=${ reviewPno }">${ p }</a></li>
+				</c:forEach>
+				
+				<c:choose>
+					<c:when test="${ pi.currentPage eq pi.maxPage }">
+						<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="reviewList.st?cpage=${ pi.currentPage + 1 }&pno=${ reviewPno }">Next</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
         		</c:when>
         		<c:otherwise>
-        			<h2 align="center">아직 리뷰가 없어요... <br>
-        			   첫번째 리뷰를 작성해주세요! </h2>
+        			<h4 align="center">아직 리뷰가 없어요... <br>
+        			   첫번째 리뷰를 작성해주세요! </h4>
         		</c:otherwise>
         	</c:choose>
 
@@ -217,6 +245,7 @@
 		
 	<script>
 	
+	// 신고 ajax
     function rpdata(){
         var rpValue = $('input[name=radio]:checked').val();
         if(rpValue == 25){
@@ -248,7 +277,6 @@
         
     }
 	
-	
     $("input:radio[name=radio]").click(function(){
         // value값이 5인 라디오버튼 체크시에만 text-area 활성화
         if($("input[name=radio]:checked").val() == "25"){
@@ -258,6 +286,46 @@
         }
 
     })
+    
+    // 추천 ajax
+       	function recommendCk(rno){
+   		if(document.getElementById("memNo").value == ""){
+               alert("로그인 후 이용 가능한 서비스 입니다.");
+           } else if('${loginUser.memNo}' == '${ srm.memberNo }'){
+           	alert("본인의 후기는 추천할 수 없습니다.");
+           } else {
+           	$.ajax({
+           		url:"recommendStore.st",
+           		data:{reviewNo:rno,
+           		     memberNo:document.getElementById("memNo").value},
+           		success:function(result){
+           			if(result == "dd"){
+           				alert("해당 리뷰의 추천을 제거하였습니다.");
+           			}else if(result == "ss"){
+           				alert("추천 제거 실패되었습니다.")
+           			}else if(result == "gg"){
+           				alert("추천완!");
+           			}else{
+           				alert("추천실패");
+           			}
+           			
+           		}
+           	})
+           }
+   	}
+    
+	function reviewUpdate(reviewNo){
+       location.href = "reviewUpdatePage.st?rno=" + reviewNo;
+    }
+	
+	function reviewDelete(reviewNo){
+        confirm("정말로 삭제하시겠습니까?");
+        
+        $.ajax({
+        	
+        })
+    }
+	
 		
 	</script>
 </body>

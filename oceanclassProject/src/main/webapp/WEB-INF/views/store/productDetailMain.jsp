@@ -54,13 +54,12 @@
 }
 .quick_menu{
     width: 350px;
-    height: 400px;
-    position: sticky;
-    overflow:auto;
-    top: 53px;
-    right: 350px;
-    background:rgba(212, 212, 212, 0.493);
-    z-index:10;
+    height: 350px;
+    display: inline-block;
+    background-color: #eeeeee91;
+    position: fixed;
+    margin-left:40px;
+    border-radius:10px;
 }
 .product_discription{
     width:200px;
@@ -70,16 +69,18 @@
 
 .product_merchant_name{font-size: 15px;}
 .product_name{font-size: 20px;}
-.price_area{float: right; height: 120px; margin-right: 10px;}
-.discount_persent{font-size: 23px; font-family: sans-serif; font-weight: bold; color: steelblue;}
+.price_area{float: right; height: 90px; margin-right: 10px;}
+.discount_persent{font-size: 23px; font-family: sans-serif; font-weight: bold; color:#6babd5;}
 .price {font-size: 20px;}
-.price_area>s{font-size:15px; color: rgb(146, 144, 144);position: absolute; right: 15px;}
+.price_area>s{font-size:15px; color: #6babd5;position: absolute; right: 15px;}
 .in_cart, .heart {
     width: 150px;
     height: 40px;
     margin-bottom: 5px;
+    border-radius:5px;
+    border:none;
 }
-.buy_now{width:305px; height: 40px; background: #4b81c8d8; color: white;}
+.buy_now{width:305px; height: 40px; background: #6babd5; color: white;border-radius:5px; border:none;}
 .button_area{position: absolute; left: 22px;}
 .product_title_image>img{ width:100%; height:100%; object-fit: cover;}
 .product_detail_image>img{width: 100%; object-fit: cover;}
@@ -108,9 +109,9 @@
 #tab-1:checked ~ .tab label:nth-child(1),
 #tab-2:checked ~ .tab label:nth-child(2),
 #tab-3:checked ~ .tab label:nth-child(3),
-#tab-4:checked ~ .tab label:nth-child(4) {
-	background-color: #4b81c8d8;
-	color:white;
+#tab-4:checked ~ .tab label:nth-child(4),
+#tab-5:checked ~ .tab label:nth-child(5) {
+	color:#6babd5;
     box-shadow: none;
 }
 .content > div {
@@ -119,14 +120,14 @@
 #tab-1:checked ~ .content div:nth-child(1),
 #tab-2:checked ~ .content div:nth-child(2),
 #tab-3:checked ~ .content div:nth-child(3),
-#tab-4:checked ~ .content div:nth-child(4)  {
+#tab-4:checked ~ .content div:nth-child(4),
+#tab-5:checked ~ .content div:nth-child(5)  {
 	display: block;
 }
 
 .content > div{
    padding: 30px;
    line-height: 1.5;
-   font-size: 17px;
 }
 </style>
 </head>
@@ -152,12 +153,13 @@
 				  <input type="radio" id="tab-2" name="show" />
 				  <input type="radio" id="tab-3" name="show" />
 				  <input type="radio" id="tab-4" name="show" />
+				  <input type="radio" id="tab-5" name="show" />
 				  <div class="tab">
 					  <label for="tab-1">상품소개</label>
 					  <label for="tab-2">상품리뷰</label>
 					  <label for="tab-3">상품문의</label>
 					  <label for="tab-4">배송일정</label>
-					  <label for="tab-4">환불정책</label>
+					  <label for="tab-5">환불정책</label>
 				  </div>
 	            <hr>
 	            <br>
@@ -167,7 +169,7 @@
 			            <div class="product_detail_image">
 			                <img src="${ p.productImg1 }">
 			                
-			                <p>상품소개글 상품소개글</p>
+			                <p> <!-- 상품 소개글 --></p>
 			            </div>			
 					</div>
 					
@@ -181,6 +183,18 @@
 		            <div class="content-dis">
 		            	<jsp:include page="productDetailQna.jsp"/>
 		            </div>
+		            
+		            <!-- 4 -->
+		            
+		            <div class="content-dis">
+		            	<jsp:include page="productDetailDelivery.jsp"/>
+		            </div>
+		            
+		            <!-- 5 -->
+		            <div class="content-dis">
+		            	<jsp:include page="productDetailDelivery.jsp"/>
+		            </div>
+		            
 				</div>
             
             </div>
@@ -200,15 +214,17 @@
                 <span class="price">${ p.price } 원</span>
             </div>
             <br><br>
-            <select name="productOption" id="productOption" style="width: 305px; height: 40px; margin-left:22px;">
-                <option value="0" selected>옵션선택</option>
-            	<c:forEach var="o" items="${ list }">
-					<option value="${ o.optionNo }" >${ o.optionName }
-					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-													 ${ o.price }</option>                
-                </c:forEach>
-            </select>
-            <br><br>
+            <c:if test="${ !empty list }">
+	            <select name="productOption" id="productOption" style="width: 305px; height: 40px; margin-left:22px; margin-bottom:5px;" onchange="optionChange();">
+	                <option value="0" selected>옵션선택</option>
+	            	<c:forEach var="o" items="${ list }">
+						<option value="${ o.optionNo }" >${ o.optionName }
+						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+														 ${ o.price }</option>                
+	                </c:forEach>
+	            </select>
+            </c:if>
+            <br>
             <div class="button_area" align="center">
                 <button type="button" class="in_cart" onclick="inCart(${p.productNo});">장바구니</button>
                 <button type="button" class="heart" onclick="likeCk(${p.productNo});">
@@ -224,11 +240,29 @@
 		                <span id="likeCount">${ p.like }</span>
 	                </div>
                 </button> <br>
-                <button type="button" class="buy_now">바로구매</button>
+                <button type="button" class="buy_now" onclick="goPay(${p.productNo});">바로구매</button>
             </div>
         </div>
     
     <script>
+    
+    function goPay(pno){
+    	
+		/*
+	    function optionChange(){
+	   		   var optionList = document.getElementById("productOption")
+	   		   var opNo = optionList.options[optionList.selectedIndex].value
+	   		   
+	   		   location.href = "payEnrollForm.st?pno=" + pno + "&& opNo=" + opNo;
+	    }
+    	*/
+		
+    	if(document.getElementById("memNo").value == ""){
+            alert("로그인 후 이용 가능한 서비스 입니다.");
+    	   }else{
+    		   location.href = "payEnrollForm.st?pno=" + pno;
+    	   }
+    }
     
 	function likeCk(pno){
 		//console.log(window.event.target);
@@ -286,6 +320,30 @@
         		 }
         	 })
          }
+	}
+	
+	function reviewUpdate(){
+		
+		
+        	 $.ajax({
+        		 url:"inCart.st",
+        		 data:{
+        			 memberNo:document.getElementById("memNo").value,
+        			 productNo:pno,
+        			 optionNo:$("#productOption option:selected").val()
+        		 }, success:function(result){
+        			 if(result == "ss"){
+        				 confirm("장바구니에 추가 되었습니다! 장바구니로 이동하시겠습니까?");
+        				 location.replace('cart.st');
+        			 }else if(result == "dd"){
+        				 alert("수량이 추가되었습니다!");
+        			 }
+        		 },error: function(){
+        			 console.log("통신실패!");
+        		 }
+        	 })
+         }
+	  }
 	}
 	
 	

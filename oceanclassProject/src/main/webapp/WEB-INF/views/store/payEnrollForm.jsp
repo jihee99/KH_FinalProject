@@ -1,29 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="./resources/css/cartStyle.css"rel="stylesheet" type="text/css">
+<link href="./resources/css/store/cartStyle.css"rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 <link type="text/css" rel="stylesheet" href="https://img-shop.pstatic.net/cart/static/pc/20220119/136/css/global.css?1642573329292">
-<link rel="shortcut icon" href="https://ssl.pstatic.net/imgshopping/search/m/static/20191226163224/favicon.ico">
 <link type="text/css" rel="stylesheet" href="https://img-shop.pstatic.net/cart/static/pc/20220119/136/css/app.css?1642573329292">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://js.tosspayments.com/v1"></script>
+<script src="https://nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
 <style>
-    .total{width: 1000px; font-size: 15px;}
-    .total>th{background-color: lightgrey;}
-    .total>td{background-color: rgba(236, 236, 236, 0.863);}
-    .submit{background: rgb(147, 186, 230); color: white; width: 500px; display:block; margin: auto;}
+.total{width: 1000px; font-size: 15px;}
+.total>th{background-color: lightgrey;}
+.total>td{background-color: rgba(236, 236, 236, 0.863);}
+.submit{background: rgb(107, 171, 213); color: white; width: 500px; display:block; margin: auto; height:50px; font-size:20px; border-radius:5px;}
 
-    .shipment_info>input{width:500px; height: 30px;}
+.shipment_info>input{width:500px; height: 30px;}
 
-    .flex_area{display: flex;}
-    .left_area{flex:3.5;}
-    .right_area{flex: 1;}
-    .user_info{background: lightgrey; width: 300px; height: 300px;}
+.flex_area{display: flex;}
+.left_area{flex:3.5;font-size:15px;}
+.right_area{flex: 1;}
+.user_info{background: lightgrey; width: 300px; height: 300px;}
+
+.payBtn{width:300px; height:40px; font-size:15px; border:3px solid #6babd5; border-radius:10px; margin:10px; mouse:cursor; }
 </style>
 </head>
 <body>
@@ -81,13 +85,13 @@
                             <div class="product_desc_wrap">
                                 <div class="product_description">
                                     <span class="product_thumb">
-                                        <img src=""  class="product_img">
+                                        <img src="${ p.productImg0 }"  class="product_img">
                                     </span>
-                                    <a href="#" class="product_merchant_name" target="_blank">판매처이름</a> <br>
-                                    <span class="product_name">상품명 상품명 상품명</span>
+                                    <a href="#" class="product_merchant_name" target="_blank">${ p.nickname }</a> <br>
+                                    <span class="product_name" id="productName">${p.title }</span>
                                     <span class="product_price_area">
-                                        <span class="product_price_sale">
-                                            9,500
+                                        <span class="product_price_sale" id="price">
+                                            ${ p.price }
                                             <span class="unit">원</span>
                                         </span>
                                     </span>
@@ -151,10 +155,10 @@
                         </td>
                         <td class="table_cell">
                             <div class="product_price">
-                                <s>5,000</s>
+                                <s>50,000</s>
                                 <span>원</span>
                                 <em class="product_detail_price">
-                                    4,000
+                                    ${ p.price }
                                     <span class="unit">원</span>
                                 </em>
                             </div>
@@ -226,21 +230,20 @@
                     <br>
                     <div class="shipment_info">
                         <span>받으시는 분</span> <br>
-                        <input type="text" placeholder="도지현"><br><br>
+                        <input type="text" placeholder="${m.userName }"><br><br>
                         <span>휴대폰 번호</span> <br>
-                        <input type="text" placeholder="01075183618"><br><br>
+                        <input type="text" placeholder="${m.phone }"><br><br>
                         <span>배송주소</span><br>
-                        <input type="text" id="sample6_postcode" placeholder="우편번호">
-                        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="width: 100px;"><br>
-                        <input type="text" id="sample6_address" placeholder="주소"><br>
-                        <input type="text" id="sample6_detailAddress" placeholder="상세주소">
+                        <input type="text" id="address_kakao" placeholder="주소">
+                        <input type="button" id="address" value="주소 찾기" style="width: 100px;"><br>
+                        <input type="text" id="detail" name="address_detail" placeholder="상세주소">
                         <br>
                         <span>베송 요청사항</span><br>
                         <select name="" id="">
-                            <option value="">요청사항을 직접 입력합니다.</option>
                             <option value="">집앞에 놔주세요.</option>
                             <option value="">배전함에 넣어주세요.</option>
                             <option value="">경비실에 맡겨주세요.</option>
+                            <option value="">요청사항을 직접 입력합니다.</option>
                         </select>
                     </div> 
                     
@@ -251,13 +254,17 @@
         
                     <div class="coupon">
                         <span>쿠폰</span>
-                        <input type="text" placeholder="0원"><button type="button">쿠폰변경</button>
+                        <select>
+                        	<option></option>
+                        	<option></option>
+                        </select>
+                        <button type="button">쿠폰사용</button>
                         <span>사용 가능한 쿠폰 0개</span>                
                     </div>
         
                     <div class="point">
                         <span>포인트</span>
-                        <input type="text" placeholder="0원"><button type="button">전액사용</button>
+                        <input type="text" placeholder="0" step="1000" onkeyup="inputNumberFormat(this)">원<button type="button">전액사용</button>
                         <span>사용 가능한 포인트 0원</span>                
                     </div>
     
@@ -266,9 +273,8 @@
                 <div class="right_area">
                     <div class="user_info">
                         <h3>주문자 정보</h3> <br>
-                        <span>도지현</span><br>
-                        <span>010-7**8-3**8</span> <button>수정</button> <br>
-                        <span>wl***@naver.com</span> <button>수정</button>
+                        <span id="customerName">${ m.userName }</span><br>
+                        <span>${ m.phone }</span> <button>수정</button> <br>
                         <hr>
                     </div>
                 </div>
@@ -285,21 +291,32 @@
                     <th>최종 가격</th>
                 </tr>
                 <tr>
-                    <td>5,000원</td>
-                    <td>2,500원</td>
-                    <td>1,000원 할인 쿠폰 적용</td>
-                    <td>6,500원</td>
+                    <th>5,000원</th>
+                    <th>2,500원</th>
+                    <th>1,000원 할인 쿠폰 적용</th>
+                    <th>6,500원</th>
                 </tr>
             </table>
             <br><br>
             
-            <h3>결제 방식</h3>
-            <button type="button">카드결제</button>
-            <button type="button">무통장입금</button>
-            <button type="button">네이버페이</button> <br>
-            <button type="button">토스</button>
-            <button type="button">카카오페이</button>
-            <button type="button">휴대폰결제</button>
+            <h3>결제 방식</h3> <!-- table  -->
+            <table class="total">
+                <tr>
+                    <th><button type="button" class="payBtn">카드결제</button></th>
+                    <th><button type="button" class="payBtn">무통장입금</button></th>
+                    <th><button type="button" class="payBtn" onclick="naver();">네이버페이</button></th>
+                </tr>
+                <tr>
+                    <th><button type="button" class="payBtn" onclick="toss();">토스</button></th>
+                    
+                    <th>
+                    	<form action="post" action="/kakaoPay">
+                    	<img src="./resources/images/store/kakaoPay.png" onclick="kakaoPay();">
+                    	</form>
+                    </th>
+                    <th><button type="button" class="payBtn">휴대폰결제</button></th>
+                </tr>
+            </table>
 
             <br><br>
             <button type="button" class="submit">결제하기</button>
@@ -307,54 +324,83 @@
     </div>
 
 
-    <script>
-        function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	window.onload = function(){
+	    document.getElementById("address").addEventListener("click", function(){ //주소입력칸을 클릭하면
+	        //카카오 지도 발생
+	        new daum.Postcode({
+	            oncomplete: function(data) { //선택시 입력값 세팅
+	                document.getElementById("address_kakao").value = data.address; // 주소 넣기
+	                document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+	            }
+	        }).open();
+	    });
+	}
+	
+	// 1000단위마다 콤마 찍기
+	 function inputNumberFormat(obj) {
+	     obj.value = comma(uncomma(obj.value));
+	 }
+	 
+	 function comma(str) {
+	     str = String(str);
+	     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	 }
+	 
+	 function uncomma(str) {
+	     str = String(str);
+	     return str.replace(/[^\d]+/g, '');
+	 }
+	</script>
+	
+	<script>
+	
+	
+	var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+	var tossPayments = TossPayments(clientKey)
+	
+	function toss(){
+	  tossPayments.requestPayment('카드', {
+		  amount: '15000',
+		  orderId: 'UprQtrHrBCwVBIutU40bD',
+		  orderName: '토마토',
+		  customerName: '도지현',
+		  successUrl: 'http://localhost:8080/success',
+		  failUrl: 'http://localhost:8080/fail',
+		})
+		
+		
+	}
+	
+	    var oPay = Naver.Pay.create({
+	        "mode" : "production", // development or production
+	        "clientId": "u86j4ripEt8LRfPGzQ8" // clientId
+	    });
 
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
+	function naver(){
+	  //직접 만든 네이버페이 결제 버튼에 click 이벤트를 할당하세요.
+	  var elNaverPayBtn = document.getElementById("naverPayBtn");
+	  elNaverPayBtn.addEventListener("click", function() {
+	
+	  oPay.open({
+	        "merchantUserKey": "가맹점 사용자 식별키",
+	        "merchantPayKey": "가맹점 주문 번호",
+	        "productName": "상품명을 입력하세요",
+	        "totalPayAmount": "1000",
+	        "taxScopeAmount": "1000",
+	        "taxExScopeAmount": "0",
+	        "returnUrl": "사용자 결제 완료 후 결제 결과를 받을 URL"
+	      });
+	 });
+		
+	}
+	
+	function kakaoPay(){
+		location.href = "https://kapi.kakao.com";
+	}
 
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
 
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
-                
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
-    }
-    </script>
+	</script>
 </body>
 </html>
