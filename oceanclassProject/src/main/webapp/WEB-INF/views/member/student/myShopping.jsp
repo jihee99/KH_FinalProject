@@ -259,7 +259,6 @@
 									 + '<tr>'
 									 +    '<td> 주소 : ' + result.address + '</td>'
 									 + '</tr>'
-								console.log(pay);
 								$(".modal-body").html(pay);	
 							},error:function(){
 								console.log("주문 상세보기 실패")
