@@ -14,8 +14,8 @@ public class InstructorStarChart {
 	// 상품별 만족도
 	// 필요컬럼
 	// 상품번호, 별점, 수
-	private int productNo;
-	private int star;
-	private int starCount;
+	private int productNo;		//DB COULUMN pno
+	private int star;			//DB COULUMN star
+	private int starCount;		//DB COULUMN count
 	
 }
