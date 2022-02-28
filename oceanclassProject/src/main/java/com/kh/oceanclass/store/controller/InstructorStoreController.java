@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -366,24 +367,23 @@ public class InstructorStoreController {
 	
 	@ResponseBody
 	@RequestMapping(value="sosearchF.in", produces="application/json; charset=UTF-8")
-	public String searchStoreOrder(@RequestParam(value="cpage", defaultValue="1") int currentPage, String orderStatus) {
+	public Map<String, Object> searchStoreOrder(@RequestParam(value="cpage", defaultValue="1") int currentPage, String orderStatus) {
 //		HashMap<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap();
 		
 		int listCount = inStoreService.searchStoreOrderCount(orderStatus);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<StoreOrder> list = inStoreService.searchStoreOrderList(orderStatus, pi);
-//		System.out.println(orderStatus);
-//		System.out.println(pi);
-//		System.out.println(list);
+		System.out.println(orderStatus);
+		System.out.println(pi);
+		System.out.println(list);
 		
-//		JSONArray jArr = new JSONArray();
-		
-//		JSONObject jObj = new JSONObject();
-//		jObj.put("pi", pi.toString());
-//		jObj.put("list", jArr);
+
+		map.put("pi", pi.toString());
+		map.put("list", list);
 
 		//return jObj.toJSONString();
-		return new Gson().toJson(list);
+		return map;
 
 	}
 	
@@ -484,7 +484,6 @@ public class InstructorStoreController {
 	public String productReviewCountAjax(String pno) {
 		StoreReview sr = inStoreService.selectStoreProductReviewCount(pno);
 		
-		System.out.println(sr);
 		return new Gson().toJson(sr);
 	}
 	
@@ -573,6 +572,20 @@ public class InstructorStoreController {
 
 		model.addAttribute("rp",rp);
 		
+		return "member/common/reportWindow";
+	}
+	
+	@RequestMapping(value="srreport.in")
+	public String reviewReportForm(String rno, Model model) {
+		StoreReview sr = inStoreService.selectStoreReviewDetail(rno);
+		Report rp = new Report();
+		System.out.println(sr);
+		rp.setReportMemNo(Integer.toString(sr.getMemberNo()));
+		rp.setRefCategory("SR");
+		rp.setRefBNo(Integer.toString(sr.getReviewNo()));
+		rp.setRpContent(sr.getContent());
+		System.out.println(rp);
+		model.addAttribute("rp", rp);
 		return "member/common/reportWindow";
 	}
 	

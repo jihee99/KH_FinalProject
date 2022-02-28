@@ -15,6 +15,12 @@
 <link rel="stylesheet" href="./resources/css/store/instructorStoreDeliveryOrderList.css">
 
 <style>
+	.wrap{
+	        width: 1000px;
+	        height: auto;
+	        margin: auto;
+	        margin-top: 50px;
+	    }
 	.content_1_left>b{font-size: 17px;}
 	.content_1_center{width: 20%;}
 	.content_1_right{width: 60%; float: right;}
@@ -25,7 +31,7 @@
 </style>
 </head>
 <body>
-
+	<div style="width: 1600px; height: auto; margin: auto;">
 	<!-- 강사용 사이드바 연결 -->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 	
@@ -116,8 +122,7 @@
                             <td>${s.payMethod }</td>
                             <td>${s.payAmount }</td>
                             <td>
-                            	<input type="hidden" name="orderStatus" value="${s.orderStatus }"> 
-                                <select name="status" id="" value="${s.orderStatus }">
+                                <select name="status" class="orderNo${s.orderNo }">
                                 	<option class="op1" value="1">결제완료</option>
                                     <option class="op2" value="2">상품준비</option>
                                     <option class="op3" value="3">배송시작</option>
@@ -126,12 +131,19 @@
                                     <option class="op6" value="6">주문취소</option>
                                     <option class="op7" value="7" style="color: red;">취소완료</option>
                                 </select>
-                            	
+
                             </td>
                             <td align="center">
-                                <button id="updateBtn" type="submit">변경</button>
+                                <button id="updateBtn" type="submit" onclick="statusUp('${s.orderNo}');">변경</button>
                                 <button id="detailBtn" onclick="location.href='sodetail.in?ono=${s.orderNo}'">상세</button>
                             </td>
+                            	<script>
+                                	$(".orderNo${ s.orderNo } option").each(function(){
+                                		if($(this).val() == ${s.orderStatus }){
+                                			$(this).attr("selected", true);
+                                		}
+                                	})
+                                </script>
                         </tr>
                         </c:forEach>
                     </tbody>
@@ -170,13 +182,18 @@
 		
 		<script>	
 
-		
 			function detailView(orderNo){
 				console.log(orderNo);
 				//location.href='sodetail.in?ono=${s.orderNo}'"
 				location.href="sodetail.in?ono="+orderNo;
 			}	
 		
+			function statusUp(orderNo){
+				console.log(orderNo);
+				status = $(".orderNo"+orderNo+" option:selected").val();
+				console.log($(".orderNo"+orderNo+" option:selected").val());
+				location.href="sostatusUp.in?ono="+orderNo+"&status="+status;
+			}
 			function typeValue(num){
 				console.log(num)
 				var box1 = $("#type1");
@@ -239,42 +256,48 @@
 				$.ajax({
 					url:"sosearchF.in",
 					data:{orderStatus:num},
-					success:function(list){
-						console.log(list);
+					success:function(result){
+						//console.log(list);
+						console.log(result);
 						
 						let value ="";
+						let pageVal = "";
 						
-						for(let i in list){
+						for(let i in result.list){
+							/*
+							if(list[i].orderStatus == 1){
+								selectVal = 
+							}*/
 							value += "<tr>"
-									+ "<td><input type='checkbox' class='deleteNum' name='chBxRow' value='"+list[i].orderNo+"'></td>"
-									+ "<td>"+ list[i].orderNo + "</td>"
-									+ "<td>"+ list[i].userId + "</td>"
-									+ "<td>"+ list[i].payDate + "</td>"
-									+ "<td>"+ list[i].payMethod +"</td>"
-									+ "<td>"+ list[i].payAmount +"</td>"
-									+ "<td>"
-	                            	+ "<input type='hidden' name='orderStatus' value='"+list[i].orderStatus+"'>"
-										+"<select name='status' id='' value='"+list[i].orderStatus+"'>"
-											+"<option class='op1' value='1'>결제완료</option>"
-	                                    	+"<option class='op2' value='2'>상품준비</option>"
-	                                    	+"<option class='op3' value='3'>배송시작</option>"
-		                                    +"<option class='op4' value='4'>배송중</option>"
-		                                    +"<option class='op5'value='5 style='color: green;'>배송완료</option>"
-		                                   	+"<option class='op6' value='6'>주문취소</option>"
-			                                +"<option class='op7' value='7' style='color: red;'>취소완료</option>"
-		                                +"</select> </td>"
-		                            +"<td align='center'>"
-	                                +"<button id='updateBtn' type='submit'>변경</button>"
-	                                +"<button id='detailBtn' onclick='detailView("+list[i].orderNo+");'>상세</button>"
-	                               + "</td>"
-	                               + "</tr>"		  
+								+ "<td><input type='checkbox' class='deleteNum' name='chBxRow' value='"+result.list[i].orderNo+"'></td>"
+								+ "<td>"+ result.list[i].orderNo + "</td>"
+								+ "<td>"+ result.list[i].userId + "</td>"
+								+ "<td>"+ result.list[i].payDate + "</td>"
+								+ "<td>"+ result.list[i].payMethod +"</td>"
+								+ "<td>"+ result.list[i].payAmount +"</td>"
+								+ "<td>"
+                            	+ "<input type='hidden' name='orderStatus' value='"+result.list[i].orderStatus+"'>"
+									+"<select class='orderNo"+result.list[i].orderNo+"' name='status' id='' value='"+result.list[i].orderStatus+"'>"
+										+"<option class='op1' value='1'>결제완료</option>"
+                                    	+"<option class='op2' value='2'>상품준비</option>"
+                                    	+"<option class='op3' value='3'>배송시작</option>"
+	                                    +"<option class='op4' value='4'>배송중</option>"
+	                                    +"<option class='op5'value='5 style='color: green;'>배송완료</option>"
+	                                   	+"<option class='op6' value='6'>주문취소</option>"
+		                                +"<option class='op7' value='7' style='color: red;'>취소완료</option>"
+	                                +"</select> </td>"
+	                            +"<td align='center'>"
+	                            +"<button id='updateBtn' onclick='statusUp(\""+ result.list[i].orderNo+"\");'>변경</button>"
+                                +"<button id='detailBtn' onclick='detailView(\""+ result.list[i].orderNo+ "\");'>상세</button>"
+                               + "</td>"
+                               + "</tr>"	  	
 						}
-						
-						console.log(value);
+
+						//console.log(value);
 						$(".orderList tbody").empty();
 						$(".orderList tbody").html(value);
 						
-					},error:function(){
+					}, error:function(){
 						alert("주문내역 조회에 실패했습니다.");
 					}
 				});
@@ -307,9 +330,11 @@
                     if($("#checkAll").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
                     else $("input[name=chBxRow]").prop("checked", false);
                 });
-            })
+			
+			})
+            
 		</script>
     </div>
-
+</div>
 </body>
 </html>

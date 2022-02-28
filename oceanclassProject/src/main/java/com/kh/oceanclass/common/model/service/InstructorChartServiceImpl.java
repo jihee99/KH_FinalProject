@@ -38,4 +38,15 @@ public class InstructorChartServiceImpl implements InstructorChartService{
 		return inDao.qnaChartList(sqlSession, productNo);
 	}
 
+	@Override
+	public ArrayList<InstructorStarChart> mainStarChart() {
+		return inDao.mainStarChart(sqlSession);
+	}
+
+	@Override
+	public ArrayList<InstructorQnaChart> mainQnaChart() {
+		// TODO Auto-generated method stub
+		return inDao.mainQnaChart(sqlSession);
+	}
+
 }

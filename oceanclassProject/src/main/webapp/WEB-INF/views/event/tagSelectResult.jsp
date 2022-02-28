@@ -22,6 +22,14 @@
 	#classImg{display:block; width: 100%; height: 200px; margin: 0 auto; vertical-align: middle;}
     #ctitle{width: 100%; text-align: center; font-size: 20px; font-weight: 600;}
     #classImg:hover{cursor: pointer;}
+	.innerOuter{width: 100%; height: 1300px;}
+	.list{width: 100%; height: 600px; margin: 0 auto; margin-top: 20px; border: 1px solid;}
+    .item{width:40%; height: 250px; float:left; margin: 0 auto; margin-top: 40px; overflow: hidden; border: 1px solid;}
+    #classImg{display:block; width: 100%; height: 150px; border: 1px solid;}
+    .item>p{text-align: center; font-size: 20px; font-weight: 600;}
+    a{text-decoration: none; color: black; font-weight: 600;}
+    #classImg:hover{cursor: pointer;}
+    #proImg:hover{cursor: pointer;}
     .pagination{ width: 100%; justify-content: center; padding-top: 50px;}
 </style>
 </head>
@@ -46,6 +54,8 @@
 			            	<c:choose>
 			            		<c:when test="${fn:length(c.clName) gt 21}">
 			            			<c:out value="${fn:substring(c.clName, 0, 20)}"></c:out>
+			            		<c:when test="${fn:length(c.clName) gt 15}">
+			            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
 			            			..
 			            		</c:when>
 			            		<c:otherwise>

@@ -189,6 +189,19 @@ public class StuMypageController {
 		return "member/student/myPoint";		
 	}
 	
+//	@RequestMapping("pointSaveList.me")
+//	public String pointSaveList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+//		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+//		int pointCount = myService.selectPointCount(memNo);
+//		
+//		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+//		ArrayList<Point> pointList = myService.selectPointList(ppi, memNo);
+//		
+//		model.addAttribute("pi", ppi);
+//		model.addAttribute("pointList", pointList);
+//		return "member/student/myPoint";		
+//	}
+	
 	
 	
 //1:1문의 내역
@@ -412,6 +425,7 @@ public class StuMypageController {
 				list.get(i).setCategory("자기계발");
 			}
 		}
+
 		model.addAttribute("list", list);
 		return "member/student/myClassDetail";
 	}
@@ -421,6 +435,26 @@ public class StuMypageController {
 	public String myAllClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		ArrayList<ClassOrder> list = myService.selectMyAllClass(memNo);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("1")) {
+				list.get(i).setCategory("드로잉");
+			}else if(list.get(i).getCategory().equals("2")) {
+				list.get(i).setCategory("요리");
+			}else if(list.get(i).getCategory().equals("3")) {
+				list.get(i).setCategory("음악");
+			}else if(list.get(i).getCategory().equals("4")) {
+				list.get(i).setCategory("운동");
+			}else if(list.get(i).getCategory().equals("5")) {
+				list.get(i).setCategory("사진,영상");
+			}else if(list.get(i).getCategory().equals("6")) {
+				list.get(i).setCategory("재테크");
+			}else if(list.get(i).getCategory().equals("7")) {
+				list.get(i).setCategory("개발,데이터");
+			}else {
+				list.get(i).setCategory("자기계발");
+			}
+		}
 		
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).getCategory().equals("1")) {
@@ -614,6 +648,7 @@ public class StuMypageController {
 			}
 		}
 		return new Gson().toJson(list);
+		
 	}
 	
 	

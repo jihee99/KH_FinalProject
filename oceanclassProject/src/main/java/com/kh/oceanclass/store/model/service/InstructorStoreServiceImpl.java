@@ -255,6 +255,11 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		return inStoreDao.storeOrderStatusUpdate(sqlSession, so);
 	}
 
+	@Override
+	public StoreReview selectStoreReviewDetail(String rno) {
+		return inStoreDao.selectStoreReviewDetail(sqlSession, rno);
+	}
+
 
 
 

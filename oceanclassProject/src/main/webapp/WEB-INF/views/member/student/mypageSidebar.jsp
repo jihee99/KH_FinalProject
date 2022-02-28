@@ -21,6 +21,7 @@
 		    	<c:choose>
 		    		<c:when test="${not empty loginUser.profileImg}">
 		    			<img src="${loginUser.profileImg}" style="width: 90%; height: 50%;">
+		    			<img src="${loginUser.profileImg}">
 		    		</c:when>
 		    		<c:otherwise>
 		    			<i class="bi bi-person-circle" style="font-size: 6rem; color: cornflowerblue;"></i>

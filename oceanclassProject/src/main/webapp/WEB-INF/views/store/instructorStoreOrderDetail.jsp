@@ -11,6 +11,7 @@
 </head>
 <body>
 
+	<div style="width: 1600px; height: auto; margin: auto;">
     <!-- 강사 사이드 네비바 연결하기 -->
     <jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 	<!-- loginUser가 teacher일때만 보여지게 하기 -->
@@ -149,6 +150,6 @@
 	</c:otherwise>
 	</c:choose>
     </div>
-	
+    </div>
 </body>
 </html>

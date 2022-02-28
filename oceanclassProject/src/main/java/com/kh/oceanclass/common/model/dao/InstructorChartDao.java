@@ -24,6 +24,14 @@ public class InstructorChartDao {
 		return (ArrayList)sqlSession.selectList("inChartMapper.qnaChartList", productNo);
 	}
 
+	public ArrayList<InstructorStarChart> mainStarChart(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("inChartMapper.mainStarChart");
+	}
+
+	public ArrayList<InstructorQnaChart> mainQnaChart(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("inChartMapper.mainQnaChart");
+	}
+
 	
 	
 }
