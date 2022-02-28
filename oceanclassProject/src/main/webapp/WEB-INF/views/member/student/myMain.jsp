@@ -88,7 +88,7 @@
 	    </div>  
 	    <div class="content1">
 	        <c:choose>
-        		<c:when test="${empty list}">
+        		<c:when test="${empty classLikeList}">
         			<div class="conhead">
 			            <h2>찜한 클래스</h2>
 			        </div>
@@ -133,7 +133,7 @@
 	    </div>  
         <div class="content1">
 	        <c:choose>
-        		<c:when test="${empty list}">
+        		<c:when test="${empty storeLikeList}">
         			<div class="conhead">
 			            <h2>찜한 상품</h2>
 			        </div>
