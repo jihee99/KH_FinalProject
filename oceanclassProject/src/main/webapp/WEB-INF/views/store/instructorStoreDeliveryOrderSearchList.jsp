@@ -15,6 +15,12 @@
 <link rel="stylesheet" href="./resources/css/store/instructorStoreDeliveryOrderList.css">
 
 <style>
+	.wrap{
+	        width: 1000px;
+	        height: auto;
+	        margin: auto;
+	        margin-top: 50px;
+	    }
 	.content_1_left>b{font-size: 17px;}
 	.content_1_center{width: 20%;}
 	.content_1_right{width: 60%; float: right;}
@@ -25,7 +31,7 @@
 </style>
 </head>
 <body>
-
+	<div style="width: 1600px; height: auto; margin: auto;">
 	<!-- 강사용 사이드바 연결 -->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 	
@@ -310,6 +316,6 @@
             })
 		</script>
     </div>
-
+</div>
 </body>
 </html>

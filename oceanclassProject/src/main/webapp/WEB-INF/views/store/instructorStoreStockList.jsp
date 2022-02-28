@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="./resources/css/store/instructorStoreStockList.css">
 </head>
 <body>
-
+<div style="width: 1600px; height: auto; margin: auto;">
 	<!-- 강사용 메뉴바 연결하기 -->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
     <div class="innerOuter" align="center">
@@ -148,7 +148,7 @@
         			},error:function(){
         				alert("상품 재고 수정에 실패했습니다.");
         			}
-        		})
+        		});
 				location.reload();
         	*/
         	})
@@ -162,6 +162,6 @@
 		</c:otherwise>
 		</c:choose>	
     </div>
-
+</div>
 </body>
 </html>

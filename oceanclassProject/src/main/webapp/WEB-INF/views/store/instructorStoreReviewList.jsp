@@ -106,7 +106,7 @@
 </style>  
 </head>
 <body>
-
+<div style="width: 1600px; height: auto; margin: auto;">
 	<div style="width: 1600px; height: auto; margin: auto;">
 	    <jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
         <div class="wrap">
@@ -249,6 +249,7 @@
 			
 			})
 		</script>
+    </div>
     </div>
 </body>
 

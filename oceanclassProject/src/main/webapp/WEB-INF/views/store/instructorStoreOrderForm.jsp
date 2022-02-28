@@ -14,6 +14,7 @@
 	<!-- 
 	강사용메뉴페이지 연결하기
 	 -->
+ <div style="width: 1600px; height: auto; margin: auto;">
  	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
  	
     <div class="innerOuter" align="center">
@@ -93,6 +94,6 @@
         
         </div>
     </div>
-
+</div>
 </body>
 </html>
