@@ -49,7 +49,14 @@
 	            	<div class="reviewItem" onclick="location.href='classReviewDetail.me?crNo=${ ri.crNo }&cpage=1&clNo=${ reviewClNo }&rpage=${ pi.currentPage }'">
 		                <div class="profile">
 		                    <div style="float:left; margin-right: 10px;">
-		                        <img src="" width="50px" height="50px">
+	                        	<c:choose>
+	                        		<c:when test="${ !empty ri.profile }">
+		                            	<img src="${ ri.profile }" width="40px" height="40px">
+	                        		</c:when>
+	                        		<c:otherwise>
+		                            	<img src="resources/images/user.png" width="40px" height="40px">
+	                        		</c:otherwise>
+	                        	</c:choose>
 		                    </div>
 		                    <div>
 		                        <div style="font-weight: bold;">${ ri.memNo }</div>
@@ -141,13 +148,13 @@ ${ ri.content }
             <div id="pagingArea">
                 <ul class="pagination">
                 	<c:if test="${ pi.currentPage > 1 }">
-							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage - 1 }&clNo=${ reviewPno }">Previous</a></li>
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage - 1 }&clNo=${ reviewClNo }">Previous</a></li>
 					</c:if>
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ p }&clNo=${ reviewPno }">${ p }</a></li>
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ p }&clNo=${ reviewClNo }">${ p }</a></li>
 					</c:forEach>
 					<c:if test="${ pi.currentPage != pi.maxPage }">
-							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage + 1 }&clNo=${ reviewPno }">Next</a></li>
+							<li class="page-item"><a class="page-link" href="classReviewList.me?cpage=${ pi.currentPage + 1 }&clNo=${ reviewClNo }">Next</a></li>
 					</c:if>
                 </ul>
             </div>

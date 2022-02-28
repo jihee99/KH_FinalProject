@@ -22,6 +22,5 @@ public class Event {
 	private String img;
 	
 	private int couponNo;
-	private int maxCount;
 
 }

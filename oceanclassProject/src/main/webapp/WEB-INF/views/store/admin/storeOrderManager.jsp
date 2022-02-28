@@ -65,6 +65,7 @@
             <b>통합발주요청서목록(123)</b>
             <button id="deleteBtn" class="btn">목록삭제</button>
             <button id="printBtn" class="btn" style="background: steelblue;">출력</button>
+            <br><br>
             <table id="orderTable">
                 <thead>
                     <tr>

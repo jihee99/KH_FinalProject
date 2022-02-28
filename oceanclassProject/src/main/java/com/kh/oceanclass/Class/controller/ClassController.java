@@ -28,6 +28,7 @@ import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Report;
 
 /*사용자 클래스 관련 기능 처리하는 controller*/
 
@@ -435,10 +436,13 @@ public class ClassController {
 	@RequestMapping(value="classQnaList.me")
 	public String classQnaList(int cpage, int referNo, Model model) {
 		
+		ClassVo c = cService.selectClass(referNo);
+		
 		int listCount = cService.classQnaListCount(referNo); // 조회할 문의 갯수
 		PageInfo pi = Pagination.getPageInfo(listCount, cpage, 5, 3);
 		ArrayList<ClassQna> cqList = cService.selectClassQnaListPaging(referNo, pi); // 클래스 문의 리스트 (페이징 처리)
 		
+		model.addAttribute("c", c);
 		model.addAttribute("cqList", cqList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("referNo", referNo);
@@ -590,5 +594,47 @@ public class ClassController {
 	public String ajaxMainSlideList() {
 		ArrayList<Event> slideList = cService.mainSlideList();
 		return new Gson().toJson(slideList);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="reportReview.me")
+	public String ajaxReportReview(Report rp) {
+		ClassReview cr = cService.selectReview(rp.getRefBNo());
+		rp.setReportMemNo(cr.getMemNo());
+		int result = cService.reportReview(rp);
+		
+		if(result > 0) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="reportReviewReply.me")
+	public String ajaxReportReviewReply(Report rp) {
+		Reply r = cService.selectReply(rp.getRefBNo());
+		rp.setReportMemNo(r.getMemNo() + "");
+		int result = cService.reportReviewReply(rp);
+		
+		if(result > 0) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="reportQna.me")
+	public String ajaxReportQna(Report rp) {
+		ClassQna cq = cService.selectQna(rp.getRefBNo());
+		rp.setReportMemNo(cq.getMemNo() + "");
+		int result = cService.reportQna(rp);
+		
+		if(result > 0) {
+			return "yyyyy";
+		} else {
+			return "nnnnn";
+		}
 	}
 }

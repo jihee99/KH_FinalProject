@@ -15,20 +15,15 @@
     <link rel="stylesheet" href="./resources/css/eventMain.css?4">
     
 <style>
-	.img{margin:0 auto; margin-top: 50px;}
-	#img{
-		width: 80%; 
-		height: 200px;
-		object-fit:cover;
-	}
-	.pagination{
-		width: 25%;
-		margin: 0 auto;
-		padding-top: 80px;
-		border: 1px solid white;
-	}
-	#move{width: 90%; height: 40%; overflow: hidden; border:none; margin: 0 auto; margin-left: 20px;}
-	.img>p{text-align: center;}
+	.innerOuter{width: 100%; height: 1300px;}
+	.list{width: 100%; height: 600px; margin: 0 auto; margin-top: 20px; border: 1px solid;}
+    .item{width:40%; height: 250px; float:left; margin: 0 auto; margin-top: 40px; overflow: hidden; border: 1px solid;}
+    #classImg{display:block; width: 100%; height: 150px; border: 1px solid;}
+    .item>p{text-align: center; font-size: 20px; font-weight: 600;}
+    a{text-decoration: none; color: black; font-weight: 600;}
+    #classImg:hover{cursor: pointer;}
+    #proImg:hover{cursor: pointer;}
+    .pagination{ width: 100%; justify-content: center; padding-top: 50px;}
 </style>
 </head>
 <body>
@@ -41,48 +36,28 @@
 			<div class="head py-3">
 	            <p>${selectTag}</p>
 	        </div>
-
-        	<c:forEach var="c" items="${list}">
-        		
-	            <div class="img">
-	            	<input type="hidden" id="clno" value="${c.clNo}">
-	            	<form id="classDetail" method="post" action="classDetail.me">
-	            		<input type="hidden" id="referNo" name="referNo" value="${c.clNo}">
-		                <button id="move" type="submit"><img src="${c.clImg}" id="img"></button>
-		            </form>   
-		            <p>
-			            <c:choose>
-		            		<c:when test="${fn:length(c.clName) gt 22}">
-		            			<c:out value="${fn:substring(c.clName, 0, 21)}"></c:out>
-		            			..
-		            		</c:when>
-		            		<c:otherwise>
-		            			<c:out value="${c.clName}"></c:out>
-		            		</c:otherwise>
-			            </c:choose>
-		            </p> 
-	            </div>
-	            
-	 		</c:forEach> 
-		</div>       
-		
-		<!--
-		<script>
-			$("#classDetail>img").click(function(){
-				let referNo = $(this).prev().val();
-				console.log(referNo);
-				$.ajax({
-					url:"classDetail.me",
-					data:{referNo:referNo},
-					success:function(){
-						console.log("^^");
-					},error:function(){
-						console.log("ㅠㅠ");
-					}
-				})
-			})
-		</script>
-		 -->
+			<div class="list">
+	        	<c:forEach var="c" items="${list}">
+		            <div class="item">
+		            	<div class="img">
+		            		<input type="hidden" value="${c.clNo}">
+		            		<img src="${c.clImg}" id="classImg">
+			            </div>
+		            	<p id="ctitle">
+			            	<c:choose>
+			            		<c:when test="${fn:length(c.clName) gt 15}">
+			            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
+			            			..
+			            		</c:when>
+			            		<c:otherwise>
+			            			<c:out value="${c.clName}"></c:out>
+			            		</c:otherwise>
+			            	</c:choose>
+		            	</p>
+		            </div>
+		 		</c:forEach> 
+	 		</div>
+		</div>   
 		
 		<div id="paging">
 			<ul class="pagination">

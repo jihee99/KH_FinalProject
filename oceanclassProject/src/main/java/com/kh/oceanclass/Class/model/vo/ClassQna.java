@@ -27,4 +27,10 @@ public class ClassQna {
 	private String filePathMessage;
 	private String teacherNick;
 	
+	private String nickname;
+	
+	private String clName;
+
+	private String profile;
+	
 }

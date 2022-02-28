@@ -19,6 +19,7 @@
 		<result column="count" property="count" />
 		<result column="nickname" property="memNo" />
 		<result column="like_count" property="like" />
+		<result column="profile" property="profile" />
 	</resultMap>
 	
 	<resultMap id="classReviewResult" type="ClassReview">
@@ -34,6 +35,7 @@
 		<result column="status" property="status" />
 		<result column="reconum" property="recommend" />
 		<result column="replynum" property="replyNum" />
+		<result column="profile" property="profile" />
 	</resultMap>
 	
 	<resultMap id="classReviewReplyResult" type="Reply">
@@ -45,6 +47,7 @@
 		<result column="reply_date" property="replyDate" />
 		<result column="reply_status" property="replyStatus" />
 		<result column="nickname" property="nickName" />
+		<result column="profile" property="profile" />
 	</resultMap>
 	
 	<resultMap id="classQnaResult" type="ClassQna">
@@ -62,6 +65,7 @@
 		<result column="answer_content" property="answerContent" />
 		<result column="answer_date" property="answerDate" />
 		<result column="teacher_nick" property="teacherNick" />
+		<result column="profile" property="profile" />
 	</resultMap>
 	
 	<resultMap id="eventResult2" type="Event">
@@ -126,6 +130,7 @@
 		         where gb_no = 1
 		           and refer_no = clno
 		        ) as like_count
+		     , profile
 		  from class
           JOIN member USING (MNO)
 		 where cl_status = 'Y'
@@ -279,6 +284,7 @@
                and board_no = 2
                and content_no = c_rno
               ) as replynum
+            , profile
 		  from class_review c
           join member using (mno)
 		 where status = 'Y'
@@ -329,6 +335,7 @@
                    and reply_status = 'Y'
                    and content_no = c_rno
                 ) as replynum
+             , PROFILE
 		  from class_review c
           join member using (mno)
 		 where status = 'Y'
@@ -366,6 +373,7 @@
                    and board_no = 2
                    and content_no = c_rno
               ) as replynum
+            , profile
 		  from class_review r
           join member using (mno)
 		 where status = 'Y'
@@ -388,6 +396,7 @@
 		     , reply_content
 		     , to_char(reply_date, 'YYYY-MM-DD') as reply_date
 		     , reply_status
+		     , profile
 		  from reply
 		  join member using (mno)
 		 where reply_status = 'Y'
@@ -520,6 +529,7 @@
                   join class using (mno)
                  where clno = refer_no
                 ) as teacher_nick
+             , profile
 		  from cs_qna
 		  join member using (mno)
 		 where status = 'Y'
@@ -899,5 +909,124 @@
 		   set point = point + #{pointSave}
 		 where mno = #{memNo}
 	</update>
+	
+	<select id="selectReview" resultMap="classReviewResult">
+		select 
+		       c_rno
+		     , clno
+		     , mno
+		     , status
+		  from class_review
+		 where c_rno = #{refBNo}
+	</select>
+	
+	<insert id="reportReview">
+		insert
+		  into report
+		values
+			 (
+			   SEQ_RPNO.NEXTVAL
+			 , #{reportMemNo}
+			 , 'CR'
+			 , #{refBNo}
+			 <choose>
+			 	<when test="content == 1">
+			 		, '욕설 또는 음란성 내용'
+			 	</when>
+			 	<when test="content == 2">
+			 		, '부적절한 홍보성 댓글'
+			 	</when>
+			 	<when test="content == 3">
+			 		, '사생활 침해 및 불법 촬영물'
+			 	</when>
+			 	<when test="content == 4">
+			 		, '명예훼손 및 저작권침해'
+			 	</when>
+			 	<when test="content == 5">
+			 		, #{reason}
+			 	</when>
+			 </choose>
+			 , 'N'
+			 , sysdate
+			 )
+	</insert>
+	
+	<select id="selectReply" resultMap="classReviewReplyResult">
+		select 
+		       REPLY_NO
+		     , MNO
+		  from reply
+		 where REPLY_NO = #{refBNo}
+	</select>
+	
+	<insert id="reportReviewReply">
+		insert
+		  into report
+		values
+			 (
+			   SEQ_RPNO.NEXTVAL
+			 , #{reportMemNo}
+			 , 'R'
+			 , #{refBNo}
+			 <choose>
+			 	<when test="content == 1">
+			 		, '욕설 또는 음란성 내용'
+			 	</when>
+			 	<when test="content == 2">
+			 		, '부적절한 홍보성 댓글'
+			 	</when>
+			 	<when test="content == 3">
+			 		, '사생활 침해 및 불법 촬영물'
+			 	</when>
+			 	<when test="content == 4">
+			 		, '명예훼손 및 저작권침해'
+			 	</when>
+			 	<when test="content == 5">
+			 		, #{reason}
+			 	</when>
+			 </choose>
+			 , 'N'
+			 , sysdate
+			 )
+	</insert>
+	
+	<select id="selectQna" resultMap="classQnaResult">
+		select
+			   CS_QNO
+			 , mno
+		  from cs_qna
+		 where gb_no = 1
+		   and CS_QNO = #{refBNo}
+	</select>
 		
+	<insert id="reportQna">
+		insert
+		  into report
+		values
+			 (
+			   SEQ_RPNO.NEXTVAL
+			 , #{reportMemNo}
+			 , 'CQ'
+			 , #{refBNo}
+			 <choose>
+			 	<when test="content == 1">
+			 		, '욕설 또는 음란성 내용'
+			 	</when>
+			 	<when test="content == 2">
+			 		, '부적절한 홍보성 댓글'
+			 	</when>
+			 	<when test="content == 3">
+			 		, '사생활 침해 및 불법 촬영물'
+			 	</when>
+			 	<when test="content == 4">
+			 		, '명예훼손 및 저작권침해'
+			 	</when>
+			 	<when test="content == 5">
+			 		, #{reason}
+			 	</when>
+			 </choose>
+			 , 'N'
+			 , sysdate
+			 )
+	</insert>
 </mapper>

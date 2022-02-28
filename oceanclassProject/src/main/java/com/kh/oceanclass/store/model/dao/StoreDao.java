@@ -1,6 +1,7 @@
 package com.kh.oceanclass.store.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
@@ -18,27 +20,28 @@ import com.kh.oceanclass.store.model.vo.StoreReview;
 @Repository
 public class StoreDao {
 	
-	public int selectListCount(SqlSessionTemplate sqlSession) {
+	public int selectListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("storeMapper.selectListCount");
 	}
 	
-	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo){
+	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("storeMapper.selectList", memberNo, rowBounds);
-		
+		return (ArrayList)sqlSession.selectList("storeMapper.selectList", map, rowBounds);
 	}
 	
-	public ArrayList<Product> categorySearch(SqlSessionTemplate sqlSession, Product p){
-		
-		return (ArrayList)sqlSession.selectList("storeMapper.categorySearch", p);
+	public ArrayList<Product> storeHotList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("storeMapper.storeHotList");
+	}
+	
+	public ArrayList<Product> storeNewList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("storeMapper.storeNewList");
 	}
 	
 	public Product selectProduct(SqlSessionTemplate sqlSession, int pno, int memberNo) {
 		Product p = new Product();
-		//int productNo = pno;
 		p.setProductNo(pno);
 		p.setMemberNo(memberNo);
 		return sqlSession.selectOne("storeMapper.selectProduct", p);
@@ -154,5 +157,41 @@ public class StoreDao {
 	public int insertQna (SqlSessionTemplate sqlSession, StoreQna qna) {
 		return sqlSession.insert("storeMapper.insertQna", qna);
 	}
+	
+	public int storeQnaPwdCheck(SqlSessionTemplate sqlSession, StoreQna sq) {
+		return sqlSession.selectOne("storeMapper.storeQnaPwdCheck", sq);
+	}
+	
+	public Member selectMember(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("storeMapper.selectMember", memberNo);
+	}
+	
+	public ProductOption selectPo(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.selectOne("storeMapper.selectPo", pno);
+	}
+	
+	public int reviewUpdate(SqlSessionTemplate sqlSession, StoreReview sr) {
+		//System.out.println(sr);
+		return sqlSession.update("storeMapper.reviewUpdate", sr);
+	}
+	
+	public int reviewDelete(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.delete("storeMapper.reviewDelete", rno);
+	}
+	
+	public int qnaDelete(SqlSessionTemplate sqlSession, StoreQna q) {
+		return sqlSession.delete("storeMapper.qnaDelete", q);
+	}
+	
+	public StoreReview selectReview(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.selectOne("storeMapper.selectReview", rno);
+	}
+	
+	public StoreQna selectQna(SqlSessionTemplate sqlSession, int csQno) {
+		return sqlSession.selectOne("storeMapper.selectQna", csQno);
+	}
+	
+	
+	
 
 }

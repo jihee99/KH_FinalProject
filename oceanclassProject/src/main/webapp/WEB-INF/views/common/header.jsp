@@ -46,10 +46,12 @@ div{box-sizing: border-box;}
     cursor: pointer;
 }
 
-#classCategory>li{
+#classCategory>li,
+#storeCategory>li{
 	cursor:pointer;
 }
-#classCategory>li:hover{
+#classCategory>li:hover,
+#storeCategory>li:hover{
 	color:#6babd5;
 	font-weight:bold;
 }
@@ -125,23 +127,23 @@ div{box-sizing: border-box;}
                 <li class="header_2_menu">
                     <a href="">CLASS</a>
                     <ul id="classCategory" class="header_2_detail">
-                        <li onclick="classCatePage(1)">드로잉</a></li>
-                        <li onclick="classCatePage(2)">요리</a></li>
-                        <li onclick="classCatePage(3)">음악</a></li>
-                        <li onclick="classCatePage(4)">운동</a></li>
-                        <li onclick="classCatePage(5)">사진&영상</a></li>
-                        <li onclick="classCatePage(6)">재태크</a></li>
-                        <li onclick="classCatePage(7)">개발&데이터</a></li>
-                        <li onclick="classCatePage(8)">자기계발</a></li>
+                        <li onclick="classCatePage(1)">드로잉</li>
+                        <li onclick="classCatePage(2)">요리</li>
+                        <li onclick="classCatePage(3)">음악</li>
+                        <li onclick="classCatePage(4)">운동</li>
+                        <li onclick="classCatePage(5)">사진&영상</li>
+                        <li onclick="classCatePage(6)">재태크</li>
+                        <li onclick="classCatePage(7)">개발&데이터</li>
+                        <li onclick="classCatePage(8)">자기계발</li>
                     </ul>
                 </li>
 
                 <li class="header_2_menu">
                     <a href="storeList.st">STORE</a>
-                    <ul class="header_2_detail">
-                        <li><a href="">클래스 상품</a></li>
-                        <li><a href="">OC 에디션</a></li>
-                        <li><a href="">DIY Kit</a></li>
+                    <ul class="header_2_detail" id="storeCategory">
+                        <li onclick="storeCatePage(1)">클래스 상품</li>
+                        <li onclick="storeCatePage(2)">OC 에디션</li>
+                        <li onclick="storeCatePage(3)">DIY Kit</li>
                     </ul>
                 </li>
                 
@@ -169,9 +171,7 @@ div{box-sizing: border-box;}
                     searchForm.action = 'classSearchList.me';
                     searchForm.submit();
                 } else{
-                    // 지현이 여기 action 링크에다가 store 링크 넣으세용
-                    // 스토어 고르고 검색하면 링크로 submit 되는 구조
-                    searchForm.action = '${pageContext.request.contextPath}';
+                    searchForm.action = 'storeSearchList.st';
                     searchForm.submit();
                 }
             } else {
@@ -183,7 +183,25 @@ div{box-sizing: border-box;}
         function classCatePage(cateNum){
         	location.href = "classCategoryList.me?cpage=1&category=" + cateNum + "&array=like";
         }
+        
+        function storeCatePage(cateNum){
+        	location.href = "storeSearchList.st?cpage=1&category=" + cateNum + "&array=like";
+        }
     </script>
+    
+   <script>
+	   	$(function(){
+	   		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+			(function(){
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/621ad582a34c24564128854f/1fssd41mg';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+			})();
+		})
+   </script>
 
 </body>
 </html>

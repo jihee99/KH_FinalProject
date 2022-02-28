@@ -1,13 +1,16 @@
 package com.kh.oceanclass.store.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.dao.StoreDao;
 import com.kh.oceanclass.store.model.vo.Cart;
@@ -26,13 +29,13 @@ public class StoreServiceImpl implements StoreService {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public int selectListCount() {
-		return sDao.selectListCount(sqlSession);
+	public int selectListCount(HashMap<String, String> map) {
+		return sDao.selectListCount(sqlSession, map);
 	}
 
 	@Override
-	public ArrayList<Product> selectList(PageInfo pi, int memberNo) {
-		return sDao.selectList(sqlSession, pi, memberNo);
+	public ArrayList<Product> selectList(PageInfo pi, HashMap<String, String> map) {
+		return sDao.selectList(sqlSession, pi, map);
 	}
 	
 	@Override
@@ -60,11 +63,6 @@ public class StoreServiceImpl implements StoreService {
 		return sDao.insertReview(sqlSession, review);
 	}
 	
-	@Override
-	public ArrayList<Product> categorySearch(Product p) {
-		return sDao.categorySearch(sqlSession, p);
-	}
-
 	@Override
 	public int likeCheck(LikeVo li) {
 		return sDao.likeCheck(sqlSession, li);
@@ -169,5 +167,57 @@ public class StoreServiceImpl implements StoreService {
 	public int insertQna(StoreQna qna) {
 		return sDao.insertQna(sqlSession, qna);
 	}
+	
+	@Override
+	public int storeQnaPwdCheck(StoreQna sq) {
+		return sDao.storeQnaPwdCheck(sqlSession, sq);
+	}
+
+	@Override
+	public ArrayList<Product> storeHotList() {
+		return sDao.storeHotList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Product> storeNewList() {
+		return sDao.storeNewList(sqlSession);
+	}
+
+	@Override
+	public Member selectMember(int memberNo) {
+		return sDao.selectMember(sqlSession, memberNo);
+	}
+
+	@Override
+	public ProductOption selectPo(int pno) {
+		return sDao.selectPo(sqlSession, pno);
+	}
+
+	@Override
+	public int reviewUpdate(StoreReview sr) {
+		return sDao.reviewUpdate(sqlSession, sr);
+	}
+
+	@Override
+	public int reviewDelete(int rno) {
+		return sDao.reviewDelete(sqlSession, rno);
+	}
+
+	@Override
+	public int qnaDelete(StoreQna q) {
+		return sDao.qnaDelete(sqlSession, q);
+	}
+
+	@Override
+	public StoreReview selectReview(int rno) {
+		return sDao.selectReview(sqlSession, rno);
+	}
+
+	@Override
+	public StoreQna selectQna(int csQno) {
+		return sDao.selectQna(sqlSession, csQno);
+	}
+
+
 	
 }

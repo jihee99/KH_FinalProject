@@ -28,12 +28,9 @@ public class EventController {
 
 	@RequestMapping(value="eventMain.ev")
 	public String eventMain(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
-		
 		int listCount = eService.selectEventCount();
-		
 		PageInfo pi  = Pagination.getPageInfo(listCount, currentPage, 5, 6);
 		ArrayList<Event> list = eService.selectEventList(pi);
-		//System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "event/eventMain";
@@ -42,17 +39,13 @@ public class EventController {
 	@ResponseBody
 	@RequestMapping(value="ajaxSearchEvent.ev", produces="application/json; charset=UTF-8")
 	public String ajaxSearchEvent(String category) {
-		//System.out.println(category);
-		
 		ArrayList<Event> list = eService.ajaxSearchEvent(category);
-		//System.out.println(list);
 		return new Gson().toJson(list);
 	}
 	
 	@RequestMapping("detailEvent.ev")
 	public String selectEvent(int eno, Model model) {
 		Event e = eService.selectEvent(eno);
-		//System.out.println(e);
 		model.addAttribute("e", e);
 		return "event/eventDetail";
 	}
@@ -60,15 +53,12 @@ public class EventController {
 	@ResponseBody
 	@RequestMapping("getCoupon.ev")
 	public int ajaxCouponInsert(int memNo, int couponNo) {
-		Coupon c = eService.selectCoupon(couponNo);
-		//System.out.println(c);
+		Coupon c = eService.selectCoupon(couponNo);	
 		if(c.getCount() == c.getMaxCount()) {
 			return -1;			// 쿠폰 소진일 경우
 		}else {
 			c.setMemNo(memNo);
-			//System.out.println(c);
 			int couponHistoryMem = eService.couponHistoryMem(c);
-			//System.out.println("쿠폰발급여부: "+couponHistoryMem);
 			if(couponHistoryMem > 0) {
 				return 0;		// 이미 발급받은 쿠폰일 경우
 			}else {
@@ -87,8 +77,7 @@ public class EventController {
 	@ResponseBody
 	@RequestMapping(value="replyList.ev", produces="application/json; charset=utf-8")
 	public String ajaxSelectReplyList(int contentNo) {
-		ArrayList<Reply> list = eService.selectReplyList(contentNo);
-		
+		ArrayList<Reply> list = eService.selectReplyList(contentNo);		
 		return new Gson().toJson(list);
 	}
 	
@@ -96,19 +85,15 @@ public class EventController {
 	@RequestMapping("replyInsert.ev")
 	public String ajaxreplyInsert(Reply r) {
 		int result = eService.insertReply(r);
-		//System.out.println(result);
 		return result>0 ? "1" : "0";
 	}
 	
 	@RequestMapping("tagSelect.ev")
 	public String tagSelect(@RequestParam(value="cpage", defaultValue="1") int currentPage, String hashtag, Model model) {
-//		System.out.println(hashtag);
 		String selectTag = hashtag;
 		int listCount = eService.tagSelectCount(hashtag);
 		PageInfo pi  = Pagination.getPageInfo(listCount, currentPage, 5, 6);
 		ArrayList<ClassVo> list = eService.tagSelectList(pi, hashtag);
-//		System.out.println(listCount);
-//		System.out.println(list);
 		
 		model.addAttribute("selectTag", selectTag);
 		model.addAttribute("pi", pi);

@@ -71,7 +71,6 @@
             <div id="footer_1-2">
                 <a href="helpList.he">공지사항</a> 
                 <a href="faqMain.he">FAQ</a>
-                <a href="">채팅상담</a>
             </div>
         </div>
         <br>

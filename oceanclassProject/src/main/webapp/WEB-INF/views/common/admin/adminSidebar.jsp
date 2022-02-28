@@ -44,18 +44,18 @@
                 <div id="menu2">
                     <p>클래스 관리</p>
                     <ul>
-                        <li><a href="classEnrollManager.ad?cpage=1&array=1&category=&keyword=" id="classEnrollManager">클래스 등록 관리</a></li>
-                        <li><a href="classManager.ad" id="classManager">클래스 관리</a></li>
+                        <li><a href="classEnrollManager.ad?cpage=1&array=1&category=&keyword=&clNo=" id="classEnrollManager">클래스 등록 관리</a></li>
+                        <li><a href="classManager.ad?cpage=1&yclass=1&nclass=&array=new&category=&keyword=&before=&after=" id="classManager">클래스 관리</a></li>
                     </ul>
                 </div>
                 <div id="menu3">
                     <p>스토어 관리</p>
                     <ul>
-                        <li><a href="">상품 관리</a></li>
-                        <li><a href="">리뷰 관리</a></li>
-                        <li><a href="">문의 관리</a></li>
-                        <li><a href="">발주 관리</a></li>
-                    </ul>
+                        <li><a href="productManager.st">상품 관리</a></li>
+                        <li><a href="reviewManager.st">리뷰 관리</a></li>
+                        <li><a href="qnaManager.st">문의 관리</a></li>
+                        <li><a href="orderManager.st">발주 관리</a></li>
+                    </ul>r
                 </div>
                 <div id="menu4">
                     <p>고객센터</p>

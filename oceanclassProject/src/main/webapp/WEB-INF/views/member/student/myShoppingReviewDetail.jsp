@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./resources/css/stuMypage.css?second">
+    <link rel="stylesheet" href="./resources/css/stuMypage.css?3">
 <style>
 	.list{
 	    width: 90%;
@@ -20,25 +20,19 @@
 	    margin-top: 50px;
 	    background: rgba(107, 171, 213, 0.28);
 	    padding: 10px;
-	    border: 1px  solid;
 	}
-	#img{
-		width: 30%; 
-		height: 100%;
-		float: left;
-	}
-	#img img{
-		width: 100%;
-		height: 80%;
-	}
+	.list.img, .list.explain{float: left;}
+	.img{width: 30%; float: left;}
+	.list img{width: 100%; height: 150px;}
+	.list>.img>p{width: 100%; text-align: center;}
 	.explain{
 		width: 70%; 
-		height: 100%; 
-		float: left; 
-		padding: 15px;
+		height: 90%; 
+		padding-left: 15px;
+		float: right;
 	}
 	.explain>h4{font-weight: 600;}
-	.explain>p{display: block; font-weight: bolder; text-overflow: ellipsis; overflow:hidden;}
+	.explain>p{width: fit-content; display: block; font-weight: bolder;}
 	h4{font-weight: 600; margin-bottom: 20px;}
 	#stitle{font-size: 18px; font-weight: 800p; margin-bottom: 20px;}
 </style>
@@ -60,14 +54,14 @@
 				    </div>
 				    <c:forEach var="s" items="${list}">
 						<div class="list">
-				        	<div id="img">
-				        		<a href=""><img src="${s.img}" alt=""></a>
+							<div class="img">
+				        		<img src="${s.img}">
 				            	<p>${s.starRating}</p>
-				        	</div>
+			            	</div>
 				        	<div class="explain">
 				                <h4>${s.title}</h4>
+				                <p>${s.reviewDate}</p>
 				                <p>${s.content}</p>
-				                <p>${s.reviewDate}</p>	
 				            </div>
 					    </div>
 				    </c:forEach>

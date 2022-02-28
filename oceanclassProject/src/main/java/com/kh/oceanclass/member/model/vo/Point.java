@@ -25,4 +25,5 @@ public class Point {
 	private String userId;
 	private String userName;
 	
+	private int status;
 }

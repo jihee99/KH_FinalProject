@@ -48,8 +48,8 @@ public class EventDao {
 	}
 	
 	
-	public int tagSelectCount(SqlSessionTemplate sqlSession, String tag) {
-		return sqlSession.selectOne("eventMapper.tagSelecetCount");
+	public int tagSelectCount(SqlSessionTemplate sqlSession, String hashtag) {
+		return sqlSession.selectOne("eventMapper.tagSelecetCount", hashtag);
 	}
 	
 	

@@ -16,6 +16,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
+import com.kh.oceanclass.member.model.vo.Report;
 
 @Repository
 public class ClassDao {
@@ -236,4 +237,27 @@ public class ClassDao {
 		return sqlSession.update("classMapper.upMemberPoint", coInfo);
 	}
 	
+	public ClassReview selectReview(SqlSessionTemplate sqlSession, String refBNo) {
+		return sqlSession.selectOne("classMapper.selectReview", refBNo);
+	}
+	
+	public int reportReview(SqlSessionTemplate sqlSession, Report rp) {
+		return sqlSession.insert("classMapper.reportReview", rp);
+	}
+	
+	public Reply selectReply(SqlSessionTemplate sqlSession, String refBNo) {
+		return sqlSession.selectOne("classMapper.selectReply", refBNo);
+	}
+	
+	public int reportReviewReply(SqlSessionTemplate sqlSession, Report rp) {
+		return sqlSession.insert("classMapper.reportReviewReply", rp);
+	}
+	
+	public ClassQna selectQna(SqlSessionTemplate sqlSession, String refBNo) {
+		return sqlSession.selectOne("classMapper.selectQna", refBNo);
+	}
+	
+	public int reportQna(SqlSessionTemplate sqlSession, Report rp) {
+		return sqlSession.insert("classMapper.reportQna", rp);
+	}
 }

@@ -110,46 +110,54 @@
 					<button type="button" class="input_qna" onclick="qnaEnrollForm(${p.productNo});">문의하기</button>
 				</c:if>
 			</div>
-
-			<div class="qna_list">
-				<c:forEach var="q" items="${sqList}">
-					<div class="qna">
-						<div class="user_detail">
-							<div class="user_image">
-								<img src="" alt="">
+     		<c:choose>
+	     	  <c:when test="${!empty sqList}">
+				<div class="qna_list">
+					<c:forEach var="q" items="${sqList}">
+						<div class="qna">
+							<div class="user_detail">
+								<div class="user_image">
+									<img src="" alt="">
+								</div>
+								<span class="user_name">${q.userId }</span> <span
+									class="enroll_date">${q.createDate }</span>
+								<button type="button">신고</button>
 							</div>
-							<span class="user_name">${q.userId }</span> <span
-								class="enroll_date">${q.createDate }</span>
-							<button type="button">신고</button>
+							<div class="qna_content">
+								<span class="qna_title">${q.title }</span> <br> <span
+									class="content">${q.content }</span>
+								<hr>
+							</div>
+							<div class="answer_area">
+								<c:choose>
+									<c:when test="${q.answerContent eq null}">
+										<span>미답변</span>
+									</c:when>
+									<c:otherwise>
+										<span>답변완료</span>								
+									</c:otherwise>
+								</c:choose>
+							</div>
 						</div>
-						<div class="qna_content">
-							<span class="qna_title">${q.title }</span> <br> <span
-								class="content">${q.content }</span>
-							<hr>
-						</div>
-						<div class="answer_area">
-							<c:choose>
-								<c:when test="${q.answerContent eq null}">
-									<span>미답변</span>
-								</c:when>
-								<c:otherwise>
-									<span>답변완료</span>								
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</div>	
+				
 				<div class="bottom_area">
 					<button type="button" class="more_qna" onclick="allQna(${p.productNo});">문의 더보기</button>
 				</div>
+					</c:when>
+	        		<c:otherwise>
+	        			<h4 align="center">문의가 없습니다. </h4>
+	        			<br><br>
+	        		</c:otherwise>
+        	</c:choose>
 			</div>
 		</div>
-	</div>
 	
 	<script>
 	
 	function allQna(pno){
-        window.open("qnaList.st?cpage=1&&pno=" + pno, "스토어문의목록", "width=800, height=800, resizeable=no, location=no");
+        window.open("qnaList.st?cpage=1&&pno=" + pno, "스토어문의목록", "width=816, height=800, resizeable=no, location=no");
     }
 	
 	function qnaEnrollForm(pno){

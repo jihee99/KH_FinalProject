@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,7 +76,7 @@
         font-size: 20px;
         font-weight: bolder;
         float: right;
-        margin-bottom: 10px;
+        margin-bottom: 40px;
     }
     #noanswer{
         margin-left: 25px;
@@ -87,6 +88,12 @@
     #tableBox{
         height: 700px;
     }
+    #paging{
+		padding-top: 10px;
+	}
+	.pagination {
+	    justify-content: center;
+    }
 </style>  
 </head>
 <body>
@@ -97,6 +104,7 @@
             <div id="top-area">
                 <span id="bord-name">클래스 문의 관리</span>
             </div>
+            <!--
             <div id="classCategory">
                 <select name="" id="">
                     <option value="">보미 강사의 강아지 훈련 클래스</option>
@@ -104,14 +112,17 @@
                     <option value="">무의미하게 시간 보내는 클래스</option>
                 </select>
             </div>
+            -->
             <div id="content-wrap" >
+            	<input type="hidden" name="cpage" value="1">
+            	<input type="hidden" id="csQnaNo" name="csQnaNo" value="${tq.csQnaNo}">
                 <div class="answerRadio">
                     <div class="radio-box">
-                        <input type="radio" name="answer" id="answer" checked>
+                        <input type="radio" name="answerContent" id="answer" checked>
                         <label for="">답변</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" name="answer" id="noanswer">
+                        <input type="radio" name="answerContent" id="noanswer">
                         <label for="">미답변</label>
                     </div>
                 </div>
@@ -119,57 +130,69 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th width="100px">글번호</th>
                                 <th width="450px">제목</th>
                                 <th width="150px">작성자</th>
                                 <th width="150px">작성일</th>
-                                <th width="100px">답변상태</th>
+                                <th width="150px">답변상태</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>강사님 궁긍해요 어떻게 해야 하나요</td>
-                                <td>보미사랑</td>
-                                <td>2022-01-02</td>
-                                <td>답변</td>
-                            </tr>
-                            <tr>
-                                <td>수강도중 문의사항이 생겼습니다.. 빠른 답변 부탁요</td>
-                                <td>보미</td>
-                                <td>2022-01-02</td>
-                                <td>답변</td>
-                            </tr>
-                            <tr>
-                                <td>강사님 궁긍해요 어떻게 해야 하나요</td>
-                                <td>보미콧물</td>
-                                <td>2022-01-02</td>
-                                <td>답변</td>
-                            </tr>
-                            <tr>
-                                <td>강사님 궁긍해요 어떻게 해야 하나요</td>
-                                <td>보미럽</td>
-                                <td>2022-01-02</td>
-                                <td>미답변</td>
-                            </tr>
-                            <tr>
-                                <td>강사님 궁긍해요 어떻게 해야 하나요</td>
-                                <td>보미사랑</td>
-                                <td>2022-01-02</td>
-                                <td>답변</td>
-                            </tr>
+	                        <c:forEach var="tq" items="${ tcQnaList }">
+	                            <tr>
+                                    <td class="td tcqno">${ tq.csQnaNo }</td>
+	                                <td class="td">${ tq.title }</td>
+	                                <td class="td">${ tq.nickname }</td>
+	                                <td class="td">${ tq.createDate }</td>
+	                                <c:choose>
+				                        <c:when test="${not empty tq.answerContent}">
+				                        	<td>답변완료<td>
+				                        </c:when>
+				                        <c:otherwise>
+				                        	<td>미답변<td>
+				                        </c:otherwise>
+			                        </c:choose>
+	                            </tr>
+	                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                <div class="paging" align="center">
-                    <button class="btn btn-light">&lt;</button>
-                    
-                    <button class="btn btn-light">1</button>
-                    <button class="btn btn-light">2</button>
-                    <button class="btn btn-light">3</button>
-                    <button class="btn btn-light">4</button>
-                    <button class="btn btn-light">5</button>
-                    
-                    <button class="btn btn-light">&gt;</button>
-                </div>
+                <script>
+                $(function(){
+	        		$(".td").click(function(){
+	        			location.href = 'tcQnaDetail.tc?csQnaNo=' + $(this).siblings(".tcqno").text();
+	        		});
+	        	})
+                </script>
+                <div id="paging" align="center">
+					<ul class="pagination">
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="myClassQnaList.tc?cpage=${ pi.currentPage-1 }">&laquo;&laquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                    	<li class="page-item"><a class="page-link" href="myClassQnaList.tc?cpage=${ p }">${ p }</a></li>
+	                    </c:forEach>
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="myClassQnaList.tc?cpage=${ pi.currentPage+1 }">&raquo;&raquo;</a></li>
+							</c:otherwise>
+						</c:choose>
+		            </ul>
+		        </div>
             </div>
             <br><br><br>
         </div>

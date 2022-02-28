@@ -131,7 +131,14 @@
 		                <div class="bestReview" style="cursor:pointer;" onclick="detailPage(${r.crNo})">
 		                    <div class="profile">
 		                        <div style="float:left; margin-right: 10px;">
-		                            <img src="" width="50px" height="50px">
+		                        	<c:choose>
+		                        		<c:when test="${ !empty r.profile }">
+			                            	<img src="${ r.profile }" width="40px" height="40px">
+		                        		</c:when>
+		                        		<c:otherwise>
+			                            	<img src="resources/images/user.png" width="40px" height="40px">
+		                        		</c:otherwise>
+		                        	</c:choose>
 		                        </div>
 		                        <div>
 		                            <div style="font-weight: bold;">${ r.memNo }</div>

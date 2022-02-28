@@ -39,7 +39,14 @@
             <div class="reviewContent">
                 <div class="profile">
                     <div style="float:left; margin-right: 10px;">
-                        <img src="" width="50px" height="50px">
+                       <c:choose>
+                      		<c:when test="${ !empty cr.profile }">
+                           		<img src="${ cr.profile }" width="40px" height="40px">
+                      		</c:when>
+                      		<c:otherwise>
+                           		<img src="resources/images/user.png" width="40px" height="40px">
+                      		</c:otherwise>
+                      	</c:choose> 
                     </div>
                     <div>
                     	<c:if test="${ loginUser.nickName == cr.memNo }">

@@ -13,12 +13,15 @@
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
 	.searchBar p{float: left; margin-right: 30px; font-weight: 800;}
-	.button{ width: 45%; float: left; margin-left: 50px;}
-	.search{ width:45%; float: left;}
+	.button{width: 45%; float: left; border: 1px solid;}
+	.search{width:50%; height: 50px; float: left}
+	.label{width: 100%; height: 30px; padding-left: 30px;  margin-right: 10px; vertical-align: top; border: 1px solid;}
+	#search{margin-top: 30px;}
+    .label>ul>li{margin:0 auto; float:left; margin-left: 30px}
 	#myQna{
 		width:100%;
 		margin: 0 auto;
-		margin-top: 30px;
+		margin-top: 50px;
 		text-align: center;
 		margin-bottom: 50px; 
 	}
@@ -43,22 +46,15 @@
 			<td id="mainContent">
 				<div class="content">
 				    <h2>1:1 문의 내역</h2>
-				    
 				    <div class="searchBar">
-				        <div class="button">
-				        	<p>기간검색</p>
-					        <input type="hidden" id="memNo" value="${loginUser.memNo}">
-					        <button class="btn btn-info" id="week" value="week">1주일</button>
-					        <button class="btn btn-info" id="2week" value="2week">15일</button>
-					        <button class="btn btn-info" id="month" value="month">1개월</button>
-					    </div>    
-				        <div class="search">
-				            <select name="option" id="option">
-				                <option value="t">제목</option>
-				                <option value="c">분류</option>
-				            </select>
-				            <input type="text" id="text">
-				            <button>검색</button>
+				        <p>기간검색</p>
+				        <input type="hidden" id="memNo" value="${loginUser.memNo}">
+				        <button type="button" class="btn btn-info" id="week" value="7">1주일</button>
+				        <button type="button" class="btn btn-info" id="week" value="14">15일</button>
+				        <button type="button" class="btn btn-info" id="week" value="31">1개월</button>
+				        <div id="search">
+				            <input type="date" id="startDate"> ~ <input type="date" id="endDate">
+				            <button type="button" id="searchDate" onclick="search()">검색</button>
 				        </div>
 				    </div>
 				    
@@ -101,18 +97,17 @@
 				            </c:forEach>
 				        </tbody>
 				    </table>
+				    
 				    <!-- 목록 상세보기 -->
 				    <script>
 						$(function(){
 							$("#myQna>tbody>#qna").click(function(){
-								//console.log($(this));
 								$(this).toggleClass("selected");
 								$("#myQna>tbody>#qna").not(this).removeClass("selected");
 								var targetQ = $(this).next();
 								var targetA = $(this).next().next();
-								//console.log(targetQ.text());
-								targetQ.fadeToggle(200);
-								targetA.fadeToggle(200);
+								targetQ.fadeToggle(400);
+								targetA.fadeToggle(400);
 							});
 						});
 					</script>
@@ -123,25 +118,17 @@
 				    		$(".btn").click(function(){
 				    			let value = $(this).val();			// 날짜버튼값
 					    		$(document).on("click", ".btn", function(){		// 클래스가 btn인 요소들에 click이벤트 발생시
-
 					    			let cpage = 1;
 					    			if($(this).is("a")){			// .btn중에 a태그인 것을 찾아서 현재페이지값 저장
 					    				cpage = $(this).text();		
 					    			}
-					    			
 					    			let memNo = $("#memNo").val();	
-					    			
-					    			//console.log(value);
-					    			//console.log(cpage);
 					    			$.ajax({
 					    				url:"ajaxMyQna.me",
 					    				data:{createDate: value,		// 날짜
 					    					  memNo: memNo,				// 회원번호
 					    					  cpage: cpage},			// 현재페이지수
 					    				success:function(result){
-						    				console.log(result);
-						    				
-						    			
 					    					let qna = '';
 					    					for(let i in result.list){
 					    						let answer = result.list[i].ansContent;
@@ -154,16 +141,12 @@
 					    						}else{
 					    							qna += '<td>답변대기</td>'
 					    						}
-					    						//console.log("중간" + qna);
 					    						qna += '</tr>' 
 					    							 + '<tr id="question">'
 					    						 	 + '<td></td>'
 					    						 	 + '<td>내용</td>'
 					    						 	 + '<td colspan="2" style="text-align: left; padding-left: 100px;">' + result.list[i].qnaContent + '</td>'
 					    						 	 + '</tr>'
-				    						 	//if(answer != "" || answer != null || answer != "undefined" || answer != undefined){
-				    						 	//if(!answer){
-				    						 	//if(typeof answer != "" || answer != null || answer != "undefined" || answer != undefined){ 
 				    						 	if(!(answer == "" || answer == null || answer == "undefined" || answer == undefined)){
 					    							 qna += '<tr id="answer"> <td></td> <td>답변</td> <td colspan="2" style="text-align: left; padding-left: 100px;">'
 					    								  + result.list[i].ansContent
@@ -173,9 +156,7 @@
 					    						}else{
 					    							qna += ''
 					    						}	 	 
-					    						//console.log(result.list[i].ansContent)
 					    					}
-					    					//console.log(qna);
 						    				$("#result").html(qna);
 						    				
 						    				// ajax 결과 클릭 시 내용답변 뿌려주는 
@@ -184,9 +165,8 @@
 												$("#myQna>tbody>#qna").not(this).removeClass("selected");
 												var targetQ = $(this).next();
 												var targetA = $(this).next().next();
-												//console.log(targetQ.text());
-												targetQ.fadeToggle(200);
-												targetA.fadeToggle(200);
+												targetQ.fadeToggle(400);
+												targetA.fadeToggle(400);
 											});
 						    				
 					    					let page = '<ul class="pagination">';
@@ -195,21 +175,18 @@
 						    					}else{
 						    						page += '<li class="page-item"><a class="page-link btn">Previous</a></li>'
 						    					}
-						    					
 												for(let j=result.pi.startPage; j<=result.pi.endPage; j++){
 													page += '<li class="page-item"><a class="page-link btn">'
 														  + j 
 														  + '</a></li>'
 												}
-												
 												if(result.pi.currentPage == result.pi.maxPage){
 													page += '<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' 
 												}else{
 													page += '<li class="page-item"><a class="page-link btn">Next</a></li>'
 												}
-					    					page += '</ul>'
+				    						page += '</ul>'
 					    					$("#paging").html(page);
-						    					//console.log(page);
 						    				
 					    				},error:function(){
 					    					console.log("에러ㅠㅠ");
@@ -219,7 +196,117 @@
 					    	})
 				    	})
 				    </script>
-			    
+			    	
+			    	<script>
+			        	$(".label label").click(function(){
+			        		let category = $(this).prev().val();
+			        		$.ajax({
+			        			url: "searchHelpList.he",
+			        			data: {category:category},
+			        			dataType: 'json',
+			        			success:function(result){
+			        				let help = '';
+			        				for(let i in result.list){
+			        					help += '<tr>'
+				                        	  + '<td id="nno">' + result.list[i].noNo + '</td>'
+				                        	  + '<td>' + result.list[i].category + '</td>'
+				                              + '<td>' + result.list[i].noTitle + '</td>'
+				                        	  + '<td>' + result.list[i].createDate + '</td>'
+				                        	  + '<td>' + result.list[i].count + '</td>'
+				                    		  + '</tr>'
+			        				}
+			        				$("#result").html(help);
+			        				
+			        				let page = '<ul class="pagination">';
+				    					if(result.pi.currentPage == 1 ){
+				    						page += '<li class="page-item disabled"> <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+				    					}else{
+				    						page += '<li class="page-item"><a class="page-link btn">Previous</a></li>'
+				    					}
+										for(let j=result.pi.startPage; j<=result.pi.endPage; j++){
+											page += '<li class="page-item"><a class="page-link btn">'
+												  + j 
+												  + '</a></li>'
+										}
+										if(result.pi.currentPage == result.pi.maxPage){
+											page += '<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' 
+										}else{
+											page += '<li class="page-item"><a class="page-link btn">Next</a></li>'
+										}
+									page += '</ul>'
+			    					$("#paging").html(page);
+									
+									$(function(){
+			        	        		$("#noticeList>tbody>tr").click(function(){
+			        	        			location.href = 'detail.he?nno=' + $(this).children("#nno").text();
+			        	        		});
+			        	        	})
+								
+			        			},error:function(){
+			        				console.log("여기오지마ㅠㅠ");
+			        			}
+			        		})
+			        	});
+			        </script>
+			        
+			        <!-- 달력검색 -->
+					<script>
+						function search(){
+							let startDate = $("#startDate").val();
+							let endDate = $("#endDate").val();
+							$.ajax({
+								url:"ajaxSearchQnaDate.me",
+								data:{sDate : startDate,
+									  eDate : endDate},
+							    success:function(result){
+							    	console.log(result);
+							    	let qna = '';
+			    					for(let i in result){
+			    						let answer = result[i].ansContent;
+			    						qna += '<tr id="qna">'
+			    							 + '<td>' + result[i].createDate + '</td>'
+			    						 	 + '<td>' + result[i].category + '</td>'
+			    						 	 + '<td>' + result[i].qnaTitle + '</td>'
+			    						if(!(answer == "" || answer == null || answer == "undefined" || answer == undefined)){
+			    							qna += '<td>답변완료</td>'
+			    						}else{
+			    							qna += '<td>답변대기</td>'
+			    						}
+			    						qna += '</tr>' 
+			    							 + '<tr id="question">'
+			    						 	 + '<td></td>'
+			    						 	 + '<td>내용</td>'
+			    						 	 + '<td colspan="2" style="text-align: left; padding-left: 100px;">' + result[i].qnaContent + '</td>'
+			    						 	 + '</tr>'
+		    						 	if(!(answer == "" || answer == null || answer == "undefined" || answer == undefined)){
+			    							 qna += '<tr id="answer"> <td></td> <td>답변</td> <td colspan="2" style="text-align: left; padding-left: 100px;">'
+			    								  + result[i].ansContent
+			    								  + '<p>'
+			    								  + result[i].ansDate
+			    								  + '</p></td></tr>'
+			    						}else{
+			    							qna += ''
+			    						}	 	 
+			    					}
+				    				$("#result").html(qna);
+				    				$('#startDate').val('');
+							    	$('#endDate').val('');
+				    				// ajax 결과 클릭 시 내용답변 뿌려주는 
+									$("#myQna>tbody>#qna").click(function(){
+										$(this).toggleClass("selected");
+										$("#myQna>tbody>#qna").not(this).removeClass("selected");
+										var targetQ = $(this).next();
+										var targetA = $(this).next().next();
+										targetQ.fadeToggle(400);
+										targetA.fadeToggle(400);
+									});
+							    },error:function(){
+							    	
+							    }
+							})
+						}
+					</script>
+			        
 			    	<div id="paging">
 						<ul class="pagination">
 							<c:choose>
@@ -251,7 +338,6 @@
 							</c:choose>
 			            </ul>
 			        </div>
-					
 					
 				</div>	
 			</td>

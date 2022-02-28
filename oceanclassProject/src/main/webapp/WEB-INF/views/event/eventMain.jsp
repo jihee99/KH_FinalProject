@@ -14,16 +14,10 @@
     <link rel="stylesheet" href="./resources/css/eventMain.css?4">
     
 <style>
-	#img{
-		width: 100%; 
-		height: 100%;
-	}
-	.pagination{
-		width: 25%;
-		margin: 0 auto;
-		padding-top: 80px;
-		border: 1px solid white;
-	}
+	.innerOuter{height: 1500px;}
+	.img{height: 300px;}
+	#img{width: 100%; height: 95%;}
+	.pagination{width: 100%; justify-content: center; padding-top: 50px;}
 	#img:hover{border: 3px solid rgb(107, 171, 213); cursor:pointer;}
 </style>
 </head>
@@ -90,7 +84,6 @@
     <script>
     	$(".img>#img").click(function(){
 	    	let eventNo = $(this).prev().val();
-	    	console.log(eventNo);
 	    	location.href = 'detailEvent.ev?eno=' + eventNo;
     	})
     
@@ -101,14 +94,12 @@
     	$(function(){
     		$(".btn1").click(function(){
         		let value = $(this).val();
-        		//console.log(value);
         		$.ajax({
         			url:"ajaxSearchEvent.ev",
         			data:{category:value},
         			success:function(result){
-        				let value = "";
+        				let value = '<div class="content" id="result">';
         				for(let i in result){
-        					//console.log(result[i].eventNo);
         					value += '<div class="img">'
         						   + '<input type="hidden" value="' + result[i].eventNo + '">'
         						   + '<img src="' + result[i].img + '" id="img">'
@@ -119,14 +110,12 @@
         				}
         				
         				$("#result").html(value);
-        				//console.log(value);
         				$(".img>#img").click(function(){
 					    	let eventNo = $(this).prev().val();
 					    	console.log(eventNo);
 					    	location.href = 'detailEvent.ev?eno=' + eventNo;
 				    	})
         			},error:function(){
-        				//console.log("에러");
         				alert("에러발생");
         			}
         		})

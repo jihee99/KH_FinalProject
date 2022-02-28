@@ -30,6 +30,7 @@ import com.kh.oceanclass.help.model.vo.Qna;
 import com.kh.oceanclass.member.model.service.MypageService;
 import com.kh.oceanclass.member.model.vo.Coupon;
 import com.kh.oceanclass.member.model.vo.Member;
+import com.kh.oceanclass.member.model.vo.Point;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreReview;
@@ -51,7 +52,18 @@ public class StuMypageController {
 //프로필 관련	
 	// 마이페이지 이동
 	@RequestMapping("myPage.me")
-	public String myPage() {return "member/student/mypageMain";}
+	public String myPage(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		ArrayList<ClassOrder> list = myService.selectMainMyClass(memNo);
+		ArrayList<ClassVo> classLikeList = myService.selectMainLikeClass(memNo);
+		ArrayList<Product> storeLikeList = myService.selectMainLikeProduct(memNo);
+
+		model.addAttribute("list", list);
+		model.addAttribute("classLikeList", classLikeList);
+		model.addAttribute("storeLikeList", storeLikeList);
+		return "member/student/mypageMain";
+	}
 	
 	// 프로필 확인
 	@RequestMapping("myProfile.me")
@@ -64,16 +76,12 @@ public class StuMypageController {
 	// 프로필 변경
 	@RequestMapping("changeProfile.me")
 	public String changeProfile(Member m, MultipartFile upfile, HttpSession session, Model model) {
-		
-		System.out.println(upfile);
 		if(!upfile.getOriginalFilename().equals("")) {		
 			String changeName = saveFile(upfile, session);
 			m.setProfileImg("resources/uploadFiles/" + changeName);
 		}else {				// 프로필 사진 없을 경우
 			m.setProfileImg("");
 		}
-		
-		//System.out.println(m);
 		int result = myService.updateProfile(m);
 		Member loginUser = myService.selectUser(m);
 		if(result>0) {
@@ -106,12 +114,10 @@ public class StuMypageController {
 	// 회원 탈퇴
 	@RequestMapping("myDelete.me")
 	public String deleteMem(String userPwd, String userId, HttpSession session, Model model) {
-		// db 비밀번호 암호문
-		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
+		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd(); // db 비밀번호 암호문
 		
 		if(bcryptPasswordEncoder.matches(userPwd, encPwd)) { 
-			int result = myService.deleteMem(userId);
-			
+			int result = myService.deleteMem(userId);			
 			if(result>0) {
 				session.removeAttribute("loginUser");
 				session.setAttribute("alertMsg", "그동안 오션클래스를 이용해주셔서 감사합니다");
@@ -136,24 +142,18 @@ public class StuMypageController {
 	
 	// 넘어온 첨부파일 그자체를 서버 폴더에 저장
 	public String saveFile(MultipartFile upfile, HttpSession session) {
-
-		String originName = upfile.getOriginalFilename(); // "flower.png"
-		
+		String originName = upfile.getOriginalFilename(); // "flower.png"		
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // 년월일시분초
 		int ranNum = (int)(Math.random() * 90000 + 10000); // 5자리 랜덤값
-		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"
-		
+		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"		
 		String changeName = currentTime + ranNum + ext;
-				
 		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
-		
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");		
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return changeName;
 	}
 	
@@ -164,21 +164,42 @@ public class StuMypageController {
 	public String couponList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		int couponCount = myService.selectCouponCount(memNo);
+		int pointCount = myService.selectPointCount(memNo);
+		int pointSum = myService.pointSum(memNo);
 		
-		PageInfo pi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
-		ArrayList<Coupon> list = myService.selectCouponList(pi, memNo);
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).getDedate() == null) {
-				list.get(i).setDedate("무제한");
+		PageInfo cpi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
+		ArrayList<Coupon> couponList = myService.selectCouponList(cpi, memNo);
+		for(int i=0; i<couponList.size(); i++) {
+			if(couponList.get(i).getDedate() == null) {
+				couponList.get(i).setDedate("무제한");
 			}
 		}
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("couponCount", couponCount);
-		model.addAttribute("list", list);
-		return "member/student/myPoint";
+		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+		ArrayList<Point> pointPlusList = myService.selectPointList(ppi, memNo);
 		
+		ArrayList<Point> pointMinusList = myService.PointMinusList(memNo);
+		
+		model.addAttribute("couponCount", couponCount);
+		model.addAttribute("couponList", couponList);
+		model.addAttribute("pointPlusList", pointPlusList);
+		model.addAttribute("pointSum", pointSum);
+		model.addAttribute("pointMinusList", pointMinusList);
+		return "member/student/myPoint";		
 	}
+	
+//	@RequestMapping("pointSaveList.me")
+//	public String pointSaveList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+//		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+//		int pointCount = myService.selectPointCount(memNo);
+//		
+//		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+//		ArrayList<Point> pointList = myService.selectPointList(ppi, memNo);
+//		
+//		model.addAttribute("pi", ppi);
+//		model.addAttribute("pointList", pointList);
+//		return "member/student/myPoint";		
+//	}
 	
 	
 	
@@ -199,8 +220,7 @@ public class StuMypageController {
 			}else {
 				list.get(i).setCategory("기타");
 			}
-		}
-		
+		}		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myQna";
@@ -210,11 +230,10 @@ public class StuMypageController {
 	@ResponseBody
 	@RequestMapping(value="ajaxMyQna.me", produces="application/json; charset=UTF-8")
 	public Map<String, Object> ajaxMyQna(@RequestParam(value="cpage", defaultValue="1") int currentPage, Qna q, Model model) {
-
-		Map<String, Object> map = new HashMap();
-		
+		Map<String, Object> map = new HashMap();		
 		int qnaCount = myService.myQnaCount(q);
-		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 5, 5);
+		
+		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 10, 10);
 		ArrayList<Qna> list = myService.selectMyQnaList(pi, q);
 	
 		for(int i=0; i<list.size(); i++) {
@@ -226,10 +245,37 @@ public class StuMypageController {
 				list.get(i).setCategory("기타");
 			}
 		}
-		
 		map.put("pi", pi);
 		map.put("list", list);
 		return map;
+	}
+	
+	// 1:1 문의 달력검색
+	@ResponseBody
+	@RequestMapping(value="ajaxSearchQnaDate.me", produces="application/json; charset=UTF-8")
+	public String ajaxSearchQnaDate(String sDate, String eDate, Model model, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		Map<String, Object> option = new HashMap();
+		option.put("memNo", memNo);
+		option.put("sDate", sDate);
+		option.put("eDate", eDate);
+		
+		ArrayList<Qna> list = myService.ajaxSearchQnaDate(option);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("C")) {
+				list.get(i).setCategory("클래스");
+			}else if(list.get(i).getCategory().equals("S")) {
+				list.get(i).setCategory("스토어");
+			}else {
+				list.get(i).setCategory("기타");
+			}
+		}
+	
+		return new Gson().toJson(list);
+		
 	}
 	
 	
@@ -239,12 +285,11 @@ public class StuMypageController {
 	@RequestMapping("likeClass.me")
 	public String likeClass(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
 		int likeClassCount = myService.likeClassCount(memNo);
-		
+
 		PageInfo pi = Pagination.getPageInfo(likeClassCount, currentPage, 5, 6);
 		ArrayList<ClassVo> list = myService.selectLikeClass(pi, memNo);
-		
+
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassLike";
@@ -253,8 +298,7 @@ public class StuMypageController {
 	// 클래스 후기(리뷰)
 	@RequestMapping("myReview.me")
 	public String myReview(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 		int reviewCount = myService.classReviewCount(memNo);
 		int qnaCount = myService.classQnaCount(memNo);
 		
@@ -272,8 +316,7 @@ public class StuMypageController {
 	// 클래스 리뷰 디테일
 	@RequestMapping("myClassReviewDetail.me")
 	public String myClassReviewDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 		int reviewCount = myService.classReviewCount(memNo);
 		
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
@@ -287,37 +330,135 @@ public class StuMypageController {
 	// 클래스 문의 디테일
 	@RequestMapping("myClassQnaDetail.me")
 	public String myClassQnaDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 		int reviewCount = myService.classReviewCount(memNo);
-		
-		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
+
+		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 10);
 		ArrayList<CsQna> list = myService.classQnaList(pi, memNo);
-		
+
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myClassQnaDetail";
 	}
 	
+	// 클래스 문의 모달 내역
+	@ResponseBody
+	@RequestMapping(value="ajaxClassQna.me", produces="application/json; charset=UTF-8")
+	public String ajaxClassQna(int csQno) {
+		CsQna cs = myService.ajaxClassQna(csQno);
+		return new Gson().toJson(cs);
+	}
 	
 	// 내 클래스 메인
 	@RequestMapping("myClass.me")
 	public String myClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
+		ArrayList<ClassOrder> allList = myService.selectMyAllClass(memNo);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("1")) {
+				list.get(i).setCategory("드로잉");
+			}else if(list.get(i).getCategory().equals("2")) {
+				list.get(i).setCategory("요리");
+			}else if(list.get(i).getCategory().equals("3")) {
+				list.get(i).setCategory("음악");
+			}else if(list.get(i).getCategory().equals("4")) {
+				list.get(i).setCategory("운동");
+			}else if(list.get(i).getCategory().equals("5")) {
+				list.get(i).setCategory("사진,영상");
+			}else if(list.get(i).getCategory().equals("6")) {
+				list.get(i).setCategory("재테크");
+			}else if(list.get(i).getCategory().equals("7")) {
+				list.get(i).setCategory("개발,데이터");
+			}else {
+				list.get(i).setCategory("자기계발");
+			}
+		}
+		
+		for(int i=0; i<allList.size(); i++) {
+			if(allList.get(i).getCategory().equals("1")) {
+				allList.get(i).setCategory("드로잉");
+			}else if(allList.get(i).getCategory().equals("2")) {
+				allList.get(i).setCategory("요리");
+			}else if(allList.get(i).getCategory().equals("3")) {
+				allList.get(i).setCategory("음악");
+			}else if(allList.get(i).getCategory().equals("4")) {
+				allList.get(i).setCategory("운동");
+			}else if(allList.get(i).getCategory().equals("5")) {
+				allList.get(i).setCategory("사진,영상");
+			}else if(allList.get(i).getCategory().equals("6")) {
+				allList.get(i).setCategory("재테크");
+			}else if(allList.get(i).getCategory().equals("7")) {
+				allList.get(i).setCategory("개발,데이터");
+			}else {
+				allList.get(i).setCategory("자기계발");
+			}
+		}
 		
 		model.addAttribute("list", list);
+		model.addAttribute("allList", allList);
 		return "member/student/myClass";
+	}
+	
+	// 수강 클래스 전체
+	@RequestMapping("myIngClass.me")
+	public String myIngClass(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("1")) {
+				list.get(i).setCategory("드로잉");
+			}else if(list.get(i).getCategory().equals("2")) {
+				list.get(i).setCategory("요리");
+			}else if(list.get(i).getCategory().equals("3")) {
+				list.get(i).setCategory("음악");
+			}else if(list.get(i).getCategory().equals("4")) {
+				list.get(i).setCategory("운동");
+			}else if(list.get(i).getCategory().equals("5")) {
+				list.get(i).setCategory("사진,영상");
+			}else if(list.get(i).getCategory().equals("6")) {
+				list.get(i).setCategory("재테크");
+			}else if(list.get(i).getCategory().equals("7")) {
+				list.get(i).setCategory("개발,데이터");
+			}else {
+				list.get(i).setCategory("자기계발");
+			}
+		}
+
+		model.addAttribute("list", list);
+		return "member/student/myClassDetail";
 	}
 	
 	// 내 클래스 전체
 	@RequestMapping("myAllClass.me")
 	public String myAllClass(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		ArrayList<ClassOrder> list = myService.selectMyClass(memNo);
+		ArrayList<ClassOrder> list = myService.selectMyAllClass(memNo);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("1")) {
+				list.get(i).setCategory("드로잉");
+			}else if(list.get(i).getCategory().equals("2")) {
+				list.get(i).setCategory("요리");
+			}else if(list.get(i).getCategory().equals("3")) {
+				list.get(i).setCategory("음악");
+			}else if(list.get(i).getCategory().equals("4")) {
+				list.get(i).setCategory("운동");
+			}else if(list.get(i).getCategory().equals("5")) {
+				list.get(i).setCategory("사진,영상");
+			}else if(list.get(i).getCategory().equals("6")) {
+				list.get(i).setCategory("재테크");
+			}else if(list.get(i).getCategory().equals("7")) {
+				list.get(i).setCategory("개발,데이터");
+			}else {
+				list.get(i).setCategory("자기계발");
+			}
+		}
 		
 		model.addAttribute("list", list);
-		return "member/student/myClassDetail";
+		return "member/student/myAllClassDetail";
 	}
 	
 	
@@ -358,7 +499,7 @@ public class StuMypageController {
 		return "member/student/myShoppingReview";
 	}
 	
-	// 상품 Qna 디테일
+	// 상품 Qna 리스트
 	@RequestMapping("myShoppingQnaDetail.me")
 	public String myShoppingQnaDetail(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -370,6 +511,14 @@ public class StuMypageController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShoppingQnaDetail";
+	}
+	
+	// 상품 Qna 디테일
+	@ResponseBody
+	@RequestMapping(value="ajaxShoppingQna.me", produces="application/json; charset=UTF-8")
+	public String ajaxShoppingQna(int csQno) {
+		CsQna cs = myService.ajaxShoppingQna(csQno);
+		return new Gson().toJson(cs);
 	}
 	
 	// 상품 Review 디테일
@@ -424,5 +573,67 @@ public class StuMypageController {
 		StorePay pay = myService.selectShopping(orderNo);
 		return new Gson().toJson(pay);
 	}
+	
+	// 상품 주문조회 기간검색
+	@ResponseBody
+	@RequestMapping(value="ajaxMyShopping.me", produces="application/json; charset=UTF-8")
+	public String ajaxMyShopping(StorePay pay, Model model) {
+		ArrayList<StorePay> list = myService.searchShoppingList(pay);
+
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getOrderStatus().equals("1")) {
+				list.get(i).setOrderStatus("주문접수");
+			}else if(list.get(i).getOrderStatus().equals("2")){
+				list.get(i).setOrderStatus("결제완료");
+			}else if(list.get(i).getOrderStatus().equals("3")){
+				list.get(i).setOrderStatus("상품준비");
+			}else if(list.get(i).getOrderStatus().equals("4")){
+				list.get(i).setOrderStatus("배송시작");
+			}else if(list.get(i).getOrderStatus().equals("5")){
+				list.get(i).setOrderStatus("배송중");
+			}else if(list.get(i).getOrderStatus().equals("6")){
+				list.get(i).setOrderStatus("배송완료");
+			}else if(list.get(i).getOrderStatus().equals("7")){
+				list.get(i).setOrderStatus("취소접수");
+			}
+		}
+		return new Gson().toJson(list);
+	}
+	
+	// 상품 주문조회 달력 검색
+	@ResponseBody
+	@RequestMapping(value="ajaxSearchDate.me", produces="application/json; charset=UTF-8")
+	public String ajaxSearchDate(String sDate, String eDate, StorePay pay, Model model, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		pay.setMemberNo(memNo);
+		pay.setStartDate(sDate);
+		pay.setEndDate(eDate);
+		
+		ArrayList<StorePay> list = myService.ajaxSearchDate(pay);
+		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getOrderStatus().equals("1")) {
+				list.get(i).setOrderStatus("주문접수");
+			}else if(list.get(i).getOrderStatus().equals("2")){
+				list.get(i).setOrderStatus("결제완료");
+			}else if(list.get(i).getOrderStatus().equals("3")){
+				list.get(i).setOrderStatus("상품준비");
+			}else if(list.get(i).getOrderStatus().equals("4")){
+				list.get(i).setOrderStatus("배송시작");
+			}else if(list.get(i).getOrderStatus().equals("5")){
+				list.get(i).setOrderStatus("배송중");
+			}else if(list.get(i).getOrderStatus().equals("6")){
+				list.get(i).setOrderStatus("배송완료");
+			}else if(list.get(i).getOrderStatus().equals("7")){
+				list.get(i).setOrderStatus("취소접수");
+			}
+		}
+	
+		return new Gson().toJson(list);
+		
+	}
+	
 	
 }

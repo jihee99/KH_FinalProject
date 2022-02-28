@@ -30,5 +30,5 @@ public class StoreQna {
 	private String productName;
 	private String profile;
 	private String category;
-	
+	private String pwdCk;
 }

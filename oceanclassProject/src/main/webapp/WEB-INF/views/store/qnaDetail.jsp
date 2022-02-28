@@ -28,13 +28,13 @@
 
     .review_list{margin-bottom: 60px; height: auto; margin-left: 30px;}
     .user_detail>button{background:none; border: none; font-weight: bold; font-size: 13px; cursor: pointer;}
-    .user_detail{width: 400px; height: 80px;}
+    .user_detail{width: 400px; height: 60px;}
     .user_detail>span{ display:inline-block; margin-top: 12px;}
-    .user_image{width: 50px; height: 50px; border: 1px solid; position:inline-block; float:left; margin-right: 10px;}
+    .user_image{position:inline-block; float:left; margin-right: 10px;}
     .product_name_small{font-size: small; color: rgb(88, 88, 88);}
     .content{font-family: 본고딕; font-size: 15px; display:inline-block; width:650px; height: auto; margin-bottom: 10px;}
     .recommend{width: 200px; height: 30px; margin-right: 10px; cursor: pointer; background:rgb(211, 212, 212); border: none; border-radius: 5px;}
-    .thumbnail_image{width:150px; height:120px; border: 1px solid; margin-bottom: 10px;}
+    .thumbnail_image{width:150px; height:120px; margin-bottom: 10px;}
     .answer_area{margin-buttom:50px;}
         #pagingArea{
 		width:fit-content;
@@ -59,139 +59,127 @@
             <br>
         </div>
         
+     <c:choose>
+        <c:when test="${!empty qlist}">
             <div class="review_list">
             	<c:forEach var="q" items="${qlist}">
-            		<c:choose>
-            			<c:when test="${q.pwd == null}">
-			                <div class="review" style="margin-bottom:50px;">
-			                    <div class="user_detail">
-			                        <div class="user_image">
-			                            <img src="${q.profile }">
-			                        </div>
-			                        <span class="user_name">${q.userId }</span>
-			                        <span class="enroll_date">${q.createDate }</span>
-			            			<input type="hidden" id="refBNo" neme="refBNo" value="${q.csQno}">
-			                   		<input type="hidden" id="reportMemNo" name="reportMemNo" value="${q.memNo}">
-			                   		<button type="button" data-toggle="modal" data-target="#report">신고</button>
-			                    </div>
-			                    <div class="review_content">
-			                        <span class="product_name_small">${q.title }</span> <br>
-			                        <span class="content">${q.content }</span>
-			                        <c:choose>
-				                        <c:when test="${q.filePath != null}">
+	                <div class="review" style="margin-bottom:50px;">
+	                    <div class="user_detail">
+	                        <div class="user_image">
+	                            <img src="${q.profile }" width="50px" height="50px">
+	                        </div>
+	                        <span class="user_name">${q.userId }</span>
+	                        <span class="enroll_date">${q.createDate }</span>
+	            			<input type="hidden" id="refBNo" neme="refBNo" value="${q.csQno}">
+	                   		<input type="hidden" id="reportMemNo" name="reportMemNo" value="${q.memNo}">
+	                   		<button type="button" data-toggle="modal" data-target="#report">신고</button>
+	                    </div>
+	            		<c:choose>
+	            			<c:when test="${!empty q.pwd && loginUser.userId != q.userId}">
+	            					<div id="pwdZone${ q.csQno }" style="margin: auto" align="center">
+					                	<img src="resources/images/unlock.png" width="6%" style="margin-bottom:10px;"><br>
+					                	해당 문의는 비밀글 입니다.<br>
+					                	비밀번호 확인 후 내용 조회가 가능합니다.<br>
+					                	<input type="password" id="pwdCk${ q.csQno }" style="margin-top:10px;">
+					                	<button type="button" onclick="pwdCheck(${q.csQno});" class="btn" style="margin-bottom: 3px;background-color: #6babd5; height:30px; line-height: 11px; font-size:15px; color:white;">확인</button>
+					                </div>
+					                
+					                <div id="noPwdZone${ q.csQno }" style="display:none;">
+						                <c:if test="${ loginUser.userId == q.userId }">
+					               	    	<div style="float:right; margin-top:5px;">
+						                    	<button type="button" onclick="qnaDelete(${q.referNo}, ${q.csQno});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
+					                    	</div>
+		                    			</c:if>
+		                    			
+					                    <div class="review_content">
+					                        <span class="product_name_small">${q.title }</span> <br>
+					                        <span class="content">${q.content }</span>
+					                        <c:if test="${q.filePath != null}">
+						                    	<div class="thumbnail_image">
+						                            <img src="${q.filePath}" class="thumb" style="width:150px; height: 120px;">
+						                        </div>
+					                        </c:if>
+					                    </div>
+				                    	<hr>
+				                    	<div class="answer_area">
+				                    		<c:if test="${!empty q.answerContent}">
+					                    		<div class="user_detail">
+							                        <span class="user_name">${q.userId }</span>
+							                        <span class="enroll_date">${q.answerDate }</span>
+							                    </div>
+												<span style="font-weight:bold">답변:</span>		
+								                <span>${q.answerContent}</span>
+											</c:if>
+				                    	</div>
+	            					</div>
+	            			</c:when>
+				            
+				            <c:otherwise>
+				                    
+		                    	<div id="noPwdZone${ q.csQno }">
+					                <c:if test="${ loginUser.userId == q.userId }">
+				               	    	<div style="float:right; margin-top:5px;">
+					                    	<button type="button" onclick="qnaDelete(${q.referNo}, ${q.csQno});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
+				                    	</div>
+	                    			</c:if>
+				                    <div class="review_content">
+				                        <span class="product_name_small">${q.title }</span> <br>
+				                        <span class="content">${q.content }</span>
+				                        <c:if test="${q.filePath != null}">
 					                    	<div class="thumbnail_image">
 					                            <img src="${q.filePath}" class="thumb" style="width:150px; height: 120px;">
 					                        </div>
-				                        </c:when>
-				                        <c:otherwise></c:otherwise>
-			                        </c:choose>
-			                    </div>
-			                    <hr>
-			                    <div class="answer_area">
-			                    	<c:choose>
-			                    		<c:when test="${q.answerContent != null}">
-													<span style="font-weight:bold">답변:</span>		
-							                        <span>${q.answerContent}</span>
-										</c:when>
-										<c:when test="${q.pwd != null}">		
-											<span style="font-weight:bold">비밀번호 입력:<input type="password"></span>
-										</c:when>
-										<c:otherwise>
-											<span style="font-weight:bold">미답변</span>
-										</c:otherwise>
-									</c:choose>	
-			                    </div>
-            				</div>
-            			</c:when>
-            			<c:when test="${q.pwd != null}">
-            				<div class="review" style="margin-bottom:50px;">
-			                    <div class="user_detail">
-			                        <div class="user_image">
-			                            <img src="${q.profile }">
-			                        </div>
-			                        <span class="user_name">${q.userId }</span>
-			                        <span class="enroll_date">${q.createDate }</span>
-			            			<input type="hidden" id="refBNo" neme="refBNo" value="${q.csQno}">
-			                   		<input type="hidden" id="reportMemNo" name="reportMemNo" value="${q.memNo}">
-			                   		<button type="button" data-toggle="modal" data-target="#report">신고</button>
-			                    </div>
-			                    
-			                    <!-- 비번 입력 모달 -->
-			                    <div class="modal fade" id="pass">
-								    <div class="modal-dialog modal-sm">
-								      <div class="modal-content">
-								      
-								        <!-- Modal Header -->
-								        <div class="modal-header">
-								          <h4 class="modal-title">비밀번호입력</h4>
-								          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-								        </div>
-								        
-								        <!-- Modal body -->
-								        <div class="modal-body">
-								          <input type="hidden" id="hi" value="">
-								          <input type="password" maxlength="4" id="pwd" name="pwd" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
-								        </div>
-								        
-								        <!-- Modal footer -->
-								        <div class="modal-footer">
-								          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								          <button type="submit" class="btn btn-primary" onclick="passCheck();">확인</button>
-								        </div>
-								        
-								      </div>
-								    </div>
-								  </div>
-			                    
-			                    <!-- 비번 모달 띄우고 비번 맞을시에만 보이게 -->
-			                    <div class="review_content">
-			                    	<img src="./resources/images/unlock.png" style="width:40px; height:40px;" data-toggle="modal" data-target="#pass">
-			                    	<b>비밀글입니다.</b>
-			                    	
-			                    	<!-- 
-			                        <span class="product_name_small">${q.title }</span> <br>
-			                        <span class="content">${q.content }</span>
-			                        <c:choose>
-				                        <c:when test="${q.filePath != null}">
-					                    	<div class="thumbnail_image">
-					                            <img src="${q.filePath}" class="thumb" style="width:150px; height: 120px;">
-					                        </div>
-				                        </c:when>
-				                        <c:otherwise></c:otherwise>
-			                        </c:choose> 
-			                        -->
-			                    </div>
-			                    <hr>
-			                    <div class="answer_area">
-			                    	<!-- 
-										<span style="font-weight:bold">답변:</span>		
-						                <span>${q.answerContent}</span>
-						                
-										<span style="font-weight:bold">미답변</span>
-									 -->
-			                    </div>
-			                    
-            				</div>
-            			</c:when>
-            			<c:otherwise></c:otherwise>
-            		</c:choose>
-	                
+				                        </c:if>
+				                    </div>
+				                    <div class="answer_area" >
+					                    <c:choose>
+					                    	<c:when test="${ !empty q.answerContent }">
+												<img src="resources/images/curvearrow.png" width="25" height="25" style="float:left; margin-right:5px;">		
+								                <span>${q.answerContent}</span>
+								            </c:when>
+								            <c:otherwise>
+												<b>미답변</b>
+											</c:otherwise>
+										</c:choose>
+				                    </div>
+	            				</div>
+	            			</c:otherwise>
+	            		</c:choose>
+	            	</div>
                 </c:forEach>
             </div>
+         </c:when>
+         <c:otherwise>
+         	    <h4 align="center"> 문의가 없습니다. </h4>
+         </c:otherwise>
+      </c:choose>
+            
+        <div id="pagingArea">
+			<ul class="pagination">
 
-            <div id="pagingArea">
-                <ul class="pagination">
-                	<c:if test="${ pi.currentPage > 1 }">
-							<li class="page-item"><a class="page-link" href="qnaList.st?cpage=${ pi.currentPage - 1 }&pno=${ qnaPno }">Previous</a></li>
-					</c:if>
-					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-							<li class="page-item"><a class="page-link" href="qnaList.st?cpage=${ p }&pno=${ qnaPno }">${ p }</a></li>
-					</c:forEach>
-					<c:if test="${ pi.currentPage != pi.maxPage }">
-							<li class="page-item"><a class="page-link" href="qnaList.st?cpage=${ pi.currentPage + 1 }&pno=${ qnaPno }">Next</a></li>
-					</c:if>
-                </ul>
-            </div>
+				<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="qnaList.st?cpage=${ pi.currentPage - 1 }&pno=${ qnaPno }">Previous</a></li>
+					</c:otherwise>
+				</c:choose>
+
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<li class="page-item"><a class="page-link" href="qnaList.st?cpage=${ p }&pno=${ qnaPno }">${ p }</a></li>
+				</c:forEach>
+				
+				<c:choose>
+					<c:when test="${ pi.currentPage eq pi.maxPage }">
+						<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="qnaList.st?cpage=${ pi.currentPage + 1 }&pno=${ qnaPno }">Next</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
     </div>
     
         <!-- 신고 모달 -->
@@ -270,23 +258,56 @@
         })
         
     }
-	
-	
-    $("input:radio[name=radio]").click(function(){
-        // value값이 5인 라디오버튼 체크시에만 text-area 활성화
-        if($("input[name=radio]:checked").val() == "25"){
-            $("#input-area2").attr("disabled",false);
-        } else{
-            $("#input-area2").attr("disabled",true);
-        }
-
-    })
     
-    // 모달창에 값넘겨주기
-    
-	// 비번 일치하면 자기꺼만 보이게
-	// 비번 일치하지않으면 일치하지않음 알람
-
+	  	function pwdCheck(cqNo){
+			var pwdCk = document.getElementById("pwdCk" + cqNo).value;
+			var pwdZone = document.getElementById("pwdZone" + cqNo);
+			var noPwdZone = document.getElementById("noPwdZone" + cqNo);
+			
+			$.ajax({
+				url:"storeQnaPwdCheck.me",
+				data:{csQno:cqNo,pwd:pwdCk},
+				success:function(result){
+					if(result == 'yyyyy'){
+						pwdZone.style.display = 'none';
+						noPwdZone.style.display = 'block';
+					} else if(result == 'nnnnn'){
+						alert("비밀번호가 틀립니다. 다시 입력해주세요.");
+					} else {
+						console.log("잘못된 접근입니다.");
+					}
+				}, error:function(){
+					console.log("스토어 문의 비밀번호 확인용 ajax 통신 실패");    				
+				}
+			})
+		}
+	  	
+	  	// 문의삭제
+		function qnaDelete(referNo,csQno){
+	        if(confirm("정말로 삭제하시겠습니까?") == true){
+	            $.ajax({
+	                url:"qnaDelete.st",
+	                type:"post",
+	                data:{csQno:csQno,
+	                	  referNo:referNo
+	                },success:function(result){
+	                	if(result == "ss"){
+	                		alert("해당 글의 삭제가 완료되었습니다.");
+	    	                window.close();
+	                	}else{
+	    	                alert("해당 글의 삭제가 실패했습니다.");
+	    	                window.close();
+	                	}
+	                    
+	                },error:function(){
+	                	alert("통신실패!");
+	                }
+	            })
+	        }else{
+	        	alert("삭제 취소");
+	        	window.close();
+	        }
+	    }
 		
 	</script>
 </body>

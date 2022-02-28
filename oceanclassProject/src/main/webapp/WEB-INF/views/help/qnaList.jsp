@@ -48,7 +48,7 @@
         <div class="button my-3">
             <button type="button" class="btn" onclick="location.href='helpList.he';">공지사항</button>
             <button type="button" class="btn" onclick="location.href='faqMain.he';">FAQ</button>
-            <button type="button" class="btn" onclick="location.href='qnaMain.he';">1:1문의</button>
+            <button type="button" class="btn" onclick="location.href='qnaList.he';">1:1문의</button>
         </div>
         <div class="middle">
         	<div id="search">
@@ -127,9 +127,9 @@
         <script>
         	$(function(){
         		$("#qnaList>tbody>tr").click(function(){
-        			var pwd = $($(this)[0]).children().first().val();
-        			var nick = $($(this)[0]).children().eq(4).text();
-        			var login = '<c:out value="${loginUser.nickName}"/>';
+        			let pwd = $($(this)[0]).children().first().val();
+        			let nick = $($(this)[0]).children().eq(4).text();
+        			let login = '<c:out value="${loginUser.nickName}"/>';
         			//console.log(pwd);
         			//console.log(nick);
         			console.log(login);

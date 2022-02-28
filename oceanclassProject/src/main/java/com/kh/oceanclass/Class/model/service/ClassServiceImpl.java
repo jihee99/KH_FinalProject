@@ -17,6 +17,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
+import com.kh.oceanclass.member.model.vo.Report;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -265,5 +266,35 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public int upMemberPoint(ClassOrder coInfo) {
 		return cDao.upMemberPoint(sqlSession, coInfo);
+	}
+
+	@Override
+	public ClassReview selectReview(String refBNo) {
+		return cDao.selectReview(sqlSession, refBNo);
+	}
+
+	@Override
+	public int reportReview(Report rp) {
+		return cDao.reportReview(sqlSession, rp);
+	}
+
+	@Override
+	public Reply selectReply(String refBNo) {
+		return cDao.selectReply(sqlSession, refBNo);
+	}
+
+	@Override
+	public int reportReviewReply(Report rp) {
+		return cDao.reportReviewReply(sqlSession, rp);
+	}
+
+	@Override
+	public ClassQna selectQna(String refBNo) {
+		return cDao.selectQna(sqlSession, refBNo);
+	}
+
+	@Override
+	public int reportQna(Report rp) {
+		return cDao.reportQna(sqlSession, rp);
 	}
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,19 +13,16 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.conhead{
-        width: 100%;
-	    height: 15%;
-	}
-	.content1{
-	    width: 100%;
-	    height: 30%;
-	}
+	.conhead{width: 100%; height: 15%;}
+	.content1{width: 100%; height: 30%; margin-top: 20px;}
 	.conhead>h2{width: 30%; font-weight: 900;}
 	.conhead>a{float: right; margin-top: -30px;}
     .item{width:25%; float:left; margin: 30px; margin-top: 40px; overflow: hidden;}
-    .item img{display:block; width: 100%;}
-    .item>p{text-align: center; font-size: 20px; font-weight: 600;}
+    .item img{display:block; width: 100%; height: 130px;}
+    .item>p{text-align: center; font-size: 16px; font-weight: 600;}
+    a{text-decoration: none; color: black; font-weight: 600;}
+    #classImg:hover{cursor: pointer;}
+    #proImg:hover{cursor: pointer;}
 </style>
 </head>
 <body>
@@ -31,30 +30,113 @@
 	    <div class="content1">
 	        <div class="conhead">
 	            <h2>나의 클래스</h2>
-	            <a>더보기</a>
+	            <a href="myClass.me">더보기</a>
 	        </div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와 함께하..</p></div>
-	        <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
+            <c:choose>
+        		<c:when test="${empty list}">
+        			<p>수강중인 클래스가 없습니다</p>
+        			<button type="button" class="btn btn-lg">클래스 구경 가기!</button>
+        		</c:when>
+	        	<c:otherwise>
+			        <c:forEach var="c" items="${list}" begin="0" end="2">
+			            <div class="item">
+			            	<a><img src="${c.clImg}"></a>
+			            	<input type="hidden" value="${c.clNo}">
+			            	<p id="ctitle">
+				            	<c:choose>
+				            		<c:when test="${fn:length(c.clName) gt 15}">
+				            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
+				            			..
+				            		</c:when>
+				            		<c:otherwise>
+				            			<c:out value="${c.clName}"></c:out>
+				            		</c:otherwise>
+				            	</c:choose>
+			            	</p>
+			            </div>
+		            </c:forEach>
+		    	</c:otherwise>			        
+	        </c:choose>  
 	    </div>  
 	    <div class="content1">
 	        <div class="conhead">
 	            <h2>찜한 클래스</h2>
-	            <a>더보기</a>
+	            <a href="likeClass.me">더보기</a>
 	        </div>
-	        <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-	        <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
+	        <c:choose>
+        		<c:when test="${empty list}">
+        			<p>찜한 클래스가 없습니다</p>
+        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
+        		</c:when>
+	        	<c:otherwise>
+			        <c:forEach var="c" items="${classLikeList}" begin="0" end="2">
+			            <div class="item">
+			            	<div class="img">
+			            		<input type="hidden" value="${c.clNo}">
+			            		<img src="${c.clImg}" id="classImg">
+				            </div>
+			            	<p id="ctitle">
+				            	<c:choose>
+				            		<c:when test="${fn:length(c.clName) gt 15}">
+				            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
+				            			..
+				            		</c:when>
+				            		<c:otherwise>
+				            			<c:out value="${c.clName}"></c:out>
+				            		</c:otherwise>
+				            	</c:choose>
+			            	</p>
+			            </div>
+		            </c:forEach>
+		    	</c:otherwise>			        
+	        </c:choose>
 	    </div>  
         <div class="content1">
 	        <div class="conhead">
 	            <h2>찜한 상품</h2>
-	            <a>더보기</a>
+	            <a href="likeProduct.me">더보기</a>
 	        </div>
-	        <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
-	        <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p>.</div>
-            <div class="item"><a><img src="resources/images/bomi7.jpg"></a><p>샤크코치와..</p></div>
+	        <c:choose>
+        		<c:when test="${empty list}">
+        			<p>찜한 상품이 없습니다</p>
+        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
+        		</c:when>
+	        	<c:otherwise>
+			        <c:forEach var="s" items="${storeLikeList}" begin="0" end="2">
+			            <div class="item">
+			            	<div class="img">
+			            		<input type="hidden" value="${s.productNo}">
+			            		<img src="${s.productImg0}" id="proImg">
+				            </div>
+			            	<p id="ctitle">
+				            	<c:choose>
+				            		<c:when test="${fn:length(s.title) gt 30}">
+				            			<c:out value="${fn:substring(s.title, 0, 29)}"></c:out>
+				            			..
+				            		</c:when>
+				            		<c:otherwise>
+				            			<c:out value="${s.title}"></c:out>
+				            		</c:otherwise>
+				            	</c:choose>
+			            	</p>
+			            </div>
+		            </c:forEach>
+		    	</c:otherwise>			        
+	        </c:choose>
 	    </div>  
+	    
+	    <script>
+		    $(".item #classImg").click(function(){
+		   		let clNo = $(this).prev().val();
+		   		location.href = "classDetail.me?referNo=" + clNo;
+		   	})
+	    
+        	$(".item #proImg").click(function(){
+        		let pno = $(this).prev().val();
+        		location.href = "productMain.pr?pno=" + pno;
+        	})
+        </script>
+	    
 	</div>
 </body>
 </html>
