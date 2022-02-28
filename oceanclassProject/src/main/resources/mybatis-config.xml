@@ -65,8 +65,9 @@
 		<mapper resource="/mappers/adminStatistics-mapper.xml" />
 		<mapper resource="/mappers/instructorChart-mapper.xml" />
 		<mapper resource="/mappers/adminClass-mapper.xml" />
+		<!--  
 		<mapper resource="/mappers/adminStore-mapper.xml" />
-
+		-->
 		
 
 	</mappers>
