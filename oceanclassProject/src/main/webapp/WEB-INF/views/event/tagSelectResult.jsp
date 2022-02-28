@@ -58,6 +58,13 @@
 	 		</div>
 		</div>   
 		
+	 	<script>
+        	$(".item #classImg").click(function(){
+        		let clNo = $(this).prev().val();
+        		location.href = "classDetail.me?referNo=" + clNo;
+        	})
+        </script>
+		
 		<div id="paging">
 			<ul class="pagination">
 				<c:choose>
