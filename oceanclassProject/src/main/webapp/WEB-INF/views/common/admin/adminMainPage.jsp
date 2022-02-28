@@ -7,14 +7,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
-
 <style>
-	#content{
-	    width: 1200px;
-	    height: 1200px;
-	    margin: 0 auto;
-	    padding: 10px;
-	}
+	.wrapper{width: 1500px;height: auto;}
+	/* 내용 div */
+	.contentArea{width: 85%;height: 100%; float: left;}
+	#content{width: 1200px; height: 1200px; margin: 0 auto; padding: 10px;}
 	#currentDate{font-weight: 900; font-size: 20px;}
 	.chartArea{width: 90%; margin: 0 auto; margin-top: 50px;}
 	.chartArea>p{font-size: 28px; font-weight: 800; color:rgb(107, 171, 213); }
