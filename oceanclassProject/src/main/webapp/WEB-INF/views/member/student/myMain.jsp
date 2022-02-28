@@ -58,8 +58,10 @@
 			        </div>
 			        <c:forEach var="c" items="${list}" begin="0" end="2">
 			            <div class="item">
-			            	<a><img src="${c.clImg}"></a>
-			            	<input type="hidden" value="${c.clNo}">
+			            	<div class="img">
+			            		<input type="hidden" value="${c.clNo}">
+			            		<img src="${c.clImg}" id="classImg">
+				            </div>
 			            	<p id="ctitle">
 				            	<c:choose>
 				            		<c:when test="${fn:length(c.clName) gt 15}">
