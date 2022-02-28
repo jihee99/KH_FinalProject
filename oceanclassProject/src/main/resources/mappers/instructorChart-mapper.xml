@@ -67,8 +67,24 @@
 		</choose>
 	</select>
 	
+	<select id="mainStarChart" resultMap="inStarResult">
+		select
+			  CEIL(star_rating) star
+			, count(*) count
+		from s_review
+		group by CEIL(star_rating)
+		order by CEIL(star_rating)
+	</select>
 
-
+	<select id="mainQnaChart" resultMap="inQnaResult">
+		select 
+			refer_no "pno"
+			, count(*) "qna_count"
+			, count(answer_content) "answer_count" 
+		 from cs_qna 
+		group by refer_no
+		order by refer_no
+	</select>
 
 	
 </mapper>

@@ -290,6 +290,7 @@
 						//console.log(value);
 						$(".orderList tbody").empty();
 						$(".orderList tbody").html(value);
+						$(".btn_group").empty();
 						
 					}, error:function(){
 						alert("주문내역 조회에 실패했습니다.");

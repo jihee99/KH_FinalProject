@@ -36,7 +36,7 @@
                     <thead>
                         <tr>
                             <th width="150">문의번호</th>
-                            <th width="150">문의유형</th>
+                            <th width="150">상품번호</th>
                             <th width="300">제목</th>
                             <th width="150">작성자</th>
                             <th width="180">작성일</th>
@@ -163,7 +163,8 @@
 	        							+"<td><button id='detailBtn' onclick='qnaDetail("+ list[i].csQno+")'>상세</button></td>"	
 	        							+"</tr>";
         				}
-    					console.log(value);        			        			
+    					console.log(value);  
+    					$(".btn_group").empty();
         				$(".qnaBody").empty();
         				$(".qnaBody").html(value);
         			}, error:function(){
