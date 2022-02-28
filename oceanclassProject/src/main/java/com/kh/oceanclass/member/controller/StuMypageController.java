@@ -62,6 +62,7 @@ public class StuMypageController {
 		model.addAttribute("list", list);
 		model.addAttribute("classLikeList", classLikeList);
 		model.addAttribute("storeLikeList", storeLikeList);
+		
 		return "member/student/mypageMain";
 	}
 	
@@ -523,7 +524,7 @@ public class StuMypageController {
 	public String myShopping(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		int shoppingCount = myService.shoppingCount(memNo);
-		
+		System.out.println(memNo);
 		PageInfo pi = Pagination.getPageInfo(shoppingCount, currentPage, 5, 5);
 		ArrayList<StorePay> list = myService.shoppingList(pi, memNo);
 		
@@ -544,6 +545,8 @@ public class StuMypageController {
 				list.get(i).setOrderStatus("취소접수");
 			}
 		}
+		System.out.println(pi);
+		System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShopping";
