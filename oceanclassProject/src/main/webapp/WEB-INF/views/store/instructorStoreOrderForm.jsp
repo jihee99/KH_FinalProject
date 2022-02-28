@@ -39,7 +39,7 @@
                     </tr>
                     <tr>
                         <th>발주상품명</th>
-                        <td><input type="text" name="title" placeholder="주문할 사이트의 상품명울 똑같이 작성하세요" required></td>
+                        <td><input type="text" name="title" placeholder="주문할 사이트의 상품명을 똑같이 작성하세요" required></td>
                     </tr>
                     <tr>
                         <th>재고</th>

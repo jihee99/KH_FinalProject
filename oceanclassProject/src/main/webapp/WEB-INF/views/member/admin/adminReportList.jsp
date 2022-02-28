@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="./resources/css/adminReportList.css">
 </head>
 <body>
-
+<div style="width: 1600px; height: auto; margin: auto;">
     <!-- 관리자 사이드바 연결하기 -->
     <jsp:include page="../../common/admin/adminSidebar.jsp" />
     
@@ -125,7 +125,7 @@
             </c:choose>
         </div>
 	</div>
-	
+</div>
 	<script>
 		
 		$("#searchBtn").click(function(){

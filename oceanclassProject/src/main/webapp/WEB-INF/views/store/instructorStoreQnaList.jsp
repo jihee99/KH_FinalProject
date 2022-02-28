@@ -100,7 +100,7 @@
         	$("#productList").click(function(){
         		console.log($(this).val());
         		// 페이징바 처리하는 ajax
-        		
+        		/*
         		$.ajax({
         			url:"pQnaCountAjax.in",
         			data:{pno:$(this).val()},
@@ -136,7 +136,7 @@
 						console.log("ajax 상품 조회 실패!!")
         			}
         		});
-        		
+        		*/
         		//상품별 조회하는 ajax
         		$.ajax({
         			url:"pQnaListAjax.in",

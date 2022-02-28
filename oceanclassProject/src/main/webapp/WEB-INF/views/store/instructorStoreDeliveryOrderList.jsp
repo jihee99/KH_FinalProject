@@ -186,7 +186,7 @@
 				console.log(orderNo);
 				status = $(".orderNo"+orderNo+" option:selected").val();
 				console.log($(".orderNo"+orderNo+" option:selected").val());
-				//location.href="sostatusUp.in?ono="+orderNo+"&status="+status;
+				location.href="sostatusUp.in?ono="+orderNo+"&status="+status;
 			}
 			function typeValue(num){
 				console.log(num)
@@ -250,41 +250,43 @@
 				$.ajax({
 					url:"sosearchF.in",
 					data:{orderStatus:num},
-					success:function(list){
+					success:function(result){
 						//console.log(list);
+						console.log(result);
 						
 						let value ="";
-						let selectVal = "";
+						let pageVal = "";
 						
-						for(let i in list){
+						for(let i in result.list){
 							/*
 							if(list[i].orderStatus == 1){
 								selectVal = 
 							}*/
 							value += "<tr>"
-									+ "<td><input type='checkbox' class='deleteNum' name='chBxRow' value='"+list[i].orderNo+"'></td>"
-									+ "<td>"+ list[i].orderNo + "</td>"
-									+ "<td>"+ list[i].userId + "</td>"
-									+ "<td>"+ list[i].payDate + "</td>"
-									+ "<td>"+ list[i].payMethod +"</td>"
-									+ "<td>"+ list[i].payAmount +"</td>"
-									+ "<td>"
-	                            	+ "<input type='hidden' name='orderStatus' value='"+list[i].orderStatus+"'>"
-										+"<select class='orderNo' name='status' value='"+list[i].orderStatus+"'>"
-											+"<option class='op1' value='1'>결제완료</option>"
-	                                    	+"<option class='op2' value='2'>상품준비</option>"
-	                                    	+"<option class='op3' value='3'>배송시작</option>"
-		                                    +"<option class='op4' value='4'>배송중</option>"
-		                                    +"<option class='op5'value='5' style='color: green;'>배송완료</option>"
-		                                   	+"<option class='op6' value='6'>주문취소</option>"
-			                                +"<option class='op7' value='7' style='color: red;'>취소완료</option>"
-		                                +"</select> </td>"
-		                            +"<td align='center'>"
-	                                +"<button id='updateBtn' onclick='statusUp(\""+ list[i].orderNo+"\");'>변경</button>"
-	                                +"<button id='detailBtn' onclick='detailView(\"" +list[i].orderNo+ "\");'>상세</button>"
-	                               + "</td>"
-	                               + "</tr>"		  	
+								+ "<td><input type='checkbox' class='deleteNum' name='chBxRow' value='"+result.list[i].orderNo+"'></td>"
+								+ "<td>"+ result.list[i].orderNo + "</td>"
+								+ "<td>"+ result.list[i].userId + "</td>"
+								+ "<td>"+ result.list[i].payDate + "</td>"
+								+ "<td>"+ result.list[i].payMethod +"</td>"
+								+ "<td>"+ result.list[i].payAmount +"</td>"
+								+ "<td>"
+                            	+ "<input type='hidden' name='orderStatus' value='"+result.list[i].orderStatus+"'>"
+									+"<select name='status' id='' value='"+result.list[i].orderStatus+"'>"
+										+"<option class='op1' value='1'>결제완료</option>"
+                                    	+"<option class='op2' value='2'>상품준비</option>"
+                                    	+"<option class='op3' value='3'>배송시작</option>"
+	                                    +"<option class='op4' value='4'>배송중</option>"
+	                                    +"<option class='op5'value='5 style='color: green;'>배송완료</option>"
+	                                   	+"<option class='op6' value='6'>주문취소</option>"
+		                                +"<option class='op7' value='7' style='color: red;'>취소완료</option>"
+	                                +"</select> </td>"
+	                            +"<td align='center'>"
+	                            +"<button id='updateBtn' onclick='statusUp(\""+ result.list[i].orderNo+"\");'>변경</button>"
+                                +"<button id='detailBtn' onclick='detailView(\""+ result.list[i].orderNo+ "\");'>상세</button>"
+                               + "</td>"
+                               + "</tr>"	  	
 						}
+
 						//console.log(value);
 						$(".orderList tbody").empty();
 						$(".orderList tbody").html(value);

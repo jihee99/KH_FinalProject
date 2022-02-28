@@ -535,16 +535,16 @@ public class AdminMemController {
 			model.addAttribute("key", key);
 		}
 
-		//System.out.println(map);
+		System.out.println(map);
 		int listCount = adMemService.adminReportSearchCount(map);
-		//System.out.println(listCount);
+		System.out.println(listCount);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Report> rlist = adMemService.adminReportSearchList(pi, map);
 		model.addAttribute("pi", pi);
 		model.addAttribute("rlist", rlist);
 		
-		//System.out.println(rlist);
+		System.out.println(rlist);
 		return "member/admin/adminReportSearchList";
 	}
 }
