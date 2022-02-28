@@ -66,7 +66,7 @@
 		                    <div class="box">
 		                   		<div id="preview">
 		                   			<c:if test="${not empty loginUser.profileImg}">
-						    			<img src="${loginUser.profileImg}">
+						    			<img src="${loginUser.profileImg}" style="width: 200px;">
 						    		</c:if>
 		                   		</div>
 		                    </div>
