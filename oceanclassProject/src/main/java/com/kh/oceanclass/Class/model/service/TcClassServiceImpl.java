@@ -71,5 +71,10 @@ public class TcClassServiceImpl implements TcClassService {
 		return tcDao.selectTcQnaDetail(sqlSession, csQnaNo);
 	}
 
+	@Override
+	public int qnaInsertRf(ClassQna cq) {
+		return tcDao.qnaInsertRf(sqlSession, cq);
+	}
+
 	
 }
