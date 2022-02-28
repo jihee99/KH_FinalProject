@@ -118,13 +118,13 @@
 						<c:when test="${empty pointMinusList}">
 							<div class="conhead">
 						        <h3>사용 내역</h3>
+						        <p>사용 내역이 없습니다.</p>
 						    </div>
 						</c:when>
 						<c:otherwise>
 							<div class="content1" id="content-wrap" style="overflow-y: scroll;">
 							    <div class="conhead">
 							    	<h3> 사용내역 </h3>
-								    <a href="pointMinusList.me">더보기</a>
 								</div>
 							    <table class="table">
 							        <thead>

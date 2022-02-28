@@ -101,7 +101,7 @@
 					 
 					 <div class="content1">
 					    <c:choose>
-					    	<c:when test="${empty reviewlist}">
+					    	<c:when test="${empty reviewList}">
 					    		<div class="conhead">
 							        <h2>상품 리뷰</h2>
 							    </div>

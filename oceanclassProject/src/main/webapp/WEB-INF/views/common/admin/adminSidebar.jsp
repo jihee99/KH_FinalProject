@@ -10,11 +10,20 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./resources/css/adminMain.css?2">
 <style>
-	#logo img:hover{
-		backgroundColor: black;
-	}
+	.wrapper{ width: 1500px; height: auto;}
+	.side{width: 15%; height: 100%; background-color: ghostwhite; float: left; padding : 5px;}
+	.contentArea{ width: 85%; height: 100%; float: left;}
+	/* 관리자1 표시 */
+	#header{margin-left: 1150px; height: 5%;}
+	/* 사이드바 스타일 */
+	#menu div{
+	    float: left; margin-top: 30px; margin-left: 15px; margin-bottom: 20px;}
+	#menu li{ list-style: none; }
+	#menu p{font-weight: bolder; font-size: 18px; color: rgb(107, 171, 213); margin-left: 15px; margin-bottom: 5px;}
+	#menu a{text-decoration: none; float: left; color: grey; margin-top: 5px; margin-left: 5px; font-size: 15px;}
+	#menu a:hover{text-decoration: underline; font-weight: bolder;}
+	#logo img:hover{backgroundColor: black;}
 </style>
 </head>
 <body>
