@@ -62,10 +62,10 @@
                                 <tr>
                                 	<td><!-- 게시상태 : ${p.status} -->
                                 	<c:choose>
-                                    	<c:when test="${p.status eq 'Y '}">
+                                    	<c:when test="${p.status eq 'Y'}">
                                     		게시중
                                     	</c:when>
-                                    	<c:when test="${p.status eq 'N '}">
+                                    	<c:when test="${p.status eq 'N'}">
                                     		승인대기중
                                     	</c:when>
                                     </c:choose>

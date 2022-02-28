@@ -576,13 +576,6 @@ public class InstructorStoreController {
 		return "member/common/reportWindow";
 	}
 	
-	//-------------------chart
-	@RequestMapping(value="schart.in")
-	public String storeChartForm() {
-		return "store/instructorChartPage";
-	}
-	
-	
 	
 	
 	// 첨부파일
