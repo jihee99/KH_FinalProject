@@ -98,7 +98,7 @@
 						$.ajax({
 							url:"memChart.ad",
 							success:function(result){
-								//console.log(result);
+								
 								let date = [];
 								let newMem = [];
 								let sleepMem = [];
@@ -106,12 +106,6 @@
 								let newTeacher = [];
 								let sleepTeacher = [];
 								let delTeacher = [];
-								
-								/*
-								for(let i=6; i=0; i++){
-									date.push(result.memList[i].staDate);
-								}
-								*/
 								
 								for(let i in result.memList){
 									date.push(result.memList[i].staDate);

@@ -35,6 +35,7 @@
     .label{float:left; padding-left: 30px; vertical-align: middle; margin-right: 10px; padding-top: 5px;}
     #searchArea>label{margin:0 auto;}
     input[type='radio']{width: 15px; margin-right: 50px; margin-top: -1px; vertical-align: middle; }
+    #qnaList{width: 110%;}
 </style>
 </head>
 <body>
