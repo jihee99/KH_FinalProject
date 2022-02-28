@@ -23,6 +23,7 @@
 		margin-bottom: 50px;
 		background: rgb(224, 224, 224)
 	}
+	.tags{margin-bottom: 80px;}
 	.tags button{
 		border: 0;
 		outline: 0;
@@ -35,6 +36,7 @@
 	}
 	.tags button:hover{color: rgb(107, 171, 213, 0.7)}
 	#img{width: 60%; height: 35%; margin: 0 auto; margin-top: 100px;  overflow: hidden; }
+	.content p{font-size: 20px; font-weight: 600; text-align: center;}
 	.content button{display: block; width: 50%; margin: 0 auto; margin-top: 50px;}
 </style>
 </head>
@@ -60,11 +62,13 @@
         <div class="content">
         	<c:choose>
         		<c:when test="${e.couponNo != 0}">
+        			<p>${e.eventContent}</p>
         			<div id="img"><img src="${e.img}"></div>
         			<input type="hidden" id="couponNo" name="couponNo" value="${e.couponNo}">
         			<button type="button" class="btn btn-lg btn-light" onclick="getCoupon();">쿠폰받기</button>
         		</c:when>
         		<c:otherwise>
+        			<p>${e.eventContent}</p>
         			<img src="${e.img}" style="width: 100%; height: 90%;">
         		</c:otherwise>
         	</c:choose>
