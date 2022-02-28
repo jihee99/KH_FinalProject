@@ -37,4 +37,7 @@ public interface TcClassService {
 	// 클래스 문의 상세보기
 	ClassQna selectTcQnaDetail(int csQnaNo);
 	
+	// 클래스 문의 댓글 작성용 서비스 (ajax)
+	int qnaInsertRf(ClassQna cq);
+	
 }

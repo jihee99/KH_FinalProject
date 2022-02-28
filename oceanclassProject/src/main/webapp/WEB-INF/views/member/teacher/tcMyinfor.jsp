@@ -69,8 +69,13 @@
     form .form-group{
         display: flex;
         margin-bottom: 5px;
+    }#phoneUpdate{
+    	background-color: rgb(228, 240, 250);
+        border-radius: 4px;
+        border-style: none;
+        width: 55px;
     }
-    #phoneUpdate{
+    .phoneUdBtn{
         background-color: rgb(228, 240, 250);
         border-radius: 4px;
         border-style: none;
@@ -260,14 +265,13 @@
 
                     <span id="top-text">휴대전화 번호</span>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="phone" value="${loginUser.phone }" name="phone" style="width: 340px;" required> 
-                      <button id="phoneUpdate" type="button" class="rightBtn btn-sm" onclick="idCheck();" data-toggle="modal" data-target="#phoneModal">수정</button>
+                      <input type="text" class="form-control" id="phone" value="${loginUser.phone }" style="width: 340px;" required> 
+                      <button id="phoneUpdate" type="button" class="rightBtn btn-sm" class="phoneUdBtn" data-toggle="modal" data-target="#phoneModal">수정</button>
                     </div>
                     <!-- 번호인증 모달 -->
                     <div class="modal fade" id="phoneModal">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content" style="width: 400px;">
-                                
                                 <div class="modal-header">
                                     <span style="font-weight: bolder;">휴대폰 인증하기</span>
                                     <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
@@ -280,23 +284,70 @@
                                 <div class="modal-body" align="center">
                                     <div class="modalMsg-area">
                                         <div id="confirm">
-                                            <input type="text" class="form-control" id="phone" placeholder="01095227273" name="" style="width: 250px;" required> 
-                                            <button id="phoneUpdate" type="button" onclick="idCheck();" style="width: 90px; height: 38px; background-color: lightgray;">인증받기</button>
+                                            <input type="text" class="form-control" id="phone2" placeholder="휴대전화 번호(숫자만)" name="phone" style="width: 250px;" required> 
+                                            <button id="phoneChk" type="button" class="phoneUdBtn" style="width: 90px; height: 38px; background-color: lightgray;">인증받기</button>
+                                        	<input type="hidden" id="phoneDoubleChk"/>
                                         </div>
+                                        <div id="phoneResult" style="font-size:0.8em;"></div>
                                         <div id="check">
-                                            <input type="number" class="form-control" id="phone" placeholder="1234" name="" style="width: 250px;" required> 
-                                            <button id="phoneUpdate" type="button" onclick="idCheck();" style="width: 90px; height: 38px;">확인</button>
+                                            <input type="number" class="form-control" id="phone3" name="" style="width: 250px;" disabled required> 
+                                            <button id="phoneChk2" type="button" class="phoneUdBtn" style="width: 90px; height: 38px;">확인</button>
+                                        	<input type="hidden" id="phoneDoubleChk"/>
                                         </div>
+                                        <div id="phoneResult2" style="font-size:0.8em;"></div>
                                     </div>
                                     <div id="deletebtn-area">
-                                    <a type="button" class="btn" id="confirm-btn" data-toggle="modal" href="">확인</a>
-                                    <button type="button" class="btn" data-dismiss="modal" id="closebtn">닫기</button>
+                                    	<button onclick="formSubmit(2)" class="btn" id="confirm-btn">확인</button>
+                                    	<button type="button" class="btn" data-dismiss="modal" id="closebtn">닫기</button>
                                     </div>              
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+                    <script>
+                    var code2 = ""; 
+                    $("#phoneChk").click(function(){ 
+                    	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); 
+                    	var phone = $("#phone2").val(); 
+                    		$.ajax({ 
+                    			type:"GET", 
+                    			url:"phoneCheck?phone=" + phone, 
+                    			cache : false, 
+                    			success:function(data){ 
+                   					if(data == "error"){ 
+                   						alert("휴대폰 번호가 올바르지 않습니다.") 
+                   						$("#PhoneChk").text("유효한 번호를 입력해주세요."); 
+                   						$("#PhoneChk").css("color","red"); 
+                   						$("#phone").attr("autofocus",true); 
+                    				}else{ 
+                    					$("#phone3").attr("disabled",false); 
+                    					$("#phoneChk2").css("display","inline-block"); 
+                    					$("#PhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오."); 
+                    					$("#PhoneChk").css("color","green"); 
+                    					$("#phone").attr("readonly",true); 
+                    					code2 = data; 
+                    				} 
+                    			} 
+                    	}); 
+                    });
+
+                  //휴대폰 인증번호 대조 
+                  $("#phoneChk2").click(function(){ 
+                	  if($("#phone3").val() == code2){ 
+                		  alert("인증정보가 일치 합니다.")
+                		  $("#PhoneChk2").text("인증번호가 일치합니다."); 
+                		  $("#PhoneChk2").css("color","green"); 
+                		  $("#phoneDoubleChk").val("true"); 
+                		  $("#phone3").attr("disabled",true); 
+                	  }else{ 
+                		  $("#PhoneChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다."); 
+                		  $("#PhoneChk").css("color","red"); 
+                		  $("#phoneDoubleChk").val("false"); 
+                		  $(this).attr("autofocus",true); 
+                	} 
+                });
+
+				   </script>
 				   
                     <button onclick="formSubmit(1)" id="findIdBtn" class="btn" style="background-color: lightgray; margin-top: 40px;">비밀번호 변경하기</button>
                     <button onclick="formSubmit(2)" id="updateBtn" class="btn" style="background-color: rgb(228, 240, 250);">수정하기</button>

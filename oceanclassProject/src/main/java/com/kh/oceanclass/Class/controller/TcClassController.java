@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,6 +24,7 @@ import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.event.model.vo.Event;
+import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.member.model.vo.Member;
 
 @Controller
@@ -249,13 +251,28 @@ public class TcClassController {
 		mv.addObject("pi", pi).addObject("tcQnaList", tcQnaList).setViewName("member/teacher/classQnAList");
 		return mv;
 	}
-	
+	// 강사 문의 상세보기
 	@RequestMapping("tcQnaDetail.tc")
 	public String selectTcQnaDetail(int csQnaNo, Model model) {
 		
 			ClassQna cq = tcService.selectTcQnaDetail(csQnaNo);
 			model.addAttribute("cq", cq);
 			return "member/teacher/classQnaDetailForm";
+		
+	}
+	
+	@RequestMapping("qnaInsertRf.tc")
+	public String qnaInsertRf(ClassQna cq, HttpSession session, Model model) {
+		
+		int result = tcService.qnaInsertRf(cq);
+		//System.out.println(result);
+		if(result > 0) { // 성공
+			session.setAttribute("alertMsg", "성공적으로 문의 답변이 등록/수정 되었습니다.");
+			return "redirect:tcQnaDetail.tc?csQnaNo=" + cq.getCsQnaNo();
+		}else { // 실패
+			model.addAttribute("errorMsg", "실패");
+			return "common/errorPage";
+		}
 		
 	}
 

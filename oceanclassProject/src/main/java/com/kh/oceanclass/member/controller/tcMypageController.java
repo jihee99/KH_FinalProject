@@ -29,7 +29,12 @@ public class tcMypageController {
 	
 	// 마이페이지 내정보 수정 이동
 	@RequestMapping("inforPage.tc")
-	public String tcinforPage() {
+	public String tcinforPage(HttpSession session) {
+		Teacher t = new Teacher();
+		t.setMemNo(((Member)session.getAttribute("loginUser")).getMemNo());
+		
+		session.setAttribute("loginTc", tcmyService.loginTc(t));
+		
 		return "member/teacher/tcMyinfor";
 	}
 	
