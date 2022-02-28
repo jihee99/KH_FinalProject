@@ -30,6 +30,7 @@ public class ClassQna {
 	private String nickname;
 	
 	private String clName;
+	private String teacherProfile;
 
 	private String profile;
 	

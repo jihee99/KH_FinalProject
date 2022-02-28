@@ -68,6 +68,7 @@
 		<result column="cl_name" property="clName" />
 		<result column="profile" property="profile" />
 		<result column="teacher_nick" property="teacherNick" />
+		<result column="teacher_profile" property="teacherProfile" />
 	</resultMap>
 
 	<select id="myClassList" resultMap="classResult">
@@ -241,6 +242,12 @@
                   join class using (mno)
                  where clno = refer_no
                 ) as teacher_nick
+             , (
+                select profile
+                  from member
+                  join class using (mno)
+                 where clno = refer_no
+                ) as teacher_profile
 		  from cs_qna qr
           join class c on (c.clno = qr.refer_no)
           join member m on (m.mno = qr.mno)
@@ -250,5 +257,12 @@
 	     order
    			by cs_qno desc
 	</select>
+	
+	<update id="qnaInsertRf">
+		update cs_qna
+		   set answer_content = #{answerContent}
+		 where cs_qno = #{csQnaNo}
+	</update>
+	
 		
 </mapper>

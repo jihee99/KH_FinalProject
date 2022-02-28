@@ -60,4 +60,8 @@ public class TcClassDao {
 		return sqlSession.selectOne("tcclassMapper.selectTcQnaDetail", csQnaNo);
 	}
 	
+	public int qnaInsertRf(SqlSessionTemplate sqlSession, ClassQna cq) {
+		return sqlSession.update("tcclassMapper.qnaInsertRf", cq);
+	}
+	
 }
