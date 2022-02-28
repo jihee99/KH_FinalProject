@@ -133,8 +133,8 @@
                     <p>스토어 관리</p>
                     <ul>
                         <li><a href="stlist.in">내 상품</a></li>
-                        <li><a href="">상품 리뷰 관리</a></li>
-                        <li><a href="">상품 문의 관리</a></li>
+                        <li><a href="srlist.in">상품 리뷰 관리</a></li>
+                        <li><a href="sqlist.in">상품 문의 관리</a></li>
                         <li><a href="ststock.in">재고 관리</a></li>
                         <li><a href="solist.in">주문 배송 관리</a></li>
                     </ul>
@@ -143,7 +143,7 @@
                     <p>통계 분석</p>
                     <ul>
                         <li><a href="">클래스 분석</a></li>
-                        <li><a href="">상품 분석</a></li>
+                        <li><a href="schart.in">상품 분석</a></li>
                     </ul>
                 </div>
                 <div id="menu5">
@@ -155,70 +155,6 @@
             </div>
         </div>
 	</div> 
-
-    <button id="iChat" onclick="">
-		<img src="resources/images/iChatImg.png">
-	</button>
-
-	
-	<!-- The Modal -->
-	<div id="iChatModal">
-		<form action="">
-		    <div class="modal_dialog">
-			<div class="modal_content">
-	
-			<!-- Modal Header -->
-			<div class="modal_header">
-				<table>
-					<tr>
-						<td><img src="resources/images/logoOnlyImg.png"></td>
-						<td><b>Instructor Center</b></td>
-					</tr>
-				</table>
-				
-				<button type="button" class="close">&times;</button>
-			</div>
-	
-			<!-- Modal body -->
-			<div class="modal_body">
-				<div>
-					<b>OceanClass 고객센터</b><br>
-					<p>
-					반갑습니다! 문의 내용을 입력해주시면 알맞은 담당자를 <br> 연결해드릴게요!
-					<br><br>
-					OceanClass는 고객센터를 통해 강사님들과 소통하고 <br>있습니다.
-					<br><br>
-					고객센터 운영시간 10:00 ~ 19:00
-				  </p>
-				</div>
-			</div>
-	
-			<!-- Modal footer -->
-			<div class="modal_footer">
-				<input type="text">
-				<button type="submit" class="">
-					<img src="resources/images/chat.png">	
-				</button>
-			</div>
-		</div>
-		</div>
-	  </form>
-	</div>
-	<script>
-
-	$(function(){
-		$("#iChat").click(function(){
-			if($("#iChatModal").css("display")=="none"){
-				$("#iChatModal").show();
-			}
-		})
-		$(".close").click(function(){
-			$("#iChatModal").css("display","none");
-		})
-	})
-
-	</script>
-
 
 
 </body>
