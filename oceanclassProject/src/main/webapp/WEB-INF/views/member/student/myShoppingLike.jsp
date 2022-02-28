@@ -132,13 +132,13 @@
 		   		
 				
 					$("a").click(function(){
-						console.log($(this).next().val());
 						$.ajax({
 							url:"productMain.pr",
-							data:{productNo:$(this).next().val()},
+							data:{pno:$(this).next().val()},
 							success:function(result){
-								console.log(result);
 								console.log("성공");
+							},error:function(){
+								console.log("상품메인접속실패");
 							}
 						})
 					})
