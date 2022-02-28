@@ -99,8 +99,10 @@ div{box-sizing: border-box;}
        		
        			if('<c:out value = "${loginUser.grade}"></c:out>' == "S"){ 
        				location.href = "myPage.me";
-       			}else{ 
+       			}else if('<c:out value = "${loginUser.grade}"></c:out>' == "T"){ 
        				location.href = "inforPage.tc";
+       			}else{
+       				
        			}
        		}
        	</script>
