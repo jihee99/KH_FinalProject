@@ -164,30 +164,34 @@ public class StuMypageController {
 	@RequestMapping("pointCoupon.me")
 	public String couponList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		
+
 		int couponCount = myService.selectCouponCount(memNo);
 		int pointCount = myService.selectPointCount(memNo);
-		int pointSum = myService.pointSum(memNo);
 		
-		PageInfo cpi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
-		ArrayList<Coupon> couponList = myService.selectCouponList(cpi, memNo);
-		for(int i=0; i<couponList.size(); i++) {
-			if(couponList.get(i).getDedate() == null) {
-				couponList.get(i).setDedate("무제한");
+		if(!(couponCount == 0 || pointCount == 0)) {
+			int  pointSum = myService.pointSum(memNo);
+			PageInfo cpi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
+			ArrayList<Coupon> couponList = myService.selectCouponList(cpi, memNo);
+			for(int i=0; i<couponList.size(); i++) {
+				if(couponList.get(i).getDedate() == null) {
+					couponList.get(i).setDedate("무제한");
+				}
 			}
+			
+			PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+			ArrayList<Point> pointPlusList = myService.selectPointList(ppi, memNo);
+			ArrayList<Point> pointMinusList = myService.PointMinusList(memNo);
+			
+			model.addAttribute("couponCount", couponCount);
+			model.addAttribute("couponList", couponList);
+			model.addAttribute("pointPlusList", pointPlusList);
+			model.addAttribute("pointSum", pointSum);
+			model.addAttribute("pointMinusList", pointMinusList);
+			return "member/student/myPoint";		
+		}else {
+			return "member/student/myPoint";
 		}
 		
-		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
-		ArrayList<Point> pointPlusList = myService.selectPointList(ppi, memNo);
-		
-		ArrayList<Point> pointMinusList = myService.PointMinusList(memNo);
-		
-		model.addAttribute("couponCount", couponCount);
-		model.addAttribute("couponList", couponList);
-		model.addAttribute("pointPlusList", pointPlusList);
-		model.addAttribute("pointSum", pointSum);
-		model.addAttribute("pointMinusList", pointMinusList);
-		return "member/student/myPoint";		
 	}
 	
 	
@@ -210,6 +214,7 @@ public class StuMypageController {
 				list.get(i).setCategory("기타");
 			}
 		}		
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myQna";
@@ -477,10 +482,10 @@ public class StuMypageController {
 		ArrayList<CsQna> qnaList = myService.shoppingQnaList(qpi, memNo);
 		
 		PageInfo rpi = Pagination.getPageInfo(reviewCount, currentPage, 5, 6);
-		ArrayList<StoreReview> reviewlist = myService.shoppingReviewList(rpi, memNo);
+		ArrayList<StoreReview> reviewList = myService.shoppingReviewList(rpi, memNo);
 
 		model.addAttribute("qnaList", qnaList);
-		model.addAttribute("reviewlist", reviewlist);
+		model.addAttribute("reviewList", reviewList);
 		return "member/student/myShoppingReview";
 	}
 	
@@ -514,6 +519,7 @@ public class StuMypageController {
 		
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
 		ArrayList<StoreReview> list = myService.shoppingReviewList(pi, memNo);
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShoppingReviewDetail";
@@ -524,7 +530,7 @@ public class StuMypageController {
 	public String myShopping(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		int shoppingCount = myService.shoppingCount(memNo);
-		System.out.println(memNo);
+
 		PageInfo pi = Pagination.getPageInfo(shoppingCount, currentPage, 5, 5);
 		ArrayList<StorePay> list = myService.shoppingList(pi, memNo);
 		
@@ -545,8 +551,6 @@ public class StuMypageController {
 				list.get(i).setOrderStatus("취소접수");
 			}
 		}
-		System.out.println(pi);
-		System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShopping";
