@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?1">
 <style>
+	.searchBar{margin-bottom: 80px;}
 	.searchBar>div{float:left; width: 35%; margin:0 auto; padding: 10px;}
 	.searchBar .bi{float: left; width: 20px; margin-top: -10px;}
 	.searchBar p{
@@ -25,19 +26,20 @@
 	#point{margin-left: 180px;}
 	.conhead{
         width: 100%;
-	    height: 15%;
+	    height: 20%;
 	}
 	.content1{
 	    width: 100%;
 	    height: 30%;
-	    margin-top: 50px;
+	    margint-top: 50px;
+	    margin-bottom: 50px;
 	}
 	.conhead>h2{width: 30%;}
-	.conhead>a{
-		float: right; 
-		margin-top: -20px; 
-		text-decoration: none;
-		color: black;	
+	.conhead>p{
+		font-size: 16px;
+		font-weight: 600;
+		text-align: center;	
+		margin-top: 50px;
 	}
 	.table{
 		width:100%;
@@ -67,16 +69,32 @@
 				    <h2>나의 포인트/쿠폰</h2>
 				 
 				    <div class="searchBar">
-				    	<div id="point">
-				        	<i class="bi bi-coin" style="font-size: 2.5rem;"></i> 
-				        	<p style="width: 200px;">${pointSum}원</p>
-				        </div>
-				        <div id="content">
-					        <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 
-					        <p>
-					        	쿠폰 <a href="#" onclick="openModal();">${couponCount}</a>장
-					        </p>
-				        </div>
+				    	<c:choose>
+							<c:when test="${empty pointPlusList}">
+						    	<div id="point">
+						        	<i class="bi bi-coin" style="font-size: 2.5rem;"></i> 
+						        	<p style="width: 200px;">0원</p>
+						        </div>
+						        <div id="content">
+							        <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 
+							        <p>
+							        	쿠폰 <a href="#" onclick="openModal();">0</a>장
+							        </p>
+						        </div>
+					        </c:when>
+					        <c:otherwise>
+					        	<div id="point">
+						        	<i class="bi bi-coin" style="font-size: 2.5rem;"></i> 
+						        	<p style="width: 200px;">${pointSum}원</p>
+						        </div>
+						        <div id="content">
+							        <i class="bi bi-cash" style="font-size: 2.5rem;"></i> 
+							        <p>
+							        	쿠폰 <a href="#" onclick="openModal();">${couponCount}</a>장
+							        </p>
+						        </div>
+					        </c:otherwise>
+				        </c:choose>
 				    </div>
 				    <c:choose>
 						<c:when test="${empty pointPlusList}">
