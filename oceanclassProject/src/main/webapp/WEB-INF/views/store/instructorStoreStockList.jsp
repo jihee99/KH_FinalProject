@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="./resources/css/store/instructorStoreStockList.css">
 </head>
 <body>
-
+<div style="width: 1600px; height: auto; margin: auto;">
 	<!-- 강사용 메뉴바 연결하기 -->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
     <div class="innerOuter" align="center">
@@ -65,16 +65,16 @@
                             <td>${st.availCount }</td>
                             <td><input type="number" name="inValue" class="inValue"></td>
                      		<c:choose>
-                            		<c:when test="${st.soldout eq 'Y '}">
+                            		<c:when test="${st.soldout eq 'Y'}">
                             		    <td><input type="checkbox" name="soldYN" class="soldYN" id="soldY" value="1"></td>
                    						<td><input type="checkbox" name="soldYN" class="soldYN" id="soldN" value="0" checked></td> 
                             		</c:when>
-                            		<c:when test="${st.soldout eq 'N '}">
+                            		<c:when test="${st.soldout eq 'N'}">
                             		    <td><input type="checkbox" name="soldYN" class="soldYN" id="soldY" value="1" checked></td>
                    						<td><input type="checkbox" name="soldYN" class="soldYN" id="soldN" value="0"></td> 
                             		</c:when>
                             </c:choose>
-                            <td><button class="btn stockBtn"  style="height:35px;">저장</button></td>
+                            <td><button class="btn stockBtn" style="height:35px;">저장</button></td>
                         </tr>
                 	</c:forEach>
                 </tbody>
@@ -148,10 +148,10 @@
         			},error:function(){
         				alert("상품 재고 수정에 실패했습니다.");
         			}
-        		})
+        		});
 				location.reload();
-        	*/
-        	})
+
+        	});
         </script>
         </c:when>
 		<c:otherwise>
@@ -162,6 +162,6 @@
 		</c:otherwise>
 		</c:choose>	
     </div>
-
+</div>
 </body>
 </html>

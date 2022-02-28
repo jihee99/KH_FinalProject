@@ -42,6 +42,8 @@
     	font-weight: 800;
     	width: 300px;
     }
+	.content1>button{display: block; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;}
+	.content1 a{text-decoration: none; color: black;}
 </style>
 </head>
 <body>
@@ -63,6 +65,7 @@
 			        		<c:when test="${empty list}">
 			        			<p>수강중인 클래스가 없습니다</p>
 			        			<button type="button" class="btn btn-lg" onclick="moveClass();">클래스 구경가기!</button>
+			        			<button type="button" class="btn btn-lg">클래스 구경가기!</button>
 			        		</c:when>
 				        	<c:otherwise>
 						        <c:forEach var="c" items="${list}" begin="0" end="2">

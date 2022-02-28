@@ -13,7 +13,7 @@
 </style>
 </head>
 <body>
-
+<div style="width: 1600px; height: auto; margin: auto;">
 	<!-- 강사용 메뉴바 연결하기 	-->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 	 	
@@ -36,7 +36,7 @@
                     <thead>
                         <tr>
                             <th width="150">문의번호</th>
-                            <th width="150">문의유형</th>
+                            <th width="150">상품번호</th>
                             <th width="300">제목</th>
                             <th width="150">작성자</th>
                             <th width="180">작성일</th>
@@ -100,7 +100,7 @@
         	$("#productList").click(function(){
         		console.log($(this).val());
         		// 페이징바 처리하는 ajax
-        		
+        		/*
         		$.ajax({
         			url:"pQnaCountAjax.in",
         			data:{pno:$(this).val()},
@@ -136,7 +136,7 @@
 						console.log("ajax 상품 조회 실패!!")
         			}
         		});
-        		
+        		*/
         		//상품별 조회하는 ajax
         		$.ajax({
         			url:"pQnaListAjax.in",
@@ -163,7 +163,8 @@
 	        							+"<td><button id='detailBtn' onclick='qnaDetail("+ list[i].csQno+")'>상세</button></td>"	
 	        							+"</tr>";
         				}
-    					console.log(value);        			        			
+    					console.log(value);  
+    					$(".btn_group").empty();
         				$(".qnaBody").empty();
         				$(".qnaBody").html(value);
         			}, error:function(){
@@ -182,11 +183,8 @@
         		location.href='sqdetail.in?qno='+num;
         	}
         	</script>
-        
-
-        
-        
-        
+       
+    </div>
     </div>
 </body>
 </html>

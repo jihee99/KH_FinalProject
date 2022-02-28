@@ -143,6 +143,7 @@
 							<div class="content1" id="content-wrap" style="overflow-y: scroll;">
 							    <div class="conhead">
 							    	<h3> 사용내역 </h3>
+								    <a href="pointMinusList.me">더보기</a>
 								</div>
 							    <table class="table">
 							        <thead>

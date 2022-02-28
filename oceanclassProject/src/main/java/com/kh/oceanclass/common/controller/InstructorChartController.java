@@ -32,8 +32,27 @@ public class InstructorChartController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="chartMain.in", produces="application/json; charset=UTF-8")
+	public Map<String, Object> mainStarChartList() {
+		Map<String, Object> map = new HashMap();
+		
+
+		ArrayList<InstructorStarChart> starlist = inService.mainStarChart();
+		ArrayList<InstructorQnaChart> qnalist = inService.mainQnaChart();
+		System.out.println("--------------------");
+		System.out.println(starlist);
+		System.out.println(qnalist);
+		System.out.println("--------------------");
+		map.put("starlist", starlist);
+		map.put("qnalist", qnalist);
+		
+		return map;
+	}
+	
+	
+	@ResponseBody
 	@RequestMapping(value="chartAjax.in", produces="application/json; charset=UTF-8")
-	public Map<String, Object> mainStarChartList(@RequestParam(value="pno",defaultValue="0") String productNo) {
+	public Map<String, Object> ChartList(@RequestParam(value="pno",defaultValue="0") String productNo) {
 		Map<String, Object> map = new HashMap();
 		System.out.println(productNo);
 

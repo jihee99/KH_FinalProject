@@ -111,7 +111,7 @@ public interface InstructorStoreService {
 	int insertProductOrder(InProductOrder pOrder);
 
 
-
+	StoreReview selectStoreReviewDetail(String rno);
 
 	
 	

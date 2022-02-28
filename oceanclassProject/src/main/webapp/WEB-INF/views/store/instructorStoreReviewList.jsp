@@ -103,10 +103,13 @@
         color: rgb(107, 171, 223);
         font-weight: bolder;
     }
+    .cl-wrap{
+    	cursor:pointer;
+    }
 </style>  
 </head>
 <body>
-
+<div style="width: 1600px; height: auto; margin: auto;">
 	<div style="width: 1600px; height: auto; margin: auto;">
 	    <jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
         <div class="wrap">
@@ -167,9 +170,12 @@
         </div>
 		<script type="text/javascript">
 			$(".cl-wrap").click(function(){
+				let rno = $(this).children(".reviewNo").val();
 				console.log($(this).children(".reviewNo").val());
-				//location.href
+				window.open('srreport.in?rno='+rno+'','신고하기','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no');
 			})
+			
+			
 			
 			$(".productList").change(function(){
 				console.log($(this).val());
@@ -246,9 +252,15 @@
 						alert("리뷰 조회에 실패했습니다.");
 					}
 				})
+				$(".cl-wrap").click(function(){
+					let rno = $(this).children(".reviewNo").val();
+					console.log($(this).children(".reviewNo").val());
+					window.open('srreport.in?rno='+rno+'','신고하기','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no');
+				;})
 			
 			})
 		</script>
+    </div>
     </div>
 </body>
 

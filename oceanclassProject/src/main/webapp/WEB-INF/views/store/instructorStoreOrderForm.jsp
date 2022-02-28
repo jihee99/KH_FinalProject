@@ -14,6 +14,7 @@
 	<!-- 
 	강사용메뉴페이지 연결하기
 	 -->
+ <div style="width: 1600px; height: auto; margin: auto;">
  	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
  	
     <div class="innerOuter" align="center">
@@ -38,7 +39,7 @@
                     </tr>
                     <tr>
                         <th>발주상품명</th>
-                        <td><input type="text" name="title" placeholder="주문할 사이트의 상품명울 똑같이 작성하세요" required></td>
+                        <td><input type="text" name="title" placeholder="주문할 사이트의 상품명을 똑같이 작성하세요" required></td>
                     </tr>
                     <tr>
                         <th>재고</th>
@@ -93,6 +94,6 @@
         
         </div>
     </div>
-
+</div>
 </body>
 </html>

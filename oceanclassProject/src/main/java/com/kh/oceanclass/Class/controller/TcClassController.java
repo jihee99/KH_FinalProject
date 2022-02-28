@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +27,7 @@ import com.kh.oceanclass.common.template.Pagination;
 import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.member.model.vo.Member;
+
 
 @Controller
 public class TcClassController {
@@ -239,6 +241,7 @@ public class TcClassController {
 	// 강사 내 문의 리뷰 조회
 	@RequestMapping("myClassQnaList.tc")
 	public ModelAndView myClassQnaList(@RequestParam(value="cpage", defaultValue="1")int currentPage, ModelAndView mv, HttpSession session) {
+
 		
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		
@@ -258,9 +261,20 @@ public class TcClassController {
 			ClassQna cq = tcService.selectTcQnaDetail(csQnaNo);
 			model.addAttribute("cq", cq);
 			return "member/teacher/classQnaDetailForm";
+
 		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
+		int tcQnaListCount = tcService.tcQnaListCount(memNo);
+		//System.out.println(tcQnaListCount);
+		PageInfo pi = Pagination.getPageInfo(tcQnaListCount, currentPage, 5, 10);
+		
+		ArrayList<ClassQna> tcQnaList = tcService.myClassQnaList(memNo, pi); // 문의 리스트
+		
+		mv.addObject("pi", pi).addObject("tcQnaList", tcQnaList).setViewName("member/teacher/classQnAList");
+		return mv;
 	}
-	
+
 	@RequestMapping("qnaInsertRf.tc")
 	public String qnaInsertRf(ClassQna cq, HttpSession session, Model model) {
 		
@@ -273,6 +287,14 @@ public class TcClassController {
 			model.addAttribute("errorMsg", "실패");
 			return "common/errorPage";
 		}
+
+	@RequestMapping("tcQnaDetail.tc")
+	public String selectTcQnaDetail(int csQnaNo, Model model) {
+		
+			ClassQna cq = tcService.selectTcQnaDetail(csQnaNo);
+			model.addAttribute("cq", cq);
+			return "member/teacher/classQnaDetailForm";
+
 		
 	}
 
