@@ -491,6 +491,7 @@ public class StuMypageController {
 	@RequestMapping("playVideo.me")
 	public String selectVideo(int clNo, HttpSession session, Model model) {
 		Video play = myService.selectVideo(clNo);
+		
 		model.addAttribute("p", play);
 		return "member/student/classVideo";
 	}

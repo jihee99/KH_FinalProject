@@ -26,15 +26,15 @@ public class MypageDao {
 	
 // 마이페이지 메인	
 	public ArrayList<ClassVo> selectMainLikeClass(SqlSessionTemplate sqlSession, int memNo){
-		return (ArrayList)sqlSession.selectList("myMapper.selectMainLikeClass", memNo);
+		return (ArrayList)sqlSession.selectList("myMapper.selectLikeClass", memNo);
 	}
 	
 	public ArrayList<Product> selectMainLikeProduct(SqlSessionTemplate sqlSession, int memNo){
-		return (ArrayList)sqlSession.selectList("myMapper.selectMainLikeProduct", memNo);
+		return (ArrayList)sqlSession.selectList("myMapper.selectLikeProduct", memNo);
 	}
 	
 	public ArrayList<ClassOrder> selectMainMyClass(SqlSessionTemplate sqlSession, int memNo){
-		return (ArrayList)sqlSession.selectList("myMapper.selectMainMyClass", memNo);
+		return (ArrayList)sqlSession.selectList("myMapper.selectMyClass", memNo);
 	}
 	
 	

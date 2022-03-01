@@ -11,46 +11,62 @@
 <title>Insert title here</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-    .Wrapper{width: 1000px; height: auto; border: 1px solid;}
-    #header{width: 100%; border: 1px solid;}
-    #video{width: 70%; float:left; border: 1px solid;}
-    #list{width:20%; float:left; padding: 10px; border: 1px solid;}
-    #header>p{font-size: 22px; font-weight: 600;}
-    #list p{font-size: 18px; font-weight: 600; background-color: lightsteelblue;}
+    #header{width: 100%;}
+    #header>bi{float:left;}
+    #video{width: 80%; height: 630px; float:left;}
+    #list{width:20%; height: 630px; float:left; padding: 10px;}
+    #header>p{font-size: 28px; font-weight: 600;}
+    #list p{font-size: 20px; font-weight: 600; background-color: lightsteelblue;}
     #list ul{list-style:none;}
+    #title{width: 100%;}
+    #title>p{font-size: 24px; font-weight: 600px; margin-top: 20px;}
+    #list p:hover, .bi:hover{cursor:pointer;}
+    #list li:hover{cursor:pointer; font-weight: bolder;}
 </style>
 </head>
 <body>
-    <div id="Wrapper">
+    <div id="Wrapper" style="width: 1600px; height: auto; margin: 0 auto;">
         <div id="header">
+        	<i class="bi bi-chevron-left" id="back" style="color: cornflowerblue; font-weight: 800;">뒤로가기</i>
             <p>${p.clName}</p>
         </div>
         <div id="video">
-            <video src="${p.videoAddress}" controls autoplay style="width:100%;"></video>
+            <video src="${p.videoAddress}" controls autoplay style="width:100%; height: 90%"></video>
+             <div id="title">
+	        	<p>1.무작정 따라해보기</p>
+	        </div>
         </div>
-        <div id="list">
+        <div id="list" style="overflow-y: scroll;">
         	<c:set var="chapArr" value="${fn:split(p.chapter, '/')}" />
+        	<!-- 
+        	<c:set var="subChapArr" value="${fn:split(p.subChapter, '/')}" />
+        	<c:set var="subChapIndexArr" value="${fn:split(subChapArr, ' ')}" />
+        	 -->
         	<c:forEach var="c" items="${chapArr}">
-            <div class="chapter">
-                <p>${c}</p>
-                    	${p.subChapter}
-	                    <ul style="display: none;">
-	                        <li>1강.어쩌구</li>
-	                        <li>2강.어쩌구</li>
-	                        <li>3강.어쩌구</li>
-	                        <li>4강.어쩌구</li>
-	                    </ul>
-            </div>
+	            <div class="chapter">
+	                <p>${c}</p>
+	                	<ul style="display:none;">
+		                        <li>1.무작정 따라해보기</li>
+		                        <li>2.뜻과 의미 생각하며 따라해보기</li>
+		                        <li>3.실전에 적용해보기</li>
+		                </ul>
+	            </div>
             </c:forEach>
         </div>
     </div>
+    
     <script>
         $(".chapter>p").click(function(){
             console.log("여기");
             console.log($(this).siblings("ul"));
             $(this).siblings("ul").slideToggle(600);
+        })
+        
+        $("#back").click(function(){
+        	location.href="myIngClass.me";
         })
     </script>
 </body>
