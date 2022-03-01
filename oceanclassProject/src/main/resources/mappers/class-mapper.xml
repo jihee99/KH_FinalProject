@@ -74,7 +74,7 @@
 		<result column="img" property="img" />
 	</resultMap>
 	
-	<resultMap id="memCouponResult2" type="memCoupon">
+	<resultMap id="memCouponResult2" type="MemCoupon">
 		<result column="pcno" property="memCouponNo" />
 		<result column="mno" property="memNo" />
 		<result column="cno" property="couponNo" />
@@ -98,6 +98,10 @@
 		<result column="deposit" property="deposit" />
 		<result column="point_save" property="pointSave" />
 		<result column="reading_status" property="readingCheck" />
+	</resultMap>
+	
+	<resultMap id="memberResult2" type="Member">
+		<result column="point" property="point" />
 	</resultMap>
 
 	<update id="increaseCount">
@@ -1031,4 +1035,10 @@
 			 , sysdate
 			 )
 	</insert>
+	
+	<select id="selectMember" resultMap="memberResult2">
+		select point
+		  from member
+		 where mno = #{memNo}
+	</select>
 </mapper>

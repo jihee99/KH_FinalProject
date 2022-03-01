@@ -110,7 +110,7 @@
 	                <div>포인트</div>
 	                <input type="text" id="usePoint" onkeyup="changePointMessage();" class="form-control" style="width: 300px; float: left;" placeholder="0원">
 	                <button type="button" onclick="usePointSubmit();" class="btn" style="background-color: #6babd5;color: white; width:140px;">포인트 사용</button>
-	                <div style="font-size: 14px; color:grey; margin-top: 5px;">사용가능한 포인트: <fmt:formatNumber value="${ loginUser.point }" type="number" />원 (1,000원 이상 사용 가능)</div>
+	                <div style="font-size: 14px; color:grey; margin-top: 5px;">사용가능한 포인트: <fmt:formatNumber value="${ m.point }" type="number" />원 (1,000원 이상 사용 가능)</div>
 	            </div>
 	        </div>
 	

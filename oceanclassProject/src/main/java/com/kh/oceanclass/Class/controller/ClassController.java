@@ -512,6 +512,9 @@ public class ClassController {
 	public String classPayForm(int clNo, int memNo, Model model) {
 		ClassVo c = cService.selectClass(clNo);
 		ArrayList<MemCoupon> couponList = cService.memberCouponList(memNo);	// 쿠폰 정보 확인
+		Member m = cService.selectMember(memNo);	//사용가능한 포인트 잔액 확인을 위한 회원 정보 조회 (loginUser로 가져오면 session 다시 담아야되서)
+		
+		model.addAttribute("m", m);
 		model.addAttribute("c", c);
 		model.addAttribute("couponList", couponList);
 		return "class/classPay";

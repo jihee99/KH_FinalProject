@@ -29,6 +29,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
+import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 
 @Service
@@ -411,4 +412,10 @@ public class ClassServiceImpl implements ClassService {
 	        
 	        return null;
 	    }
+
+	@Override
+	public Member selectMember(int memNo) {
+		return cDao.selectMember(sqlSession, memNo);
+	}
+
 }
