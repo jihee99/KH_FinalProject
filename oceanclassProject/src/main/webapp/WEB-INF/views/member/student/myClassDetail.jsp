@@ -37,27 +37,36 @@
 				        <div class="conhead">
 				            <h2>나의 클래스</h2>
 				        </div>
-					        <c:forEach var="c" items="${list}">
-					            <div class="item">
-					            	<a><img src="${c.clImg}"></a>
-					            	<input type="hidden" value="${c.clNo}">
-					            	<p id="ctitle">
-						            	<c:choose>
-						            		<c:when test="${fn:length(c.clName) gt 30}">
-						            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
-						            			..
-						            		</c:when>
-						            		<c:otherwise>
-						            			<c:out value="${c.clName}" />
-						            		</c:otherwise>
-						            	</c:choose>
-					            	</p>
-					            </div>
-				            </c:forEach>
+				        <c:forEach var="c" items="${list}">
+				            <div class="item">
+				            	<a><img src="${c.clImg}"></a>
+				            	<p id="ctitle">
+					            	<c:choose>
+					            		<c:when test="${fn:length(c.clName) gt 30}">
+					            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
+					            			..
+					            		</c:when>
+					            		<c:otherwise>
+					            			<c:out value="${c.clName}" />
+					            		</c:otherwise>
+					            	</c:choose>
+				            	</p>
+				            </div>
+				            <input type="hidden" id="clNo" value="${c.clNo}">
+				            <button type="button" class="btn btn-info" onclick="playVideo();">수강하기</button>
+			            </c:forEach>
 				    </div>
 				</div>
 			</td>
 		</tr>
 	</table>
+	
+	<script>
+		function playVideo(){
+			let clNo = $("#clNo").val();
+			console.log(clNo);
+			location.href='playVideo.me?clNo=' + clNo;
+		}
+	</script>
 </body>
 </html>
