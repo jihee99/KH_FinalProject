@@ -203,7 +203,11 @@
  				alert("승인 할 클래스를 선택해주세요.");
  				return false;
  			} else {
- 				return true;
+ 				if(confirm("승인하시겠습니까?")){
+	 				return true;
+ 				} else{
+ 					return false;
+ 				}
  			}
  			
 	 	}
