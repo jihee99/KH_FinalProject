@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.Class.model.vo.Video;
 import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -186,6 +187,10 @@ public class MypageDao {
 	
 	public CsQna ajaxClassQna(SqlSessionTemplate sqlSession, int csQno) {
 		return sqlSession.selectOne("myMapper.ajaxClassQna", csQno);
+	}
+	
+	public Video selectVideo(SqlSessionTemplate sqlSession, int clNo) {
+		return sqlSession.selectOne("myMapper.selectVideo", clNo);
 	}
 	
 	

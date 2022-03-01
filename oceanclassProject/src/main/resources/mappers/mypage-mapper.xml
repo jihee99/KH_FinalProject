@@ -755,4 +755,28 @@
 		    by order_no desc
 	</select>
 	
+	<resultMap id="myVideoResult" type="Video">
+		<result column="clNo" property="clNo" />
+		<result column="video_no" property="videoNo" />
+		<result column="category" property="category" />
+		<result column="cl_name" property="clName" />
+		<result column="chapter" property="chapter" />
+		<result column="subchapter" property="subChapter" />
+		<result column="video_address" property="videoAddress" />
+	</resultMap>
+	
+	<select id="selectVideo" resultMap="myVideoResult">
+		select
+		       c.clno
+		     , category
+		     , cl_name
+		     , video_no
+		     , chapter
+		     , subchapter
+		     , video_address
+		  from video v
+		  join class c on (c.clno = v.clno)
+		 where v.clno = #{clNo}
+	</select>
+	
 </mapper>

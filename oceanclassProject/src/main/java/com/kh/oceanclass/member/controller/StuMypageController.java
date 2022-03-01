@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.Class.model.vo.Video;
 import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
@@ -58,7 +59,7 @@ public class StuMypageController {
 		ArrayList<ClassOrder> list = myService.selectMainMyClass(memNo);
 		ArrayList<ClassVo> classLikeList = myService.selectMainLikeClass(memNo);
 		ArrayList<Product> storeLikeList = myService.selectMainLikeProduct(memNo);
-
+		
 		model.addAttribute("list", list);
 		model.addAttribute("classLikeList", classLikeList);
 		model.addAttribute("storeLikeList", storeLikeList);
@@ -351,6 +352,7 @@ public class StuMypageController {
 	@RequestMapping(value="ajaxClassQna.me", produces="application/json; charset=UTF-8")
 	public String ajaxClassQna(int csQno) {
 		CsQna cs = myService.ajaxClassQna(csQno);
+		
 		return new Gson().toJson(cs);
 	}
 	
@@ -485,6 +487,14 @@ public class StuMypageController {
 		return "member/student/myAllClassDetail";
 	}
 	
+	// 클래스 수강하기
+	@RequestMapping("playVideo.me")
+	public String selectVideo(int clNo, HttpSession session, Model model) {
+		Video play = myService.selectVideo(clNo);
+		System.out.println(play);
+		model.addAttribute("p", play);
+		return "member/student/classVideo";
+	}
 	
 	
 	
