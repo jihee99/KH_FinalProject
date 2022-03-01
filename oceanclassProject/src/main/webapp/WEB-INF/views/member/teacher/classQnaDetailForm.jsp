@@ -168,7 +168,7 @@
         vertical-align: top;
         font-weight: bolder;
         color: black;
-        width: 100px;
+        width: 70px;
     }
     /* 댓글창 내용들 */
     #reply-content-area{
@@ -181,6 +181,7 @@
         font-size: 15px;
         resize: none;
         overflow: hidden;
+        width: 700px;
     }
     /* 수정 삭제 링크 */
     #btn-box a{
