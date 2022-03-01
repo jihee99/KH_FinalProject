@@ -507,20 +507,26 @@
 					}
     			})
     		} else if(reportQnaR5.checked == true){
-    			$.ajax({
-					url:"reportQna.me",
-					data:{refBNo:cqNo, content:reportQnaR5.value, reason:reportQnaContent},
-					success:function(result){
-						if(result == 'yyyyy'){
-							alert("신고가 접수되었습니다.");
-							$("#reportQnaModal" + cqNo).modal('hide');
-						} else{
-							alert("신고처리에 실패했습니다.");
+    			
+    			if(reportQnaContent == null || reportQnaContent == ""){
+    				alert("신고 이유를 입력해주세요.");
+    			} else{
+	    			$.ajax({
+						url:"reportQna.me",
+						data:{refBNo:cqNo, content:reportQnaR5.value, reason:reportQnaContent},
+						success:function(result){
+							if(result == 'yyyyy'){
+								alert("신고가 접수되었습니다.");
+								$("#reportQnaModal" + cqNo).modal('hide');
+							} else{
+								alert("신고처리에 실패했습니다.");
+							}
+						}, error:function(){
+							console.log("리뷰 신고용 ajax 통신 실패");
 						}
-					}, error:function(){
-						console.log("리뷰 신고용 ajax 통신 실패");
-					}
-    			})
+	    			})
+    			}
+    			
     		}
     		
     	}

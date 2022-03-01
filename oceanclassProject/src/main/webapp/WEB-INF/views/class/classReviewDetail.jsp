@@ -182,7 +182,7 @@ ${ cr.content }
 	                        	<textarea name="reportReviewContent" id="reportReviewContent" style="width: 100%; height: 150px; resize: none; margin-top: 10px;" placeholder="내용을 작성해주세요."></textarea>
 		                    </div>
 		                    <div class="modal-footer">
-		                        <button type="submit" class="btn" style="background-color: #6babd5; margin-right:190px;" onclick="reportReview(${cr.crNo});">신고하기</button>
+		                        <button type="button" class="btn" style="background-color: #6babd5; margin-right:190px;" onclick="reportReview(${cr.crNo});">신고하기</button>
 		                        <!--  <button type="button" class="btn" data-dismiss="modal" style="background-color: lightgray;">취소</button>-->
 		                    </div>
 		                </div>
@@ -589,20 +589,26 @@ ${ r.replyContent }
 					}
     			})
     		} else if(reportReviewR5.checked == true){
-    			$.ajax({
-					url:"reportReview.me",
-					data:{refBNo:crNo, content:reportReviewR5.value, reason:reportReviewContent},
-					success:function(result){
-						if(result == 'yyyyy'){
-							alert("신고가 접수되었습니다.");
-							$("#reportReviewModal").modal('hide');
-						} else{
-							alert("신고처리에 실패했습니다.");
+    			
+    			if(reportReviewContent == null || reportReviewContent == ""){
+    				alert("신고 이유를 입력해주세요.");
+    			} else{
+	    			$.ajax({
+						url:"reportReview.me",
+						data:{refBNo:crNo, content:reportReviewR5.value, reason:reportReviewContent},
+						success:function(result){
+							if(result == 'yyyyy'){
+								alert("신고가 접수되었습니다.");
+								$("#reportReviewModal").modal('hide');
+							} else{
+								alert("신고처리에 실패했습니다.");
+							}
+						}, error:function(){
+							console.log("리뷰 신고용 ajax 통신 실패");
 						}
-					}, error:function(){
-						console.log("리뷰 신고용 ajax 통신 실패");
-					}
-    			})
+	    			})
+    			}
+    			
     		}
     		
     	}
@@ -682,20 +688,26 @@ ${ r.replyContent }
 					}
     			})
     		} else if(reportReviewR5.checked == true){
-      			$.ajax({
-					url:"reportReviewReply.me",
-					data:{refBNo:replyNo, content:reportReviewR5.value, reason:reportReviewContent},
-					success:function(result){
-						if(result == 'yyyyy'){
-							alert("신고가 접수되었습니다.");
-							$("#reportReviewReplyModal" + replyNo).modal('hide');
-						} else{
-							alert("신고처리에 실패했습니다.");
+    			
+    			if(reportReviewContent == null || reportReviewContent == ""){
+    				alert("신고 이유를 입력해주세요.");
+    			} else{
+	      			$.ajax({
+						url:"reportReviewReply.me",
+						data:{refBNo:replyNo, content:reportReviewR5.value, reason:reportReviewContent},
+						success:function(result){
+							if(result == 'yyyyy'){
+								alert("신고가 접수되었습니다.");
+								$("#reportReviewReplyModal" + replyNo).modal('hide');
+							} else{
+								alert("신고처리에 실패했습니다.");
+							}
+						}, error:function(){
+							console.log("리뷰 댓글 신고용 ajax 통신 실패");
 						}
-					}, error:function(){
-						console.log("리뷰 댓글 신고용 ajax 통신 실패");
-					}
-    			})
+	    			})
+    			}
+    			
     		}
     	}
     	
