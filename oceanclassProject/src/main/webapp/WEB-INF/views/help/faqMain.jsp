@@ -49,13 +49,10 @@
         
         <script>
         	$(".con>.t").click(function(){
-        		console.log($(this).text());
         		$(this).toggleClass("selected");
         		$(".con>t").not(this).removeClass("selected");
         		
         		var target = $(this).parents(".con").find(".c");
-        		//console.log(target);
-        		//$(this).next().slideDown();
         		target.slideToggle(300);
         	});
         </script>
