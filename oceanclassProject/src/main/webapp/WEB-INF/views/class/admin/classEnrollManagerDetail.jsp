@@ -25,6 +25,9 @@
 		margin-top: 100px;
 		margin-bottom: 50px;
 	}
+	.modal-backdrop.show {
+	    opacity: .3;
+	}
 </style>
 </head>
 <body>
