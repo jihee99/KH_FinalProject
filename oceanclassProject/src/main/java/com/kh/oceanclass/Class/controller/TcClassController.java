@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,8 +25,6 @@ import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
-import com.kh.oceanclass.event.model.vo.Event;
-import com.kh.oceanclass.help.model.vo.Faq;
 import com.kh.oceanclass.member.model.vo.Member;
 
 
@@ -161,7 +160,7 @@ public class TcClassController {
 		ClassVo c = tcService.updateClassForm(clNo);
 		
 		model.addAttribute("c", c);
-		
+		System.out.println(c);
 		return "member/teacher/myClassUpdate";
 	}
 	

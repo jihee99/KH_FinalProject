@@ -89,9 +89,8 @@
             <div id="top-area">
                 <span id="bord-name">내클래스 목록</span>
             </div>
-            <form action="" method="post" id="form-area">
             	<div id="content-wrap" style="overflow-y: scroll;">
-	                <c:forEach var="cl" items="${ classList }">
+	            <c:forEach var="cl" items="${ classList }">
 	                <input type="hidden" id="clnum" name="clNo" value="${cl.clNo }">
 	                <div id="cl-wrap">
 	                    <div id="cl-img">
@@ -110,31 +109,19 @@
 	                            <span id="cl-num">
 	                                	수강상태 : ${cl.clStatus } &ensp; 조회수 : ${cl.count }
 	                            </span>
-		                            <button onclick="formSubmit(1)" class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
-		                            <c:if test="${cl.clStatus eq '게시중' }">
-		                            <button onclick="formSubmit(2)" class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
-		                            </c:if>
+		                            <button onclick="location.href='updateClassForm.tc?clNo=${cl.clNo}'" class="btn" style="background-color: rgb(107, 171, 213); color: white; height: 35px;">수정</button>
+	                            <c:if test="${cl.clStatus eq '게시중' }">
+	                            	<button onclick="location.href='endClass.tc?clNo=${cl.clNo}'" class="btn" style="background-color: rgb(41, 128, 185); color: white; height: 35px;">내리기</button>
+	                            </c:if>
 	                        </div>
 	                    </div>
 	                </div>
 	                <hr>
 	                </c:forEach>
-		            <script>
-		           		function formSubmit(num){
-		           			if(num == 1){ 
-		           				$("#form-area").attr("action", "updateClassForm.tc").submit();
-		           			}else if(num == 2){ 
-		           				$("#form-area").attr("action", "endClass.tc").submit();
-		           			}else{
-		           				$("#form-area").attr("action", "enrollClassForm.tc").submit();
-		           			}
-		           		}
-		           	</script>
             	</div>
             <div align="center">
-            <button onclick="formSubmit(3)" id="enrollBtn" class="btn" style="background-color: rgb(228, 240, 250);">새로운 클래스 등록하기</button>
+            <button onclick="location.href='enrollClassForm.tc'" id="enrollBtn" class="btn" style="background-color: rgb(228, 240, 250);">새로운 클래스 등록하기</button>
             </div>
-            </form>
             <br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />
