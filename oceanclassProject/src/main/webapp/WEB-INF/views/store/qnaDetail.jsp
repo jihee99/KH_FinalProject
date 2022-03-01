@@ -66,8 +66,14 @@
 	                <div class="review" style="margin-bottom:50px;">
 	                    <div class="user_detail">
 	                        <div class="user_image">
-	                            <img src="${q.profile }" width="50px" height="50px">
-	                        </div>
+		                        <c:choose>
+	                        		<c:when test="${q.profile eq null }">
+	                        			<img src="./resources/images/user.png" width="50px" height="50px">
+	                        		</c:when>
+	                        		<c:otherwise>
+	                        			<img src="${q.profile}" width="50px" height="50px">
+	                        		</c:otherwise>
+	                        	</c:choose>	                        </div>
 	                        <span class="user_name">${q.userId }</span>
 	                        <span class="enroll_date">${q.createDate }</span>
 	            			<input type="hidden" id="refBNo" neme="refBNo" value="${q.csQno}">

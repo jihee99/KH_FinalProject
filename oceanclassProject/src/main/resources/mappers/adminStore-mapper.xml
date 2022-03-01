@@ -1,5 +1,234 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper>
-  <cache-ref namespace=""/>
+<mapper namespace="adminStoreMapper">
+	
+	<resultMap id="inProductOrderResult" type="InProductOrder">
+		<result column="pno" property="productNo"/>
+		<result column="title" property="title"/>
+		<result column="quantity" property="quantity"/>
+		<result column="unit_price" property="unitPrice"/>
+		<result column="total" property="total"/>
+		<result column="order_site" property="orderSite"/>
+		<result column="process" property="process"/>
+		<result column="order_no" property="orderNo"/>
+		<result column="productName" property="productName"/>
+		<result column="stock" property="stock"/>
+	</resultMap>
+	
+	<resultMap id="reviewResult" type="StoreReview">
+		<result column="rno" property="reviewNo"/>
+		<result column="pno" property="productNo"/>
+		<result column="mno" property="memberNo"/>
+		<result column="nickname" property="nickname"/>
+		<result column="profile" property="profile"/>
+		<result column="content" property="content"/>
+		<result column="star_rating" property="rating"/>
+		<result column="review_date" property="reviewDate"/>
+		<result column="total" property="totalCount"/>
+		<result column="star_avg" property="starAvg"/>
+		<result column="status" property="status"/>
+		<result column="reconum" property="reconum"/>
+		<result column="recoCk" property="recoCk"/>
+		<result column="filepath" property="img"/>
+	</resultMap>
+	
+	<resultMap id="qnaResult" type="StoreQna">
+		<result column="cs_qno" property="csQno"/>
+		<result column="mno" property="memNo"/>
+		<result column="gb_no" property="gbNo"/>
+		<result column="refer_no" property="referNo"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="create_date" property="createDate"/>
+		<result column="pwd" property="pwd"/>
+		<result column="filepath" property="filePath"/>
+		<result column="status" property="status"/>
+		<result column="answer_content" property="answerContent"/>
+		<result column="answer_date" property="answerDate"/>
+		<result column="profile" property="profile"/>
+		<result column="user_id" property="userId"/>
+		<result column="category" property="category"/>
+	</resultMap>
+	
+	<resultMap id="storeResult" type="Product">
+	  	<result column="pno" property="productNo"/>
+	  	<result column="mno" property="memberNo"/>
+	  	<result column="category" property="category"/>
+	  	<result column="title" property="title"/>
+	  	<result column="price" property="price"/>
+	  	<result column="stock" property="stock"/>
+	  	<result column="endate" property="enDate"/>
+	  	<result column="courier" property="courier"/>
+	  	<result column="soldout_yn" property="soldoutYN"/>
+	  	<result column="status" property="status"/>
+	  	<result column="img1" property="productImg0"/>
+	  	<result column="img2" property="productImg1"/>
+	  	<result column="img3" property="productImg2"/>
+	 	<result column="img4" property="productImg3"/>
+	 	<result column="nickname" property="nickname" />
+	 	<result column="like_count" property="like" />
+	 	<result column="likeck" property="likeCk" />
+	 	<result column="quantity" property="quantity"/>
+	 	
+	</resultMap>
+	
+	<select id="selectInProuctOrder" resultMap="inProductOrderResult">
+		select
+		       o.ORDER_NO
+		     , o.PNO
+		     , o.TITLE
+		     , o.STOCK
+		     , o.QUANTITY
+		     , o.UNIT_PRICE
+		     , o.TOTAL
+		     , o.ORDER_SITE
+		     , o.PROCESS
+		     , s.title as productName
+		     , (select count(*) from s_order )as count
+		  from s_order o
+		  join store s on (o.pno = s.pno)
+	</select>
+	
+		<select id="selectProduct" resultMap="storeResult">
+		select
+			   pno
+			 , nickname
+			 , user_id
+			 , category
+			 , to_char(endate, 'YYYY-MM-DD') as endate
+			 , title
+			 , price
+			 , courier
+			 , soldout_yn
+			 , status
+			 , img1
+			 , img2
+			 , img3
+			 , img4
+			 , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and refer_no = pno
+		        ) as like_count
+		      , (
+		        select count(*)
+		          from like_item
+		         where gb_no = 2
+		           and mno = #{memberNo} 
+		           and refer_no = pno
+		       ) as likeck
+		  from store 
+		  join member using (mno)
+		 where title like '%' || #{keyword} || '%'
+		 		   <choose>
+				<when test="category == 1">
+				   and category = 1
+				</when>
+				<when test="category == 2">
+				   and category = 2
+				</when>
+				<when test="category == 3">
+				   and category = 3
+				</when>
+				<otherwise>
+				</otherwise>
+		   </choose>
+   		   <choose>
+		   		<when test="array == 'like'">
+					 order
+					    by like_count desc
+		   		</when>
+		   		<when test="array == 'date'">
+					 order
+					    by pno desc
+		   		</when>
+		   		<when test="array == 'rev'">
+					 order
+					    by pno desc
+		   		</when>
+		   </choose>
+	</select>
+	
+	<select id="selectStoreReview" resultMap="reviewResult">
+		select 
+			   r.rno
+		     , r.pno
+		     , filepath
+		     , nickname
+		     , profile
+		     , r.content
+		     , r.star_rating
+		     , to_char(r.review_date, 'YYYY-MM-DD') as review_date
+		     , status
+   		     , (
+		        select count(*)
+		          from recommend
+		         where gb_no = 2
+		           and refer_no = rno
+		        ) as reconum
+		  from s_review r
+          join member using (mno)
+	     order
+   			by review_date desc
+	</select>
+	
+	<select id="selectStoreQna" resultMap="qnaResult">
+		select
+		       CS_QNO
+		     , MNO
+		     , user_id
+     		 , profile
+		     , GB_NO
+		     , REFER_NO
+		     , TITLE
+		     , CONTENT
+		     , to_char(create_date, 'YYYY-MM-DD') as create_date
+		     , PWD
+		     , FILEPATH
+		     , STATUS
+		     , ANSWER_CONTENT
+		     , ANSWER_DATE
+		  from cs_qna
+		  join member using (mno)
+		   and gb_no = 2
+	</select>
+	
+		<select id="selectQnaListCount" resultType="_int">
+		select
+			   count(*)
+		  from cs_qna
+		 where  gb_no = 2
+	</select>
+	
+		<select id="selectListCount" resultType="_int">
+		select count(*)
+		  from store
+		 where status = 'Y'
+		   and title like '%' || #{keyword} || '%'
+		   <choose>
+		 		<when test="category == '1'">
+		 			and category = 1
+		 		</when>
+		 		<when test="category == '2'">
+		 			and category = 2
+		 		</when>
+		 		<when test="category == '3'">
+		 			and category = 3
+		 		</when>
+		 		<otherwise>
+		 		</otherwise>
+		   </choose>
+	</select>
+	
+	<select id="selectReviewListCount" resultType="_int">
+		select
+			   count(*)
+		  from s_review
+		 where status = 'Y'
+		   and pno = #{pno}
+	</select>
+	
+	
+	
 </mapper>

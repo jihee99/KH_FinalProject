@@ -30,7 +30,7 @@
     .product_name_small{font-size: small; color: rgb(88, 88, 88);}
     .content{font-family: 본고딕; font-size: 15px; display:inline-block; width:650px; height: auto; margin-bottom: 10px;}
     .recommend{width: 200px; height: 30px; margin-right: 10px; cursor: pointer; background:rgb(211, 212, 212); border: none; border-radius: 5px;}
-    .thumbnail_image{width:150px; height:120px; border: 1px solid; margin-bottom: 10px;}
+    .thumbnail_image{width:150px; height:120px; margin-bottom: 10px;}
     #pagingArea{
 		width:fit-content;
 		margin:auto;
@@ -112,7 +112,7 @@
 			                        <div class="user_image">
 				                        <c:choose>
 			                        		<c:when test="${r.profile eq null }">
-			                        			<img src="">
+			                        			<img src="./resources/images/user.png" width="50px" height="50px">
 			                        		</c:when>
 			                        		<c:otherwise>
 			                        			<img src="${r.profile}" width="50px" height="50px">
@@ -130,9 +130,9 @@
 			                        <br>
 			                        <span class="user_name">${r.nickname }</span>
 			                        <span class="enroll_date">${r.reviewDate }</span>
-			            			<input type="hidden" id="refBNo" neme="refBNo" value="${r.reviewNo}">
-                        			<input type="hidden" id="reportMemNo" name="reportMemNo" value="${r.memberNo}">
-                        			<input type="hidden" id="memNo" value="${r.memberNo}">
+			            			<input type="hidden" id="refBNo" name="refBNo" value="${r.reviewNo}">
+                        			<input type="hidden" id="reportMemNo" name="reportMemNo" value="${loginUser.memNo}">
+                        			<input type="hidden" id="memNo" name="memNo" value="${ loginUser.memNo }">
 			                        <button type="button" data-toggle="modal" data-target="#report">신고</button>
 			                    </div>
 			                    <c:if test="${ loginUser.memNo == r.memberNo }">
@@ -156,7 +156,7 @@
 		                        	</c:choose>
 			                    </div>
 			                    <div class="recommend_area">
-			                    	<button type="button" class="recommend" onclick="recommendCk(${r.reviewNo});"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
+			                    	<button type="button" class="recommend" onclick="recommend(${r.reviewNo});"><i class="far fa-thumbs-up"></i> 도움이 됐어요</button>
 				                        
 			                        <span style="font-weight:bold;">${r.reconum }</span>명에게 도움이 되었어요.
 			                    </div>
@@ -245,6 +245,33 @@
 		
 	<script>
 	
+    // 추천 ajax
+    	function recommend(rno){
+    		if(document.getElementById("memNo").value == ""){
+                alert("로그인 후 이용 가능한 서비스 입니다.");
+            } else if('${loginUser.memNo}' == '${ srm.memberNo }'){
+            	alert("본인의 후기는 추천할 수 없습니다.");
+            } else {
+            	$.ajax({
+            		url:"recommendStore.st",
+            		data:{reviewNo:rno,
+            		     memberNo:document.getElementById("memNo").value},
+            		success:function(result){
+            			if(result == "dd"){
+            				alert("해당 리뷰의 추천을 제거하였습니다.");
+            			}else if(result == "ss"){
+            				alert("추천 제거 실패되었습니다.")
+            			}else if(result == "gg"){
+            				alert("추천완!");
+            			}else{
+            				alert("추천실패");
+            			}
+            			
+            		}
+            	})
+            }
+    	}
+    
 	// 신고 ajax
     function rpdata(){
         var rpValue = $('input[name=radio]:checked').val();
@@ -287,35 +314,9 @@
 
     })
     
-    // 추천 ajax
-    	function recommendCk(rno){
-    		if(document.getElementById("memNo").value == ""){
-                alert("로그인 후 이용 가능한 서비스 입니다.");
-            } else if('${loginUser.memNo}' == '${ r.memberNo }'){
-            	alert("본인의 후기는 추천할 수 없습니다.");
-            } else {
-            	$.ajax({
-            		url:"recommendStore.st",
-            		data:{reviewNo:rno,
-            		     memberNo:document.getElementById("memNo").value},
-            		success:function(result){
-            			if(result == "dd"){
-            				alert("해당 리뷰의 추천을 제거하였습니다.");
-            			}else if(result == "ss"){
-            				alert("추천 제거 실패되었습니다.")
-            			}else if(result == "gg"){
-            				alert("추천완!");
-            			}else{
-            				alert("추천실패");
-            			}
-            			
-            		}
-            	})
-            }
-    	}
     
 	function reviewUpdate(rno){
-       window.open("reviewUpdateForm.st?rno=" + reviewNo, "스토어리뷰수정", "width=650, height=800, resizeable=no, location=no");
+       window.open("reviewUpdateForm.st?rno=" + rno, "스토어리뷰수정", "width=650, height=800, resizeable=no, location=no");
     }
 	
 	function reviewDelete(rno){

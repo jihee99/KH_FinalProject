@@ -7,15 +7,16 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.oceanclass.Class.model.vo.ClassQna;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.dao.StoreDao;
 import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
@@ -109,8 +110,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public ArrayList<ProductOption> selectCartOption(int optionNo) {
-		return sDao.selectCartOption(sqlSession, optionNo);
+	public ArrayList<Cart> selectCartOption(ArrayList<Cart> cartList, int memberNo) {
+		return sDao.selectCartOption(sqlSession, cartList, memberNo);
 	}
 
 	@Override
@@ -217,7 +218,35 @@ public class StoreServiceImpl implements StoreService {
 	public StoreQna selectQna(int csQno) {
 		return sDao.selectQna(sqlSession, csQno);
 	}
+	
+	public ArrayList<Cart> selectCartList(ArrayList<Cart> list, int[] pno, int memberNo) {
+		
+		list = sDao.selectCartList(sqlSession, pno, memberNo);
+		list = sDao.selectCartOption(sqlSession, list, memberNo);
+		
+		return list;
+		
+	}
 
+	@Override
+	public int deleteCart(int pno, int memberNo) {
+		return sDao.deleteCart(sqlSession, pno, memberNo);
+	}
+	
+	@Override
+	public int insertPay(StorePay pay) {
+		return sDao.insertPay(sqlSession, pay);
+	}
+	
+	@Override
+	public String selectOrderNo(int memberNo) {
+		return sDao.selectOrderNo(sqlSession, memberNo);
+	}
+	
+	@Override
+	public ArrayList<Event> selectEventList() {
+		return sDao.selectEventList(sqlSession);
+	}
 
 	
 }

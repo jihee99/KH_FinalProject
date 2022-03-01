@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,7 +85,7 @@
                 <tbody>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">CO432</td>
+                        <td class="orderNo"></td>
                         <td>S0203</td>
                         <td>베이킹파우더</td>
                         <td><a href="">배송문의합니다.</a></td>

@@ -611,11 +611,13 @@ dt {
     font-size: 18px;
     vertical-align: -2px;
 }
+/*
 .order_calculator .product_price:nth-child(2):after {
     height: 2px;
     margin-top: 6px;
     background: #c7c7c7;
 }
+*/
 .order_calculator .product_price dd.discount {
     color: #f85151;
 }

@@ -17,4 +17,5 @@ public class ProductOption {
 	private int productNo;			// 상품번호(참조)
 	private String optionName;		// 옵션명
 	private int price;			// 가격
+	private int quantity;		// 수량
 }

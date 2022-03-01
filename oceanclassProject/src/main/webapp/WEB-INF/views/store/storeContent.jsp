@@ -13,11 +13,6 @@
 	margin-top: 20px;
 }
 
-#silde {
-	background-color: skyblue;
-	width: 100%;
-	height: 250px;
-}
 
 .items {
 	width: 100%;
@@ -61,7 +56,7 @@
 
 	<div id="outer">
 		<div id="silde">
-			
+			<jsp:include page="storeImgSlider.jsp"/>
 		</div>
 
 		<input type="hidden" id="memNo" value="${ loginUser.memNo }">

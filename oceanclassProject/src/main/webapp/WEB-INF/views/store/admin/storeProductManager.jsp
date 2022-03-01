@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,71 +82,40 @@
                         <th width="100">배송사</th>
                         <th width="100">재고수량</th>
                         <th width="100">상태</th>
-                        <th width="100">승인여부</th>
-                        <th width="100">상세보기</th>
                     </tr>
                 </thead>
                 <tbody>
+                <c:forEach var="p" items="${list}">
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">SO432</td>
-                        <td>식품</td>
-                        <td>베이킹파우더</td>
-                        <td>도지현</td>
-                        <td>2,000 <SPAN>원</SPAN> </td>
-                        <td>2022-02-03 12:24:32</td>
-                        <td></td>
-                        <td>Y</td>
-                        <td>N</td>
+                        <td class="orderNo">${p.productNo}</td>
+                        <td>${p.category}</td>
+                        <td>${p.title }</td>
+                        <td>${p.nickname}</td>
+                        <td>${p.price}<SPAN>원</SPAN> </td>
+                        <td>${p.enDate}</td>
+                        <td>${p.courier}</td>
+                        <td>${p.stock}</td>
                         <td>
-                            <button type="button" style="border: none; border-radius: 5px;">미답변</button>
+                        	<c:choose>
+                        		<c:when test="${p.status eq 'Y'}">
+		                            <button type="button" class="btn btn-success" style="border:none; border-radius:5px;">승인</button>
+                        		</c:when>
+                        		<c:when test="${p.status eq 'N'}">
+		                            <button type="button" class="btn btn-warning" style="border: none; border-radius: 5px;">승인대기</button>
+                        		</c:when>
+                        		<c:when test="${p.status eq 'D'}">
+		                            <button type="button" class="btn btn-link" style="border: none; border-radius: 5px;">내려감</button>
+                        		</c:when>
+                        		<c:when test="${p.status eq 'R'}">
+		                            <button type="button" class="btn btn-danger" style="border: none; border-radius: 5px;">반려</button>
+                        		</c:when>
+                        		<c:otherwise>
+                        		</c:otherwise>
+                        	</c:choose>
                         </td>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">CO432</td>
-                        <td>S0203</td>
-                        <td>베이킹파우더</td>
-                        <td><a href="">배송문의합니다.</a></td>
-                        <td>도대체 언제 도착하는지; 알려주...</td>
-                        <td>도지현</td>
-                        <td>2022-02-03 12:24:32</td>
-                        <td>Y</td>
-                        <td>N</td>
-                        <td>
-                            <button type="button" style="background: steelblue; color: white; border: none; border-radius: 5px;">답변</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">CO432</td>
-                        <td>S0203</td>
-                        <td>베이킹파우더</td>
-                        <td><a href="">배송문의합니다.</a></td>
-                        <td>도대체 언제 도착하는지; 알려주...</td>
-                        <td>도지현</td>
-                        <td>2022-02-03 12:24:32</td>
-                        <td>Y</td>
-                        <td>N</td>
-                        <td>
-                            <button type="button" style="background: steelblue; color: white; border: none; border-radius: 5px;">답변</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">CO432</td>
-                        <td>S0203</td>
-                        <td>베이킹파우더</td>
-                        <td><a href="">배송문의합니다.</a></td>
-                        <td>도대체 언제 도착하는지; 알려주...</td>
-                        <td>도지현</td>
-                        <td>2022-02-03 12:24:32</td>
-                        <td>Y</td>
-                        <td>N</td>
-                        <td>
-                            <button type="button" style="border: none; border-radius: 5px;">미답변</button>
-                        </td>
-                    </tr>
+                </c:forEach>
 
 
                 </tbody>

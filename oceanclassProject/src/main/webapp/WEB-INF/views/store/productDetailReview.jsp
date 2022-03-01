@@ -85,7 +85,7 @@
 				                        <div class="user_image">
 				                        	<c:choose>
 				                        		<c:when test="${srm.profile eq null }">
-				                        			<img src="">
+				                        			<img src="./resources/images/user.png" width="50px" height="50px">
 				                        		</c:when>
 				                        		<c:otherwise>
 				                        			<img src="${srm.profile}" width="50px" height="50px">

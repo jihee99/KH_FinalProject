@@ -5,11 +5,13 @@ import java.util.HashMap;
 
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
@@ -62,7 +64,7 @@ public interface StoreService {
 	
 	ArrayList<Product> selectCartProduct(int productNo);
 	
-	ArrayList<ProductOption> selectCartOption(int optionNo);
+	ArrayList<Cart> selectCartOption(ArrayList<Cart> cartList, int memberNo);
 	
 	// 16. 리뷰 조회 서비스
 	ArrayList<StoreReview> selectReviewList(int pno, PageInfo pi, int memberNo);
@@ -101,5 +103,14 @@ public interface StoreService {
 	
 	StoreReview selectReview(int rno);
 	StoreQna selectQna(int csQno);
+	
+	
+	ArrayList<Cart> selectCartList(ArrayList<Cart> list, int[] pno, int memberNo);
+	int deleteCart(int pno, int memberNo);
+	
+	int insertPay(StorePay pay);
+	
+	String selectOrderNo(int memberNo);
+	ArrayList<Event> selectEventList();
 }
 

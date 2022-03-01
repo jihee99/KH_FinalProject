@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,8 @@
             </ul>
             
             <h3 class="blind">장바구니 목록</h3>
-
+			<form action="cartEnrollForm.st" id="cartEnroll">
+			
             <table class="table">
                 <caption>
                     <span class="blind"> 장바구니 내역</span>
@@ -73,39 +75,37 @@
                         <th scope="col" class="th">배송비</th>
                     </tr>
                 </thead>
-
+				
                 <tbody>
+                
+                <c:forEach var="p" items="${ list }">
+                	<c:set var="total" value="${p.price }"/>
                     <tr class="table_row">
                         <td class="table_cell">
                             <div class="checkbox">
-                                <input type="checkbox" id="bundle_checkbox" checked class="input">
+                                <input type="checkbox" id="bundle_checkbox" name="pno" value="${ p.productNo }" class="input">
                                 <label for="bundle_checkbox" class="blind">상품선택</label>
                             </div>
                         </td>
                         <td class="table_cell">
                             <div class="product_desc_wrap">
                                 <div class="product_description">
-                                <c:forEach var="p" items="${ plist }">
+                                
                                     <span class="product_thumb">
                                         <img src="${ p.productImg0 }"  class="product_img">
                                     </span>
-                                    <a href="#" class="product_merchant_name" target="_blank">판매처이름</a>
-                                    <span class="product_name">상품명 상품명 상품명</span>
+                                    <a href="#" class="product_merchant_name" target="_blank">${p.nickname }</a>
+                                    <span class="product_name">${p.title }</span>
                                     <span class="product_price_area">
                                         <span class="product_price_sale">
-                                            9,500
+                                            ${p.price }
                                             <span class="unit">원</span>
                                         </span>
-                                        <s class="product_price_total">
-                                            <span class="blind">할인 미적용 가격</span>
-                                            12,800
-                                        </s>
                                     </span>
-                                </c:forEach>
                                 </div>
                             </div>
                             <div class="product_button_area">
-                                <button type="button" class="image_button button_delete">
+                                <button type="button" class="image_button button_delete" onclick="deleteCart(${p.productNo});">
                                     <span class="blind">상품삭제</span>
                                 </button>
                             </div>
@@ -113,19 +113,27 @@
                         <td class="table_cell valign_top">
                             <div class="product_item_wrap">
                                 <div class="product_options">
-                                    <div class="product_item">선택1 : 빨간색 /  선택2 : XL / 1개</div>
-                                    <div class="product_option_box">
-                                        <button type="button" class="button button_small button_basic">주문조건 추가/변경</button>
-                                    </div>
+	                                <c:if test="${p.optionList.get(0).getOptionNo() != 0 }">
+                                  		<c:forEach var="o" items="${p.optionList}">
+                                    		<div class="product_item">옵션명:${o.optionName}/가격:${o.price}/수량:${o.quantity}</div>
+                                  		
+                                  			<c:set var="total" value="${ total + o.price * o.quantity }"/>
+                                  		</c:forEach>  
+	                                    <div class="product_option_box">
+	                                        <button type="button" class="button button_small button_basic">주문조건 추가/변경</button>
+	                                    </div>
+                                   	</c:if>
                                 </div>
                             </div>
                         </td>
                         <td class="table_cell">
                             <div class="product_price">
                                 <em class="product_detail_price">
-                                    9,500
+                                    ${ total }
                                     <span class="unit">원</span>
                                 </em>
+                               	<input type="hidden" class="pdp" value="${ total }" >
+                               
                                 <span class="product_delivery_fee">
                                     (
                                     <!-- -->
@@ -138,39 +146,16 @@
                                 </div>
                             </div>
                         </td>
-                        <td rowspan="2" class="table_cell">
+                        <td class="table_cell">
                             <div class="delivery_fee">
-                                <div class="delivery_fee_area">
                                     <span class="delivery_fee_price">
                                         3000
                                         <span class="unit">원</span>
                                     </span>
-                                    <button type="button" class="image_button button_tooltip">
-                                        <span class="blind">배송비 안내 자세히 보기</span>
-                                    </button>
-                                    <div class="tooltip_box">
-                                        <div class="tooltip">
-                                            <button type="button" class="button_close">
-                                                <span class="blind">레이어 닫기</span>
-                                            </button>
-                                            <strong class="tooltip_tit">구매금액별 배송비</strong>
-                                            <div class="tooltip_desc">
-                                                <p>
-                                                    30,000원 미만 구매 시
-                                                    <em>3,000원</em>
-                                                    <br>
-                                                    30,000원 이상 구매 시 무료
-                                                    <em></em>
-                                                    <br>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="delivery_fee_text">(3만원 이상 구매 시 배송비 무료)</div>
-                                </div>
                             </div>
                         </td>
                     </tr>
+                  </c:forEach>
                 </tbody>
             </table>
 
@@ -184,7 +169,9 @@
                     <dl class="product_price">
                         <dt>총 상품금액</dt>
                         <dd>
-                            <span class="price">25,600</span>
+                            <span class="price" id="totalPrice">
+                            	
+                            </span>
                             원
                         </dd>
                     </dl>
@@ -195,29 +182,59 @@
                             원
                         </dd>
                     </dl>
-                    <dl class="product_price">
-                        <dt>할인예상금액</dt>
-                        <dd class="discount">
-                            <span class="price">5,300</span>
-                            원
-                        </dd>
-                    </dl>
                 </div>
                 <div class="product_price_total">
                     <span class="text_mart">총 주문금액</span>
                     <span class="text_point">
-                        <span class="price">23,300</span>
+                        <span class="price" id="ttt"></span>
                         원
                     </span>
                 </div>
             </div>
             <div class="cart_button_box">
                 <a href="#" class="link_home">쇼핑 계속하기</a>
-                <button type="button" class="button button_large button_blue">주문하기</button>
+                <button type="submit" class="button button_large button_blue" onclick="check();">주문하기</button>
             </div>
-
+			</form>
         </main>
     </div>
+    
+    <script>
+    
+    	$(function(){
+    		let totalPrice = 0;
+    		$(".pdp").each(function(){
+    			totalPrice += Number($(this).val());
+    		})
+    		
+    		$("#totalPrice").html(totalPrice);
+    		$("#ttt").html(totalPrice + 3000);
+    		
+    	})
+    	
+    	function deleteCart(pno){
+    		
+    		if(confirm("장바구니에서 삭제하시겠습니까? 옵션정보도 함께 삭제됩니다.")){
+    			$.ajax({
+    				url:"deleteCart.st",
+    				data:{pno:pno},
+    				success:function(result){
+    					if(result == "ss"){
+    						location.reload();
+    					}else{
+    						alert("장바구니 삭제에 실패했습니다.");
+    					}
+    				}, error:function(){
+    					alert("ajax통신실패!");
+    				}
+    			})
+    		}
+    		
+    	}
+    	
+    	
+    	
+    </script>
 </body>
 </body>
 </html>

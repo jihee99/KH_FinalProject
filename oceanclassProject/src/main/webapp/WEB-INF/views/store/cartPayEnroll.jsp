@@ -81,9 +81,13 @@
                         <th scope="col" class="th">상품금액</th>
                     </tr>
                 </thead>
+
+                <c:set var="pName" value="${list.get(0).title}"/>
+                <input type="hidden" value="${pName}" id="pName">
                 
                 <tbody>
-     <form action="insertPay.st" id="insertPay">
+     <form action="insertPay.st">
+	                 <c:forEach var="p" items="${list}">
 	                 <c:set var="total" value="${p.price }"/>
 	                    <tr class="table_row">
 	                        <td class="table_cell"></td>
@@ -109,11 +113,11 @@
 	                        <td class="table_cell valign_top">
 	                            <div class="product_item_wrap">
 	                                <div class="product_options">
-		                                <c:if test="${po.get(0).getOptionNo() != 0 }">
-	                                  		<c:forEach var="o" items="${po.optionList}">
-	                                    		<div class="product_item">옵션명:${po.optionName}/가격:${po.price}/수량:${po.quantity}</div>
+		                                <c:if test="${p.optionList.get(0).getOptionNo() != 0 }">
+	                                  		<c:forEach var="o" items="${p.optionList}">
+	                                    		<div class="product_item">옵션명:${o.optionName}/가격:${o.price}/수량:${o.quantity}</div>
 	                                  		
-	                                  			<c:set var="total" value="${ total + po.price * po.quantity }"/>
+	                                  			<c:set var="total" value="${ total + o.price * o.quantity }"/>
 	                                  		</c:forEach>  
 		                                    <div class="product_option_box">
 		                                        <button type="button" class="button button_small button_basic">주문조건 추가/변경</button>
@@ -158,6 +162,7 @@
 	                            </div>
 	                        </td>
 	                    </tr>
+	                 </c:forEach>
 	                </tbody>
 	            </table>
 	
@@ -251,7 +256,7 @@
 	                </div>
 	            </div>
 	            <br><br>
-            <button type="button" class="submit" onclick="iamport();">결제하기</button>
+            <button type="button" class="submit" onclick="iamport(); click();" >결제하기</button>
             <br><br>
       </form>
         </main>
@@ -283,7 +288,7 @@
 	 
 	 function iamport(){
 		 
-		 var title = document.getElementById("productName").value;
+		 var title = document.getElementById("pName").value;
 		 var amount = ${total+3000};
 		 var name = document.getElementById("customerName").value;
 		 var phone = document.getElementById("phoneNo").value;
@@ -310,7 +315,6 @@
 			        msg += '상점 거래ID : ' + rsp.merchant_uid;
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        msg += '카드 승인번호 : ' + rsp.apply_num;
-			        document.getElementById("insertPay").submit();
 			        location.href="payCompletePage.st";
 			    } else {
 			    	 var msg = '결제에 실패하였습니다.';
@@ -336,6 +340,11 @@
 		$("#ttt").html(totalPrice + 3000);
 		
 	})
+	
+	function click(){
+
+        document.getElementById("insertPay").submit();
+ 	}
 	</script>
 </body>
 </html>

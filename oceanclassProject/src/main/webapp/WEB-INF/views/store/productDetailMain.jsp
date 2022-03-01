@@ -214,16 +214,17 @@
                 <span class="price">${ p.price } 원</span>
             </div>
             <br><br>
-            <c:if test="${ !empty list }">
-	            <select name="productOption" id="productOption" style="width: 305px; height: 40px; margin-left:22px; margin-bottom:5px;" onchange="optionChange();">
-	                <option value="0" selected>옵션선택</option>
-	            	<c:forEach var="o" items="${ list }">
-						<option value="${ o.optionNo }" >${ o.optionName }
-						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-														 ${ o.price }</option>                
-	                </c:forEach>
+            
+            <select name="productOption" id="productOption" style="width: 305px; height: 40px; margin-left:22px; margin-bottom:5px;" onchange="optionChange();">
+                <option value="0" selected>옵션선택</option>
+	                <c:if test="${ !empty list }">
+		            	<c:forEach var="o" items="${ list }">
+							<option value="${ o.optionNo }" >${ o.optionName }
+							&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+															 ${ o.price }</option>                
+		                </c:forEach>
+	                </c:if>
 	            </select>
-            </c:if>
             <br>
             <div class="button_area" align="center">
                 <button type="button" class="in_cart" onclick="inCart(${p.productNo});">장바구니</button>
@@ -248,14 +249,6 @@
     
     function goPay(pno){
     	
-		/*
-	    function optionChange(){
-	   		   var optionList = document.getElementById("productOption")
-	   		   var opNo = optionList.options[optionList.selectedIndex].value
-	   		   
-	   		   location.href = "payEnrollForm.st?pno=" + pno + "&& opNo=" + opNo;
-	    }
-    	*/
 		
     	if(document.getElementById("memNo").value == ""){
             alert("로그인 후 이용 가능한 서비스 입니다.");
@@ -302,6 +295,7 @@
 		 if(document.getElementById("memNo").value == ""){
              alert("로그인 후 이용 가능한 서비스 입니다.");
          } else{
+        	 
         	 $.ajax({
         		 url:"inCart.st",
         		 data:{
@@ -342,10 +336,7 @@
         			 console.log("통신실패!");
         		 }
         	 })
-         }
-	  }
-	}
-	
+        }
 	
 	
 	

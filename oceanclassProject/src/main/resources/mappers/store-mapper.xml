@@ -28,10 +28,15 @@
 		<result column="pno" property="productNo"/>
 		<result column="opname" property="optionName"/>
 		<result column="price" property="price"/>
+		<result column="quantity" property="quantity"/>
 	</resultMap>
 	
 	<resultMap id="cartResult" type="Cart">
 		<result column="pno" property="productNo"/>
+		<result column="cano" property="cartNo"/>
+		<result column="title" property="title"/>
+		<result column="price" property="price"/>
+		<result column="img1" property="productImg0"/>
 	</resultMap>
 	
 	<resultMap id="sMemberResult" type="Member">
@@ -79,6 +84,14 @@
 		<result column="profile" property="profile"/>
 		<result column="user_id" property="userId"/>
 		<result column="category" property="category"/>
+	</resultMap>
+	
+	<resultMap id="eventResult" type="Event">
+		<result column="img" property="img" />
+	</resultMap>
+	
+	<resultMap id="payResult" type="StorePay">
+		<result column="order_no" property="orderNo"/>
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">
@@ -284,6 +297,7 @@
 	         , PRICE
 		  from soption
 		 where pno = #{pno}	
+
 	</select>
 
 
@@ -293,6 +307,7 @@
 		  from cart
 		 where mno = #{memberNo}
 		   and pno = #{productNo}
+		   and opno = #{optionNo}
 	</select>
 	
 	<insert id="insertCart">
@@ -312,7 +327,7 @@
 		delete 
 		  from cart
 		 where mno = #{memberNo}
-		   and pno = #{productNo}
+		   and pno = #{pno}
 	</delete>
 	
 	<update id="updateCart">
@@ -346,20 +361,28 @@
 	
 	<select id="selectCart" resultMap="cartResult">
 		select
-			   pno
-			 , opno
-			 , quantity
-		  from cart
-		 where mno = #{memberNo}
+		       pno
+		     , title
+		     , img1
+		     , price
+		  from store
+		 where pno in (
+		                select 
+		                       distinct pno 
+		                  from cart
+		                 where mno = #{memberNo})
 	</select>
 	
 	<select id="selectCartOption" resultMap="optionResult">
 		select
-		       pno
+		       c.opno
 		     , opname
 		     , price
-		  from soption
-		 where opno = #{optionNo}
+		     , quantity
+		  from cart c
+		  left join soption o on(c.opno = o.opno)
+		 where c.pno = #{productNo}
+		   and mno = #{memberNo}
 	</select>
 	
 		<select id="selectStoreReviewList" resultMap="reviewResult">
@@ -675,6 +698,52 @@
 		 where cs_qno = #{csQno}
 	</select>
 	
+	<select id="selectCartList" resultMap="cartResult">
+		select
+		       pno
+		     , title
+		     , img1
+		     , price
+		  from store
+		 where pno in (
+		                select 
+		                       distinct pno 
+		                  from cart
+		                 where mno = #{memberNo}
+                 	<foreach item="p" index="index" collection="pno"
+					        open="and pno in(" separator="," close=")">
+					      #{p}
+					</foreach>
+		               )
+	</select>
+	
+	<insert id="insertPay">
+		insert
+		  into pay
+          (ORDER_NO, MNO, ADDRESS, PAY_AMOUNT, PAY_DATE, PAY_METHOD, ORDER_STATUS, PNO)
+		  values
+		  (
+		  'S' || to_char(sysdate, 'YYYYMMDD') || SEQ_SORDER.NEXTVAL,
+          #{memberNo},
+          #{address},
+          #{payAmount},
+          SYSDATE,
+          '카카오페이',
+          1,
+          #{productNo}
+		  )
+	</insert>
+	
+	<select id="selectOrderNo" resultMap="payResult">
+		select *
+          from (
+                   select order_no
+                   from pay
+                   where mno = #{memberNo}
+                   order by pay_date DESC
+                )
+          where rownum = 1
+	</select>
 	
 	
 	

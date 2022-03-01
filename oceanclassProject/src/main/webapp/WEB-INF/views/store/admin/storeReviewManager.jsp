@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,34 +69,33 @@
             <button id="deleteBtn" class="btn">삭제</button>
             <table id="orderTable">
                 <thead>
+                
                     <tr>
                         <th><input type="checkbox" id="checkAll"></th>
                         <th width="100">리뷰번호</th>
                         <th width="100">상품번호</th>
-                        <th width="200">상품명</th>
                         <th width="300">내용</th>
                         <th width="100">별점</th>
                         <th width="100">작성자명</th>
                         <th width="200">작성일</th>
                         <th width="100">상태</th>
                         <th width="100">추천수</th>
-                        <th width="100">신고여부</th>
                     </tr>
                 </thead>
                 <tbody>
+                <c:forEach var="r" items="${list}">
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">CO432</td>
-                        <td>S0203</td>
-                        <td>베이킹파우더</td>
-                        <td><a href="">가성비조아요</a></td>
-                        <td>3.5</td>
-                        <td>도지현</td>
-                        <td>2022-02-03 12:24:32</td>
-                        <td>Y</td>
-                        <td>30</td>
-                        <td><a href="">N</a></td>
+                        <td class="orderNo">${r.reviewNo }</td>
+                        <td>${r.productNo }</td>
+                        <td><a href="">${r.content}</a></td>
+                        <td>${r.rating }</td>
+                        <td>${r.memberNo }</td>
+                        <td>${r.reviewDate }</td>
+                        <td>${r.status }</td>
+                        <td></td>
                     </tr>
+                 </c:forEach>
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
                         <td class="orderNo">CO432</td>

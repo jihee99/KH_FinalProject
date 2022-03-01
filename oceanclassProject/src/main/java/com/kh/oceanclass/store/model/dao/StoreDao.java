@@ -9,11 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
@@ -88,8 +90,18 @@ public class StoreDao {
 		return (ArrayList)sqlSession.selectList("storeMapper.selectCartProduct", productNo);
 	}
 	
-	public ArrayList<ProductOption> selectCartOption(SqlSessionTemplate sqlSession, int optionNo){
-		return (ArrayList)sqlSession.selectList("storeMapper.selectCartOption", optionNo);
+	public ArrayList<Cart> selectCartOption(SqlSessionTemplate sqlSession, ArrayList<Cart> cartList, int memberNo){
+		
+		for(int i=0; i<cartList.size(); i++) {
+			HashMap<String, Integer> map = new HashMap<>();
+			map.put("productNo", cartList.get(i).getProductNo());
+			map.put("memberNo", memberNo);
+			
+			cartList.get(i).setOptionList((ArrayList)sqlSession.selectList("storeMapper.selectCartOption", map));
+		}
+		
+		return cartList;
+		
 	}
 	
 	public ArrayList<StoreReview> selectReviewList(SqlSessionTemplate sqlSession, int pno, PageInfo pi, int memberNo){
@@ -190,8 +202,36 @@ public class StoreDao {
 	public StoreQna selectQna(SqlSessionTemplate sqlSession, int csQno) {
 		return sqlSession.selectOne("storeMapper.selectQna", csQno);
 	}
+
+	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, int[] pno, int memberNo) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("memberNo", memberNo);
+		map.put("pno", pno);
+		map.put("pno1", pno[0]);
+		
+		return (ArrayList)sqlSession.selectList("storeMapper.selectCartList", map);
+	}
 	
+	public int deleteCart(SqlSessionTemplate sqlSession, int pno, int memberNo) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("memberNo", memberNo);
+		map.put("pno", pno);
+		
+		return sqlSession.delete("storeMapper.deleteCart", map);
+	}
 	
+	public int insertPay(SqlSessionTemplate sqlSession, StorePay pay) {
+		return sqlSession.insert("storeMapper.insertPay", pay);
+	}
 	
+	public String selectOrderNo(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("storeMapper.selectOrderNo", memberNo);
+	}
+	
+	public ArrayList<Event> selectEventList(SqlSessionTemplate sqlSession){
+		
+		return (ArrayList)sqlSession.selectList("eventMapper.selectEventList");
+	}
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,8 +63,8 @@
 
 
         <div class="content_2">
-            <b>통합발주요청서목록(123)</b>
-            <button id="deleteBtn" class="btn">목록삭제</button>
+            <b>통합발주요청서목록()</b>
+            <button id="deleteBtn" class="btn" style="background: yellow;" >목록삭제</button>
             <button id="printBtn" class="btn" style="background: steelblue;">출력</button>
             <br><br>
             <table id="orderTable">
@@ -81,46 +82,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                <c:forEach var="o" items="${list}">
                     <tr>
                         <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">SO432</td>
-                        <td>와플팬</td>
-                        <td>와플팬 세척솔</td>
-                        <td>2</td>
-                        <td>20</td>
-                        <td>2,000 <span>원</span> </td>
-                        <td>40,000 <span>원</span> </td>
+                        <td class="orderNo">${o.orderNo }</td>
+                        <td>${o.productName}</td>
+                        <td>${o.title}</td>
+                        <td>${o.stock }</td>
+                        <td>${o.quantity}</td>
+                        <td>${o.unitPrice }<span>원</span> </td>
+                        <td>${o.total}<span>원</span> </td>
                         <td>
                             <button type="button" style="border: none; border-radius: 5px;">대기</button>
                         </td>
                     </tr>
-                    
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">SO432</td>
-                        <td>와플팬</td>
-                        <td>와플팬 세척솔</td>
-                        <td>2</td>
-                        <td>20</td>
-                        <td>2,000 <span>원</span> </td>
-                        <td>40,000 <span>원</span> </td>
-                        <td>
-                            <button type="button" style="background: steelblue; color: white; border: none; border-radius: 5px;">완료</button>
-                        </td>
-                    </tr> 
-                    <tr>
-                        <td><input type="checkbox" name="memChBxRow" id=""></td>
-                        <td class="orderNo">SO432</td>
-                        <td>와플팬</td>
-                        <td>와플팬 세척솔</td>
-                        <td>2</td>
-                        <td>20</td>
-                        <td>2,000 <span>원</span> </td>
-                        <td>40,000 <span>원</span> </td>
-                        <td>
-                            <button type="button" style="background: steelblue; color: white; border: none; border-radius: 5px;">완료</button>
-                        </td>
-                    </tr>
+                </c:forEach>  
                     
 
 

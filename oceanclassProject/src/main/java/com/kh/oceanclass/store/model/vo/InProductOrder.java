@@ -22,4 +22,6 @@ public class InProductOrder {
 	private int total;		  // 총가격
 	private String orderSite; // 주문사이트
 	private String process;	  // '대기' | '완료'
+	
+	private String productName;
 }

@@ -65,7 +65,6 @@
 .user_image {
 	width: 50px;
 	height: 50px;
-	border: 1px solid;
 	position: inline-block;
 	float: left;
 	margin-right: 10px;
@@ -117,7 +116,14 @@
 						<div class="qna">
 							<div class="user_detail">
 								<div class="user_image">
-									<img src="" alt="">
+									<c:choose>
+		                        		<c:when test="${sq.profile eq null }">
+		                        			<img src="./resources/images/user.png" width="50px" height="50px">
+		                        		</c:when>
+		                        		<c:otherwise>
+		                        			<img src="${sq.profile}" width="50px" height="50px">
+		                        		</c:otherwise>
+		                        	</c:choose>	  
 								</div>
 								<span class="user_name">${q.userId }</span> <span
 									class="enroll_date">${q.createDate }</span>

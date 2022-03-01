@@ -1,5 +1,7 @@
 package com.kh.oceanclass.store.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +29,7 @@ public class Cart {
 	private int opPrice;
 	
 	private String nickname;
+	
+	private ArrayList<ProductOption> optionList;
 	
 }

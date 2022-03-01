@@ -19,6 +19,8 @@ import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.LikeVo;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
+import com.kh.oceanclass.event.model.service.EventServiceImpl;
+import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.service.StoreService;
@@ -26,6 +28,7 @@ import com.kh.oceanclass.store.model.vo.Cart;
 import com.kh.oceanclass.store.model.vo.LikeItem;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
+import com.kh.oceanclass.store.model.vo.StorePay;
 import com.kh.oceanclass.store.model.vo.StoreQna;
 import com.kh.oceanclass.store.model.vo.StoreReview;
 
@@ -156,6 +159,8 @@ public class StoreController {
 	@RequestMapping(value="inCart.st", produces="application/json; charset=utf-8")
 	public String inCart(Cart ca) {
 		
+		//System.out.println("ca : " + ca);
+		
 		String check = "";
 		
 		// 장바구니에 있는지 확인
@@ -185,8 +190,9 @@ public class StoreController {
 		check = "ff";
 		return new Gson().toJson(check);
 	}
-	/*
+	
 	// 장바구니 화면 컨트롤러
+	/*
 	@RequestMapping(value="cart.st")
 	public String cart() {
 		
@@ -194,7 +200,8 @@ public class StoreController {
 	}
 	*/
 	
-	/*
+	
+	
 	@RequestMapping(value="cart.st")
 	public String selectCart(Model model, HttpSession session) {
 		
@@ -205,25 +212,21 @@ public class StoreController {
 		
 		ArrayList<Cart> list = sService.selectCart(memberNo);
 		
-		ArrayList<Product> pList = new ArrayList();
-		ArrayList<ProductOption> oList = new ArrayList();
+		list = sService.selectCartOption(list, memberNo);
 		
 		System.out.println(list);
 		
-		for(Cart c : list) {
-			pList = sService.selectCartProduct(c.getProductNo());
-			oList = sService.selectCartOption(c.getOptionNo());
-		}
+		
 		
 		model.addAttribute("list", list);
-		model.addAttribute("plist", pList);
-		model.addAttribute("olist", oList);
+		//model.addAttribute("plist", pList);
+		//model.addAttribute("olist", oList);
 
 		// 포워딩할 뷰(/WEB-INF/views/ store/storeContent .jsp)
 		return "store/cart";
 		
 	}
-	*/
+	
 	
 	
 	
@@ -428,9 +431,48 @@ public class StoreController {
 		
 		model.addAttribute("p", p);
 		model.addAttribute("m", m);
+		model.addAttribute("po", po);
 		
 		return "store/payEnrollForm";
 	}
+	
+	@RequestMapping(value="cartEnrollForm.st")
+	public String cartEnrollForm(int[] pno, HttpSession session, Model model) {
+		
+		int memberNo = 0;
+		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
+			memberNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		}
+		
+		// 16, 17
+		// 상품번호, 상품명, 가격, 상품이미지, (옵션번호, 옵션명, 옵션가격, quantity),(옵션번호, 옵션명, 옵션가격, quantity)
+		// 상품번호, 상품명, 가격, 상품이미지, (옵션번호, 옵션명, 옵션가격, quantity),(옵션번호, 옵션명, 옵션가격, quantity)
+		ArrayList<Cart> list = new ArrayList<>();
+		
+		list = sService.selectCartList(list, pno, memberNo);
+		Member m = sService.selectMember(memberNo);
+		
+		model.addAttribute("m", m);
+		model.addAttribute("list", list);
+		
+		return "store/cartPayEnroll";
+	}
+	
+	@RequestMapping(value="insertPay.st", produces="application/json; charset=UTF-8")
+	public String insertPay(StorePay pay) {
+		
+		// orderNo, mno, address, payAmount, payDate, payMethod,orderStatus, 
+		// payStatus, depositCk, usePoint, useCoupon, point, dFee, pno
+		
+		int result = sService.insertPay(pay);
+		if(result > 0) {
+			
+		}else {
+			
+		}
+		return "payCompletePage.st";
+	}
+	
 	
 	// 리뷰 업데이트 페이지 포워딩
 	@RequestMapping(value="reviewUpdateForm.st")
@@ -500,6 +542,48 @@ public class StoreController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="deleteCart.st", produces="application/json; charset=UTF-8")
+	public String deleteCart(int pno, HttpSession session) {
+		
+		int memberNo = 0;
+		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
+			memberNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		}
+		
+		int result = sService.deleteCart(pno, memberNo);
+		if(result > 0) { //성공
+			return new Gson().toJson("ss");
+		}else { // 실패
+			return new Gson().toJson("ff");
+		}
+	}
+	
+	@RequestMapping(value="payCompletePage.st")
+	public String selectOrderNo(HttpSession session, Model model) {
+		
+		int memberNo = 0;
+		if(session.getAttribute("loginUser") != null) { // 로그인이 되어있을 경우 
+			memberNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		}
+		
+		String orderNo = sService.selectOrderNo(memberNo);
+		
+		model.addAttribute("orderNo", orderNo);
+		
+		return "store/payCompletePage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="imgSlider.ma", produces="application/json; charset=UTF-8")
+	public String selectImg(Model model, PageInfo pi) {
+		
+		ArrayList<Event> list = sService.selectEventList();
+		
+		model.addAttribute("list", list);
+		
+		return new Gson().toJson(list);
+	}
 	
 	
 }
