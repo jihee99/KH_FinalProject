@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,8 +31,10 @@
             <video src="${p.videoAddress}" controls autoplay style="width:100%;"></video>
         </div>
         <div id="list">
+        	<c:set var="chapArr" value="${fn:split(p.chapter, '/')}" />
+        	<c:forEach var="c" items="${chapArr}">
             <div class="chapter">
-                <p>${p.chapter}</p>
+                <p>${c}</p>
                     	${p.subChapter}
 	                    <ul style="display: none;">
 	                        <li>1강.어쩌구</li>
@@ -40,6 +43,7 @@
 	                        <li>4강.어쩌구</li>
 	                    </ul>
             </div>
+            </c:forEach>
         </div>
     </div>
     <script>
