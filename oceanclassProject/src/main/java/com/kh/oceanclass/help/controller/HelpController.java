@@ -58,7 +58,6 @@ public class HelpController {
 	@RequestMapping("detail.he")
 	public String selectNotice(int nno, Model model) {
 		int result = hService.increaseCount(nno);
-		//System.out.println(result);
 		
 		if(result>0){
 			Notice n = hService.selectNotice(nno);
@@ -69,7 +68,6 @@ public class HelpController {
 			}else {
 				n.setCategory("기타");
 			}
-			//System.out.println(n);
 			model.addAttribute("n", n);
 			return "help/helpDetail";
 		}else {
@@ -82,13 +80,13 @@ public class HelpController {
 	@RequestMapping(value="searchHelpList.he", produces="application/json; charset=UTF-8")
 	public Map<String, Object> ajaxSearchHelpList(@RequestParam(value="cpage", defaultValue="1") int currentPage, 
 												  String category, Model model) {
-		//System.out.println(category);
+	
 		Map<String, Object> map = new HashMap();
 		int listCount = hService.selectHelpSearchCount(category);
-		//System.out.println(listCount);
+	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Notice> list = hService.selectHelpSearchList(pi, category);
-		//System.out.println(list);
+		
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).getCategory().equals("C")) {
 				list.get(i).setCategory("클래스");
@@ -132,11 +130,9 @@ public class HelpController {
 	public String qnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
 		
 		int qnaCount = hService.selectQnaCount();
-		//System.out.println(qnaCount);
-		
 		PageInfo pi = Pagination.getPageInfo(qnaCount, currentPage, 10, 10);
 		ArrayList<Qna> list = hService.selectQnaList(pi);
-		//System.out.println(list);
+
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).getCategory().equals("C")) {
 				list.get(i).setCategory("클래스");
@@ -146,7 +142,6 @@ public class HelpController {
 				list.get(i).setCategory("기타");
 			}
 		}
-		//System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "help/qnaList";
@@ -177,10 +172,7 @@ public class HelpController {
 		if(q.getPwd() == null) {
 			q.setPwd("");
 		}
-		//System.out.println(q);
-		
 		int result = hService.insertQna(q);
-		
 		if(result>0) {
 			session.setAttribute("alertMsg", "게시글이 등록되었습니다");
 			return "redirect:qnaList.he";
@@ -192,13 +184,12 @@ public class HelpController {
 	
 	@RequestMapping("searchQnaList.he")		//qna객체에 한번에 넘기는 것 보다 따로 넘기는게 깔끔
 	public String searchQnaList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String option, String nickName, String category, Model model) {
-		//System.out.println(q);
+		
 		if(option.equals("category")) {
 			int qnaCategoryCount = hService.selectCategoryCount(category);
-			//System.out.println(qnaCategoryCount);
 			PageInfo pi = Pagination.getPageInfo(qnaCategoryCount, currentPage, 10, 10);
 			ArrayList<Qna> list = hService.selectCategoryQnaList(pi, category);
-			//System.out.println(list);
+			
 			for(int i=0; i<list.size(); i++) {
 				if(list.get(i).getCategory().equals("C")) {
 					list.get(i).setCategory("클래스");
@@ -208,7 +199,6 @@ public class HelpController {
 					list.get(i).setCategory("기타");
 				}
 			}
-			//System.out.println(list);
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 			model.addAttribute("option", option);
@@ -216,10 +206,9 @@ public class HelpController {
 			return "help/qnaList";
 		}else {
 			int qnaNickCount = hService.selectNickCount(nickName);
-			//System.out.println(qnaNickCount);
 			PageInfo pi = Pagination.getPageInfo(qnaNickCount, currentPage, 10, 10);
 			ArrayList<Qna> list = hService.selectNickQnaList(pi, nickName);
-			//System.out.println(list);
+			
 			for(int i=0; i<list.size(); i++) {
 				if(list.get(i).getCategory().equals("C")) {
 					list.get(i).setCategory("클래스");
@@ -229,7 +218,6 @@ public class HelpController {
 					list.get(i).setCategory("기타");
 				}
 			}
-			//System.out.println(list);
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 			model.addAttribute("option", option);

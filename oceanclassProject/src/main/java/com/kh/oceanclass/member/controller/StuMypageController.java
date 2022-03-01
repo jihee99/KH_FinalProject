@@ -62,6 +62,7 @@ public class StuMypageController {
 		model.addAttribute("list", list);
 		model.addAttribute("classLikeList", classLikeList);
 		model.addAttribute("storeLikeList", storeLikeList);
+		
 		return "member/student/mypageMain";
 	}
 	
@@ -163,29 +164,34 @@ public class StuMypageController {
 	@RequestMapping("pointCoupon.me")
 	public String couponList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+
 		int couponCount = myService.selectCouponCount(memNo);
 		int pointCount = myService.selectPointCount(memNo);
-		int pointSum = myService.pointSum(memNo);
 		
-		PageInfo cpi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
-		ArrayList<Coupon> couponList = myService.selectCouponList(cpi, memNo);
-		for(int i=0; i<couponList.size(); i++) {
-			if(couponList.get(i).getDedate() == null) {
-				couponList.get(i).setDedate("무제한");
+		if(!(couponCount == 0 || pointCount == 0)) {
+			int  pointSum = myService.pointSum(memNo);
+			PageInfo cpi = Pagination.getPageInfo(couponCount, currentPage, 5, 5);
+			ArrayList<Coupon> couponList = myService.selectCouponList(cpi, memNo);
+			for(int i=0; i<couponList.size(); i++) {
+				if(couponList.get(i).getDedate() == null) {
+					couponList.get(i).setDedate("무제한");
+				}
 			}
+			
+			PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
+			ArrayList<Point> pointPlusList = myService.selectPointList(ppi, memNo);
+			ArrayList<Point> pointMinusList = myService.PointMinusList(memNo);
+			
+			model.addAttribute("couponCount", couponCount);
+			model.addAttribute("couponList", couponList);
+			model.addAttribute("pointPlusList", pointPlusList);
+			model.addAttribute("pointSum", pointSum);
+			model.addAttribute("pointMinusList", pointMinusList);
+			return "member/student/myPoint";		
+		}else {
+			return "member/student/myPoint";
 		}
 		
-		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
-		ArrayList<Point> pointPlusList = myService.selectPointList(ppi, memNo);
-		
-		ArrayList<Point> pointMinusList = myService.PointMinusList(memNo);
-		
-		model.addAttribute("couponCount", couponCount);
-		model.addAttribute("couponList", couponList);
-		model.addAttribute("pointPlusList", pointPlusList);
-		model.addAttribute("pointSum", pointSum);
-		model.addAttribute("pointMinusList", pointMinusList);
-		return "member/student/myPoint";		
 	}
 	
 //	@RequestMapping("pointSaveList.me")
@@ -221,6 +227,7 @@ public class StuMypageController {
 				list.get(i).setCategory("기타");
 			}
 		}		
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myQna";
@@ -273,9 +280,7 @@ public class StuMypageController {
 				list.get(i).setCategory("기타");
 			}
 		}
-	
 		return new Gson().toJson(list);
-		
 	}
 	
 	
@@ -457,6 +462,25 @@ public class StuMypageController {
 			}
 		}
 		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getCategory().equals("1")) {
+				list.get(i).setCategory("드로잉");
+			}else if(list.get(i).getCategory().equals("2")) {
+				list.get(i).setCategory("요리");
+			}else if(list.get(i).getCategory().equals("3")) {
+				list.get(i).setCategory("음악");
+			}else if(list.get(i).getCategory().equals("4")) {
+				list.get(i).setCategory("운동");
+			}else if(list.get(i).getCategory().equals("5")) {
+				list.get(i).setCategory("사진,영상");
+			}else if(list.get(i).getCategory().equals("6")) {
+				list.get(i).setCategory("재테크");
+			}else if(list.get(i).getCategory().equals("7")) {
+				list.get(i).setCategory("개발,데이터");
+			}else {
+				list.get(i).setCategory("자기계발");
+			}
+		}
 		model.addAttribute("list", list);
 		return "member/student/myAllClassDetail";
 	}
@@ -492,10 +516,10 @@ public class StuMypageController {
 		ArrayList<CsQna> qnaList = myService.shoppingQnaList(qpi, memNo);
 		
 		PageInfo rpi = Pagination.getPageInfo(reviewCount, currentPage, 5, 6);
-		ArrayList<StoreReview> reviewlist = myService.shoppingReviewList(rpi, memNo);
+		ArrayList<StoreReview> reviewList = myService.shoppingReviewList(rpi, memNo);
 
 		model.addAttribute("qnaList", qnaList);
-		model.addAttribute("reviewlist", reviewlist);
+		model.addAttribute("reviewList", reviewList);
 		return "member/student/myShoppingReview";
 	}
 	
@@ -529,6 +553,7 @@ public class StuMypageController {
 		
 		PageInfo pi = Pagination.getPageInfo(reviewCount, currentPage, 5, 5);
 		ArrayList<StoreReview> list = myService.shoppingReviewList(pi, memNo);
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShoppingReviewDetail";
@@ -539,7 +564,7 @@ public class StuMypageController {
 	public String myShopping(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		int shoppingCount = myService.shoppingCount(memNo);
-		
+
 		PageInfo pi = Pagination.getPageInfo(shoppingCount, currentPage, 5, 5);
 		ArrayList<StorePay> list = myService.shoppingList(pi, memNo);
 		
@@ -560,7 +585,6 @@ public class StuMypageController {
 				list.get(i).setOrderStatus("취소접수");
 			}
 		}
-		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		return "member/student/myShopping";
@@ -630,7 +654,6 @@ public class StuMypageController {
 				list.get(i).setOrderStatus("취소접수");
 			}
 		}
-	
 		return new Gson().toJson(list);
 		
 	}

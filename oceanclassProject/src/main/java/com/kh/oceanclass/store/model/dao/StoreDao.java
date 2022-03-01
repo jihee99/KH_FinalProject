@@ -171,6 +171,7 @@ public class StoreDao {
 	}
 	
 	public int reviewUpdate(SqlSessionTemplate sqlSession, StoreReview sr) {
+		//System.out.println(sr);
 		return sqlSession.update("storeMapper.reviewUpdate", sr);
 	}
 	
@@ -178,12 +179,8 @@ public class StoreDao {
 		return sqlSession.delete("storeMapper.reviewDelete", rno);
 	}
 	
-	public int qnaUpdate(SqlSessionTemplate sqlSession, StoreQna sq) {
-		return sqlSession.update("storeMapper.qnaUpdate", sq);
-	}
-	
-	public int qnaDelete(SqlSessionTemplate sqlSession, int csQno) {
-		return sqlSession.delete("storeMapper.qnaDelete", csQno);
+	public int qnaDelete(SqlSessionTemplate sqlSession, StoreQna q) {
+		return sqlSession.delete("storeMapper.qnaDelete", q);
 	}
 	
 	public StoreReview selectReview(SqlSessionTemplate sqlSession, int rno) {

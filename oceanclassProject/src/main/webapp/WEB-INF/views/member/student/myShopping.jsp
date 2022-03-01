@@ -30,11 +30,12 @@
 		width: 40%; 
 		height: 100%; 
 		float: left; 
-		margin-top: 20px;
+		margin-top: 30px;
 		margin-left: 15px;
 	}
 	#explain>h3{color:rgb(107, 171, 213); font-weight: 600;}
 	#explain>p{margin-top: -10px; font-weight: bolder; }
+	#proTitle{font-size: 18px;}
 	#state{float:left;}
 	.list>button{
 		width: 15%; 
@@ -75,17 +76,17 @@
 						    	<a href=""><img src="${s.img}"></a>
 						    	<input type="hidden" id="orderNo" name="orderNo" value="${s.orderNo}">
 					            <div id="explain">
-					                <h4>
+					                <p id="proTitle">
 					                	<c:choose>
-						            		<c:when test="${fn:length(s.title) gt 21}">
-						            			<c:out value="${fn:substring(s.title, 0, 20)}"></c:out>
+						            		<c:when test="${fn:length(s.title) gt 20}">
+						            			<c:out value="${fn:substring(s.title, 0, 19)}"></c:out>
 						            			..
 						            		</c:when>
 						            		<c:otherwise>
 						            			<c:out value="${s.title}"></c:out>
 						            		</c:otherwise>
 							            </c:choose>
-							        </h4>
+							        </p>
 					                <p>주문날짜 : ${s.payDate}</p>
 					                <h3 id="state">${s.orderStatus}</h3>
 					            </div>
@@ -139,16 +140,16 @@
 							    	let list = '';
 							    	for(let i in result){
 							    		list += '<div class="list">'
-							    			  + '<a href=""><img src="'+ result[i].img + '"></a>'
+							    			  + '<img src="'+ result[i].img + '">'
 								    		  + '<input type="hidden" id="orderNo" name="orderNo" value="' + result[i].orderNo + '">'
 							            	  + '<div id="explain">'
-							                  + '<h4>'
-							            if(result[i].title.length >= 21){
-							            	list += result[i].title.substr(0,20) + '...'
+							                  + '<p id="proTitle">'
+							            if(result[i].title.length > 20){
+							            	list += result[i].title.substr(0,19) + '...'
 							            }else{
 							            	list += result[i].title
 							            }
-					                	list += '</h4>'
+					                	list += '</p>'
 											  + '<p>주문날짜 : ' + result[i].payDate + '</p>'
 							                  + '<h3 id="state">' + result[i].orderStatus + '</h3>'
 							            	  + '</div>'

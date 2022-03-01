@@ -43,11 +43,18 @@ public class TcClassDao {
 	public ArrayList<ClassReview> myClassReviewList(SqlSessionTemplate sqlSession, int memNo){
 		return (ArrayList)sqlSession.selectList("tcclassMapper.myClassReviewList", memNo);
 	}
+
 	
 	public int tcQnaListCount(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("tcclassMapper.tcQnaListCount", memNo);
 	}
 	
+	
+	public int tcQnaListCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("tcclassMapper.tcQnaListCount", memNo);
+	}
+	
+
 	public ArrayList<ClassQna> myClassQnaList(SqlSessionTemplate sqlSession, int memNo, PageInfo pi){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
@@ -59,5 +66,11 @@ public class TcClassDao {
 	public ClassQna selectTcQnaDetail(SqlSessionTemplate sqlSession, int csQnaNo) {
 		return sqlSession.selectOne("tcclassMapper.selectTcQnaDetail", csQnaNo);
 	}
+
+	
+	public int qnaInsertRf(SqlSessionTemplate sqlSession, ClassQna cq) {
+		return sqlSession.update("tcclassMapper.qnaInsertRf", cq);
+	}
+
 	
 }

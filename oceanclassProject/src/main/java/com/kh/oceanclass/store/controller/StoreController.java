@@ -373,10 +373,11 @@ public class StoreController {
 		int result = sService.insertQna(qna);
 		if(result > 0) {
 			//session.setAttribute("alertMsg", "성공적으로 문의가 등록되었습니다!");
+			return "<script>window.close();</script>";
 		} else {
 			//session.setAttribute("alertMsg", "문의 등록에 실패하였습니다.");
+			return "common/errorPage";
 		}
-		return "<script>window.close();</script>";
 	}
 	
 	@ResponseBody
@@ -432,8 +433,8 @@ public class StoreController {
 	}
 	
 	// 리뷰 업데이트 페이지 포워딩
-	@RequestMapping(value="reviewUpdatePage.st")
-	public String reviewUpdatePage(int rno, HttpSession session, Model model) {
+	@RequestMapping(value="reviewUpdateForm.st")
+	public String reviewUpdateForm(int rno, HttpSession session, Model model) {
 		
 		StoreReview sr = sService.selectReview(rno);
 		model.addAttribute("sr", sr);
@@ -441,11 +442,12 @@ public class StoreController {
 		return "store/reviewUpdateForm";	
 	}
 	
-	// ajax리뷰 업데이트
+	// 리뷰 업데이트
 	@ResponseBody
-	@RequestMapping(value="reviewUpdateForm.st", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="reviewUpdatePage.st")
 	public String reviewUpdateForm(StoreReview sr, MultipartFile reupfile, HttpSession session, Model model) {
 
+		// 새로 넘어온 파일이 있을 경우
 		if(!reupfile.getOriginalFilename().equals("")) {
 			
 			// 기존에 첨부파일 있을 경우 지움
@@ -465,12 +467,36 @@ public class StoreController {
 		
 		int result = sService.reviewUpdate(sr);
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 리뷰가 수정되었습니다.");
+			session.setAttribute("alert", "리뷰수정이 완료되었습니다!");
 			return "<script>window.close();</script>";
 			
 		}else { // 수정 실패 => 에러페이지
-			model.addAttribute("errorMsg", "게시글 수정 실패");
+			session.setAttribute("errorMsg", "리뷰 수정 실패");
 			return "common/errorPage";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="reviewDelete.st", produces="application/json; charset=UTF-8")
+	public String reviewDelete(int rno) {
+		
+		int result = sService.reviewDelete(rno);
+		if(result > 0) { //성공
+			return new Gson().toJson("ss");
+		}else { // 실패
+			return new Gson().toJson("ff");
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="qnaDelete.st", produces="application/json; charset=UTF-8")
+	public String qnaDelete(StoreQna q) {
+		
+		int result = sService.qnaDelete(q);
+		if(result > 0) { //성공
+			return new Gson().toJson("ss");
+		}else { // 실패
+			return new Gson().toJson("ff");
 		}
 	}
 	

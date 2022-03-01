@@ -23,6 +23,7 @@
 		margin-bottom: 50px;
 		background: rgb(224, 224, 224)
 	}
+	.tags{margin-bottom: 80px;}
 	.tags button{
 		border: 0;
 		outline: 0;
@@ -35,6 +36,7 @@
 	}
 	.tags button:hover{color: rgb(107, 171, 213, 0.7)}
 	#img{width: 60%; height: 35%; margin: 0 auto; margin-top: 100px;  overflow: hidden; }
+	.content p{font-size: 20px; font-weight: 600; text-align: center;}
 	.content button{display: block; width: 50%; margin: 0 auto; margin-top: 50px;}
 </style>
 </head>
@@ -60,11 +62,13 @@
         <div class="content">
         	<c:choose>
         		<c:when test="${e.couponNo != 0}">
+        			<p>${e.eventContent}</p>
         			<div id="img"><img src="${e.img}"></div>
         			<input type="hidden" id="couponNo" name="couponNo" value="${e.couponNo}">
         			<button type="button" class="btn btn-lg btn-light" onclick="getCoupon();">쿠폰받기</button>
         		</c:when>
         		<c:otherwise>
+        			<p>${e.eventContent}</p>
         			<img src="${e.img}" style="width: 100%; height: 90%;">
         		</c:otherwise>
         	</c:choose>
@@ -180,62 +184,65 @@
 	        </table>
         </c:if>
        	<button type="button" class="btn" onclick="history.back()">목록으로</button>
+       	
+       	<script>
+    
+			$(function(){
+				replyList();
+			})    
+			
+			function replyList(){
+				$.ajax({
+					url:"replyList.ev",
+					data:{contentNo: ${e.eventNo}},
+					success:function(list){
+						//console.log(list);
+						
+						let value = "";
+	    				for(let i in list){
+	    					value += "<tr>"
+			                       +    "<th>" + list[i].nickName + "</th>"
+			                       +    "<td>" + list[i].replyContent + "</td>"
+			                       +    "<td>" + list[i].replyDate + "</td>"
+			                       + "</tr>";
+	    				}
+	    				
+	    				$("#replyTable tbody").html(value);
+	    				
+					},error:function(){
+						console.log("댓글조회실패여기오지마ㅠㅠ");
+					}
+				})
+			}
+	    
+	    	function addReply(){
+	    		reply = $("#reply").val();
+	    		console.log(reply);
+	    		if(reply.trim().length != 0){
+	    			$.ajax({
+	    				url: "replyInsert.ev",
+	    				data:{
+	    					memNo: '${loginUser.memNo}',
+	    					contentNo: ${e.eventNo},
+	    					replyContent: reply
+	    				},success:function(result){
+	    					if(result == "1"){
+	    						replyList();
+	    						$("#reply").val("");
+	    					}
+	    				},error:function(){
+	    					console.log("댓글추가실패오지마ㅠㅠ");
+	    				}
+	    			})
+	    		}else{
+	    			alert("댓글 작성 후 등록해주세요!");
+	    		}
+	    	}
+	    </script>
+       	
     </div>    
     
-    <script>
     
-		$(function(){
-			replyList();
-		})    
-		
-		function replyList(){
-			$.ajax({
-				url:"replyList.ev",
-				data:{contentNo: ${e.eventNo}},
-				success:function(list){
-					//console.log(list);
-					
-					let value = "";
-    				for(let i in list){
-    					value += "<tr>"
-		                       +    "<th>" + list[i].nickName + "</th>"
-		                       +    "<td>" + list[i].replyContent + "</td>"
-		                       +    "<td>" + list[i].replyDate + "</td>"
-		                       + "</tr>";
-    				}
-    				
-    				$("#replyTable tbody").html(value);
-    				
-				},error:function(){
-					console.log("댓글조회실패여기오지마ㅠㅠ");
-				}
-			})
-		}
-    
-    	function addReply(){
-    		reply = $("#reply").val();
-    		//console.log(reply);
-    		if(reply.trim().length != 0){
-    			$.ajax({
-    				url: "replyInsert.ev",
-    				data:{
-    					memNo: '${loginUser.memNo}',
-    					contentNo: ${e.eventNo},
-    					replyContent: reply
-    				},success:function(result){
-    					if(result == "1"){
-    						replyList();
-    						$("#reply").val("");
-    					}
-    				},error:function(){
-    					console.log("댓글추가실패오지마ㅠㅠ");
-    				}
-    			})
-    		}else{
-    			alert("댓글 작성 후 등록해주세요!");
-    		}
-    	}
-    </script>
 	
 	 <jsp:include page="../common/footerBar.jsp" />
 	

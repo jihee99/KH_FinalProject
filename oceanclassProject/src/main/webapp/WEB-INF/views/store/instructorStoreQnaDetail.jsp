@@ -42,7 +42,7 @@
 </head>
 <body>
 
-
+<div style="width: 1600px; height: auto; margin: auto;">
    	<jsp:include page="../common/teacher/tcMypageSidebar.jsp" />
 	<div class="wrap">
 	    <div id="top-area">
@@ -88,7 +88,7 @@
 		</div>
 		<br>
 	</div>
-
+</div>
 
 </body>
 

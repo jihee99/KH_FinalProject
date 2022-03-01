@@ -34,6 +34,14 @@
 	    margin: auto;
 	    text-align: center;
 	}
+	.content1>p{
+    	text-align: center;
+    	font-size : 18px;
+    	font-weight: 800;
+    	padding: 30px;
+    	margin-top: 40px;
+    	margin-bottom: 20px;
+    }
 </style>
 </head>
 <body>
@@ -51,7 +59,7 @@
 							<c:when test="${empty qnaList}">
 								<div class="conhead">
 							        <h2>클래스 문의</h2>
-							        <p>등록된 문의가 없습니다</p>
+							        <p style="text-align: center; font-size : 24px; margin-top: 80px; font-weight: 800;">등록된 문의가 없습니다</p>
 							    </div>
 							</c:when>
 							<c:otherwise>
@@ -115,7 +123,7 @@
 					        <c:when test="${empty reviewList}">
 							    <div class="conhead">
 							        <h2>클래스 리뷰</h2>
-							        <p>등록된 리뷰가 없습니다</p>
+							        <p style="text-align: center; font-size : 24px; margin-top: 80px; font-weight: 800;">등록된 리뷰가 없습니다</p>
 							    </div>
 						    </c:when>
 						    <c:otherwise>

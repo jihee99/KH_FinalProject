@@ -104,6 +104,11 @@
     	border-radius: 250px;
         object-fit: cover;
     }
+
+    #reply-img{
+    	border-radius: 250px;
+        object-fit: cover;
+    }
     /* 내용 전체 영역 */
     #content-area{
         margin-bottom: 40px;
@@ -124,7 +129,7 @@
     }
     /* 댓글 영역 */
     #reply-area{
-        height: 210px;
+        height: 200px;
         margin-left: 35px;
         margin-bottom: 20px;
     }
@@ -169,10 +174,14 @@
     /* 댓글창 내용들 */
     #reply-content-area{
         margin-left: 30px;
+        resize: none;
     }
     /* 댓글 내용 */
     #reply-content{
         margin-bottom: 10px;
+        font-size: 15px;
+        resize: none;
+        overflow: hidden;
     }
     /* 수정 삭제 링크 */
     #btn-box a{
@@ -194,7 +203,8 @@
     <div style="width: 1600px; height: auto; margin: auto;">
     	<jsp:include page="../../common/teacher/tcMypageSidebar.jsp" />
         <div class="wrap">
-        <input type="hidden" id="cs_qno" name="csQnaNo" value="${cq.csQnaNo}">
+
+            <input type="hidden" id="cs_qno" name="csQnaNo" value="${cq.csQnaNo}">
             <div id="top-area">
                 <span id="bord-name">클래스 문의 관리</span>
             </div>
@@ -214,7 +224,18 @@
                         <span id="sysdate">${cq.createDate }</span>
                     </div>
                     <div id="writer">
+
+                    	<c:choose>
+                      		<c:when test="${ not empty cq.profile }">
+                        		<img id="writerImg" src="${cq.profile }" style="width: 30px;">
+                        	</c:when>
+                      		<c:otherwise>
+                           		<img src="resources/images/user.png" width="30px" height="30px">
+                      		</c:otherwise>
+                      	</c:choose>
+
                         <img id="writerImg" src="${cq.profile }" style="width: 30px;">
+
                         <a href="" id="writer-nick">${cq.nickname }</a>
                     </div>
                 </div>
@@ -230,6 +251,37 @@
                 <hr style="border: solid 1px rgb(179, 178, 178); width: 980px;">
                 
                 <div id="reply-area" style="overflow-y: scroll;">
+
+                	<form action="qnaInsertRf.tc" method="get">
+                	    <input type="hidden" id="cs_qno" name="csQnaNo" value="${cq.csQnaNo}">
+	                    <div id="reply-bar">
+	                        <div id="reply-img">
+	                            <img src="resources/images/reply2.png" style="width: 35px;" alt="">
+	                        </div>
+	                        <input type="text" id="reply-input" name="answerContent" placeholder="댓글 내용을 입력해 주세요.">
+	                        <div id="reply-btn">
+	                            <button type="submit" class="btn btn-md" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; width: 95px;">답변</button>
+	                        </div>
+	                    </div>
+                    </form>
+                    <c:choose>
+	                    <c:when test="${not empty cq.answerContent }">
+	                    <div id="reply-writer">
+		                    <c:choose>
+	                      		<c:when test="${ not empty cq.teacherProfile }">
+	                        		<img id="reply-img" src="${cq.teacherProfile }" style="width: 30px; height:30px;">
+	                        	</c:when>
+	                      		<c:otherwise>
+	                           		<img src="resources/images/user.png" width="35px" height="35px">
+	                      		</c:otherwise>
+	                      	</c:choose>
+	                        <a href="" id="reply-nick"  style="color: rgb(107, 171, 253);">${cq.teacherNick }</a>
+	                        <div id="reply-content-area">
+	                        	<!-- <textarea id="reply-content" class="textarea_size" cols="100">${cq.answerContent }</textarea>-->
+	                            <p id="reply-content" cols="100">${cq.answerContent } </p>
+	                            <div id="btn-box">
+	                                <a href="#" class="comment-edit-btn" onclick="onDisplay()">수정</a>
+
                     <div id="reply-bar">
                         <div id="reply-img">
                             <img src="resources/images/reply2.png" style="width: 35px;" alt="">
@@ -249,17 +301,36 @@
 	                            <div id="btn-box">
 	                                <a href="">수정</a>
 	                                <a href="">삭제</a>
+
 	                            </div>
 	                        </div>
 	                    </div>
 	                    </c:when>
+
 	                    
+
 	                    <c:otherwise>
 	                    	<span style="color:lightgrey; margin-left: 15%; font-size: 25px;">해당 문의글에 답변이 달리지 않았습니다. 답변을 달아주세요!</span>
 	                    </c:otherwise>
                     </c:choose>
+
+                    <form action="qnaInsertRf.tc" method="get" id="noneDiv" style="display:none; margin-left:10px;">
+                	    <input type="hidden" id="cs_qno" name="csQnaNo" value="${cq.csQnaNo}">
+	                    <div id="reply-bar">
+	                        <input type="text" id="reply-input" name="answerContent" value="${cq.answerContent }">
+	                        <div id="reply-btn">
+	                            <button type="submit" class="btn btn-md" style="background-color: rgb(107, 171, 213); color: white; font-weight: bolder; width: 95px;">수정등록</button>
+	                        </div>
+	                    </div>
+                    </form>
+
                 </div>
             </div>
+            <script>
+            function onDisplay() {
+            	$('#noneDiv').show();
+            }
+            </script>
             <br><br><br><br><br><br>
         </div>
         <jsp:include page="../../common/footerBar.jsp" />

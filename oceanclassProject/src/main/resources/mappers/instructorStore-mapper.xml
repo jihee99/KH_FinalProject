@@ -660,4 +660,13 @@
 		 where order_no = #{orderNo}
 	</update>
 	
+	<select id="selectStoreReviewDetail" resultMap="reviewResult">
+		select 
+			   rno
+			 , mno
+			 , content
+			from s_review
+			where rno = #{rno}
+	</select>
+	
 </mapper>

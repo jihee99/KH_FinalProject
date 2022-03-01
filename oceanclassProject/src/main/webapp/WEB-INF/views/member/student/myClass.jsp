@@ -24,6 +24,24 @@
 	.item{width: 85%; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
 	.item img{width: 20%; height: 100px;}
 	.item>p{width: 73%; float: right; margin-right: 40px; margin-top: 30px; text-align: left; font-size: 20px; font-weight: 600;}
+	.all{display: block; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;}
+	.content1 a{text-decoration: none; color: black;}
+	.content1>p{
+    	text-align: center;
+    	font-size : 24px;
+    	font-weight: 800;
+    	padding: 30px;
+    	margin-top: 50px;
+    	margin-bottom: 50px;
+    }
+    .content1>button{
+    	display: block; 
+    	margin: 0 auto;
+    	background-color: rgb(107, 171, 213, 0.2);
+    	font-sixe: 20px;
+    	font-weight: 800;
+    	width: 300px;
+    }
 	.content1>button{display: block; margin: 0 auto; margin-top: 20px; margin-bottom: 20px;}
 	.content1 a{text-decoration: none; color: black;}
 </style>
@@ -46,6 +64,7 @@
 				        <c:choose>
 			        		<c:when test="${empty list}">
 			        			<p>수강중인 클래스가 없습니다</p>
+			        			<button type="button" class="btn btn-lg" onclick="moveClass();">클래스 구경가기!</button>
 			        			<button type="button" class="btn btn-lg">클래스 구경가기!</button>
 			        		</c:when>
 				        	<c:otherwise>
@@ -67,12 +86,16 @@
 						            	</p>
 						            </div>
 					            </c:forEach>
+					            <button type="button" class="btn" onclick="myAllClass();">수강중 강의 전체 보기</button>  
 					    	</c:otherwise>			        
 				        </c:choose>    
-				        <button type="button" class="btn btn-info" onclick="myAllClass();">수강중 강의 전체 보기</button>  
 				    </div>
 				    
 				    <script>
+				    	function moveClass(){
+				    		location.href="home.me";
+				    	}
+				    
 				    	function myAllClass(){
 				    		location.href='myIngClass.me';
 				    	}
@@ -83,7 +106,7 @@
 					    	<c:when test="${empty list}">
 					        	<div class="conhead">
 						            <h2>나의 클래스 내역</h2>
-						            <p>클래스 내역이 없습니다.</p>
+						            <p style="text-align: center; font-size : 24px; margin-top: 80px; font-weight: 800;">클래스 내역이 없습니다</p>
 						        </div>
 					        </c:when>
 					        <c:otherwise>

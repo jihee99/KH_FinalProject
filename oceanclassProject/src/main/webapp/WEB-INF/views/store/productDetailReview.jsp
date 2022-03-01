@@ -66,7 +66,6 @@
 	                	<!-- 구매내역있는 사용자만 조건 걸기 -->
 	                	<c:if test="${ !empty loginUser }">
 			                <button type="button" class="input_review" onclick="reviewEnrollForm(${p.productNo});">리뷰작성</button>
-	                		<button type="button" class="update_review" onclick="reviewUpdateForm"></button>
 	                	</c:if>
 					<div class="star-ratings">
 						<div class="star-ratings-fill space-x-2 text-lg" style="width:${c.starAvg*20}%">

@@ -869,7 +869,7 @@
 		select count(*)
 		 from report 
 		 join member on member.mno = report.reported_mno
-		 where report.status = #{status}
+		 where report.status = #{status} || ' '
 		<if test="sDate!=null and eDate!=null">
 			 and report_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
 		</if>
@@ -891,7 +891,7 @@
 		  from report rp
 		  join class_review rv on rv.c_rno = rp.rep_bno
 		  join member using (mno)
-		 where rp.status = #{status}
+		 where rp.status = #{status} || ' '
 		<if test="sDate!=null and eDate!=null">
 			 and report_date between TO_DATE(#{sDate},'YYYY/MM/DD') and TO_DATE(#{eDate},'YYYY/MM/DD')
 		</if>

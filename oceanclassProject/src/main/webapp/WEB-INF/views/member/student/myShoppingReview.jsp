@@ -101,7 +101,7 @@
 					 
 					 <div class="content1">
 					    <c:choose>
-					    	<c:when test="${empty reviewlist}">
+					    	<c:when test="${empty reviewList}">
 					    		<div class="conhead">
 							        <h2>상품 리뷰</h2>
 							    </div>
@@ -123,7 +123,7 @@
 							            </tr>
 							        </thead>
 							        <tbody>
-					        			<c:forEach var="r" items="${reviewlist}" begin="0" end="4">
+					        			<c:forEach var="r" items="${reviewList}" begin="0" end="4">
 								            <tr>
 								                <td>${r.title}</td>
 								                <td>${r.starRating}</td>

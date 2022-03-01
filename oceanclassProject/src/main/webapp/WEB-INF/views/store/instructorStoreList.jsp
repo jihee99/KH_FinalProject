@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="./resources/css/store/instructorStoreList.css">
 </head>
 <body>
-	
+	<div style="width: 1600px; height: auto; margin: auto;">
 	<!-- 강사용 메뉴바 연결하기 -->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 
@@ -62,10 +62,10 @@
                                 <tr>
                                 	<td><!-- 게시상태 : ${p.status} -->
                                 	<c:choose>
-                                    	<c:when test="${p.status eq 'Y '}">
+                                    	<c:when test="${p.status eq 'Y'}">
                                     		게시중
                                     	</c:when>
-                                    	<c:when test="${p.status eq 'N '}">
+                                    	<c:when test="${p.status eq 'N'}">
                                     		승인대기중
                                     	</c:when>
                                     </c:choose>
@@ -119,5 +119,6 @@
 			</c:choose>
         </div>
     </div>   
+    </div>
 </body>
 </html>

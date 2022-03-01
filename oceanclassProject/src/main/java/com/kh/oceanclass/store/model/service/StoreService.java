@@ -97,8 +97,7 @@ public interface StoreService {
 	
 	int reviewUpdate(StoreReview sr);
 	int reviewDelete(int rno);
-	int qnaUpdate(int csQno);
-	int qnaDelete(int csQno);
+	int qnaDelete(StoreQna q);
 	
 	StoreReview selectReview(int rno);
 	StoreQna selectQna(int csQno);

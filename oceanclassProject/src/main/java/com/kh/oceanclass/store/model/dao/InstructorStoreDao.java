@@ -207,6 +207,10 @@ public class InstructorStoreDao {
 		return sqlSession.update("inStoreMapper.storeOrderStatusUpdate", so);
 	}
 
+	public StoreReview selectStoreReviewDetail(SqlSessionTemplate sqlSession, String rno) {
+		return sqlSession.selectOne("inStoreMapper.selectStoreReviewDetail", rno);
+	}
+
 	
 	
 	

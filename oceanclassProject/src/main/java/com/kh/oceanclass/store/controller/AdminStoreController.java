@@ -17,28 +17,28 @@ public class AdminStoreController {
 	public String orderManager(HttpSession session, Model model) {
 		
 		
-		return "store/storeOrderManager";	
+		return "store/admin/storeOrderManager";	
 	}
 	
 	@RequestMapping(value="productManager.st")
 	public String productManager(HttpSession session, Model model) {
 		
 		
-		return "store/storeProductManager";	
+		return "store/admin/storeProductManager";	
 	}
 	
 	@RequestMapping(value="qnaManager.st")
 	public String qnaManager(HttpSession session, Model model) {
 		
 		
-		return "store/storeQnaManager";	
+		return "store/admin/storeQnaManager";	
 	}
 	
 	@RequestMapping(value="reviewManager.st")
 	public String reviewManager(HttpSession session, Model model) {
 		
 		
-		return "store/storeReviewManager";	
+		return "store/admin/storeReviewManager";	
 	}
 	
 

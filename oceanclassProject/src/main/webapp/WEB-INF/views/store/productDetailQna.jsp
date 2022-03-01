@@ -111,7 +111,7 @@
 				</c:if>
 			</div>
      		<c:choose>
-	     	  <c:when test="${!empty sqlist}">
+	     	  <c:when test="${!empty sqList}">
 				<div class="qna_list">
 					<c:forEach var="q" items="${sqList}">
 						<div class="qna">

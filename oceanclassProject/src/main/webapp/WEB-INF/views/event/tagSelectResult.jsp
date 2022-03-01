@@ -12,9 +12,16 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/header.css?1">
-    <link rel="stylesheet" href="./resources/css/eventMain.css?4">
     
 <style>
+	.innerOuter{width: 100%; min-height: 1000px;}
+	.list{width: 100%; min-height: 500px; margin-left: 40px;}
+	.head {width: 100%; height: 8%; margin:auto;}
+	.head>p{text-align: center; font-size: 40px; font-weight: 800; color: rgb(107, 171, 213);}
+    .item{width:40%; height: 80%; float:left; margin: 0 auto; margin: 35px; margin-left: 30px; margin-left: 30px; overflow: hidden;}
+	#classImg{display:block; width: 100%; height: 200px; margin: 0 auto; vertical-align: middle;}
+    #ctitle{width: 100%; text-align: center; font-size: 20px; font-weight: 600;}
+    #classImg:hover{cursor: pointer;}
 	.innerOuter{width: 100%; height: 1300px;}
 	.list{width: 100%; height: 600px; margin: 0 auto; margin-top: 20px; border: 1px solid;}
     .item{width:40%; height: 250px; float:left; margin: 0 auto; margin-top: 40px; overflow: hidden; border: 1px solid;}
@@ -45,6 +52,8 @@
 			            </div>
 		            	<p id="ctitle">
 			            	<c:choose>
+			            		<c:when test="${fn:length(c.clName) gt 21}">
+			            			<c:out value="${fn:substring(c.clName, 0, 20)}"></c:out>
 			            		<c:when test="${fn:length(c.clName) gt 15}">
 			            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
 			            			..
@@ -58,6 +67,13 @@
 		 		</c:forEach> 
 	 		</div>
 		</div>   
+		
+	 	<script>
+        	$(".item #classImg").click(function(){
+        		let clNo = $(this).prev().val();
+        		location.href = "classDetail.me?referNo=" + clNo;
+        	})
+        </script>
 		
 		<div id="paging">
 			<ul class="pagination">

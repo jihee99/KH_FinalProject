@@ -55,7 +55,7 @@
 				        <c:choose>
 			        		<c:when test="${empty list}">
 			        			<p>찜한 클래스가 없습니다</p>
-			        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
+			        			<button type="button" class="btn btn-lg" onclick="moveClass();">지금 찜하러 가기!</button>
 			        		</c:when>
 				        	<c:otherwise>
 						        <c:forEach var="c" items="${list}">
@@ -79,6 +79,10 @@
 					            </c:forEach>
 					            
 					            <script>
+						            function moveClass(){
+						   				location.href="home.me";
+						   			}
+					            
 						        	$(".item #classImg").click(function(){
 						        		let clNo = $(this).prev().val();
 						        		location.href = "classDetail.me?referNo=" + clNo;

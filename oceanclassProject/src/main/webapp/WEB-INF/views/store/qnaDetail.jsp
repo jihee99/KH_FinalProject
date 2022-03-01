@@ -87,8 +87,7 @@
 					                <div id="noPwdZone${ q.csQno }" style="display:none;">
 						                <c:if test="${ loginUser.userId == q.userId }">
 					               	    	<div style="float:right; margin-top:5px;">
-						                    	<button type="button" onclick="updateQna(${q.csQno});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">수정</button>
-						                    	<button type="button" onclick="deleteQna(${q.referNo}, ${q.csQno});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
+						                    	<button type="button" onclick="qnaDelete(${q.referNo}, ${q.csQno});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
 					                    	</div>
 		                    			</c:if>
 		                    			
@@ -120,8 +119,7 @@
 		                    	<div id="noPwdZone${ q.csQno }">
 					                <c:if test="${ loginUser.userId == q.userId }">
 				               	    	<div style="float:right; margin-top:5px;">
-					                    	<button type="button" onclick="updateQna(${q.csQno});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">수정</button>
-					                    	<button type="button" onclick="deleteQna(${q.referNo}, ${q.csQno});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
+					                    	<button type="button" onclick="qnaDelete(${q.referNo}, ${q.csQno});" class="btn" style="background-color: lightgray; height:25px; line-height: 10px; font-size:13px;">삭제</button>
 				                    	</div>
 	                    			</c:if>
 				                    <div class="review_content">
@@ -283,6 +281,33 @@
 				}
 			})
 		}
+	  	
+	  	// 문의삭제
+		function qnaDelete(referNo,csQno){
+	        if(confirm("정말로 삭제하시겠습니까?") == true){
+	            $.ajax({
+	                url:"qnaDelete.st",
+	                type:"post",
+	                data:{csQno:csQno,
+	                	  referNo:referNo
+	                },success:function(result){
+	                	if(result == "ss"){
+	                		alert("해당 글의 삭제가 완료되었습니다.");
+	    	                window.close();
+	                	}else{
+	    	                alert("해당 글의 삭제가 실패했습니다.");
+	    	                window.close();
+	                	}
+	                    
+	                },error:function(){
+	                	alert("통신실패!");
+	                }
+	            })
+	        }else{
+	        	alert("삭제 취소");
+	        	window.close();
+	        }
+	    }
 		
 	</script>
 </body>

@@ -236,11 +236,14 @@
 									page += '</ul>'
 			    					$("#paging").html(page);
 									
+									/*
 									$(function(){
 			        	        		$("#noticeList>tbody>tr").click(function(){
 			        	        			location.href = 'detail.he?nno=' + $(this).children("#nno").text();
 			        	        		});
 			        	        	})
+			        	        	*/
+			        	        	
 								
 			        			},error:function(){
 			        				console.log("여기오지마ㅠㅠ");
@@ -289,8 +292,6 @@
 			    						}	 	 
 			    					}
 				    				$("#result").html(qna);
-				    				$('#startDate').val('');
-							    	$('#endDate').val('');
 				    				// ajax 결과 클릭 시 내용답변 뿌려주는 
 									$("#myQna>tbody>#qna").click(function(){
 										$(this).toggleClass("selected");

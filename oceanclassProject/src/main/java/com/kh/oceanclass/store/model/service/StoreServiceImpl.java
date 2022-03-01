@@ -204,13 +204,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public int qnaUpdate(int csQno) {
-		return 0;
-	}
-
-	@Override
-	public int qnaDelete(int csQno) {
-		return 0;
+	public int qnaDelete(StoreQna q) {
+		return sDao.qnaDelete(sqlSession, q);
 	}
 
 	@Override
