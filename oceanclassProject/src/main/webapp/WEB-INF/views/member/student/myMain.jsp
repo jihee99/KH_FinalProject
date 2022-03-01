@@ -48,7 +48,7 @@
         		<c:when test="${empty list}">
         			<h2>나의 클래스</h2>
         			<p>수강중인 클래스가 없습니다</p>
-        			<button type="button" class="btn btn-lg">클래스 구경 가기!</button>
+        			<button type="button" class="btn btn-lg" id="home">클래스 구경 가기!</button>
         		</c:when>
 	        	<c:otherwise>
 	        		 <div class="conhead">
@@ -82,7 +82,7 @@
         		<c:when test="${empty list}">
         			<h2>찜한 클래스</h2>
         			<p>찜한 클래스가 없습니다</p>
-        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
+        			<button type="button" class="btn btn-lg" id="home">지금 찜하러 가기!</button>
         		</c:when>
 	        	<c:otherwise>
 	        		<div class="conhead">
@@ -113,9 +113,9 @@
 	    </div>  
         <div class="content1">
 	        <c:choose>
-        		<c:when test="${empty list}">
+        		<c:when test="${empty storeLikeList}">
         			<p>찜한 상품이 없습니다</p>
-        			<button type="button" class="btn btn-lg">지금 찜하러 가기!</button>
+        			<button type="button" class="btn btn-lg" id="store">지금 찜하러 가기!</button>
         		</c:when>
 	        	<c:otherwise>
 	        		<div class="conhead">
@@ -146,13 +146,23 @@
 	    </div>  
 	    
 	    <script>
+		    $(".item #home").click(function(){
+		   		location.href = "home.me";
+		   	})
+		   	
+		   	$(".item #store").click(function(){
+		   		location.href = "storeList.st";
+		   	})
+	    
 		    $(".item #classImg").click(function(){
 		   		let clNo = $(this).prev().val();
+		   		console.log(clNo);
 		   		location.href = "classDetail.me?referNo=" + clNo;
 		   	})
 	    
         	$(".item #proImg").click(function(){
         		let pno = $(this).prev().val();
+        		console.log(pNo);
         		location.href = "productMain.pr?pno=" + pno;
         	})
         </script>
