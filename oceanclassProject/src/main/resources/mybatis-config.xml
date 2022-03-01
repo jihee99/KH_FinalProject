@@ -48,6 +48,8 @@
 		<typeAlias type="com.kh.oceanclass.common.model.vo.AdminStatistics" alias="AdminStatistics"/>
 		<typeAlias type="com.kh.oceanclass.common.model.vo.InstructorStarChart" alias="InStarChart"/>
 		<typeAlias type="com.kh.oceanclass.common.model.vo.InstructorQnaChart" alias="InQnaChart"/>
+		
+		<typeAlias type="com.kh.oceanclass.Class.model.vo.Video" alias="Video"/>
 	</typeAliases>
 	
 	<mappers>
