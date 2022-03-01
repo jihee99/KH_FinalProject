@@ -244,6 +244,7 @@
 			        	        	})
 			        	        	*/
 			        	        	
+								
 			        			},error:function(){
 			        				console.log("여기오지마ㅠㅠ");
 			        			}
@@ -261,6 +262,7 @@
 								data:{sDate : startDate,
 									  eDate : endDate},
 							    success:function(result){
+							    	console.log(result);
 							    	let qna = '';
 			    					for(let i in result){
 			    						let answer = result[i].ansContent;

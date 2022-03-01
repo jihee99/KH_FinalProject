@@ -59,6 +59,152 @@
 	
 	<script>
     	$(function(){
+			$(".chart1").html('<canvas id="myChart1" width="400" height="400"></canvas>');
+			$(".chart2").html('<canvas id="myChart2" width="400" height="400"></canvas>');
+			
+			$.ajax({
+				url:"chartMain.in",
+				success:function(result){
+					
+					console.log(result.starlist);
+    				console.log(result.qnalist);
+
+    				//let starPno = [];	
+    				let starNo = [];	// x축
+    				let starCount = [];	// 대응되는 데이터
+    				
+    				for(let i  in result.starlist){
+    					starNo.push(result.starlist[i].star);
+    					starCount.push(result.starlist[i].starCount);
+    				}
+    				
+    				console.log(starNo);
+    				console.log(starCount);	
+					
+    				let ctx1 = document.getElementById('myChart1').getContext('2d');
+    	    		let myChart1 = new Chart(ctx1, {
+    	    			  type: 'pie', // 차트의 형태
+    	                  data: { // 차트에 들어갈 데이터
+    	                      labels: starNo,
+    	                      datasets: [
+    	                          { //데이터
+    	                              label: '상품별 만족도', //차트 제목
+    	                              fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+    	                              data: starCount, //x축 label에 대응되는 데이터 값
+    	                              backgroundColor: [
+    	                                  //색상
+    	                                  'rgba(255, 99, 132, 0.2)',
+    	                                  'rgba(54, 162, 235, 0.2)',
+    	                                  'rgba(255, 206, 86, 0.2)',
+    	                                  'rgba(75, 192, 192, 0.2)',
+    	                                  'rgba(153, 102, 255, 0.2)'
+    	                              ],
+    	                              borderColor: [
+    	                                  //경계선 색상
+    	                                  'rgba(255, 99, 132, 1)',
+    	                                  'rgba(54, 162, 235, 1)',
+    	                                  'rgba(255, 206, 86, 1)',
+    	                                  'rgba(75, 192, 192, 1)',
+    	                                  'rgba(153, 102, 255, 1)'
+    	                              ],
+    	                              borderWidth: 1 //경계선 굵기
+    	                          }
+    	                      ]
+    	                  },
+    	                  options: {
+    	                	  pieceLabel: { mode:"label", position:"outside", fontSize: 11, fontStyle: 'bold' },
+    	                      scales: {
+    	                      	title: {
+    					    		display: true,
+    					    		text: '스토어만족도'
+    					  		},
+    	                        yAxes: [
+    	                              {
+    	                                  ticks: {
+    	                                      beginAtZero: true
+    	                                  }
+    	                              }
+    	                        ]
+    	                      }
+    	                  }
+    	            });
+    	    		
+    	    		let qnaCount = [];
+    	    		let answerCount = [];
+    	    		let xlabel= [];
+					
+    	    		for(let i  in result.qnalist){
+    					qnaCount.push(result.qnalist[i].qnaCount);
+    					answerCount.push(result.qnalist[i].answerCount);
+   						xlabel.push(result.qnalist[i].productNo);
+    	    		}
+    	    		
+    	    		console.log(result.qnalist);
+    	    		console.log(qnaCount);
+    	    		console.log(answerCount);
+    	    		console.log(xlabel);
+    	    		
+    	    		//문의 응답율 추이
+    	    		let ctx2 = document.getElementById('myChart2').getContext('2d');
+    	    		let myChart2 = new Chart(ctx2, {
+    	    			  type: 'line', // 차트의 형태
+    	                  data: { // 차트에 들어갈 데이터
+    	                      labels: xlabel,
+    	                      datasets: [
+    	                          { //데이터
+    	                              label: '문의', //차트 제목
+    	                              //fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+    	                              data: qnaCount,
+    	                              backgroundColor: [
+    	                                  //색상
+    	                                  'rgb(255, 99, 132, 0.2)'
+    	                              ],
+    	                              borderColor: [
+    	                                  //경계선 색상
+    	                            	  'rgb(255, 99, 132, 0.2)'
+    	                              ]
+    	                          },
+    	                          { //데이터
+    	                              label: '응답', //차트 제목
+    	                              //fill: false,  // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+    	                              data: answerCount,
+    	                              backgroundColor: [
+    	                                  //색상
+    	                                  'rgb(54, 162, 235, 0.2)'
+    	                              ],
+    	                              borderColor: [
+    	                                  //경계선 색상
+    	                            	  'rgb(54, 162, 235, 0.2)'
+    	                              ]
+    	                          }
+    								
+    	                      ]
+    	                  },
+    	                  options: {
+    	                	title: {
+    					    		display: true,
+    					    		text: '문의 응답율 추이'
+    					  	},
+    					  	yAxes: [
+    	                        {
+    	                            ticks: {
+    	                                beginAtZero: true
+    	                            }
+    	                        }
+    	                  ]
+    					 }
+    	              });
+    	    		
+    	    		
+    	    		
+    	    		
+    	    		
+    	    		
+    	    		
+				},error:function(){
+					console.log("ajax통신 실패");
+				}
+			});
 			
     		let pno = $(".list option:selected").val();
 			console.log(pno);
@@ -117,16 +263,7 @@
 	    	                                  'rgba(153, 102, 255, 1)'
 	    	                              ],
 	    	                              borderWidth: 1 //경계선 굵기
-	    	                          }/* ,
-	    	                          {
-	    	                              label: 'test2',
-	    	                              fill: false,
-	    	                              data: [
-	    	                                  8, 34, 12, 24
-	    	                              ],
-	    	                              backgroundColor: 'rgb(157, 109, 12)',
-	    	                              borderColor: 'rgb(157, 109, 12)'
-	    	                          } */
+	    	                          }
 	    	                      ]
 	    	                  },
 	    	                  options: {
@@ -161,10 +298,6 @@
 	    					}
 	    	    		}
 	    	    		
-	    	    		console.log(result.qnalist);
-	    	    		console.log(qnaCount);
-	    	    		console.log(answerCount);
-	    	    		console.log(xlabel);
 	    	    		
 	    	    		//문의 응답율 추이
 	    	    		let ctx2 = document.getElementById('myChart2').getContext('2d');
@@ -218,7 +351,7 @@
 	    	              });
 
 	    			},error:function(){
-	    				
+	    				console.log("error");
 	    			}
 	    		});
     		});

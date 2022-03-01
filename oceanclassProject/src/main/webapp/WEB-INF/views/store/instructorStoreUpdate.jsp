@@ -52,7 +52,7 @@
      		}
      	});
 	</script>
-	
+	<div style="width: 1600px; height: auto; margin: auto;">
 	<!-- 강사용 메뉴바 연결하기 	-->
 	<jsp:include page="../common/teacher/tcMypageSidebar.jsp"/>
 	 	
@@ -198,6 +198,7 @@
                 <br><br>
             </form>
         </div>
+    </div>
     </div>
 </body>
 </html>

@@ -354,8 +354,12 @@
 			var searchText = document.getElementById("searchText").value;
 			var searchCategory = document.getElementById("searchCategory").value;
 			
+			var regExp = /^[0-9]+$/g;
+			
 			if(searchCategory == '1' && searchText.replace(/ /gi, "").length < 1){
 				alert("검색어는 한 글자 이상 입력해야 합니다.");
+			} else if(searchCategory == '1' && regExp.test(searchText) == false){
+				alert("숫자만 입력해주세요.");
 			} else{
 				location.href = "classManagerQna.ad?cpage=" + cpage + "&clNo=" + clNo + "&array=" + array + "&category=" + searchCategory
 								+ "&keyword=" + searchText + "&yclass=" + yy +"&nclass=" + nn + "&rarray=" + rarray + "&rcategory=" + rcategory 

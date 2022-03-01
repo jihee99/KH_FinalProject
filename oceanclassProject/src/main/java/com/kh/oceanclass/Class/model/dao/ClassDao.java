@@ -16,6 +16,7 @@ import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.model.vo.Reply;
 import com.kh.oceanclass.event.model.vo.Event;
 import com.kh.oceanclass.member.model.vo.MemCoupon;
+import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 
 @Repository
@@ -259,5 +260,9 @@ public class ClassDao {
 	
 	public int reportQna(SqlSessionTemplate sqlSession, Report rp) {
 		return sqlSession.insert("classMapper.reportQna", rp);
+	}
+	
+	public Member selectMember(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("classMapper.selectMember", memNo);
 	}
 }

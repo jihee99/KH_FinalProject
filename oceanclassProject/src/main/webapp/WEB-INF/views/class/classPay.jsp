@@ -75,7 +75,7 @@
 
         <div class="cate">주문 정보</div>
 		
-		<form action="classPay.me" onsubmit="return paySubmitCheck();">
+		<form action="classPay.me" method="post" onsubmit="return paySubmitCheck();">
 			<!-- 주문을 위한 정보  -->
 	    	<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo}">
 	    	<input type="hidden" id="clNo" name="clNo" value="${c.clNo}">
@@ -110,7 +110,7 @@
 	                <div>포인트</div>
 	                <input type="text" id="usePoint" onkeyup="changePointMessage();" class="form-control" style="width: 300px; float: left;" placeholder="0원">
 	                <button type="button" onclick="usePointSubmit();" class="btn" style="background-color: #6babd5;color: white; width:140px;">포인트 사용</button>
-	                <div style="font-size: 14px; color:grey; margin-top: 5px;">사용가능한 포인트: <fmt:formatNumber value="${ loginUser.point }" type="number" />원 (1,000원 이상 사용 가능)</div>
+	                <div style="font-size: 14px; color:grey; margin-top: 5px;">사용가능한 포인트: <fmt:formatNumber value="${ m.point }" type="number" />원 (1,000원 이상 사용 가능)</div>
 	            </div>
 	        </div>
 	
@@ -148,10 +148,8 @@
 	                <div>
 	                	<input type="radio" id="payment1" name="paymentOption" onclick="btnStyle(1);" value="1" style="display:none;">
 	                	<label id="payment1_btn" class="btn" for="payment1" style="border:2px solid #6babd5; width:200px;">무통장 입금</label>
-	                	
 	                	<input type="radio" id="payment2" name="paymentOption" onclick="btnStyle(2);" value="2" style="display:none;">
-	                	<label id="payment2_btn" class="btn" for="payment2" style="border:2px solid #6babd5; width:200px;">네이버 페이</label>
-	                	
+	                	<label id="payment2_btn" class="btn" for="payment2" style="border:2px solid #6babd5; width:200px; display:none;">네이버 페이</label>
 	                	<input type="radio" id="payment3" name="paymentOption" onclick="btnStyle(3);" value="3" style="display:none;">
 	                	<label id="payment3_btn" class="btn" for="payment3" style="border:2px solid #6babd5; width:200px;">카카오 페이</label>
 	                </div>
@@ -255,12 +253,14 @@
     		var pointPrice = document.getElementById("pointPrice");
     		var price = ${ c.clPrice }; //원래 금액
     		
+    		var point = "${loginUser.point}";
+    		
     		if(usePoint == ""){
     			alert("사용할 포인트 금액을 입력해주세요.");
     		} else if(regExp.test(usePoint) == true){
     			if(usePoint.toString().substring(0,1) == "0" && usePoint != 0){
     				alert("포인트 사용 금액의 첫 자리는 0이 될 수 없습니다.");
-    			} else if(${loginUser.point} < usePoint){
+    			} else if(point < usePoint){
     				alert("사용 가능한 포인트 금액을 확인해주세요.");
     			} else if(usePoint < 1000 && usePoint > 0){
     				alert("포인트는 1,000원 이상부터 사용 가능합니다.");
