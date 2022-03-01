@@ -189,6 +189,7 @@ div{box-sizing: border-box;}
         function storeCatePage(cateNum){
         	location.href = "storeSearchList.st?cpage=1&category=" + cateNum + "&array=like";
         }
+        
     </script>
     
    <script>
@@ -202,6 +203,14 @@ div{box-sizing: border-box;}
 			s1.setAttribute('crossorigin','*');
 			s0.parentNode.insertBefore(s1,s0);
 			})();
+			
+			
+			var search_keyword = document.getElementById("search_keyword");
+			var keyword = "${keyword}";
+			
+			if(keyword != ""){
+				search_keyword.value = keyword;
+			}
 		})
    </script>
 
