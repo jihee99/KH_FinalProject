@@ -116,8 +116,17 @@
                     </tr>
                 </thead>
                 <tbody id="result">
+                	<c:forEach var="n" items="${importantList}"> 
+               			<tr id="important" style="background-color: rgb(107, 171, 213, 0.5);">
+               				<input type="hidden" value="${n.noNo}" id="nno"/>
+	                        <td colspan="2">TOP공지</td>
+	                        <td>${n.noTitle}</td>
+	                        <td>${n.createDate}</td>
+	                        <td>${n.count}</td>
+	                    </tr>
+                   	</c:forEach>
                 	<c:forEach var="n" items="${list}"> 
-	                    <tr>	
+                    	<tr id="normal">
 	                        <td id="nno">${n.noNo}</td>
 	                        <td>${n.category}</td>
 	                        <td>${n.noTitle}</td>
@@ -129,10 +138,14 @@
             </table>
         </div>
         
-        <script>
+        <script>  
         	$(function(){
-        		$("#noticeList>tbody>tr").click(function(){
+        		$("#noticeList>tbody>#normal").click(function(){
         			location.href = 'detail.he?nno=' + $(this).children("#nno").text();
+        		});
+        		
+        		$("#noticeList>tbody>#important").click(function(){
+        			location.href = 'detail.he?nno=' + $(this).children().first().val();;
         		});
         	})
         </script>

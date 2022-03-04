@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.Class.model.vo.Video;
 import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -164,7 +165,10 @@ public class MypageServiceImpl implements MypageService{
 		return myDao.ajaxClassQna(sqlSession, csQno);
 	}
 
-
+	@Override
+	public Video selectVideo(int clNo) {
+		return myDao.selectVideo(sqlSession, clNo);
+	}
 	
 
 // 스토어	

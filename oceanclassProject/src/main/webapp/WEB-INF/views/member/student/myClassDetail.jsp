@@ -17,10 +17,11 @@
 	.conhead{width: 100%; height: 15%;  margin-bottom: 25px;}
 	.conhead>h2{width: 30%;}
 	.conhead>a{float: right; margin-top: -20px;}
-	.table{width: 90%; margin: auto; text-align: center;}
-	.item{width: 80%; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray;}
-	.item img{width: 25%; height: 100px;}
-	.item>p{width: 70%; float: right; margin-right: 30px; margin-top: 30px; text-align: left; font-size: 20px; font-weight: 800;}
+	.table{width: 100%; margin: auto; text-align: center;}
+	.item{width: 800px; height: 100px; margin: 0 auto; margin-bottom: 20px; border: 1px solid lightgray; display: flex;}
+	.item img{width: 200px; height: 100px;}
+	.item>p{width: 450px; float: right; margin-right: 25px; margin-top: 30px; padding-left: 10px; text-align: left; font-size: 20px; font-weight: 800;}
+	.item>button{width: 150px; height: 50px; margin-top: 25px;}
 </style>
 </head>
 <body>
@@ -37,27 +38,37 @@
 				        <div class="conhead">
 				            <h2>나의 클래스</h2>
 				        </div>
-					        <c:forEach var="c" items="${list}">
-					            <div class="item">
-					            	<a><img src="${c.clImg}"></a>
-					            	<input type="hidden" value="${c.clNo}">
-					            	<p id="ctitle">
-						            	<c:choose>
-						            		<c:when test="${fn:length(c.clName) gt 30}">
-						            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
-						            			..
-						            		</c:when>
-						            		<c:otherwise>
-						            			<c:out value="${c.clName}" />
-						            		</c:otherwise>
-						            	</c:choose>
-					            	</p>
-					            </div>
-				            </c:forEach>
+				        <c:forEach var="c" items="${list}">
+				            <div class="item">
+				            	<a><img src="${c.clImg}"></a>
+				            	<p id="ctitle">
+				            		[${c.category}]
+					            	<c:choose>
+					            		<c:when test="${fn:length(c.clName) gt 30}">
+					            			<c:out value="${fn:substring(c.clName, 0, 29)}"></c:out>
+					            			..
+					            		</c:when>
+					            		<c:otherwise>
+					            			<c:out value="${c.clName}" />
+					            		</c:otherwise>
+					            	</c:choose>
+				            	</p>
+				            	<input type="hidden" id="clNo" value="${c.clNo}">
+				            	<button type="button" class="btn btn-info" onclick="playVideo();">수강하기</button>
+				            </div>
+			            </c:forEach>
 				    </div>
 				</div>
 			</td>
 		</tr>
 	</table>
+	
+	<script>
+		function playVideo(){
+			let clNo = $("#clNo").val();
+			console.log(clNo);
+			location.href='playVideo.me?clNo=' + clNo;
+		}
+	</script>
 </body>
 </html>

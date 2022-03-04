@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.Class.model.vo.Video;
 import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
@@ -58,7 +59,7 @@ public class StuMypageController {
 		ArrayList<ClassOrder> list = myService.selectMainMyClass(memNo);
 		ArrayList<ClassVo> classLikeList = myService.selectMainLikeClass(memNo);
 		ArrayList<Product> storeLikeList = myService.selectMainLikeProduct(memNo);
-
+		
 		model.addAttribute("list", list);
 		model.addAttribute("classLikeList", classLikeList);
 		model.addAttribute("storeLikeList", storeLikeList);
@@ -86,8 +87,9 @@ public class StuMypageController {
 		int result = myService.updateProfile(m);
 		Member loginUser = myService.selectUser(m);
 		if(result>0) {
+			
 			session.setAttribute("loginUser", loginUser);
-			session.setAttribute("alertMsg", "정보 수정 완료");
+			//session.setAttribute("alertMsg", "정보 수정 완료");
 			return "redirect:myProfile.me";
 		}else {
 			model.addAttribute("errorMsg", "정보수정실패");
@@ -193,20 +195,6 @@ public class StuMypageController {
 		}
 		
 	}
-	
-//	@RequestMapping("pointSaveList.me")
-//	public String pointSaveList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-//		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-//		int pointCount = myService.selectPointCount(memNo);
-//		
-//		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
-//		ArrayList<Point> pointList = myService.selectPointList(ppi, memNo);
-//		
-//		model.addAttribute("pi", ppi);
-//		model.addAttribute("pointList", pointList);
-//		return "member/student/myPoint";		
-//	}
-	
 	
 	
 //1:1문의 내역
@@ -351,6 +339,7 @@ public class StuMypageController {
 	@RequestMapping(value="ajaxClassQna.me", produces="application/json; charset=UTF-8")
 	public String ajaxClassQna(int csQno) {
 		CsQna cs = myService.ajaxClassQna(csQno);
+		
 		return new Gson().toJson(cs);
 	}
 	
@@ -485,6 +474,14 @@ public class StuMypageController {
 		return "member/student/myAllClassDetail";
 	}
 	
+	// 클래스 수강하기
+	@RequestMapping("playVideo.me")
+	public String selectVideo(int clNo, HttpSession session, Model model) {
+		Video play = myService.selectVideo(clNo);
+		
+		model.addAttribute("p", play);
+		return "member/student/classVideo";
+	}
 	
 	
 	

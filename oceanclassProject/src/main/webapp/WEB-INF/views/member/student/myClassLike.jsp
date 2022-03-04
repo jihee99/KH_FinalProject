@@ -18,7 +18,7 @@
 	.conhead>h2{width: 30%; font-weight: 900;}
     .item{width:40%; height: 80%; float:left; margin: 35px; overflow: hidden;}
     .item img{display:block; width: 100%; height: 180px; vertical-align: middle}
-    .item>#ctitle{text-align: center; font-size: 20px; font-weight: 600; }
+    .item>#ctitle{text-align: left; font-size: 18px;}
     #classImg:hover{cursor: pointer;}
     .content1>p{
     	text-align: center;
@@ -36,6 +36,7 @@
     	font-weight: 800;
     	width: 300px;
     }
+    .item>p{font-weight: 600;}
 </style>
 </head>
 <body>
@@ -64,16 +65,22 @@
 						            		<input type="hidden" value="${c.clNo}">
 						            		<img src="${c.clImg}" id="classImg">
 							            </div>
+							            <p>
+						            		${c.nickName}
+						            	</p>
 						            	<p id="ctitle">
 							            	<c:choose>
-							            		<c:when test="${fn:length(c.clName) gt 18}">
-							            			<c:out value="${fn:substring(c.clName, 0, 18)}"></c:out>
+							            		<c:when test="${fn:length(c.clName) gt 21}">
+							            			<c:out value="${fn:substring(c.clName, 0, 20)}"></c:out>
 							            			..
 							            		</c:when>
 							            		<c:otherwise>
 							            			<c:out value="${c.clName}"></c:out>
 							            		</c:otherwise>
 							            	</c:choose>
+						            	</p>
+						            	<p>
+						            		${c.clPrice}원
 						            	</p>
 						            </div>
 					            </c:forEach>

@@ -13,37 +13,14 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css?4">
 <style>
-	.list{
-	    width: 90%;
-	    height: 150px;
-	    margin: 0 auto;
-	    margin-top: 30px;
-	    border: 1px solid lightgray;
-	}
-	.listArea img{
-		width: 30%; 
-		height: 145px;
-		float: left;
-		padding: 5px;
-	}
-	#explain{
-		width: 40%; 
-		height: 100%; 
-		float: left; 
-		margin-top: 30px;
-		margin-left: 15px;
-	}
+	.list{width: 90%; height: 150px; margin: 0 auto; margin-top: 30px; border: 1px solid lightgray;}
+	.listArea img{width: 30%; height: 145px; float: left; padding: 5px;}
+	#explain{width: 50%; height: 100%; float: left; margin-top: 30px; margin-left: 15px;}
 	#explain>h3{color:rgb(107, 171, 213); font-weight: 600;}
 	#explain>p{margin-top: -10px; font-weight: bolder; }
-	#proTitle{font-size: 18px;}
+	#proTitle{font-size: 16px;}
 	#state{float:left;}
-	.list>button{
-		width: 15%; 
-		height: 30%; 
-		margin-top: 45px;
-		margin-left: 50px;
-		font-weight: 600;
-	}
+	.list>button{width: 15%; height: 30%; margin-top: 45px;vmargin-left: 50px; font-weight: 600;}
 	#paging{width: 100%; margin-top: 40px;}
 	.pagination{margin: 0 auto;}
 </style>
@@ -78,8 +55,8 @@
 					            <div id="explain">
 					                <p id="proTitle">
 					                	<c:choose>
-						            		<c:when test="${fn:length(s.title) gt 20}">
-						            			<c:out value="${fn:substring(s.title, 0, 19)}"></c:out>
+						            		<c:when test="${fn:length(s.title) gt 21}">
+						            			<c:out value="${fn:substring(s.title, 0, 20)}"></c:out>
 						            			..
 						            		</c:when>
 						            		<c:otherwise>
@@ -144,8 +121,8 @@
 								    		  + '<input type="hidden" id="orderNo" name="orderNo" value="' + result[i].orderNo + '">'
 							            	  + '<div id="explain">'
 							                  + '<p id="proTitle">'
-							            if(result[i].title.length > 20){
-							            	list += result[i].title.substr(0,19) + '...'
+							            if(result[i].title.length >= 21){
+							            	list += result[i].title.substr(0,20) + '...'
 							            }else{
 							            	list += result[i].title
 							            }
@@ -184,13 +161,13 @@
 						    			  + '<a href=""><img src="'+ result[i].img + '"></a>'
 							    		  + '<input type="hidden" id="orderNo" name="orderNo" value="' + result[i].orderNo + '">'
 						            	  + '<div id="explain">'
-						                  + '<h4>'
+						                  + '<p id="proTitle">'
 						            if(result[i].title.length >= 21){
 						            	list += result[i].title.substr(0,20) + '...'
 						            }else{
 						            	list += result[i].title
 						            }
-				                	list += '</h4>'
+						            list += '</p>'
 										  + '<p>주문날짜 : ' + result[i].payDate + '</p>'
 						                  + '<h3 id="state">' + result[i].orderStatus + '</h3>'
 						            	  + '</div>'

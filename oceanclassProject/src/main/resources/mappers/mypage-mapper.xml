@@ -65,6 +65,7 @@
 		<result column="cl_status" property="clStatus" />
 		<result column="cl_img" property="clImg" />
 		<result column="like" property="like" />
+		<result column="nickname" property="nickName"/>
 	</resultMap>
 	
 	<resultMap id="myClassOrderResult" type="ClassOrder">
@@ -100,6 +101,7 @@
 	  	<result column="soldout_yn" property="soldoutYN"/>
 	  	<result column="status" property="status"/>
 	  	<result column="img1" property="productImg0"/>
+	  	<result column="nickname" property="nickname"/>
 	</resultMap>
 	
 	<resultMap id="csResult" type="CsQna">
@@ -151,45 +153,16 @@
 	  	<result column="phone" property="phone"/>
 	</resultMap>
 	
-<!-- 마이페이지 메인 -->
-	<select id="selectMainMyClass" resultMap="myClassOrderResult">
-		select
-		       distinct c_ono
-		     , c.clno
-		     , cl_name
-		     , cl_img
-		  from class c   		
-		  join class_order co on (c.clno = co.clno)
-		 where co.mno = #{memNo}
-		 order
-		 	by c_ono desc
-	</select>
+	<resultMap id="myVideoResult" type="Video">
+		<result column="clNo" property="clNo" />
+		<result column="video_no" property="videoNo" />
+		<result column="category" property="category" />
+		<result column="cl_name" property="clName" />
+		<result column="chapter" property="chapter" />
+		<result column="subchapter" property="subChapter" />
+		<result column="video_address" property="videoAddress" />
+	</resultMap>
 	
-	<select id="selectMainLikeClass" resultMap="myClassResult">
-		select 
-		       distinct clno
-		     , l.mno as "mno"
-		     , cl_name
-		     , cl_img
-		  from class c
-		  join like_item l on (c.clno = l.refer_no)
-		 where l.mno = #{mno}
-		   and cl_status = 'Y'
-	</select>
-	
-	<select id="selectMainLikeProduct" resultMap="storeResult">
-		select 
-		       distinct pno
-		     , s.mno as "mno"
-		     , title
-		     , img1
-		  from store s
-		  join like_item l on (s.pno = l.refer_no)
-		  where l.mno = #{memNo} 
-		    and status = 'Y'
-	</select>
-
-
 <!-- 정보수정용 -->
 	<update id="updateProfile">
 		update
@@ -463,13 +436,16 @@
 		select 
 		       distinct clno
 		     , l.mno as "mno"
+             , nickname
 		     , cl_name
 		     , cl_price
 		     , to_char(cl_date, 'YYYY-MM-DD') as "cl_date"
 		     , cl_img
 		  from class c
 		  join like_item l on (c.clno = l.refer_no)
-		  where l.mno = #{mno}
+          join member m on (c.mno = m.mno)
+		  where l.mno = #{memNo}
+		    and cl_status = 'Y'
 		  order 
 		     by clno
 	</select>
@@ -559,6 +535,20 @@
 		    by cs_qno desc
 	</select>
 	
+	<select id="selectVideo" resultMap="myVideoResult">
+		select
+		       c.clno
+		     , category
+		     , cl_name
+		     , video_no
+		     , chapter
+		     , subchapter
+		     , video_address
+		  from video v
+		  join class c on (c.clno = v.clno)
+		 where v.clno = #{clNo}
+	</select>
+	
 	
 	
 <!-- 스토어 -->
@@ -571,15 +561,19 @@
 	
 	<select id="selectLikeProduct" resultMap="storeResult">
 		select 
-		       pno
+		       distinct pno
 		     , s.mno as "mno"
+             , nickname
 		     , title
 		     , price
 		     , img1
              , status
 		  from store s
 		  join like_item l on (s.pno = l.refer_no)
+          join member m on (m.mno = s.mno)
 		  where l.mno = #{memNo} 
+		  order 
+		     by pno desc
 	</select>
 	
 	<select id="shoppingQnaCount" resultType="_int">
@@ -597,7 +591,7 @@
 		     , refer_no
 		     , cs.title
 		     , content
-		     , create_date
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , filepath
 		     , cs.status
 		     , answer_content
@@ -641,6 +635,7 @@
 		select count(*)
 		  from s_review
 		 where mno = #{memNo}
+		   and status = 'Y'
 	</select>
 	
 	<select id="shoppingReviewList" resultMap="storeReviewResult">
@@ -649,12 +644,12 @@
 	       	 , title
 		     , content
 		     , img1
-		     , review_date
-		     , case when star_rating <![CDATA[<=]]> 5 and star_rating <![CDATA[>]]> 4 then '★★★★★'
-		    		when star_rating <![CDATA[<=]]> 4 and star_rating <![CDATA[>]]> 3 then '★★★★☆'
-		    		when star_rating <![CDATA[<=]]> 3 and star_rating <![CDATA[>]]> 2 then '★★★☆☆'
-		    		when star_rating <![CDATA[<=]]> 2 and star_rating <![CDATA[>]]> 1 then '★★☆☆☆'
-		    	    when star_rating <![CDATA[<=]]> 1 then '★☆☆☆☆'  end as star_rating
+		     , to_char(review_date, 'YYYY-MM-DD') as "review_date"
+		     , case when star_rating <![CDATA[<=]]> 5 and star_rating <![CDATA[>]]> 4.5 then '★★★★★'
+		    		when star_rating <![CDATA[<=]]> 4.5 and star_rating <![CDATA[>]]> 3.5 then '★★★★☆'
+		    		when star_rating <![CDATA[<=]]> 3.5 and star_rating <![CDATA[>]]> 2.5 then '★★★☆☆'
+		    		when star_rating <![CDATA[<=]]> 2.5 and star_rating <![CDATA[>]]> 1.5 then '★★☆☆☆'
+		    	    when star_rating <![CDATA[<=]]> 1.5 then '★☆☆☆☆'  end as star_rating
 		  from s_review r
 		  join store s using(pno)
 		 where r.mno = 5

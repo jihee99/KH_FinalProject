@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.Class.model.vo.Video;
 import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -25,15 +26,15 @@ public class MypageDao {
 	
 // 마이페이지 메인	
 	public ArrayList<ClassVo> selectMainLikeClass(SqlSessionTemplate sqlSession, int memNo){
-		return (ArrayList)sqlSession.selectList("myMapper.selectMainLikeClass", memNo);
+		return (ArrayList)sqlSession.selectList("myMapper.selectLikeClass", memNo);
 	}
 	
 	public ArrayList<Product> selectMainLikeProduct(SqlSessionTemplate sqlSession, int memNo){
-		return (ArrayList)sqlSession.selectList("myMapper.selectMainLikeProduct", memNo);
+		return (ArrayList)sqlSession.selectList("myMapper.selectLikeProduct", memNo);
 	}
 	
 	public ArrayList<ClassOrder> selectMainMyClass(SqlSessionTemplate sqlSession, int memNo){
-		return (ArrayList)sqlSession.selectList("myMapper.selectMainMyClass", memNo);
+		return (ArrayList)sqlSession.selectList("myMapper.selectMyClass", memNo);
 	}
 	
 	
@@ -186,6 +187,10 @@ public class MypageDao {
 	
 	public CsQna ajaxClassQna(SqlSessionTemplate sqlSession, int csQno) {
 		return sqlSession.selectOne("myMapper.ajaxClassQna", csQno);
+	}
+	
+	public Video selectVideo(SqlSessionTemplate sqlSession, int clNo) {
+		return sqlSession.selectOne("myMapper.selectVideo", clNo);
 	}
 	
 	

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kh.oceanclass.Class.model.vo.ClassOrder;
 import com.kh.oceanclass.Class.model.vo.ClassReview;
 import com.kh.oceanclass.Class.model.vo.ClassVo;
+import com.kh.oceanclass.Class.model.vo.Video;
 import com.kh.oceanclass.common.model.vo.CsQna;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.help.model.vo.Qna;
@@ -93,6 +94,9 @@ public interface MypageService {
 	
 	// 클래스 문의 리스트
 	ArrayList<CsQna> classQnaList(PageInfo pi, int memNo);
+	
+	// 클래스 영상
+	Video selectVideo(int clNo);
 	
 	// 클래스 문의 상세
 	CsQna ajaxClassQna(int csQno);

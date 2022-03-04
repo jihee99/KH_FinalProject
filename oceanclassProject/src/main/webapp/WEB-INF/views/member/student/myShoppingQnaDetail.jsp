@@ -46,7 +46,7 @@
 			                <tr>
 			                    <th>상품명</th> 
 				                <th>문의제목</th>
-				                <th>문의내용</th>
+				                <th>문의날짜</th>
 				                <th>답변유무</th>
 			                </tr>
 			            </thead>
@@ -56,17 +56,7 @@
 					            	<input type="hidden" id="csQno" name="csQno" value="${s.csQno}">
 					                <td>${s.proTitle}</td>
 					                 <td>${s.title}</td>
-					                <td>
-						                <c:choose>
-					            		<c:when test="${fn:length(s.content) gt 25}">
-					            			<c:out value="${fn:substring(s.content, 0, 24)}"></c:out>
-					            			..
-					            		</c:when>
-					            		<c:otherwise>
-					            			<c:out value="${s.content}"></c:out>
-					            		</c:otherwise>
-						            	</c:choose>
-					                </td>
+					                <td>${s.createDate}</td>
 					                <c:choose>
 				                        <c:when test="${not empty s.answerContent}">
 				                        	<td>등록완료</td>

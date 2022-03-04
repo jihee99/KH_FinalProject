@@ -64,7 +64,7 @@
                         <li><a href="reviewManager.st">리뷰 관리</a></li>
                         <li><a href="qnaManager.st">문의 관리</a></li>
                         <li><a href="orderManager.st">발주 관리</a></li>
-                    </ul>r
+                    </ul>
                 </div>
                 <div id="menu4">
                     <p>고객센터</p>

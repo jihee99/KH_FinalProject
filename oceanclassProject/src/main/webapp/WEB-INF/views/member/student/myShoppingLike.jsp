@@ -13,17 +13,11 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/stuMypage.css">
 <style>
-	.conhead{
-        width: 100%;
-	    height: 15%;
-	}
-	.content1{
-	    width: 100%;
-	    height: 50%;
-	}
+	.conhead{width: 100%; height: 15%;}
+	.content1{width: 100%; height: 50%;}
 	.conhead>h2{width: 30%; font-weight: 900;}
     .item{width:40%; height: 80%; float:left; margin: 35px; overflow: hidden;}
-    .item>#stitle{text-align: center; font-size: 20px; font-weight: 600; }
+    .item>#stitle{text-align: left; font-size: 18px; }
     #proImg{width: 350px; height: 230px;}
     #proImg:hover{cursor: pointer;}
     .content1>p{
@@ -42,6 +36,7 @@
     	font-weight: 800;
     	width: 300px;
     }
+    .item>p{font-weight: 600;}
 </style>
 </head>
 <body>
@@ -70,16 +65,22 @@
 						            		<input type="hidden" value="${s.productNo}">
 						            		<img src="${s.productImg0}" id="proImg">
 							            </div>
+							            <p>
+						            		${s.nickname}
+						            	</p>
 						            	<p id="stitle">
 							            	<c:choose>
-							            		<c:when test="${fn:length(s.title) gt 18}">
-							            			<c:out value="${fn:substring(s.title, 0, 18)}"></c:out>
-							            			.. ${s.price}원
+							            		<c:when test="${fn:length(s.title) gt 21}">
+							            			<c:out value="${fn:substring(s.title, 0, 20)}"></c:out>
+							            			..
 							            		</c:when>
 							            		<c:otherwise>
-							            			<c:out value="${s.title} ${s.price}원"></c:out>
+							            			<c:out value="${s.title}"></c:out>
 							            		</c:otherwise>
 							            	</c:choose>
+						            	</p>
+						            	<p>
+						            		${s.price}원
 						            	</p>
 						            </div>
 						   		</c:forEach>	

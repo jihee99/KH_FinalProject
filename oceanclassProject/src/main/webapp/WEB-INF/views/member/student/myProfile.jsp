@@ -146,7 +146,6 @@
 	
 	
 	<script>
-	
 		function formProfile(){
 			location.href='formProfile.me'
 		} 	

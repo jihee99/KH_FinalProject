@@ -30,4 +30,5 @@ public class ClassVo {
 	private String like;
 	
 	private String profile;
+	private String nickName;
 }
