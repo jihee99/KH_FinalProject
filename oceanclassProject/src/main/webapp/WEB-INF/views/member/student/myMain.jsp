@@ -63,8 +63,8 @@
 				            </div>
 			            	<p id="ctitle">
 				            	<c:choose>
-				            		<c:when test="${fn:length(c.clName) gt 15}">
-				            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
+				            		<c:when test="${fn:length(c.clName) gt 14}">
+				            			<c:out value="${fn:substring(c.clName, 0, 13)}"></c:out>
 				            			..
 				            		</c:when>
 				            		<c:otherwise>
@@ -79,7 +79,7 @@
 	    </div>  
 	    <div class="content1">
 	        <c:choose>
-        		<c:when test="${empty list}">
+        		<c:when test="${empty classLikeList}">
         			<h2>찜한 클래스</h2>
         			<p>찜한 클래스가 없습니다</p>
         			<button type="button" class="btn btn-lg" id="home">지금 찜하러 가기!</button>
@@ -97,8 +97,8 @@
 				            </div>
 			            	<p id="ctitle">
 				            	<c:choose>
-				            		<c:when test="${fn:length(c.clName) gt 15}">
-				            			<c:out value="${fn:substring(c.clName, 0, 14)}"></c:out>
+				            		<c:when test="${fn:length(c.clName) gt 14}">
+				            			<c:out value="${fn:substring(c.clName, 0, 13)}"></c:out>
 				            			..
 				            		</c:when>
 				            		<c:otherwise>
@@ -114,6 +114,7 @@
         <div class="content1">
 	        <c:choose>
         		<c:when test="${empty storeLikeList}">
+        			<h2>찜한 상품</h2>
         			<p>찜한 상품이 없습니다</p>
         			<button type="button" class="btn btn-lg" id="store">지금 찜하러 가기!</button>
         		</c:when>
@@ -131,7 +132,7 @@
 			            	<p id="ctitle">
 				            	<c:choose>
 				            		<c:when test="${fn:length(s.title) gt 30}">
-				            			<c:out value="${fn:substring(s.title, 0, 29)}"></c:out>
+				            			<c:out value="${fn:substring(s.title, 0, 13)}"></c:out>
 				            			..
 				            		</c:when>
 				            		<c:otherwise>

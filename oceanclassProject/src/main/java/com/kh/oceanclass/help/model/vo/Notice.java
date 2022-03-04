@@ -22,5 +22,6 @@ public class Notice {
 	private String img;
 	
 	private String nickname;
+	private int important;
 
 }

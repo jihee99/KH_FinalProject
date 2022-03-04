@@ -65,6 +65,7 @@
 							            <tr>
 							                <th>상품</th>
 							                <th>문의내용</th>
+							                <th>문의날짜</th>
 							                <th>답변유무</th>
 							            </tr>
 							        </thead>
@@ -83,6 +84,7 @@
 								            		</c:otherwise>
 									            	</c:choose>
 								                </td>
+								                <td>${q.createDate}</td>
 								                <c:choose>
 							                        <c:when test="${not empty q.answerContent}">
 							                        	<td>등록완료</td>

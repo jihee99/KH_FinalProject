@@ -35,12 +35,10 @@ public class HelpController {
 	public String helpMain(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
 		
 		int listCount = hService.selectListCount();
-		//System.out.println(currentPage);
-		//System.out.println(listCount);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Notice> list = hService.selectList(pi);
-		// System.out.println(list);
+		
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).getCategory().equals("C")) {
 				list.get(i).setCategory("클래스");
@@ -50,8 +48,17 @@ public class HelpController {
 				list.get(i).setCategory("기타");
 			}
 		}
+		
+		ArrayList<Notice> importantList = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getImportant() == 1) {
+				importantList.add(list.get(i));
+			}
+		}
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);		
+		model.addAttribute("importantList", importantList);
 		return "help/helpList";
 	}
 	

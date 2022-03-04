@@ -87,8 +87,9 @@ public class StuMypageController {
 		int result = myService.updateProfile(m);
 		Member loginUser = myService.selectUser(m);
 		if(result>0) {
+			
 			session.setAttribute("loginUser", loginUser);
-			session.setAttribute("alertMsg", "정보 수정 완료");
+			//session.setAttribute("alertMsg", "정보 수정 완료");
 			return "redirect:myProfile.me";
 		}else {
 			model.addAttribute("errorMsg", "정보수정실패");
@@ -194,20 +195,6 @@ public class StuMypageController {
 		}
 		
 	}
-	
-//	@RequestMapping("pointSaveList.me")
-//	public String pointSaveList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-//		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-//		int pointCount = myService.selectPointCount(memNo);
-//		
-//		PageInfo ppi = Pagination.getPageInfo(pointCount, currentPage, 5, 5);
-//		ArrayList<Point> pointList = myService.selectPointList(ppi, memNo);
-//		
-//		model.addAttribute("pi", ppi);
-//		model.addAttribute("pointList", pointList);
-//		return "member/student/myPoint";		
-//	}
-	
 	
 	
 //1:1문의 내역

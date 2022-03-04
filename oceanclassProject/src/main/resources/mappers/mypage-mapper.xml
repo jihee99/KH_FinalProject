@@ -591,7 +591,7 @@
 		     , refer_no
 		     , cs.title
 		     , content
-		     , create_date
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , filepath
 		     , cs.status
 		     , answer_content
@@ -644,12 +644,12 @@
 	       	 , title
 		     , content
 		     , img1
-		     , review_date
-		     , case when star_rating <![CDATA[<=]]> 5 and star_rating <![CDATA[>]]> 4 then '★★★★★'
-		    		when star_rating <![CDATA[<=]]> 4 and star_rating <![CDATA[>]]> 3 then '★★★★☆'
-		    		when star_rating <![CDATA[<=]]> 3 and star_rating <![CDATA[>]]> 2 then '★★★☆☆'
-		    		when star_rating <![CDATA[<=]]> 2 and star_rating <![CDATA[>]]> 1 then '★★☆☆☆'
-		    	    when star_rating <![CDATA[<=]]> 1 then '★☆☆☆☆'  end as star_rating
+		     , to_char(review_date, 'YYYY-MM-DD') as "review_date"
+		     , case when star_rating <![CDATA[<=]]> 5 and star_rating <![CDATA[>]]> 4.5 then '★★★★★'
+		    		when star_rating <![CDATA[<=]]> 4.5 and star_rating <![CDATA[>]]> 3.5 then '★★★★☆'
+		    		when star_rating <![CDATA[<=]]> 3.5 and star_rating <![CDATA[>]]> 2.5 then '★★★☆☆'
+		    		when star_rating <![CDATA[<=]]> 2.5 and star_rating <![CDATA[>]]> 1.5 then '★★☆☆☆'
+		    	    when star_rating <![CDATA[<=]]> 1.5 then '★☆☆☆☆'  end as star_rating
 		  from s_review r
 		  join store s using(pno)
 		 where r.mno = 5
