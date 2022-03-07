@@ -149,7 +149,7 @@
                 <div id="menu5">
                     <p>고객센터</p>
                     <ul>
-                        <li><a href="">공지사항</a></li>
+                        <li><a href="nlist.in">공지사항</a></li>
                     </ul>
                 </div>
             </div>

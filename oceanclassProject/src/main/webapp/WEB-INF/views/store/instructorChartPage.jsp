@@ -112,6 +112,10 @@
     	                      ]
     	                  },
     	                  options: {
+	    	                	  title: {
+	  					    		display: true,
+	  					    		text: '스토어 만족도'
+	  					  	  },
     	                	  pieceLabel: { mode:"label", position:"outside", fontSize: 11, fontStyle: 'bold' },
     	                      scales: {
     	                      	title: {
@@ -183,7 +187,7 @@
     	                  options: {
     	                	title: {
     					    		display: true,
-    					    		text: '문의 응답율 추이'
+    					    		text: '문의 응답률 추이'
     					  	},
     					  	yAxes: [
     	                        {
@@ -267,6 +271,10 @@
 	    	                      ]
 	    	                  },
 	    	                  options: {
+	    	                	  title: {
+	    					    		display: true,
+	    					    		text: '스토어 만족도'
+	    					  	  },
 	    	                	  pieceLabel: { mode:"label", position:"outside", fontSize: 11, fontStyle: 'bold' },
 	    	                      scales: {
 	    	                      	title: {
@@ -338,7 +346,7 @@
 	    	                  options: {
 	    	                	title: {
 	    					    		display: true,
-	    					    		text: '문의 응답율 추이'
+	    					    		text: '문의 응답률 추이'
 	    					  	},
 	    					  	yAxes: [
 	    	                        {

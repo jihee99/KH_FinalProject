@@ -135,11 +135,11 @@ button[type="submit"]{
                         },success:function(result){
                             alert("해당 글의 신고가 완료되었습니다.");
                             console.log(result);
-                            opener.parent.location.href = "/oceanclass";
+    	       				opener.parent.location.reload();
                             window.close();
                         },error:function(){
                             alert("해당 글의 신고가 실패했습니다.");
-                            opener.parent.location.href = "/oceanclass";
+    	       				opener.parent.location.reload();
                             window.close();
                         }
                     });
