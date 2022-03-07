@@ -110,7 +110,7 @@
 	                        </tbody>
 	                    </table>
 	                </div> 
-	                <div align="center">
+	                <div align="center">	
 	                    <button id="submitBtn" class="btn btn-lg" type="submit">저장하기</button>
 	                    <input type="button" id="listBtn" class="btn btn-lg" onclick="history.back();" value="목록보기">
 	                </div>   

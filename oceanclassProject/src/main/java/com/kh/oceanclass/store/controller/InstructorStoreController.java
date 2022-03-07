@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.oceanclass.common.model.vo.PageInfo;
 import com.kh.oceanclass.common.template.Pagination;
+import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.member.model.vo.Member;
 import com.kh.oceanclass.member.model.vo.Report;
 import com.kh.oceanclass.store.model.service.InstructorStoreService;
@@ -145,38 +146,55 @@ public class InstructorStoreController {
 	
 
 	@RequestMapping(value = "stupdate.in")
-	public String updateProduct(Product p, ProductOption option, MultipartFile[] reupfile, String[] originName, HttpSession session, Model model) {
+	public String updateProduct(Product p, String opnolist, ProductOption option, MultipartFile[] reupfile, String[] originName, HttpSession session, Model model) {
 		
 		//옵션수정파트먼저
-		int result1 = 1;			// 옵션 개수가 변하지 않거나 작을때 결과
-		int result2 = 1;			// 옵션 개수가 변했을 때 결과
-
-		if(option.getOptionNo() != null) {
+		int result1 = 1;			// 옵션 개수가 변하지 않거나 많을때 결과
+		int result2 = 1;			// 상품 수정에 관한
+		int opresult = 1;
+		System.out.println(option);
+		
+		if(option.getOptionName() != null) {
 			String[] opNameArr = option.getOptionName().split(",");
-			String[] opNoArr = option.getOptionNo().split(",");
+			String[] opNoArr = opnolist.split(",");
 			// 1. 옵션이 원래 있었을 때			
 			// /*--------확인용 출력문------------
 			for(int i=0; i<opNameArr.length; i++) {
-				System.out.println(i +" : " + opNameArr[i]);
+				System.out.println(opNameArr[i]);
 			}
 			
 			for(int i=0; i<opNoArr.length; i++) {
-				System.out.println(i +" : " + opNoArr[i]);
+				System.out.println(opNoArr[i]);
 			}
 			//---------확인용 출력문------------*/
 			ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
-			
+
 			for(int i=0; i<opNameArr.length; i++) {
 				oplist.add(new ProductOption());
 				oplist.get(i).setProductNo(p.getProductNo());
 				oplist.get(i).setOptionName(opNameArr[i]);
 				oplist.get(i).setPrice(option.getPrice());
 			}
-			for(int i=0; i<opNoArr.length; i++) {
-				oplist.get(i).setOptionNo(opNoArr[i]);
+			int pno = p.getProductNo();
+			opresult = inStoreService.deleteProductOption(pno);
+			
+			for(int i=0; i<opNameArr.length; i++) {
+				result1 *= inStoreService.upinsertProductOption(oplist.get(i));
 			}
+			/*
+			for(int i=0; i<opNoArr.length; i++) {
+				//oplist.get(i).setOptionNo(opNoArr[i]);
+				opresult *= inStoreService.updeleteProductOption(opNoArr[i]);
+			}
+			for(int i=0; i<opNameArr.length; i++) {
+				result1 *= inStoreService.upinsertProductOption(oplist.get(i));
+			}
+			*/
 			//System.out.println("0-----------------옵션수정------------------");
+			/*		
 			for(int i=0; i<oplist.size(); i++) {
+				//int opresult = inStoreService.deleteProductOption(pno);
+				
 				if(oplist.get(i).getOptionNo() != null) {
 					result1 *= inStoreService.updateProductOption(oplist.get(i));
 				}else {
@@ -184,10 +202,27 @@ public class InstructorStoreController {
 				}
 				//System.out.println(oplist.get(i));
 			}
+			*/
 			//System.out.println("0-----------------옵션수정------------------");
-		}
 		
+		}
 		// 첨부파일 수정 섹션
+		/*
+		if(reupfile == null) {
+			for(int i=0; i<originName.length; i++) {
+				if(i==0) {
+					p.setProductImg0(originName[i]);
+				}else if(i==1) {
+					p.setProductImg1(originName[i]);
+				}else if(i==2) {
+					p.setProductImg2(originName[i]);
+				}else if(i==3) {
+					p.setProductImg3(originName[i]);
+				}
+			}
+		}
+*/
+
 		for(int j=0; j<reupfile.length; j++) {
 			// 첨부파일이 있다면
 			if(!reupfile[j].getOriginalFilename().equals("")) {
@@ -219,7 +254,7 @@ public class InstructorStoreController {
 		}
 		
 		for(int i=0; i<reupfile.length; i++) {
-			System.out.println(reupfile[i]);
+
 			if(!reupfile[i].getOriginalFilename().equals("")) {
 				String changeName = saveFile(reupfile[i], session);
 				if(i==0) {
@@ -233,21 +268,8 @@ public class InstructorStoreController {
 	 			}
 			}
 		}
-		/*
-		ArrayList<String> changeList = saveFile(reupfile, session);
-		for(int i=0; i<changeList.size(); i++) {
-			if(i==0) {
-				p.setProductImg0("resources/uploadFiles/store/"+changeList.get(i));
-			} else if(i==1) {
-				p.setProductImg1("resources/uploadFiles/store/"+changeList.get(i));
- 			} else if(i==2) {
- 				p.setProductImg2("resources/uploadFiles/store/"+changeList.get(i));
- 			} else {
- 				p.setProductImg3("resources/uploadFiles/store/"+changeList.get(i));
- 			}
-		}
-		*/
-		System.out.println(p);
+
+
 		
 		result2 = inStoreService.updateProduct(p);
 		
@@ -589,6 +611,31 @@ public class InstructorStoreController {
 		return "member/common/reportWindow";
 	}
 	
+	@RequestMapping(value="nlist.in")
+	public String instructorNoticeList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = inStoreService.selectinstructorNoticeCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Notice> list = inStoreService.selectTcNoticeList(pi);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list",list);
+		return "store/instructorNoticeList";
+	}
+	
+	@RequestMapping(value="ndetail.in")
+	public String instructorNoticeDetail(int nno, Model model) {
+
+		int upCount = inStoreService.updateNoticeCount(nno);
+		if(upCount > 0) {
+			Notice n = inStoreService.selectinstructorNoticeDetail(nno);
+			model.addAttribute("n", n);
+			return "store/instructorNoticeDetail";			
+		}else {
+			return "redirect:/";
+		}
+
+	}
 	
 	
 	// 첨부파일
@@ -613,9 +660,7 @@ public class InstructorStoreController {
 		
 		return changeName;
 	}
-	
-	
-	
+
 	
 	
 	

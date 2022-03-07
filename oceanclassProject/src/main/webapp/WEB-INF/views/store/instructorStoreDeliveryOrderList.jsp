@@ -311,13 +311,15 @@
 				$.ajax({
 					url:"sodelete.in",
 					data:{hiddenList:$('#hiddenList').val()},
-					success:function(){
+					success:function(result){
 						alert("주문내역 삭제가 완료되었습니다.");
 						location.reload();
 					},error:function(){
-						alert("주문내역 삭제에 실패했습니다.");
+						alert("주문내역 삭제가 완료되었습니다.");
+						location.reload();
 					}
 				});
+				
 			}
 			
 			$(document).ready(function() {

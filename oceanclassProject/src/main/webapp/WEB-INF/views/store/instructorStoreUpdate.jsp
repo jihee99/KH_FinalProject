@@ -107,7 +107,7 @@
 								<c:forEach var="op" items="${oplist }">
 									<div>
 										<input name="optionName" type="text" value="${op.optionName }" style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;">
-										<input name="optionNo" type="hidden" value="${op.optionNo }">
+										<input name="opnolist" type="hidden" value="${op.optionNo }">
 										<a href="#" class="delBtn1">삭제</a>
 									</div>
 								</c:forEach>

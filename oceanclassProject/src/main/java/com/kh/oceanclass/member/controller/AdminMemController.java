@@ -416,7 +416,7 @@ public class AdminMemController {
 	@RequestMapping(value="rplist.ad")
 	public String adminReportList(@RequestParam(value="cpage",defaultValue="1") int currentPage, Model model) {
 		int listCount = adMemService.adminReportCount();
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Report> reportList = adMemService.adminReportList(pi);
 		
 		model.addAttribute("pi", pi);
@@ -511,7 +511,7 @@ public class AdminMemController {
 	public String adminBlackMemOut(String mno, HttpSession session) {
 		int result = adMemService.blackMemOut(mno);
 		if(result>0) {
-			session.setAttribute("alertMsg", "회원상태 복구에 실패했습니다.");
+			session.setAttribute("alertMsg", "해당회원의 탈퇴처리가 완료되었습니다.");
 		}
 		return "redirect:blList.ad";
 	}
