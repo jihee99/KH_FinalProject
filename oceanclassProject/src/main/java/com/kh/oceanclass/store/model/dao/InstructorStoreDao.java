@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
@@ -160,7 +161,7 @@ public class InstructorStoreDao {
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreReviewList", userNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectStoreReviewList", userNo);
 	}
 
 	public ArrayList<StoreReview> selectStoreProductReview(SqlSessionTemplate sqlSession, String pno) {
@@ -209,6 +210,30 @@ public class InstructorStoreDao {
 
 	public StoreReview selectStoreReviewDetail(SqlSessionTemplate sqlSession, String rno) {
 		return sqlSession.selectOne("inStoreMapper.selectStoreReviewDetail", rno);
+	}
+
+	public int selectinstructorNoticeCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("inStoreMapper.selectinstructorNoticeCount");
+	}
+
+	public ArrayList<Notice> selectTcNoticeList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("inStoreMapper.selectTcNoticeList", null, rowBounds );
+	}
+
+	public Notice selectinstructorNoticeDetail(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.selectOne("inStoreMapper.selectTcNoticeDetail", nno);
+	}
+
+	public int updateNoticeCount(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("inStoreMapper.upNoticeCount", nno);
+	}
+
+	public int updeleteProductOption(SqlSessionTemplate sqlSession, String opno) {
+		return sqlSession.delete("inStoreMapper.updeleteStoreOption", opno);
 	}
 
 	

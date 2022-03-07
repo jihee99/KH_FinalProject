@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.store.model.dao.InstructorStoreDao;
 import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
@@ -258,6 +259,31 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 	@Override
 	public StoreReview selectStoreReviewDetail(String rno) {
 		return inStoreDao.selectStoreReviewDetail(sqlSession, rno);
+	}
+
+	@Override
+	public int selectinstructorNoticeCount() {
+		return inStoreDao.selectinstructorNoticeCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Notice> selectTcNoticeList(PageInfo pi) {
+		return inStoreDao.selectTcNoticeList(sqlSession, pi);
+	}
+
+	@Override
+	public Notice selectinstructorNoticeDetail(int nno) {
+		return inStoreDao.selectinstructorNoticeDetail(sqlSession, nno);
+	}
+
+	@Override
+	public int updateNoticeCount(int nno) {
+		return inStoreDao.updateNoticeCount(sqlSession, nno);
+	}
+
+	@Override
+	public int updeleteProductOption(String opno) {
+		return inStoreDao.updeleteProductOption(sqlSession, opno );
 	}
 
 

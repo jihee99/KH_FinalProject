@@ -121,6 +121,20 @@
 		<result column="p_title" property="productName"/>
 	</resultMap>
 	
+	<resultMap id="noticeResult" type="Notice">
+		<result column="nno" property="noNo" />
+		<result column="mno" property="memNo" />
+		<result column="category" property="category" />
+		<result column="n_title" property="noTitle" />
+		<result column="n_content" property="noContent" />
+		<result column="count" property="count" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		<result column="img" property="img" />
+		
+		<result column="nickname" property="nickname" />
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		select
 		       count(*)
@@ -669,4 +683,43 @@
 			where rno = #{rno}
 	</select>
 	
+	<select id="selectinstructorNoticeCount" resultType="_int">
+		select count(*)
+		  from notice
+		 where category = 'T'
+	</select>
+	
+	<select id="selectTcNoticeList" resultMap="noticeResult">
+		select
+		       nno
+		     , n_title
+		     , n_content
+		     , create_date
+		 from notice
+		 where category = 'T'
+		 order by nno desc
+	</select>
+	
+	<update id="upNoticeCount">
+		update notice
+		   set count = count + 1
+		 where nno = #{nno}
+	</update>
+	
+	<select id="selectTcNoticeDetail" resultMap="noticeResult">
+		select
+		       nno
+		     , n_title
+		     , n_content
+		     , count
+		     , create_date
+		 from notice
+		 where nno = #{nno}
+	</select>
+	
+	<delete id="updeleteStoreOption">
+		delete 
+		  from soption 
+		 where opno = #{opno}
+	</delete>
 </mapper>

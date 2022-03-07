@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.oceanclass.common.model.vo.PageInfo;
+import com.kh.oceanclass.help.model.vo.Notice;
 import com.kh.oceanclass.store.model.vo.InProductOrder;
 import com.kh.oceanclass.store.model.vo.Product;
 import com.kh.oceanclass.store.model.vo.ProductOption;
@@ -112,6 +113,13 @@ public interface InstructorStoreService {
 
 
 	StoreReview selectStoreReviewDetail(String rno);
+	
+	
+	int selectinstructorNoticeCount();
+	ArrayList<Notice> selectTcNoticeList(PageInfo pi);
+	Notice selectinstructorNoticeDetail(int nno);
+	int updateNoticeCount(int nno);
+	int updeleteProductOption(String opno);
 
 	
 	
