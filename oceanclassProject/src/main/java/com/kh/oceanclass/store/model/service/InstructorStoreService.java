@@ -119,7 +119,7 @@ public interface InstructorStoreService {
 	ArrayList<Notice> selectTcNoticeList(PageInfo pi);
 	Notice selectinstructorNoticeDetail(int nno);
 	int updateNoticeCount(int nno);
-	int updeleteProductOption(String opno);
+	int updeleteProductOption(ProductOption op);
 
 	
 	

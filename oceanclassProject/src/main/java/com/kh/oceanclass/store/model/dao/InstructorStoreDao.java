@@ -232,8 +232,8 @@ public class InstructorStoreDao {
 		return sqlSession.update("inStoreMapper.upNoticeCount", nno);
 	}
 
-	public int updeleteProductOption(SqlSessionTemplate sqlSession, String opno) {
-		return sqlSession.delete("inStoreMapper.updeleteStoreOption", opno);
+	public int updeleteProductOption(SqlSessionTemplate sqlSession, ProductOption op) {
+		return sqlSession.delete("inStoreMapper.updeleteStoreOption", op);
 	}
 
 	

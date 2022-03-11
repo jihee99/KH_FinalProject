@@ -21,7 +21,8 @@
 button[type="submit"]{
     width: 120px; height: 40px; 
     border-radius: 10px; border: none; 
-    background: rgb(107, 171, 213); color: white;
+    background : darkgray;  color: white;
+    /*background: rgb(107, 171, 213);*/
     font-size: 16px; font-weight: 550;    
 }
 
@@ -38,6 +39,21 @@ button[type="submit"]{
                         <hr>
                     </td>
                 </tr>
+                <!-- 
+                <tr>
+                	<th style="width:150px;">신고 글 제목</th>
+               		<td>★신★고★해★봐★또★쓸★거★임★</td>
+                </tr>
+                <tr>
+                	<th>작 &nbsp; 성  &nbsp; 자 </th>
+                	<td>u*****</td>
+                </tr>
+                <tr>
+                <td colspan="2">
+                        <hr>
+                    </td>
+                </tr>
+                 -->
             </thead>
             <tbody>
                 <tr>
@@ -86,7 +102,7 @@ button[type="submit"]{
         	var content;
         	
             $("input:radio[name=rpcategory]").click(function(){
-                // value값이 5인 라디오버튼 체크시에만 text-area 활성화
+                // 기타 버튼 선택 시
                 if($("input:radio[name=rpcategory]:checked").val() == "25"){
                     $("#input-area2").attr("disabled",false);
                 } else{
@@ -114,17 +130,15 @@ button[type="submit"]{
 
                 if(rpCategory == '25'){
                 	if(content.length > 5){
-                        rpValue = $("#input-area2").val();
-                        console.log(rpValue);	
+                        rpValue = $("#input-area2").val();	
                 	}else{
                 		alert("최소 5글자 이상 입력해주세요");
                 	}
                 }else{
                 	rpValue= $('input[name=rpcategory]:checked').val();
-                	console.log(rpValue);
                 }
-            	if(rpValue != null){
-            		
+                
+            	if(rpValue != null){	
                     $.ajax({
                     	url:"report.me",
                         data:{
@@ -134,7 +148,6 @@ button[type="submit"]{
                             content:rpValue
                         },success:function(result){
                             alert("해당 글의 신고가 완료되었습니다.");
-                            console.log(result);
     	       				opener.parent.location.reload();
                             window.close();
                         },error:function(){
@@ -142,13 +155,10 @@ button[type="submit"]{
     	       				opener.parent.location.reload();
                             window.close();
                         }
-                    });
-            		
+                    });	
             	}else{
-            		console.log("글자수부족");
+            		console.log("신고 실패");
             	}
-                
-            	
             }
             
             

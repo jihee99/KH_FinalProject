@@ -456,9 +456,8 @@ public class AdminMemController {
 	
 	@RequestMapping(value="rpdelete.ad")
 	public String adminReportDelete(String rpno, String mno, HttpSession session) {
-		
-		int result = adMemService.adminReportDelete(rpno);
 		Member m = adMemService.selectReportMem(mno);
+		int result = adMemService.adminReportDelete(rpno);
 		int result2 = adMemService.reportCountUp(m);
 		
 		if(result*result2>0) {
@@ -472,8 +471,9 @@ public class AdminMemController {
 	@RequestMapping(value="rpback.ad")
 	public String adminReportRollback(String rpno, String mno, HttpSession session) {
 		
-		int result = adMemService.adminReportRollback(rpno);
 		Member m = adMemService.selectReportMem(mno);
+		
+		int result = adMemService.adminReportRollback(rpno);
 		int result2 = adMemService.reportCountDown(m);
 		
 		if(result*result2>0) {

@@ -106,7 +106,7 @@ div{box-sizing: border-box;}
        			}
        		}
        	</script>
-
+	<!-- 
 		<div id="header_search" align="center">
             <form id="search_form">
                 <select id="header_category">
@@ -121,7 +121,7 @@ div{box-sizing: border-box;}
                 <button type="button" onclick="smCk();">검색</button>
             </form>
 		</div>
-		
+	 -->
 		<!--각 페이지 넘어가서 해당 메뉴에 글자 색 효과 넣기 rgb(107, 171, 213) -->
         <div id="header_2">
 

@@ -118,8 +118,8 @@
         */
         	$(".stockBtn").on('click' , function(){
         		var thisRow = $(this).closest('tr'); 
-
         		var productNo = thisRow.find('td:eq(0)').find('input').val();
+        		// inputStock
         		var inValue = thisRow.find('td:eq(5)').find('input').val();
         		if(inValue==""){
         			inValue = 0;
@@ -127,30 +127,30 @@
         		var soldY = thisRow.find('td:eq(6)').find('input:checked').val();
         		var soldN = thisRow.find('td:eq(7)').find('input:checked').val();
         		var soldYN = "";
-        		if(soldY == 1 || soldN == null){  //해당상품이 품절이 아닐때 
+        		if(soldY == 1 && soldN == null){   
         			soldYN = "N";
-        		} else if(soldY == null || soldN == 0) {	// 품절일때 
+        		} else if(soldN == 0 && soldY == null) {
         			soldYN = "Y";
+        		} else{
+        			alert("판매여부는 중복 선택이 불가능합니다.");
         		}
-        		console.log(productNo);
-        		console.log(inValue);
-        		console.log(soldYN);
         		
-        		$.ajax({
-        			url:"stockUp.in",
-        			data:{
-        				productNo:productNo,
-        				inValue:inValue,
-						soldout:soldYN
-        			},success:function(result){
-        				alert("상품 재고 수정이 완료되었습니다.");
-        				
-        			},error:function(){
-        				alert("상품 재고 수정에 실패했습니다.");
-        			}
-        		});
-				location.reload();
-
+        		if(soldYN != ""){
+            		$.ajax({
+            			url:"stockUp.in",
+            			data:{
+            				productNo:productNo,
+            				inValue:inValue,
+    						soldout:soldYN
+            			},success:function(result){
+            				alert("상품 재고 수정이 완료되었습니다.");
+            				
+            			},error:function(){
+            				alert("상품 재고 수정에 실패했습니다.");
+            			}
+            		});
+    				location.reload();	
+        		}
         	});
         </script>
         </c:when>

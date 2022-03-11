@@ -720,6 +720,6 @@
 	<delete id="updeleteStoreOption">
 		delete 
 		  from soption 
-		 where opno = #{opno}
+		 where opno = #{optionNo}
 	</delete>
 </mapper>

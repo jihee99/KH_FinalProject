@@ -104,6 +104,9 @@
                         <tr>
                         	<td colspan="2">
                         		<div id="append1" style="margin-left:50px; width:700px;">
+                        		<c:forEach var="op" items="${oplist }">
+									<input name="originOpNo" type="hidden" value="${op.optionNo }">
+								</c:forEach>
 								<c:forEach var="op" items="${oplist }">
 									<div>
 										<input name="optionName" type="text" value="${op.optionName }" style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;">
@@ -131,7 +134,7 @@
 								<c:if test="${ p.productImg0 ne null }">
 	                         	현재 파일 : 
 	                            <a href="${p.productImg0 }" download="${p.productImg0 }">${p.productImg0 }</a>
-	                            <input type="hidden" name="originName" value="${p.productImg0 }">
+	                            <input type="hidden" name="productImg0" value="${p.productImg0 }">
                         		</c:if>
                             </td>
                         </tr>
@@ -149,7 +152,7 @@
 	                            <c:if test="${ p.productImg1 ne null }">
 	                         	현재 파일 : 
 	                            <a href="${p.productImg1 }" download="${p.productImg1 }">${p.productImg1 }</a>
-	                            <input type="hidden" name="originName" value="${p.productImg1 }">
+	                            <input type="hidden" name="productImg1" value="${p.productImg1 }">
 	                       		</c:if>
                        		</td>
                         </tr>
@@ -160,7 +163,7 @@
 	                            <c:if test="${ p.productImg2 ne null }">
 	                         	현재 파일 : 
 	                            <a href="${p.productImg2 }" download="${p.productImg2 }">${p.productImg2 }</a>
-	                            <input type="hidden" name="originName" value="${p.productImg2 }">
+	                            <input type="hidden" name="productImg2" value="${p.productImg2 }">
 	                       		</c:if>
                        		</td>
                         </tr>
@@ -171,7 +174,7 @@
 	                            <c:if test="${ p.productImg3 ne null }">
 	                         	현재 파일 : 
 	                            <a href="${p.productImg3 }" download="${p.productImg3 }">${p.productImg3 }</a>
-	                            <input type="hidden" name="originName" value="${p.productImg3 }">
+	                            <input type="hidden" name="productImg3" value="${p.productImg3 }">
 	                       		</c:if>
                        		</td>
                         </tr>

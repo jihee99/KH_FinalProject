@@ -67,28 +67,28 @@
                 </div>
             </form>
 			<script>
-				$(function(){
+			
+				window.onload = function(){
+					
 					$('#selectList').change(function(){
-						//var value = $("#selectList option:selected").val();
-						//console.log(value);
+						
 						var index = $("#selectList option").index($("#selectList option:selected"));
-						//console.log(index);		
 						var obj = new Object();
 						var plist = new Array();
+						
 						<c:forEach var="p" items="${plist}">
 							obj = {productNo : "${p.productNo}", title : "${p.title}", stock:"${p.stock}"}
 							plist.push(obj);
 						</c:forEach>
-						//console.log(plist);
-						$('#productNo').attr('value',plist[index].productNo);
-						$('#stock').attr('value',plist[index].stock);
-						$('#stock').attr('disabled',true);
-						//console.log(plist[index].stock);
+
+						document.getElementById('productNo').setAttribute('value',plist[index].productNo);
+						document.getElementById('stock').setAttribute('value',plist[index].stock);
+						document.getElementById('stock').setAttribute('disabled',true);
+
 						
 					});
-					
-					
-				})
+									
+				}
 
 			</script>
         

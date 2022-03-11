@@ -98,7 +98,7 @@
         
         <script>
         	$("#productList").click(function(){
-        		console.log($(this).val());
+
         		// 페이징바 처리하는 ajax
         		/*
         		$.ajax({
@@ -142,10 +142,7 @@
         			url:"pQnaListAjax.in",
         			data:{pno:$(this).val()},
         			success:function(list){
-        				console.log(list);
-        				
-        				let value = "";
-        				
+        				let value = "";	
         				for(let i in list){
         					value += "<tr>"
         								+ "<td><input type='hidden' class='csQno' value="+ list[i].csQno + ">"+ list[i].csQno + "</td>"
@@ -162,15 +159,14 @@
 	        					value += "</td>"
 	        							+"<td><button id='detailBtn' onclick='qnaDetail("+ list[i].csQno+")'>상세</button></td>"	
 	        							+"</tr>";
-        				}
-    					console.log(value);  
+        				}  
     					$(".btn_group").empty();
         				$(".qnaBody").empty();
         				$(".qnaBody").html(value);
         			}, error:function(){
         				alert("상품 문의 조회에 실패했습니다.");
         			}
-        		})
+        		});
         		
         		
         	})

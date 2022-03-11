@@ -99,22 +99,7 @@ public class InstructorStoreController {
 		
 			}
 		}
-		/*
-		ArrayList<String> changeList = saveFile(upfile, session);
-		System.out.println(changeList);
-		
-		for(int i=0; i<changeList.size(); i++) {
-			if(i==0) {
-				p.setProductImg0("resources/uploadFiles/store/"+changeList.get(i));
-			} else if(i==1) {
-				p.setProductImg1("resources/uploadFiles/store/"+changeList.get(i));
- 			} else if(i==2) {
- 				p.setProductImg2("resources/uploadFiles/store/"+changeList.get(i));
- 			} else {
- 				p.setProductImg3("resources/uploadFiles/store/"+changeList.get(i));
- 			}
-		}
-		*/
+
 		int result1 = inStoreService.insertProduct(p);
 		int result2 = 1;
 		for(int i=0; i<oplist.size(); i++) {
@@ -146,135 +131,87 @@ public class InstructorStoreController {
 	
 
 	@RequestMapping(value = "stupdate.in")
-	public String updateProduct(Product p, String opnolist, ProductOption option, MultipartFile[] reupfile, String[] originName, HttpSession session, Model model) {
+	public String updateProduct(Product p, String originOpNo, ProductOption option, MultipartFile[] reupfile, HttpSession session, Model model) {
 		
-		//옵션수정파트먼저
+		//옵션수정 관련
 		int result1 = 1;			// 옵션 개수가 변하지 않거나 많을때 결과
-		int result2 = 1;			// 상품 수정에 관한
+		int result2 = 0;			// 상품 정보 수정 결과
 		int opresult = 1;
-		System.out.println(option);
-		
-		if(option.getOptionName() != null) {
-			String[] opNameArr = option.getOptionName().split(",");
-			String[] opNoArr = opnolist.split(",");
-			// 1. 옵션이 원래 있었을 때			
-			// /*--------확인용 출력문------------
-			for(int i=0; i<opNameArr.length; i++) {
-				System.out.println(opNameArr[i]);
-			}
-			
-			for(int i=0; i<opNoArr.length; i++) {
-				System.out.println(opNoArr[i]);
-			}
-			//---------확인용 출력문------------*/
-			ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
 
-			for(int i=0; i<opNameArr.length; i++) {
-				oplist.add(new ProductOption());
-				oplist.get(i).setProductNo(p.getProductNo());
-				oplist.get(i).setOptionName(opNameArr[i]);
-				oplist.get(i).setPrice(option.getPrice());
-			}
-			int pno = p.getProductNo();
-			opresult = inStoreService.deleteProductOption(pno);
+		if(option != null) {
 			
-			for(int i=0; i<opNameArr.length; i++) {
-				result1 *= inStoreService.upinsertProductOption(oplist.get(i));
+			String[] opNameArr = option.getOptionName().split(",");
+			String[] opNoArr = originOpNo.split(",");
+
+			ArrayList<ProductOption> oplist = new ArrayList<ProductOption>();
+			if(opNameArr.length == opNoArr.length) {
+				// 원래 옵션수와 수정된 옵션수가 동일할 때
+				for(int i=0; i<opNoArr.length; i++) {
+					oplist.add(new ProductOption());
+					oplist.get(i).setOptionNo(opNoArr[i]);
+					oplist.get(i).setProductNo(p.getProductNo());
+					oplist.get(i).setOptionName(opNameArr[i]);
+				}
+			} else if(opNameArr.length < opNoArr.length) {
+				// 원래 옵션수보다 수정된 옵션 수가 적을 때
+				for(int i=0; i<opNoArr.length; i++) {
+					oplist.add(new ProductOption());
+					oplist.get(i).setOptionNo(opNoArr[i]);
+					oplist.get(i).setProductNo(p.getProductNo());
+				}		
+				for(int i=0; i<opNameArr.length; i++) {
+					oplist.get(i).setOptionName(opNameArr[i]);
+				}
+			} else if(opNameArr.length > opNoArr.length) {
+				// 원래 옵션 수보다 수정된 옵션 수가 많을 때
+				for(int i=0; i<opNameArr.length; i++) {
+					oplist.add(new ProductOption());
+					oplist.get(i).setOptionName(opNameArr[i]);
+					oplist.get(i).setProductNo(p.getProductNo());
+					oplist.get(i).setPrice(p.getPrice());
+				}
+				for(int i=0; i<opNoArr.length; i++) {
+					oplist.get(i).setOptionNo(opNoArr[i]);	
+				}
 			}
-			/*
-			for(int i=0; i<opNoArr.length; i++) {
-				//oplist.get(i).setOptionNo(opNoArr[i]);
-				opresult *= inStoreService.updeleteProductOption(opNoArr[i]);
-			}
-			for(int i=0; i<opNameArr.length; i++) {
-				result1 *= inStoreService.upinsertProductOption(oplist.get(i));
-			}
-			*/
-			//System.out.println("0-----------------옵션수정------------------");
-			/*		
+			
+			System.out.println(oplist);
+			
 			for(int i=0; i<oplist.size(); i++) {
-				//int opresult = inStoreService.deleteProductOption(pno);
-				
-				if(oplist.get(i).getOptionNo() != null) {
+				if(oplist.get(i).getOptionNo() != null && oplist.get(i).getOptionName() != null) {
 					result1 *= inStoreService.updateProductOption(oplist.get(i));
-				}else {
+				} else if(oplist.get(i).getOptionNo() != null && oplist.get(i).getOptionName() == null) {
+					result1 *= inStoreService.updeleteProductOption(oplist.get(i));
+				} else if(oplist.get(i).getOptionNo() == null && oplist.get(i).getOptionName() != null) {
 					result1 *= inStoreService.upinsertProductOption(oplist.get(i));
 				}
-				//System.out.println(oplist.get(i));
-			}
-			*/
-			//System.out.println("0-----------------옵션수정------------------");
-		
-		}
-		// 첨부파일 수정 섹션
-		/*
-		if(reupfile == null) {
-			for(int i=0; i<originName.length; i++) {
-				if(i==0) {
-					p.setProductImg0(originName[i]);
-				}else if(i==1) {
-					p.setProductImg1(originName[i]);
-				}else if(i==2) {
-					p.setProductImg2(originName[i]);
-				}else if(i==3) {
-					p.setProductImg3(originName[i]);
-				}
 			}
 		}
-*/
 
-		for(int j=0; j<reupfile.length; j++) {
-			// 첨부파일이 있다면
-			if(!reupfile[j].getOriginalFilename().equals("")) {
-				//System.out.println("re YYYY");
-				for(int i = 0; i<originName.length; i++) {
-					if(i==0) {
-						if(p.productImg0 != null) {
-							new File(session.getServletContext().getRealPath(p.productImg0)).delete();
-						}
-					} else if(i==1) {
-						if(p.productImg1 != null) {
-							new File(session.getServletContext().getRealPath(p.productImg1)).delete();
-						}
-					} else if(i==2) {
-						if(p.productImg2 != null) {
-							new File(session.getServletContext().getRealPath(p.productImg2)).delete();
-						}
-					} else if(i==3) {
-						if(p.productImg3 != null) {
-							new File(session.getServletContext().getRealPath(p.productImg3)).delete();
-						}
-					} else {
-						// 실패시 에러페이지로 반환
-						model.addAttribute("errorMsg", "상품 수정에 실패했습니다.");
-						return "common/errorPage";
-					}
-				}
-			}
-		}
-		
+		// 첨부파일 수정
 		for(int i=0; i<reupfile.length; i++) {
-
 			if(!reupfile[i].getOriginalFilename().equals("")) {
 				String changeName = saveFile(reupfile[i], session);
 				if(i==0) {
+					new File(session.getServletContext().getRealPath(p.productImg0)).delete();
 					p.setProductImg0("resources/uploadFiles/store/" + changeName);
 				} else if(i==1) {
+					new File(session.getServletContext().getRealPath(p.productImg1)).delete();
 					p.setProductImg1("resources/uploadFiles/store/" + changeName);
-	 			} else if(i==2) {
+				} else if(i==2) {
+					new File(session.getServletContext().getRealPath(p.productImg2)).delete();
 	 				p.setProductImg2("resources/uploadFiles/store/" + changeName);
-	 			} else {
+				} else if(i==3) {
+					new File(session.getServletContext().getRealPath(p.productImg3)).delete();
 	 				p.setProductImg3("resources/uploadFiles/store/" + changeName);
-	 			}
+				} else {
+					model.addAttribute("errorMsg", "상품 수정에 실패했습니다.");
+					return "common/errorPage";
+				}
 			}
 		}
-
-
 		
 		result2 = inStoreService.updateProduct(p);
-		
-		System.out.println(result1);
-		System.out.println(result2);
 		
 		session.setAttribute("alertMsg", "상품 수정이 완료되었습니다.");
 		return "redirect:stlist.in";
@@ -356,9 +293,7 @@ public class InstructorStoreController {
 		ArrayList<StoreOrder> list = inStoreService.selectStoreDeliveryList(pi);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		
-		//System.out.println(pi);
-		//System.out.println(list);
+
 		return "store/instructorStoreDeliveryOrderList";
 	}
 	
@@ -366,8 +301,7 @@ public class InstructorStoreController {
 	public String storeOrderDetail(String ono, Model model) {
 		StoreOrder so = inStoreService.selectStoreDelivery(ono);
 		ArrayList<StoreBuyList> buylist = inStoreService.selectStoreBuyList(ono);
-		//System.out.println(so);
-		//System.out.println(buylist);
+
 		model.addAttribute("so", so);
 		model.addAttribute("buylist", buylist);
 		return "store/instructorStoreOrderDetail";
@@ -375,7 +309,7 @@ public class InstructorStoreController {
 	
 	@RequestMapping(value="soupdate.in")
 	public String storeOrderUpdate(StoreOrder so, Model model, HttpSession session) {
-		//System.out.println(so);
+
 		int result = inStoreService.storeOrderUpdate(so);
 		if(result>0) {
 			session.setAttribute("alertMsg", "주문상태변경에 성공했습니다.");
@@ -396,15 +330,10 @@ public class InstructorStoreController {
 		int listCount = inStoreService.searchStoreOrderCount(orderStatus);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<StoreOrder> list = inStoreService.searchStoreOrderList(orderStatus, pi);
-		System.out.println(orderStatus);
-		System.out.println(pi);
-		System.out.println(list);
-		
 
 		map.put("pi", pi.toString());
 		map.put("list", list);
 
-		//return jObj.toJSONString();
 		return map;
 
 	}
@@ -412,13 +341,12 @@ public class InstructorStoreController {
 	@ResponseBody
 	@RequestMapping(value="sodelete.in", produces="application/json; charset=UTF-8")
 	public String deleteStoreOrder(String hiddenList) {
-		//System.out.println(hiddenList);
+		
 		String[] list = hiddenList.split(",");
-		//System.out.println(list);
+
 		int result = 1;
 		for(int i=0; i<list.length; i++) {
 			String orderNo = list[i];
-			//System.out.println(orderNo);
 			result *= inStoreService.deleteStoreOrder(orderNo);
 		}
 		
@@ -431,15 +359,14 @@ public class InstructorStoreController {
 		
 		map.put("type", type);
 		map.put("key", key);
+		
 		model.addAttribute("type", type);
 		model.addAttribute("key", key);
-		System.out.println(map	);
+
 		int listCount = inStoreService.searchKeyStoreOrderCount(map);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		System.out.println(pi);
 		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<StoreOrder> list = inStoreService.searchKeyStoreOrderList(map, pi);
-		System.out.println(list);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -475,16 +402,12 @@ public class InstructorStoreController {
 			
 			ArrayList<Product> plist = inStoreService.selectReviewProductList(userNo);
 			ArrayList<StoreReview> slist = inStoreService.selectStoreReviewList(pi, userNo);
-			System.out.println(pi);
-			System.out.println(plist);
-			System.out.println(loginUser.getMemNo());
 			
 			model.addAttribute("pi",pi);
 			model.addAttribute("plist", plist);
 			model.addAttribute("slist", slist);
-			System.out.println(slist);
-			return "store/instructorStoreReviewList";
 			
+			return "store/instructorStoreReviewList";
 		} else {
 			session.setAttribute("alertMsg", "접근 권한이 없습니다.");
 			return "redirect:/";
@@ -522,12 +445,10 @@ public class InstructorStoreController {
 			ArrayList<Product> plist = inStoreService.selectReviewProductList(userNo);
 			ArrayList<StoreQna> list = inStoreService.selectStoreQnaList(pi);
 			
-			System.out.println(pi);
-			System.out.println(list);
-			
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 			model.addAttribute("plist", plist);
+			
 			return "store/instructorStoreQnaList";
 		}else {
 			session.setAttribute("alertMsg", "접근 권한이 없습니다.");
@@ -540,9 +461,7 @@ public class InstructorStoreController {
 	public String productQnaCountAjax(@RequestParam(value="cpage", defaultValue="1") int currentPage, String pno) {
 		int listCount = inStoreService.selectStoreProductQnaCount(pno);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-//		StoreQna sq = inStoreService.selectStoreProductQnaCount(pno);
-		
-//		System.out.println(sq);
+
 		return new Gson().toJson(pi);
 	}
 	
@@ -552,9 +471,7 @@ public class InstructorStoreController {
 		int listCount = inStoreService.selectStoreProductQnaCount(pno);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<StoreQna> list = inStoreService.selectStoreProductQnaList(pi, pno);
-//		StoreQna sq = inStoreService.selectStoreProductQnaCount(pno);
-		
-//		System.out.println(sq);
+
 		return new Gson().toJson(list);
 	}
 	
@@ -562,7 +479,7 @@ public class InstructorStoreController {
 	public String productQnaDetailF(String qno, Model model) {
 		
 		StoreQna sq = inStoreService.selectStoreQnaDetail(qno);
-		System.out.println(sq);
+
 		model.addAttribute("sq", sq);
 		return "store/instructorStoreQnaDetail";
 	}
@@ -583,7 +500,6 @@ public class InstructorStoreController {
 	@RequestMapping(value="sqreport.in")
 	public String reportForm(String qno, Model model) {
 		StoreQna sq = inStoreService.selectStoreQnaDetail(qno);
-		System.out.println(sq);
 		
 		Report rp = new Report();
 		
@@ -601,12 +517,12 @@ public class InstructorStoreController {
 	public String reviewReportForm(String rno, Model model) {
 		StoreReview sr = inStoreService.selectStoreReviewDetail(rno);
 		Report rp = new Report();
-		System.out.println(sr);
+
 		rp.setReportMemNo(Integer.toString(sr.getMemberNo()));
 		rp.setRefCategory("SR");
 		rp.setRefBNo(Integer.toString(sr.getReviewNo()));
 		rp.setRpContent(sr.getContent());
-		System.out.println(rp);
+
 		model.addAttribute("rp", rp);
 		return "member/common/reportWindow";
 	}

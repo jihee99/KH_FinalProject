@@ -8,135 +8,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	#outer{
-	    width: 1000px;
-	    margin:auto;
-	    margin-top: 20px;
-	}
-	/*
-	#slide{
-	    width: 100%;
-	    height: 450px;
-	    margin-bottom: 70px;
-	    cursor:pointer;
-	}
-	#slideShow{
-		width: 800px;
-		height: 400px;
-		overflow: hidden;
-	}
-	*/
-	#slider-wrap {
-	 width: 100%;
-	 height: 400px;
-	 position: relative;
-	 overflow: hidden;
-	}
 	
-	#slider-wrap ul#slider {
-	    height: 100%;
-	    position: absolute;
-	    top: 0;
-	    left: 0;
-	}
-	
-	#slider-wrap ul#slider li {
-	    float: left;
-	    position: relative;
-	    width: 600px;
-	    height: 400px;
-	}
-	
-	#slider-wrap ul#slider li>div {
-	    position: absolute;
-	    top: 20px;
-	    left: 35px;
-	}
-	
-	#slider-wrap ul#slider li>div h3 {
-	    font-size: 36px;
-	    text-transform: uppercase;
-	}
-	
-	#slider-wrap ul#slider li>div span {
-	    font-size: 21px;
-	}
-	
-	#slider-wrap ul#slider li img {
-	    display: block;
-	    width: 100%;
-	    height: 100%;
-	}
-	
-	ul{
-		list-style:none;
-		padding-left:0;
-	}
-	
-	li img{
-		cursor:pointer;
-	}
-	
-	/*btns*/
-	.slider-btns {
-	    position: absolute;
-	    width: 50px;
-	    height: 60px;
-	    top: 50%;
-	    margin-top: -25px;
-	    line-height: 57px;
-	    text-align: center;
-	    cursor: pointer;
-	    background: rgba(0, 0, 0, 0.1);
-	    z-index: 100;
-	    -webkit-user-select: none;
-	    -moz-user-select: none;
-	    -khtml-user-select: none;
-	    -ms-user-select: none;
-	    -webkit-transition: all 0.1s ease;
-	    -o-transition: all 0.1s ease;
-	    transition: all 0.1s ease;
-	}
-	
-	.slider-btns:hover {
-	    background: rgba(0, 0, 0, 0.3);
-	}
-	
-	#next {
-	    right: -50px;
-	    border-radius: 7px 0px 0px 7px;
-	    color: #eee;
-	}
-	
-	#previous {
-	    left: -50px;
-	    border-radius: 0px 7px 7px 7px;
-	    color: #eee;
-	}
-	
-	#slider-wrap.active #next {
-	    right: 0px;
-	}
-	
-	#slider-wrap.active #previous {
-	    left: 0px;
-	}
-	
-	/*bar*/
-	#slider-pagination-wrap {
-	    min-width: 20px;
-	    margin-top: 350px;
-	    margin-left: auto;
-	    margin-right: auto;
-	    height: 15px;
-	    position: relative;
-	    text-align: center;
-	}
-	
-	#slider-pagination-wrap ul {
-	    width: 100%;
-	}
-	
+	\
 	#slider-pagination-wrap ul li {
 	    margin: 0 4px;
 	    display: inline-block;
@@ -209,7 +82,7 @@
 
 	<div id="outer">
         <div id="slide" align="center">
-
+			<!-- 슬라이드 이미지 들어갈 영역 -->
         </div>
 
 		<input type="hidden" id="memNo" value="${ loginUser.memNo }">
@@ -221,7 +94,7 @@
 				<a href="storeSearchList.st" class="more_btn">+more</a>
 			</div>
 
-			<c:forEach var="h" items="${ hlist }" end="2">
+			<c:forEach var="h" items="${ hlist }" end="3">
 				<div class="item" >
 					<img src="${ h.productImg0 }" class="thumbnail"
 						onclick="goDetail(${h.productNo});">
@@ -419,7 +292,7 @@
 				<a href="storeSearchList.st" class="more_btn">+more</a>
 			</div>
 
-			<c:forEach var="n" items="${ nlist }" end="2">
+			<c:forEach var="n" items="${ nlist }" end="3">
 				<div class="item">
 					<img src="${ n.productImg0 }" class="thumbnail"
 						onclick="goDetail(${n.productNo});">

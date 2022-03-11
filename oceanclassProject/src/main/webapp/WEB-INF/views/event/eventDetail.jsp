@@ -35,9 +35,10 @@
 		margin-left: 30px;
 	}
 	.tags button:hover{color: rgb(107, 171, 213, 0.7)}
-	#img{width: 60%; height: 35%; margin: 0 auto; margin-top: 100px;  overflow: hidden; }
+	.img{width: 50%; height: 35%; margin: 0 auto;  overflow: hidden;}
 	.content p{font-size: 20px; font-weight: 600; text-align: center;}
 	.content button{display: block; width: 50%; margin: 0 auto; margin-top: 50px;}
+	.img:hover{cursor: pointer;}
 </style>
 </head>
 <body>
@@ -45,9 +46,11 @@
 	<jsp:include page="../common/header.jsp" />
 	
     <div class="innerOuter my-3" id="outer">
+        <!-- 
         <div class="head py-5">
             <p>${e.eventTitle}</p>
         </div>
+
         <div class="tags">
         	<c:if test="${not empty e.tag}">
 	        	<c:set var="tagArr" value="${fn:split(e.tag, ' ')}"></c:set>
@@ -59,27 +62,27 @@
 	        	</c:forEach>
         	</c:if>
         </div>
+         -->
         <div class="content">
         	<c:choose>
-        		<c:when test="${e.couponNo != 0}">
-        			<p>${e.eventContent}</p>
-        			<div id="img"><img src="${e.img}"></div>
-        			<input type="hidden" id="couponNo" name="couponNo" value="${e.couponNo}">
-        			<button type="button" class="btn btn-lg btn-light" onclick="getCoupon();">쿠폰받기</button>
+        		<c:when  test="${e.nowCount ne e.maxCount}">
+        			<div class="img"><img class="img" src="${e.img}"></div>
+        			<button class="btn" onclick="getCoupon();">쿠폰 발급받기</button>
         		</c:when>
         		<c:otherwise>
-        			<p>${e.eventContent}</p>
-        			<img src="${e.img}" style="width: 100%; height: 90%;">
+        			<img class="img" src="${e.img}" style="display:block; margin-left:250px;">
+        			<button class="btn" disabled>해당 쿠폰은 소진 완료 되었습니다.</button>
         		</c:otherwise>
         	</c:choose>
+        	<input type="hidden" id="couponNo" name="couponNo" value="${e.couponNo}">
         </div>
         
         <script>
         	function getCoupon(){
-        		let couponNo = $(".content").children("#couponNo").val();
+        		let couponNo = document.getElementById("couponNo").value;
         		let memNo = '<c:out value="${loginUser.memNo}"/>';
         		let noLogin = "";
-        		console.log(couponNo);
+
         		if(memNo == noLogin){
         			alert("로그인 후 이용 가능합니다");
         		}else{
@@ -88,15 +91,14 @@
         				data:{memNo: memNo,
         					  couponNo: couponNo},
         				success:function(result){
-        					//console.log(result);
         					if(result>0){
-        						$(".modalSuccess").modal();
+        						alert("쿠폰이 발급되었습니다! 내 쿠폰함에서 확인하세요.");
         					}else if(result == 0){
-        						$(".modalAlready").modal();
+        						alert("이미 발급된 쿠폰입니다!");
         					}else if(result == -1){
-        						$(".modalEnd").modal();	
+        						alert("쿠폰이 모두 소진되었습니다.");
         					}else{
-        						$(".modalFail").modal();
+        						alert("쿠폰 발급에 실패하였습니다. 다시 시도해주세요.");
         					}
         				},error:function(){
         					console.log("쿠폰발급실패");

@@ -142,14 +142,11 @@
 			if(startDateCompare.getTime() > endDateCompare.getTime()) {
 				alert("시작날짜와 종료날짜를 확인해 주세요.");     
 				return;
-			}
-			console.log(startDate);
-			console.log(endDate)      
+			}  
 		});
 		
 		$("#reportTable tbody tr").click(function(){
 			var cat = $(this).children(".category").text();
-			console.log(cat);
 
 			location.href='rpdetail.ad?rpno=' + $(this).children(".rpNo").text() + '&category=' + $(this).children(".category").text();
 		});

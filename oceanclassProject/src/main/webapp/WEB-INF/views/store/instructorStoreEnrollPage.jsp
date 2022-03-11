@@ -12,16 +12,21 @@
 </head>
 <body>
 	<script>
-		$(function(){
-			var max = 5;	// 옵션 추가 가능한 최댓값
-			var index = 1;	// 최초 카운트 1
-			var wrapper = $("#append");	// 옵션 추가될 영역
+		window.onload = function(){
+			// 최대 옵션 수
+			var max = 5;
+			// 최초 카운트 1
+			var index = 1;	
+			// 옵션 추가할 영역
+			var wrapper = document.getElementById("append");	
 			
 			$('#insBtn').click(function(){
 				if(index<=max){
-					var fieldHTML = '<div><input class="opStyle1" name="optionName" type="text" placeholder="옵션명" style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn">삭제</a></div>';
-					$('#append').append(fieldHTML);		//add field
-					index++;	// 카운트 증가
+					var fieldHTML = '<div><input class="opStyle1" name="optionName" type="text" placeholder="옵션명"' 
+						+ 'style="width:70%; margin-left:70px; line-height:29px; margin-right:2px;"><a href="#" class="delBtn">삭제</a></div>';
+					//add field
+					$('#append').append(fieldHTML);		
+					index++;	
 				}else{
 					alert("더이상 옵션을 추가할 수 없습니다!");
 				}
@@ -33,7 +38,7 @@
 				index--;	
 			});
 			
-		})
+		}
 	</script>
 	<div style="width: 1600px; height: auto; margin: auto;">
 	<!-- 강사용 메뉴바 연결하기 	-->

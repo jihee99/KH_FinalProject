@@ -168,13 +168,12 @@
             </div>
             <br><br><br>
         </div>
-		<script type="text/javascript">
+		<script>
 			$(".cl-wrap").click(function(){
 				let rno = $(this).children(".reviewNo").val();
 				console.log($(this).children(".reviewNo").val());
 				window.open('srreport.in?rno='+rno+'','신고하기','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no');
 			})
-			
 			
 			
 			$(".productList").change(function(){
@@ -251,12 +250,9 @@
 					},error:function(){
 						alert("리뷰 조회에 실패했습니다.");
 					}
-				})
-				$(".cl-wrap").click(function(){
-					let rno = $(this).children(".reviewNo").val();
-					console.log($(this).children(".reviewNo").val());
-					window.open('srreport.in?rno='+rno+'','신고하기','width=550, height=500, menubar=no, status=no, toolbar=no, resizable=no');
-				;})
+				});
+				
+
 			
 			})
 		</script>

@@ -14,8 +14,7 @@
 
 <link rel="stylesheet" href="./resources/css/store/instructorStoreDeliveryOrderList.css">
 
-<style>
-    
+<style>    
 	.content_1_left>b{font-size: 17px;}
 	.content_1_center{width: 20%;}
 	.content_1_right{width: 60%; float: right;}
@@ -251,17 +250,11 @@
 					url:"sosearchF.in",
 					data:{orderStatus:num},
 					success:function(result){
-						//console.log(list);
-						console.log(result);
-						
+				
 						let value ="";
-						let pageVal = "";
 						
 						for(let i in result.list){
-							/*
-							if(list[i].orderStatus == 1){
-								selectVal = 
-							}*/
+
 							value += "<tr>"
 								+ "<td><input type='checkbox' class='deleteNum' name='chBxRow' value='"+result.list[i].orderNo+"'></td>"
 								+ "<td>"+ result.list[i].orderNo + "</td>"
@@ -287,7 +280,6 @@
                                + "</tr>"	  	
 						}
 
-						//console.log(value);
 						$(".orderList tbody").empty();
 						$(".orderList tbody").html(value);
 						$(".btn_group").empty();
@@ -306,10 +298,8 @@
 	            });
 				$('#hiddenList').val(chkArr);
 				
-				console.log(chkArr);
-				
 				$.ajax({
-					url:"sodelete.in",
+					url:"sodelete.ad",
 					data:{hiddenList:$('#hiddenList').val()},
 					success:function(result){
 						alert("주문내역 삭제가 완료되었습니다.");
@@ -322,13 +312,13 @@
 				
 			}
 			
-			$(document).ready(function() {
+			window.onload = function() {
                 $("#checkAll").click(function() {
                     if($("#checkAll").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
                     else $("input[name=chBxRow]").prop("checked", false);
                 });
 			
-			})
+			}
             
 		</script>
     </div>

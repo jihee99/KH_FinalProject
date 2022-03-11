@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-
 <title>Insert title here</title>
 <style>
 .innerOuter{width:1000px; margin: auto;}
@@ -57,42 +56,36 @@
 	</div>
 	
 	
-	<script>
-    	$(function(){
+	<script>	
+	
+		window.onload = function(){
+			
 			$(".chart1").html('<canvas id="myChart1" width="400" height="400"></canvas>');
 			$(".chart2").html('<canvas id="myChart2" width="400" height="400"></canvas>');
 			
 			$.ajax({
 				url:"chartMain.in",
 				success:function(result){
-					
-					console.log(result.starlist);
-    				console.log(result.qnalist);
-
-    				//let starPno = [];	
-    				let starNo = [];	// x축
-    				let starCount = [];	// 대응되는 데이터
-    				
+    				// x-axis
+    				let starNo = [];	
+    				// response data
+    				let starCount = [];	    				
     				for(let i  in result.starlist){
     					starNo.push(result.starlist[i].star);
     					starCount.push(result.starlist[i].starCount);
-    				}
-    				
-    				console.log(starNo);
-    				console.log(starCount);	
+    				}  				
 					
+    				// myChart1
     				let ctx1 = document.getElementById('myChart1').getContext('2d');
     	    		let myChart1 = new Chart(ctx1, {
-    	    			  type: 'pie', // 차트의 형태
-    	                  data: { // 차트에 들어갈 데이터
+    	    			  type: 'pie', 
+    	                  data: { 
     	                      labels: starNo,
     	                      datasets: [
-    	                          { //데이터
-    	                              label: '상품별 만족도', //차트 제목
-    	                              fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-    	                              data: starCount, //x축 label에 대응되는 데이터 값
+    	                          { 
+    	                              fill: false, 
+    	                              data: starCount, 
     	                              backgroundColor: [
-    	                                  //색상
     	                                  'rgba(255, 99, 132, 0.2)',
     	                                  'rgba(54, 162, 235, 0.2)',
     	                                  'rgba(255, 206, 86, 0.2)',
@@ -100,14 +93,13 @@
     	                                  'rgba(153, 102, 255, 0.2)'
     	                              ],
     	                              borderColor: [
-    	                                  //경계선 색상
     	                                  'rgba(255, 99, 132, 1)',
     	                                  'rgba(54, 162, 235, 1)',
     	                                  'rgba(255, 206, 86, 1)',
     	                                  'rgba(75, 192, 192, 1)',
     	                                  'rgba(153, 102, 255, 1)'
     	                              ],
-    	                              borderWidth: 1 //경계선 굵기
+    	                              borderWidth: 1 
     	                          }
     	                      ]
     	                  },
@@ -118,10 +110,6 @@
 	  					  	  },
     	                	  pieceLabel: { mode:"label", position:"outside", fontSize: 11, fontStyle: 'bold' },
     	                      scales: {
-    	                      	title: {
-    					    		display: true,
-    					    		text: '스토어만족도'
-    					  		},
     	                        yAxes: [
     	                              {
     	                                  ticks: {
@@ -133,55 +121,45 @@
     	                  }
     	            });
     	    		
+    	    		// 해당 강사가 판매중인 모든 상품의 문의 수
     	    		let qnaCount = [];
+    	    		// 해당 강사가 판매중인 모든 상품의 응답 수
     	    		let answerCount = [];
+    	    		// x축 기준 data
     	    		let xlabel= [];
-					
     	    		for(let i  in result.qnalist){
     					qnaCount.push(result.qnalist[i].qnaCount);
     					answerCount.push(result.qnalist[i].answerCount);
    						xlabel.push(result.qnalist[i].productNo);
     	    		}
     	    		
-    	    		console.log(result.qnalist);
-    	    		console.log(qnaCount);
-    	    		console.log(answerCount);
-    	    		console.log(xlabel);
-    	    		
-    	    		//문의 응답율 추이
+    	    		//myChart2
     	    		let ctx2 = document.getElementById('myChart2').getContext('2d');
     	    		let myChart2 = new Chart(ctx2, {
-    	    			  type: 'line', // 차트의 형태
-    	                  data: { // 차트에 들어갈 데이터
+    	    			  type: 'line',
+    	                  data: { 
     	                      labels: xlabel,
     	                      datasets: [
-    	                          { //데이터
-    	                              label: '문의', //차트 제목
-    	                              //fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+    	                          { 
+    	                              label: '문의',
     	                              data: qnaCount,
     	                              backgroundColor: [
-    	                                  //색상
     	                                  'rgb(255, 99, 132, 0.2)'
     	                              ],
     	                              borderColor: [
-    	                                  //경계선 색상
     	                            	  'rgb(255, 99, 132, 0.2)'
     	                              ]
     	                          },
-    	                          { //데이터
-    	                              label: '응답', //차트 제목
-    	                              //fill: false,  // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+    	                          {
+    	                              label: '응답', 
     	                              data: answerCount,
     	                              backgroundColor: [
-    	                                  //색상
     	                                  'rgb(54, 162, 235, 0.2)'
     	                              ],
     	                              borderColor: [
-    	                                  //경계선 색상
     	                            	  'rgb(54, 162, 235, 0.2)'
     	                              ]
-    	                          }
-    								
+    	                          }	
     	                      ]
     	                  },
     	                  options: {
@@ -198,60 +176,46 @@
     	                  ]
     					 }
     	              });
-    	    		
-    	    		
-    	    		
-    	    		
-    	    		
-    	    		
-    	    		
 				},error:function(){
-					console.log("ajax통신 실패");
+					console.log("ajax error");
 				}
 			});
 			
-    		let pno = $(".list option:selected").val();
-			console.log(pno);
+			
+			// select product
     		$(".list").change(function(){
     			
     			$(".chart1").html('<canvas id="myChart1" width="400" height="400"></canvas>');
     			$(".chart2").html('<canvas id="myChart2" width="400" height="400"></canvas>');
     			
     			pno = $(".list option:selected").val();
-    			console.log(pno);
+    			
 	    		$.ajax({
 	    			url : "chartAjax.in",
 	    			data : {
 	    				pno : pno
 	    			},success:function(result){
-	    				console.log(result.starlist);
-	    				console.log(result.qnalist);
-
-	    				//let starPno = [];	
-	    				let starNo = [];	// x축
-	    				let starCount = [];	// 대응되는 데이터
-	    				
+	    				// x-axis
+	    				let starNo = [];	
+	    				// response data
+	    				let starCount = [];	 	    				
 	    				for(let i  in result.starlist){
 	    					starNo.push(result.starlist[i].star);
 	    					starCount.push(result.starlist[i].starCount);
 	    				}
 	    				
-	    				console.log(starNo);
-	    				console.log(starCount);
-	    				
-	    				//상품 만족도 그래프
+	    				// myChart1
 	    	    		let ctx1 = document.getElementById('myChart1').getContext('2d');
 	    	    		let myChart1 = new Chart(ctx1, {
-	    	    			  type: 'pie', // 차트의 형태
-	    	                  data: { // 차트에 들어갈 데이터
+	    	    			  type: 'pie', 
+	    	                  data: { 
 	    	                      labels: starNo,
 	    	                      datasets: [
-	    	                          { //데이터
-	    	                              label: '상품별 만족도', //차트 제목
-	    	                              fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-	    	                              data: starCount, //x축 label에 대응되는 데이터 값
+	    	                          { 
+	    	                              label: '상품별 만족도', 
+	    	                              fill: false, 
+	    	                              data: starCount, 
 	    	                              backgroundColor: [
-	    	                                  //색상
 	    	                                  'rgba(255, 99, 132, 0.2)',
 	    	                                  'rgba(54, 162, 235, 0.2)',
 	    	                                  'rgba(255, 206, 86, 0.2)',
@@ -259,14 +223,13 @@
 	    	                                  'rgba(153, 102, 255, 0.2)'
 	    	                              ],
 	    	                              borderColor: [
-	    	                                  //경계선 색상
 	    	                                  'rgba(255, 99, 132, 1)',
 	    	                                  'rgba(54, 162, 235, 1)',
 	    	                                  'rgba(255, 206, 86, 1)',
 	    	                                  'rgba(75, 192, 192, 1)',
 	    	                                  'rgba(153, 102, 255, 1)'
 	    	                              ],
-	    	                              borderWidth: 1 //경계선 굵기
+	    	                              borderWidth: 1 
 	    	                          }
 	    	                      ]
 	    	                  },
@@ -277,10 +240,6 @@
 	    					  	  },
 	    	                	  pieceLabel: { mode:"label", position:"outside", fontSize: 11, fontStyle: 'bold' },
 	    	                      scales: {
-	    	                      	title: {
-	    					    		display: true,
-	    					    		text: '스토어만족도'
-	    					  		},
 	    	                        yAxes: [
 	    	                              {
 	    	                                  ticks: {
@@ -306,37 +265,30 @@
 	    					}
 	    	    		}
 	    	    		
-	    	    		
-	    	    		//문의 응답율 추이
+	    	    		// myChart2
 	    	    		let ctx2 = document.getElementById('myChart2').getContext('2d');
 	    	    		let myChart2 = new Chart(ctx2, {
-	    	    			  type: 'line', // 차트의 형태
-	    	                  data: { // 차트에 들어갈 데이터
+	    	    			  type: 'line', 
+	    	                  data: { 
 	    	                      labels: xlabel,
 	    	                      datasets: [
-	    	                          { //데이터
-	    	                              label: '문의', //차트 제목
-	    	                              //fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+	    	                          { 
+	    	                              label: '문의', 
 	    	                              data: qnaCount,
 	    	                              backgroundColor: [
-	    	                                  //색상
 	    	                                  'rgb(255, 99, 132, 0.2)'
 	    	                              ],
 	    	                              borderColor: [
-	    	                                  //경계선 색상
 	    	                            	  'rgb(255, 99, 132, 0.2)'
 	    	                              ]
 	    	                          },
-	    	                          { //데이터
-	    	                              label: '응답', //차트 제목
-	    	                              //fill: false,  // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+	    	                          { 
+	    	                              label: '응답',
 	    	                              data: answerCount,
 	    	                              backgroundColor: [
-	    	                                  //색상
 	    	                                  'rgb(54, 162, 235, 0.2)'
 	    	                              ],
 	    	                              borderColor: [
-	    	                                  //경계선 색상
 	    	                            	  'rgb(54, 162, 235, 0.2)'
 	    	                              ]
 	    	                          }
@@ -365,7 +317,7 @@
     		});
     		
     	
-    	})
+    	}
 
     	
     	

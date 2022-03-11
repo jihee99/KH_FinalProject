@@ -281,9 +281,10 @@ public class InstructorStoreServiceImpl implements InstructorStoreService{
 		return inStoreDao.updateNoticeCount(sqlSession, nno);
 	}
 
+
 	@Override
-	public int updeleteProductOption(String opno) {
-		return inStoreDao.updeleteProductOption(sqlSession, opno );
+	public int updeleteProductOption(ProductOption op) {
+		return inStoreDao.updeleteProductOption(sqlSession, op);
 	}
 
 

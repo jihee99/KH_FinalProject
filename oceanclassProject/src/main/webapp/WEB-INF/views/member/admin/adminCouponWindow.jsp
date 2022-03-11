@@ -92,17 +92,16 @@
                 </tbody>
             </table>
             <br>
-            <button class="btn" align="center" type="submit" onclick="fnGetData();">지급하기</button>
+            <button class="btn" align="center" type="submit" onclick="memberCoupon();">지급하기</button>
 
         <script>
-			function fnGetData(){
+			function memberCoupon(){
 	            var chkArr = new Array();
 				var hiddenList 
 	            $('input:checkbox[name=chBxRow]:checked').each(function(){
 	            	chkArr.push(this.value);
 	            });
 				$('#hiddenList').val(chkArr);
-				//alert($('#hiddenList').val());	
 
 				$.ajax({
 	       			url:"cgive.ad",
@@ -112,7 +111,6 @@
 	       				hiddenList:$('#hiddenList').val()
 	       			},success:function(result){
 	       				alert("쿠폰 발행에 성공했습니다.");
-	       				//console.log(result);
 	       				opener.parent.location.reload();
 	       				window.close();
 	       			},error:function(){
@@ -120,13 +118,12 @@
 	       				opener.parent.location.reload();
 	       				window.close();
 	       			}
-	       		})
+	       		});
 				
 			}
 			
 
-            $(document).ready(function() {
-			
+            $(document).ready(function() {			
                 $("#checkAll").click(function() {
                     if($("#checkAll").is(":checked")) $("input[name=chBxRow]").prop("checked", true);
                     else $("input[name=chBxRow]").prop("checked", false);
